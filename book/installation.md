@@ -93,12 +93,12 @@ source <env_name>/bin/activate
 pip install bids-manager
 ```
 
-## Installation completed! 🎉
-
 After the installation finishes, you will find two **shortcuts** on your desktop:
 
 | OS          | Launch                    | Uninstall                      |
 |-------------|---------------------------|--------------------------------|
 | **Windows** | `run_bidsmanager.bat`      | `uninstall_bidsmanager.bat`    |
-| **Linux**   | _BIDS Manager_ (launcher)| _Uninstal BIDS Manager_ (configuration file)     |
+| **Linux**   | _BIDS Manager_ (launcher)| _Uninstall BIDS Manager_ (configuration file)     |
+
+## Installation completed! 🎉
 
