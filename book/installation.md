@@ -36,6 +36,11 @@ Give execute permissions to the installer
 
     chmod +x install_bids_manager.sh
 
+
+Or alternatively
+
+    chmod 755 install_bids_manager.sh
+
 Run the installer
 
     ./install_bids_manager.sh
