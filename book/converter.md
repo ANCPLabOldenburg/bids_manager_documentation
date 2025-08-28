@@ -115,7 +115,15 @@ In this section, you can see how your dataset will look like once converted into
 * The **Text tab** will show a list of generated file paths.
 * The **Tree tab** provides a hierarchical view, organized by subject, modality and files
 
+## Run conversion
+
 <img src="../static/converter/7_run.png" alt="run" width="400px" align="center">
+
+Finally, once you have configured your conversion, you can proceed to run the conversion. Click Run to start converting your dataset into a BIDS-compliant structure. The Log Output and the Terminal will provide real-time updates on the progress and any issues encountered.
+When the process completes, you will find your converted dataset in the directory specified as the BIDS Output Directory.
+
+<img src="../static/converter/6_log2.png" alt="log-output" width="400px" align="center">
+
 
 
 
