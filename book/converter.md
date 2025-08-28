@@ -29,6 +29,9 @@ Once you have defined the different configuration parameters, you can press in `
 
 Both the terminal and the `Log Output` section will show some updates in the process of scanning your dataset and the creation of the TSV file.
 
+<img src="../static/converter/6_log.png" alt="log-output" width="400px" align="center">
+
+
 ## Scanned Data Viewer
 This section is divided in 2 sub-sections:
 * Scanned metadata
@@ -112,6 +115,7 @@ In this section, you can see how your dataset will look like once converted into
 * The **Text tab** will show a list of generated file paths.
 * The **Tree tab** provides a hierarchical view, organized by subject, modality and files
 
+<img src="../static/converter/7_run.png" alt="run" width="400px" align="center">
 
 
 
