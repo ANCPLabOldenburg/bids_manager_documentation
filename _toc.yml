@@ -1,0 +1,5 @@
+root: index
+format: jb-book
+chapters:
+- file: book/installation
+- file: book/converter
