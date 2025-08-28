@@ -22,7 +22,7 @@ Both installation methods include all the depencies required to run the GUI and 
 | **Linux**        | `install_bids_manager.sh`      | Allow execution and run the installer |
 
 
-**3. Allow script execution and run (for Linux users):**
+**3. (for Linux users) Allow script execution and run the installer:**
 
 If you're working in Linux, you'll need first to allow the `.sh` script execution. This can be done in two different ways:
 
@@ -35,8 +35,6 @@ Right click and select **"Open terminal here"** or open a terminal and use:
 Give execute permissions to the installer
 
     chmod +x install_bids_manager.sh
-
-chomd -R 777 install_bids_manager.sh
 
 Run the installer
 
@@ -54,6 +52,10 @@ Allow "execute" option in XFCE systems
 Give execute permissions to the installer
 
     chmod +x install_bids_manager.sh
+
+Or alternatively
+
+    chmod 755 install_bids_manager.sh
 
 Run the installer
 
