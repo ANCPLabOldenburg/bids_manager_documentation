@@ -29,17 +29,23 @@ Once you've loaded your dataset, you can use BIDSplorer to easily navigate throu
 
 
 
+
 * **Hidden folders:** BIDSplorer also let you access hidden folders such as `.bids_manager` and `.heudiconv`_
   * _.bids_manager:_ it will contain the "subject_mapping.tsv" (list of all subjects) and the "subject_summary.tsv" (with all files per subject). 
   * _.heudiconv:_: stores heuristics. BIDS-Manager creates Python scripts here that record the specific transformation rules used to convert your raw data into BIDS format.
 
-* **Anatomical files:** `nii` and `gz` files can be opened with BIDSplorer as well. You can freely inspect voxel values, switch between views (Sagittal, Coronal or Axial), and scroll though slices and volumes. You may also adjust the brightness and contrast.
+* **Sequence type view:** `nii` and `gz` files can be opened with BIDSplorer as well. You can freely inspect voxel values, switch between views (Sagittal, Coronal or Axial), and scroll though slices and volumes. You may also adjust the brightness and contrast.
 
 <img src="../static/editor/02_anatomical.png" alt="anatomical" width="300px" align="center">
 
-  * **Graph view:** some files include a `Graph` option, which allows you to see the signal over time. Usse the `Volume` toggle to scroll throught different time points of the signal. The graph below will help you spot "jump" or irregularities caused by participant movement or scanner errors.
 
-<img src="../static/editor/02_graph.png" alt="graph" width="300px" align="center">
 
-  * **Neighbors:** Increse the `
+  * **Graph view:** some files include a `Graph` option (top-up), which allows you to see the signal over time. Usse the `Volume` toggle to scroll throught different time points of the signal. The graph below will help you spot "jumps" or irregularities caused by participant movement or scanner errors.
+
+<img src="../static/editor/02_graph.png" alt="graph" width="500px" align="center">
+
+  * **Neighbors:** Increse the `scope` option (bottom-down) to inlcude neighboring voxels, making it easier to identify localized artifacts. You may additionally increase the dot size and even remove the dot from the neighboring graphs.
+
+<img src="../static/editor/02_nhb.png" alt="nhb" width="500px" align="center">
+
 
