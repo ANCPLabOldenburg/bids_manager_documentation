@@ -27,3 +27,5 @@ Once you've loaded your dataset, you can use BIDSplorer to easily navigate throu
   * For _tsv_ file, you can `Add` and `Remove` `Columns` and `Rows`.
 
 <img src="../static/editor/02_metadata.png" alt="json" width="500px" align="center">
+
+* **Hidden folders:** 
