@@ -17,7 +17,7 @@ The first tab you'll see in BIDS-Manager is the `converter tab`. This is where y
 
 ## Configuration
 
-<img src="../static/converter/2_configuration.png" alt="configuration" width="400px" align="center">
+<img src="../static/converter/2_configuration.png" alt="configuration" width="350px" align="center">
 
 
 To scan your dataset, first you need to fullfill the `Configuration` section:
@@ -27,7 +27,7 @@ To scan your dataset, first you need to fullfill the `Configuration` section:
 
 Once you have defined the different configuration parameters, you can press in `Scan files`. Both the terminal and the `Log Output` section will show some updates in the process of scanning your dataset and the creation of the TSV file.
 
-<img src="../static/converter/6_log.png" alt="log-output" width="400px" align="center">
+<img src="../static/converter/6_log.png" alt="log-output" width="350px" align="center">
 
 
 ## Scanned Data Viewer
@@ -114,7 +114,7 @@ In this section, you can click on `Preview` to see how your dataset will look li
 * The **Text tab** will show a list of generated file paths.
 * The **Tree tab** provides a hierarchical view, organized by subjects, modalities (dwi, anat, func...) and each file with its final BIDS compliant name.
 
-<img src="../static/converter/5_preview_tree.png" alt="preview_tree" width="400px" align="center">
+<img src="../static/converter/5_preview_treee.png" alt="preview_tree" width="400px" align="center">
 
 
 ## Run conversion
