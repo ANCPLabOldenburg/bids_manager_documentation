@@ -126,8 +126,14 @@ When the process completes, you will find your converted dataset in the director
 
 <img src="../static/converter/6_log2.png" alt="log-output" width="400px" align="center">
 
-## Next section
-In the next section we will get deeper into the Editor tab.
+
+```{admonition} Next section
+:class: tip
+
+In the next section we will get see how to navigate and edit metadata (`json` and `tsv` files) as well as view and scroll through sequence types (`nii` and `gz` files) thanks to the Editor Tab.
+
+``` 
+
 
 
 
