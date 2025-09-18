@@ -124,7 +124,7 @@ In this section, you can click on `Preview` to see how your dataset will look li
 Finally, once you have chosen your conversion parameters, you can proceed to run the conversion. Click `Run` to start converting your dataset into a BIDS-compliant structure. The Log Output and the Terminal will provide real-time updates on the progress and any issues encountered.
 When the process completes, you will find your converted dataset in the directory specified as the BIDS Output Directory.
 
-<img src="../static/converter/6_log2.png" alt="log-output" width="400px" align="center">
+<img src="../static/converter/6_log2.png" alt="log-output" width="350px" align="center">
 
 
 ```{admonition} Next section
