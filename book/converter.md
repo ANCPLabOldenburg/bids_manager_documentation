@@ -8,8 +8,8 @@ The first tab you'll see in BIDS-Manager is the `converter tab`. This is where y
 ```{admonition} Visual theme
 :class: tip
 
-* You can change the color palette with the icon int the lower-left corner icon. The selected theme will onlyy affect the GUI's appearance and will be saved for future sessions. THigh-contrast themes are also available.
-* Each sub-section can be resized by and dragging its edges.
+* You can change the color palette with the icon int the lower-left corner icon. The selected theme will only affect the GUI's appearance and will be saved for future sessions. High-contrast themes are also available.
+* Each sub-section can be resized by dragging its edges.
 * Each sub-section can be undocked by clicking on the `>>` icon (top-right corner). Closing the undocked window will dock it back.
 * The `DPI` (dots per inch) setting in the lower-left corner lets you scale the display to match your PC's resolution. Very high DPI values might give issues, not recommended to be set 50% higher than your PC's resolution.
 
@@ -22,12 +22,10 @@ The first tab you'll see in BIDS-Manager is the `converter tab`. This is where y
 
 To scan your dataset, first you need to fullfill the `Configuration` section:
 - **Raw data Dir:** You can paste the path or `browse` to select your datasets folder. BIDS-Manager can work simulatenusly with datasets from different studies at the same time.
-- **BIDS Out Dir:** You can `paste` the path or `browse` to select the folder where you want to keep the converted output, the BIDS-compliant conversion. 
-- **TSV Name:** Everytime you scan your dataset, you create a .tsv file with a summary of your scanned files and the conversion settings. You can edit the name, but the default is _"subject_summary.tsv"_.
+- **BIDS Out Dir:** You can paste the path or `browse` to select the folder where you want to save the converted output (the BIDS-compliant dataset). 
+- **TSV Name:** Everytime you scan your dataset, you create a _.tsv_ file with a summary of your scanned files and the conversion settings. You can edit the name, but the default is _"subject_summary.tsv"_.
 
-Once you have defined the different configuration parameters, you can press in `Scan files`.
-
-Both the terminal and the `Log Output` section will show some updates in the process of scanning your dataset and the creation of the TSV file.
+Once you have defined the different configuration parameters, you can press in `Scan files`. Both the terminal and the `Log Output` section will show some updates in the process of scanning your dataset and the creation of the TSV file.
 
 <img src="../static/converter/6_log.png" alt="log-output" width="400px" align="center">
 
@@ -41,7 +39,7 @@ This section is divided in 2 sub-sections:
 <img src="../static/converter/3_scanned_metadata.png" alt="scanned-metadata" width="400px" align="center">
 
 Here you can see a **mapping table** of your uploaded raw data, including subjects, sessions, sequence types and their BIDS proposed conversion.
-* `Load TSV...`: lets you reload a dataset by browisng their _"subject_summary.tsv"_. This skips the scanning process, which can take a lot of time. You still need to set the **Raw data Dir** and the **BIDS Out Dir**.
+* `Load TSV...`: lets you reload a dataset by browsing their _"subject_summary.tsv"_. This skips the scanning process, which can take a lot of time. You still need to set the **Raw data Dir** and the **BIDS Out Dir**.
 * `Apply changes`: updates the TSV file with any edits you've made.
 * `Generate unique IDs`: if the experimenter forgot to change the IDs in-between recordings, BIDS-Manager will be able to identify the different subjects and assign unique identifiers.
 * `Detect repeats`: the `rep` column will show a **2**, which means that this entry is the latest version (common when a run is interrupted and restarted). Sometimes this will be done automatically when you scan the file.
