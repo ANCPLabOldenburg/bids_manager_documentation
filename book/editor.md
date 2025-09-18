@@ -7,7 +7,7 @@ The second tab in BIDS-Manager is the `editor tab`.
 ## Load your dataset
 Go to the top menu and click `File`, in the dropdown select `Open BIDS...`, then a file browser will appear. Navigate to the **root or absolute folder** of your BIDS dataset (the top-level directory that contains all subfolders).
 
-<img src="../static/editor/01_open.png" alt="open bids" width="250px" align="center">
+<img src="../static/editor/01_open.png" alt="openbids" width="250px" align="center">
 
 
 
