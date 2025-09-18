@@ -5,4 +5,4 @@ chapters:
 - file: book/converter
 - file: book/editor
 sections:
-  - file: book/tools
+  - file: extra/tools
