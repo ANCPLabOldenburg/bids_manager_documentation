@@ -25,7 +25,7 @@ Once you've loaded your dataset, you can use BIDSplorer to easily navigate throu
   * For `json` files, you can easily `Add` and `Delete Fields`.
   * For `tsv` file, you can `Add` and `Remove` `Columns` and `Rows`.
 
-<img src="../static/editor/02_metadata.png" alt="metadata" width="600px" align="center">
+<img src="../static/editor/02_metadata.png" alt="metadata" width="650px" align="center">
 
 
 
