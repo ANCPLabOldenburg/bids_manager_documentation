@@ -18,7 +18,7 @@ This documentation includes an installation guide and a tutorial on how to use t
 * A DICOM dataset— if you don’t have one, a [dummy dataset](./extra/download) is available so you can follow along with the tutorial.
 
 ## I've got a question!
-If you have any questions or encounter difficulties while working with BIDS Manager, please don’t hesitate to get in touch with us. You can send an e-mail to karel.mauricio.lopez.vilaret@uni-oldenburg.de or check a `New Issue` in the [BIDS-Manager github](https://github.com/ANCPLabOldenburg/BIDS-Manager/issues).
+If you have any questions or encounter difficulties while working with BIDS Manager, please don’t hesitate to get in touch with us. You can send an e-mail to karel.mauricio.lopez.vilaret@uni-oldenburg.de or create a [`New Issue`](https://github.com/ANCPLabOldenburg/BIDS-Manager/issues) in the BIDS-Manager github.
 
 ## Acknowledgements
 This tutorial was made possible through the dedicated work of the [Jupyter community](https://jupyter.org/community), specifically, the [Executable/Jupyter Book](https://executablebooks.org/en/latest/).
