@@ -22,8 +22,8 @@ Once you've loaded your dataset, you can use BIDSplorer to easily navigate throu
 
 
 
-* **Metadata:** You can double-click on the _json_ and _tsv_ files to scroll through them, edit them and apply the changes just by pressing on the `Save` button.
-  * you can easily `Add Fields` and `Delete Fields` to _json_files.
-  * and you can `Add` and `Remove` `Columns` and `Rows`.
+* **Metadata:** Double-click on the _json_ and _tsv_ files to open theme. Then, you can scroll through their contents, make edits and save changes with the `Save` button (it overwrites the original file).
+  * For _json_ files, you can easily `Add` and `Delete Fields`.
+  * For _tsv_ file, you can `Add` and `Remove` `Columns` and `Rows`.
 
-<img src="../static/editor/02_metadata.png" alt="json" width="450px" align="center">
+<img src="../static/editor/02_metadata.png" alt="json" width="500px" align="center">
