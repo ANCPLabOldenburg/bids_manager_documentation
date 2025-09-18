@@ -100,6 +100,7 @@ The dropdown below lets you choose between `Use BIDS name` or `Use given name`, 
 <img src="../static/converter/4_filter_exclude.png" alt="always-exclude" width="400px" align="center">
 
 BIDS-Manager has a list of common scan patterns that are usually not necesary and exclude them automatically during scanning. You can add new **patterns manually** so they won't be scan in your next session.
+
 All new patterns will be stored in a tsv file within your BIDS-Manager environment:
 
 ```bash
@@ -109,19 +110,24 @@ path/to/BIDS_MANAGER\env\Lib\site-packages\bids_manager\user_preferences
  ## Preview
 <img src="../static/converter/5_preview.png" alt="preview" width="400px" align="center">
 
-In this section, you can see how your dataset will look like once converted into BIDS format.
+In this section, you can click on `Preview` to see how your dataset will look like once converted into BIDS format.
 * The **Text tab** will show a list of generated file paths.
-* The **Tree tab** provides a hierarchical view, organized by subject, modality and files
+* The **Tree tab** provides a hierarchical view, organized by subjects, modalities (dwi, anat, func...) and each file with its final BIDS compliant name.
+
+<img src="../static/converter/5_preview_tree.png" alt="preview_tree" width="400px" align="center">
+
 
 ## Run conversion
 
 <img src="../static/converter/7_run.png" alt="run" width="400px" align="center">
 
-Finally, once you have configured your conversion, you can proceed to run the conversion. Click Run to start converting your dataset into a BIDS-compliant structure. The Log Output and the Terminal will provide real-time updates on the progress and any issues encountered.
+Finally, once you have chosen your conversion parameters, you can proceed to run the conversion. Click `Run` to start converting your dataset into a BIDS-compliant structure. The Log Output and the Terminal will provide real-time updates on the progress and any issues encountered.
 When the process completes, you will find your converted dataset in the directory specified as the BIDS Output Directory.
 
 <img src="../static/converter/6_log2.png" alt="log-output" width="400px" align="center">
 
+## Next section
+In the next section we will get deeper into the Editor tab.
 
 
 
