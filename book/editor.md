@@ -18,8 +18,10 @@ Once you've load your dataset, **BIDStatistic** will show you a summary of your 
 
 
 ## BIDSplorer
+Once you've loaded your dataset, you can use BIDSplorer to easily navigate through your dataset folder and open, view and edit different type of files and sequence types.
+
 <img src="../static/editor/02_bidsplorer.png" alt="bidsplorer" width="250px" align="right">
-Once you've loaded your dataset, you can use BIDSplorer to easily navigate through your dataset folder and open, view and edit different type of files and sequence types. 
+
 
 * **Metadata:** Double-click on the `json` and `tsv` files to open theme. Then, you can scroll through their contents, make edits and save changes with the `Save` button (it overwrites the original file).
   * For `json` files, you can easily `Add` and `Delete Fields`.
