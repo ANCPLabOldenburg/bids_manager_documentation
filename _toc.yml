@@ -4,4 +4,5 @@ chapters:
 - file: book/installation
 - file: book/converter
 - file: book/editor
-- file: book/tools
+sections:
+  - file: book/tools
