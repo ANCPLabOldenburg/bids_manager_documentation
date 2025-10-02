@@ -1,7 +1,7 @@
 # Editor Tab
 The second tab in BIDS-Manager is the `editor tab`. 
 
-<img src="../static/editor/00_general.png" alt="general" width="350px" align="center">
+<img src="../static/editor/00_general.png" alt="general" width="450px" align="center">
 
 
 
