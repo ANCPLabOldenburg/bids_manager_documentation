@@ -49,7 +49,7 @@ Here you can see a **mapping table** of your uploaded raw data, including subjec
 
 Each tab corresponds to a **BIDS sequence type** and lists the keywords that BIDS-Manager uses to recognize it.
 * You can use the `Add` and `Remove` buttons to edit these keywords and include any specific naming patterns you use in your own datasets.
-* All changes will be saved for following sessions. The changes are stored in a tsv file within the environment of your BIDS-Manager.
+* All changes will be saved for following sessions. The changes are stored in the _"user_preferences.tsv"_ file within the environment of your BIDS-Manager.
 
 ```bash
 path\to\BIDS_MANAGER\env\Lib\site-packages\bids_manager\user_preferences
