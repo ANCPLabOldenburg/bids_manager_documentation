@@ -1,9 +1,7 @@
 # Editor Tab
-The second tab in BIDS-Manager is the `Editor`. It lets your preview and edit metada (`.json` and `.tsv` files) and imaging data (DICOMS, NIfTI volumes with different cuts, basic 3D renders...).
+The second tab in BIDS-Manager is the `Editor`. It lets your preview and edit metada (`.json` and `.tsv` files) and imaging data (DICOMS, NIfTI volumes...).
 
 <img src="../static/editor/00_general.png" alt="general" width="450px" align="center">
-
-
 
 ## Load your dataset
 Go to the top menu and click `File`, in the dropdown select `Open BIDS...`, then a file browser will appear. Navigate to the **root or absolute folder** of your BIDS dataset (the top-level directory that contains all subfolders).
