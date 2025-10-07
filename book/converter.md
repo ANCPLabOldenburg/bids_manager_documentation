@@ -46,14 +46,13 @@ This sections summarizes your uploaded raw data, including subjects, sessions, s
 * `BIDS Name`: Subject label in the BIDS conversion. Ensure it is consistent after any changes in `FamilyName` or `PatientID`. Also editable.
 * `session`: Shows the sessions detected in your dataset. If auto-detection fails, edit the values manually.
 
-More Tools:
+More options:
 * `Load TSV...`: lets you reload a dataset by browsing their _"subject_summary.tsv"_. This skips the scanning process, which can take a lot of time. You still need to set the **Raw data Dir** and the **BIDS Out Dir**.
 * `Apply changes`: updates the TSV file with any edits you’ve made.
 * `Generate unique IDs`: BIDS-Manager will be able to identify the different subjects and assign unique identifiers.
 * `Detect repeats`: the `rep` column will show a **2**, which means that this entry is the latest version (common when a run is interrupted and restarted). Sometimes this will be done automatically when you scan the file.
 
-
-```{admonition} Edition tips
+```{admonition} Conversion tips
 :class: tip
 
 * You can drag the small square in the lower-left corner of a cell to copy its value vertically to other rows. This works for all editable fields in this section.
@@ -62,21 +61,12 @@ More Tools:
 
 * **Warning:** The `include` checkbox allows you to select what to include in the final BIDS conversion, but this **is not recommended**. Use the `filter` section instead.
 * `fmap` files sometimes get missclassified as _"misc\"_ in the scanner data viewer. This label **does not carry over** to the final BIDS conversion.
-* **Sequential Conversion:** If you're scanning and editing subjects one-by-one, the default `BIDS Name` will be _"sub-001"_. Click on `Generate unique IDs` to detect repettitions and prevent overwritting subjects with the same BIDS label. When prompted to modify the `BIDS Name` row by row, you can click `No`. Optionally, use the `Filter` section -> `Edit Naming` sub-section ->  `Scan existing studies`.
 * Don't forget to `Apply Changes` when you're done.
 
 ```
-
-<!--
-```{admonition} Sequential Conversion
-:class: dropdown
-If you're scanning and editing subjects one-by-one, the default `BIDS Name` will be _"sub-001"_. Click on `Generate unique IDs` to detect repettitions and prevent overwritting subjects with the same BIDS label. When prompted to modify the `BIDS Name` row by row, you can click `No`.
-
-Optionally, use the `Filter` section -> `Edit Naming` sub-section ->  `Scan existing studies`.
-
-Don't forget to `Apply Changes` when you're done.
-```
--->
+* **Sequential Conversion:** If you're scanning and editing subjects one-by-one, the default `BIDS Name` will be _"sub-001"_. Click on `Generate unique IDs` to detect repettitions and prevent overwritting subjects with the same BIDS label. When prompted to modify the `BIDS Name` row by row, you can click `No`. Optionally, use the `Filter` section -> `Edit Naming` sub-section ->  `Scan existing studies`.
+* **Multiple sessions or participants:** If BIDS-Manager detects more than a participant or sessions in a folder, it will ask you if you want to move them in its own subfolder. If you click `Yes`, BIDS-Manager will modify your original folders and create a FamilyName, a PatientID and correctly create a a different BIDS_name.
+<img src="../static/converter/1_multiple.png" alt="scanned-metadata" width="400px" align="center">
 
 
 ### 2. Sequence dictionary
