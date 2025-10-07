@@ -7,7 +7,8 @@ The first tab you'll see in BIDS-Manager is the `converter tab`. This is where y
 
 ```{admonition} Visual settings
 :class: dropdown
-* You can change the color palette of the GUI with the icon in the lower-left corner. High-contrast themes are also available. This only affect the appearance, it will be saved for future sessions.
+* You can change the color palette of the GUI with the icon in the lower-left corner. High-contrast themes are also available. This only affect the appearance, it will be saved for future sessions. <img src="../static/converter/1_visual.png" alt="sequence-dictionary" width="350px" align="center">
+
 * The `DPI` (dots per inch) setting in the lower-left corner lets you scale the display to match your PC's resolution. Very high DPI values might give issues, not recommended to be set 50% higher than your PC's resolution. This only affect the appearance, it will be saved for future sessions.
 * Each section can be resized by dragging its edges. 
 * Each section can be undocked by clicking on the `>>` icon (top-right corner). Closing the undocked window will dock it back.
