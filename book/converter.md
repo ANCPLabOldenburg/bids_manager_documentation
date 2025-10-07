@@ -65,7 +65,7 @@ More options:
 
 ```
 * **Sequential Conversion:** If you're scanning and editing subjects one-by-one, the default `BIDS Name` will be _"sub-001"_. Click on `Generate unique IDs` to detect repettitions and prevent overwritting subjects with the same BIDS label. When prompted to modify the `BIDS Name` row by row, you can click `No`. Optionally, use the `Filter` section -> `Edit Naming` sub-section ->  `Scan existing studies`.
-* **Multiple sessions or participants:** If BIDS-Manager detects more than a participant or sessions in a folder, it will ask you if you want to move them in its own subfolder. If you click `Yes`, BIDS-Manager will modify your original folders and create a FamilyName, a PatientID and correctly create a a different BIDS_name.
+* **Multiple sessions or participants:** If BIDS-Manager detects more than one participant or sessions in a folder, it will prompt you to move them in its own subfolder. Selecting `Yes` will **re-organize your original folders** and create `FamilyName`, `PatientID` and correct `BIDS name` for each subject.
 <img src="../static/converter/1_multiple.png" alt="scanned-metadata" width="400px" align="center">
 
 
