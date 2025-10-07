@@ -61,6 +61,8 @@ This sections summarizes your uploaded raw data, including subjects, sessions, s
 
 More options:
 * `Load TSV...`: lets you reload a dataset by browsing their _"subject_summary.tsv"_. This skips the scanning process, which can take a lot of time. You still need to set the **Raw data Dir** and the **BIDS Out Dir**.
+* `Apply changes`: updates the TSV file with any edits you’ve made.
+* `Generate unique IDs`: if the experimenter forgot to change the IDs in-between recordings, BIDS-Manager will be able to identify the different subjects and assign unique identifiers.
 * `Detect repeats`: the `rep` column will show a **2**, which means that this entry is the latest version (common when a run is interrupted and restarted). Sometimes this will be done automatically when you scan the file.
 
 ### 2. Sequence dictionary
