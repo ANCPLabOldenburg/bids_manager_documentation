@@ -7,7 +7,7 @@ The first tab you'll see in BIDS-Manager is the `converter tab`. This is where y
 
 ```{admonition} Visual settings
 :class: dropdown
-* You can change the color palette of the GUI with the icon in the lower-left corner. High-contrast themes are also available. This only affect the appearance, it will be saved for future sessions. <img src="../static/converter/1_visual.png" alt="sequence-dictionary" width="350px" align="center">
+* You can change the color palette of the GUI with the icon in the lower-left corner. High-contrast themes are also available. This only affect the appearance, it will be saved for future sessions. <img src="../static/converter/1_visual.png" alt="sequence-dictionary" width="300px" align="center">
 
 * The `DPI` (dots per inch) setting in the lower-left corner lets you scale the display to match your PC's resolution. Very high DPI values might give issues, not recommended to be set 50% higher than your PC's resolution. This only affect the appearance, it will be saved for future sessions.
 * Each section can be resized by dragging its edges. 
@@ -67,8 +67,6 @@ Don't forget to `Apply Changes` when you're done.
 
 ```
 
-
-
 More options:
 * `Load TSV...`: lets you reload a dataset by browsing their _"subject_summary.tsv"_. This skips the scanning process, which can take a lot of time. You still need to set the **Raw data Dir** and the **BIDS Out Dir**.
 * `Apply changes`: updates the TSV file with any edits you’ve made.
@@ -124,8 +122,14 @@ Be aware, this might overwrite some changes done in the General view.
 ### 3. Edit naming
 <img src="../static/converter/4_filter_name.png" alt="edit-naming" width="400px" align="center">
 
-This pannels displays both the **BIDS name** and the **Given Name** (e.g. the codeword used during participant recruiting). Use this section to verify that participants are not misassigned. You can also manually modify the BIDS name or the given name if correction are needed.
-The dropdown below lets you choose between `Use BIDS name` or `Use given name`, but note that selecting the Given Name option won't be BIDS compliant.
+This pannels displays both the **BIDS name** and the **Given Name** (e.g. the codeword used during participant recruiting). Use this section to verify that participants are not misassigned. You can also manually modify the BIDS name or the given name if correction are needed. The dropdown lets you choose between `Use BIDS name` or `Use given name`.
+
+```{warning}
+
+Selecting the Given Name option won't be BIDS compliant.
+
+```
+
 
  ### 4. Always exclude
 <img src="../static/converter/4_filter_exclude.png" alt="always-exclude" width="400px" align="center">
