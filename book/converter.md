@@ -141,15 +141,15 @@ All new patterns will be stored in a tsv file within your BIDS-Manager environme
 ```bash
 path/to/BIDS_MANAGER\env\Lib\site-packages\bids_manager\user_preferences
 ```
-
+ 
  ## Preview
-<img src="../static/converter/5_preview.png" alt="preview" width="400px" align="center">
+<img src="../static/converter/5_preview.png" alt="preview" width="500px" align="center">
 
-In this section, you can click on `Preview` to see how your dataset will look like once converted into BIDS format.
-* The **Text tab** will show a list of generated file paths.
-* The **Tree tab** provides a hierarchical view, organized by subjects, modalities (dwi, anat, func...) and each file with its final BIDS compliant name.
+In this section, you can see, on the right side, a preview of the BIDS conversion. On the left side you can see the name of the original sequence. You can click on `Preview` to update the preview with the modifications done. There are 2 views:
+* **Text** view (above) will show a list of generated file paths.
+* **Tree** view (below) provides a hierarchical view, organized by subjects, modalities (dwi, anat, func...) and each file with its final BIDS compliant name.
 
-<img src="../static/converter/5_preview_treee.png" alt="preview_tree" width="400px" align="center">
+<img src="../static/converter/5_preview_treee.png" alt="preview_tree" width="500px" align="center">
 
 
 ## Run conversion
