@@ -46,17 +46,28 @@ This sections summarizes your uploaded raw data, including subjects, sessions, s
 * `BIDS Name`: Subject label in the BIDS conversion. Ensure it is consistent after any changes in `FamilyName` or `PatientID`. Also editable.
 * `session`: Shows the sessions detected in your dataset. If auto-detection fails, edit the values manually.
 
+More Tools:
+* `Load TSV...`: lets you reload a dataset by browsing their _"subject_summary.tsv"_. This skips the scanning process, which can take a lot of time. You still need to set the **Raw data Dir** and the **BIDS Out Dir**.
+* `Apply changes`: updates the TSV file with any edits you’ve made.
+* `Generate unique IDs`: BIDS-Manager will be able to identify the different subjects and assign unique identifiers.
+* `Detect repeats`: the `rep` column will show a **2**, which means that this entry is the latest version (common when a run is interrupted and restarted). Sometimes this will be done automatically when you scan the file.
+
+
 ```{admonition} Edition tips
 :class: tip
 
 * You can drag the small square in the lower-left corner of a cell to copy its value vertically to other rows. This works for all editable fields in this section.
 
-<img src="../static/converter/3_drag.png" alt="scanned-metadata" width="350px" align="center">
+<img src="../static/converter/3_drag.png" alt="scanned-metadata" width="400px" align="center">
 
 * **Warning:** The `include` checkbox allows you to select what to include in the final BIDS conversion, but this **is not recommended**. Use the `filter` section instead.
 * `fmap` files sometimes get missclassified as _"misc\"_ in the scanner data viewer. This label **does not carry over** to the final BIDS conversion.
+* **Sequential Conversion:** If you're scanning and editing subjects one-by-one, the default `BIDS Name` will be _"sub-001"_. Click on `Generate unique IDs` to detect repettitions and prevent overwritting subjects with the same BIDS label. When prompted to modify the `BIDS Name` row by row, you can click `No`. Optionally, use the `Filter` section -> `Edit Naming` sub-section ->  `Scan existing studies`.
+* Don't forget to `Apply Changes` when you're done.
 
 ```
+
+<!--
 ```{admonition} Sequential Conversion
 :class: dropdown
 If you're scanning and editing subjects one-by-one, the default `BIDS Name` will be _"sub-001"_. Click on `Generate unique IDs` to detect repettitions and prevent overwritting subjects with the same BIDS label. When prompted to modify the `BIDS Name` row by row, you can click `No`.
@@ -64,14 +75,9 @@ If you're scanning and editing subjects one-by-one, the default `BIDS Name` will
 Optionally, use the `Filter` section -> `Edit Naming` sub-section ->  `Scan existing studies`.
 
 Don't forget to `Apply Changes` when you're done.
-
 ```
+-->
 
-More options:
-* `Load TSV...`: lets you reload a dataset by browsing their _"subject_summary.tsv"_. This skips the scanning process, which can take a lot of time. You still need to set the **Raw data Dir** and the **BIDS Out Dir**.
-* `Apply changes`: updates the TSV file with any edits you’ve made.
-* `Generate unique IDs`: BIDS-Manager will be able to identify the different subjects and assign unique identifiers.
-* `Detect repeats`: the `rep` column will show a **2**, which means that this entry is the latest version (common when a run is interrupted and restarted). Sometimes this will be done automatically when you scan the file.
 
 ### 2. Sequence dictionary
 <img src="../static/converter/3_sequence_dictionary.png" alt="sequence-dictionary" width="400px" align="center">
@@ -98,7 +104,6 @@ This section is divided into 4 sub-sections:
 <img src="../static/converter/4_filter.png" alt="general-view" width="400px" align="center">
 
 It displays all of the patterns detected in all subjects, organized and classified by **BIDS sequence types** (anat, func, fmap, dwi..). Under each modality you'll see the specific types of images and runs that were detected during scanning. You can check and uncheck which ones you want to include in the final BIDS converted dataset.
-
 
 ```{admonition} Repeated sequences
 
