@@ -6,7 +6,7 @@ The first tab you'll see in BIDS-Manager is the `converter tab`. This is where y
 <img src="../static/converter/1_general.png" alt="general-gui" width="450px" align="center">
 
 ```{admonition} Visual settings
-:class: tip
+:class: dropdown
 * You can change the color palette of the GUI with the icon in the lower-left corner. High-contrast themes are also available. This only affect the appearance, it will be saved for future sessions.
 * The `DPI` (dots per inch) setting in the lower-left corner lets you scale the display to match your PC's resolution. Very high DPI values might give issues, not recommended to be set 50% higher than your PC's resolution. This only affect the appearance, it will be saved for future sessions.
 * Each section can be resized by dragging its edges. 
@@ -58,8 +58,10 @@ This sections summarizes your uploaded raw data, including subjects, sessions, s
 ```
 ```{admonition} Sequential Conversion
 :class: dropdown
-If you're scanning and editing subjects one-by-one, the default `BIDS Name` will be _"sub-001"_. Click on `Generate unique IDs` to detect repettitions and prevent overwritting subjects with the same BIDS label. When prompted to modify the `BIDS Name` row by row, you can click `No`. 
-Optionally, use the Filter -> Edit Naming section ->  `Scan existing studies`.
+If you're scanning and editing subjects one-by-one, the default `BIDS Name` will be _"sub-001"_. Click on `Generate unique IDs` to detect repettitions and prevent overwritting subjects with the same BIDS label. When prompted to modify the `BIDS Name` row by row, you can click `No`.
+
+Optionally, use the `Filter` section -> `Edit Naming` sub-section ->  `Scan existing studies`.
+
 Don't forget to `Apply Changes` when you're done.
 
 ```
