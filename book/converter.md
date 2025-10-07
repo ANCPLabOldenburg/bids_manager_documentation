@@ -30,6 +30,11 @@ Once you have defined the different configuration parameters, you can press in `
 
 <img src="../static/converter/6_log.png" alt="log-output" width="350px" align="center">
 
+```{admonition} Multiple sessions or participants
+:class: tip
+If BIDS-Manager detects more than one participant or sessions in a folder, it will prompt you to move them in its own subfolder. Selecting `Yes` will **re-organize your original folders** and create `FamilyName`, `PatientID` and correct `BIDS name` for each subject.
+<img src="../static/converter/1_multiple.png" alt="scanned-metadata" width="400px" align="center">
+```
 
 ## Scanned Data Viewer
 This section is divided in 2 sub-sections:
@@ -62,11 +67,9 @@ More options:
 * **Warning:** The `include` checkbox allows you to select what to include in the final BIDS conversion, but this **is not recommended**. Use the `filter` section instead.
 * `fmap` files sometimes get missclassified as _"misc\"_ in the scanner data viewer. This label **does not carry over** to the final BIDS conversion.
 * Don't forget to `Apply Changes` when you're done.
-
 ```
+
 * **Sequential Conversion:** If you're scanning and editing subjects one-by-one, the default `BIDS Name` will be _"sub-001"_. Click on `Generate unique IDs` to detect repettitions and prevent overwritting subjects with the same BIDS label. When prompted to modify the `BIDS Name` row by row, you can click `No`. Optionally, use the `Filter` section -> `Edit Naming` sub-section ->  `Scan existing studies`.
-* **Multiple sessions or participants:** If BIDS-Manager detects more than one participant or sessions in a folder, it will prompt you to move them in its own subfolder. Selecting `Yes` will **re-organize your original folders** and create `FamilyName`, `PatientID` and correct `BIDS name` for each subject.
-<img src="../static/converter/1_multiple.png" alt="scanned-metadata" width="400px" align="center">
 
 
 ### 2. Sequence dictionary
