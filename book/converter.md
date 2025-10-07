@@ -49,6 +49,9 @@ This sections summarizes your uploaded raw data, including subjects, sessions, s
 :class: tip
 
 * You can drag the small square in the lower-left corner of a cell to copy its value vertically to other rows. This works for all editable fields in this section.
+
+<img src="../static/converter/3_drag.png" alt="scanned-metadata" width="300px" align="center">
+
 * Click on `Apply changes` to save your edits on the _"subject_summary.tsv"_.
 * **Warning:** The `include` checkbox allows you to select what to include in the final BIDS conversion, but this **is not recommended**. Use the `filter` section instead.
 * `fmap` files sometimes get missclassified as _"misc\"_ in the scanner data viewer. This label **does not carry over** to the final BIDS conversion.
@@ -58,8 +61,6 @@ This sections summarizes your uploaded raw data, including subjects, sessions, s
 
 More options:
 * `Load TSV...`: lets you reload a dataset by browsing their _"subject_summary.tsv"_. This skips the scanning process, which can take a lot of time. You still need to set the **Raw data Dir** and the **BIDS Out Dir**.
-* `Apply changes`: updates the TSV file with any edits you've made.
-* `Generate unique IDs`: if the experimenter forgot to change the IDs in-between recordings, BIDS-Manager will be able to identify the different subjects and assign unique identifiers.
 * `Detect repeats`: the `rep` column will show a **2**, which means that this entry is the latest version (common when a run is interrupted and restarted). Sometimes this will be done automatically when you scan the file.
 
 ### 2. Sequence dictionary
