@@ -145,9 +145,9 @@ path/to/BIDS_MANAGER\env\Lib\site-packages\bids_manager\user_preferences
  ## Preview
 <img src="../static/converter/5_preview.png" alt="preview" width="500px" align="center">
 
-In this section, you can see, on the right side, a preview of the BIDS conversion. On the left side you can see the name of the original sequence. You can click on `Preview` to update the preview with the modifications done. There are 2 views:
-* **Text** view (above) will show a list of generated file paths.
-* **Tree** view (below) provides a hierarchical view, organized by subjects, modalities (dwi, anat, func...) and each file with its final BIDS compliant name.
+The right side shows the proposed BIDS conversion; the left side shows the original sequence name. You can click on `Preview` to update it with the most recent modifications done. There are 2 views:
+* **Text** (above): a list of generated file paths.
+* **Tree** (below): a hierarchical view organized by subjects, modalities (dwi, anat, func...) and each file with its final BIDS compliant name.
 
 <img src="../static/converter/5_preview_treee.png" alt="preview_tree" width="500px" align="center">
 
