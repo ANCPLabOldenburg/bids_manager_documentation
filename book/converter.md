@@ -66,10 +66,9 @@ More options:
 
 * **Warning:** The `include` checkbox allows you to select what to include in the final BIDS conversion, but this **is not recommended**. Use the `filter` section instead.
 * `fmap` files sometimes get missclassified as _"misc\"_ in the scanner data viewer. This label **does not carry over** to the final BIDS conversion.
+* **Sequential Conversion:** If you're scanning and editing subjects one-by-one, the default `BIDS Name` will be _"sub-001"_. Click on `Generate unique IDs` to detect repettitions and prevent overwritting subjects with the same BIDS label. When prompted to modify the `BIDS Name` row by row, you can click `No`. Optionally, use the `Filter` section -> `Edit Naming` sub-section ->  `Scan existing studies`.
 * Don't forget to `Apply Changes` when you're done.
 ```
-
-* **Sequential Conversion:** If you're scanning and editing subjects one-by-one, the default `BIDS Name` will be _"sub-001"_. Click on `Generate unique IDs` to detect repettitions and prevent overwritting subjects with the same BIDS label. When prompted to modify the `BIDS Name` row by row, you can click `No`. Optionally, use the `Filter` section -> `Edit Naming` sub-section ->  `Scan existing studies`.
 
 
 ### 2. Sequence dictionary
