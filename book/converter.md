@@ -7,13 +7,11 @@ The first tab you'll see in BIDS-Manager is the `converter tab`. This is where y
 
 ```{admonition} Visual settings
 :class: tip
-GUI's appearance: Visual settings will be saved for future sessions. They only affect the appearance.
-* You can change the color palette with the icon int the lower-left corner icon. High-contrast themes are also available.
-* The `DPI` (dots per inch) setting in the lower-left corner lets you scale the display to match your PC's resolution. Very high DPI values might give issues, not recommended to be set 50% higher than your PC's resolution.
-
-Sub-sections:
-* Each sub-section can be resized by dragging its edges.
-* Each sub-section can be undocked by clicking on the `>>` icon (top-right corner). Closing the undocked window will dock it back.
+* You can change the color palette of the GUI with the icon in the lower-left corner. High-contrast themes are also available. This only affect the appearance, it will be saved for future sessions.
+* The `DPI` (dots per inch) setting in the lower-left corner lets you scale the display to match your PC's resolution. Very high DPI values might give issues, not recommended to be set 50% higher than your PC's resolution. This only affect the appearance, it will be saved for future sessions.
+* Each section can be resized by dragging its edges. 
+* Each section can be undocked by clicking on the `>>` icon (top-right corner). Closing the undocked window will dock it back.
+* The whole GUI can also be resized by dragging from the edges. If you want to make it very small, you can try undocking some sections.
 
 ```
 
@@ -40,7 +38,25 @@ This section is divided in 2 sub-sections:
 ### 1. Scanned metadata
 <img src="../static/converter/3_scanned_metadata.png" alt="scanned-metadata" width="400px" align="center">
 
-Here you can see a **mapping table** of your uploaded raw data, including subjects, sessions, sequence types and their BIDS proposed conversion.
+This sections summarizes your uploaded raw data, including subjects, sessions, sequence types and their proposed BIDS conversion.
+* `source_folder`: Path to the folder that contains this file. The **root** is the raw-data directory you selected when loading the dataset.
+* `StudyDescription`: The name of the Study, there can be several in your raw data directory. This becomes the **root name** in the final BIDS conversion. There can be errors if different machines were used. You can edit it by double-clicking.
+* `FamilyName` & `PatientID`: They are often identical. If the experimenter forgot to add or change the IDs between recordings, BIDS-Manager will be able to identify the different subjects. You can edit it manually or click on `Generate unique IDs` to assign unique identifiers per `FamilyName`.
+* `BIDS Name`: Subject label in the BIDS conversion. Ensure it is consistent after any changes in `PatientID`. Also editable.
+* 
+
+```{admonition} Edition tips
+:class: tip
+
+* You can drag the small square in the lower-left corner of a cell to copy its value vertically to other rows. This works for all editable fields in this section.
+* Click on `Apply changes` to save your edits on the _"subject_summary.tsv"_.
+* **Warning:** The `include` checkbox allows you to select what to include in the final BIDS conversion, but this **is not recommended**. Use the `filter` section instead.
+* `fmap` files sometimes get missclassified as _"misc\"_ in the scanner data viewer. This label **does not carry over** to the final BIDS conversion.
+
+```
+
+
+More options:
 * `Load TSV...`: lets you reload a dataset by browsing their _"subject_summary.tsv"_. This skips the scanning process, which can take a lot of time. You still need to set the **Raw data Dir** and the **BIDS Out Dir**.
 * `Apply changes`: updates the TSV file with any edits you've made.
 * `Generate unique IDs`: if the experimenter forgot to change the IDs in-between recordings, BIDS-Manager will be able to identify the different subjects and assign unique identifiers.
