@@ -50,9 +50,8 @@ This sections summarizes your uploaded raw data, including subjects, sessions, s
 
 * You can drag the small square in the lower-left corner of a cell to copy its value vertically to other rows. This works for all editable fields in this section.
 
-<img src="../static/converter/3_drag.png" alt="scanned-metadata" width="300px" align="center">
+<img src="../static/converter/3_drag.png" alt="scanned-metadata" width="350px" align="center">
 
-* Click on `Apply changes` to save your edits on the _"subject_summary.tsv"_.
 * **Warning:** The `include` checkbox allows you to select what to include in the final BIDS conversion, but this **is not recommended**. Use the `filter` section instead.
 * `fmap` files sometimes get missclassified as _"misc\"_ in the scanner data viewer. This label **does not carry over** to the final BIDS conversion.
 
