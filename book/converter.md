@@ -47,7 +47,7 @@ This sections summarizes your uploaded raw data, including subjects, sessions, s
 * `session`: Shows the sessions detected in your dataset. If auto-detection fails, edit the values manually.
 
 ```{admonition} Edition tips
-:class: dropdown
+:class: tip
 
 * You can drag the small square in the lower-left corner of a cell to copy its value vertically to other rows. This works for all editable fields in this section.
 
