@@ -33,6 +33,8 @@ Once you have defined the different configuration parameters, you can press in `
 ```{admonition} Multiple sessions or participants
 :class: tip
 If BIDS-Manager detects more than one participant or sessions in a folder, it will prompt you to move them in its own subfolder. Selecting `Yes` will **re-organize your original folders** and create `FamilyName`, `PatientID` and correct `BIDS name` for each subject.
+
+
 <img src="../static/converter/1_multiple.png" alt="scanned-metadata" width="400px" align="center">
 ```
 
