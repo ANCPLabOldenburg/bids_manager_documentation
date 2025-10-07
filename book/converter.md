@@ -42,8 +42,8 @@ This sections summarizes your uploaded raw data, including subjects, sessions, s
 * `source_folder`: Path to the folder that contains this file. The **root** is the raw-data directory you selected when loading the dataset.
 * `StudyDescription`: The name of the Study, there can be several in your raw data directory. This becomes the **root name** in the final BIDS conversion. There can be errors if different machines were used. You can edit it by double-clicking.
 * `FamilyName` & `PatientID`: They are often identical. If the experimenter forgot to add or change the IDs between recordings, BIDS-Manager will be able to identify the different subjects. You can edit it manually or click on `Generate unique IDs` to assign unique identifiers per `FamilyName`.
-* `BIDS Name`: Subject label in the BIDS conversion. Ensure it is consistent after any changes in `PatientID`. Also editable.
-* 
+* `BIDS Name`: Subject label in the BIDS conversion. Ensure it is consistent after any changes in `FamilyName` or `PatientID`. Also editable.
+* `session`: Shows the sessions detected in your dataset. If auto-detection fails, edit the values manually.
 
 ```{admonition} Edition tips
 :class: tip
