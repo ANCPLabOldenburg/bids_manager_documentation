@@ -1,5 +1,5 @@
 # Editor Tab
-The second tab in BIDS-Manager is the `editor tab`. 
+The second tab in BIDS-Manager is the `Editor`. It lets your preview and edit metada (`.json` and `.tsv` files) and imaging data (DICOMS, NIfTI volumes with different cuts, basic 3D renders...).
 
 <img src="../static/editor/00_general.png" alt="general" width="450px" align="center">
 
@@ -30,13 +30,10 @@ Once you've loaded your dataset, you can use BIDSplorer to easily navigate throu
 
 <img src="../static/editor/02_metadata.png" alt="metadata" width="700px" align="center">
 
-
-
-
 * **Hidden folders:** BIDSplorer also let you access hidden folders such as `.bids_manager` and `.heudiconv`_
-  * `.bids_manager:` it will contain the _"subject_mapping.tsv"_ (list of all subjects) and the _"subject_summary.tsv"_ (all files per subject). 
-  * `.heudiconv`: stores heuristics. BIDS-Manager creates Python scripts here that record the specific transformation rules used to convert your raw data into BIDS format.
-
+  * `.bids_manager:` it will contain the _"subject_mapping.tsv"_ (simple list of all subjects, without age and gender) and the _"subject_summary.tsv"_ (all data scanned, metada and sequences types, and the rules to include it or not). 
+  * `.heudiconv`: stores the heudiconv files used for the conversion heuristics. 
+  
 * **Sequence type view:** `nii` and `gz` files can be opened with BIDSplorer as well. You can freely inspect voxel values with the `Volume` toggle, switch between views (Sagittal, Coronal or Axial). You may also adjust the brightness and contrast.
 
 <img src="../static/editor/02_anatomical.png" alt="anatomical" width="300px" align="center">
