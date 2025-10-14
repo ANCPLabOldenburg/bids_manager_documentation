@@ -20,10 +20,11 @@ Once you've loaded your dataset, you can use BIDSplorer to easily navigate throu
 
 <img src="../static/editor/02_bidsplorer.png" alt="bidsplorer" width="250px" align="center">
 
-* `.bids_manager:` Hidden folder, it contains:
- *  **"subject_mapping.tsv":** simple list of all subjects, without age and gender.
- *  **"subject_summary.tsv":** all data scanned, metada and sequences types, and the rules to include it or not. 
-* `.heudiconv`: stores the heudiconv files used for the conversion heuristics. 
+* **Hidden folders**: BIDSplorer also let you access hidden folders such as `.bids_manager` and `.heudiconv`.
+  * `.bids_manager`: it will contain the
+    * _“subject_mapping.tsv”_: simple list of all subjects, without age and gender.
+    * _“subject_summary.tsv”_: all data scanned, metada and sequences types, and the rules to include it or not.
+  * `.heudiconv`: stores the heudiconv files used for the conversion heuristics.
 * **Metadata:** Double-click on the `json` and `tsv` files to open them. Then, you can scroll through their contents and make edits:
   * For `json` files, you can easily `Add` and `Delete Fields`.
   * For `tsv` file, you can `Add` and `Remove` `Columns` and `Rows`.
