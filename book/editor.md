@@ -20,13 +20,6 @@ Once you've loaded your dataset, you can use BIDSplorer to easily navigate throu
 
 <img src="../static/editor/02_bidsplorer.png" alt="bidsplorer" width="250px" align="center">
 
-* **Hidden folders**: BIDSplorer also let you access hidden folders such as:
-  * `.bids_manager`: it contains the following tsv files:
-    * _“subject_mapping.tsv”_: simple list of all subjects, without age and gender.
-    * _“subject_summary.tsv”_: all data scanned, metada and sequences types, and the rules to include it or not.
-  * `.heudiconv`: stores the the conversion heuristics files.
- 
-
 * **Metadata:** Double-click on the `json` and `tsv` files to open them. Then, you can scroll through their contents and make edits:
   * For `json` files, you can easily `Add` and `Delete Fields`.
   * For `tsv` file, you can `Add` and `Remove` `Columns` and `Rows`.
@@ -34,15 +27,30 @@ Once you've loaded your dataset, you can use BIDSplorer to easily navigate throu
 
 <img src="../static/editor/02_metadata.png" alt="metadata" width="700px" align="center">
 
+ <br>
 
-  
-* **Sequence type view:** `nii` and `gz` files can be opened with BIDSplorer as well. You can freely inspect voxel values with the `Volume` toggle, switch between views (Sagittal, Coronal or Axial). You may also adjust the brightness and contrast.
+
+* **Hidden folders**: BIDSplorer also let you access hidden folders such as:
+  * `.bids_manager`: it contains the following tsv files:
+    * _subject_mapping.tsv_: simple list of all subjects, without age and gender.
+    * _subject_summary.tsv_: all data scanned, metada and sequences types, and the rules to include it or not.
+  * `.heudiconv`: stores the the conversion heuristics files.
+
+ <br>
+
+   
+* **Sequence type view:** BIDSplorer can open NIfTI images (`nii`/`.nii.gz`) across different sequence types (anat, func, fmap, dwi). You can:
+  * Navigate slices in the three orthogonal planes: `Axial`, `Coronal`, `Sagittal`.
+<img src="../static/editor_gifs/01_planes.gif" alt="planes" width="600px">
+
+
+  * NEXT
+*   files can be opened with BIDSplorer as well. You can freely inspect voxel values with the `Volume` toggle, switch between views (Sagittal, Coronal or Axial). You may also adjust the brightness and contrast.
 
 <img src="../static/editor/02_anatomical.png" alt="anatomical" width="300px" align="center">
 
-
-
-  * **Graph view:** some files include a `Graph` option (top-up), which allows you to see the signal over time. Usse the `Volume` toggle to scroll throught different time points of the signal. The graph below will help you spot "jumps" or irregularities caused by participant movement or scanner errors.
+ <br>
+*  **Graph view:** some files include a `Graph` option (top-up), which allows you to see the signal over time. Usse the `Volume` toggle to scroll throught different time points of the signal. The graph below will help you spot "jumps" or irregularities caused by participant movement or scanner errors.
 
 <img src="../static/editor/02_graph.png" alt="graph" width="500px" align="center">
 
