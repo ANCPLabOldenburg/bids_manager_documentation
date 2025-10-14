@@ -32,44 +32,49 @@ Once you've loaded your dataset, you can use BIDSplorer to easily navigate throu
 
  <br>
 
-
-* **Hidden folders**: BIDSplorer also let you access hidden folders such as:
-  * `.bids_manager`: it contains the following tsv files:
-    * _subject_mapping.tsv_: simple list of all subjects, without age and gender.
-    * _subject_summary.tsv_: all data scanned, metada and sequences types, and the rules to include it or not.
-  * `.heudiconv`: stores the the conversion heuristics files.
+```{admonition} Hidden Folders
+BIDSplorer also let you access hidden folders such as:
+ * `.bids_manager`: which contains the following tsv files:
+   * _subject_mapping.tsv_: simple list of all subjects, without age and gender.
+   * _subject_summary.tsv_: all data scanned, metada and sequences types, and the rules to include it or not.
+ * `.heudiconv`: stores the the conversion heuristics files.
+```
 
  <br>
-
    
 * **Sequence type view:** BIDSplorer can open NIfTI images (`nii`/`.nii.gz`) across different sequence types (anat, func, fmap, dwi). You can:
   * Inspect the three orthogonal planes: `Axial`, `Coronal`, `Sagittal`.
   
 <img src="../static/editor_gifs/1_planes.gif" alt="planes" width="600px">
- <br>
 
+ <br>
 
   * Navigate `Slices`
 <img src="../static/editor_gifs/2_slices.gif" alt="slices" width="600px">
 
+ <br>
+
   * Adjust `brightness` and `contrast` to improve visibility
 <img src="../static/editor_gifs/3_brightness_contrast.gif" alt="brightness_contrast" width="600px">
 
-
-  * next
-*   files can be opened with BIDSplorer as well. You can freely inspect voxel values with the `Volume` toggle, switch between views (Sagittal, Coronal or Axial). You may also adjust the brightness and contrast.
-
-<img src="../static/editor/02_anatomical.png" alt="anatomical" width="300px" align="center">
+ <br>
+ 
+  * For **functional (BOLD) images** you can scroll through time (4-D data) using the `volume` toggle.
+<img src="../static/editor_gifs/4_volumes.gif" alt="volumes" width="600px">
 
  <br>
-*  **Graph view:** some files include a `Graph` option (top-up), which allows you to see the signal over time. Usse the `Volume` toggle to scroll throught different time points of the signal. The graph below will help you spot "jumps" or irregularities caused by participant movement or scanner errors.
+ 
+    * On top of the volume function, BIDSplorer includes a `Graph` option that allows to see the how the signal changes over time. This graph will help you spot "jumps" or big irregularities that could be cause by the participant movement or scanner errors.
 
-<img src="../static/editor/02_graph.png" alt="graph" width="500px" align="center">
+<img src="../static/editor_gifs/5_graph_volumes.gif" alt="graph" width="600px">
 
-  * **Neighbors:** Increse the `scope` option (bottom-down) to inlcude neighboring voxels, making it easier to identify localized artifacts. You may additionally increase the dot size and even remove the dot from the neighboring graphs.
+ <br>
 
-<img src="../static/editor/02_nhb.png" alt="nhb" width="500px" align="center">
+    * The `Graph` option can also be expanded with the `Scope`option to inlcude neighboring voxels, making it easier to identify localized artifacts. You may additionally increase the `Dot size` and even remove the dot from the neighboring graphs.
 
+<img src="../static/editor_gifs/6_graph_neughbors.gif" alt="scope" width="600px">
+
+ <br>
 
 ```{admonition} Next section
 :class: tip
