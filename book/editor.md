@@ -58,7 +58,7 @@ BIDSplorer also let you access hidden folders such as:
 
  <br>
 
-  * For **functional (BOLD) images**, scroll through time (4D data) using the `volume` toggle. Each volume is one timepoint.
+  * For **functional (BOLD) images**, scroll through time (4D data) using the `volume` toggle.
 <img src="../static/editor_gifs/4_volumes.gif" alt="volumes" width="600px">
 
  <br>
