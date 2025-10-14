@@ -48,8 +48,8 @@ BIDSplorer also let you access hidden folders such as:
 
  <br>
 
-  * Navigate `Slices`
-<img src="../static/editor_gifs/2_slices.gif" alt="slices" width="600px">
+  * Navigate `Slices`:
+    <img src="../static/editor_gifs/2_slices.gif" alt="slices" width="600px">
 
  <br>
 
