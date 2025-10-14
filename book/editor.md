@@ -25,6 +25,8 @@ Once you've loaded your dataset, you can use BIDSplorer to easily navigate throu
     * _“subject_mapping.tsv”_: simple list of all subjects, without age and gender.
     * _“subject_summary.tsv”_: all data scanned, metada and sequences types, and the rules to include it or not.
   * `.heudiconv`: stores the heudiconv files used for the conversion heuristics.
+ 
+
 * **Metadata:** Double-click on the `json` and `tsv` files to open them. Then, you can scroll through their contents and make edits:
   * For `json` files, you can easily `Add` and `Delete Fields`.
   * For `tsv` file, you can `Add` and `Remove` `Columns` and `Rows`.
