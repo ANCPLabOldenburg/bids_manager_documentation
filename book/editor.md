@@ -10,7 +10,7 @@ Go to the top menu and click `File`, in the dropdown select `Open BIDS...`, then
 
  <br>
 
-Once you've load your dataset, **BIDStatistic** will show you a summary of your dataset, such as total amount of subject, total amount of files. And from each subject, the amout of sessions and sequence types.
+Once you've load your dataset, **BIDStatistic** will show you a summary of your dataset, such as total amount of subjects and files, as well as sessions and sequence types per subject.
 
 <img src="../static/editor/01_bidstatistic.png" alt="bidstatistic" width="250px" align="center">
 
