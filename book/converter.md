@@ -10,8 +10,8 @@ The first tab you'll see in BIDS-Manager is the `converter tab`. This is where y
 * You can change the color palette of the GUI with the icon in the lower-left corner. High-contrast themes are also available. This only affect the appearance, it will be saved for future sessions. <img src="../static/converter/1_visual.png" alt="sequence-dictionary" width="300px" align="center">
 
 * The `DPI` (dots per inch) setting in the lower-left corner lets you scale the display to match your PC's resolution. Very high DPI values might give issues, not recommended to be set 50% higher than your PC's resolution. This only affect the appearance, it will be saved for future sessions.
-* Each section can be resized by dragging its edges. 
 * Each section can be undocked by clicking on the `>>` icon (top-right corner). Closing the undocked window will dock it back.
+* Each section can be resized by dragging its edges. 
 * The whole GUI can also be resized by dragging from the edges. If you want to make it very small, you can try undocking some sections.
 
 ```
@@ -30,12 +30,12 @@ Once you have defined the different configuration parameters, you can press in `
 
 <img src="../static/converter/6_log.png" alt="log-output" width="350px" align="center">
 
-```{admonition} Multiple sessions or participants
+```{warning} Multiple sessions or participants
 :class: tip
 If BIDS-Manager detects more than one participant or sessions in a folder, it will prompt you to move them in its own subfolder. Selecting `Yes` will **re-organize your original folders** and create `FamilyName`, `PatientID` and correct `BIDS name` for each subject.
 
 
-<img src="../static/converter/1_multiple.png" alt="scanned-metadata" width="400px" align="center">
+<img src="../static/converter/1_multiple.png" alt="scanned-metadata" width="380px" align="center">
 ```
 
 ## Scanned Data Viewer
@@ -52,27 +52,30 @@ This sections summarizes your uploaded raw data, including subjects, sessions, s
 * `FamilyName` & `PatientID`: They are often identical. If the experimenter forgot to add or change the IDs between recordings, BIDS-Manager will be able to identify the different subjects. You can edit it manually or click on `Generate unique IDs` to assign unique identifiers per `FamilyName`.
 * `BIDS Name`: Subject label in the BIDS conversion. Ensure it is consistent after any changes in `FamilyName` or `PatientID`. Also editable.
 * `session`: Shows the sessions detected in your dataset. If auto-detection fails, edit the values manually.
-
-More options:
-* `Load TSV...`: lets you reload a dataset by browsing their _"subject_summary.tsv"_. This skips the scanning process, which can take a lot of time. You still need to set the **Raw data Dir** and the **BIDS Out Dir**.
-* `Apply changes`: updates the TSV file with any edits you’ve made.
-* `Generate unique IDs`: BIDS-Manager will be able to identify the different subjects and assign unique identifiers.
-* `Detect repeats`: the `rep` column will show a **2**, which means that this entry is the latest version (common when a run is interrupted and restarted). Sometimes this will be done automatically when you scan the file.
-* `Sort`: It allows you to sort the columns by the selected "category" and by ascending or descending order. This is specially useful when you have scan folders with different studies, subjects and acquisition times.
-<img src="../static/converter/3_sort.png" alt="scanned-metadata" width="500px" align="center">
-
+* `sequence` & `Proposed BIDS name`: The different sequences are classified and given a BIDS name thanks to the `Sequence dictionary`. `fmap` files sometimes get missclassified as _"misc\"_ in the `Proposed BIDS name`. This label **does not carry over** to the final BIDS conversion.
 
 ```{admonition} Conversion tips
 :class: tip
 
 * You can drag the small square in the lower-left corner of a cell to copy its value vertically to other rows. This works for all editable fields in this section.
 
-<img src="../static/converter/3_drag.png" alt="scanned-metadata" width="500px" align="center">
+<img src="../static/converter/3_drag.png" alt="scanned-metadata" width="600px" align="center">
 
 * **Warning:** The `include` checkbox allows you to select what to include in the final BIDS conversion, but this **is not recommended**. Use the `filter` section instead.
-* `fmap` files sometimes get missclassified as _"misc\"_ in the scanner data viewer. This label **does not carry over** to the final BIDS conversion.
-* **Sequential Conversion:** If you're scanning and editing subjects one-by-one, the default `BIDS Name` will be _"sub-001"_. Click on `Scan existing studies` (within the  `Filter` section -> `Edit Naming` sub-section) to detect repettitions and prevent overwritting subjects with the same BIDS label.
-* Don't forget to `Apply Changes` when you're done.
+
+```
+
+More options:
+* `Load TSV...`: lets you reload a dataset by browsing their _"subject_summary.tsv"_. This skips the scanning process, which can take a lot of time. You still need to set the **Raw data Dir** and the **BIDS Out Dir**.
+* `Apply changes`: it updates the TSV file with any edits you’ve made. Don't forget to `Apply Changes` when you're done.
+* `Generate unique IDs`: BIDS-Manager will be able to identify the different subjects and assign unique identifiers.
+* `Detect repeats`: the `rep` column will show a **2**, which means that this entry is the latest version (common when a run is interrupted and restarted). Sometimes this will be done automatically when you scan the file.
+* `Sort`: It allows you to order the metadata table by the selected columns and by ascending or descending order. This is specially useful when you have scanned folders with different studies, subjects or acquisition times.
+<img src="../static/converter/3_sort.png" alt="scanned-metadata" width="300px" align="center">
+
+
+```{warning} Sequential Conversion
+If you're scanning and editing subjects one-by-one, the default `BIDS Name` will be _"sub-001"_. Click on `Scan existing studies` (within the  `Filter` section -> `Edit Naming` sub-section) to detect repettitions and prevent overwritting subjects with the same BIDS label.
 ```
 
 
