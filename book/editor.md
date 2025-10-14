@@ -8,17 +8,20 @@ Go to the top menu and click `File`, in the dropdown select `Open BIDS...`, then
 
 <img src="../static/editor/01_open.png" alt="openbids" width="250px" align="center">
 
+ <br>
 
 Once you've load your dataset, **BIDStatistic** will show you a summary of your dataset, such as total amount of subject, total amount of files. And from each subject, the amout of sessions and sequence types.
 
 <img src="../static/editor/01_bidstatistic.png" alt="bidstatistic" width="250px" align="center">
 
-
+ <br>
 
 ## BIDSplorer
 Once you've loaded your dataset, you can use BIDSplorer to easily navigate through your dataset subfolders and view different type of files and sequence types.
 
 <img src="../static/editor/02_bidsplorer.png" alt="bidsplorer" width="250px" align="center">
+
+ <br>
 
 * **Metadata:** Double-click on the `json` and `tsv` files to open them. Then, you can scroll through their contents and make edits:
   * For `json` files, you can easily `Add` and `Delete Fields`.
@@ -40,12 +43,20 @@ Once you've loaded your dataset, you can use BIDSplorer to easily navigate throu
 
    
 * **Sequence type view:** BIDSplorer can open NIfTI images (`nii`/`.nii.gz`) across different sequence types (anat, func, fmap, dwi). You can:
-  * Navigate slices in the three orthogonal planes: `Axial`, `Coronal`, `Sagittal`.
+  * Inspect the three orthogonal planes: `Axial`, `Coronal`, `Sagittal`.
   
 <img src="../static/editor_gifs/1_planes.gif" alt="planes" width="600px">
+ <br>
 
 
-  * NEXT
+  * Navigate `Slices`
+<img src="../static/editor_gifs/2_slices.gif" alt="slices" width="600px">
+
+  * Adjust `brightness` and `contrast` to improve visibility
+<img src="../static/editor_gifs/3_brightness_contrast.gif" alt="brightness_contrast" width="600px">
+
+
+  * next
 *   files can be opened with BIDSplorer as well. You can freely inspect voxel values with the `Volume` toggle, switch between views (Sagittal, Coronal or Axial). You may also adjust the brightness and contrast.
 
 <img src="../static/editor/02_anatomical.png" alt="anatomical" width="300px" align="center">
