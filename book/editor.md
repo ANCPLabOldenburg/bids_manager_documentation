@@ -64,13 +64,11 @@ BIDSplorer also let you access hidden folders such as:
  <br>
  
   * On top of the volume function, BIDSplorer includes a `Graph` option that allows to see the how the signal changes over time. This graph will help you spot "jumps" or big irregularities that could be cause by the participant movement or scanner errors.
-
 <img src="../static/editor_gifs/5_graph_volumes.gif" alt="graph" width="600px">
 
  <br>
 
   * The `Graph` option can also be expanded with the `Scope`option to inlcude neighboring voxels, making it easier to identify localized artifacts. You may additionally increase the `Dot size` and even remove the dot from the neighboring graphs.
-
 <img src="../static/editor_gifs/6_graph_neughbors.gif" alt="scope" width="600px">
 
  <br>
