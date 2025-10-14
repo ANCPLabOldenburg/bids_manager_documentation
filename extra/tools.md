@@ -1,7 +1,7 @@
 # Tools
 The `Editor` tab also has some extra `Tools` to help you to manage your BIDS dataset.
 
-<img src="../static/editor/0_tab.png" alt="tab" width="400px" align="center">
+<img src="../static/tools/0_tab.png" alt="tab" width="400px" align="center">
 
 
 ## Batch Rename
@@ -11,7 +11,7 @@ Use batch rules to rename files in a batch.
 3. Click `Preview` to see the original name (left) and the new name (right).
 4. `Apply` once you're satisfied.
 
-<img src="../static/editor/01_batch_rename.png" alt="rename" width="500px" align="center">
+<img src="../static/tools/01_batch_rename.png" alt="rename" width="500px" align="center">
 
 ```{warning} 
 Your renamed files might not be BIDS-compliant!
@@ -24,7 +24,7 @@ Link **fieldmap (fmap)** images to the functional images they should correct by 
 3. Click `Save` so BIDS-Manager writes the chosen Function image path in the field map's `JSON`. A pop-up will confirm you that `IntendedFor` was updated.
 
 
-<img src="../static/editor/02_intended_for.png" alt="intended" width="500px" align="center">
+<img src="../static/tools/02_intended_for.png" alt="intended" width="500px" align="center">
    
 *. _To correct any error, click on the functional image in the middle and click on `Remove`._
 
@@ -34,12 +34,7 @@ Scans the BIDS dataset and updates participants' _sub-XXX_scans.tsv_ in case som
 ## Edit .bidsignore
 Add patterns for files and folders you don't want some BIDS-compliant analysis to include.
 
-<img src="../static/editor/04_ignore.png" alt="ignore" width="500px" align="center">
-
-
-
-
-
+<img src="../static/tools/04_ignore.png" alt="ignore" width="500px" align="center">
 
 ```{warning} 
 Ask Karel
