@@ -63,7 +63,7 @@ BIDSplorer also let you access hidden folders such as:
 
  <br>
  
-  * BIDSplorer includes a `Graph` option for functiona images that allows to see the how the signal changes over time. This graph will help you spot "jumps" or big irregularities that could be cause by the participant movements or scanner artifacts.
+  * BIDSplorer includes a `Graph` option for functional images that allows to see the how the signal changes over time. The graph will help you spot "jumps" or big irregularities that could be cause by the participant movements or scanner artifacts.
 <img src="../static/editor_gifs/5_graph_volumes.gif" alt="graph" width="600px">
 
  <br>
