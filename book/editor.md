@@ -41,7 +41,8 @@ Once you've loaded your dataset, you can use BIDSplorer to easily navigate throu
    
 * **Sequence type view:** BIDSplorer can open NIfTI images (`nii`/`.nii.gz`) across different sequence types (anat, func, fmap, dwi). You can:
   * Navigate slices in the three orthogonal planes: `Axial`, `Coronal`, `Sagittal`.
-<img src="../static/editor_gifs/01_planes.gif" alt="planes" width="600px">
+  
+<img src="../static/editor_gifs/1_planes.gif" alt="planes" width="600px">
 
 
   * NEXT
