@@ -21,12 +21,14 @@ Link **fieldmap (fmap)** images to the functional images they should correct by 
 *. _To correct any error, click on the middle functional image and click on `Remove`._
 
 ## Refresh Scans.tsv
-Scans the dataset again and updates the _subject_summary.tsv_ in case something got erased or added. 
-
-```{warning} 
-Ask Karel,  _subject_summary.tsv_? or something else?
-```
+Scans the BIDS dataset and updates participants' _sub-XXX_scans.tsv_ in case something got erased or added to the converted dataset.
 
 ## Edit .bidsignore
-You set some paths that will be ignore, you add things that you don’t want to include in certain analysis. Such as reference (?).
+Add patterns for files and folders you don't want some BIDS-compliant analysis to include.
+
+
+
+```{warning} 
+Ask Karel
+```
 
