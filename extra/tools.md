@@ -1,7 +1,7 @@
 # Tools
 The `Editor` tab also has some extra `Tools` to help you to manage your BIDS dataset.
 
-<img src="../static/tools/0_tab.png" alt="tab" width="400px" align="center">
+<img src="../static/tools/0_tab.png" alt="tab" width="300px" align="center">
 
 
 ## Batch Rename
