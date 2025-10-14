@@ -52,7 +52,7 @@ This sections summarizes your uploaded raw data, including subjects, sessions, s
 * `FamilyName` & `PatientID`: They are often identical. If the experimenter forgot to add or change the IDs between recordings, BIDS-Manager will be able to identify the different subjects. You can edit it manually or click on `Generate unique IDs` to assign unique identifiers per `FamilyName`.
 * `BIDS Name`: Subject label in the BIDS conversion. Ensure it is consistent after any changes in `FamilyName` or `PatientID`. Also editable.
 * `session`: Shows the sessions detected in your dataset. If auto-detection fails, edit the values manually.
-* `sequence` & `Proposed BIDS name`: The different sequences are classified and given a BIDS name thanks to the `Sequence dictionary`. `fmap` files sometimes get missclassified as _"misc\"_ in the `Proposed BIDS name`. This label **does not carry over** to the final BIDS conversion.
+* `sequence` & `Proposed BIDS name`: The different sequences are classified and given a BIDS name thanks to the `Sequence dictionary` (see next section). 
 
 ```{admonition} Conversion tips
 :class: tip
@@ -62,6 +62,7 @@ This sections summarizes your uploaded raw data, including subjects, sessions, s
 <img src="../static/converter/3_drag.png" alt="scanned-metadata" width="600px" align="center">
 
 * **Warning:** The `include` checkbox allows you to select what to include in the final BIDS conversion, but this **is not recommended**. Use the `filter` section instead.
+* `fmap` sequences sometimes get missclassified as _"misc\"_ in the `Proposed BIDS name`. This label **does not carry over** to the final BIDS conversion.
 
 ```
 
@@ -107,7 +108,7 @@ It displays all of the patterns detected in all subjects, organized and classifi
 
 ```{admonition} Repeated sequences
 
-If a sequences shows (rep2) next to its name, it means that it's a duplicated. If you include both, they will be included as run-1 and run-2.
+If a sequences shows `(rep2)` next to its name, it means that it's a duplicated. This usually represents runs that got interrupted. If you include both, they will be included as run-1 and run-2. 
 
 ``` 
 
@@ -119,7 +120,7 @@ This view is similar to the General view, but you here can select *specific file
 
 ```{admonition} Repeated sequencees
 
-The option `Only last repeats` automatically keeps the most recent version of each duplicate and deselect the older ones.
+The option `Only last repeats` automatically keeps the most recent version of each duplicate file `(rep 2)` and deselect the older ones.
 Be aware, this might overwrite some changes done in the General view.
 
 ```
