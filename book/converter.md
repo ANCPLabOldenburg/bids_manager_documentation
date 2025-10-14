@@ -75,8 +75,8 @@ More options:
 <img src="../static/converter/3_sort.png" alt="scanned-metadata" width="300px" align="center">
 
 
-```{warning} Sequential Conversion
-If you're scanning and editing subjects one-by-one, the default `BIDS Name` will be _"sub-001"_. Click on `Scan existing studies` (within the  `Filter` section -> `Edit Naming` sub-section) to detect repettitions and prevent overwritting subjects with the same BIDS label.
+```{warning} 
+**Sequential Conversion:** If you're scanning and editing subjects one-by-one, the default `BIDS Name` will be _"sub-001"_. Click on `Scan existing studies` (within the  `Filter` section -> `Edit Naming` sub-section) to detect repettitions and prevent overwritting subjects with the same BIDS label.
 ```
 
 
@@ -151,7 +151,9 @@ path/to/BIDS_MANAGER\env\Lib\site-packages\bids_manager\user_preferences
  ## Preview
 <img src="../static/converter/5_preview.png" alt="preview" width="500px" align="center">
 
-The right side shows the proposed BIDS conversion; the left side shows the original sequence name. You can click on `Preview` to update it with the most recent modifications done. There are 2 views:
+The right side shows the proposed BIDS conversion; the left side shows the original sequence name. You can click on `Preview` to update it with the most recent modifications done. Sometimes the path names are too long, double click on the top banner to adjust the windows.
+
+There are 2 views:
 * **Text** (above): a list of generated file paths.
 * **Tree** (below): a hierarchical view organized by subjects, modalities (dwi, anat, func...) and each file with its final BIDS compliant name.
 
