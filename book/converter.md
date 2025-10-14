@@ -58,17 +58,20 @@ More options:
 * `Apply changes`: updates the TSV file with any edits you’ve made.
 * `Generate unique IDs`: BIDS-Manager will be able to identify the different subjects and assign unique identifiers.
 * `Detect repeats`: the `rep` column will show a **2**, which means that this entry is the latest version (common when a run is interrupted and restarted). Sometimes this will be done automatically when you scan the file.
+* `Sort`: It allows you to sort the columns by the selected "category" and by ascending or descending order. This is specially useful when you have scan folders with different studies, subjects and acquisition times.
+<img src="../static/converter/3_sort.png" alt="scanned-metadata" width="500px" align="center">
+
 
 ```{admonition} Conversion tips
 :class: tip
 
 * You can drag the small square in the lower-left corner of a cell to copy its value vertically to other rows. This works for all editable fields in this section.
 
-<img src="../static/converter/3_drag.png" alt="scanned-metadata" width="400px" align="center">
+<img src="../static/converter/3_drag.png" alt="scanned-metadata" width="500px" align="center">
 
 * **Warning:** The `include` checkbox allows you to select what to include in the final BIDS conversion, but this **is not recommended**. Use the `filter` section instead.
 * `fmap` files sometimes get missclassified as _"misc\"_ in the scanner data viewer. This label **does not carry over** to the final BIDS conversion.
-* **Sequential Conversion:** If you're scanning and editing subjects one-by-one, the default `BIDS Name` will be _"sub-001"_. Click on `Generate unique IDs` to detect repettitions and prevent overwritting subjects with the same BIDS label. When prompted to modify the `BIDS Name` row by row, you can click `No`. Optionally, use the `Filter` section -> `Edit Naming` sub-section ->  `Scan existing studies`.
+* **Sequential Conversion:** If you're scanning and editing subjects one-by-one, the default `BIDS Name` will be _"sub-001"_. Click on `Scan existing studies` (within the  `Filter` section -> `Edit Naming` sub-section) to detect repettitions and prevent overwritting subjects with the same BIDS label.
 * Don't forget to `Apply Changes` when you're done.
 ```
 
