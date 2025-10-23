@@ -77,7 +77,7 @@ More options:
 
 ```{admonition} Sequential Conversion
 
-If you're scanning and editing subjects one-by-one, the default `BIDS Name` will be _"sub-001"_, even if they were not the first subject of the dataset. Click on `Scan existing studies` (`Filter` section -> `Edit Naming` sub-section) to scan already scanned datasets of the same study, and then the `BIDS Name` will be corrected.
+If you're scanning and editing subjects of the same Study one-by-one, the default `BIDS Name` will be _"sub-001"_, even if they were not the first subject of the dataset. Click on `Scan existing studies` (in `Filter` section -> `Edit Naming` sub-section) to scan already scanned datasets of the same study, and then the `BIDS Name` will be corrected.
 
 ```
 
