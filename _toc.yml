@@ -6,3 +6,4 @@ chapters:
 - file: book/editor
   sections:
     - file: extra/tools
+    - file: extra/3d
