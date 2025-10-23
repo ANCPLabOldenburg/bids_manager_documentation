@@ -18,10 +18,16 @@ Your renamed files might not be BIDS-compliant!
 ```
 
 ## Set Intended For
-Link **fieldmap (fmap)** images to the functional images they should correct by writting the `IntendedFor` field in the field map's `JSON`.
-1. Pick the field map's `JSON` (left window) that carries the `IntenderFor`. 
-2. Select one or more Functional images (right window) and click on `Add`. The list is created automatically.
-3. Click `Save` so BIDS-Manager writes the chosen Function image path in the field map's `JSON`. A pop-up will confirm you that `IntendedFor` was updated.
+Link the **fieldmap (fmap)** images of a subject to the functional images they should correct.
+
+<!--
+by writting the `IntendedFor` field in the field map's `JSON`.
+-->
+
+1. `Fieldmap images` (left-window): Choose the subjects that you want to correct. The _IntendedFor_ field of their _json_ files will be edited.
+2. `Functional images` (right-window): Select one or more functional images and click on `Add` to correct the fieldmap images. This is created automatically.
+
+4. Click `Save` so BIDS-Manager writes the chosen Function image path in the field map's `JSON`. A pop-up will confirm you that `IntendedFor` was updated.
 
 
 <img src="../static/tools/2_intended_for.png" alt="intended" width="700px" align="center">
