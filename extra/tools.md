@@ -26,7 +26,7 @@ Link **fieldmap (fmap)** images to the functional images they should correct by 
 
 <img src="../static/tools/2_intended_for.png" alt="intended" width="700px" align="center">
    
-*. _To correct any error, click on the functional image in the middle and click on `Remove`._
+* _To correct any error, click on the functional image in the middle and click on `Remove`._
 
 ## Refresh Scans.tsv
 Scans the BIDS dataset and updates participants' _sub-XXX_scans.tsv_ in case something got erased or added to the converted dataset.
