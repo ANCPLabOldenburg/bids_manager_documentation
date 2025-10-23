@@ -36,7 +36,4 @@ Add patterns for files and folders you don't want some BIDS-compliant analysis t
 
 <img src="../static/tools/4_ignore.png" alt="ignore" width="700px" align="center">
 
-```{warning} 
-Ask Karel
-```
 
