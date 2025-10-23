@@ -76,7 +76,7 @@ More options:
 
 
 ```{warning} 
-**Sequential Conversion:** If you're scanning and editing subjects one-by-one, the default `BIDS Name` will be _"sub-001"_. Click on `Scan existing studies` (within the  `Filter` section -> `Edit Naming` sub-section) to detect repettitions and prevent overwritting subjects with the same BIDS label.
+**Sequential Conversion:** If you're scanning and editing subjects one-by-one, the default `BIDS Name` will be _"sub-001"_. Click on `Scan existing studies` (within the  `Filter` section -> `Edit Naming` sub-section) to detect repetitions and prevent overwritting subjects with the same BIDS label.
 ```
 
 
