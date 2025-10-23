@@ -18,25 +18,22 @@ Your renamed files might not be BIDS-compliant!
 ```
 
 ## Set Intended For
-Link the **fieldmap (fmap)** images of a subject to the functional images they should correct.
+Writes the chosen _functional images_ image path in the _IntendedFor_ field of the _field map's_ _json_ files
 
-<!--
-by writting the `IntendedFor` field in the field map's `JSON`.
--->
 
 1. `Fieldmap images` _(left-window)_: Choose the subjects whose _fieldmap images_ you want to correct.
-2. `Functional images` _(right-window)_: The list of _functional images_ is created automatically. Select one or more _functional images_ and click on `Add` to select.
+2. `Functional images` _(right-window)_: The list shows all available _functional images_. Select one or more and click on `Add`.
    * If you add a _functional image_ by error, click on the _functional image_ in the `IntendedFor` window and click on `Remove`.
-3. Click `Save` so BIDS-Manager writes the chosen _functional images_ image path in the _field map's_ _json_ files _IntendedFor_ field. A pop-up will confirm you that `IntendedFor` was updated.
+3. Click `Save` to apply your selection. A pop-up will confirm you that `IntendedFor` was updated.
 
 <img src="../static/tools/2_intended_for.png" alt="intended" width="700px" align="center">
 
 
 ## Refresh Scans.tsv
-Scans the BIDS dataset and updates participants' _sub-XXX_scans.tsv_ in case something got erased or added to the converted dataset.
+Re-scans the loaded BIDS dataset and updates participants' _sub-XXX_scans.tsv_ in case something got erased or added to the converted dataset.
 
 ## Edit .bidsignore
-Add patterns for files and folders you don't want some BIDS-compliant analysis to include.
+If you don't like some files, you can add them to the .bidsignore, so some BIDS-compliant analysis won't include, such as [MEGqc](https://github.com/ANCPLabOldenburg/MEGqc) or fMRIPrep. It also has a files filter.
 
 <img src="../static/tools/4_ignore.png" alt="ignore" width="700px" align="center">
 
