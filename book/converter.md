@@ -156,7 +156,7 @@ path/to/BIDS_MANAGER\env\Lib\site-packages\bids_manager\user_preferences
  ## Preview
 <img src="../static/converter/5_preview.png" alt="preview" width="500px" align="center">
 
-The right side shows the proposed BIDS conversion; the left side shows the original sequence name. You can click on `Preview` to update it with the most recent modifications done. Sometimes the path names are too long, double click on the top banner to adjust the windows.
+The right side shows the proposed BIDS conversion; the left side shows the original sequence name. You can click on `Preview` to update it with the most recent modifications done. 
 
 There are 2 views:
 * **Text** (above): a list of generated file paths.
@@ -164,6 +164,7 @@ There are 2 views:
 
 <img src="../static/converter/5_preview_treee.png" alt="preview_tree" width="500px" align="center">
 
+* _Sometimes the path names are too long, double click on the top banner to adjust the windows._
 
 ## Run conversion
 
