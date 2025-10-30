@@ -164,7 +164,13 @@ There are 2 views:
 
 <img src="../static/converter/5_preview_treee.png" alt="preview_tree" width="500px" align="center">
 
-* _Sometimes the path names are too long, double click on the top banner to adjust the windows._
+
+```{admonition} Path names
+:class: tip
+
+Sometimes the path names are too long, double click on the top banner to adjust the windows.
+
+```
 
 ## Run conversion
 
