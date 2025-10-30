@@ -38,3 +38,7 @@ If you don't like some files, you can add them to the .bidsignore, so some BIDS-
 <img src="../static/tools/4_ignore.png" alt="ignore" width="700px" align="center">
 
 
+```{admonition} Next section! 
+In the next section we'll explore how to see your fMRI data in a 3D view.
+
+```
