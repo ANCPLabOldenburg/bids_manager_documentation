@@ -44,31 +44,37 @@ BIDSplorer also let you access hidden folders such as:
    
 * **Sequence type view:** BIDSplorer can open NIfTI images (_.nii/.nii.gz_) across different sequence types (_anat, func, fmap, dwi_). Use the different option to
   * Inspect the three orthogonal planes with the `Axial`, `Coronal` and `Sagittal` buttons.
+    
 <img src="../static/editor_gifs/1_planes.gif" alt="planes" width="600px">
 
  <br>
 
   * Scroll through the 2D cross-sections of the current plane with the `Slices` toggle.
+    
 <img src="../static/editor_gifs/2_slices.gif" alt="slices" width="600px">
 
  <br>
 
   * Adjust `brightness` and `contrast` to improve visibility.
+    
 <img src="../static/editor_gifs/3_brightness_contrast.gif" alt="brightness_contrast" width="600px">
 
  <br>
 
   * For **functional (BOLD) images**, you can scroll through time using the `volume` toggle.
+    
 <img src="../static/editor_gifs/4_volumes.gif" alt="volumes" width="600px">
 
  <br>
  
   * BIDSplorer includes a `Graph` option for functional images that allows to see the how the signal changes over time. The graph along with the `volume` toggle will help you spot "jumps" or big irregularities that could be cause by the participant movements or scanner artifacts.
+    
 <img src="../static/editor_gifs/5_graph_volumes.gif" alt="graph" width="600px">
 
  <br>
 
   * Expand the graph with the `Scope` option (at the bottom of the screen) to include neighboring voxels, which can make artifacts easier to localize. You can also adjust the `Dot size` or hide the neighboring dots.
+    
 <img src="../static/editor_gifs/6_graph_neughbors.gif" alt="scope" width="600px">
 
  <br>
