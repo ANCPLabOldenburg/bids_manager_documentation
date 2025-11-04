@@ -6,8 +6,8 @@ on:
       - main
 
 env:
-  BUILD_DIR: .            # set to "docs" if your book lives in ./docs
-  BUILD_OUTPUT: _build/html
+  BUILD_DIR: . # add on 04.11
+  BUILD_OUTPUT: _build/html # add on 04.11
   BASE_URL: /${{ github.event.repository.name }}
 
 concurrency:
@@ -23,15 +23,20 @@ jobs:
       pages: write
       id-token: write      
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4 # add on 04.11
 
       - name: Set up Python 3.11
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5 # add on 04.11
         with:
           python-version: 3.11
 
       - name: Install dependencies
         run: |
+         python -m pip install -U pip # add on 04.11
+          # Pin jb/sphinx to avoid breaking changes
+          pip install "jupyter-book==1.0.0" "sphinx==7.4.7"
+          # Your extras
+          pip install sphinx-book-theme myst-nb ghp-import jupytext
           pip install -r requirements.txt
 
       - name: Build the book
