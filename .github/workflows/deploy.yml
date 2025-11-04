@@ -6,6 +6,8 @@ on:
       - main
 
 env:
+  BUILD_DIR: .            # set to "docs" if your book lives in ./docs
+  BUILD_OUTPUT: _build/html
   BASE_URL: /${{ github.event.repository.name }}
 
 concurrency:
