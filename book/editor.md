@@ -49,7 +49,7 @@ BIDSplorer also let you access hidden folders such as:
  <br>
 
   * Scroll through the 2D cross-sections of the current plane with the `Slices` toggle.
-    <img src="../static/editor_gifs/2_slices.gif" alt="slices" width="600px">
+<img src="../static/editor_gifs/2_slices.gif" alt="slices" width="600px">
 
  <br>
 
