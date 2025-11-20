@@ -16,6 +16,14 @@ Once you've load your dataset, **BIDStatistic** will show you a summary of your 
 
  <br>
 
+```{admonition} Note for macOS users
+
+On macOS, the `File` and `Tools` menus are not inside the BIDS Manager window, instead they appear in the system menu bar at the top of the screen. 
+
+ <img src="../static/editor/01_mac.png" alt="mac" width="300px" align="center">
+
+```
+
 ## BIDSplorer
 Once you've loaded your dataset, you can use BIDSplorer to easily navigate through your dataset subfolders and view different type of files and sequence types.
 
