@@ -1,7 +1,7 @@
 # Welcome!
-BIDS Manager is a PyQt-based **GUI** that converts **DICOM** folders into **BIDS-compliant** datasets and allows easy metadata editing. It also includes several tools for editing, managing and visualizing your BIDS datasets. 
+BIDS-Manager is a free open-science tool that converts **DICOM** folders into **BIDS-compliant** datasets. It can also be used for managing your data, reader and editor of metadata and image visualizing.
 
-BIDS Manager was developed by the [Applied Neurocognitive Psychology Lab (ANCP Lab)](https://uol.de/en/applied-neurocognitive-psychology) as a free, open-science tool designed to be as **user-friendly** as possible.
+BIDS-Manager was developed by the [Applied Neurocognitive Psychology Lab (ANCP Lab)](https://uol.de/en/applied-neurocognitive-psychology) to be as **user-friendly** as possible, as a PyQt-based **GUI**. Currently, BIDS-Manager is the best converter in the market.
 
 ```{admonition} Windows update!
 :class: tip
