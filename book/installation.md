@@ -16,6 +16,8 @@ Both installation methods include all the depencies required to run the GUI and 
 
 **2. **Extract** the ZIP file and run the script:**
 After extracting the ZIP, you will see one subfolder per operating system. Each subfolder contains a specific installation script: 
+<img src="../static/install/folders.png" alt="folders" width="350px" align="center">
+
 
 
 | OS               | Script                        | How to Run                         |
@@ -24,7 +26,6 @@ After extracting the ZIP, you will see one subfolder per operating system. Each 
 | **Linux**        | `install_bids_manager.sh`      | Allow execution (see below) and run the installer |
 | **MacOS**        | `install_bids_manager.command`      | Allow execution (see below) and run the installer |
 
-<img src="../static/install/folders.png" alt="folders" width="450px" align="center">
 
 
 
@@ -80,13 +81,15 @@ Because the installer is not from the App Store, macOS will initially block it.
 
 * Double-click `install_bids_manager.command` will open a warning ⚠️ dialog. Cick `Done`.
 
-<img src="../static/install/mac_1.png" alt="mac-error" width="350px" align="center">
+<img src="../static/install/mac_1.png" alt="mac-error" width="250px" align="center">
 
+<br>
   
 * Open `System Settings` and scroll until `Privacy & Security`.
 
 <img src="../static/install/mac_2.png" alt="mac-settings" width="450px" align="center">
 
+<br>
 
 * In the `Security` section, you should now see a mesage about the blocked attempt. Click `Open Anyways` to allow it.
   
