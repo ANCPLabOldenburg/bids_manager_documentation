@@ -79,7 +79,7 @@ Because the installer is not from the App Store, macOS will initially block it.
 
 * Double-click `install_bids_manager.command` will open a warning ⚠️ dialog. Cick `Done`.
 
-<img src="../static/install/mac_1.png" alt="mac-error" width="450px" align="center">
+<img src="../static/install/mac_1.png" alt="mac-error" width="350px" align="center">
   
 * Open `System Settings` and scroll until `Privacy & Security`.
 
