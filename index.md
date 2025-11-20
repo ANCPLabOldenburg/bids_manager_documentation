@@ -6,7 +6,7 @@ BIDS Manager was developed by the [Applied Neurocognitive Psychology Lab (ANCP L
 ```{admonition} Windows update!
 :class: tip
 
-Currently, BIDS-Manager runs smoothly both on Linux and Windows! 🚀
+Currently, BIDS-Manager runs smoothly both on Windows, Linux and macOS! 🚀
 
 ```
 
