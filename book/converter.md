@@ -62,11 +62,13 @@ This sections summarizes your uploaded raw data, including subjects, sessions, s
 <img src="../static/converter/3_drag.png" alt="scanned-metadata" width="600px" align="center">
 
 * **Warning:** The `include` checkbox allows you to select what to include in the final BIDS conversion, but this **is not recommended**. Use the `filter` section instead.
-* `fmap` sequences sometimes get missclassified as _"misc\"_ in the `Proposed BIDS name`. This label **does not carry over** to the final BIDS conversion.
 
 ```
 
-More options:
+#### Actions
+
+<img src="../static/converter/3_actions.png" alt="actions" width="600px" align="center">
+
 * `Load TSV...`: lets you reload a dataset by browsing their _"subject_summary.tsv"_. This skips the scanning process, which can take a lot of time. You still need to set the **Raw data Dir** and the **BIDS Out Dir**.
 * `Apply changes`: it updates the TSV file with any edits you’ve made. Don't forget to `Apply Changes` when you're done.
 * `Generate unique IDs`: BIDS-Manager will be able to identify the different subjects and assign unique identifiers.
