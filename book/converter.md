@@ -44,7 +44,7 @@ This section is divided in 2 sub-sections:
 * Sequence dictionary
 
 ### 1. Scanned metadata
-<img src="../static/converter/3_scanned_metadata.png" alt="scanned-metadata" width="400px" align="center">
+<img src="../static/converter/3_scanned_metadata.png" alt="scanned-metadata" width="500px" align="center">
 
 This sections summarizes your uploaded raw data, including subjects, sessions, sequence types and their proposed BIDS conversion.
 * `source_folder`: Path to the folder that contains this file. The **root** is the raw-data directory you selected when loading the dataset.
@@ -64,17 +64,21 @@ This sections summarizes your uploaded raw data, including subjects, sessions, s
 * **Warning:** The `include` checkbox allows you to select what to include in the final BIDS conversion, but this **is not recommended**. Use the `filter` section instead.
 
 ```
+<br>
 
 #### Actions
 
-<img src="../static/converter/3_actions.png" alt="actions" width="600px" align="center">
+<img src="../static/converter/3_actions.png" alt="actions" width="400px" align="center">
+
+* `Sort`: It allows you to order the metadata table by the selected columns and by ascending or descending order. This is specially useful when you have scanned folders with different studies, subjects or acquisition times.
+
+<img src="../static/converter/3_sort.png" alt="scanned-metadata" width="300px" align="center">
 
 * `Load TSV...`: lets you reload a dataset by browsing their _"subject_summary.tsv"_. This skips the scanning process, which can take a lot of time. You still need to set the **Raw data Dir** and the **BIDS Out Dir**.
-* `Apply changes`: it updates the TSV file with any edits you’ve made. Don't forget to `Apply Changes` when you're done.
 * `Generate unique IDs`: BIDS-Manager will be able to identify the different subjects and assign unique identifiers.
 * `Detect repeats`: the `rep` column will show a **2**, which means that this entry is the latest version (common when a run is interrupted and restarted). Sometimes this will be done automatically when you scan the file.
-* `Sort`: It allows you to order the metadata table by the selected columns and by ascending or descending order. This is specially useful when you have scanned folders with different studies, subjects or acquisition times.
-<img src="../static/converter/3_sort.png" alt="scanned-metadata" width="300px" align="center">
+* `Save changes`: it updates the TSV file with any edits you’ve made. Don't forget to `Apply Changes` when you're done.
+
 
 
 ```{admonition} Sequential Conversion
