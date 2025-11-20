@@ -27,6 +27,7 @@ After extracting the ZIP, you will see one subfolder per operating system. Each 
 <img src="../static/install/folders.png" alt="folders" width="450px" align="center">
 
 
+
 **3. (for Linux users) Allow script execution and run the installer:**
 
 If you're working in Linux, you'll need first to allow the `.sh` script execution. This can be done in two different ways:
