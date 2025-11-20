@@ -76,6 +76,8 @@ Run the installer
 ```
 ````
 
+<br>
+
 **3. (for MacOS users) Allow script execution and run the installer:**
 Because the installer is not from the App Store, macOS will initially block it.
 
