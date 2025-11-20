@@ -46,6 +46,8 @@ This section is divided in 2 sub-sections:
 ### 1. Scanned metadata
 <img src="../static/converter/3_scanned_metadata.png" alt="scanned-metadata" width="500px" align="center">
 
+<br>
+
 This sections summarizes your uploaded raw data, including subjects, sessions, sequence types and their proposed BIDS conversion.
 * `source_folder`: Path to the folder that contains this file. The **root** is the raw-data directory you selected when loading the dataset.
 * `StudyDescription`: The name of the Study, there can be several in your raw data directory. This becomes the **root name** in the final BIDS conversion. There can be errors if different machines were used. You can edit it by double-clicking.
@@ -68,11 +70,15 @@ This sections summarizes your uploaded raw data, including subjects, sessions, s
 
 #### Actions
 
-<img src="../static/converter/3_actions.png" alt="actions" width="400px" align="center">
+<img src="../static/converter/3_actions.png" alt="actions" width="300px" align="center">
+
+<br>
 
 * `Sort`: It allows you to order the metadata table by the selected columns and by ascending or descending order. This is specially useful when you have scanned folders with different studies, subjects or acquisition times.
 
 <img src="../static/converter/3_sort.png" alt="scanned-metadata" width="300px" align="center">
+
+<br>
 
 * `Load TSV...`: lets you reload a dataset by browsing their _"subject_summary.tsv"_. This skips the scanning process, which can take a lot of time. You still need to set the **Raw data Dir** and the **BIDS Out Dir**.
 * `Generate unique IDs`: BIDS-Manager will be able to identify the different subjects and assign unique identifiers.
@@ -93,6 +99,7 @@ If you're scanning and editing subjects of the same Study one-by-one, the defaul
 
 ### 2. Sequence dictionary
 <img src="../static/converter/3_sequence_dictionary.png" alt="sequence-dictionary" width="400px" align="center">
+<br>
 
 Each tab corresponds to a **BIDS sequence type** and lists the keywords that BIDS-Manager uses to recognize it.
 * You can use the `Add` and `Remove` buttons to edit these keywords and include any specific naming patterns you use in your own datasets.
@@ -114,6 +121,7 @@ This section is divided into 4 sub-sections:
  
 ### 1. General view
 <img src="../static/converter/4_filter.png" alt="general-view" width="400px" align="center">
+<br>
 
 It displays all of the patterns detected in all subjects, organized and classified by **BIDS sequence types** (anat, func, fmap, dwi..). Under each modality you'll see the specific types of images and runs that were detected during scanning. You can check and uncheck which ones you want to include in the final BIDS converted dataset.
 
@@ -125,7 +133,8 @@ If a sequences shows `(rep2)` next to its name, it means that it's a duplicated.
 
 
 ### 2. Specific view
-<img src="../static/converter/4_filter_specific.png" alt="specific-view" width="400px" align="center">
+<img src="../static/converter/4_filter_specific.png" alt="specific-view" width="350px" align="center">
+<br>
 
 This view is similar to the General view, but you here can select *specific files per subject*.
 
