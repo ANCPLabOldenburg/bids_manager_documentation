@@ -1,12 +1,13 @@
 # Welcome!
-BIDS-Manager is a free open-science tool that converts **DICOM** folders into **BIDS-compliant** datasets. It can also be used for managing your data, reader and editor of metadata and image visualizing.
+BIDS-Manager is a free open-science tool that converts **DICOM** folders into **BIDS compliant** datasets. It was developed by the [Applied Neurocognitive Psychology Lab (ANCP Lab)](https://uol.de/en/applied-neurocognitive-psychology) as an **user-friendly**, PyQt-based **GUI**.
 
-BIDS-Manager was developed by the [Applied Neurocognitive Psychology Lab (ANCP Lab)](https://uol.de/en/applied-neurocognitive-psychology) to be as **user-friendly** as possible, as a PyQt-based **GUI**. Currently, BIDS-Manager is the best converter in the market.
+Currently, BIDS-Manager is the best converter in the market, as it was build on heudiconv for the core DICOM-to-BIDS conversion and extended its functionality with a metadata-based scanning system, an interface that improves metadata annotation (viewing and editing) and conversion settings, and advance visualization options for a wide range of BIDS compliant datasets. 
 
-```{admonition} Windows update!
+
+```{admonition} Comptability update!
 :class: tip
 
-Currently, BIDS-Manager runs smoothly both on Windows, Linux and macOS! 🚀
+Currently, BIDS-Manager runs smoothly both on Windows (x86), Linux (x86) and macOS (ARN)! 🚀
 
 ```
 
