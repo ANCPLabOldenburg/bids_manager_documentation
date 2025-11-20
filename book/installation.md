@@ -16,8 +16,8 @@ Both installation methods include all the depencies required to run the GUI and 
 
 **2. **Extract** the ZIP file and run the script:**
 After extracting the ZIP, you will see one subfolder per operating system. Each subfolder contains a specific installation script: 
-<img src="../static/install/folders.png" alt="folders" width="350px" align="center">
-
+<br>
+<img src="../static/install/folders.png" alt="folders" width="250px" align="center">
 
 
 | OS               | Script                        | How to Run                         |
@@ -27,7 +27,7 @@ After extracting the ZIP, you will see one subfolder per operating system. Each 
 | **MacOS**        | `install_bids_manager.command`      | Allow execution (see below) and run the installer |
 
 
-
+<br>
 
 **3. (for Linux users) Allow script execution and run the installer:**
 
