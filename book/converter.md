@@ -7,7 +7,7 @@ The first tab you'll see in BIDS-Manager is the `converter tab`. This is where y
 
 ```{admonition} Visual settings
 :class: dropdown
-* You can change the color palette of the GUI with the icon in the lower-left corner. High-contrast themes are also available. This only affect the appearance, it will be saved for future sessions. <img src="../static/converter/1_visual.png" alt="sequence-dictionary" width="300px" align="center">
+* You can change the color palette of the GUI with the icon in the lower-left corner. High-contrast themes are also available. This only affect the appearance, it will be saved for future sessions. <img src="../static/converter/1_visual.png" alt="palette" width="300px" align="center">
 
 * The `DPI` (dots per inch) setting in the lower-left corner lets you scale the display to match your PC's resolution. Very high DPI values might give issues, not recommended to be set 50% higher than your PC's resolution. This only affect the appearance, it will be saved for future sessions.
 * Each section can be undocked by clicking on the `>>` icon (top-right corner). Closing the undocked window will dock it back.
@@ -41,7 +41,7 @@ If BIDS-Manager detects more than one participant or sessions in a folder, it wi
 ## Scanned Data Viewer
 This section is divided in 2 sub-sections:
 * Scanned metadata
-* Sequence dictionary
+* Suffix dictionary
 
 ### 1. Scanned metadata
 <img src="../static/converter/3_scanned_metadata.png" alt="scanned-metadata" width="500px" align="center">
@@ -97,19 +97,28 @@ If you're scanning and editing subjects of the same Study one-by-one, the defaul
 ```
 
 
-### 2. Sequence dictionary
+### 2. Suffix dictionary
 <img src="../static/converter/3_sequence_dictionary.png" alt="sequence-dictionary" width="400px" align="center">
 <br>
 
-Each tab corresponds to a **BIDS sequence type** and lists the keywords that BIDS-Manager uses to recognize it.
+Each tab corresponds to a **BIDS sequence type** (f.e. dwi) and lists the keywords that BIDS-Manager uses to recognize it (f.e. dti, dwi, diff). 
+* Default patterns: commonly used keywords across laboratories.
+* Custom patterns: here you can add specific naming patterns you use in your own datasets. You just need to write your keyword in the bar below and click on `Add` (or `Remove` to erase it).
+
+You can use the Default patterns, or you can additionally use your Custom patterns by checking the box above the tabs.
+
+<!--
 * You can use the `Add` and `Remove` buttons to edit these keywords and include any specific naming patterns you use in your own datasets.
 * All changes will be saved for following sessions. The changes are stored in the _"user_preferences.tsv"_ file within the environment of your BIDS-Manager.
 
 ```bash
 path\to\BIDS_MANAGER\env\Lib\site-packages\bids_manager\user_preferences
 ```
-
 * If you want to undo modifications or fix mistakes, use the `Restore defaults` option to return to the original keyword list.
+
+-->
+
+
  
 ## Filter
 
