@@ -133,7 +133,16 @@ This section is divided into 4 sub-sections:
 * Always exclude
  
 ### 1. General view
+
 <img src="../static/converter/4_filter.png" alt="general-view" width="400px" align="center">
+
+
+```{image} ../static/converter/4_filter.png
+:alt: general-view
+:width: 400px
+:align: center
+
+
 <br>
 
 It displays all of the patterns detected in all subjects, organized and classified by **BIDS sequence types** (anat, func, fmap, dwi..). Under each modality you'll see the specific types of images and runs that were detected during scanning. You can check and uncheck which ones you want to include in the final BIDS converted dataset.
@@ -160,6 +169,7 @@ Be aware, this might overwrite some changes done in the General view.
 
 ### 3. Edit naming
 <img src="../static/converter/4_filter_name.png" alt="edit-naming" width="400px" align="center">
+
 
 This pannels displays both the **BIDS name** and the **Given Name** (e.g. the codeword used during participant recruiting). Use this section to verify that participants are not misassigned. You can also manually modify the BIDS name or the given name if correction are needed. The dropdown lets you choose between `Use BIDS name` or `Use given name`.
 
