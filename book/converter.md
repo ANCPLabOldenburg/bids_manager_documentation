@@ -107,8 +107,7 @@ If you're scanning and editing subjects of the same Study one-by-one, the defaul
 
 Each tab corresponds to a **BIDS sequence type** (f.e. dwi) and lists the keywords that BIDS-Manager uses to recognize it (f.e. dti, dwi, diff). 
 * Default patterns: commonly used keywords across laboratories.
-* Custom patterns: here you can add specific naming patterns you use in your own datasets. You just need to write your keyword in the bar below and click on `Add` (or `Remove` to erase it).
- * To activate and edit your custom patterns, you need to check the `Use custom suffix patterns`.
+* Custom patterns: to activate and edit your custom patterns, you need to check the `Use custom suffix patterns`. In this section you can add specific naming patterns you use in your own datasets. You just need to write your keyword in the bar below and click on `Add` or `Remove` to erase a keyword or `Restore defaults` to erase them all.  
    
 <!--
 * You can use the `Add` and `Remove` buttons to edit these keywords and include any specific naming patterns you use in your own datasets.
