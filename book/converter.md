@@ -44,7 +44,7 @@ This section is divided in 2 sub-sections:
 * Suffix dictionary
 
 ### 1. Scanned metadata
-<img src="../static/converter/3_scanned_metadata.png" alt="scanned-metadata" width="500px" align="center">
+<img src="../static/converter/3_scanned_metadata.png" alt="scanned-metadata" width="550px" align="center">
 
 <br>
 
@@ -61,7 +61,7 @@ This sections summarizes your uploaded raw data, including subjects, sessions, s
 
 * You can drag the small square in the lower-left corner of a cell to copy its value vertically to other rows. This works for all editable fields in this section.
 
-<img src="../static/converter/3_drag.png" alt="scanned-metadata" width="600px" align="center">
+<img src="../static/converter/3_drag.png" alt="scanned-metadata" width="650px" align="center">
 
 * **Warning:** The `include` checkbox allows you to select what to include in the final BIDS conversion, but this **is not recommended**. Use the `filter` section instead.
 
@@ -100,7 +100,7 @@ If you're scanning and editing subjects of the same Study one-by-one, the defaul
 
 ### 2. Suffix dictionary
 
-<img src="../static/converter/3_sequence_dictionary.png" alt="sequence-dictionary" width="400px" align="center">
+<img src="../static/converter/3_sequence_dictionary.png" alt="sequence-dictionary" width="450px" align="center">
 
 
 <br>
@@ -108,9 +108,8 @@ If you're scanning and editing subjects of the same Study one-by-one, the defaul
 Each tab corresponds to a **BIDS sequence type** (f.e. dwi) and lists the keywords that BIDS-Manager uses to recognize it (f.e. dti, dwi, diff). 
 * Default patterns: commonly used keywords across laboratories.
 * Custom patterns: here you can add specific naming patterns you use in your own datasets. You just need to write your keyword in the bar below and click on `Add` (or `Remove` to erase it).
-
-You can use the Default patterns, or you can additionally use your Custom patterns by checking the box above the tabs.
-
+ * To activate and edit your custom patterns, you need to check the `Use custom suffix patterns`.
+   
 <!--
 * You can use the `Add` and `Remove` buttons to edit these keywords and include any specific naming patterns you use in your own datasets.
 * All changes will be saved for following sessions. The changes are stored in the _"user_preferences.tsv"_ file within the environment of your BIDS-Manager.
