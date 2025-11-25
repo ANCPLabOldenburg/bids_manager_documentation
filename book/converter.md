@@ -137,12 +137,6 @@ This section is divided into 4 sub-sections:
 <img src="../static/converter/4_filter.png" alt="general-view" width="400px" align="center">
 
 
-```{image} ../static/converter/4_filter.png
-:alt: general-view
-:width: 400px
-:align: center
-
-
 <br>
 
 It displays all of the patterns detected in all subjects, organized and classified by **BIDS sequence types** (anat, func, fmap, dwi..). Under each modality you'll see the specific types of images and runs that were detected during scanning. You can check and uncheck which ones you want to include in the final BIDS converted dataset.
@@ -155,7 +149,9 @@ If a sequences shows `(rep2)` next to its name, it means that it's a duplicated.
 
 
 ### 2. Specific view
+
 <img src="../static/converter/4_filter_specific.png" alt="specific-view" width="350px" align="center">
+
 <br>
 
 This view is similar to the General view, but you here can select *specific files per subject*.
@@ -168,8 +164,10 @@ Be aware, this might overwrite some changes done in the General view.
 ```
 
 ### 3. Edit naming
+
 <img src="../static/converter/4_filter_name.png" alt="edit-naming" width="400px" align="center">
 
+<br>
 
 This pannels displays both the **BIDS name** and the **Given Name** (e.g. the codeword used during participant recruiting). Use this section to verify that participants are not misassigned. You can also manually modify the BIDS name or the given name if correction are needed. The dropdown lets you choose between `Use BIDS name` or `Use given name`.
 
@@ -181,7 +179,10 @@ Selecting the Given Name option won't be BIDS compliant.
 
 
  ### 4. Always exclude
+ 
 <img src="../static/converter/4_filter_exclude.png" alt="always-exclude" width="400px" align="center">
+
+<br>
 
 BIDS-Manager has a list of common scan patterns that are usually not necesary and exclude them automatically during scanning. You can add new **patterns manually** so they won't be scan in your next session.
 
@@ -192,7 +193,10 @@ path/to/BIDS_MANAGER\env\Lib\site-packages\bids_manager\user_preferences
 ```
  
  ## Preview
+ 
 <img src="../static/converter/5_preview.png" alt="preview" width="500px" align="center">
+
+<br>
 
 The right side shows the proposed BIDS conversion; the left side shows the original sequence name. You can click on `Preview` to update it with the most recent modifications done. 
 
