@@ -54,7 +54,7 @@ This sections summarizes your uploaded raw data, including subjects, sessions, s
 * `FamilyName` & `PatientID`: They are often identical. If the experimenter forgot to add or change the IDs between recordings, BIDS-Manager will be able to identify the different subjects. You can edit it manually or click on `Generate unique IDs` to assign unique identifiers per `FamilyName`.
 * `BIDS Name`: Subject label in the BIDS conversion. Ensure it is consistent after any changes in `FamilyName` or `PatientID`. Also editable.
 * `session`: Shows the sessions detected in your dataset. If auto-detection fails, edit the values manually.
-* `sequence` & `Proposed BIDS name`: The different sequences are classified and given a BIDS name thanks to the `Sequence dictionary` (see next section). 
+* `sequence` & `Proposed BIDS name`: The different sequences are classified and given a BIDS name thanks to the `Suffix dictionary` (see next section). 
 
 ```{admonition} Conversion tips
 :class: tip
@@ -83,10 +83,10 @@ This sections summarizes your uploaded raw data, including subjects, sessions, s
 * `Load TSV...`: lets you reload a dataset by browsing their _"subject_summary.tsv"_. This skips the scanning process, which can take a lot of time. You still need to set the **Raw data Dir** and the **BIDS Out Dir**.
 * `Generate unique IDs`: BIDS-Manager will be able to identify the different subjects and assign unique identifiers.
 * `Detect repeats`: the `rep` column will show a **2**, which means that this entry is the latest version (common when a run is interrupted and restarted). Sometimes this will be done automatically when you scan the file.
-* `Save changes`: it updates the TSV file with any edits you’ve made. Don't forget to `Apply Changes` when you're done.
+* `Save changes`: it updates the TSV file _“subject_summary.tsv”_ with any edits you’ve made. 
 
 
-
+<!--
 ```{admonition} Sequential Conversion
 :class: tip
 
@@ -95,10 +95,14 @@ If you're scanning and editing subjects of the same Study one-by-one, the defaul
 <img src="../static/converter/3_sequential_conversion.png" alt="sequential_conversion" width="600px" align="center">
 
 ```
+-->
 
 
 ### 2. Suffix dictionary
+
 <img src="../static/converter/3_sequence_dictionary.png" alt="sequence-dictionary" width="400px" align="center">
+
+
 <br>
 
 Each tab corresponds to a **BIDS sequence type** (f.e. dwi) and lists the keywords that BIDS-Manager uses to recognize it (f.e. dti, dwi, diff). 
