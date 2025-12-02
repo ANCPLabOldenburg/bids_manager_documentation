@@ -139,7 +139,10 @@ After the installation finishes, you will find two **shortcuts** on your desktop
 
 * _First time to launch will take a minute._
 
-### Instalation paths
+
+```{admonition} Installation paths
+You can find your BIDS_MANGER installed in the following full paths:
+
 * **Windows:**
 ```bash
 C:\Users\<your_user>\BIDS_MANAGER
@@ -154,9 +157,10 @@ C:\Users\<your_user>\BIDS_MANAGER
 ```bash
 /Users/<your_user>/BIDS_MANAGER
 ```
+```
 
 ### Activate the environment
-The installer automatically creates and manages a virtual environment. If you want to learn more about virtual environments, [click here](../extra/environment.md). If you want to manually activate the environment from a terminal or command prompt you can use the following full paths:
+The installer automatically creates and manages a virtual environment. If you want to manually activate the environment from a terminal or command prompt you can use the following full paths. If you want to learn more about virtual environments, [click here](../extra/environment.md):
 
 * **Windows:**
 ```bash
