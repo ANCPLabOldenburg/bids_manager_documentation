@@ -31,14 +31,13 @@ Once you've loaded your dataset, you can use BIDSplorer to easily navigate throu
 
  <br>
 
-* **Metadata:** Double-click on the _json_ and _tsv_ files to open them. Then, you can scroll through their contents and make edits:
-  * For _json_ files, you can easily `Add` and `Delete Fields`.
+* **Metadata and Sidecars:** Double-click on the _json_ and _tsv_ files to open them, review them and modify entries.
   * For _tsv_ files, you can `Add` and `Remove` `Columns` and `Rows`.
+  * For _json_ files, you can easily `Add` and `Delete Fields`, without opening a text editor and manually editing.
+
+<img src="../static/editor/02_json.png" alt="json" width="650px" align="center">
+
   * Changes can be saved with the `Save` button (it overwrites the original file).
-
-<img src="../static/editor/02_json.png" alt="json" width="750px" align="center">
-
-<img src="../static/editor/02_tsv.png" alt="tsv" width="750px" align="center">
 
  <br>
 
