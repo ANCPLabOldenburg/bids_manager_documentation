@@ -10,12 +10,10 @@ Both installation methods include all the depencies required to run the GUI and 
 
 ## Installers
 
-**Download the ZIP package:**  
-* **[📦 Installers](https://github.com/ANCPLabOldenburg/BIDS-Manager/raw/main/Installers/Installers.zip
+* **Download the ZIP package:** **[📦 Installers](https://github.com/ANCPLabOldenburg/BIDS-Manager/raw/main/Installers/Installers.zip
 )**
 
-** **Extract** the ZIP file and run the script:**
-After extracting the ZIP, you will see one subfolder per operating system. Each subfolder contains a specific installation script: 
+* **Extract the ZIP file and run the script:** After extracting the ZIP, you will see one subfolder per operating system. Each subfolder contains a specific installation script: 
 <br>
 
 
@@ -29,9 +27,9 @@ After extracting the ZIP, you will see one subfolder per operating system. Each 
 
 <br>
 
-### Important steps for Linux and MacOS users
+## Important steps for Linux and MacOS users
 
-#### **(for Linux users) Allow script execution and run the installer:**
+* **Allow script execution and run the installer for Linux users:**
 
 If you're working in Linux, you'll need first to allow the `.sh` script execution. This can be done in two different ways:
 
@@ -80,7 +78,7 @@ Run the installer
 
 <br>
 
-### **(for MacOS users) Allow script execution and run the installer:**
+* **Allow script execution and run the installer for MacOS users:**
 Because the installer is not from the App Store, macOS will initially block it.
 
 * Double-click `install_bids_manager.command` will open a warning ⚠️ dialog. Cick `Done`.
@@ -99,10 +97,10 @@ Because the installer is not from the App Store, macOS will initially block it.
   
 <img src="../static/install/mac_3.png" alt="mac-security" width="450px" align="center">
 
-
+<br>
 
 <!--
-
+commented out because it doesn't work
 ## Manual Installation (advanced)
 
 **1. Create a virtual environment**
@@ -127,6 +125,7 @@ pip install bids-manager
 ```
 -->
 
+## Installation completed! 🎉
 
 
 After the installation finishes, you will find two **shortcuts** on your desktop:
@@ -139,18 +138,23 @@ After the installation finishes, you will find two **shortcuts** on your desktop
 
 * _First time to launch will take a minute._
 
-* Observation:
-
-  Installation paths Windows:
+### Instalation paths
+* **Windows:**
+```bash
 C:\Users\<your_user>\BIDS_MANAGER
+```
 
-  Linux & :
-  /home/<your_user>/BIDS_MANAGER
+* **Linux:**
+```bash
+/home/<your_user>/BIDS_MANAGER
+```
+* **MacOS:**
 
-MacOS
+```bash
 /Users/<your_user>/BIDS_MANAGER
+```
 
-  
+
 para activar el environment:
 menciona que bids manager crea el enviornment. Enlace a environment page.
 \Users\Student\BIDS_MANAGER\env\Scripts\activate (sin el punto, full path)
@@ -164,5 +168,4 @@ source Users/<your_user>/BIDS_MANAGER/env/bin/activate
 
 
 
-## Installation completed! 🎉
 
