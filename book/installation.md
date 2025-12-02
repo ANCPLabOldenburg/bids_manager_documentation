@@ -144,9 +144,11 @@ After the installation finishes, you will find two **shortcuts** on your desktop
   Installation paths Windows:
 C:\Users\<your_user>\BIDS_MANAGER
 
-  Linux & MacOS:
+  Linux & :
   /home/<your_user>/BIDS_MANAGER
 
+MacOS
+/Users/<your_user>/BIDS_MANAGER
 
   
 para activar el environment:
