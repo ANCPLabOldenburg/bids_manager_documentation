@@ -36,7 +36,7 @@ Once you've loaded your dataset, you can use BIDSplorer to easily navigate throu
   * For _tsv_ files, you can `Add` and `Remove` `Columns` and `Rows`.
   * Changes can be saved with the `Save` button (it overwrites the original file).
 
-<img src="../static/editor/02_metadata.png" alt="metadata" width="700px" align="center">
+<img src="../static/editor/02_metadata.png" alt="metadata" width="750px" align="center">
 
  <br>
 
