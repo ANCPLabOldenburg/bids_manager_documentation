@@ -87,10 +87,8 @@ BIDSplorer also let you access hidden folders such as:
 
  <br>
 
-```{admonition} Next section
-:class: tip
+## Next section
 
 In the next section we will get see how to use the different tools of the Editor tab to rename batches of files, add fieldmap images to function images, and more.
 
-``` 
 
