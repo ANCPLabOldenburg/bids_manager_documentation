@@ -143,16 +143,16 @@ After the installation finishes, you will find two **shortcuts** on your desktop
 ```{admonition} Installation paths
 You can find your BIDS_MANGER installed in the following full paths:
 
-* **Windows:**
+**Windows:**
 
     C:\Users\<your_user>\BIDS_MANAGER
 
-* **Linux:**
+**Linux:**
 
     /home/<your_user>/BIDS_MANAGER
 
 
-* **MacOS:**
+**MacOS:**
 
     /Users/<your_user>/BIDS_MANAGER
 
