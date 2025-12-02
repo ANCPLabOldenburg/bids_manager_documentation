@@ -3,7 +3,7 @@
 The first tab you'll see in BIDS-Manager is the `converter tab`. This is where you can `scan` your raw data, identify different patterns and run the `conversion` into a BIDS compliant dataset.
 
 
-<img src="../static/converter/1_general.png" alt="general-gui" width="450px" align="center">
+<img src="../static/converter/1_general.png" alt="general-gui" width="500px" align="center">
 
 ```{admonition} Visual settings
 :class: dropdown
@@ -18,7 +18,7 @@ The first tab you'll see in BIDS-Manager is the `converter tab`. This is where y
 
 ## Configuration
 
-<img src="../static/converter/2_configuration.png" alt="configuration" width="350px" align="center">
+<img src="../static/converter/2_configuration.png" alt="configuration" width="400px" align="center">
 
 
 To scan your dataset, first you need to fullfill the `Configuration` section:
@@ -30,8 +30,8 @@ Once you have defined the different configuration parameters, you can press in `
 
 <img src="../static/converter/6_log.png" alt="log-output" width="350px" align="center">
 
-```{warning} Multiple sessions or participants
-:class: tip
+```{warning} 
+
 If BIDS-Manager detects more than one participant or sessions in a folder, it will prompt you to move them in its own subfolder. Selecting `Yes` will **re-organize your original folders** and create `FamilyName`, `PatientID` and correct `BIDS name` for each subject.
 
 
