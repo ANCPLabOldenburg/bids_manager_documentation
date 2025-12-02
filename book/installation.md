@@ -29,7 +29,9 @@ After extracting the ZIP, you will see one subfolder per operating system. Each 
 
 <br>
 
-### **(for Linux users) Allow script execution and run the installer:**
+### Important steps for Linux and MacOS users
+
+#### **(for Linux users) Allow script execution and run the installer:**
 
 If you're working in Linux, you'll need first to allow the `.sh` script execution. This can be done in two different ways:
 
@@ -114,7 +116,7 @@ python3 -m venv <env_name>
 
 # Activate the virtual environment
 source <env_name>/bin/activate
-# On Windows: <env_name>\Scripts\activate
+# On Windows: .\<env_name>\Scripts\activate
 
 ```
 
@@ -125,12 +127,40 @@ pip install bids-manager
 ```
 -->
 
+
+
 After the installation finishes, you will find two **shortcuts** on your desktop:
 
 | OS          | Launch                    | Uninstall                      |
 |-------------|---------------------------|--------------------------------|
 | **Windows** | `run_bidsmanager.bat`      | `uninstall_bidsmanager.bat`    |
-| **Linux**   | _BIDS Manager_ (launcher)| _Uninstall BIDS Manager_ (configuration file)     |
+| **Linux**   | _BIDS Manager_ | _Uninstall BIDS Manager_    |
+| **MacOS**   | _BIDSManager.command_ | _Uninstall BIDSManager.command_     |
+
+* _First time to launch will take a minute._
+
+* Observation:
+
+  Installation paths Windows:
+C:\Users\<your_user>\BIDS_MANAGER
+
+  Linux & MacOS:
+  /home/<your_user>/BIDS_MANAGER
+
+
+  
+para activar el environment:
+menciona que bids manager crea el enviornment. Enlace a environment page.
+\Users\Student\BIDS_MANAGER\env\Scripts\activate (sin el punto, full path)
+
+linux
+source home/<your_user>/BIDS_MANAGER/env/bin/activate
+
+
+mac
+source Users/<your_user>/BIDS_MANAGER/env/bin/activate
+
+
 
 ## Installation completed! 🎉
 
