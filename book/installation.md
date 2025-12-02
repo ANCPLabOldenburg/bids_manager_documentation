@@ -134,8 +134,8 @@ After the installation finishes, you will find two **shortcuts** on your desktop
 | OS          | Launch                    | Uninstall                      |
 |-------------|---------------------------|--------------------------------|
 | **Windows** | `run_bidsmanager.bat`      | `uninstall_bidsmanager.bat`    |
-| **Linux**   | _BIDS Manager_ | _Uninstall BIDS Manager_    |
-| **MacOS**   | _BIDSManager.command_ | _Uninstall BIDSManager.command_     |
+| **Linux**   | `BIDS Manager` | `Uninstall BIDS Manager`    |
+| **MacOS**   | `BIDSManager.command` | `Uninstall BIDSManager.command`  |
 
 * _First time to launch will take a minute._
 
@@ -159,22 +159,25 @@ You can find your BIDS_MANGER installed in the following full paths:
 ```
 
 ### Activate the environment
-The installer automatically creates and manages a virtual environment. If you want to manually activate the environment from a terminal or command prompt you can use the following full paths. If you want to learn more about virtual environments, [click here](../extra/environment.md):
+The installer automatically creates and manages a virtual environment ([learn more about virtual environments](../extra/environment.md)). If you want to manually activate the environment from a terminal or command prompt you can use the following full paths:
 
-* **Windows:**
-```bash
-\Users\<your user>\BIDS_MANAGER\env\Scripts\activate
+
+```{admonition} Environment activation full path
+
+**Windows:**
+
+    \Users\<your user>\BIDS_MANAGER\env\Scripts\activate
+
+
+**Linux:**
+
+    source home/<your user>/BIDS_MANAGER/env/bin/activate
+
+
+**MacOS:**
+
+    source Users/<your user>/BIDS_MANAGER/env/bin/activate
+
+
 ```
-
-* **Linux:**
-```bash
-source home/<your user>/BIDS_MANAGER/env/bin/activate
-```
-
-* **MacOS:**
-```bash
-source Users/<your user>/BIDS_MANAGER/env/bin/activate
-```
-
-
 
