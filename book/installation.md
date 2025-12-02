@@ -27,9 +27,9 @@ Both installation methods include all the depencies required to run the GUI and 
 
 <br>
 
-## Important steps for Linux and MacOS users
+## Allow script execution and run the installer for Linux and MacOS users
 
-* **Allow script execution and run the installer for Linux users:**
+### **Linux systems:**
 
 If you're working in Linux, you'll need first to allow the `.sh` script execution. This can be done in two different ways:
 
@@ -78,7 +78,8 @@ Run the installer
 
 <br>
 
-* **Allow script execution and run the installer for MacOS users:**
+### **MacOS systems:**
+  
 Because the installer is not from the App Store, macOS will initially block it.
 
 * Double-click `install_bids_manager.command` will open a warning ⚠️ dialog. Cick `Done`.
