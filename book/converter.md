@@ -3,7 +3,7 @@
 The first tab you'll see in BIDS-Manager is the `converter tab`. This is where you can `scan` your raw data, identify different patterns and run the `conversion` into a BIDS compliant dataset.
 
 
-<img src="../static/converter/1_general.png" alt="general-gui" width="500px" align="center">
+<img src="../static/converter/1_general.png" alt="general-gui" width="550px" align="center">
 
 ```{admonition} Visual settings
 :class: dropdown
@@ -70,13 +70,13 @@ This sections summarizes your uploaded raw data, including subjects, sessions, s
 
 #### Actions
 
-<img src="../static/converter/3_actions.png" alt="actions" width="300px" align="center">
+<img src="../static/converter/3_actions.png" alt="actions" width="400px" align="center">
 
 <br>
 
 * `Sort`: It allows you to order the metadata table by the selected columns and by ascending or descending order. This is specially useful when you have scanned folders with different studies, subjects or acquisition times.
 
-<img src="../static/converter/3_sort.png" alt="scanned-metadata" width="300px" align="center">
+<img src="../static/converter/3_sort.png" alt="scanned-metadata" width="400px" align="center">
 
 <br>
 
