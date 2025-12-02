@@ -154,18 +154,23 @@ C:\Users\<your_user>\BIDS_MANAGER
 /Users/<your_user>/BIDS_MANAGER
 ```
 
+### Activate the environment
+The installer automatically creates and manages a virtual environment. If you want to learn more about virtual environments, [click here](../extra/environment.md). If you want to manually activate the environment from a terminal or command prompt you can use the following full paths:
 
-para activar el environment:
-menciona que bids manager crea el enviornment. Enlace a environment page.
-\Users\Student\BIDS_MANAGER\env\Scripts\activate (sin el punto, full path)
+* **Windows:**
+```bash
+\Users\<your user>\BIDS_MANAGER\env\Scripts\activate
+```
 
-linux
-source home/<your_user>/BIDS_MANAGER/env/bin/activate
+* **Linux:**
+```bash
+source home/<your user>/BIDS_MANAGER/env/bin/activate
+```
 
-
-mac
-source Users/<your_user>/BIDS_MANAGER/env/bin/activate
-
+* **MacOS:**
+```bash
+source Users/<your user>/BIDS_MANAGER/env/bin/activate
+```
 
 
 
