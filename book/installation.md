@@ -144,19 +144,18 @@ After the installation finishes, you will find two **shortcuts** on your desktop
 You can find your BIDS_MANGER installed in the following full paths:
 
 * **Windows:**
-```bash
-C:\Users\<your_user>\BIDS_MANAGER
-```
+
+    C:\Users\<your_user>\BIDS_MANAGER
 
 * **Linux:**
-```bash
-/home/<your_user>/BIDS_MANAGER
-```
+
+    /home/<your_user>/BIDS_MANAGER
+
+
 * **MacOS:**
 
-```bash
-/Users/<your_user>/BIDS_MANAGER
-```
+    /Users/<your_user>/BIDS_MANAGER
+
 ```
 
 ### Activate the environment
