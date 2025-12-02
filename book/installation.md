@@ -8,20 +8,20 @@ Both installation methods include all the depencies required to run the GUI and 
 ``` 
 
 
-## One-click installers (recommended)
+## Installers
 
-**1. Download the ZIP package:**  
-* **[📦 One-click Installers](https://github.com/ANCPLabOldenburg/BIDS-Manager/raw/main/Installers/Installers.zip
+**Download the ZIP package:**  
+* **[📦 Installers](https://github.com/ANCPLabOldenburg/BIDS-Manager/raw/main/Installers/Installers.zip
 )**
 
-**2. **Extract** the ZIP file and run the script:**
+** **Extract** the ZIP file and run the script:**
 After extracting the ZIP, you will see one subfolder per operating system. Each subfolder contains a specific installation script: 
 <br>
 
 
 | OS               | Script                        | How to Run                         |
 |------------------|-------------------------------|------------------------------------|
-| **Windows 10/11**| `install_bids_manager.bat`     | Double-click                        |
+| **Windows 10/11**| `install_bids_manager.bat`     | Double-click and `Run` in the Security Warning         |
 | **Linux**        | `install_bids_manager.sh`      | Allow execution (see below) and run the installer |
 | **MacOS**        | `install_bids_manager.command`      | Allow execution (see below) and run the installer |
 
@@ -29,7 +29,7 @@ After extracting the ZIP, you will see one subfolder per operating system. Each 
 
 <br>
 
-**3. (for Linux users) Allow script execution and run the installer:**
+### **(for Linux users) Allow script execution and run the installer:**
 
 If you're working in Linux, you'll need first to allow the `.sh` script execution. This can be done in two different ways:
 
@@ -78,7 +78,7 @@ Run the installer
 
 <br>
 
-**3. (for MacOS users) Allow script execution and run the installer:**
+### **(for MacOS users) Allow script execution and run the installer:**
 Because the installer is not from the App Store, macOS will initially block it.
 
 * Double-click `install_bids_manager.command` will open a warning ⚠️ dialog. Cick `Done`.
@@ -99,6 +99,7 @@ Because the installer is not from the App Store, macOS will initially block it.
 
 
 
+<!--
 
 ## Manual Installation (advanced)
 
@@ -122,6 +123,7 @@ source <env_name>/bin/activate
 ```bash
 pip install bids-manager
 ```
+-->
 
 After the installation finishes, you will find two **shortcuts** on your desktop:
 
