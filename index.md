@@ -7,7 +7,7 @@ Currently, BIDS-Manager is the best converter in the market, as it was build on 
 ```{admonition} Comptability update!
 :class: tip
 
-Currently, BIDS-Manager runs smoothly both on Windows (x86), Linux (x86) and macOS (ARN)! 🚀
+Currently, BIDS-Manager runs smoothly both on Windows (x86), Linux (x86) and macOS (ARM)! 🚀
 
 ```
 
