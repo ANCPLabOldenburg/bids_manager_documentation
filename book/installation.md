@@ -109,7 +109,7 @@ Because the installer is not from the App Store, macOS will initially block it.
 <br>
 
 <!--
-commented out because it doesn't work
+commented out!
 ## Manual Installation (advanced)
 
 **1. Create a virtual environment**
@@ -135,7 +135,6 @@ pip install bids-manager
 -->
 
 ## Installation completed! 🎉
-
 
 After the installation finishes, you will find two **shortcuts** on your desktop:
 
