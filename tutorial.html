@@ -30,9 +30,13 @@
         <span class="page-toc-dot" aria-hidden="true"></span>
         Dataset overview
       </a>
+      <a class="page-toc-link" href="#gui-tour">
+        <span class="page-toc-dot" aria-hidden="true"></span>
+        Meet the GUI
+      </a>
       <a class="page-toc-link" href="#scenes">
         <span class="page-toc-dot" aria-hidden="true"></span>
-        Tutorial scenes
+        Workflow
       </a>
       <a class="page-toc-link" href="#cli">
         <span class="page-toc-dot" aria-hidden="true"></span>
@@ -196,18 +200,219 @@
     </section>
 
     <!-- ============================================================
+         Meet the GUI (annotated screenshots of the real app)
+         ============================================================ -->
+    <section class="section" id="gui-tour">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Meet the GUI</span>
+          <h2 class="section-title">The window you'll be working in.</h2>
+          <p class="section-lead">
+            BIDS Manager has two views: the <strong>Converter</strong>
+            (raw &rarr; BIDS) and the <strong>Editor</strong> (read,
+            fix, validate). Hover or click a numbered marker on the
+            screenshot to learn what each section of the window does.
+          </p>
+        </div>
+
+        <div class="tabs" data-tabs>
+          <div class="tab-buttons" role="tablist" aria-label="GUI view">
+            <button class="tab-btn is-active" data-tab="converter"
+                    role="tab" aria-selected="true">Converter view</button>
+            <button class="tab-btn" data-tab="editor"
+                    role="tab" aria-selected="false">Editor view</button>
+          </div>
+
+          <!-- ============== Converter tour ============== -->
+          <div class="tab-panel is-active" data-panel="converter"
+               role="tabpanel">
+            <div class="gui-tour" data-tour="converter">
+              <div class="gui-tour-image">
+                <img src="assets/screenshots/full_converter_window_dark.png"
+                     data-light="assets/screenshots/full_converter_window_light.png"
+                     alt="Full BIDS Manager Converter window with numbered markers"
+                     loading="lazy">
+                <!-- Markers positioned in % so they scale with the image. -->
+                <button class="gui-tour-marker" data-marker="1" type="button"
+                        style="left: 13%; top: 5%;"
+                        aria-label="Marker 1: View switcher">1</button>
+                <button class="gui-tour-marker" data-marker="2" type="button"
+                        style="left: 28%; top: 14%;"
+                        aria-label="Marker 2: PathBars">2</button>
+                <button class="gui-tour-marker" data-marker="3" type="button"
+                        style="left: 50%; top: 25%;"
+                        aria-label="Marker 3: Scan toolbar">3</button>
+                <button class="gui-tour-marker" data-marker="4" type="button"
+                        style="left: 6%; top: 50%;"
+                        aria-label="Marker 4: Raw data tree">4</button>
+                <button class="gui-tour-marker" data-marker="5" type="button"
+                        style="left: 24%; top: 56%;"
+                        aria-label="Marker 5: Output data tree + Filter">5</button>
+                <button class="gui-tour-marker" data-marker="6" type="button"
+                        style="left: 56%; top: 56%;"
+                        aria-label="Marker 6: Inspection table">6</button>
+                <button class="gui-tour-marker" data-marker="7" type="button"
+                        style="left: 92%; top: 50%;"
+                        aria-label="Marker 7: Properties panel">7</button>
+                <button class="gui-tour-marker" data-marker="8" type="button"
+                        style="left: 70%; top: 92%;"
+                        aria-label="Marker 8: BIDS preview &amp; log dock">8</button>
+              </div>
+
+              <ol class="gui-tour-legend" data-tour-legend>
+                <li data-marker="1">
+                  <strong>View switcher</strong>
+                  <p>Toggles between the <em>Converter</em> (raw
+                    &rarr; BIDS) and the <em>Editor</em> (read, fix,
+                    validate). Settings and the theme toggle live on
+                    the same top bar.</p>
+                </li>
+                <li data-marker="2">
+                  <strong>PathBars</strong>
+                  <p>Tell BIDS Manager where your raw DICOM data
+                    lives, and where the BIDS dataset should land. The
+                    glyph on the left flips from circle to check when
+                    the path is valid.</p>
+                </li>
+                <li data-marker="3">
+                  <strong>Scan toolbar</strong>
+                  <p>The <em>Scan&hellip;</em> button kicks off the
+                    inventory walker. <em>TSV:</em> names the inventory
+                    file. Four status chips
+                    (<em>valid / warnings / error / skipped</em>) tick
+                    up live as the walker enumerates each series.
+                    <em>Run conversion</em> stays disabled until the
+                    scan finishes.</p>
+                </li>
+                <li data-marker="4">
+                  <strong>Raw data tree</strong>
+                  <p>Browse the raw DICOM input folder, subject by
+                    subject. Read-only here; it's a navigator, not an
+                    editor.</p>
+                </li>
+                <li data-marker="5">
+                  <strong>Output tree &amp; structure filter</strong>
+                  <p>Below the raw tree, the future BIDS layout
+                    (<em>OUTPUT DATA TREE</em>). The middle pane
+                    (<em>FILTER / STRUCTURE</em>) shows the schema-grouped
+                    view of every series, with quick filtering by
+                    entity.</p>
+                </li>
+                <li data-marker="6">
+                  <strong>Inspection table</strong>
+                  <p>The centre of gravity. One row per DICOM series,
+                    with the <em>predicted basename</em>, datatype,
+                    task, run and confidence at a glance. Every
+                    conversion decision is editable here; the
+                    schema-driven classifier's guesses are just
+                    defaults.</p>
+                </li>
+                <li data-marker="7">
+                  <strong>Properties panel</strong>
+                  <p>Schema-aware editor for the currently-selected
+                    row. Shows only the entities valid for that row's
+                    datatype + suffix, with required fields marked
+                    with a red asterisk. The <em>PREDICTED PATH</em>
+                    at the bottom updates as you type.</p>
+                </li>
+                <li data-marker="8">
+                  <strong>BIDS preview &amp; log dock</strong>
+                  <p>Bottom dock with tabs: <em>BIDS preview</em>
+                    (the future filesystem layout), <em>Log</em> (engine
+                    output), <em>Conflicts</em> and <em>Statistics</em>.</p>
+                </li>
+              </ol>
+            </div>
+          </div>
+
+          <!-- ============== Editor tour ============== -->
+          <div class="tab-panel" data-panel="editor" role="tabpanel">
+            <div class="gui-tour" data-tour="editor">
+              <div class="gui-tour-image">
+                <img src="assets/screenshots/full_editor_window_dark.png"
+                     data-light="assets/screenshots/full_editor_window_light.png"
+                     alt="Full BIDS Manager Editor window with numbered markers"
+                     loading="lazy">
+                <button class="gui-tour-marker" data-marker="1" type="button"
+                        style="left: 14%; top: 5%;"
+                        aria-label="Marker 1: View switcher">1</button>
+                <button class="gui-tour-marker" data-marker="2" type="button"
+                        style="left: 50%; top: 8%;"
+                        aria-label="Marker 2: Editor toolbar">2</button>
+                <button class="gui-tour-marker" data-marker="3" type="button"
+                        style="left: 6%; top: 50%;"
+                        aria-label="Marker 3: BIDS dataset tree">3</button>
+                <button class="gui-tour-marker" data-marker="4" type="button"
+                        style="left: 40%; top: 50%;"
+                        aria-label="Marker 4: File viewer">4</button>
+                <button class="gui-tour-marker" data-marker="5" type="button"
+                        style="left: 87%; top: 50%;"
+                        aria-label="Marker 5: Validation pane">5</button>
+              </div>
+
+              <ol class="gui-tour-legend" data-tour-legend>
+                <li data-marker="1">
+                  <strong>View switcher</strong>
+                  <p>You're in the <em>Editor</em>: read the converted
+                    BIDS dataset, edit sidecars, run validation.</p>
+                </li>
+                <li data-marker="2">
+                  <strong>Editor toolbar</strong>
+                  <p><em>Open BIDS root</em> picks the dataset.
+                    <em>Validate file / folder / dataset</em> run audits
+                    at three scopes. The <em>Strict BIDS</em> toggle
+                    swaps the validator's leniency; the severity chips
+                    summarise the current dataset's issues; the
+                    BusySpinner ticks while validation is running.</p>
+                </li>
+                <li data-marker="3">
+                  <strong>BIDS dataset tree</strong>
+                  <p>The converted BIDS layout with a status dot per
+                    file: green for clean, amber for warnings, red
+                    for errors. Click a file to open it in the
+                    center pane.</p>
+                </li>
+                <li data-marker="4">
+                  <strong>File viewer (extension-routed)</strong>
+                  <p>JSON sidecars open a schema-aware form (with
+                    Tree view fallback). TSV files open an editable
+                    table. NIfTI files open the tri-view +
+                    4-D graph viewer.</p>
+                </li>
+                <li data-marker="5">
+                  <strong>Validation pane</strong>
+                  <p>Severity-coloured issue list. Click an item to
+                    jump to the offending file. The list updates
+                    automatically when you fix something in the file
+                    viewer.</p>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <p class="muted" style="margin-top: 16px;">
+          Now that you know the layout, the next section walks the
+          actual workflow: scanning the example dataset, reviewing the
+          inventory, and running the conversion.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
          Tutorial scenes (state machine in script.js)
          ============================================================ -->
     <section class="section" id="scenes">
       <div class="container">
         <div class="section-header">
-          <span class="section-eyebrow">Tutorial scenes</span>
-          <h2 class="section-title">Step-by-step walkthrough.</h2>
+          <span class="section-eyebrow">Workflow</span>
+          <h2 class="section-title">Walk the workflow.</h2>
           <p class="section-lead">
-            Each scene re-creates the active BIDS Manager panel in
-            pure HTML, CSS and JS, then animates how it reacts to
-            the dataset above. Use the dots or the prev / next
-            buttons to step through.
+            Now that you know what the GUI looks like, watch BIDS
+            Manager react to the dataset step by step. Each scene
+            re-creates the active panel in pure HTML, CSS and JS and
+            animates the engine's response. Use the dots or the
+            prev / next buttons to step through.
           </p>
         </div>
 

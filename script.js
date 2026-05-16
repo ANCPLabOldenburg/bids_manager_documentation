@@ -46,8 +46,63 @@
   initPageToc();
   initCodeCopy();
   initDatasetOverview();
+  initGuiTour();
   initTutorialScenes();
 })();
+
+
+/* ====================================================================
+ * GUI tour (tutorial.html, #gui-tour)
+ *
+ * For each [data-tour] container: wire its numbered markers (overlaid
+ * on the screenshot) to the matching legend cards by data-marker. On
+ * hover, transient highlight; on click, pin the highlight until the
+ * user clicks the same item again (or another marker).
+ *
+ * Independent per-tour state lets the Converter and Editor tours
+ * coexist on the same page without leakage.
+ * ================================================================== */
+
+function initGuiTour() {
+  document.querySelectorAll("[data-tour]").forEach((tour) => {
+    const markers = Array.from(tour.querySelectorAll(".gui-tour-marker"));
+    const items   = Array.from(tour.querySelectorAll("[data-tour-legend] li"));
+    if (!markers.length || !items.length) return;
+
+    let pinned = null;
+
+    function highlight(num) {
+      markers.forEach((m) => m.classList.toggle("is-active", m.dataset.marker === num));
+      items.forEach((i) => i.classList.toggle("is-active", i.dataset.marker === num));
+    }
+    function unhighlight() {
+      if (pinned) { highlight(pinned); return; }
+      markers.forEach((m) => m.classList.remove("is-active"));
+      items.forEach((i) => i.classList.remove("is-active"));
+    }
+    function togglePin(num) {
+      pinned = pinned === num ? null : num;
+      if (pinned) highlight(pinned);
+      else unhighlight();
+    }
+
+    function wire(el, num) {
+      el.addEventListener("mouseenter", () => highlight(num));
+      el.addEventListener("focus",      () => highlight(num));
+      el.addEventListener("mouseleave", unhighlight);
+      el.addEventListener("blur",       unhighlight);
+      el.addEventListener("click",      () => togglePin(num));
+    }
+
+    markers.forEach((m) => wire(m, m.dataset.marker));
+    items.forEach((i)   => wire(i, i.dataset.marker));
+
+    /* Esc clears the pin. */
+    tour.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && pinned) { pinned = null; unhighlight(); }
+    });
+  });
+}
 
 
 /* ====================================================================

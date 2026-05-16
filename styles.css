@@ -1881,6 +1881,162 @@ details.disclosure p:last-child { margin-bottom: 0; }
 }
 
 /* --------------------------------------------------------------------
+ * GUI tour (tutorial.html, #gui-tour)
+ *
+ * Annotated screenshots of the real Converter / Editor windows.
+ * Numbered markers float on top of the image; the matching legend
+ * card on the right (or below, on narrow) highlights in sync.
+ * Hover or click a marker, or the legend card, to wire them.
+ * ------------------------------------------------------------------ */
+
+.gui-tour {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: 24px;
+  margin-top: 16px;
+  align-items: start;
+}
+@media (max-width: 940px) {
+  .gui-tour { grid-template-columns: 1fr; }
+}
+
+.gui-tour-image {
+  position: relative;
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-soft);
+  box-shadow: var(--shadow);
+  /* contain markers inside the rounded corners */
+  isolation: isolate;
+}
+.gui-tour-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.gui-tour-marker {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  color: var(--accent);
+  font-weight: 800;
+  font-size: 0.86rem;
+  font-family: "SF Pro Text", "Segoe UI", Inter, system-ui, sans-serif;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent),
+              0 8px 22px color-mix(in srgb, var(--accent) 30%, transparent);
+  transition: transform 220ms ease, box-shadow 220ms ease,
+              background 220ms ease, color 220ms ease;
+  animation: gui-marker-pulse 2.6s ease-in-out infinite;
+  padding: 0;
+  z-index: 1;
+}
+.gui-tour-marker:hover,
+.gui-tour-marker.is-active {
+  transform: translate(-50%, -50%) scale(1.18);
+  background: var(--accent);
+  color: var(--bg);
+  box-shadow: 0 0 0 8px color-mix(in srgb, var(--accent) 45%, transparent),
+              0 12px 30px color-mix(in srgb, var(--accent) 55%, transparent);
+  animation: none;
+}
+
+@keyframes gui-marker-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent),
+                          0 8px 18px color-mix(in srgb, var(--accent) 25%, transparent); }
+  50%      { box-shadow: 0 0 0 10px color-mix(in srgb, var(--accent) 8%, transparent),
+                          0 8px 22px color-mix(in srgb, var(--accent) 25%, transparent); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gui-tour-marker { animation: none; }
+}
+
+.gui-tour-legend {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 640px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.gui-tour-legend::-webkit-scrollbar { width: 6px; }
+.gui-tour-legend::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+}
+
+.gui-tour-legend li {
+  position: relative;
+  padding: 14px 16px 14px 56px;
+  border: 1px solid var(--border-glass);
+  border-radius: 10px;
+  background: var(--panel-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  cursor: pointer;
+  transition: border-color 180ms ease, background 180ms ease,
+              transform 200ms ease, box-shadow 220ms ease;
+}
+.gui-tour-legend li::before {
+  content: attr(data-marker);
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  color: var(--accent);
+  font-weight: 800;
+  font-size: 0.82rem;
+  display: grid;
+  place-items: center;
+  font-family: "SF Pro Text", "Segoe UI", Inter, system-ui, sans-serif;
+  transition: background 200ms ease, border-color 200ms ease,
+              transform 200ms ease;
+}
+.gui-tour-legend li:hover,
+.gui-tour-legend li.is-active {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, var(--panel));
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+.gui-tour-legend li:hover::before,
+.gui-tour-legend li.is-active::before {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+  transform: scale(1.06);
+}
+.gui-tour-legend strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.96rem;
+  color: var(--text);
+}
+.gui-tour-legend p {
+  margin: 0;
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+
+/* --------------------------------------------------------------------
  * Tutorial scenes (tutorial.html, #scenes)
  *
  * State machine in script.js (initTutorialScenes). One scene is
