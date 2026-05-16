@@ -2240,8 +2240,50 @@ details.disclosure p:last-child { margin-bottom: 0; }
 .scene-header p {
   color: var(--text);
   max-width: 72ch;
-  margin: 0;
+  margin: 0 0 10px;
 }
+.scene-header p:last-child { margin-bottom: 0; }
+
+/* 'How the panes connect' explainer, placed inside the scene header
+ * to underline an inter-pane relationship the visitor should watch
+ * for during the animation. */
+.scene-link {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  margin: 10px 0 0;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--accent) 6%, var(--panel));
+  max-width: 80ch;
+}
+.scene-link .scene-link-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  color: var(--accent);
+  font-weight: 800;
+  font-size: 0.78rem;
+  flex-shrink: 0;
+  font-family: "SF Pro Text", Inter, sans-serif;
+}
+.scene-link strong {
+  display: block;
+  color: var(--text);
+  font-size: 0.92rem;
+  margin-bottom: 4px;
+}
+.scene-link p {
+  margin: 0;
+  font-size: 0.86rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.scene-link p + p { margin-top: 4px; }
 
 .scene-body { margin-top: 8px; }
 
