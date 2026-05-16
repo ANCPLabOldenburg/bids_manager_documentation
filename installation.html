@@ -24,6 +24,42 @@
           BIDS Manager. Pick the one that fits your workflow.
         </p>
 
+        <!-- Supported-platforms callout. The one-click installer ships
+             pre-built portable Python binaries, so it only works on the
+             three OS / arch combos listed here. The manual install path
+             has no such constraint. -->
+        <div class="callout callout-warning">
+          <div class="callout-icon" aria-hidden="true">&#x25c6;</div>
+          <div>
+            <strong>Supported platforms for the one-click installer</strong>
+            <ul style="margin: 6px 0 8px; padding-left: 1.2em;">
+              <li><strong>macOS</strong>: Apple Silicon only (M1, M2, M3,
+                M4 chips). Intel Macs are not supported by the installer.</li>
+              <li><strong>Linux</strong>: x86_64 only. ARM / aarch64 is
+                not supported by the installer.</li>
+              <li><strong>Windows</strong>: x86_64 only. ARM Windows is
+                not supported by the installer.</li>
+            </ul>
+            <p style="margin: 0;">
+              If your machine is on a different architecture, use
+              <a href="#manual">Method 2 (manual install)</a>. It works
+              on any platform with Python 3.10 to 3.14.
+              <a href="#arch">Not sure which architecture you have? &rarr;</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Sticky in-page navigation. Highlights the section currently
+             in view via initPageToc() (script.js). -->
+        <nav class="page-toc" aria-label="On this page">
+          <a class="page-toc-link" href="#bootstrap">Installer</a>
+          <a class="page-toc-link" href="#installer-internals">How it works</a>
+          <a class="page-toc-link" href="#after-install">After install</a>
+          <a class="page-toc-link" href="#manual">Manual install</a>
+          <a class="page-toc-link" href="#arch">Check architecture</a>
+          <a class="page-toc-link" href="#troubleshooting">Troubleshooting</a>
+        </nav>
+
         <div class="method-cards">
           <a class="method-card" href="#bootstrap">
             <span class="method-badge is-rec">Recommended</span>
@@ -468,7 +504,7 @@
     <!-- ============================================================
          After install (launchers, paths)
          ============================================================ -->
-    <section class="section">
+    <section class="section" id="after-install">
       <div class="container container-narrow prose">
         <span class="section-eyebrow">After install</span>
         <h2 style="margin-top:0;">Launch, uninstall, where things land</h2>
@@ -748,6 +784,110 @@ source ~/bidsmgr-env/bin/activate
           Close the GUI first on Windows. Newer dependency pins may
           require recreating the venv if a pinned major version moves.
         </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Check your architecture
+         ============================================================ -->
+    <section class="section" id="arch">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Reference</span>
+        <h2 style="margin-top:0;">Check your architecture</h2>
+        <p>
+          The one-click installer ships pre-built binaries for specific
+          CPU architectures (Apple Silicon on macOS, x86_64 on Linux and
+          Windows). If you're not sure what your machine has, here's how
+          to find out in under thirty seconds.
+        </p>
+
+        <div class="tabs" data-tabs>
+          <div class="tab-buttons" role="tablist"
+               aria-label="Check architecture">
+            <button class="tab-btn is-active" data-tab="macos"
+                    role="tab" aria-selected="true">macOS</button>
+            <button class="tab-btn" data-tab="linux"
+                    role="tab" aria-selected="false">Linux</button>
+            <button class="tab-btn" data-tab="windows"
+                    role="tab" aria-selected="false">Windows</button>
+          </div>
+
+          <!-- macOS -->
+          <div class="tab-panel is-active" data-panel="macos" role="tabpanel">
+            <p><strong>Option A. From the Apple menu.</strong></p>
+            <ol class="steps">
+              <li>Click the
+                <strong>Apple menu &rarr; About This Mac</strong>.</li>
+              <li>Look at the <em>Chip</em> line.
+                <ul>
+                  <li><strong>"Apple M1 / M2 / M3 / M4..."</strong>:
+                    Apple Silicon (arm64).
+                    <span style="color: var(--success); font-weight: 700;">Installer works.</span></li>
+                  <li><strong>"Intel Core..."</strong>: Intel (x86_64).
+                    <span style="color: var(--warning); font-weight: 700;">Use Method 2.</span></li>
+                </ul>
+              </li>
+            </ol>
+
+            <p><strong>Option B. From the Terminal.</strong></p>
+<pre class="code">uname -m
+</pre>
+            <ul>
+              <li><code class="inline">arm64</code>: Apple Silicon.
+                Installer works.</li>
+              <li><code class="inline">x86_64</code>: Intel Mac. Use
+                <a href="#manual">Method 2</a>.</li>
+            </ul>
+          </div>
+
+          <!-- Linux -->
+          <div class="tab-panel" data-panel="linux" role="tabpanel">
+            <p>Open a terminal and run:</p>
+<pre class="code">uname -m
+</pre>
+            <ul>
+              <li><code class="inline">x86_64</code>: 64-bit Intel / AMD.
+                <span style="color: var(--success); font-weight: 700;">Installer works.</span></li>
+              <li><code class="inline">aarch64</code> /
+                <code class="inline">arm64</code>: 64-bit ARM (e.g.
+                Raspberry Pi 4/5, Apple Silicon under UTM).
+                <span style="color: var(--warning); font-weight: 700;">Use
+                  <a href="#manual">Method 2</a>.</span></li>
+              <li><code class="inline">i686</code> /
+                <code class="inline">i386</code>: 32-bit. Not supported
+                (Python 3.10+ requires 64-bit).</li>
+            </ul>
+          </div>
+
+          <!-- Windows -->
+          <div class="tab-panel" data-panel="windows" role="tabpanel">
+            <p><strong>Option A. From Settings.</strong></p>
+            <ol class="steps">
+              <li>Open <strong>Settings &rarr; System &rarr; About</strong>.</li>
+              <li>Look at the <em>System type</em> line.
+                <ul>
+                  <li><strong>"64-bit operating system, x64-based processor"</strong>:
+                    x86_64.
+                    <span style="color: var(--success); font-weight: 700;">Installer works.</span></li>
+                  <li><strong>"... ARM-based processor"</strong>:
+                    ARM Windows (Surface Pro X, etc.).
+                    <span style="color: var(--warning); font-weight: 700;">Use
+                      <a href="#manual">Method 2</a>.</span></li>
+                </ul>
+              </li>
+            </ol>
+
+            <p><strong>Option B. From PowerShell.</strong></p>
+<pre class="code">echo $Env:PROCESSOR_ARCHITECTURE
+</pre>
+            <ul>
+              <li><code class="inline">AMD64</code>: x86_64. Installer
+                works.</li>
+              <li><code class="inline">ARM64</code>: ARM. Use
+                <a href="#manual">Method 2</a>.</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
 

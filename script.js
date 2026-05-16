@@ -43,7 +43,63 @@
   initWorkflowFlowchart();
   initTabs();
   initInstallPipeline();
+  initPageToc();
 })();
+
+
+/* ====================================================================
+ * Page TOC (sticky sub-navigation on long pages)
+ *
+ * For any [.page-toc] block, observe the sections it links to and mark
+ * the closest-to-top visible one as .is-active. Click already works
+ * via plain anchor scrolling.
+ * ================================================================== */
+
+function initPageToc() {
+  const toc = document.querySelector(".page-toc");
+  if (!toc) return;
+  const links = Array.from(toc.querySelectorAll(".page-toc-link"));
+  if (!links.length) return;
+
+  const linkById = new Map();
+  const sections = [];
+  links.forEach((a) => {
+    const id = (a.getAttribute("href") || "").replace(/^#/, "");
+    const sec = id && document.getElementById(id);
+    if (sec) {
+      linkById.set(id, a);
+      sections.push(sec);
+    }
+  });
+  if (!sections.length) return;
+
+  function setActive(id) {
+    links.forEach((l) => l.classList.toggle("is-active", linkById.get(id) === l));
+  }
+
+  if (!("IntersectionObserver" in window)) {
+    setActive(sections[0].id);
+    return;
+  }
+
+  const visible = new Set();
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) visible.add(e.target);
+        else visible.delete(e.target);
+      });
+      if (!visible.size) return;
+      // Closest to the top (smallest positive top).
+      const closest = Array.from(visible).sort(
+        (a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top
+      )[0];
+      if (closest) setActive(closest.id);
+    },
+    { rootMargin: "-110px 0px -55% 0px", threshold: 0 }
+  );
+  sections.forEach((s) => io.observe(s));
+}
 
 
 /* ====================================================================
@@ -114,6 +170,17 @@ function initInstallPipeline() {
       l.classList.toggle("is-shown",   i <= idx);
       l.classList.toggle("is-current", i === idx);
     });
+    /* Pull the active chip's --step-color / --step-glow into the
+     * pipeline root so the progress bar gradient and the detail-step
+     * eyebrow recolor along with the visualization. */
+    const active = chips[idx];
+    if (active) {
+      const cs = getComputedStyle(active);
+      const stepColor = cs.getPropertyValue("--step-color").trim();
+      const stepGlow  = cs.getPropertyValue("--step-glow").trim();
+      if (stepColor) pipe.style.setProperty("--current-step-color", stepColor);
+      if (stepGlow)  pipe.style.setProperty("--current-step-glow",  stepGlow);
+    }
     const s = STEPS[idx];
     detail.innerHTML = `
       <h3>

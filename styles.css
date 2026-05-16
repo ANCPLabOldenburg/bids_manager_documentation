@@ -37,6 +37,24 @@
   --glow-purple:   rgba(210, 168, 255, 0.42);
   --glow-success:  rgba(63, 185, 80, 0.40);
 
+  /* Per-step palette used by the installation pipeline visualization.
+   * Seven distinct hues so each install stage owns its own color. */
+  --step1:         #58a6ff;  /* folder       blue   */
+  --step2:         #39c5cf;  /* download     teal   */
+  --step3:         #d2a8ff;  /* extract      purple */
+  --step4:         #ffb454;  /* venv         amber  */
+  --step5:         #3fb950;  /* pip install  green  */
+  --step6:         #ff79c6;  /* launcher     pink   */
+  --step7:         #f85149;  /* uninstaller  red    */
+
+  --step1-glow:    rgba( 88, 166, 255, 0.55);
+  --step2-glow:    rgba( 57, 197, 207, 0.55);
+  --step3-glow:    rgba(210, 168, 255, 0.55);
+  --step4-glow:    rgba(255, 180,  84, 0.55);
+  --step5-glow:    rgba( 63, 185,  80, 0.55);
+  --step6-glow:    rgba(255, 121, 198, 0.55);
+  --step7-glow:    rgba(248,  81,  73, 0.55);
+
   --header-bg:     rgba(10, 14, 19, 0.78);
   --shadow:        0 24px 80px rgba(0, 0, 0, 0.42);
   --radius:        10px;
@@ -67,6 +85,23 @@
   --glow-accent:   rgba(9, 105, 218, 0.32);
   --glow-purple:   rgba(130, 80, 223, 0.32);
   --glow-success:  rgba(26, 127, 55, 0.30);
+
+  /* Per-step palette (light theme). */
+  --step1:         #0969da;
+  --step2:         #1d7a8c;
+  --step3:         #8250df;
+  --step4:         #bf8700;
+  --step5:         #1a7f37;
+  --step6:         #d4368c;
+  --step7:         #cf222e;
+
+  --step1-glow:    rgba(  9, 105, 218, 0.32);
+  --step2-glow:    rgba( 29, 122, 140, 0.32);
+  --step3-glow:    rgba(130,  80, 223, 0.32);
+  --step4-glow:    rgba(191, 135,   0, 0.32);
+  --step5-glow:    rgba( 26, 127,  55, 0.32);
+  --step6-glow:    rgba(212,  54, 140, 0.32);
+  --step7-glow:    rgba(207,  34,  46, 0.32);
 
   --header-bg:     rgba(255, 255, 255, 0.86);
   --shadow:        0 24px 80px rgba(34, 47, 68, 0.18);
@@ -963,12 +998,61 @@ details.disclosure p:last-child { margin-bottom: 0; }
 .method-card:hover .method-go { text-decoration: underline; }
 
 /* --------------------------------------------------------------------
+ * Page TOC (installation.html sub-navigation)
+ *
+ * Sticky horizontal pill row that sits just under the main header and
+ * jumps the visitor between sections. Active section is highlighted
+ * via a scroll-spy in script.js (.page-toc-link.is-active).
+ * ------------------------------------------------------------------ */
+
+.page-toc {
+  position: sticky;
+  top: 60px;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 2.2em 0 0;
+  padding: 8px;
+  background: var(--header-bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.page-toc::-webkit-scrollbar { display: none; }
+
+.page-toc-link {
+  padding: 6px 14px;
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 150ms ease, background 150ms ease;
+}
+.page-toc-link:hover {
+  color: var(--text);
+  background: rgba(88, 166, 255, 0.10);
+  text-decoration: none;
+}
+.page-toc-link.is-active {
+  color: var(--accent);
+  background: rgba(88, 166, 255, 0.14);
+}
+[data-theme="light"] .page-toc-link:hover    { background: rgba(9, 105, 218, 0.08); }
+[data-theme="light"] .page-toc-link.is-active { background: rgba(9, 105, 218, 0.12); }
+
+/* --------------------------------------------------------------------
  * Interactive install pipeline (installation.html)
  *
- * A 7-step "what the installer does" visualization. The chip row is
- * tabs / progress markers; the stage below shows a layered SVG that
- * accumulates step by step. JS auto-advances on a timer, with hover
- * preview and click-to-pin.
+ * A 7-step "what the installer does" visualization. Each chip + its
+ * matching SVG layer owns a distinct color via --step-color /
+ * --step-glow. JS auto-advances on a timer; hover previews; click
+ * pins; Pause / Auto-play toggles.
  * ------------------------------------------------------------------ */
 
 .install-pipeline {
@@ -976,17 +1060,45 @@ details.disclosure p:last-child { margin-bottom: 0; }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--panel);
-  padding: clamp(20px, 3vw, 32px);
+  padding: clamp(22px, 3vw, 36px);
   box-shadow: var(--shadow);
+  /* JS updates this when the active step changes; used by the
+   * progress bar gradient and the detail-step eyebrow color. */
+  --current-step-color: var(--step1);
+  --current-step-glow:  var(--step1-glow);
+}
+
+/* Per-step color tokens. Cascaded to chips AND to the matching SVG
+ * layer so both speak the same hue. */
+.pipeline-chip[data-step="1"], .stage-layer[data-layer="1"] {
+  --step-color: var(--step1); --step-glow: var(--step1-glow);
+}
+.pipeline-chip[data-step="2"], .stage-layer[data-layer="2"] {
+  --step-color: var(--step2); --step-glow: var(--step2-glow);
+}
+.pipeline-chip[data-step="3"], .stage-layer[data-layer="3"] {
+  --step-color: var(--step3); --step-glow: var(--step3-glow);
+}
+.pipeline-chip[data-step="4"], .stage-layer[data-layer="4"] {
+  --step-color: var(--step4); --step-glow: var(--step4-glow);
+}
+.pipeline-chip[data-step="5"], .stage-layer[data-layer="5"] {
+  --step-color: var(--step5); --step-glow: var(--step5-glow);
+}
+.pipeline-chip[data-step="6"], .stage-layer[data-layer="6"] {
+  --step-color: var(--step6); --step-glow: var(--step6-glow);
+}
+.pipeline-chip[data-step="7"], .stage-layer[data-layer="7"] {
+  --step-color: var(--step7); --step-glow: var(--step7-glow);
 }
 
 .pipeline-track {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 8px;
+  gap: 10px;
   list-style: none;
   padding: 0;
-  margin: 0 0 28px;
+  margin: 0 0 32px;
   align-items: stretch;
   position: relative;
 }
@@ -994,7 +1106,7 @@ details.disclosure p:last-child { margin-bottom: 0; }
 .pipeline-track::before {
   content: "";
   position: absolute;
-  top: 28px;
+  top: 34px;
   left: 8%;
   right: 8%;
   height: 2px;
@@ -1009,48 +1121,62 @@ details.disclosure p:last-child { margin-bottom: 0; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  padding: 10px 6px;
-  border-radius: 12px;
+  gap: 8px;
+  padding: 14px 8px 12px;
+  border-radius: 14px;
   border: 1px solid var(--border);
   background: var(--panel);
   color: var(--muted);
   cursor: pointer;
   font: inherit;
-  font-size: 0.78rem;
-  font-weight: 600;
+  font-size: 0.86rem;
+  font-weight: 700;
   text-align: center;
   transition: color 180ms ease, border-color 180ms ease,
-              background 180ms ease, box-shadow 200ms ease,
+              background 180ms ease, box-shadow 220ms ease,
               transform 160ms ease;
 }
 .pipeline-chip:hover {
-  border-color: var(--accent);
-  color: var(--text);
-  transform: translateY(-1px);
+  border-color: var(--step-color, var(--accent));
+  color: var(--step-color, var(--text));
+  transform: translateY(-2px);
 }
 .pipeline-chip.is-active {
-  border-color: var(--accent);
-  background: rgba(88, 166, 255, 0.12);
-  color: var(--accent);
-  box-shadow: 0 0 0 1px var(--accent), 0 10px 26px var(--glow-accent);
+  border-color: var(--step-color);
+  background: color-mix(in srgb, var(--step-color) 14%, transparent);
+  color: var(--step-color);
+  box-shadow: 0 0 0 1px var(--step-color),
+              0 14px 38px var(--step-glow);
+  animation: chip-breathe 2.4s ease-in-out infinite;
+}
+
+@keyframes chip-breathe {
+  0%, 100% { box-shadow: 0 0 0 1px var(--step-color),
+                          0 12px 30px var(--step-glow); }
+  50%      { box-shadow: 0 0 0 1px var(--step-color),
+                          0 20px 46px var(--step-glow); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pipeline-chip.is-active { animation: none; }
 }
 
 .pipeline-chip svg {
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   stroke: currentColor;
   fill: none;
   stroke-width: 1.7;
+  transition: transform 200ms ease;
 }
+.pipeline-chip.is-active svg { transform: scale(1.08); }
 
 .pipeline-chip .chip-num {
   font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   color: var(--quiet);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
 }
-.pipeline-chip.is-active .chip-num { color: var(--accent); }
+.pipeline-chip.is-active .chip-num { color: var(--step-color); }
 
 .pipeline-chip .chip-label {
   white-space: nowrap;
@@ -1062,15 +1188,16 @@ details.disclosure p:last-child { margin-bottom: 0; }
 /* Compact chips on narrow viewports: hide the label, keep icon + number. */
 @media (max-width: 720px) {
   .pipeline-chip .chip-label { display: none; }
+  .pipeline-chip svg { width: 28px; height: 28px; }
 }
 
 .pipeline-stage {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-  gap: 28px;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: 32px;
   align-items: center;
 }
-@media (max-width: 820px) {
+@media (max-width: 920px) {
   .pipeline-stage { grid-template-columns: 1fr; }
 }
 
@@ -1079,15 +1206,20 @@ details.disclosure p:last-child { margin-bottom: 0; }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background:
-    radial-gradient(120% 80% at 30% 20%, rgba(88, 166, 255, 0.10), transparent 60%),
-    radial-gradient(80% 70% at 80% 80%, rgba(210, 168, 255, 0.08), transparent 60%),
+    radial-gradient(120% 80% at 30% 20%,
+                    color-mix(in srgb, var(--current-step-color) 18%, transparent),
+                    transparent 60%),
+    radial-gradient(80% 70% at 78% 82%,
+                    color-mix(in srgb, var(--current-step-color) 12%, transparent),
+                    transparent 60%),
     var(--bg-soft);
-  padding: 14px;
-  aspect-ratio: 720 / 380;
+  padding: 18px;
+  min-height: 320px;
+  aspect-ratio: 720 / 360;
   display: grid;
   place-items: center;
   overflow: hidden;
-  color: var(--accent);
+  transition: background 400ms ease;
 }
 
 .stage-illustration .stage-svg {
@@ -1096,22 +1228,32 @@ details.disclosure p:last-child { margin-bottom: 0; }
   display: block;
 }
 
+/* Each SVG layer inherits color from its --step-color custom property
+ * so the stroke / text / fill (which all use currentColor) match the
+ * chip. Inactive layers shown dim; the current layer pulses bright. */
 .stage-layer {
+  color: var(--step-color, var(--accent));
   opacity: 0;
-  transition: opacity 500ms ease;
+  transition: opacity 500ms ease, filter 400ms ease;
 }
-.stage-layer.is-shown {
-  opacity: 0.42;
-}
+.stage-layer.is-shown   { opacity: 0.32; }
 .stage-layer.is-current {
   opacity: 1;
-  filter: drop-shadow(0 0 6px var(--glow-accent));
-  animation: pipeline-pulse 1.6s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px var(--step-glow));
+  animation: pipeline-pulse 1.8s ease-in-out infinite;
+}
+
+/* Beef up the current layer's stroke so the active step pops more. */
+.stage-layer.is-current path,
+.stage-layer.is-current rect,
+.stage-layer.is-current line,
+.stage-layer.is-current circle {
+  stroke-width: 2.8;
 }
 
 @keyframes pipeline-pulse {
-  0%,100% { filter: drop-shadow(0 0 4px var(--glow-accent)); }
-  50%     { filter: drop-shadow(0 0 10px var(--glow-accent)); }
+  0%,100% { filter: drop-shadow(0 0 8px  var(--step-glow)); }
+  50%     { filter: drop-shadow(0 0 18px var(--step-glow)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1121,18 +1263,23 @@ details.disclosure p:last-child { margin-bottom: 0; }
 .pipeline-detail h3 {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  margin: 0 0 14px;
+  gap: 6px;
+  margin: 0 0 16px;
 }
 .pipeline-detail .detail-step {
-  font-size: 0.74rem;
-  letter-spacing: 0.16em;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--current-step-color);
   font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
   font-weight: 700;
+  transition: color 250ms ease;
 }
-.pipeline-detail .detail-title { font-size: 1.3rem; line-height: 1.25; }
+.pipeline-detail .detail-title {
+  font-size: 1.45rem;
+  line-height: 1.22;
+  letter-spacing: -0.012em;
+}
 .pipeline-detail p {
   color: var(--text);
   font-size: 0.98rem;
@@ -1154,8 +1301,13 @@ details.disclosure p:last-child { margin-bottom: 0; }
   position: absolute;
   inset: 0;
   width: var(--progress, 0%);
-  background: linear-gradient(90deg, var(--accent), var(--purple));
-  transition: width 90ms linear;
+  background: linear-gradient(
+    90deg,
+    var(--current-step-color),
+    color-mix(in srgb, var(--current-step-color) 60%, #ffffff)
+  );
+  box-shadow: 0 0 12px var(--current-step-glow);
+  transition: width 90ms linear, background 300ms ease;
   border-radius: 999px;
 }
 
