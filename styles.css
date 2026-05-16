@@ -3784,6 +3784,241 @@ details.disclosure p:last-child { margin-bottom: 0; }
   pointer-events: none;
 }
 
+/* =====================================================================
+ * Precise Editor scenes (7 / 8 / 9): 3-col splitter with BIDS tree,
+ * center file viewer (file tabs + sidecar / NIfTI), and right
+ * validation panel. Matches BIDS-Manager/docs/gui_mockups.html.
+ * =================================================================== */
+
+.mock-edit-main {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr) 280px;
+  background: var(--bg);
+  border-top: 1px solid var(--border-glass);
+  min-height: 460px;
+}
+@media (max-width: 1100px) {
+  .mock-edit-main { grid-template-columns: 180px minmax(0, 1fr) 240px; }
+}
+@media (max-width: 900px) {
+  .mock-edit-main { grid-template-columns: 1fr; }
+  .mock-edit-main .col-tree,
+  .mock-edit-main .col-val { max-height: 180px; }
+}
+
+/* File tabs at the top of the center viewer (one per open file). */
+.mock-edit-tabs {
+  display: flex;
+  gap: 0;
+  padding: 0 12px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border-glass);
+}
+.mock-edit-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.76rem;
+  border-bottom: 2px solid transparent;
+}
+.mock-edit-tab .ico {
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+.mock-edit-tab.is-active {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+}
+.mock-edit-tab.is-active .ico { color: var(--accent); }
+.mock-edit-tab .close { color: var(--quiet); margin-left: 6px; font-size: 0.7rem; }
+
+.mock-edit-center {
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.mock-edit-viewer {
+  flex: 1 1 auto;
+  overflow: auto;
+  min-height: 0;
+}
+.mock-edit-statusbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 14px;
+  background: var(--panel);
+  border-top: 1px solid var(--border-glass);
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+/* Sidecar legend bar (REQ / REC / OPT / DEP swatches). */
+.sc-legend {
+  display: flex;
+  gap: 14px;
+  padding: 8px 14px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border-glass);
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+.sc-legend .lg {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.sc-legend .sw {
+  width: 6px;
+  height: 12px;
+  border-radius: 2px;
+  display: inline-block;
+}
+.sc-legend .sw.req { background: var(--error); }
+.sc-legend .sw.rec { background: var(--warning); }
+.sc-legend .sw.opt { background: var(--quiet); opacity: 0.55; }
+.sc-legend .sw.dep { background: var(--quiet); }
+.sc-legend-tag {
+  margin-left: auto;
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.7rem;
+}
+
+/* Sidecar form (one row per JSON key/value). The 4px coloured stripe
+ * on the left indicates the field's kind (req / rec / opt / dep). */
+.sidecar {
+  padding: 6px 0;
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+.sc-field {
+  display: grid;
+  grid-template-columns: 4px 200px 1fr;
+  gap: 0 12px;
+  padding: 4px 12px;
+  border-bottom: 1px solid var(--border-glass);
+  align-items: center;
+}
+.sc-field:hover { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+.sc-field .req-mark {
+  width: 4px;
+  height: 18px;
+  border-radius: 2px;
+  align-self: center;
+}
+.sc-field.req .req-mark { background: var(--error); }
+.sc-field.rec .req-mark { background: var(--warning); }
+.sc-field.opt .req-mark { background: var(--quiet); opacity: 0.55; }
+.sc-field.dep .req-mark { background: var(--quiet); }
+.sc-field .key { color: var(--text); }
+.sc-field.dep .key { color: var(--muted); text-decoration: line-through; }
+.sc-field .val { color: var(--accent); word-break: break-all; }
+.sc-field .val.todo { color: var(--error); font-style: italic; }
+.sc-field .val.num { color: var(--purple); }
+.sc-field .val.str::before { content: '"'; color: var(--muted); }
+.sc-field .val.str::after  { content: '"'; color: var(--muted); }
+
+/* Validation panel (right column). */
+.mock-val-panel {
+  background: var(--bg);
+  border-left: 1px solid var(--border-glass);
+  padding: 12px 14px;
+  overflow-y: auto;
+  font-size: 0.78rem;
+}
+.mock-val-panel-section { margin-bottom: 16px; }
+.mock-val-panel-section:last-child { margin-bottom: 0; }
+.mock-val-panel-section h5 {
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  font-weight: 700;
+  margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.mock-val-panel-section h5 .count {
+  background: var(--panel-strong);
+  border-radius: 999px;
+  padding: 1px 8px;
+  font-size: 0.66rem;
+  color: var(--muted);
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+.mock-val-msg {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 8px;
+  padding: 7px 10px;
+  background: var(--panel);
+  border: 1px solid var(--border-glass);
+  border-radius: 6px;
+  margin-bottom: 5px;
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+.mock-val-msg.ok   { border-color: color-mix(in srgb, var(--success) 45%, transparent);
+                     background: color-mix(in srgb, var(--success) 6%, var(--panel)); }
+.mock-val-msg.warn { border-color: color-mix(in srgb, var(--warning) 45%, transparent);
+                     background: color-mix(in srgb, var(--warning) 6%, var(--panel)); }
+.mock-val-msg.err  { border-color: color-mix(in srgb, var(--error)   45%, transparent);
+                     background: color-mix(in srgb, var(--error)   6%, var(--panel)); }
+.mock-val-msg.info { border-color: color-mix(in srgb, var(--accent)  45%, transparent);
+                     background: color-mix(in srgb, var(--accent)  6%, var(--panel)); }
+
+.mock-val-msg .b {
+  display: inline-grid;
+  place-items: center;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+.mock-val-msg.ok   .b { background: color-mix(in srgb, var(--success) 18%, transparent); color: var(--success); }
+.mock-val-msg.warn .b { background: color-mix(in srgb, var(--warning) 18%, transparent); color: var(--warning); }
+.mock-val-msg.err  .b { background: color-mix(in srgb, var(--error)   18%, transparent); color: var(--error);   }
+.mock-val-msg.info .b { background: color-mix(in srgb, var(--accent)  18%, transparent); color: var(--accent);  }
+
+.mock-val-msg .rule {
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.66rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.mock-val-msg .body { color: var(--text); }
+.mock-val-msg .body code {
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.76em;
+  color: var(--muted);
+}
+.mock-val-msg .fix-btn {
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  border-radius: 4px;
+  padding: 1px 8px;
+  font-size: 0.7rem;
+  margin-left: 6px;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+}
+
 /* --- Validation list (Scene 9) ---- */
 
 .mock-validation {

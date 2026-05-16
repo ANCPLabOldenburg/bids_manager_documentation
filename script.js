@@ -635,49 +635,56 @@ function initTutorialScenes() {
     },
 
     /* ---------- Scene 7. Open the result in the Editor.
-     * The view-switcher pill was already in the Editor active state in
-     * markup. This player streams the schema-aware sidecar form rows
-     * for the OL_0001 T1w.json that's highlighted in the BIDS tree. */
+     * Streams the schema-aware sidecar form rows for the OL_0001
+     * T1w.json. Each row carries its kind (req / rec / opt / dep)
+     * which colors the 4-px stripe on the left, mirroring the real
+     * SidecarFormPane. Value-type also matters: str vs num drives
+     * the syntax-coloured value styling. */
     async 7(el, cancelled) {
       const form = el.querySelector('[data-mock="sidecar-form"]');
       if (!form) return;
+      /* Real-ish content from the OL_0001 T1w.json. The 'kind'
+       * mirrors the BIDS schema's level field; the 'type' picks the
+       * .val.str / .val.num class. */
       const ROWS = [
-        ["Modality",               "MR",               "req"],
-        ["Manufacturer",           "Siemens",          "req"],
-        ["ManufacturersModelName", "Prisma",           "rec"],
-        ["MagneticFieldStrength",  "3",                "req"],
-        ["DeviceSerialNumber",     "66080",            "opt"],
-        ["RepetitionTime",         "2.3",              "req"],
-        ["EchoTime",               "0.00237",          "req"],
-        ["FlipAngle",              "8",                "req"],
-        ["SliceThickness",         "1.0",              "rec"],
-        ["InstitutionName",        "BioPsy",           "opt"],
+        ["Modality",                "MR",                       "req", "str"],
+        ["MagneticFieldStrength",   "3",                        "rec", "num"],
+        ["Manufacturer",            "Siemens Healthineers",     "rec", "str"],
+        ["ManufacturersModelName",  "MAGNETOM Prisma",          "rec", "str"],
+        ["InstitutionName",         "University of Oldenburg",  "rec", "str"],
+        ["DeviceSerialNumber",      "66080",                    "rec", "str"],
+        ["SoftwareVersions",        "syngo MR XA31A",           "rec", "str"],
+        ["BodyPartExamined",        "BRAIN",                    "rec", "str"],
+        ["ScanningSequence",        "GR\\IR",                   "rec", "str"],
+        ["SequenceVariant",         "SK\\SP\\MP",               "rec", "str"],
+        ["EchoTime",                "0.00237",                  "rec", "num"],
+        ["InversionTime",           "0.9",                      "rec", "num"],
+        ["FlipAngle",               "8",                        "rec", "num"],
+        ["RepetitionTime",          "2.3",                      "rec", "num"],
+        ["PhaseEncodingDirection",  "j-",                       "opt", "str"],
+        ["AcquisitionDateTime",     "2025-05-26T07:16:29",      "opt", "str"],
+        ["AcquisitionDuration",     "300",                      "dep", "num"],
       ];
       form.innerHTML = "";
-      const drop = (k, v, kind) => {
+      const drop = (k, v, kind, type) => {
         const row = document.createElement("div");
-        row.className = `mock-form-row is-${kind}`;
+        row.className = `sc-field ${kind}`;
         row.innerHTML = `
-          <span class="mock-form-key">${k}</span>
-          <span class="mock-form-val">${escapeHtml(v)}</span>
-          <span class="legend-pill legend-${kind === "req" ? "req"
-                                          : kind === "rec" ? "rec"
-                                          : "opt"}">${kind === "req" ? "required"
-                                                    : kind === "rec" ? "recommended"
-                                                    : "optional"}</span>
+          <span class="req-mark" aria-hidden="true"></span>
+          <span class="key">"${k}"</span>
+          <span class="val ${type}">${escapeHtml(v)}</span>
         `;
         form.appendChild(row);
-        requestAnimationFrame(() => row.classList.add("is-visible"));
       };
 
       if (reducedMotion) {
-        ROWS.forEach(([k, v, kind]) => drop(k, v, kind));
+        ROWS.forEach(([k, v, kind, type]) => drop(k, v, kind, type));
         return;
       }
-      for (const [k, v, kind] of ROWS) {
+      for (const [k, v, kind, type] of ROWS) {
         if (cancelled()) return;
-        drop(k, v, kind);
-        await delay(140);
+        drop(k, v, kind, type);
+        await delay(100);
       }
     },
 
