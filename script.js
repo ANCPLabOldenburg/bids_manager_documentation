@@ -300,7 +300,7 @@ function initTutorialScenes() {
       const status = el.querySelector('[data-mock="conv-status"]');
       if (status) status.textContent = "Converting...";
       const stage = el.querySelector('[data-mock="conv-stage"]');
-      if (stage) stage.textContent = "BIDS 1.10.0 . converting series 0 / 30";
+      if (stage) stage.textContent = "BIDS 1.10.0 . converting series 0 / 21";
       el.querySelector('[data-mock="conv-spinner"]')?.classList.add("is-spinning");
       const log = el.querySelector('[data-mock="log"]');
       if (log) log.innerHTML = "";
@@ -372,14 +372,21 @@ function initTutorialScenes() {
       const series  = el.querySelector('[data-mock="count-series"]');
       const dcm     = el.querySelector('[data-mock="count-dcm"]');
 
+      /* Real bidsmgr-scan counts on this dataset:
+       *   inventory rows: 33
+       *   keepers (include=1): 21
+       *   dropped (always-exclude pattern): 12
+       *   warnings / errors at scan time: 0 / 0
+       *   subjects clustered: 2 (sub-001 spans 2 sessions, sub-002 1)
+       *   DICOM files walked: 394 */
       if (reducedMotion) {
         if (status) status.textContent = "Done.";
-        if (valid)  valid.textContent  = "30";
-        if (warn)   warn.textContent   = "1";
+        if (valid)  valid.textContent  = "21";
+        if (warn)   warn.textContent   = "0";
         if (err)    err.textContent    = "0";
-        if (skip)   skip.textContent   = "6";
-        if (subj)   subj.textContent   = "3";
-        if (series) series.textContent = "36";
+        if (skip)   skip.textContent   = "12";
+        if (subj)   subj.textContent   = "2";
+        if (series) series.textContent = "33";
         if (dcm)    dcm.textContent    = "394";
         return;
       }
@@ -387,7 +394,8 @@ function initTutorialScenes() {
       spinner?.classList.add("is-spinning");
       const messages = [
         "Walking ~/Downloads/neuroimaging_unit_new...",
-        "Found 394 DICOMs across 3 subjects",
+        "Found 394 DICOMs across 3 folders",
+        "Clustering folders by PatientID...",
         "Reading SeriesInstanceUID for every series...",
         "Stamping bids_guess_* entities from SeriesDescription...",
         "Done.",
@@ -396,22 +404,21 @@ function initTutorialScenes() {
         if (cancelled()) return;
         if (status) status.textContent = msg;
         if (msg.startsWith("Found")) {
-          await Promise.all([
-            tweenInt(subj, 0,   3, 600, cancelled),
-            tweenInt(dcm,  0, 394, 900, cancelled),
-          ]);
+          await tweenInt(dcm, 0, 394, 900, cancelled);
+        } else if (msg.startsWith("Clustering")) {
+          await tweenInt(subj, 0, 2, 600, cancelled);
         } else if (msg.startsWith("Reading")) {
-          await tweenInt(series, 0, 36, 700, cancelled);
+          await tweenInt(series, 0, 33, 700, cancelled);
         }
         await delay(700);
       }
       if (cancelled()) return;
       spinner?.classList.remove("is-spinning");
       await Promise.all([
-        tweenInt(valid, 0, 30, 800, cancelled),
-        tweenInt(warn,  0,  1, 500, cancelled),
+        tweenInt(valid, 0, 21, 800, cancelled),
+        tweenInt(warn,  0,  0, 200, cancelled),
         tweenInt(err,   0,  0, 200, cancelled),
-        tweenInt(skip,  0,  6, 600, cancelled),
+        tweenInt(skip,  0, 12, 700, cancelled),
       ]);
     },
 
@@ -561,40 +568,40 @@ function initTutorialScenes() {
       const spinner = el.querySelector('[data-mock="conv-spinner"]');
       const log     = el.querySelector('[data-mock="log"]');
 
-      /* Each log entry carries: [tag, message, series-delta]. The
-       * series-delta is how many of the 30 total series the entry
-       * accounts for; the counter ticks up by that amount when the
-       * line is appended. */
+      /* Real `bidsmgr-convert -v` output on this dataset, condensed.
+       * 21 keeper rows total (33 inventory rows - 12 always-excluded
+       * scout / Phoenix SR). Counter target is 21 by the end. */
       const LOG = [
-        ["scan",  "[scan]  rebuild_from_entities() refreshing BIDS names",                   0],
-        ["stage", "[OL_0001] staging at /tmp/.tmp_bidsmgr/sub-001/",                         0],
-        ["stage", "[OL_0001] dcm2niix: anat/sub-001_ses-pre_T1w.nii.gz",                     1],
-        ["stage", "[OL_0001] dcm2niix: func/sub-001_ses-pre_task-rest_bold.nii.gz",          1],
-        ["stage", "[OL_0001] dcm2niix: func/sub-001_ses-pre_task-sparse_bold.nii.gz",        1],
-        ["stage", "[OL_0001] dcm2niix: fmap/sub-001_ses-pre_run-01_magnitude1.nii.gz",       1],
-        ["stage", "[OL_0001] dcm2niix: fmap/sub-001_ses-pre_run-01_phasediff.nii.gz",        1],
-        ["stage", "[OL_0001] dcm2niix: fmap/sub-001_ses-pre_run-02_magnitude1.nii.gz",       1],
-        ["stage", "[OL_0001] dcm2niix: fmap/sub-001_ses-pre_run-02_phasediff.nii.gz",        1],
-        ["fixup", "[OL_0001] fmap fixups: IntendedFor -> rest_bold, sparse_bold",            0],
-        ["done",  "[OL_0001] committed atomically (8 series)",                               1],
-        ["stage", "[OL_0002] staging at /tmp/.tmp_bidsmgr/sub-002/",                         0],
-        ["stage", "[OL_0002] dcm2niix: func/sub-002_ses-post_task-mb_sbref.nii.gz",          1],
-        ["stage", "[OL_0002] dcm2niix: func/sub-002_ses-post_task-mb_bold.nii.gz",           1],
-        ["stage", "[OL_0002] physio: func/sub-002_ses-post_task-mb_physio.tsv.gz",           1],
-        ["stage", "[OL_0002] dcm2niix: fmap/sub-002_ses-post_run-01_magnitude1.nii.gz",      1],
-        ["stage", "[OL_0002] dcm2niix: fmap/sub-002_ses-post_run-01_phasediff.nii.gz",       1],
-        ["warn",  "[OL_0002] no anatomical reference; will flag in validation",              0],
-        ["done",  "[OL_0002] committed atomically (5 series)",                               1],
-        ["stage", "[OL_0003] staging at /tmp/.tmp_bidsmgr/sub-003/",                         0],
-        ["stage", "[OL_0003] dcm2niix: anat/sub-003_acq-space_T2w.nii.gz",                   1],
-        ["stage", "[OL_0003] dcm2niix: func/sub-003_task-dmaging_run-01_bold.nii.gz",        2],
-        ["stage", "[OL_0003] dcm2niix: func/sub-003_task-dmaging_run-02_bold.nii.gz",        2],
-        ["stage", "[OL_0003] dcm2niix: func/sub-003_task-uebung_bold.nii.gz",                2],
-        ["stage", "[OL_0003] physio: 2 PhysioLog series",                                    2],
-        ["stage", "[OL_0003] dcm2niix: dwi/sub-003_acq-15_dir-AP_dwi.nii.gz",                2],
-        ["fixup", "[OL_0003] classifier: acq-15_dir-PA b0 rerouted to fmap/_epi",            0],
-        ["done",  "[OL_0003] committed atomically (12 series)",                              5],
-        ["done",  "30 series -> BIDS . 0 errors . 1 warning",                                0],
+        ["scan",  "bidsmgr 1.0.1 . platform=darwin py=3.10.11",                                 0],
+        ["scan",  "in-memory rebuild reconciled 15 rows from entities JSON",                    0],
+        ["stage", "[sub-001] staging at /tmp/.tmp_bidsmgr/sub-001/",                            0],
+        ["stage", "[sub-001/ses-pre] dcm2niix: anat/sub-001_ses-pre_acq-tfl3p2_T1w.nii.gz",     1],
+        ["stage", "[sub-001/ses-pre] dcm2niix: func/sub-001_ses-pre_task-rest_bold.nii.gz",     1],
+        ["stage", "[sub-001/ses-pre] dcm2niix: func/sub-001_ses-pre_task-sparse_bold.nii.gz",   1],
+        ["stage", "[sub-001/ses-pre] dcm2niix: fmap/sub-001_ses-pre_acq-fm2_run-1_magnitude1",  1],
+        ["stage", "[sub-001/ses-pre] dcm2niix: fmap/sub-001_ses-pre_acq-fm2_run-1_phase2",      1],
+        ["stage", "[sub-001/ses-pre] dcm2niix: fmap/sub-001_ses-pre_acq-fm2_run-2_magnitude1",  1],
+        ["stage", "[sub-001/ses-pre] dcm2niix: fmap/sub-001_ses-pre_acq-fm2_run-2_phase2",      1],
+        ["stage", "[sub-001/ses-post] dcm2niix: func/sub-001_ses-post_task-mb_sbref.nii.gz",    1],
+        ["stage", "[sub-001/ses-post] dcm2niix: func/sub-001_ses-post_task-mb_bold.nii.gz",     1],
+        ["stage", "[sub-001/ses-post] physio: func/sub-001_ses-post_task-mb_physio.tsv.gz",     1],
+        ["stage", "[sub-001/ses-post] dcm2niix: fmap/sub-001_ses-post_acq-fm2_magnitude1",      1],
+        ["stage", "[sub-001/ses-post] dcm2niix: fmap/sub-001_ses-post_acq-fm2_phase2",          1],
+        ["fixup", "fmap rename: _e1 -> _magnitude1, _e2 -> _magnitude2, _e2_ph -> _phase2  [18 renames]", 0],
+        ["fixup", "IntendedFor: wrote 1 entries into sub-001_ses-post_acq-fm2_{magnitude1,magnitude2,phase2}.json", 0],
+        ["fixup", "IntendedFor: wrote 2 entries into sub-001_ses-pre_acq-fm2_run-{1,2}_{magnitude1,magnitude2,phase2}.json", 0],
+        ["done",  "committed sub-001 to bids_export/neuroimaging_unit_new/sub-001",             0],
+        ["stage", "[sub-002] staging at /tmp/.tmp_bidsmgr/sub-002/",                            0],
+        ["stage", "[sub-002] dcm2niix: anat/sub-002_acq-space_T2w.nii.gz",                      1],
+        ["stage", "[sub-002] dcm2niix: func/sub-002_task-dmaging_run-1_bold.nii.gz",            2],
+        ["stage", "[sub-002] dcm2niix: func/sub-002_task-dmaging_run-2_bold.nii.gz",            2],
+        ["stage", "[sub-002] dcm2niix: func/sub-002_task-uebung_bold.nii.gz",                   2],
+        ["stage", "[sub-002] physio: 2 PhysioLog series (Saving physio data x2)",               0],
+        ["stage", "[sub-002] dcm2niix: dwi/sub-002_acq-epse2_dir-AP_dwi.nii.gz  (+ .bval / .bvec)", 1],
+        ["fixup", "classifier: acq-15_dir-PA b0 rerouted to fmap/_epi",                         0],
+        ["fixup", "IntendedFor: wrote 3 entries into sub-002_acq-epse2_dir-AP_epi.json",        0],
+        ["done",  "committed sub-002 to bids_export/neuroimaging_unit_new/sub-002",             0],
+        ["done",  "21 series -> BIDS . validate to see 6 missing TaskName errors",              0],
       ];
 
       function appendLine(tag, msg) {
@@ -608,8 +615,8 @@ function initTutorialScenes() {
 
       if (reducedMotion) {
         if (status)  status.textContent  = "Done.";
-        if (counter) counter.textContent = "30";
-        if (stage)   stage.textContent   = "BIDS 1.10.0 . converted 30 / 30 series";
+        if (counter) counter.textContent = "21";
+        if (stage)   stage.textContent   = "BIDS 1.10.0 . converted 21 / 21 series";
         spinner?.classList.remove("is-spinning");
         LOG.forEach(([t, m]) => appendLine(t, m));
         return;
@@ -623,13 +630,13 @@ function initTutorialScenes() {
         done += delta;
         if (counter) counter.textContent = String(done);
         if (stage)   stage.textContent   = done < 30
-          ? `BIDS 1.10.0 . converting series ${done} / 30`
-          : "BIDS 1.10.0 . converted 30 / 30 series";
+          ? `BIDS 1.10.0 . converting series ${done} / 21`
+          : "BIDS 1.10.0 . converted 21 / 21 series";
         if (status) {
           if      (tag === "stage") status.textContent = "Running dcm2niix...";
           else if (tag === "fixup") status.textContent = "Cross-file fixups...";
           else if (tag === "warn")  status.textContent = "Warning logged";
-          else if (tag === "done"  && done >= 30) status.textContent = "Done.";
+          else if (tag === "done"  && done >= 21) status.textContent = "Done.";
         }
         await delay(310);
       }
@@ -734,19 +741,37 @@ function initTutorialScenes() {
       const hintEl   = el.querySelector('[data-mock="val-hint"]');
       const list     = el.querySelector('[data-mock="val-list"]');
 
+      /* Real validate.log output: 6 errors total, one per task BOLD
+       * sidecar (all six are missing the required TaskName field).
+       * Each file also misses 4 recommended fields (Instructions,
+       * TaskDescription, CogAtlasID, CogPOID) but those don't get
+       * promoted to errors in non-strict mode. The list below
+       * shows the representative samples; the chip count uses 6. */
       const ISSUES = [
-        { sev: "warn", icon: "!",
-          title: "sub-002 is missing an anatomical reference (T1w / T2w)",
-          desc:  "BIDS recommends at least one anatomical per subject. Rescan if possible, or set <code>is_anat_proxy=true</code> on a scout MPR.",
-          target: "sub-002/" },
-        { sev: "hint", icon: "i",
-          title: "Task name 'dmaging' is non-standard",
-          desc:  "Functional task labels should be human-readable and ideally documented in an <code>events.json</code>. Consider renaming or adding documentation.",
-          target: "sub-003/func/" },
-        { sev: "hint", icon: "i",
-          title: "OL_0003 PA b0 routed to fmap; confirm IntendedFor",
-          desc:  "The diffusion PA acquisition was rerouted to <code>fmap/_epi</code>. Verify the auto-written <code>IntendedFor</code> list matches your intended distortion-correction target.",
-          target: "sub-003/fmap/" },
+        { sev: "err", icon: "✕",
+          title: "sub-001_ses-pre_task-rest_bold.json: missing required TaskName",
+          desc:  "<code>bids.required_sidecar_field_missing</code>. The BIDS schema requires <code>TaskName</code> on every BOLD sidecar. Click the row to open the file; the Editor's auto-fill button will set it from the BIDS task entity.",
+          target: "sub-001/ses-pre/func/" },
+        { sev: "err", icon: "✕",
+          title: "sub-001_ses-pre_task-sparse_bold.json: missing required TaskName",
+          desc:  "<code>bids.required_sidecar_field_missing</code>. Same fix path: open the sidecar, click <em>Auto-fill</em>.",
+          target: "sub-001/ses-pre/func/" },
+        { sev: "err", icon: "✕",
+          title: "sub-001_ses-post_task-mb_bold.json: missing required TaskName",
+          desc:  "<code>bids.required_sidecar_field_missing</code>. The session-post multiband task fails the same rule.",
+          target: "sub-001/ses-post/func/" },
+        { sev: "err", icon: "✕",
+          title: "sub-002_task-dmaging_run-1_bold.json: missing required TaskName",
+          desc:  "<code>bids.required_sidecar_field_missing</code>. The two dmaging runs and the uebung task all share this finding.",
+          target: "sub-002/func/" },
+        { sev: "err", icon: "✕",
+          title: "sub-002_task-dmaging_run-2_bold.json: missing required TaskName",
+          desc:  "<code>bids.required_sidecar_field_missing</code>.",
+          target: "sub-002/func/" },
+        { sev: "err", icon: "✕",
+          title: "sub-002_task-uebung_bold.json: missing required TaskName",
+          desc:  "<code>bids.required_sidecar_field_missing</code>.",
+          target: "sub-002/func/" },
       ];
 
       function addIssue(it) {
@@ -766,10 +791,10 @@ function initTutorialScenes() {
       }
 
       if (reducedMotion) {
-        if (errEl)   errEl.textContent   = "0";
-        if (warnEl)  warnEl.textContent  = "1";
-        if (hintEl)  hintEl.textContent  = "2";
-        if (summary) summary.textContent = "1 warning, 2 hints";
+        if (errEl)   errEl.textContent   = "6";
+        if (warnEl)  warnEl.textContent  = "0";
+        if (hintEl)  hintEl.textContent  = "0";
+        if (summary) summary.textContent = "6 errors";
         spinner?.classList.remove("is-spinning");
         if (list) { list.innerHTML = ""; ISSUES.forEach(addIssue); }
         return;
@@ -782,11 +807,11 @@ function initTutorialScenes() {
       if (cancelled()) return;
 
       btn?.classList.remove("is-pressed");
-      if (summary) summary.textContent = "1 warning, 2 hints";
+      if (summary) summary.textContent = "6 errors";
       await Promise.all([
-        tweenInt(errEl,  0, 0, 200, cancelled),
-        tweenInt(warnEl, 0, 1, 500, cancelled),
-        tweenInt(hintEl, 0, 2, 700, cancelled),
+        tweenInt(errEl,  0, 6, 800, cancelled),
+        tweenInt(warnEl, 0, 0, 200, cancelled),
+        tweenInt(hintEl, 0, 0, 200, cancelled),
       ]);
       spinner?.classList.remove("is-spinning");
       if (!list) return;
@@ -955,115 +980,113 @@ function initDatasetOverview() {
 
   /* ----- Series data (curated from real DICOM headers) ----- */
 
+  /* Real CLI output: OL_0001 + OL_0002 cluster as sub-001 (same
+   * PatientID, two sessions), OL_0003 stands alone as sub-002.
+   * Basenames are verbatim from `bidsmgr-convert` on this dataset. */
   const SERIES = {
     OL_0001: [
       { no: 1,  desc: "localizer_20ch_head-coil",    files: 2,  type: "scout",
         skipped: true,
-        what: "Three-plane scout used by the operator to align the rest of the protocol. BIDS Manager skips it: a row stays in the inventory marked as 'scout', but no NIfTI is written." },
+        what: "Three-plane scout used by the operator to align the rest of the protocol. BIDS Manager auto-excludes the row from conversion; the classifier confidence is 0.0 (always-exclude pattern)." },
       { no: 2,  desc: "ses-pre_run-01_fmap",         files: 2,  type: "fmap",
-        what: "Fieldmap magnitude image, run 01. Paired with series 3 (phase) for distortion correction.",
-        bids: "sub-001/ses-pre/fmap/sub-001_ses-pre_run-01_magnitude1.nii.gz" },
+        what: "Fieldmap magnitude image, run 01. Pairs with series 3 (phase) for distortion correction. The classifier assigns acq-fm2 + run-1 + magnitude1 entities automatically (confidence 0.85).",
+        bids: "sub-001/ses-pre/fmap/sub-001_ses-pre_acq-fm2_run-1_magnitude1.nii.gz" },
       { no: 3,  desc: "ses-pre_run-01_fmap",         files: 1,  type: "fmap",
-        what: "Fieldmap phase image, run 01. The phase-difference computation happens later in the fixups stage.",
-        bids: "sub-001/ses-pre/fmap/sub-001_ses-pre_run-01_phasediff.nii.gz" },
+        what: "Fieldmap phase image, run 01. The fmap fix-up stage in convert renames the second echo's _ph file to _phase2.",
+        bids: "sub-001/ses-pre/fmap/sub-001_ses-pre_acq-fm2_run-1_phase2.nii.gz" },
       { no: 4,  desc: "ses-pre_task-sparse_bold",    files: 10, type: "func",
-        what: "Task fMRI. The 'sparse' name in SeriesDescription is picked up by the schema-driven classifier as the BIDS task entity. You can rename it inline in Scene 4.",
+        what: "Task fMRI. The 'sparse' label in SeriesDescription becomes the BIDS task entity. Classifier confidence is 0.4 because 'sparse' is a free-text task name; you can confirm or rename inline in Scene 4.",
         bids: "sub-001/ses-pre/func/sub-001_ses-pre_task-sparse_bold.nii.gz" },
       { no: 6,  desc: "ses-pre_T1w",                 files: 1,  type: "anat",
-        what: "T1-weighted anatomical reference. The SeriesDescription already encodes the BIDS suffix, so the classifier maps it without user input.",
-        bids: "sub-001/ses-pre/anat/sub-001_ses-pre_T1w.nii.gz" },
+        what: "T1-weighted anatomical reference. The classifier adds acq-tfl3p2 from the sequence dictionary so the BIDS basename carries the protocol fingerprint.",
+        bids: "sub-001/ses-pre/anat/sub-001_ses-pre_acq-tfl3p2_T1w.nii.gz" },
       { no: 7,  desc: "ses-pre_run-02_fmap",         files: 2,  type: "fmap",
-        what: "Second fieldmap magnitude, run 02. IntendedFor will list the rest-BOLD acquired right after.",
-        bids: "sub-001/ses-pre/fmap/sub-001_ses-pre_run-02_magnitude1.nii.gz" },
+        what: "Second fieldmap magnitude, run 02. IntendedFor lists the rest-BOLD acquired right after; the convert log shows '2 entries' for this run.",
+        bids: "sub-001/ses-pre/fmap/sub-001_ses-pre_acq-fm2_run-2_magnitude1.nii.gz" },
       { no: 8,  desc: "ses-pre_run-02_fmap",         files: 1,  type: "fmap",
         what: "Second fieldmap phase, run 02.",
-        bids: "sub-001/ses-pre/fmap/sub-001_ses-pre_run-02_phasediff.nii.gz" },
+        bids: "sub-001/ses-pre/fmap/sub-001_ses-pre_acq-fm2_run-2_phase2.nii.gz" },
       { no: 9,  desc: "ses-pre_task-rest_bold",      files: 20, type: "func",
-        what: "Resting-state BOLD. 20 volumes. The fmap_run-02 pair is auto-attached via IntendedFor in the fixups stage.",
+        what: "Resting-state BOLD, 20 volumes. The run-02 fmap pair is auto-attached via IntendedFor in the fixups stage.",
         bids: "sub-001/ses-pre/func/sub-001_ses-pre_task-rest_bold.nii.gz" },
       { no: 99, desc: "PhoenixZIPReport",            files: 6,  type: "sr",
         skipped: true,
-        what: "Siemens scanner metadata report (SR DICOM, not image data). BIDS Manager skips it automatically." },
+        what: "Siemens scanner metadata report (SR DICOM, not image data). Always-excluded by the classifier." },
     ],
     OL_0002: [
       { no: 1, desc: "AAHead_Scout_64ch-head-coil",         files: 1, type: "scout",
-        skipped: true,
-        what: "Scout / localizer. Skipped." },
+        skipped: true, what: "Scout / localizer. Always-excluded." },
       { no: 2, desc: "AAHead_Scout_64ch-head-coil_MPR_sag", files: 1, type: "scout",
-        skipped: true,
-        what: "Sagittal MPR resample from the scout. Skipped." },
+        skipped: true, what: "Sagittal MPR resample from the scout. Always-excluded." },
       { no: 3, desc: "AAHead_Scout_64ch-head-coil_MPR_cor", files: 1, type: "scout",
-        skipped: true,
-        what: "Coronal MPR resample from the scout. Skipped." },
+        skipped: true, what: "Coronal MPR resample from the scout. Always-excluded." },
       { no: 4, desc: "AAHead_Scout_64ch-head-coil_MPR_tra", files: 1, type: "scout",
-        skipped: true,
-        what: "Transverse MPR resample from the scout. Skipped. This subject's protocol stopped here, leaving no anatomical reference, which the validator will warn about." },
+        skipped: true, what: "Transverse MPR resample from the scout. Always-excluded." },
       { no: 5, desc: "ses-post_run-01_fmap",                files: 2, type: "fmap",
-        what: "Fieldmap magnitude, run 01.",
-        bids: "sub-002/ses-post/fmap/sub-002_ses-post_run-01_magnitude1.nii.gz" },
+        what: "Fieldmap magnitude, run 01. Same patient as OL_0001 so this row lands under sub-001 / ses-post (clustered by PatientID).",
+        bids: "sub-001/ses-post/fmap/sub-001_ses-post_acq-fm2_magnitude1.nii.gz" },
       { no: 6, desc: "ses-post_run-01_fmap",                files: 1, type: "fmap",
         what: "Fieldmap phase, run 01.",
-        bids: "sub-002/ses-post/fmap/sub-002_ses-post_run-01_phasediff.nii.gz" },
+        bids: "sub-001/ses-post/fmap/sub-001_ses-post_acq-fm2_phase2.nii.gz" },
       { no: 7, desc: "ses-post_task-mb_bold_SBRef",         files: 1, type: "func",
-        what: "Single-band reference for the multiband BOLD that follows. BIDS Manager classifies it as _sbref.",
-        bids: "sub-002/ses-post/func/sub-002_ses-post_task-mb_sbref.nii.gz" },
+        what: "Single-band reference for the multiband BOLD that follows. Classifier maps it to _sbref.",
+        bids: "sub-001/ses-post/func/sub-001_ses-post_task-mb_sbref.nii.gz" },
       { no: 8, desc: "ses-post_task-mb_bold",               files: 50, type: "func",
-        what: "Multiband BOLD task. 50 volumes. The SBRef from series 7 is referenced in the sidecar via IntendedFor.",
-        bids: "sub-002/ses-post/func/sub-002_ses-post_task-mb_bold.nii.gz" },
+        what: "Multiband BOLD task. 50 volumes. The fmap_run-01 pair is auto-attached via IntendedFor.",
+        bids: "sub-001/ses-post/func/sub-001_ses-post_task-mb_bold.nii.gz" },
       { no: 10, desc: "ses-post_task-mb_bold_PhysioLog",    files: 1, type: "physio",
-        what: "Siemens physio log for the BOLD. The PhysioDcmBackend (vendored bidsphysio) parses it into BIDS-compliant _physio.tsv.gz + .json.",
-        bids: "sub-002/ses-post/func/sub-002_ses-post_task-mb_physio.tsv.gz" },
+        what: "Siemens physio log. The PhysioDcmBackend (vendored bidsphysio) parses it into BIDS-compliant _physio.tsv.gz + .json. The convert log prints 'Saving physio data' per series.",
+        bids: "sub-001/ses-post/func/sub-001_ses-post_task-mb_physio.tsv.gz" },
       { no: 99, desc: "PhoenixZIPReport",                   files: 3, type: "sr",
-        skipped: true,
-        what: "Siemens metadata SR. Skipped." },
+        skipped: true, what: "Siemens metadata SR. Always-excluded." },
     ],
     OL_0003: [
       { no: 1,  desc: "AAHead_Scout_64ch-head-coil",         files: 1,   type: "scout",
-        skipped: true, what: "Scout. Skipped." },
+        skipped: true, what: "Scout. Always-excluded." },
       { no: 2,  desc: "AAHead_Scout_64ch-head-coil_MPR_sag", files: 1,   type: "scout",
-        skipped: true, what: "Sagittal MPR resample. Skipped." },
+        skipped: true, what: "Sagittal MPR resample. Always-excluded." },
       { no: 3,  desc: "AAHead_Scout_64ch-head-coil_MPR_cor", files: 1,   type: "scout",
-        skipped: true, what: "Coronal MPR resample. Skipped." },
+        skipped: true, what: "Coronal MPR resample. Always-excluded." },
       { no: 4,  desc: "AAHead_Scout_64ch-head-coil_MPR_tra", files: 1,   type: "scout",
-        skipped: true, what: "Transverse MPR resample. Skipped." },
+        skipped: true, what: "Transverse MPR resample. Always-excluded." },
       { no: 5,  desc: "acq-space_T2w",                        files: 1,   type: "anat",
-        what: "T2-weighted anatomical (SPACE sequence). The acq-space label is picked up from the SeriesDescription.",
-        bids: "sub-003/anat/sub-003_acq-space_T2w.nii.gz" },
+        what: "T2-weighted anatomical (SPACE sequence). The acq-space label is parsed straight from the SeriesDescription.",
+        bids: "sub-002/anat/sub-002_acq-space_T2w.nii.gz" },
       { no: 6,  desc: "task-dmaging_run-01_bold_SBRef",       files: 1,   type: "func",
         what: "SBRef for run 01 of the dmaging task.",
-        bids: "sub-003/func/sub-003_task-dmaging_run-01_sbref.nii.gz" },
+        bids: "sub-002/func/sub-002_task-dmaging_run-1_sbref.nii.gz" },
       { no: 7,  desc: "task-dmaging_run-01_bold",             files: 50,  type: "func",
-        what: "Multiband BOLD, dmaging task, run 01.",
-        bids: "sub-003/func/sub-003_task-dmaging_run-01_bold.nii.gz" },
+        what: "Multiband BOLD, dmaging task, run 01. Confidence is 0.4 because 'dmaging' is a free-text task name worth reviewing.",
+        bids: "sub-002/func/sub-002_task-dmaging_run-1_bold.nii.gz" },
       { no: 9,  desc: "task-dmaging_run-01_bold_PhysioLog",   files: 1,   type: "physio",
         what: "Physio log for run 01.",
-        bids: "sub-003/func/sub-003_task-dmaging_run-01_physio.tsv.gz" },
+        bids: "sub-002/func/sub-002_task-dmaging_run-1_physio.tsv.gz" },
       { no: 10, desc: "task-dmaging_run-02_bold_SBRef",       files: 1,   type: "func",
         what: "SBRef for run 02.",
-        bids: "sub-003/func/sub-003_task-dmaging_run-02_sbref.nii.gz" },
+        bids: "sub-002/func/sub-002_task-dmaging_run-2_sbref.nii.gz" },
       { no: 11, desc: "task-dmaging_run-02_bold",             files: 50,  type: "func",
         what: "Multiband BOLD, dmaging task, run 02.",
-        bids: "sub-003/func/sub-003_task-dmaging_run-02_bold.nii.gz" },
+        bids: "sub-002/func/sub-002_task-dmaging_run-2_bold.nii.gz" },
       { no: 13, desc: "task-dmaging_run-02_bold_PhysioLog",   files: 1,   type: "physio",
         what: "Physio log for run 02.",
-        bids: "sub-003/func/sub-003_task-dmaging_run-02_physio.tsv.gz" },
+        bids: "sub-002/func/sub-002_task-dmaging_run-2_physio.tsv.gz" },
       { no: 14, desc: "task-uebung_bold_SBRef",               files: 1,   type: "func",
-        what: "SBRef for the practice / uebung task.",
-        bids: "sub-003/func/sub-003_task-uebung_sbref.nii.gz" },
+        what: "SBRef for the practice (uebung) task.",
+        bids: "sub-002/func/sub-002_task-uebung_sbref.nii.gz" },
       { no: 15, desc: "task-uebung_bold",                     files: 50,  type: "func",
-        what: "Multiband BOLD, practice / uebung task.",
-        bids: "sub-003/func/sub-003_task-uebung_bold.nii.gz" },
+        what: "Multiband BOLD, practice task.",
+        bids: "sub-002/func/sub-002_task-uebung_bold.nii.gz" },
       { no: 17, desc: "acq-15_dir-ap_dwi",                    files: 117, type: "dwi",
-        what: "Diffusion-weighted imaging, anterior-to-posterior phase-encoding, 15 directions (plus b=0 frames). 117 DICOMs = one per direction per volume.",
-        bids: "sub-003/dwi/sub-003_acq-15_dir-AP_dwi.nii.gz" },
+        what: "Diffusion-weighted imaging, anterior-to-posterior phase-encoding, 15 directions plus b=0 frames. 117 DICOMs in one series; the converter writes the matched .bval / .bvec files alongside the NIfTI.",
+        bids: "sub-002/dwi/sub-002_acq-epse2_dir-AP_dwi.nii.gz" },
       { no: 18, desc: "acq-15b0_dir-ap_dwi",                  files: 1,   type: "dwi",
-        what: "b=0 AP acquisition for the DWI. Stays in dwi/ as a reference volume.",
-        bids: "sub-003/dwi/sub-003_acq-15b0_dir-AP_dwi.nii.gz" },
+        what: "b=0 AP acquisition. Stays in dwi/ as a reference volume.",
+        bids: "sub-002/dwi/sub-002_acq-epse2b0_dir-AP_dwi.nii.gz" },
       { no: 19, desc: "acq-15_dir-pa_dwi",                    files: 1,   type: "dwi",
-        what: "b=0 PA acquisition. The classifier reroutes this to fmap/_epi automatically because PA-direction b=0 in a DWI block is the standard distortion reference.",
-        bids: "sub-003/fmap/sub-003_acq-15_dir-PA_epi.nii.gz" },
+        what: "b=0 PA acquisition. The classifier reroutes this to fmap/_epi: a PA b=0 in a DWI block is the standard distortion reference. The convert log shows the reroute under 'rerouted to fmap/epi'.",
+        bids: "sub-002/fmap/sub-002_acq-epse2_dir-AP_epi.nii.gz" },
       { no: 99, desc: "PhoenixZIPReport",                     files: 8,   type: "sr",
-        skipped: true, what: "Siemens metadata SR. Skipped." },
+        skipped: true, what: "Siemens metadata SR. Always-excluded." },
     ],
   };
 
