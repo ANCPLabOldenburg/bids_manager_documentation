@@ -45,7 +45,264 @@
   initInstallPipeline();
   initPageToc();
   initCodeCopy();
+  initDatasetOverview();
 })();
+
+
+/* ====================================================================
+ * Dataset overview (tutorial.html)
+ *
+ * Drives the per-subject series breakdown. The tab row above the
+ * overview swaps between OL_0001 / OL_0002 / OL_0003; clicking or
+ * hovering a series row updates the detail panel on the right with
+ * a description of what BIDS Manager does with that series.
+ *
+ * Series metadata is verified against the actual DICOM headers of
+ * `/Users/karelo/Development/datasets/BIDS_Manager/raw_data/MRI/
+ *  neuroimaging_unit_new` (see TUTORIAL_PLAN.md §2).
+ * ================================================================== */
+
+function initDatasetOverview() {
+  const root = document.querySelector("[data-overview]");
+  if (!root) return;
+  const list   = root.querySelector("[data-series-list]");
+  const detail = root.querySelector("[data-series-detail]");
+  const tabs   = Array.from(root.querySelectorAll("[data-tab]"));
+  if (!list || !detail || !tabs.length) return;
+
+  /* ----- Datatype icon library ----- */
+
+  const ICONS = {
+    /* Crosshair / target: scout / localizer */
+    scout: `<svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="9"/>
+      <circle cx="12" cy="12" r="3"/>
+      <path d="M12 1v4M12 19v4M1 12h4M19 12h4"/></svg>`,
+    /* Brain-y outline: anat (T1w / T2w) */
+    anat: `<svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 4c-3 0-5 2-5 4 0 1-1 2-2 3 0 2 2 3 2 4 0 3 2 5 5 5
+               s5-2 5-5c0-1 2-2 2-4-1-1-2-2-2-3 0-2-2-4-5-4z"/>
+      <path d="M12 4v16M9 9c1 1 2 1 3 0M9 15c1 1 2 1 3 0"/></svg>`,
+    /* Wave / pulse: func (BOLD) */
+    func: `<svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M2 14h3l2-7 3 14 3-10 2 6 2-3h5"/></svg>`,
+    /* Compass cross: fmap (B0 field) */
+    fmap: `<svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="9"/>
+      <path d="M12 4v16M4 12h16M6 6l12 12M6 18l12-12"/></svg>`,
+    /* Arrows in four directions: dwi (directional gradients) */
+    dwi: `<svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 4v6M9 7l3-3 3 3"/>
+      <path d="M12 20v-6M9 17l3 3 3-3"/>
+      <path d="M4 12h6M7 9l-3 3 3 3"/>
+      <path d="M20 12h-6M17 9l3 3-3 3"/></svg>`,
+    /* ECG line: physio */
+    physio: `<svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M2 12h4l2-5 3 10 3-7 2 4 2-2h4"/></svg>`,
+    /* Document: structured report */
+    sr: `<svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M6 3h9l4 4v14H6z"/>
+      <path d="M15 3v4h4M9 12h7M9 16h7M9 8h3"/></svg>`,
+  };
+
+  /* ----- Series data (curated from real DICOM headers) ----- */
+
+  const SERIES = {
+    OL_0001: [
+      { no: 1,  desc: "localizer_20ch_head-coil",    files: 2,  type: "scout",
+        skipped: true,
+        what: "Three-plane scout used by the operator to align the rest of the protocol. BIDS Manager skips it: a row stays in the inventory marked as 'scout', but no NIfTI is written." },
+      { no: 2,  desc: "ses-pre_run-01_fmap",         files: 2,  type: "fmap",
+        what: "Fieldmap magnitude image, run 01. Paired with series 3 (phase) for distortion correction.",
+        bids: "sub-001/ses-pre/fmap/sub-001_ses-pre_run-01_magnitude1.nii.gz" },
+      { no: 3,  desc: "ses-pre_run-01_fmap",         files: 1,  type: "fmap",
+        what: "Fieldmap phase image, run 01. The phase-difference computation happens later in the fixups stage.",
+        bids: "sub-001/ses-pre/fmap/sub-001_ses-pre_run-01_phasediff.nii.gz" },
+      { no: 4,  desc: "ses-pre_task-sparse_bold",    files: 10, type: "func",
+        what: "Task fMRI. The 'sparse' name in SeriesDescription is picked up by the schema-driven classifier as the BIDS task entity. You can rename it inline in Scene 4.",
+        bids: "sub-001/ses-pre/func/sub-001_ses-pre_task-sparse_bold.nii.gz" },
+      { no: 6,  desc: "ses-pre_T1w",                 files: 1,  type: "anat",
+        what: "T1-weighted anatomical reference. The SeriesDescription already encodes the BIDS suffix, so the classifier maps it without user input.",
+        bids: "sub-001/ses-pre/anat/sub-001_ses-pre_T1w.nii.gz" },
+      { no: 7,  desc: "ses-pre_run-02_fmap",         files: 2,  type: "fmap",
+        what: "Second fieldmap magnitude, run 02. IntendedFor will list the rest-BOLD acquired right after.",
+        bids: "sub-001/ses-pre/fmap/sub-001_ses-pre_run-02_magnitude1.nii.gz" },
+      { no: 8,  desc: "ses-pre_run-02_fmap",         files: 1,  type: "fmap",
+        what: "Second fieldmap phase, run 02.",
+        bids: "sub-001/ses-pre/fmap/sub-001_ses-pre_run-02_phasediff.nii.gz" },
+      { no: 9,  desc: "ses-pre_task-rest_bold",      files: 20, type: "func",
+        what: "Resting-state BOLD. 20 volumes. The fmap_run-02 pair is auto-attached via IntendedFor in the fixups stage.",
+        bids: "sub-001/ses-pre/func/sub-001_ses-pre_task-rest_bold.nii.gz" },
+      { no: 99, desc: "PhoenixZIPReport",            files: 6,  type: "sr",
+        skipped: true,
+        what: "Siemens scanner metadata report (SR DICOM, not image data). BIDS Manager skips it automatically." },
+    ],
+    OL_0002: [
+      { no: 1, desc: "AAHead_Scout_64ch-head-coil",         files: 1, type: "scout",
+        skipped: true,
+        what: "Scout / localizer. Skipped." },
+      { no: 2, desc: "AAHead_Scout_64ch-head-coil_MPR_sag", files: 1, type: "scout",
+        skipped: true,
+        what: "Sagittal MPR resample from the scout. Skipped." },
+      { no: 3, desc: "AAHead_Scout_64ch-head-coil_MPR_cor", files: 1, type: "scout",
+        skipped: true,
+        what: "Coronal MPR resample from the scout. Skipped." },
+      { no: 4, desc: "AAHead_Scout_64ch-head-coil_MPR_tra", files: 1, type: "scout",
+        skipped: true,
+        what: "Transverse MPR resample from the scout. Skipped. This subject's protocol stopped here, leaving no anatomical reference, which the validator will warn about." },
+      { no: 5, desc: "ses-post_run-01_fmap",                files: 2, type: "fmap",
+        what: "Fieldmap magnitude, run 01.",
+        bids: "sub-002/ses-post/fmap/sub-002_ses-post_run-01_magnitude1.nii.gz" },
+      { no: 6, desc: "ses-post_run-01_fmap",                files: 1, type: "fmap",
+        what: "Fieldmap phase, run 01.",
+        bids: "sub-002/ses-post/fmap/sub-002_ses-post_run-01_phasediff.nii.gz" },
+      { no: 7, desc: "ses-post_task-mb_bold_SBRef",         files: 1, type: "func",
+        what: "Single-band reference for the multiband BOLD that follows. BIDS Manager classifies it as _sbref.",
+        bids: "sub-002/ses-post/func/sub-002_ses-post_task-mb_sbref.nii.gz" },
+      { no: 8, desc: "ses-post_task-mb_bold",               files: 50, type: "func",
+        what: "Multiband BOLD task. 50 volumes. The SBRef from series 7 is referenced in the sidecar via IntendedFor.",
+        bids: "sub-002/ses-post/func/sub-002_ses-post_task-mb_bold.nii.gz" },
+      { no: 10, desc: "ses-post_task-mb_bold_PhysioLog",    files: 1, type: "physio",
+        what: "Siemens physio log for the BOLD. The PhysioDcmBackend (vendored bidsphysio) parses it into BIDS-compliant _physio.tsv.gz + .json.",
+        bids: "sub-002/ses-post/func/sub-002_ses-post_task-mb_physio.tsv.gz" },
+      { no: 99, desc: "PhoenixZIPReport",                   files: 3, type: "sr",
+        skipped: true,
+        what: "Siemens metadata SR. Skipped." },
+    ],
+    OL_0003: [
+      { no: 1,  desc: "AAHead_Scout_64ch-head-coil",         files: 1,   type: "scout",
+        skipped: true, what: "Scout. Skipped." },
+      { no: 2,  desc: "AAHead_Scout_64ch-head-coil_MPR_sag", files: 1,   type: "scout",
+        skipped: true, what: "Sagittal MPR resample. Skipped." },
+      { no: 3,  desc: "AAHead_Scout_64ch-head-coil_MPR_cor", files: 1,   type: "scout",
+        skipped: true, what: "Coronal MPR resample. Skipped." },
+      { no: 4,  desc: "AAHead_Scout_64ch-head-coil_MPR_tra", files: 1,   type: "scout",
+        skipped: true, what: "Transverse MPR resample. Skipped." },
+      { no: 5,  desc: "acq-space_T2w",                        files: 1,   type: "anat",
+        what: "T2-weighted anatomical (SPACE sequence). The acq-space label is picked up from the SeriesDescription.",
+        bids: "sub-003/anat/sub-003_acq-space_T2w.nii.gz" },
+      { no: 6,  desc: "task-dmaging_run-01_bold_SBRef",       files: 1,   type: "func",
+        what: "SBRef for run 01 of the dmaging task.",
+        bids: "sub-003/func/sub-003_task-dmaging_run-01_sbref.nii.gz" },
+      { no: 7,  desc: "task-dmaging_run-01_bold",             files: 50,  type: "func",
+        what: "Multiband BOLD, dmaging task, run 01.",
+        bids: "sub-003/func/sub-003_task-dmaging_run-01_bold.nii.gz" },
+      { no: 9,  desc: "task-dmaging_run-01_bold_PhysioLog",   files: 1,   type: "physio",
+        what: "Physio log for run 01.",
+        bids: "sub-003/func/sub-003_task-dmaging_run-01_physio.tsv.gz" },
+      { no: 10, desc: "task-dmaging_run-02_bold_SBRef",       files: 1,   type: "func",
+        what: "SBRef for run 02.",
+        bids: "sub-003/func/sub-003_task-dmaging_run-02_sbref.nii.gz" },
+      { no: 11, desc: "task-dmaging_run-02_bold",             files: 50,  type: "func",
+        what: "Multiband BOLD, dmaging task, run 02.",
+        bids: "sub-003/func/sub-003_task-dmaging_run-02_bold.nii.gz" },
+      { no: 13, desc: "task-dmaging_run-02_bold_PhysioLog",   files: 1,   type: "physio",
+        what: "Physio log for run 02.",
+        bids: "sub-003/func/sub-003_task-dmaging_run-02_physio.tsv.gz" },
+      { no: 14, desc: "task-uebung_bold_SBRef",               files: 1,   type: "func",
+        what: "SBRef for the practice / uebung task.",
+        bids: "sub-003/func/sub-003_task-uebung_sbref.nii.gz" },
+      { no: 15, desc: "task-uebung_bold",                     files: 50,  type: "func",
+        what: "Multiband BOLD, practice / uebung task.",
+        bids: "sub-003/func/sub-003_task-uebung_bold.nii.gz" },
+      { no: 17, desc: "acq-15_dir-ap_dwi",                    files: 117, type: "dwi",
+        what: "Diffusion-weighted imaging, anterior-to-posterior phase-encoding, 15 directions (plus b=0 frames). 117 DICOMs = one per direction per volume.",
+        bids: "sub-003/dwi/sub-003_acq-15_dir-AP_dwi.nii.gz" },
+      { no: 18, desc: "acq-15b0_dir-ap_dwi",                  files: 1,   type: "dwi",
+        what: "b=0 AP acquisition for the DWI. Stays in dwi/ as a reference volume.",
+        bids: "sub-003/dwi/sub-003_acq-15b0_dir-AP_dwi.nii.gz" },
+      { no: 19, desc: "acq-15_dir-pa_dwi",                    files: 1,   type: "dwi",
+        what: "b=0 PA acquisition. The classifier reroutes this to fmap/_epi automatically because PA-direction b=0 in a DWI block is the standard distortion reference.",
+        bids: "sub-003/fmap/sub-003_acq-15_dir-PA_epi.nii.gz" },
+      { no: 99, desc: "PhoenixZIPReport",                     files: 8,   type: "sr",
+        skipped: true, what: "Siemens metadata SR. Skipped." },
+    ],
+  };
+
+  let currentSubject = "OL_0001";
+  let currentIndex = 0;
+
+  function renderList() {
+    const rows = SERIES[currentSubject] || [];
+    list.innerHTML = "";
+    rows.forEach((s, i) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "series-row";
+      btn.setAttribute("data-type",    s.type);
+      btn.setAttribute("data-index",   String(i));
+      btn.setAttribute("role",         "option");
+      btn.setAttribute("aria-selected", String(i === currentIndex));
+      if (s.skipped) btn.setAttribute("data-skipped", "1");
+      if (i === currentIndex) btn.classList.add("is-active");
+      btn.innerHTML = `
+        <span class="series-icon">${ICONS[s.type] || ICONS.sr}</span>
+        <span class="series-meta">
+          <span class="series-no">Series ${s.no} . ${s.files} file${s.files === 1 ? "" : "s"}</span>
+          <span class="series-desc">${s.desc}</span>
+        </span>
+        <span class="series-chip">${s.skipped ? "skipped" : s.type}</span>
+      `;
+      btn.addEventListener("click",      () => { currentIndex = i; renderList(); renderDetail(); });
+      btn.addEventListener("mouseenter", () => { renderDetail(i); });
+      btn.addEventListener("mouseleave", () => { renderDetail(); });
+      btn.addEventListener("focus",      () => { renderDetail(i); });
+      list.appendChild(btn);
+    });
+  }
+
+  function renderDetail(previewIdx) {
+    const rows = SERIES[currentSubject] || [];
+    const idx  = previewIdx ?? currentIndex;
+    const s    = rows[idx];
+    if (!s) { detail.innerHTML = ""; return; }
+    /* Inherit the same colour as the row via the data-type custom prop
+     * so the eyebrow / chip / hover ring stay in sync. */
+    detail.style.setProperty("--series-color", `var(--${typeColorVar(s.type)})`);
+    const eyebrow = s.skipped ? "Skipped"
+                              : s.type.charAt(0).toUpperCase() + s.type.slice(1);
+    detail.innerHTML = `
+      <span class="series-detail-eyebrow">${eyebrow}</span>
+      <h3>${s.desc}</h3>
+      <p class="series-detail-meta">Series ${s.no} . ${s.files} DICOM file${s.files === 1 ? "" : "s"} . ${currentSubject}</p>
+      <p>${s.what}</p>
+      ${s.bids
+        ? `<code class="series-detail-bids">${s.bids}</code>`
+        : `<code class="series-detail-bids" style="color: var(--muted);">(not converted)</code>`}
+    `;
+  }
+
+  /* Map a datatype to the matching --stepN variable name (defined in
+   * the install pipeline palette). Keeps every coloured surface in
+   * the docs speaking the same token. */
+  function typeColorVar(type) {
+    switch (type) {
+      case "anat":   return "step1";
+      case "func":   return "step5";
+      case "fmap":   return "step4";
+      case "dwi":    return "step3";
+      case "physio": return "step2";
+      default:       return "quiet";   /* scout / sr */
+    }
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      currentSubject = tab.dataset.tab;
+      currentIndex = 0;
+      tabs.forEach((b) => {
+        const on = b === tab;
+        b.classList.toggle("is-active", on);
+        b.setAttribute("aria-selected", String(on));
+      });
+      renderList();
+      renderDetail();
+    });
+  });
+
+  renderList();
+  renderDetail();
+}
 
 
 /* ====================================================================

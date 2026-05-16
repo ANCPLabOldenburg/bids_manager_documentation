@@ -1584,6 +1584,303 @@ details.disclosure p:last-child { margin-bottom: 0; }
 }
 
 /* --------------------------------------------------------------------
+ * Tutorial page (tutorial.html)
+ *
+ * The tutorial page opens with a download card, a 3-subject overview
+ * strip, and an interactive series breakdown. The scene mocks land
+ * in a future commit.
+ * ------------------------------------------------------------------ */
+
+/* ---- Download card ---- */
+
+.download-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: center;
+  margin: 1.6em 0 0;
+  padding: 28px;
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius);
+  background: var(--panel-glass);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  box-shadow: var(--shadow);
+}
+@media (max-width: 760px) {
+  .download-card { grid-template-columns: 1fr; }
+}
+
+.download-card-body h2 { font-size: 1.6rem; }
+.download-card-body p  { color: var(--text); }
+
+.download-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.download-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border-glass);
+  background: color-mix(in srgb, var(--panel) 65%, transparent);
+}
+.download-stat strong {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--accent), var(--purple));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.download-stat span {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+/* ---- Subject overview strip (3 cards) ---- */
+
+.subject-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+  margin: 0 0 28px;
+}
+
+.subject-card {
+  position: relative;
+  padding: 22px 22px 20px;
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius);
+  background: var(--panel-glass);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.subject-card h3 { margin: 0; font-size: 1.3rem; }
+.subject-card p { margin: 0; color: var(--muted); font-size: 0.94rem; }
+
+.subject-card-eyebrow {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.subject-card-stats {
+  display: flex;
+  gap: 18px;
+  margin: 2px 0 4px;
+}
+.subject-card-stats span {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+.subject-card-stats strong {
+  font-size: 1.15rem;
+  color: var(--text);
+  font-weight: 800;
+}
+
+/* ---- Interactive dataset overview (series list + detail) ---- */
+
+.dataset-overview {
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius);
+  background: var(--panel-glass);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  padding: clamp(18px, 2vw, 24px);
+  box-shadow: var(--shadow);
+}
+.dataset-overview > .tabs { margin: 0 0 20px; }
+
+.dataset-overview-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 820px) {
+  .dataset-overview-stage { grid-template-columns: 1fr; }
+}
+
+/* The series list: one button-row per DICOM series for the active
+ * subject. Each row has an icon (datatype-coloured), the SeriesNumber +
+ * description, and a datatype chip on the right. Clicking / hovering a
+ * row updates the detail panel. */
+
+.series-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 460px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.series-list::-webkit-scrollbar { width: 6px; }
+.series-list::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+}
+
+.series-row {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  transition: border-color 160ms ease, background 160ms ease,
+              transform 160ms ease;
+}
+.series-row:hover {
+  border-color: var(--series-color, var(--accent));
+  transform: translateX(2px);
+}
+.series-row.is-active {
+  border-color: var(--series-color, var(--accent));
+  background: color-mix(in srgb, var(--series-color, var(--accent)) 12%, var(--panel));
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--series-color, var(--accent)) 32%, transparent);
+}
+.series-row .series-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--series-color, var(--accent)) 14%, transparent);
+  color: var(--series-color, var(--accent));
+}
+.series-row .series-icon svg {
+  width: 20px; height: 20px;
+  stroke: currentColor; fill: none; stroke-width: 1.7;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.series-row .series-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.series-row .series-no {
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+.series-row .series-desc {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.series-row .series-chip {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--series-color, var(--accent)) 14%, transparent);
+  color: var(--series-color, var(--accent));
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Datatype colors. Re-use the install-pipeline step palette so the
+ * docs feel cohesive. */
+.series-row[data-type="scout"]  { --series-color: var(--quiet); }
+.series-row[data-type="anat"]   { --series-color: var(--step1); }
+.series-row[data-type="func"]   { --series-color: var(--step5); }
+.series-row[data-type="fmap"]   { --series-color: var(--step4); }
+.series-row[data-type="dwi"]    { --series-color: var(--step3); }
+.series-row[data-type="physio"] { --series-color: var(--step2); }
+.series-row[data-type="sr"]     { --series-color: var(--quiet); }
+
+.series-row[data-skipped="1"] .series-desc { color: var(--muted); }
+.series-row[data-skipped="1"] .series-chip {
+  background: transparent;
+  border: 1px dashed var(--border);
+  color: var(--muted);
+}
+
+/* The detail panel on the right. */
+
+.series-detail {
+  position: sticky;
+  top: 92px;
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--panel) 70%, transparent);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  padding: 22px;
+  min-height: 320px;
+  transition: border-color 200ms ease;
+}
+@media (max-width: 820px) {
+  .series-detail { position: relative; top: 0; }
+}
+.series-detail .series-detail-eyebrow {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--series-color, var(--accent)) 14%, transparent);
+  color: var(--series-color, var(--accent));
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.series-detail h3 {
+  margin: 0 0 4px;
+  font-size: 1.2rem;
+}
+.series-detail .series-detail-meta {
+  color: var(--muted);
+  font-size: 0.88rem;
+  margin: 0 0 14px;
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+.series-detail p { color: var(--text); font-size: 0.95rem; }
+.series-detail .series-detail-bids {
+  display: block;
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--panel-strong);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  word-break: break-all;
+}
+
+/* --------------------------------------------------------------------
  * Reveal-on-scroll (IntersectionObserver)
  * ------------------------------------------------------------------ */
 

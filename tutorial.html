@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Interactive tutorial: scan, inspect, convert, edit, validate. Walk the BIDS Manager workflow step by step.">
+  <meta name="description" content="Interactive BIDS Manager tutorial. Download the example MRI dataset and watch the GUI walk through scanning, converting, editing and validating it.">
   <title>Tutorial &middot; BIDS Manager</title>
   <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
   <link rel="stylesheet" href="styles.css">
@@ -11,56 +11,284 @@
 <body>
   <div data-include="header"></div>
 
+  <!-- Persistent left-side page TOC, same component as installation.html. -->
+  <aside class="page-toc" data-toc aria-label="Page navigation">
+    <button class="page-toc-toggle" type="button"
+            aria-expanded="false" aria-controls="page-toc-panel"
+            aria-label="Toggle page navigation">
+      <span class="toc-bars" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </span>
+    </button>
+    <nav id="page-toc-panel" class="page-toc-panel" aria-label="Sections">
+      <span class="page-toc-title">On this page</span>
+      <a class="page-toc-link" href="#dataset">
+        <span class="page-toc-dot" aria-hidden="true"></span>
+        Get the dataset
+      </a>
+      <a class="page-toc-link" href="#overview">
+        <span class="page-toc-dot" aria-hidden="true"></span>
+        Dataset overview
+      </a>
+      <a class="page-toc-link" href="#scenes">
+        <span class="page-toc-dot" aria-hidden="true"></span>
+        Tutorial scenes
+      </a>
+      <a class="page-toc-link" href="#cli">
+        <span class="page-toc-dot" aria-hidden="true"></span>
+        CLI parity
+      </a>
+      <a class="page-toc-link" href="#next">
+        <span class="page-toc-dot" aria-hidden="true"></span>
+        Next steps
+      </a>
+    </nav>
+  </aside>
+
   <main>
-    <section class="section">
+    <!-- ============================================================
+         Opening + download
+         ============================================================ -->
+    <section class="section" id="dataset">
       <div class="container container-narrow prose">
-        <span class="section-eyebrow">Tutorial</span>
-        <h1>Walk the BIDS Manager workflow</h1>
+        <span class="section-eyebrow">Interactive tutorial</span>
+        <h1>Watch BIDS Manager work, then try it.</h1>
         <p class="lead">
-          An interactive simulation of the GUI: click through the steps below
-          and watch the panels respond, no install required.
+          The scenes on this page simulate the GUI's reactions to a real
+          three-subject MRI dataset. Download the same dataset below to
+          follow along on your own machine.
+        </p>
+
+        <div class="download-card">
+          <div class="download-card-body">
+            <span class="section-eyebrow" style="margin-bottom:8px;">Tutorial data</span>
+            <h2 style="margin-top:0;">Example MRI dataset</h2>
+            <p>
+              A real three-subject Siemens DICOM dump. Same data the
+              scenes below use; download it if you want to run BIDS
+              Manager against it yourself after watching.
+            </p>
+            <p>
+              <a class="btn btn-primary"
+                 href="https://mega.nz/file/9I5mnCyT#TqZlTaURWaNrg3YfyVoJIoN0eM2nu-XOE11OgA4YUqg"
+                 target="_blank" rel="noopener">
+                Download raw MRI dataset example
+              </a>
+            </p>
+            <p class="muted" style="margin: 0;">
+              Hosted on Mega.nz. The
+              <code class="inline">#TqZlTaURWaN...</code> fragment is
+              the AES decryption key, so the link works in any modern
+              browser without a Mega account.
+            </p>
+          </div>
+          <div class="download-stats" aria-hidden="true">
+            <div class="download-stat">
+              <strong>3</strong><span>subjects</span>
+            </div>
+            <div class="download-stat">
+              <strong>36</strong><span>series</span>
+            </div>
+            <div class="download-stat">
+              <strong>394</strong><span>DICOMs</span>
+            </div>
+            <div class="download-stat">
+              <strong>Siemens</strong><span>scanner</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Dataset overview diagram
+         ============================================================ -->
+    <section class="section" id="overview">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Dataset overview</span>
+          <h2 class="section-title">What's inside.</h2>
+          <p class="section-lead">
+            A flat DICOM dump per subject, no series subfolders. This
+            is how Siemens scanners typically export. Pick a subject
+            below to see its series and what BIDS Manager will do
+            with each one.
+          </p>
+        </div>
+
+        <!-- 3-up subject summary cards. Same teaching points as the
+             plan in TUTORIAL_PLAN.md §2.4. -->
+        <div class="subject-strip">
+          <article class="subject-card">
+            <span class="subject-card-eyebrow">Subject 1</span>
+            <h3>OL_0001</h3>
+            <div class="subject-card-stats">
+              <span><strong>45</strong>DICOMs</span>
+              <span><strong>9</strong>series</span>
+            </div>
+            <p>
+              Standard pre-session protocol. T1w + two fMRI tasks
+              (sparse + rest) + two fieldmap pairs.
+            </p>
+          </article>
+          <article class="subject-card">
+            <span class="subject-card-eyebrow">Subject 2</span>
+            <h3>OL_0002</h3>
+            <div class="subject-card-stats">
+              <span><strong>62</strong>DICOMs</span>
+              <span><strong>10</strong>series</span>
+            </div>
+            <p>
+              Post-session scan with <em>no anatomical reference</em>.
+              The validator will warn about it. One multiband BOLD,
+              one fieldmap pair, one physio log.
+            </p>
+          </article>
+          <article class="subject-card">
+            <span class="subject-card-eyebrow">Subject 3</span>
+            <h3>OL_0003</h3>
+            <div class="subject-card-stats">
+              <span><strong>287</strong>DICOMs</span>
+              <span><strong>17</strong>series</span>
+            </div>
+            <p>
+              Full research protocol. T2w + three fMRI tasks (multiband
+              SBRefs) + diffusion (AP runs and a PA b0 reference) +
+              two physio logs.
+            </p>
+          </article>
+        </div>
+
+        <!-- Interactive series breakdown. Subject pill row swaps the
+             active series list; clicking / hovering a row updates the
+             "What BIDS Manager does" detail panel on the right. -->
+        <div class="dataset-overview" data-overview>
+          <div class="tabs" data-tabs>
+            <div class="tab-buttons" role="tablist" aria-label="Subject">
+              <button class="tab-btn is-active" data-tab="OL_0001"
+                      role="tab" aria-selected="true">OL_0001</button>
+              <button class="tab-btn" data-tab="OL_0002"
+                      role="tab" aria-selected="false">OL_0002</button>
+              <button class="tab-btn" data-tab="OL_0003"
+                      role="tab" aria-selected="false">OL_0003</button>
+            </div>
+          </div>
+
+          <div class="dataset-overview-stage">
+            <div class="series-list" data-series-list role="listbox"
+                 aria-label="Series">
+              <!-- populated by initDatasetOverview() in script.js -->
+            </div>
+            <div class="series-detail" data-series-detail aria-live="polite">
+              <!-- populated by initDatasetOverview() in script.js -->
+            </div>
+          </div>
+        </div>
+
+        <p class="muted" style="margin-top: 20px;">
+          Series rows are coloured by BIDS datatype: blue for
+          <em>anat</em>, green for <em>func</em>, amber for
+          <em>fmap</em>, purple for <em>dwi</em>, teal for
+          <em>physio</em>. Grey rows are skipped (scout / scanner
+          report).
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Scenes placeholder (filled by future commits)
+         ============================================================ -->
+    <section class="section" id="scenes">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Tutorial scenes</span>
+        <h2 style="margin-top:0;">Step-by-step walkthrough</h2>
+        <p>
+          Nine interactive scenes that walk through what BIDS Manager
+          does when it processes the dataset above. Each scene
+          re-implements the active GUI panel in HTML, CSS and JS so
+          you can see the workflow without installing anything.
         </p>
 
         <div class="callout callout-tip">
           <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
           <div>
-            <strong>Technique B: simulated widgets.</strong>
-            <p>Each scene re-creates the active panel in HTML / CSS using the
-              same palette tokens as the GUI itself. Click the controls;
-              they will behave like the real thing on a short script. The
-              CLI counterpart for each scene is shown alongside.</p>
-            <p>The actual interactive scenes (scan, inspect, convert, edit,
-              validate) are authored in the next pass.</p>
+            <strong>Coming in the next pass.</strong>
+            <p style="margin: 0 0 8px;">
+              Planned scenes (each tied to the dataset above):
+            </p>
+            <ol style="margin: 0; padding-left: 1.2em;">
+              <li>Pick the raw and BIDS folders.</li>
+              <li>Run a scan: status chips count up to
+                <code class="inline">36 series / 30 valid / 6 skipped</code>.</li>
+              <li>Inspect the inventory table; OL_0002 lights up
+                yellow because it has no anatomical.</li>
+              <li>Override a row inline (rename
+                <code class="inline">task-sparse</code> to
+                <code class="inline">task-motor</code>).</li>
+              <li>Bulk-edit the rest-BOLD task name across all
+                subjects.</li>
+              <li>Run the conversion, watch per-subject progress and
+                streaming dcm2niix log lines.</li>
+              <li>Open the result in the Editor, click a sidecar.</li>
+              <li>Inspect a NIfTI tri-view.</li>
+              <li>Validate the dataset; OL_0002 produces the warning.</li>
+            </ol>
           </div>
         </div>
+      </div>
+    </section>
 
-        <h2>Planned scenes</h2>
-        <ol>
-          <li><strong>Set raw + BIDS folders</strong> with the path bars.</li>
-          <li><strong>Run a scan</strong>: watch the spinner + status chips
-            update as the inventory builds.</li>
-          <li><strong>Inspect the table</strong>: spotlight the columns,
-            tooltip explanations on hover.</li>
-          <li><strong>Override a row</strong>: edit a cell, see the BIDS
-            preview update.</li>
-          <li><strong>Bulk-edit</strong>: multi-select rows, apply one
-            value across the selection.</li>
-          <li><strong>Run conversion</strong>: per-subject progress
-            animation, atomic rename, status chips.</li>
-          <li><strong>Open the result in Editor</strong>: BIDS tree, sidecar
-            form pane, schema-driven required / recommended / optional
-            colour legend.</li>
-          <li><strong>Inspect a NIfTI</strong>: tri-view, crosshair scrub,
-            4-D graph for BOLD.</li>
-          <li><strong>Validate the dataset</strong>: severity chips, file
-            vs folder vs dataset scope, strict BIDS toggle.</li>
-        </ol>
+    <!-- ============================================================
+         CLI parity placeholder
+         ============================================================ -->
+    <section class="section" id="cli">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">CLI parity</span>
+        <h2 style="margin-top:0;">The same flow without the GUI</h2>
+        <p>
+          Every scene above will have its <code class="inline">bidsmgr-*</code>
+          equivalent listed here. The full flow for the example
+          dataset, end to end, is just four commands:
+        </p>
 
-        <p>Each scene will pair with its CLI equivalent
-          (<code class="inline">bidsmgr-scan</code>,
-           <code class="inline">bidsmgr-convert</code>,
-           <code class="inline">bidsmgr-validate</code>, etc.) so power
-           users can read both side by side.</p>
+<pre class="code"><span class="cmt"># 1. Scan the raw DICOM tree into an inventory TSV</span>
+bidsmgr-scan ~/Downloads/neuroimaging_unit_new ~/Downloads/inv.tsv
+
+<span class="cmt"># 2. (Optional) edit inv.tsv in any spreadsheet, then rebuild
+#    the BIDS names from your edits</span>
+bidsmgr-rebuild ~/Downloads/inv.tsv
+
+<span class="cmt"># 3. Convert. Stages per-subject and atomic-renames on success</span>
+bidsmgr-convert ~/Downloads/inv.tsv ~/Documents/bids_export
+
+<span class="cmt"># 4. Validate. Two-layer: bidsmgr's schema audit + bidsschematools</span>
+bidsmgr-validate ~/Documents/bids_export
+</pre>
+
+        <p class="muted">
+          The GUI and CLI share the same engine. Anything the
+          tutorial shows the GUI doing, you can reproduce headlessly
+          for a batch of subjects.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Next steps
+         ============================================================ -->
+    <section class="section" id="next">
+      <div class="container container-narrow prose">
+        <h2>Next steps</h2>
+        <ul>
+          <li><a href="installation.html">Install BIDS Manager</a> and
+            run it against the example dataset above.</li>
+          <li><a href="intro.html#how-it-works">Read the engine
+            overview</a>: eight stages, three lenses, one schema-driven
+            engine.</li>
+          <li>Browse the
+            <a href="https://github.com/ANCPLabOldenburg/BIDS-Manager"
+               target="_blank" rel="noopener">source on GitHub</a>.</li>
+        </ul>
       </div>
     </section>
   </main>
