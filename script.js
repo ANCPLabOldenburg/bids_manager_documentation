@@ -256,13 +256,19 @@ function initTutorialScenes() {
     },
     4(el) {
       el.querySelectorAll(".mock-row").forEach((r) => r.classList.add("is-visible"));
-      const cell    = el.querySelector('[data-mock="task-cell"]');
-      const preview = el.querySelector('[data-mock="preview-path"]');
-      const basename = el.querySelector('[data-mock="row-basename"]');
-      if (cell)     { cell.textContent     = "sparse"; cell.classList.remove("is-editing"); }
-      if (basename)  basename.textContent  = "sub-001_ses-pre_task-sparse_bold";
-      if (preview)   preview.textContent   =
+      const cell      = el.querySelector('[data-mock="task-cell"]');
+      const preview   = el.querySelector('[data-mock="preview-path"]');
+      const basename  = el.querySelector('[data-mock="row-basename"]');
+      const propsTask = el.querySelector('[data-mock="props-task"]');
+      const propsEnt  = el.querySelector('[data-mock="props-task-ent"]');
+      const propsPin  = el.querySelector('[data-mock="props-task-pin"]');
+      if (cell)      { cell.textContent      = "sparse"; cell.classList.remove("is-editing"); }
+      if (basename)   basename.textContent  = "sub-001_ses-pre_task-sparse_bold";
+      if (preview)    preview.textContent   =
         "sub-001/ses-pre/func/sub-001_ses-pre_task-sparse_bold.nii.gz";
+      if (propsTask)  propsTask.value       = "sparse";
+      if (propsEnt)   propsEnt.textContent  = "task-sparse";
+      if (propsPin)   propsPin.textContent  = "sparse";
     },
     5(el) {
       el.querySelectorAll(".mock-row").forEach((r) => r.classList.add("is-visible"));
@@ -282,6 +288,8 @@ function initTutorialScenes() {
       const input = el.querySelector('[data-mock="bulk-input"]');
       if (input) { input.value = ""; input.classList.remove("is-typing"); }
       el.querySelector('[data-mock="bulk-btn"]')?.classList.remove("is-pressed");
+      const propsSes = el.querySelector('[data-mock="bulk-props-ses"]');
+      if (propsSes) propsSes.value = "pre";
     },
     6(el) {
       ["prog-0001","prog-0002","prog-0003"].forEach((k) => {
@@ -425,23 +433,32 @@ function initTutorialScenes() {
     },
 
     /* ---------- Scene 4. Override a row inline.
-     * Animates the task cell from 'sparse' -> '' -> 'motor', updating
-     * the row basename and the BIDS preview strip in step. */
+     * Animates the task cell from 'sparse' -> '' -> 'motor'. The
+     * properties pane's task input, the predicted-path preview, the
+     * row's basename, and the BIDS preview strip all update in step
+     * (everything stays consistent like in the real GUI). */
     async 4(el, cancelled) {
-      const cell     = el.querySelector('[data-mock="task-cell"]');
-      const basename = el.querySelector('[data-mock="row-basename"]');
-      const preview  = el.querySelector('[data-mock="preview-path"]');
+      const cell      = el.querySelector('[data-mock="task-cell"]');
+      const basename  = el.querySelector('[data-mock="row-basename"]');
+      const preview   = el.querySelector('[data-mock="preview-path"]');
+      const propsTask = el.querySelector('[data-mock="props-task"]');
+      const propsEnt  = el.querySelector('[data-mock="props-task-ent"]');
+      const propsPin  = el.querySelector('[data-mock="props-task-pin"]');
       if (!cell) return;
 
-      function setBasename(task) {
-        const bn = `sub-001_ses-pre_task-${task}_bold`;
-        if (basename) basename.textContent = bn;
-        if (preview)  preview.textContent  = `sub-001/ses-pre/func/${bn}.nii.gz`;
+      function setTask(task) {
+        const display = task || "...";
+        const bn      = `sub-001_ses-pre_task-${display}_bold`;
+        if (basename)  basename.textContent  = bn;
+        if (preview)   preview.textContent   = `sub-001/ses-pre/func/${bn}.nii.gz`;
+        if (propsTask) propsTask.value       = task;
+        if (propsEnt)  propsEnt.textContent  = `task-${display}`;
+        if (propsPin)  propsPin.textContent  = display;
       }
 
       if (reducedMotion) {
         cell.textContent = "motor";
-        setBasename("motor");
+        setTask("motor");
         return;
       }
 
@@ -450,22 +467,19 @@ function initTutorialScenes() {
       cell.classList.add("is-editing");
       await delay(500);
       if (cancelled()) return;
-      /* Clear character by character to feel like a user pressing
-       * Backspace. */
       for (let i = "sparse".length; i > 0; i--) {
         if (cancelled()) return;
         cell.textContent = "sparse".slice(0, i - 1);
-        setBasename(cell.textContent || "...");
+        setTask(cell.textContent);
         await delay(60);
       }
       await delay(200);
       if (cancelled()) return;
-      /* Type the new task name. */
       const target = "motor";
       for (let i = 1; i <= target.length; i++) {
         if (cancelled()) return;
         cell.textContent = target.slice(0, i);
-        setBasename(cell.textContent);
+        setTask(cell.textContent);
         await delay(90);
       }
       await delay(400);
@@ -486,11 +500,14 @@ function initTutorialScenes() {
       const bn2 = el.querySelector('[data-mock="bulk-bn-2"]');
       const bn3 = el.querySelector('[data-mock="bulk-bn-3"]');
 
+      const propsSes = el.querySelector('[data-mock="bulk-props-ses"]');
+
       function applySession(value) {
         sesEls.forEach((s) => { s.textContent = value; });
         if (bn1) bn1.textContent = `sub-001_ses-${value}_T1w`;
         if (bn2) bn2.textContent = `sub-001_ses-${value}_task-rest_bold`;
         if (bn3) bn3.textContent = `sub-001_ses-${value}_run-01_magnitude1`;
+        if (propsSes) propsSes.value = value;
       }
 
       if (reducedMotion) {
