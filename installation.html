@@ -243,10 +243,40 @@
 </pre>
               </li>
               <li>
-                Launch from your application menu, or run
-                <code class="inline">bidsmgr</code> in any terminal.
+                Launch BIDS Manager from your application menu. That
+                entry runs the bundled launcher, which sources the
+                venv for you.
               </li>
             </ol>
+            <div class="callout callout-tip">
+              <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+              <div>
+                <strong>Using the terminal on Linux.</strong>
+                <p>
+                  The bootstrap installer keeps Python and BIDS Manager
+                  inside <code class="inline">~/BIDS-Manager/env/</code>,
+                  so a fresh shell does not see the
+                  <code class="inline">bidsmgr</code> command on its
+                  <code class="inline">PATH</code>. Activate the venv
+                  first, then call it:
+                </p>
+<pre class="code">source ~/BIDS-Manager/env/bin/activate
+bidsmgr
+</pre>
+                <p style="margin: 0;">
+                  Same applies to the
+                  <code class="inline">bidsmgr-scan</code> /
+                  <code class="inline">bidsmgr-convert</code> /
+                  <code class="inline">bidsmgr-validate</code> CLI
+                  verbs. If you want them always on
+                  <code class="inline">PATH</code>, append the line
+                  above to your <code class="inline">~/.bashrc</code> /
+                  <code class="inline">~/.zshrc</code> or symlink
+                  <code class="inline">~/BIDS-Manager/env/bin/bidsmgr</code>
+                  into <code class="inline">~/.local/bin/</code>.
+                </p>
+              </div>
+            </div>
             <div class="callout callout-warning">
               <div class="callout-icon" aria-hidden="true">&#x25c6;</div>
               <div>
@@ -555,8 +585,10 @@
             </tr>
             <tr>
               <td><strong>Linux</strong></td>
-              <td><em>BIDS-Manager</em> in the application menu, or
-                <code class="inline">bidsmgr</code> in any terminal</td>
+              <td><em>BIDS-Manager</em> in the application menu (the
+                entry sources the bundled venv for you). For terminal
+                use, see the <em>Using the terminal on Linux</em>
+                note above.</td>
               <td><code class="inline">~/BIDS-Manager/uninstall_BIDS_Manager.sh</code></td>
             </tr>
             <tr>
