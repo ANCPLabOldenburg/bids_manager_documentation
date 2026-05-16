@@ -1909,17 +1909,18 @@ details.disclosure p:last-child { margin-bottom: 0; }
 .gui-tour {
   position: relative;
   margin: 0;
-  border: 1px solid var(--border-glass);
-  border-radius: 14px;
-  overflow: hidden;
-  background: var(--bg-soft);
-  box-shadow: var(--shadow);
+  /* No overflow:hidden so popovers can extend past the screenshot
+   * edges. The image keeps its own rounded frame below. */
   isolation: isolate;
 }
 .gui-tour-img {
   display: block;
   width: 100%;
   height: auto;
+  border: 1px solid var(--border-glass);
+  border-radius: 14px;
+  background: var(--bg-soft);
+  box-shadow: var(--shadow);
 }
 
 /* Anchor: a 0-size point at the (left, top) coordinate of the
@@ -2035,22 +2036,26 @@ details.disclosure p:last-child { margin-bottom: 0; }
    * frosted glass tint */
   backdrop-filter: blur(18px) saturate(150%);
 }
-.gui-tour-pop                  ::before { /* default: pop is below marker, caret on top edge */
+/* Default position (pop below marker): caret on the top edge. */
+.gui-tour-pop::before {
   left: 50%; top: -7px;
   transform: translateX(-50%) rotate(45deg);
   border-right: none; border-bottom: none;
 }
-.gui-tour-pop[data-pos="top"]  ::before { /* pop is above, caret on bottom edge */
+/* Pop above marker: caret on the bottom edge. */
+.gui-tour-pop[data-pos="top"]::before {
   left: 50%; bottom: -7px; top: auto;
   transform: translateX(-50%) rotate(45deg);
   border-left: none; border-top: none;
 }
-.gui-tour-pop[data-pos="left"] ::before { /* pop is to the left, caret on right edge */
+/* Pop to the left of the marker: caret on the right edge. */
+.gui-tour-pop[data-pos="left"]::before {
   right: -7px; top: 50%; left: auto;
   transform: translateY(-50%) rotate(45deg);
   border-left: none; border-bottom: none;
 }
-.gui-tour-pop[data-pos="right"]::before { /* pop is to the right, caret on left edge */
+/* Pop to the right of the marker: caret on the left edge. */
+.gui-tour-pop[data-pos="right"]::before {
   left: -7px; top: 50%;
   transform: translateY(-50%) rotate(45deg);
   border-right: none; border-top: none;
