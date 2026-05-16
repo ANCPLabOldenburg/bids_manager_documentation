@@ -3549,6 +3549,85 @@ details.disclosure p:last-child { margin-bottom: 0; }
 }
 
 /* --------------------------------------------------------------------
+ * Tutorial mobile (<= 640px) polish: the scene mocks are dense, so
+ * shrink the font size, hide the brand word-mark, collapse the toggle
+ * spacing, and drop progress-row labels to a fixed narrow column.
+ * ------------------------------------------------------------------ */
+
+@media (max-width: 640px) {
+  .scene-mock { font-size: 0.78rem; border-radius: 10px; }
+
+  /* Top bar: hide the word-mark but keep the gradient logo. */
+  .mock-topbar { gap: 8px; padding: 8px 10px; min-height: 48px; }
+  .mock-topbar-brand > span:last-child { display: none; }
+  .mock-topbar-switch { margin-left: 0; }
+  .mock-switch-btn { padding: 4px 10px; font-size: 0.74rem; }
+
+  /* PathBar: drop the label, keep the field + button only. */
+  .mock-pathbar-row { grid-template-columns: minmax(0, 1fr) auto; gap: 8px; padding: 7px 10px; }
+  .mock-pathbar-label { display: none; }
+  .mock-pathbar-value { font-size: 0.76rem; }
+
+  /* Scan toolbar: small chips. */
+  .mock-tb { gap: 6px; padding: 6px 10px; }
+  .mock-tb-btn, .mock-tb-btn-primary { padding: 4px 10px; font-size: 0.74rem; }
+  .mock-tb-mini-label { font-size: 0.7rem; }
+  .mock-tb-input { font-size: 0.72rem; min-width: 80px; }
+  .mock-tb-chip { font-size: 0.7rem; padding: 1px 7px; }
+  .mock-tb-status { display: none; }   /* spinner alone is enough on mobile */
+
+  /* Counter tiles smaller. */
+  .mock-status-grid { padding: 10px; gap: 6px; }
+  .mock-stat { padding: 10px 12px; }
+  .mock-stat strong { font-size: 1.25rem; }
+
+  /* Inventory table cells shrink. */
+  .mock-inv-table { font-size: 0.7rem; }
+  .mock-inv-table .cell-id, .mock-inv-table .cell-ses,
+  .mock-inv-table .cell-conf, .mock-inv-table .cell-basename {
+    font-size: 0.7rem;
+  }
+
+  /* Editor toolbar: wrap aggressively. */
+  .mock-editor-tb { padding: 6px 10px; }
+
+  /* BIDS tree narrower. */
+  .mock-bids-tree { font-size: 0.74rem; max-height: 180px; }
+
+  /* Sidecar form: collapse the legend pill into the row, smaller font. */
+  .mock-form-row { grid-template-columns: minmax(140px, 1fr) 1fr; padding: 5px 10px; }
+  .mock-form-row .legend-pill { grid-column: 1 / -1; justify-self: start; }
+
+  /* Validation rows: drop the target pill onto the next row. */
+  .mock-val-row { grid-template-columns: 24px 1fr; }
+  .mock-val-row .mock-val-target { grid-column: 2; margin-top: 6px; }
+  .mock-val-icon { width: 22px; height: 22px; }
+
+  /* Scene controls + counter shrink. */
+  .scene-controls-row { gap: 6px; }
+  .scene-btn { padding: 5px 11px; font-size: 0.78rem; }
+  .scene-counter { font-size: 0.82rem; }
+
+  /* Progress dots: hide labels on the very narrowest screens. */
+  .scene-dot { padding: 8px 4px; }
+  .scene-dot-num { font-size: 0.68rem; }
+  .scene-progress li { min-width: 38px; }
+}
+
+/* Honour prefers-reduced-motion globally for tutorial-specific
+ * animations not already covered. */
+@media (prefers-reduced-motion: reduce) {
+  .mock-spinner.is-spinning { animation: none; }
+  .mock-row { transition: none; }
+  .mock-form-row, .mock-val-row { transition: none; }
+  .mock-row.is-visible { opacity: 1; transform: none; }
+  .mock-form-row.is-visible { opacity: 1; transform: none; }
+  .mock-val-row.is-visible { opacity: 1; transform: none; }
+  .scene { animation: none; }
+  .mock-log-line { animation: none; opacity: 1; }
+}
+
+/* --------------------------------------------------------------------
  * Reveal-on-scroll (IntersectionObserver)
  * ------------------------------------------------------------------ */
 
