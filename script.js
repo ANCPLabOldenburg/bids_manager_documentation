@@ -300,6 +300,27 @@ function initTutorialScenes() {
       const log = el.querySelector('[data-mock="log"]');
       if (log) log.innerHTML = "";
     },
+    7(el) {
+      const form = el.querySelector('[data-mock="sidecar-form"]');
+      if (form) form.innerHTML = "";
+    },
+    8(el) {
+      /* Reset crosshair positions to centre. */
+      el.querySelectorAll(".mock-crosshair").forEach((line) => {
+        line.style.transform = "";
+      });
+    },
+    9(el) {
+      const list = el.querySelector('[data-mock="val-list"]');
+      if (list) list.innerHTML = "";
+      ["val-err","val-warn","val-hint"].forEach((k) => {
+        const x = el.querySelector(`[data-mock="${k}"]`);
+        if (x) x.textContent = "0";
+      });
+      const summary = el.querySelector('[data-mock="val-summary"]');
+      if (summary) summary.textContent = "Ready";
+      el.querySelector('[data-mock="val-spinner"]')?.classList.remove("is-spinning");
+    },
   };
 
   const SCENE_PLAYERS = {
@@ -612,6 +633,160 @@ function initTutorialScenes() {
       if (counter) counter.textContent = "30 / 30 series converted";
       if (title)   title.textContent   = "Done.";
       spinner?.classList.remove("is-spinning");
+    },
+
+    /* ---------- Scene 7. Open the result in the Editor.
+     * The view-switcher pill was already in the Editor active state in
+     * markup. This player streams the schema-aware sidecar form rows
+     * for the OL_0001 T1w.json that's highlighted in the BIDS tree. */
+    async 7(el, cancelled) {
+      const form = el.querySelector('[data-mock="sidecar-form"]');
+      if (!form) return;
+      const ROWS = [
+        ["Modality",               "MR",               "req"],
+        ["Manufacturer",           "Siemens",          "req"],
+        ["ManufacturersModelName", "Prisma",           "rec"],
+        ["MagneticFieldStrength",  "3",                "req"],
+        ["DeviceSerialNumber",     "66080",            "opt"],
+        ["RepetitionTime",         "2.3",              "req"],
+        ["EchoTime",               "0.00237",          "req"],
+        ["FlipAngle",              "8",                "req"],
+        ["SliceThickness",         "1.0",              "rec"],
+        ["InstitutionName",        "BioPsy",           "opt"],
+      ];
+      form.innerHTML = "";
+      const drop = (k, v, kind) => {
+        const row = document.createElement("div");
+        row.className = `mock-form-row is-${kind}`;
+        row.innerHTML = `
+          <span class="mock-form-key">${k}</span>
+          <span class="mock-form-val">${escapeHtml(v)}</span>
+          <span class="legend-pill legend-${kind === "req" ? "req"
+                                          : kind === "rec" ? "rec"
+                                          : "opt"}">${kind === "req" ? "required"
+                                                    : kind === "rec" ? "recommended"
+                                                    : "optional"}</span>
+        `;
+        form.appendChild(row);
+        requestAnimationFrame(() => row.classList.add("is-visible"));
+      };
+
+      if (reducedMotion) {
+        ROWS.forEach(([k, v, kind]) => drop(k, v, kind));
+        return;
+      }
+      for (const [k, v, kind] of ROWS) {
+        if (cancelled()) return;
+        drop(k, v, kind);
+        await delay(140);
+      }
+    },
+
+    /* ---------- Scene 8. Inspect a NIfTI tri-view.
+     * Sweeps the shared crosshair so each tile's lines move in
+     * concert, mimicking the synced cursor in the real viewer. */
+    async 8(el, cancelled) {
+      const tiles = Array.from(el.querySelectorAll(".mock-nifti-tile"));
+      if (reducedMotion || !tiles.length) return;
+
+      const start = performance.now();
+      const DURATION = 7600;
+      return new Promise((resolve) => {
+        function step(now) {
+          if (cancelled()) { resolve(); return; }
+          const t = ((now - start) % DURATION) / DURATION;
+          /* Smooth back-and-forth across the brain, 12 px max range. */
+          const dx = Math.sin(t * Math.PI * 2) * 12;
+          const dy = Math.cos(t * Math.PI * 2) * 8;
+          tiles.forEach((tile) => {
+            const lines = tile.querySelectorAll(".mock-crosshair");
+            if (lines[0]) lines[0].setAttribute("transform", `translate(${dx} 0)`);
+            if (lines[1]) lines[1].setAttribute("transform", `translate(0 ${dy})`);
+          });
+          /* Run for one full cycle as the scene's "play" duration. */
+          if (now - start < DURATION) requestAnimationFrame(step);
+          else resolve();
+        }
+        requestAnimationFrame(step);
+      });
+    },
+
+    /* ---------- Scene 9. Validate the dataset.
+     * Spinner + 'Validating...' for a beat; then severity chips tween
+     * to 0 errors / 1 warning / 2 hints, and three issue rows appear
+     * one at a time matching what bidsmgr-validate emits on this
+     * specific dataset. */
+    async 9(el, cancelled) {
+      const btn      = el.querySelector('[data-mock="validate-btn"]');
+      const spinner  = el.querySelector('[data-mock="val-spinner"]');
+      const summary  = el.querySelector('[data-mock="val-summary"]');
+      const errEl    = el.querySelector('[data-mock="val-err"]');
+      const warnEl   = el.querySelector('[data-mock="val-warn"]');
+      const hintEl   = el.querySelector('[data-mock="val-hint"]');
+      const list     = el.querySelector('[data-mock="val-list"]');
+
+      const ISSUES = [
+        { sev: "warn", icon: "!",
+          title: "sub-002 is missing an anatomical reference (T1w / T2w)",
+          desc:  "BIDS recommends at least one anatomical per subject. Rescan if possible, or set <code>is_anat_proxy=true</code> on a scout MPR.",
+          target: "sub-002/" },
+        { sev: "hint", icon: "i",
+          title: "Task name 'dmaging' is non-standard",
+          desc:  "Functional task labels should be human-readable and ideally documented in an <code>events.json</code>. Consider renaming or adding documentation.",
+          target: "sub-003/func/" },
+        { sev: "hint", icon: "i",
+          title: "OL_0003 PA b0 routed to fmap; confirm IntendedFor",
+          desc:  "The diffusion PA acquisition was rerouted to <code>fmap/_epi</code>. Verify the auto-written <code>IntendedFor</code> list matches your intended distortion-correction target.",
+          target: "sub-003/fmap/" },
+      ];
+
+      function addIssue(it) {
+        const li = document.createElement("li");
+        li.className = "mock-val-row";
+        li.setAttribute("data-sev", it.sev);
+        li.innerHTML = `
+          <span class="mock-val-icon">${it.icon}</span>
+          <div>
+            <div class="mock-val-title">${escapeHtml(it.title)}</div>
+            <div class="mock-val-desc">${it.desc}</div>
+          </div>
+          <span class="mock-val-target">${escapeHtml(it.target)}</span>
+        `;
+        list.appendChild(li);
+        requestAnimationFrame(() => li.classList.add("is-visible"));
+      }
+
+      if (reducedMotion) {
+        if (errEl)   errEl.textContent   = "0";
+        if (warnEl)  warnEl.textContent  = "1";
+        if (hintEl)  hintEl.textContent  = "2";
+        if (summary) summary.textContent = "1 warning, 2 hints";
+        spinner?.classList.remove("is-spinning");
+        if (list) { list.innerHTML = ""; ISSUES.forEach(addIssue); }
+        return;
+      }
+
+      btn?.classList.add("is-pressed");
+      spinner?.classList.add("is-spinning");
+      if (summary) summary.textContent = "Validating dataset...";
+      await delay(900);
+      if (cancelled()) return;
+
+      btn?.classList.remove("is-pressed");
+      if (summary) summary.textContent = "1 warning, 2 hints";
+      await Promise.all([
+        tweenInt(errEl,  0, 0, 200, cancelled),
+        tweenInt(warnEl, 0, 1, 500, cancelled),
+        tweenInt(hintEl, 0, 2, 700, cancelled),
+      ]);
+      spinner?.classList.remove("is-spinning");
+      if (!list) return;
+      list.innerHTML = "";
+      for (const it of ISSUES) {
+        if (cancelled()) return;
+        addIssue(it);
+        await delay(420);
+      }
     },
   };
 

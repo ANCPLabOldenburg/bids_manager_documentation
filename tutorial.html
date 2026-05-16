@@ -499,18 +499,24 @@
                 <span class="scene-dot-num">6</span>
                 <span class="scene-dot-label">Convert</span>
               </button></li>
-              <li><button class="scene-dot is-locked" type="button"
-                          disabled aria-disabled="true">
+              <li><button class="scene-dot" type="button"
+                          data-scene-jump="7" role="tab"
+                          aria-selected="false"
+                          aria-label="Scene 7: Open in Editor">
                 <span class="scene-dot-num">7</span>
                 <span class="scene-dot-label">Editor</span>
               </button></li>
-              <li><button class="scene-dot is-locked" type="button"
-                          disabled aria-disabled="true">
+              <li><button class="scene-dot" type="button"
+                          data-scene-jump="8" role="tab"
+                          aria-selected="false"
+                          aria-label="Scene 8: Inspect NIfTI">
                 <span class="scene-dot-num">8</span>
                 <span class="scene-dot-label">NIfTI</span>
               </button></li>
-              <li><button class="scene-dot is-locked" type="button"
-                          disabled aria-disabled="true">
+              <li><button class="scene-dot" type="button"
+                          data-scene-jump="9" role="tab"
+                          aria-selected="false"
+                          aria-label="Scene 9: Validate dataset">
                 <span class="scene-dot-num">9</span>
                 <span class="scene-dot-label">Validate</span>
               </button></li>
@@ -520,7 +526,7 @@
               <button type="button" class="scene-btn" data-scene-prev
                       aria-label="Previous scene">&larr; Prev</button>
               <span class="scene-counter" data-scene-counter>
-                Scene <strong>1</strong> of 6 (available)
+                Scene <strong>1</strong> of 9
               </span>
               <button type="button" class="scene-btn" data-scene-next
                       aria-label="Next scene">Next &rarr;</button>
@@ -1345,6 +1351,422 @@ bidsmgr-rebuild ~/Downloads/inv.tsv</pre>
             <footer class="scene-cli">
               <span class="scene-cli-label">CLI equivalent</span>
               <pre class="code">bidsmgr-convert ~/Downloads/inv.tsv ~/Documents/bids_export -j 3</pre>
+            </footer>
+          </article>
+
+          <!-- ================================================
+               SCENE 7. Open the result in the Editor.
+               ================================================ -->
+          <article class="scene" data-scene="7" data-scene-key="editor"
+                   aria-labelledby="scene-7-title">
+            <header class="scene-header">
+              <span class="scene-eyebrow">Scene 7</span>
+              <h3 id="scene-7-title">Open the result in the Editor.</h3>
+              <p>
+                Conversion finished, BIDS dataset on disk. Switch to
+                the Editor view, point it at the BIDS root, and click
+                a sidecar to fix metadata. The form is generated from
+                the BIDS schema for the row's datatype + suffix.
+              </p>
+            </header>
+
+            <div class="scene-body">
+              <div class="scene-mock scene-mock-editor">
+                <div class="mock-topbar">
+                  <span class="mock-topbar-brand">
+                    <span class="mock-topbar-logo" aria-hidden="true">B</span>
+                    <span>BIDS Manager</span>
+                  </span>
+                  <div class="mock-topbar-switch">
+                    <button class="mock-switch-btn"
+                            data-mock="sw-conv" type="button">Converter</button>
+                    <button class="mock-switch-btn is-active"
+                            data-mock="sw-edit" type="button">Editor</button>
+                  </div>
+                  <span class="mock-tb-grow" aria-hidden="true"></span>
+                  <button class="mock-tb-btn" type="button">Settings&hellip;</button>
+                </div>
+
+                <!-- Editor toolbar -->
+                <div class="mock-editor-tb">
+                  <button class="mock-tb-btn" type="button">Open BIDS root</button>
+                  <span class="mock-tb-sep" aria-hidden="true"></span>
+                  <button class="mock-tb-btn" type="button">Validate file</button>
+                  <button class="mock-tb-btn" type="button">Validate folder</button>
+                  <button class="mock-tb-btn" type="button">Validate dataset</button>
+                  <span class="mock-tb-sep" aria-hidden="true"></span>
+                  <span class="mock-tb-mini-label">Strict BIDS</span>
+                  <span class="mock-toggle" aria-hidden="true">
+                    <span class="mock-toggle-knob"></span>
+                  </span>
+                  <span class="mock-tb-grow" aria-hidden="true"></span>
+                  <div class="mock-tb-chips">
+                    <span class="mock-tb-chip chip-err">
+                      <strong>0</strong> errors
+                    </span>
+                    <span class="mock-tb-chip chip-warn">
+                      <strong>1</strong> warnings
+                    </span>
+                  </div>
+                </div>
+
+                <!-- 2-col splitter: BIDS tree | sidecar form -->
+                <div class="mock-editor-split">
+                  <aside class="mock-bids-tree">
+                    <div class="mock-pane-header">BIDS DATASET</div>
+                    <ul class="mock-tree">
+                      <li class="tree-folder is-open">
+                        <span class="tree-chev" aria-hidden="true">&#9662;</span>
+                        <span class="tree-name">bids_export</span>
+                        <ul>
+                          <li class="tree-folder is-open">
+                            <span class="tree-chev">&#9662;</span>
+                            <span class="tree-name">sub-001</span>
+                            <ul>
+                              <li class="tree-folder is-open">
+                                <span class="tree-chev">&#9662;</span>
+                                <span class="tree-name">ses-pre</span>
+                                <ul>
+                                  <li class="tree-folder is-open">
+                                    <span class="tree-chev">&#9662;</span>
+                                    <span class="tree-name">anat</span>
+                                    <ul>
+                                      <li class="tree-file is-active"
+                                          data-mock="open-file">
+                                        <span class="tree-glyph json">&#123;&nbsp;&#125;</span>
+                                        <span class="tree-name">sub-001_ses-pre_T1w.json</span>
+                                        <span class="tree-dot dot-ok" aria-hidden="true"></span>
+                                      </li>
+                                      <li class="tree-file">
+                                        <span class="tree-glyph nii">nii</span>
+                                        <span class="tree-name">sub-001_ses-pre_T1w.nii.gz</span>
+                                        <span class="tree-dot dot-ok"></span>
+                                      </li>
+                                    </ul>
+                                  </li>
+                                  <li class="tree-folder">
+                                    <span class="tree-chev">&#9656;</span>
+                                    <span class="tree-name">func</span>
+                                    <span class="tree-dot dot-ok"></span>
+                                  </li>
+                                  <li class="tree-folder">
+                                    <span class="tree-chev">&#9656;</span>
+                                    <span class="tree-name">fmap</span>
+                                    <span class="tree-dot dot-ok"></span>
+                                  </li>
+                                </ul>
+                              </li>
+                            </ul>
+                          </li>
+                          <li class="tree-folder">
+                            <span class="tree-chev">&#9656;</span>
+                            <span class="tree-name">sub-002</span>
+                            <span class="tree-dot dot-warn"></span>
+                          </li>
+                          <li class="tree-folder">
+                            <span class="tree-chev">&#9656;</span>
+                            <span class="tree-name">sub-003</span>
+                            <span class="tree-dot dot-ok"></span>
+                          </li>
+                          <li class="tree-file">
+                            <span class="tree-glyph json">&#123;&nbsp;&#125;</span>
+                            <span class="tree-name">dataset_description.json</span>
+                          </li>
+                          <li class="tree-file">
+                            <span class="tree-glyph tsv">tsv</span>
+                            <span class="tree-name">participants.tsv</span>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </aside>
+
+                  <section class="mock-sidecar">
+                    <div class="mock-pane-header mock-sidecar-header">
+                      <span>SIDECAR</span>
+                      <div class="mock-sidecar-tabs">
+                        <button class="mock-sidecar-tab is-active"
+                                type="button">BIDS view</button>
+                        <button class="mock-sidecar-tab"
+                                type="button">Tree view</button>
+                      </div>
+                      <span class="mock-tb-grow" aria-hidden="true"></span>
+                      <button class="mock-tb-btn" type="button">Revert</button>
+                      <button class="mock-tb-btn-primary" type="button">Save</button>
+                    </div>
+                    <div class="mock-sidecar-legend">
+                      <span class="legend-pill legend-req">required</span>
+                      <span class="legend-pill legend-rec">recommended</span>
+                      <span class="legend-pill legend-opt">optional</span>
+                    </div>
+                    <div class="mock-sidecar-form" data-mock="sidecar-form">
+                      <!-- rows streamed in by initTutorialScenes -->
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+
+            <footer class="scene-cli">
+              <span class="scene-cli-label">CLI equivalent</span>
+              <pre class="code"><span class="cmt"># Open the GUI and let it discover the dataset; or use the
+# headless metadata stage to fill placeholders programmatically.</span>
+bidsmgr-metadata ~/Documents/bids_export --fill-todos</pre>
+            </footer>
+          </article>
+
+          <!-- ================================================
+               SCENE 8. Inspect a NIfTI tri-view.
+               ================================================ -->
+          <article class="scene" data-scene="8" data-scene-key="nifti"
+                   aria-labelledby="scene-8-title">
+            <header class="scene-header">
+              <span class="scene-eyebrow">Scene 8</span>
+              <h3 id="scene-8-title">Inspect a NIfTI tri-view.</h3>
+              <p>
+                Click a <code class="inline">.nii.gz</code> in the
+                BIDS tree and the centre pane swaps to the volume
+                viewer: sagittal, coronal, axial, all sharing one
+                crosshair. For 4-D BOLDs there's also a graph mode
+                with the per-voxel time series.
+              </p>
+            </header>
+
+            <div class="scene-body">
+              <div class="scene-mock scene-mock-editor">
+                <div class="mock-topbar">
+                  <span class="mock-topbar-brand">
+                    <span class="mock-topbar-logo" aria-hidden="true">B</span>
+                    <span>BIDS Manager</span>
+                  </span>
+                  <div class="mock-topbar-switch">
+                    <button class="mock-switch-btn" type="button">Converter</button>
+                    <button class="mock-switch-btn is-active" type="button">Editor</button>
+                  </div>
+                  <span class="mock-tb-grow" aria-hidden="true"></span>
+                  <button class="mock-tb-btn" type="button">Settings&hellip;</button>
+                </div>
+
+                <div class="mock-editor-tb">
+                  <button class="mock-tb-btn" type="button">Open BIDS root</button>
+                  <span class="mock-tb-sep" aria-hidden="true"></span>
+                  <button class="mock-tb-btn" type="button">Validate file</button>
+                  <button class="mock-tb-btn" type="button">Validate folder</button>
+                  <button class="mock-tb-btn" type="button">Validate dataset</button>
+                  <span class="mock-tb-sep" aria-hidden="true"></span>
+                  <span class="mock-tb-mini-label">Strict BIDS</span>
+                  <span class="mock-toggle"><span class="mock-toggle-knob"></span></span>
+                  <span class="mock-tb-grow" aria-hidden="true"></span>
+                  <div class="mock-tb-chips">
+                    <span class="mock-tb-chip chip-err"><strong>0</strong> errors</span>
+                    <span class="mock-tb-chip chip-warn"><strong>1</strong> warnings</span>
+                  </div>
+                </div>
+
+                <div class="mock-editor-split">
+                  <aside class="mock-bids-tree">
+                    <div class="mock-pane-header">BIDS DATASET</div>
+                    <ul class="mock-tree">
+                      <li class="tree-folder is-open">
+                        <span class="tree-chev">&#9662;</span>
+                        <span class="tree-name">bids_export</span>
+                        <ul>
+                          <li class="tree-folder is-open">
+                            <span class="tree-chev">&#9662;</span>
+                            <span class="tree-name">sub-001</span>
+                            <ul>
+                              <li class="tree-folder is-open">
+                                <span class="tree-chev">&#9662;</span>
+                                <span class="tree-name">ses-pre</span>
+                                <ul>
+                                  <li class="tree-folder is-open">
+                                    <span class="tree-chev">&#9662;</span>
+                                    <span class="tree-name">anat</span>
+                                    <ul>
+                                      <li class="tree-file">
+                                        <span class="tree-glyph json">&#123;&nbsp;&#125;</span>
+                                        <span class="tree-name">sub-001_ses-pre_T1w.json</span>
+                                        <span class="tree-dot dot-ok"></span>
+                                      </li>
+                                      <li class="tree-file is-active">
+                                        <span class="tree-glyph nii">nii</span>
+                                        <span class="tree-name">sub-001_ses-pre_T1w.nii.gz</span>
+                                        <span class="tree-dot dot-ok"></span>
+                                      </li>
+                                    </ul>
+                                  </li>
+                                </ul>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </aside>
+
+                  <section class="mock-nifti">
+                    <div class="mock-pane-header mock-nifti-header">
+                      <div class="mock-nifti-tabs">
+                        <button class="mock-tb-btn" type="button">Sagittal</button>
+                        <button class="mock-tb-btn" type="button">Coronal</button>
+                        <button class="mock-tb-btn" type="button">Axial</button>
+                        <button class="mock-tb-btn is-active" type="button">Tri-view</button>
+                      </div>
+                      <span class="mock-tb-grow" aria-hidden="true"></span>
+                      <span class="mock-tb-mini-label">Vol 1 / 1</span>
+                      <span class="mock-tb-mini-label">Slice 128</span>
+                    </div>
+
+                    <div class="mock-nifti-tiles">
+                      <div class="mock-nifti-tile">
+                        <svg viewBox="0 0 120 120" aria-hidden="true"
+                             class="mock-nifti-svg">
+                          <defs>
+                            <radialGradient id="brainSag" cx="50%" cy="50%" r="50%">
+                              <stop offset="0%" stop-color="#cdd5e0" stop-opacity="0.95"/>
+                              <stop offset="60%" stop-color="#5d6675" stop-opacity="0.6"/>
+                              <stop offset="100%" stop-color="#0a0e13" stop-opacity="0"/>
+                            </radialGradient>
+                          </defs>
+                          <ellipse cx="60" cy="58" rx="46" ry="38" fill="url(#brainSag)"/>
+                          <path d="M28 64 Q60 30 92 58 Q70 70 60 56 Q40 80 28 64Z"
+                                fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+                          <line x1="60" y1="0"  x2="60" y2="120"
+                                class="mock-crosshair" data-mock="cross-x"/>
+                          <line x1="0"  y1="58" x2="120" y2="58"
+                                class="mock-crosshair" data-mock="cross-y"/>
+                        </svg>
+                        <span class="mock-tile-label">Sagittal</span>
+                      </div>
+
+                      <div class="mock-nifti-tile">
+                        <svg viewBox="0 0 120 120" class="mock-nifti-svg">
+                          <defs>
+                            <radialGradient id="brainCor" cx="50%" cy="48%" r="55%">
+                              <stop offset="0%" stop-color="#cdd5e0" stop-opacity="0.95"/>
+                              <stop offset="60%" stop-color="#5d6675" stop-opacity="0.6"/>
+                              <stop offset="100%" stop-color="#0a0e13" stop-opacity="0"/>
+                            </radialGradient>
+                          </defs>
+                          <ellipse cx="60" cy="60" rx="42" ry="40" fill="url(#brainCor)"/>
+                          <ellipse cx="48" cy="55" rx="6" ry="10"
+                                   fill="rgba(255,255,255,0.10)"/>
+                          <ellipse cx="72" cy="55" rx="6" ry="10"
+                                   fill="rgba(255,255,255,0.10)"/>
+                          <line x1="60" y1="0"  x2="60" y2="120" class="mock-crosshair"/>
+                          <line x1="0"  y1="60" x2="120" y2="60" class="mock-crosshair"/>
+                        </svg>
+                        <span class="mock-tile-label">Coronal</span>
+                      </div>
+
+                      <div class="mock-nifti-tile">
+                        <svg viewBox="0 0 120 120" class="mock-nifti-svg">
+                          <defs>
+                            <radialGradient id="brainAx" cx="50%" cy="50%" r="52%">
+                              <stop offset="0%" stop-color="#cdd5e0" stop-opacity="0.95"/>
+                              <stop offset="65%" stop-color="#5d6675" stop-opacity="0.6"/>
+                              <stop offset="100%" stop-color="#0a0e13" stop-opacity="0"/>
+                            </radialGradient>
+                          </defs>
+                          <ellipse cx="60" cy="60" rx="44" ry="34" fill="url(#brainAx)"/>
+                          <path d="M40 64 Q60 80 80 64" fill="none"
+                                stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+                          <line x1="60" y1="0"  x2="60" y2="120" class="mock-crosshair"/>
+                          <line x1="0"  y1="60" x2="120" y2="60" class="mock-crosshair"/>
+                        </svg>
+                        <span class="mock-tile-label">Axial</span>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+
+            <footer class="scene-cli">
+              <span class="scene-cli-label">CLI equivalent</span>
+              <pre class="code"><span class="cmt"># No CLI equivalent: the tri-view is GUI-only. The headless
+# alternative is a Jupyter notebook with nibabel + matplotlib.</span></pre>
+            </footer>
+          </article>
+
+          <!-- ================================================
+               SCENE 9. Validate the dataset.
+               ================================================ -->
+          <article class="scene" data-scene="9" data-scene-key="validate"
+                   aria-labelledby="scene-9-title">
+            <header class="scene-header">
+              <span class="scene-eyebrow">Scene 9</span>
+              <h3 id="scene-9-title">Validate the dataset.</h3>
+              <p>
+                Two layers: BIDS Manager's schema audit and the
+                official <code class="inline">bidsschematools</code>
+                validator. The severity chips tick up as the engine
+                runs; the issue list below explains each finding and
+                points back at the offending file.
+              </p>
+            </header>
+
+            <div class="scene-body">
+              <div class="scene-mock scene-mock-editor">
+                <div class="mock-topbar">
+                  <span class="mock-topbar-brand">
+                    <span class="mock-topbar-logo" aria-hidden="true">B</span>
+                    <span>BIDS Manager</span>
+                  </span>
+                  <div class="mock-topbar-switch">
+                    <button class="mock-switch-btn" type="button">Converter</button>
+                    <button class="mock-switch-btn is-active" type="button">Editor</button>
+                  </div>
+                  <span class="mock-tb-grow" aria-hidden="true"></span>
+                  <button class="mock-tb-btn" type="button">Settings&hellip;</button>
+                </div>
+
+                <div class="mock-editor-tb">
+                  <button class="mock-tb-btn" type="button">Open BIDS root</button>
+                  <span class="mock-tb-sep" aria-hidden="true"></span>
+                  <button class="mock-tb-btn" type="button">Validate file</button>
+                  <button class="mock-tb-btn" type="button">Validate folder</button>
+                  <button class="mock-tb-btn is-pressed"
+                          data-mock="validate-btn" type="button">Validate dataset</button>
+                  <span class="mock-tb-sep" aria-hidden="true"></span>
+                  <span class="mock-tb-mini-label">Strict BIDS</span>
+                  <span class="mock-toggle"><span class="mock-toggle-knob"></span></span>
+                  <span class="mock-spinner" data-mock="val-spinner"
+                        aria-hidden="true"></span>
+                  <span class="mock-tb-grow" aria-hidden="true"></span>
+                  <div class="mock-tb-chips" role="status" aria-live="polite">
+                    <span class="mock-tb-chip chip-err">
+                      <strong data-mock="val-err">0</strong> errors
+                    </span>
+                    <span class="mock-tb-chip chip-warn">
+                      <strong data-mock="val-warn">0</strong> warnings
+                    </span>
+                    <span class="mock-tb-chip chip-default">
+                      <strong data-mock="val-hint">0</strong> hints
+                    </span>
+                  </div>
+                </div>
+
+                <div class="mock-validation">
+                  <div class="mock-pane-header">
+                    <span>VALIDATION</span>
+                    <span class="mock-tb-grow" aria-hidden="true"></span>
+                    <span class="muted" data-mock="val-summary">
+                      Ready
+                    </span>
+                  </div>
+                  <ul class="mock-val-list" data-mock="val-list">
+                    <!-- Issue rows appended by initTutorialScenes -->
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <footer class="scene-cli">
+              <span class="scene-cli-label">CLI equivalent</span>
+              <pre class="code"><span class="cmt"># Two-layer validator. --strict enables bidsschematools strict mode.</span>
+bidsmgr-validate ~/Documents/bids_export
+bidsmgr-validate ~/Documents/bids_export --strict --html</pre>
             </footer>
           </article>
         </div>
