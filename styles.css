@@ -2863,6 +2863,269 @@ details.disclosure p:last-child { margin-bottom: 0; }
 .mock-inv-note { font-size: 0.74rem; }
 .mock-inv-note em { font-style: italic; }
 
+/* --- Tight inventory scroll (Scenes 4 / 5: focused on a few rows) -- */
+.mock-inv-scroll-tight { max-height: 280px; }
+
+/* --- Selected row + editable cell (Scene 4) ---- */
+
+.mock-row.is-selected.is-visible {
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+}
+.mock-row.is-selected td:first-child {
+  box-shadow: inset 3px 0 var(--accent);
+}
+
+.cell-editable {
+  position: relative;
+  cursor: text;
+}
+.cell-editable.is-editing {
+  background: color-mix(in srgb, var(--accent) 14%, var(--panel));
+  border-radius: 4px;
+  outline: 1px solid var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+.cell-editable.is-editing::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: var(--accent);
+  margin-left: 1px;
+  vertical-align: -2px;
+  animation: mock-cursor 800ms steps(2) infinite;
+}
+
+/* --- BIDS preview strip below the table (Scene 4) ---- */
+
+.mock-bids-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--panel);
+  border-top: 1px solid var(--border-glass);
+}
+.mock-preview-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.mock-bids-preview code {
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  color: var(--text);
+  background: var(--panel-strong);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 4px 8px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1 1 auto;
+}
+
+/* --- Bulk edit dialog (Scene 5) ----
+ * The dialog lives inside the mock window and is layered above the
+ * inventory table when active. JS toggles is-shown to reveal it.  */
+
+.mock-dialog-wrap {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--bg) 60%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 240ms ease, visibility 240ms;
+  z-index: 4;
+}
+.mock-dialog-wrap.is-shown {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.mock-dialog {
+  width: min(420px, 90%);
+  padding: 20px 22px 18px;
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  background: var(--panel-glass-strong);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  box-shadow: 0 22px 60px color-mix(in srgb, var(--accent) 30%, transparent);
+  transform: translateY(6px) scale(0.98);
+  transition: transform 240ms ease;
+}
+.mock-dialog-wrap.is-shown .mock-dialog { transform: none; }
+
+.mock-dialog-eyebrow {
+  display: inline-block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.mock-dialog-title {
+  margin: 0 0 14px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.mock-dialog-field {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.mock-dialog-field span {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+.mock-dialog-input {
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.86rem;
+}
+.mock-dialog-input:focus { outline: 1px solid var(--accent); }
+.mock-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* --- Run conversion (Scene 6): progress bars + streaming log ---- */
+
+.mock-convert {
+  padding: 18px 18px 14px;
+  background: var(--panel);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.mock-convert-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.mock-convert-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+}
+.mock-convert-title strong { color: var(--text); font-weight: 700; }
+.mock-convert-counter {
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.84rem;
+  color: var(--muted);
+}
+
+.mock-progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.mock-progress-row {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr) 48px;
+  gap: 12px;
+  align-items: center;
+}
+.mock-progress-label {
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.84rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+.mock-progress-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--panel-strong);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  position: relative;
+}
+.mock-progress-fill {
+  position: absolute;
+  inset: 0;
+  width: var(--prog, 0%);
+  background: linear-gradient(90deg, var(--accent),
+                color-mix(in srgb, var(--accent) 60%, #ffffff));
+  border-radius: 999px;
+  transition: width 80ms linear;
+  box-shadow: 0 0 10px var(--glow-accent);
+}
+.mock-progress-pct {
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  color: var(--text);
+  text-align: right;
+  font-weight: 600;
+}
+
+.mock-log-wrap {
+  border: 1px solid var(--border-glass);
+  border-radius: 8px;
+  background: var(--bg);
+  overflow: hidden;
+}
+.mock-log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border-glass);
+  background: var(--panel-strong);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  font-weight: 600;
+}
+.mock-log {
+  margin: 0;
+  padding: 10px 12px;
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.76rem;
+  line-height: 1.5;
+  color: var(--text);
+  height: 180px;
+  overflow-y: auto;
+  white-space: pre;
+  background: var(--bg);
+}
+.mock-log-line { display: block; opacity: 0; animation: log-fade 220ms ease forwards; }
+.mock-log-line.log-tag-scan      { color: var(--accent); }
+.mock-log-line.log-tag-stage     { color: var(--purple); }
+.mock-log-line.log-tag-fixup     { color: var(--teal);   }
+.mock-log-line.log-tag-done      { color: var(--success); font-weight: 700; }
+.mock-log-line.log-tag-warn      { color: var(--warning); }
+@keyframes log-fade {
+  from { opacity: 0; transform: translateY(2px); }
+  to   { opacity: 1; transform: none; }
+}
+
 /* --------------------------------------------------------------------
  * Reveal-on-scroll (IntersectionObserver)
  * ------------------------------------------------------------------ */

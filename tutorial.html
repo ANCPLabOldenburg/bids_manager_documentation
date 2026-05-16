@@ -478,19 +478,24 @@
                 <span class="scene-dot-num">3</span>
                 <span class="scene-dot-label">Inspect</span>
               </button></li>
-              <li><button class="scene-dot is-locked" type="button"
-                          disabled aria-disabled="true"
-                          aria-label="Scene 4: coming soon">
+              <li><button class="scene-dot" type="button"
+                          data-scene-jump="4" role="tab"
+                          aria-selected="false"
+                          aria-label="Scene 4: Override row">
                 <span class="scene-dot-num">4</span>
                 <span class="scene-dot-label">Override</span>
               </button></li>
-              <li><button class="scene-dot is-locked" type="button"
-                          disabled aria-disabled="true">
+              <li><button class="scene-dot" type="button"
+                          data-scene-jump="5" role="tab"
+                          aria-selected="false"
+                          aria-label="Scene 5: Bulk edit">
                 <span class="scene-dot-num">5</span>
                 <span class="scene-dot-label">Bulk</span>
               </button></li>
-              <li><button class="scene-dot is-locked" type="button"
-                          disabled aria-disabled="true">
+              <li><button class="scene-dot" type="button"
+                          data-scene-jump="6" role="tab"
+                          aria-selected="false"
+                          aria-label="Scene 6: Run conversion">
                 <span class="scene-dot-num">6</span>
                 <span class="scene-dot-label">Convert</span>
               </button></li>
@@ -515,7 +520,7 @@
               <button type="button" class="scene-btn" data-scene-prev
                       aria-label="Previous scene">&larr; Prev</button>
               <span class="scene-counter" data-scene-counter>
-                Scene <strong>1</strong> of 3 (available)
+                Scene <strong>1</strong> of 6 (available)
               </span>
               <button type="button" class="scene-btn" data-scene-next
                       aria-label="Next scene">Next &rarr;</button>
@@ -966,16 +971,382 @@ xdg-open ~/Downloads/inv.tsv <span class="cmt"># Linux</span></pre>
             </footer>
           </article>
 
-          <!-- More-scenes-coming hint, replaces the old preview list. -->
-          <div class="scene-more">
-            <p>
-              <strong>Scenes 4 through 9</strong> are landing in the
-              next pass: override a row inline, bulk-edit across
-              subjects, run the conversion (per-subject progress +
-              streaming log), open the Editor, inspect a NIfTI
-              tri-view, and validate the dataset.
-            </p>
-          </div>
+          <!-- ================================================
+               SCENE 4. Override a row inline.
+               ================================================ -->
+          <article class="scene" data-scene="4" data-scene-key="override"
+                   aria-labelledby="scene-4-title">
+            <header class="scene-header">
+              <span class="scene-eyebrow">Scene 4</span>
+              <h3 id="scene-4-title">Override a row inline.</h3>
+              <p>
+                The schema's guess is just a default. Click any cell
+                in the inspection table to overwrite it; the
+                <em>BIDS preview</em> strip at the bottom updates as
+                you type. Here we rename the <code class="inline">sparse</code>
+                task placeholder to its real label,
+                <code class="inline">motor</code>.
+              </p>
+            </header>
+
+            <div class="scene-body">
+              <div class="scene-mock scene-mock-converter">
+                <div class="mock-topbar">
+                  <span class="mock-topbar-brand">
+                    <span class="mock-topbar-logo" aria-hidden="true">B</span>
+                    <span>BIDS Manager</span>
+                  </span>
+                  <div class="mock-topbar-switch">
+                    <button class="mock-switch-btn is-active" type="button">Converter</button>
+                    <button class="mock-switch-btn" type="button">Editor</button>
+                  </div>
+                  <span class="mock-tb-grow" aria-hidden="true"></span>
+                  <button class="mock-tb-btn" type="button">Settings&hellip;</button>
+                  <button class="mock-tb-btn-primary" type="button">Run conversion</button>
+                </div>
+
+                <div class="mock-tb mock-tb-compact">
+                  <button class="mock-tb-btn" type="button">Scan&hellip;</button>
+                  <span class="mock-tb-mini-label">TSV:</span>
+                  <span class="mock-tb-input">inventory.tsv</span>
+                  <span class="mock-tb-sep" aria-hidden="true"></span>
+                  <div class="mock-tb-chips">
+                    <span class="mock-tb-chip chip-success">
+                      <strong>30</strong> valid
+                    </span>
+                    <span class="mock-tb-chip chip-warn">
+                      <strong>1</strong> warnings
+                    </span>
+                    <span class="mock-tb-chip chip-err">
+                      <strong>0</strong> error
+                    </span>
+                    <span class="mock-tb-chip chip-default">
+                      <strong>6</strong> skipped
+                    </span>
+                  </div>
+                </div>
+
+                <div class="mock-inv-scroll mock-inv-scroll-tight">
+                  <table class="mock-inv-table">
+                    <thead>
+                      <tr>
+                        <th class="col-cb"></th>
+                        <th class="col-status"></th>
+                        <th class="col-id">id</th>
+                        <th class="col-ses">ses</th>
+                        <th class="col-data">data</th>
+                        <th class="col-task">task</th>
+                        <th class="col-conf">conf</th>
+                        <th class="col-basename">predicted basename</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="mock-row" data-status="ok" data-type="anat">
+                        <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
+                        <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
+                        <td class="cell-id">sub-001</td>
+                        <td class="cell-ses">pre</td>
+                        <td class="cell-data"><span class="mock-chip-data">anat</span></td>
+                        <td class="cell-task">&mdash;</td>
+                        <td class="cell-conf conf-high">0.98</td>
+                        <td class="cell-basename"><code>sub-001_ses-pre_T1w</code></td>
+                      </tr>
+                      <tr class="mock-row is-selected"
+                          data-mock="edit-row"
+                          data-status="ok" data-type="func">
+                        <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
+                        <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
+                        <td class="cell-id">sub-001</td>
+                        <td class="cell-ses">pre</td>
+                        <td class="cell-data"><span class="mock-chip-data">func</span></td>
+                        <td class="cell-task cell-editable" data-mock="task-cell">sparse</td>
+                        <td class="cell-conf" data-mock="conf-cell">
+                          <span class="conf-med">0.82</span>
+                        </td>
+                        <td class="cell-basename">
+                          <code data-mock="row-basename">sub-001_ses-pre_task-sparse_bold</code>
+                        </td>
+                      </tr>
+                      <tr class="mock-row" data-status="ok" data-type="func">
+                        <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
+                        <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
+                        <td class="cell-id">sub-001</td>
+                        <td class="cell-ses">pre</td>
+                        <td class="cell-data"><span class="mock-chip-data">func</span></td>
+                        <td class="cell-task">rest</td>
+                        <td class="cell-conf conf-high">0.95</td>
+                        <td class="cell-basename"><code>sub-001_ses-pre_task-rest_bold</code></td>
+                      </tr>
+                      <tr class="mock-row" data-status="ok" data-type="fmap">
+                        <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
+                        <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
+                        <td class="cell-id">sub-001</td>
+                        <td class="cell-ses">pre</td>
+                        <td class="cell-data"><span class="mock-chip-data">fmap</span></td>
+                        <td class="cell-task">&mdash;</td>
+                        <td class="cell-conf conf-high">0.93</td>
+                        <td class="cell-basename"><code>sub-001_ses-pre_run-01_magnitude1</code></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="mock-bids-preview">
+                  <span class="mock-preview-label">BIDS preview</span>
+                  <code data-mock="preview-path">sub-001/ses-pre/func/sub-001_ses-pre_task-sparse_bold.nii.gz</code>
+                </div>
+              </div>
+            </div>
+
+            <footer class="scene-cli">
+              <span class="scene-cli-label">CLI equivalent</span>
+              <pre class="code"><span class="cmt"># Edit inv.tsv in any spreadsheet, then rebuild the BIDS names</span>
+bidsmgr-rebuild ~/Downloads/inv.tsv</pre>
+            </footer>
+          </article>
+
+          <!-- ================================================
+               SCENE 5. Bulk-edit across subjects.
+               ================================================ -->
+          <article class="scene" data-scene="5" data-scene-key="bulk"
+                   aria-labelledby="scene-5-title">
+            <header class="scene-header">
+              <span class="scene-eyebrow">Scene 5</span>
+              <h3 id="scene-5-title">Bulk-edit across rows.</h3>
+              <p>
+                Select multiple rows, click <em>Bulk edit&hellip;</em>,
+                and apply one value to every selected cell. Here we
+                relabel the OL_0001 session from
+                <code class="inline">pre</code> to
+                <code class="inline">baseline</code> across all of
+                the subject's rows in one motion.
+              </p>
+            </header>
+
+            <div class="scene-body">
+              <div class="scene-mock scene-mock-converter">
+                <div class="mock-topbar">
+                  <span class="mock-topbar-brand">
+                    <span class="mock-topbar-logo" aria-hidden="true">B</span>
+                    <span>BIDS Manager</span>
+                  </span>
+                  <div class="mock-topbar-switch">
+                    <button class="mock-switch-btn is-active" type="button">Converter</button>
+                    <button class="mock-switch-btn" type="button">Editor</button>
+                  </div>
+                  <span class="mock-tb-grow" aria-hidden="true"></span>
+                  <button class="mock-tb-btn" type="button">Settings&hellip;</button>
+                  <button class="mock-tb-btn-primary" type="button">Run conversion</button>
+                </div>
+
+                <div class="mock-tb mock-tb-compact">
+                  <button class="mock-tb-btn" type="button">Scan&hellip;</button>
+                  <span class="mock-tb-mini-label">TSV:</span>
+                  <span class="mock-tb-input">inventory.tsv</span>
+                  <span class="mock-tb-sep" aria-hidden="true"></span>
+                  <div class="mock-tb-chips">
+                    <span class="mock-tb-chip chip-success"><strong>30</strong> valid</span>
+                    <span class="mock-tb-chip chip-warn"><strong>1</strong> warnings</span>
+                    <span class="mock-tb-chip chip-err"><strong>0</strong> error</span>
+                    <span class="mock-tb-chip chip-default"><strong>6</strong> skipped</span>
+                  </div>
+                  <span class="mock-tb-grow" aria-hidden="true"></span>
+                  <button class="mock-tb-btn" type="button"
+                          data-mock="bulk-btn">Bulk edit&hellip;</button>
+                </div>
+
+                <div class="mock-inv-scroll mock-inv-scroll-tight">
+                  <table class="mock-inv-table">
+                    <thead>
+                      <tr>
+                        <th class="col-cb"></th>
+                        <th class="col-status"></th>
+                        <th class="col-id">id</th>
+                        <th class="col-ses">ses</th>
+                        <th class="col-data">data</th>
+                        <th class="col-task">task</th>
+                        <th class="col-conf">conf</th>
+                        <th class="col-basename">predicted basename</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="mock-row" data-mock="bulk-row"
+                          data-status="ok" data-type="anat">
+                        <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
+                        <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
+                        <td class="cell-id">sub-001</td>
+                        <td class="cell-ses" data-mock="bulk-ses">pre</td>
+                        <td class="cell-data"><span class="mock-chip-data">anat</span></td>
+                        <td class="cell-task">&mdash;</td>
+                        <td class="cell-conf conf-high">0.98</td>
+                        <td class="cell-basename">
+                          <code data-mock="bulk-bn-1">sub-001_ses-pre_T1w</code>
+                        </td>
+                      </tr>
+                      <tr class="mock-row" data-mock="bulk-row"
+                          data-status="ok" data-type="func">
+                        <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
+                        <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
+                        <td class="cell-id">sub-001</td>
+                        <td class="cell-ses" data-mock="bulk-ses">pre</td>
+                        <td class="cell-data"><span class="mock-chip-data">func</span></td>
+                        <td class="cell-task">rest</td>
+                        <td class="cell-conf conf-high">0.95</td>
+                        <td class="cell-basename">
+                          <code data-mock="bulk-bn-2">sub-001_ses-pre_task-rest_bold</code>
+                        </td>
+                      </tr>
+                      <tr class="mock-row" data-mock="bulk-row"
+                          data-status="ok" data-type="fmap">
+                        <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
+                        <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
+                        <td class="cell-id">sub-001</td>
+                        <td class="cell-ses" data-mock="bulk-ses">pre</td>
+                        <td class="cell-data"><span class="mock-chip-data">fmap</span></td>
+                        <td class="cell-task">&mdash;</td>
+                        <td class="cell-conf conf-high">0.93</td>
+                        <td class="cell-basename">
+                          <code data-mock="bulk-bn-3">sub-001_ses-pre_run-01_magnitude1</code>
+                        </td>
+                      </tr>
+                      <tr class="mock-row" data-status="ok" data-type="func">
+                        <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
+                        <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
+                        <td class="cell-id">sub-002</td>
+                        <td class="cell-ses">post</td>
+                        <td class="cell-data"><span class="mock-chip-data">func</span></td>
+                        <td class="cell-task">mb</td>
+                        <td class="cell-conf conf-high">0.96</td>
+                        <td class="cell-basename"><code>sub-002_ses-post_task-mb_bold</code></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Bulk edit dialog, hidden by default. -->
+                <div class="mock-dialog-wrap" data-mock="bulk-dialog">
+                  <div class="mock-dialog">
+                    <span class="mock-dialog-eyebrow">Bulk edit . 3 rows</span>
+                    <h4 class="mock-dialog-title">Set session for selected rows</h4>
+                    <label class="mock-dialog-field">
+                      <span>session</span>
+                      <input class="mock-dialog-input" type="text"
+                             data-mock="bulk-input" value="">
+                    </label>
+                    <div class="mock-dialog-actions">
+                      <button class="mock-tb-btn" type="button">Cancel</button>
+                      <button class="mock-tb-btn-primary" type="button">Apply</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <footer class="scene-cli">
+              <span class="scene-cli-label">CLI equivalent</span>
+              <pre class="code"><span class="cmt"># Use a spreadsheet's fill-down on the session column, then rebuild</span>
+bidsmgr-rebuild ~/Downloads/inv.tsv</pre>
+            </footer>
+          </article>
+
+          <!-- ================================================
+               SCENE 6. Run the conversion.
+               ================================================ -->
+          <article class="scene" data-scene="6" data-scene-key="convert"
+                   aria-labelledby="scene-6-title">
+            <header class="scene-header">
+              <span class="scene-eyebrow">Scene 6</span>
+              <h3 id="scene-6-title">Run the conversion.</h3>
+              <p>
+                Click <em>Run conversion</em>. BIDS Manager stages each
+                subject in a private temp tree, runs the right backend
+                per row (<code class="inline">dcm2niix</code> for MRI,
+                vendored <code class="inline">bidsphysio</code> for
+                physio), then atomically renames into the BIDS root.
+                The fixups stage stitches the cross-file metadata
+                (<em>fmap</em>, <em>IntendedFor</em>,
+                <em>scans.tsv</em>) at the end.
+              </p>
+            </header>
+
+            <div class="scene-body">
+              <div class="scene-mock scene-mock-converter">
+                <div class="mock-topbar">
+                  <span class="mock-topbar-brand">
+                    <span class="mock-topbar-logo" aria-hidden="true">B</span>
+                    <span>BIDS Manager</span>
+                  </span>
+                  <div class="mock-topbar-switch">
+                    <button class="mock-switch-btn is-active" type="button">Converter</button>
+                    <button class="mock-switch-btn" type="button">Editor</button>
+                  </div>
+                  <span class="mock-tb-grow" aria-hidden="true"></span>
+                  <button class="mock-tb-btn" type="button">Settings&hellip;</button>
+                  <button class="mock-tb-btn-primary is-pressed" type="button">
+                    Run conversion
+                  </button>
+                </div>
+
+                <div class="mock-convert">
+                  <div class="mock-convert-header">
+                    <span class="mock-convert-title">
+                      <span class="mock-spinner is-spinning"
+                            data-mock="conv-spinner" aria-hidden="true"></span>
+                      <strong data-mock="conv-title">Converting&hellip;</strong>
+                    </span>
+                    <span class="mock-convert-counter"
+                          data-mock="conv-counter">0 / 30 series converted</span>
+                  </div>
+
+                  <div class="mock-progress-list">
+                    <div class="mock-progress-row">
+                      <span class="mock-progress-label">OL_0001</span>
+                      <div class="mock-progress-bar">
+                        <div class="mock-progress-fill"
+                             data-mock="prog-0001"
+                             style="--prog: 0%;"></div>
+                      </div>
+                      <span class="mock-progress-pct"
+                            data-mock="pct-0001">0%</span>
+                    </div>
+                    <div class="mock-progress-row">
+                      <span class="mock-progress-label">OL_0002</span>
+                      <div class="mock-progress-bar">
+                        <div class="mock-progress-fill"
+                             data-mock="prog-0002"
+                             style="--prog: 0%;"></div>
+                      </div>
+                      <span class="mock-progress-pct"
+                            data-mock="pct-0002">0%</span>
+                    </div>
+                    <div class="mock-progress-row">
+                      <span class="mock-progress-label">OL_0003</span>
+                      <div class="mock-progress-bar">
+                        <div class="mock-progress-fill"
+                             data-mock="prog-0003"
+                             style="--prog: 0%;"></div>
+                      </div>
+                      <span class="mock-progress-pct"
+                            data-mock="pct-0003">0%</span>
+                    </div>
+                  </div>
+
+                  <div class="mock-log-wrap">
+                    <div class="mock-log-header">
+                      <span>log</span>
+                      <span class="muted">streaming</span>
+                    </div>
+                    <pre class="mock-log" data-mock="log"></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <footer class="scene-cli">
+              <span class="scene-cli-label">CLI equivalent</span>
+              <pre class="code">bidsmgr-convert ~/Downloads/inv.tsv ~/Documents/bids_export -j 3</pre>
+            </footer>
+          </article>
         </div>
       </div>
     </section>

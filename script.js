@@ -254,6 +254,52 @@ function initTutorialScenes() {
     3(el) {
       el.querySelectorAll(".mock-row").forEach((r) => r.classList.remove("is-visible"));
     },
+    4(el) {
+      el.querySelectorAll(".mock-row").forEach((r) => r.classList.add("is-visible"));
+      const cell    = el.querySelector('[data-mock="task-cell"]');
+      const preview = el.querySelector('[data-mock="preview-path"]');
+      const basename = el.querySelector('[data-mock="row-basename"]');
+      if (cell)     { cell.textContent     = "sparse"; cell.classList.remove("is-editing"); }
+      if (basename)  basename.textContent  = "sub-001_ses-pre_task-sparse_bold";
+      if (preview)   preview.textContent   =
+        "sub-001/ses-pre/func/sub-001_ses-pre_task-sparse_bold.nii.gz";
+    },
+    5(el) {
+      el.querySelectorAll(".mock-row").forEach((r) => r.classList.add("is-visible"));
+      /* Selection state and bulk-edit values reset to 'pre'. */
+      el.querySelectorAll('[data-mock="bulk-row"]')
+        .forEach((r) => r.classList.remove("is-selected"));
+      el.querySelectorAll('[data-mock="bulk-ses"]')
+        .forEach((s) => { s.textContent = "pre"; });
+      const bn1 = el.querySelector('[data-mock="bulk-bn-1"]');
+      const bn2 = el.querySelector('[data-mock="bulk-bn-2"]');
+      const bn3 = el.querySelector('[data-mock="bulk-bn-3"]');
+      if (bn1) bn1.textContent = "sub-001_ses-pre_T1w";
+      if (bn2) bn2.textContent = "sub-001_ses-pre_task-rest_bold";
+      if (bn3) bn3.textContent = "sub-001_ses-pre_run-01_magnitude1";
+      const dialog = el.querySelector('[data-mock="bulk-dialog"]');
+      if (dialog) dialog.classList.remove("is-shown");
+      const input = el.querySelector('[data-mock="bulk-input"]');
+      if (input) { input.value = ""; input.classList.remove("is-typing"); }
+      el.querySelector('[data-mock="bulk-btn"]')?.classList.remove("is-pressed");
+    },
+    6(el) {
+      ["prog-0001","prog-0002","prog-0003"].forEach((k) => {
+        const fill = el.querySelector(`[data-mock="${k}"]`);
+        if (fill) fill.style.setProperty("--prog", "0%");
+      });
+      ["pct-0001","pct-0002","pct-0003"].forEach((k) => {
+        const pct = el.querySelector(`[data-mock="${k}"]`);
+        if (pct) pct.textContent = "0%";
+      });
+      const counter = el.querySelector('[data-mock="conv-counter"]');
+      if (counter) counter.textContent = "0 / 30 series converted";
+      const title = el.querySelector('[data-mock="conv-title"]');
+      if (title) title.textContent = "Converting...";
+      el.querySelector('[data-mock="conv-spinner"]')?.classList.add("is-spinning");
+      const log = el.querySelector('[data-mock="log"]');
+      if (log) log.innerHTML = "";
+    },
   };
 
   const SCENE_PLAYERS = {
@@ -356,7 +402,226 @@ function initTutorialScenes() {
         await delay(60);
       }
     },
+
+    /* ---------- Scene 4. Override a row inline.
+     * Animates the task cell from 'sparse' -> '' -> 'motor', updating
+     * the row basename and the BIDS preview strip in step. */
+    async 4(el, cancelled) {
+      const cell     = el.querySelector('[data-mock="task-cell"]');
+      const basename = el.querySelector('[data-mock="row-basename"]');
+      const preview  = el.querySelector('[data-mock="preview-path"]');
+      if (!cell) return;
+
+      function setBasename(task) {
+        const bn = `sub-001_ses-pre_task-${task}_bold`;
+        if (basename) basename.textContent = bn;
+        if (preview)  preview.textContent  = `sub-001/ses-pre/func/${bn}.nii.gz`;
+      }
+
+      if (reducedMotion) {
+        cell.textContent = "motor";
+        setBasename("motor");
+        return;
+      }
+
+      await delay(500);
+      if (cancelled()) return;
+      cell.classList.add("is-editing");
+      await delay(500);
+      if (cancelled()) return;
+      /* Clear character by character to feel like a user pressing
+       * Backspace. */
+      for (let i = "sparse".length; i > 0; i--) {
+        if (cancelled()) return;
+        cell.textContent = "sparse".slice(0, i - 1);
+        setBasename(cell.textContent || "...");
+        await delay(60);
+      }
+      await delay(200);
+      if (cancelled()) return;
+      /* Type the new task name. */
+      const target = "motor";
+      for (let i = 1; i <= target.length; i++) {
+        if (cancelled()) return;
+        cell.textContent = target.slice(0, i);
+        setBasename(cell.textContent);
+        await delay(90);
+      }
+      await delay(400);
+      if (cancelled()) return;
+      cell.classList.remove("is-editing");
+    },
+
+    /* ---------- Scene 5. Bulk-edit across rows.
+     * Selects 3 OL_0001 rows, opens the Bulk-edit dialog, types
+     * 'baseline' as the new session, and applies. */
+    async 5(el, cancelled) {
+      const rows    = Array.from(el.querySelectorAll('[data-mock="bulk-row"]'));
+      const button  = el.querySelector('[data-mock="bulk-btn"]');
+      const dialog  = el.querySelector('[data-mock="bulk-dialog"]');
+      const input   = el.querySelector('[data-mock="bulk-input"]');
+      const sesEls  = Array.from(el.querySelectorAll('[data-mock="bulk-ses"]'));
+      const bn1 = el.querySelector('[data-mock="bulk-bn-1"]');
+      const bn2 = el.querySelector('[data-mock="bulk-bn-2"]');
+      const bn3 = el.querySelector('[data-mock="bulk-bn-3"]');
+
+      function applySession(value) {
+        sesEls.forEach((s) => { s.textContent = value; });
+        if (bn1) bn1.textContent = `sub-001_ses-${value}_T1w`;
+        if (bn2) bn2.textContent = `sub-001_ses-${value}_task-rest_bold`;
+        if (bn3) bn3.textContent = `sub-001_ses-${value}_run-01_magnitude1`;
+      }
+
+      if (reducedMotion) {
+        rows.forEach((r) => r.classList.add("is-selected"));
+        applySession("baseline");
+        return;
+      }
+
+      await delay(400);
+      if (cancelled()) return;
+      /* Multi-select rows one at a time (shift-click feel). */
+      for (const r of rows) {
+        if (cancelled()) return;
+        r.classList.add("is-selected");
+        await delay(280);
+      }
+      await delay(300);
+      if (cancelled()) return;
+      button?.classList.add("is-pressed");
+      await delay(180);
+      button?.classList.remove("is-pressed");
+      dialog?.classList.add("is-shown");
+      await delay(400);
+      if (cancelled()) return;
+      if (input) {
+        input.classList.add("is-typing");
+        input.focus({ preventScroll: true });
+        const target = "baseline";
+        for (let i = 1; i <= target.length; i++) {
+          if (cancelled()) return;
+          input.value = target.slice(0, i);
+          await delay(70);
+        }
+        input.classList.remove("is-typing");
+      }
+      await delay(450);
+      if (cancelled()) return;
+      /* Apply: all 3 session cells flip to 'baseline'. */
+      applySession("baseline");
+      await delay(250);
+      dialog?.classList.remove("is-shown");
+    },
+
+    /* ---------- Scene 6. Run the conversion.
+     * Three per-subject progress bars tween at staggered rates while
+     * a log pane streams realistic engine output. The counter ticks
+     * up as series complete. */
+    async 6(el, cancelled) {
+      const subjects = [
+        { key: "0001", ms: 4200, weight: 9  },
+        { key: "0002", ms: 5400, weight: 10 },
+        { key: "0003", ms: 8200, weight: 11 },   /* 30 = 9 + 10 + 11 */
+      ];
+      const counter = el.querySelector('[data-mock="conv-counter"]');
+      const title   = el.querySelector('[data-mock="conv-title"]');
+      const spinner = el.querySelector('[data-mock="conv-spinner"]');
+      const log     = el.querySelector('[data-mock="log"]');
+
+      const LOG = [
+        ["scan",  "using rebuild_from_entities to refresh BIDS names"],
+        ["stage", "[OL_0001] staging at /tmp/.tmp_bidsmgr/sub-001/"],
+        ["stage", "[OL_0001] dcm2niix: ses-pre/anat/sub-001_ses-pre_T1w.nii.gz"],
+        ["stage", "[OL_0001] dcm2niix: ses-pre/func/sub-001_ses-pre_task-rest_bold.nii.gz"],
+        ["fixup", "[OL_0001] fmap fixups: IntendedFor -> rest_bold, sparse_bold"],
+        ["done",  "[OL_0001] committed atomically (9 series)"],
+        ["stage", "[OL_0002] staging at /tmp/.tmp_bidsmgr/sub-002/"],
+        ["stage", "[OL_0002] dcm2niix: ses-post/func/sub-002_ses-post_task-mb_bold.nii.gz"],
+        ["stage", "[OL_0002] physio: ses-post/func/sub-002_ses-post_task-mb_physio.tsv.gz"],
+        ["warn",  "[OL_0002] no anatomical reference; will flag in validation"],
+        ["done",  "[OL_0002] committed atomically (10 series)"],
+        ["stage", "[OL_0003] staging at /tmp/.tmp_bidsmgr/sub-003/"],
+        ["stage", "[OL_0003] dcm2niix: anat/sub-003_acq-space_T2w.nii.gz"],
+        ["stage", "[OL_0003] dcm2niix: dwi/sub-003_acq-15_dir-AP_dwi.nii.gz"],
+        ["fixup", "[OL_0003] classifier: dir-PA b0 rerouted to fmap/_epi"],
+        ["done",  "[OL_0003] committed atomically (11 series)"],
+        ["done",  "30 series -> BIDS . 0 errors . 1 warning"],
+      ];
+
+      if (reducedMotion) {
+        subjects.forEach((s) => {
+          el.querySelector(`[data-mock="prog-${s.key}"]`)?.style.setProperty("--prog", "100%");
+          const pct = el.querySelector(`[data-mock="pct-${s.key}"]`);
+          if (pct) pct.textContent = "100%";
+        });
+        if (counter) counter.textContent = "30 / 30 series converted";
+        if (title)   title.textContent   = "Done.";
+        spinner?.classList.remove("is-spinning");
+        if (log) {
+          log.innerHTML = LOG.map(([tag, msg]) =>
+            `<span class="mock-log-line log-tag-${tag}">${escapeHtml(msg)}</span>`).join("\n") + "\n";
+        }
+        return;
+      }
+
+      /* Stream log lines in parallel with progress. */
+      const totalWeight = subjects.reduce((s, x) => s + x.weight, 0);
+      let logged = 0;
+      const logInterval = setInterval(() => {
+        if (cancelled()) { clearInterval(logInterval); return; }
+        if (logged >= LOG.length) { clearInterval(logInterval); return; }
+        if (log) {
+          const [tag, msg] = LOG[logged];
+          const line = document.createElement("span");
+          line.className = `mock-log-line log-tag-${tag}`;
+          line.textContent = msg + "\n";
+          log.appendChild(line);
+          log.scrollTop = log.scrollHeight;
+        }
+        logged++;
+      }, 440);
+
+      /* Per-subject progress bars; advance counter as each completes. */
+      let completedWeight = 0;
+      const promises = subjects.map((s) => new Promise((resolve) => {
+        const start = performance.now();
+        const fill  = el.querySelector(`[data-mock="prog-${s.key}"]`);
+        const pct   = el.querySelector(`[data-mock="pct-${s.key}"]`);
+        function step(now) {
+          if (cancelled()) { resolve(); return; }
+          const t = Math.min((now - start) / s.ms, 1);
+          const eased = 1 - Math.pow(1 - t, 2);
+          const v = Math.round(eased * 100);
+          if (fill) fill.style.setProperty("--prog", v + "%");
+          if (pct)  pct.textContent = v + "%";
+          const seriesNow = Math.round(((completedWeight + s.weight * eased) / totalWeight) * 30);
+          if (counter) counter.textContent = `${seriesNow} / 30 series converted`;
+          if (t < 1) requestAnimationFrame(step);
+          else { completedWeight += s.weight; resolve(); }
+        }
+        requestAnimationFrame(step);
+      }));
+      await Promise.all(promises);
+      if (cancelled()) { clearInterval(logInterval); return; }
+      /* Make sure the log finishes streaming. */
+      while (logged < LOG.length) {
+        if (cancelled()) { clearInterval(logInterval); return; }
+        await delay(120);
+      }
+      clearInterval(logInterval);
+      if (counter) counter.textContent = "30 / 30 series converted";
+      if (title)   title.textContent   = "Done.";
+      spinner?.classList.remove("is-spinning");
+    },
   };
+
+  /* Minimal HTML escape for log lines (text content uses textContent
+   * elsewhere; the bulk reduced-motion path uses innerHTML). */
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, (c) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
+  }
 
   /* ----------------- activation + navigation ----------------- */
 
