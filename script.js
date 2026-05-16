@@ -42,7 +42,153 @@
   initScrollReveal();
   initWorkflowFlowchart();
   initTabs();
+  initInstallPipeline();
 })();
+
+
+/* ====================================================================
+ * Install pipeline (installation page)
+ *
+ * Drives the 7-step "what does the installer do?" visualization. Each
+ * step cumulatively reveals one SVG layer; the active layer pulses; a
+ * progress bar fills between auto-advances. Hover a chip to preview,
+ * click a chip to pin, click Pause / Auto-play to toggle.
+ *
+ * Honours prefers-reduced-motion (skips the auto-advance loop).
+ * ================================================================== */
+
+function initInstallPipeline() {
+  const pipe = document.querySelector("[data-pipeline]");
+  if (!pipe) return;
+  const chips    = Array.from(pipe.querySelectorAll(".pipeline-chip"));
+  const layers   = Array.from(pipe.querySelectorAll(".stage-layer"));
+  const detail   = pipe.querySelector("[data-pipeline-detail]");
+  const progress = pipe.querySelector(".pipeline-progress");
+  const playBtn  = pipe.querySelector("[data-pipeline-play]");
+  if (!chips.length || !layers.length || !detail) return;
+
+  const STEPS = [
+    {
+      title: "Create the install folder",
+      body:  "A new <code class=\"inline\">~/BIDS-Manager/</code> directory is created in your home. Everything BIDS Manager needs lives inside it, fully isolated from the rest of your system."
+    },
+    {
+      title: "Download portable Python 3.10",
+      body:  "The installer downloads a portable Python 3.10 build matched to your OS and architecture. Apple Silicon and Linux x86_64 use a standalone build; Windows uses Python's official embeddable distribution. Your system Python is untouched."
+    },
+    {
+      title: "Extract the runtime",
+      body:  "The archive is unpacked under <code class=\"inline\">~/BIDS-Manager/</code> and <code class=\"inline\">pip</code> is bootstrapped. The runtime is now fully self-contained."
+    },
+    {
+      title: "Create the virtual environment",
+      body:  "A virtual environment is built at <code class=\"inline\">~/BIDS-Manager/env/</code>. This is where BIDS Manager and its dependencies will live, kept separate from any other Python tools you have."
+    },
+    {
+      title: "pip install bids-manager",
+      body:  "<code class=\"inline\">pip install bids-manager</code> runs inside the venv. PyQt6, mne-bids, dcm2niix, pydicom, bidsschematools, and the rest of the dependency tree are pulled in here."
+    },
+    {
+      title: "Register a native launcher",
+      body:  "A native launcher is created. Windows: Desktop + Start Menu shortcut. macOS: <code class=\"inline\">~/Applications/BIDS-Manager.app</code> bundle. Linux: application-menu entry with the BIDS Manager icon."
+    },
+    {
+      title: "Write the uninstaller",
+      body:  "An uninstaller is placed alongside the launcher. One double-click later, every file, the venv, every shortcut, all goes away. No leftover system changes to chase down."
+    }
+  ];
+
+  const STEP_MS = 4200;
+  let current  = 0;
+  let pinned   = -1;
+  let running  = true;
+  let stepStart = performance.now();
+
+  function render(idx) {
+    chips.forEach((c, i) => {
+      const on = i === idx;
+      c.classList.toggle("is-active", on);
+      c.setAttribute("aria-selected", String(on));
+    });
+    layers.forEach((l, i) => {
+      l.classList.toggle("is-shown",   i <= idx);
+      l.classList.toggle("is-current", i === idx);
+    });
+    const s = STEPS[idx];
+    detail.innerHTML = `
+      <h3>
+        <span class="detail-step">Step ${idx + 1} of ${STEPS.length}</span>
+        <span class="detail-title">${s.title}</span>
+      </h3>
+      <p>${s.body}</p>
+    `;
+  }
+
+  function tick(ts) {
+    if (running) {
+      const elapsed = ts - stepStart;
+      const p = Math.min(elapsed / STEP_MS, 1);
+      progress.style.setProperty("--progress", (p * 100).toFixed(1) + "%");
+      if (p >= 1) {
+        current = (current + 1) % STEPS.length;
+        render(current);
+        stepStart = ts;
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  chips.forEach((chip, i) => {
+    chip.addEventListener("click", () => {
+      current = i;
+      pinned = i;
+      running = false;
+      progress.style.setProperty("--progress", "0%");
+      render(current);
+      if (playBtn) playBtn.textContent = "Auto-play";
+    });
+    chip.addEventListener("mouseenter", () => {
+      if (pinned < 0 && running) {
+        running = false;
+        render(i);
+      }
+    });
+    chip.addEventListener("mouseleave", () => {
+      if (pinned < 0) {
+        running = true;
+        stepStart = performance.now();
+        render(current);
+      }
+    });
+    chip.addEventListener("focus", () => {
+      if (pinned < 0) render(i);
+    });
+  });
+
+  if (playBtn) {
+    playBtn.addEventListener("click", () => {
+      if (running) {
+        running = false;
+        playBtn.textContent = "Auto-play";
+      } else {
+        pinned = -1;
+        running = true;
+        stepStart = performance.now();
+        playBtn.textContent = "Pause";
+      }
+    });
+  }
+
+  render(0);
+
+  const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  if (!reducedMotion) {
+    requestAnimationFrame(tick);
+  } else if (playBtn) {
+    running = false;
+    playBtn.textContent = "Auto-play";
+  }
+}
 
 
 /* ====================================================================

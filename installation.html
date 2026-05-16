@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Install BIDS Manager on macOS, Linux, or Windows. One-click bootstrap installer or pip install.">
+  <meta name="description" content="Install BIDS Manager in two clicks or in four commands. Per-OS bootstrap installer or pip + venv / conda / uv.">
   <title>Installation &middot; BIDS Manager</title>
   <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
   <link rel="stylesheet" href="styles.css">
@@ -13,42 +13,73 @@
 
   <main>
     <!-- ============================================================
-         Opening
+         Opening: installation is easy, two methods.
          ============================================================ -->
     <section class="section">
       <div class="container container-narrow prose">
         <span class="section-eyebrow">Installation</span>
-        <h1>Install BIDS Manager</h1>
+        <h1>Installation is easy.</h1>
         <p class="lead">
-          Two paths. A one-double-click bootstrap installer for each OS that
-          pulls a portable Python 3.10, builds an isolated environment, and
-          registers a native launcher. Or
-          <code class="inline">pip install bids-manager</code> in any Python
-          3.10 to 3.14 you already have.
+          Two methods, both supported, both lead to the same working
+          BIDS Manager. Pick the one that fits your workflow.
         </p>
 
-        <div class="callout callout-tip">
-          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
-          <div>
-            <strong>No system Python required.</strong>
-            <p>The bootstrap installer downloads its own portable Python so
-              nothing on your machine is changed. Uninstall is a single
-              double-click and removes everything cleanly.</p>
-          </div>
+        <div class="method-cards">
+          <a class="method-card" href="#bootstrap">
+            <span class="method-badge is-rec">Recommended</span>
+            <div class="method-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3v12"/>
+                <path d="M7 10l5 5 5-5"/>
+                <path d="M5 21h14"/>
+              </svg>
+            </div>
+            <h3>Method 1. One-click installer</h3>
+            <p>
+              Download the per-OS bootstrap script and double-click it.
+              Brings its own portable Python, builds an isolated environment,
+              and registers a native launcher. Nothing on your system is
+              changed.
+            </p>
+            <span class="method-go">Go to the installer guide &rarr;</span>
+          </a>
+
+          <a class="method-card" href="#manual">
+            <span class="method-badge is-adv">For developers</span>
+            <div class="method-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="16" rx="2"/>
+                <path d="M7 9l3 3-3 3"/>
+                <path d="M13 15h4"/>
+              </svg>
+            </div>
+            <h3>Method 2. Manual install (CLI)</h3>
+            <p>
+              Install Python yourself, create a virtual environment
+              (venv, conda, or uv), and
+              <code class="inline">pip install bids-manager</code>. Useful
+              if you already manage Python environments or want to keep
+              everything inside your existing toolchain.
+            </p>
+            <span class="method-go">Go to the manual guide &rarr;</span>
+          </a>
         </div>
       </div>
     </section>
 
     <!-- ============================================================
-         Bootstrap installer (per-OS tabs)
+         METHOD 1: bootstrap installer
          ============================================================ -->
     <section class="section" id="bootstrap">
       <div class="container container-narrow prose">
-        <span class="section-eyebrow">Recommended</span>
-        <h2 style="margin-top:0;">Bootstrap installer</h2>
+        <span class="section-eyebrow">Method 1 . One-click installer</span>
+        <h2 style="margin-top:0;">Run the bootstrap installer</h2>
         <p>
-          One ZIP for all three OSes. Inside is one folder per platform with a
-          single script to run.
+          One ZIP for all three operating systems. Inside is a folder per
+          platform with a single script. Run it once, and BIDS Manager shows
+          up as a regular app on your machine.
         </p>
 
         <p>
@@ -59,8 +90,7 @@
         </p>
 
         <p class="muted">
-          Unzip it, open the folder for your operating system, and follow the
-          steps below.
+          Unzip the file, open the folder for your OS, and follow the steps.
         </p>
 
         <div class="tabs" data-tabs>
@@ -75,12 +105,11 @@
 
           <!-- ----- macOS ----- -->
           <div class="tab-panel is-active" data-panel="macos" role="tabpanel">
-            <p>
+            <p class="muted">
               The macOS installer is built for Apple Silicon (arm64). On
-              Intel Macs, use the
-              <a href="#pip-install">pip install path</a> instead.
+              Intel Macs, use <a href="#manual">Method 2 (manual)</a>
+              instead.
             </p>
-
             <ol class="steps">
               <li>
                 <strong>Double-click</strong>
@@ -90,35 +119,34 @@
               <li>
                 macOS shows an
                 <em>unidentified developer</em> warning. Click
-                <strong>Done</strong>. The OS has now seen the file and lets
-                you whitelist it.
+                <strong>Done</strong>. The OS has now seen the file and
+                lets you whitelist it.
               </li>
               <li>
-                Open <strong>System Settings &rarr; Privacy &amp; Security</strong>,
+                Open
+                <strong>System Settings &rarr; Privacy &amp; Security</strong>,
                 scroll to the <em>Security</em> section, and click
-                <strong>Open Anyway</strong> next to the blocked script.
+                <strong>Open Anyway</strong>.
               </li>
               <li>
-                Re-double-click the script. A terminal opens and the install
-                runs (3 to 5 minutes on a typical connection).
+                Re-double-click the script. A terminal opens and the
+                install runs. 3 to 5 minutes on a typical connection.
               </li>
               <li>
-                When it finishes, launch BIDS Manager from
-                <strong>Applications</strong>, Launchpad, or Spotlight. The
-                app icon is registered in
+                Launch BIDS Manager from
+                <strong>Applications</strong>, Launchpad, or Spotlight.
+                The app icon lives at
                 <code class="inline">~/Applications/BIDS-Manager.app</code>.
               </li>
             </ol>
-
             <div class="callout callout-tip">
               <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
               <div>
                 <strong>Prefer the terminal?</strong>
                 <p>
-                  Open Terminal in the <code class="inline">MacOS/</code>
-                  folder and run
-                  <code class="inline">./install_BIDS_Manager.command</code>.
-                  Same result, no Gatekeeper dialog.
+                  Run
+                  <code class="inline">./install_BIDS_Manager.command</code>
+                  directly. Same result, no Gatekeeper dialog.
                 </p>
               </div>
             </div>
@@ -126,18 +154,14 @@
 
           <!-- ----- Linux ----- -->
           <div class="tab-panel" data-panel="linux" role="tabpanel">
-            <p>
-              The Linux installer is built for x86_64. It registers BIDS
-              Manager in your application menu with the app icon, so it can
-              be launched like any other app afterwards.
+            <p class="muted">
+              Built for x86_64. The installer registers BIDS Manager in
+              your application menu with the app icon.
             </p>
-
             <ol class="steps">
               <li>
                 Open a terminal in the <code class="inline">Linux/</code>
-                folder (right-click in the file manager &rarr;
-                <em>Open terminal here</em>, or
-                <code class="inline">cd</code> manually).
+                folder.
               </li>
               <li>
                 Make the script executable.
@@ -150,20 +174,18 @@
 </pre>
               </li>
               <li>
-                When it finishes, launch BIDS Manager from your application
-                menu or run <code class="inline">bidsmgr</code> in any
-                terminal.
+                Launch from your application menu, or run
+                <code class="inline">bidsmgr</code> in any terminal.
               </li>
             </ol>
-
             <div class="callout callout-warning">
               <div class="callout-icon" aria-hidden="true">&#x25c6;</div>
               <div>
                 <strong>XFCE / Thunar users.</strong>
                 <p>
-                  By default Thunar refuses to execute shell scripts on
-                  double-click. Either run the script from a terminal (as
-                  above), or enable script execution once with:
+                  Thunar refuses to execute shell scripts on double-click
+                  by default. Either run from a terminal, or enable script
+                  execution once:
                 </p>
 <pre class="code">xfconf-query --channel thunar \
   --property /misc-exec-shell-scripts-by-default \
@@ -175,84 +197,281 @@
 
           <!-- ----- Windows ----- -->
           <div class="tab-panel" data-panel="windows" role="tabpanel">
-            <p>
-              The Windows installer is built for x86_64 (Windows 10 and
-              Windows 11). It places a Desktop shortcut and a Start Menu
-              entry with the BIDS Manager icon.
+            <p class="muted">
+              Built for x86_64 (Windows 10 and 11). Places a Desktop
+              shortcut and a Start Menu entry with the BIDS Manager icon.
             </p>
-
             <ol class="steps">
               <li>
-                Inside the unzipped <code class="inline">Windows/</code>
-                folder, <strong>double-click</strong>
+                Inside the <code class="inline">Windows/</code> folder,
+                <strong>double-click</strong>
                 <code class="inline">install_BIDS_Manager.bat</code>.
               </li>
               <li>
-                SmartScreen may show a blue
-                <em>Windows protected your PC</em> banner. Click
+                If SmartScreen shows
+                <em>Windows protected your PC</em>, click
                 <strong>More info &rarr; Run anyway</strong>.
               </li>
               <li>
-                A console opens and the install runs. When it finishes, a
+                A console opens and the install runs. A
                 <strong>BIDS-Manager</strong> shortcut appears on your
-                Desktop and in the Start Menu.
+                Desktop and in the Start Menu when finished.
               </li>
               <li>
                 Double-click the Desktop shortcut to launch.
               </li>
             </ol>
-
             <div class="callout callout-tip">
               <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
               <div>
                 <strong>First launch is slower.</strong>
                 <p>
-                  The first time the app starts, it pre-compiles the embedded
-                  Python and caches the BIDS schema. Subsequent launches are
-                  fast.
+                  The first start pre-compiles the embedded Python and
+                  caches the BIDS schema. Subsequent launches are fast.
                 </p>
               </div>
             </div>
           </div>
         </div>
-
-        <!-- "What the installer does" disclosure -->
-        <details class="disclosure">
-          <summary>What does the installer do?</summary>
-          <ol>
-            <li>Creates a <code class="inline">BIDS-Manager/</code> folder in
-              your home directory.</li>
-            <li>Downloads a portable Python 3.10 build (Apple Silicon arm64,
-              Linux x86_64, or Windows embeddable depending on your OS).</li>
-            <li>Extracts it under
-              <code class="inline">~/BIDS-Manager/</code> so nothing touches
-              your system Python.</li>
-            <li>Creates a virtual environment with that Python.</li>
-            <li>Runs <code class="inline">pip install bids-manager</code>
-              inside the environment (pulls in PyQt6, mne-bids, dcm2niix,
-              pydicom, bidsschematools, and the rest).</li>
-            <li>Registers a native launcher: a Desktop and Start Menu
-              shortcut on Windows, a <code class="inline">.app</code> bundle
-              under <code class="inline">~/Applications/</code> on macOS, an
-              application-menu entry with the app icon on Linux.</li>
-            <li>Writes an uninstaller alongside the launcher.</li>
-          </ol>
-          <p class="muted">
-            BIDS Manager is pinned to Python 3.10 inside the bundle so every
-            installation behaves identically. The Python you have on your
-            system is left untouched.
-          </p>
-        </details>
       </div>
     </section>
 
     <!-- ============================================================
-         After install
+         Interactive: What does the installer do?
+         ============================================================ -->
+    <section class="section" id="installer-internals">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Under the hood</span>
+          <h2 class="section-title">What does the installer do?</h2>
+          <p class="section-lead">
+            Seven steps, fully automated. Hover a step or let it auto-play
+            to see what the installer is building inside
+            <code class="inline">~/BIDS-Manager/</code>.
+          </p>
+        </div>
+
+        <div class="install-pipeline" data-pipeline>
+          <ol class="pipeline-track" role="tablist" aria-label="Installer steps">
+            <li>
+              <button class="pipeline-chip is-active" data-step="1"
+                      role="tab" aria-selected="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="1.7" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/>
+                </svg>
+                <span class="chip-num">01</span>
+                <span class="chip-label">Folder</span>
+              </button>
+            </li>
+            <li>
+              <button class="pipeline-chip" data-step="2" role="tab" aria-selected="false">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="1.7" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true">
+                  <path d="M7 18h10a4 4 0 0 0 .6-7.96A6 6 0 0 0 6.34 9.16 4 4 0 0 0 7 18z"/>
+                  <path d="M12 11v6"/>
+                  <path d="M9 14l3 3 3-3"/>
+                </svg>
+                <span class="chip-num">02</span>
+                <span class="chip-label">Download</span>
+              </button>
+            </li>
+            <li>
+              <button class="pipeline-chip" data-step="3" role="tab" aria-selected="false">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="1.7" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="4" width="18" height="5" rx="1"/>
+                  <path d="M4 9v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"/>
+                  <path d="M10 13h4"/>
+                </svg>
+                <span class="chip-num">03</span>
+                <span class="chip-label">Extract</span>
+              </button>
+            </li>
+            <li>
+              <button class="pipeline-chip" data-step="4" role="tab" aria-selected="false">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="1.7" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="3" width="18" height="18" rx="2" stroke-dasharray="4 3"/>
+                  <rect x="8" y="8" width="8" height="8" rx="1"/>
+                </svg>
+                <span class="chip-num">04</span>
+                <span class="chip-label">venv</span>
+              </button>
+            </li>
+            <li>
+              <button class="pipeline-chip" data-step="5" role="tab" aria-selected="false">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="1.7" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="11" width="8" height="8" rx="1"/>
+                  <rect x="13" y="5" width="8" height="6" rx="1"/>
+                  <rect x="13" y="13" width="8" height="6" rx="1"/>
+                  <path d="M11 15h2"/>
+                  <path d="M11 8h2"/>
+                </svg>
+                <span class="chip-num">05</span>
+                <span class="chip-label">pip install</span>
+              </button>
+            </li>
+            <li>
+              <button class="pipeline-chip" data-step="6" role="tab" aria-selected="false">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="1.7" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="3" width="18" height="14" rx="2"/>
+                  <path d="M8 21h8"/>
+                  <path d="M12 17v4"/>
+                  <path d="M13 7l-3 4h3l-1 4 3-5h-3l1-3z" fill="currentColor" stroke="none"/>
+                </svg>
+                <span class="chip-num">06</span>
+                <span class="chip-label">Launcher</span>
+              </button>
+            </li>
+            <li>
+              <button class="pipeline-chip" data-step="7" role="tab" aria-selected="false">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="1.7" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 7h16"/>
+                  <path d="M9 7v-2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/>
+                  <path d="M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/>
+                  <path d="M10 11v6M14 11v6"/>
+                </svg>
+                <span class="chip-num">07</span>
+                <span class="chip-label">Uninstaller</span>
+              </button>
+            </li>
+          </ol>
+
+          <div class="pipeline-stage">
+            <div class="stage-illustration">
+              <svg viewBox="0 0 720 380" class="stage-svg"
+                   xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                  <linearGradient id="folderGrad" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0" stop-color="currentColor" stop-opacity="0.10"/>
+                    <stop offset="1" stop-color="currentColor" stop-opacity="0.02"/>
+                  </linearGradient>
+                  <marker id="pipeArrow" viewBox="0 0 10 10" refX="8" refY="5"
+                          markerWidth="6" markerHeight="6" orient="auto">
+                    <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+                  </marker>
+                </defs>
+
+                <!-- L1: home folder -->
+                <g class="stage-layer" data-layer="1">
+                  <path d="M180 130 L290 130 L308 150 L540 150 L540 270 L180 270 Z"
+                        fill="url(#folderGrad)" stroke="currentColor" stroke-width="2"/>
+                  <text x="360" y="295" text-anchor="middle"
+                        font-size="13" fill="currentColor"
+                        font-family="ui-monospace, monospace">~/BIDS-Manager/</text>
+                </g>
+
+                <!-- L2: cloud + python download -->
+                <g class="stage-layer" data-layer="2">
+                  <path d="M75 70
+                           q-22 0 -22 22
+                           q0 22 22 22
+                           l70 0
+                           q24 0 24 -22
+                           q0 -22 -24 -22
+                           q-4 -18 -28 -18
+                           q-20 0 -28 18 z"
+                        fill="none" stroke="currentColor" stroke-width="2"/>
+                  <text x="100" y="100" text-anchor="middle" font-size="11"
+                        fill="currentColor" font-family="ui-monospace, monospace">Python 3.10</text>
+                  <line x1="120" y1="125" x2="220" y2="160" stroke="currentColor"
+                        stroke-width="2" stroke-dasharray="4 4"
+                        marker-end="url(#pipeArrow)"/>
+                </g>
+
+                <!-- L3: python interpreter inside folder -->
+                <g class="stage-layer" data-layer="3">
+                  <rect x="232" y="190" width="160" height="60" rx="6"
+                        fill="none" stroke="currentColor" stroke-width="2"/>
+                  <text x="312" y="225" text-anchor="middle" font-size="13"
+                        fill="currentColor" font-family="ui-monospace, monospace">python 3.10</text>
+                </g>
+
+                <!-- L4: venv ring around python -->
+                <g class="stage-layer" data-layer="4">
+                  <rect x="218" y="174" width="300" height="90" rx="10"
+                        fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-dasharray="6 4"/>
+                  <text x="514" y="170" text-anchor="end" font-size="11"
+                        fill="currentColor" font-family="ui-monospace, monospace">env/</text>
+                </g>
+
+                <!-- L5: pip packages flying in -->
+                <g class="stage-layer" data-layer="5">
+                  <rect x="600" y="180" width="28" height="28" rx="3"
+                        fill="none" stroke="currentColor" stroke-width="2"/>
+                  <rect x="638" y="208" width="28" height="28" rx="3"
+                        fill="none" stroke="currentColor" stroke-width="2"/>
+                  <rect x="600" y="232" width="28" height="28" rx="3"
+                        fill="none" stroke="currentColor" stroke-width="2"/>
+                  <line x1="598" y1="194" x2="525" y2="210" stroke="currentColor"
+                        stroke-width="2" stroke-dasharray="3 3" marker-end="url(#pipeArrow)"/>
+                  <line x1="636" y1="222" x2="525" y2="225" stroke="currentColor"
+                        stroke-width="2" stroke-dasharray="3 3" marker-end="url(#pipeArrow)"/>
+                  <line x1="598" y1="246" x2="525" y2="240" stroke="currentColor"
+                        stroke-width="2" stroke-dasharray="3 3" marker-end="url(#pipeArrow)"/>
+                  <text x="618" y="290" text-anchor="middle" font-size="11"
+                        fill="currentColor" font-family="ui-monospace, monospace">pip install</text>
+                </g>
+
+                <!-- L6: launcher on the desk -->
+                <g class="stage-layer" data-layer="6">
+                  <line x1="180" y1="320" x2="540" y2="320" stroke="currentColor"
+                        stroke-width="1" stroke-opacity="0.35"/>
+                  <rect x="298" y="328" width="44" height="44" rx="8"
+                        fill="none" stroke="currentColor" stroke-width="2"/>
+                  <path d="M323 340 L317 354 L324 354 L321 366 L333 350 L326 350 L329 340 Z"
+                        fill="currentColor" stroke="none"/>
+                </g>
+
+                <!-- L7: uninstaller next to it -->
+                <g class="stage-layer" data-layer="7">
+                  <path d="M380 336 L408 336 L406 366 L382 366 Z"
+                        fill="none" stroke="currentColor" stroke-width="2"/>
+                  <line x1="376" y1="336" x2="412" y2="336"
+                        stroke="currentColor" stroke-width="2"/>
+                  <path d="M388 330 L400 330" stroke="currentColor" stroke-width="2"/>
+                  <line x1="390" y1="343" x2="390" y2="360"
+                        stroke="currentColor" stroke-width="1.5"/>
+                  <line x1="396" y1="343" x2="396" y2="360"
+                        stroke="currentColor" stroke-width="1.5"/>
+                </g>
+              </svg>
+            </div>
+
+            <div class="pipeline-detail" data-pipeline-detail aria-live="polite">
+              <!-- populated by JS -->
+            </div>
+          </div>
+
+          <div class="pipeline-progress" aria-hidden="true"></div>
+
+          <div class="pipeline-controls">
+            <button type="button" data-pipeline-play>Pause</button>
+            <span class="muted">Hover a step to preview, click to pin.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         After install (launchers, paths)
          ============================================================ -->
     <section class="section">
       <div class="container container-narrow prose">
         <span class="section-eyebrow">After install</span>
-        <h2 style="margin-top:0;">Launch and uninstall</h2>
+        <h2 style="margin-top:0;">Launch, uninstall, where things land</h2>
 
         <table>
           <thead>
@@ -261,22 +480,20 @@
           <tbody>
             <tr>
               <td><strong>macOS</strong></td>
-              <td><code class="inline">~/Applications/BIDS-Manager.app</code>
-                (also in Launchpad / Spotlight)</td>
-              <td>Drag the <code class="inline">.app</code> to the Trash and
-                run
+              <td><code class="inline">~/Applications/BIDS-Manager.app</code></td>
+              <td>Drag the <code class="inline">.app</code> to Trash, then run
                 <code class="inline">~/BIDS-Manager/uninstall_BIDS_Manager.command</code></td>
             </tr>
             <tr>
               <td><strong>Linux</strong></td>
               <td><em>BIDS-Manager</em> in the application menu, or
-                <code class="inline">bidsmgr</code> from any terminal</td>
+                <code class="inline">bidsmgr</code> in any terminal</td>
               <td><code class="inline">~/BIDS-Manager/uninstall_BIDS_Manager.sh</code></td>
             </tr>
             <tr>
               <td><strong>Windows</strong></td>
-              <td>Desktop shortcut <em>BIDS-Manager</em>, or Start Menu
-                entry under <em>BIDS-Manager</em></td>
+              <td>Desktop shortcut or Start Menu entry
+                <em>BIDS-Manager</em></td>
               <td>Desktop shortcut <em>Uninstall BIDS-Manager</em>, or
                 <code class="inline">%USERPROFILE%\BIDS-Manager\uninstall_BIDS_Manager.bat</code></td>
             </tr>
@@ -289,63 +506,48 @@
             <tr><th>OS</th><th>Install root</th></tr>
           </thead>
           <tbody>
-            <tr>
-              <td><strong>macOS</strong></td>
-              <td><code class="inline">/Users/&lt;you&gt;/BIDS-Manager/</code></td>
-            </tr>
-            <tr>
-              <td><strong>Linux</strong></td>
-              <td><code class="inline">/home/&lt;you&gt;/BIDS-Manager/</code></td>
-            </tr>
-            <tr>
-              <td><strong>Windows</strong></td>
-              <td><code class="inline">C:\Users\&lt;you&gt;\BIDS-Manager\</code></td>
-            </tr>
+            <tr><td><strong>macOS</strong></td>
+                <td><code class="inline">/Users/&lt;you&gt;/BIDS-Manager/</code></td></tr>
+            <tr><td><strong>Linux</strong></td>
+                <td><code class="inline">/home/&lt;you&gt;/BIDS-Manager/</code></td></tr>
+            <tr><td><strong>Windows</strong></td>
+                <td><code class="inline">C:\Users\&lt;you&gt;\BIDS-Manager\</code></td></tr>
           </tbody>
         </table>
         <p class="muted">
-          The folder contains the portable Python, the virtual environment,
-          the launcher and uninstaller scripts, and an
+          The folder holds the portable Python, the virtual environment, the
+          launcher, the uninstaller, and an
           <code class="inline">install.log</code> for diagnostics.
         </p>
       </div>
     </section>
 
     <!-- ============================================================
-         pip install path
+         METHOD 2: manual install
          ============================================================ -->
-    <section class="section" id="pip-install">
+    <section class="section" id="manual">
       <div class="container container-narrow prose">
-        <span class="section-eyebrow">Alternative</span>
-        <h2 style="margin-top:0;">pip install (existing Python)</h2>
+        <span class="section-eyebrow">Method 2 . Manual (CLI)</span>
+        <h2 style="margin-top:0;">Install with pip in your own environment</h2>
         <p>
-          If you already manage a Python environment (conda, venv, uv, pyenv,
-          whatever), install BIDS Manager directly. Supported on Python 3.10
-          through 3.14.
+          Four short steps: install Python, create an environment, install
+          BIDS Manager, run it. Pick whichever Python and environment
+          manager you already use; we show
+          <code class="inline">venv</code>,
+          <code class="inline">conda</code>, and
+          <code class="inline">uv</code>.
         </p>
 
-<pre class="code"><span class="cmt"># in a fresh virtual environment</span>
-pip install bids-manager
-bidsmgr
-</pre>
-
-        <p class="muted">
-          PyPI: <a href="https://pypi.org/project/bids-manager/"
-                  target="_blank" rel="noopener">pypi.org/project/bids-manager</a>.
-          The package name is <code class="inline">bids-manager</code>; the
-          Python import name is <code class="inline">bidsmgr</code> (same
-          pattern as <code class="inline">pip install scikit-learn</code> /
-          <code class="inline">import sklearn</code>).
-        </p>
-
-        <h3>Command-line use</h3>
+        <!-- ----- Step 1: install Python ----- -->
+        <h3 id="install-python">Step 1. Install Python</h3>
         <p>
-          Activate the bundled environment to get the CLI on your PATH. The
-          installer set it up at <code class="inline">~/BIDS-Manager/env/</code>.
+          BIDS Manager needs Python 3.10 to 3.14. If
+          <code class="inline">python3 --version</code> already prints a
+          supported version, skip to Step 2.
         </p>
 
         <div class="tabs" data-tabs>
-          <div class="tab-buttons" role="tablist" aria-label="Activate venv">
+          <div class="tab-buttons" role="tablist" aria-label="Install Python">
             <button class="tab-btn is-active" data-tab="macos"
                     role="tab" aria-selected="true">macOS</button>
             <button class="tab-btn" data-tab="linux"
@@ -353,41 +555,198 @@ bidsmgr
             <button class="tab-btn" data-tab="windows"
                     role="tab" aria-selected="false">Windows</button>
           </div>
+
           <div class="tab-panel is-active" data-panel="macos" role="tabpanel">
-<pre class="code">source ~/BIDS-Manager/env/bin/activate
+            <p>Easiest: Homebrew.</p>
+<pre class="code">brew install python@3.12
 </pre>
+            <p>
+              Or download the official installer from
+              <a href="https://www.python.org/downloads/macos/"
+                 target="_blank" rel="noopener">python.org/downloads/macos</a>.
+              Open the <code class="inline">.pkg</code> and follow the
+              wizard.
+            </p>
           </div>
+
           <div class="tab-panel" data-panel="linux" role="tabpanel">
-<pre class="code">source ~/BIDS-Manager/env/bin/activate
+            <p>Debian / Ubuntu:</p>
+<pre class="code">sudo apt update
+sudo apt install python3 python3-venv python3-pip
 </pre>
+            <p>Fedora:</p>
+<pre class="code">sudo dnf install python3 python3-pip
+</pre>
+            <p>Arch:</p>
+<pre class="code">sudo pacman -S python python-pip
+</pre>
+            <p>
+              If your distro ships Python older than 3.10, install
+              <a href="https://github.com/pyenv/pyenv"
+                 target="_blank" rel="noopener">pyenv</a> and pull a
+              newer build (<code class="inline">pyenv install 3.12</code>).
+            </p>
           </div>
+
           <div class="tab-panel" data-panel="windows" role="tabpanel">
-<pre class="code">%USERPROFILE%\BIDS-Manager\env\Scripts\activate
+            <p>Easiest: winget.</p>
+<pre class="code">winget install Python.Python.3.12
 </pre>
+            <p>
+              Or download the official installer from
+              <a href="https://www.python.org/downloads/windows/"
+                 target="_blank" rel="noopener">python.org/downloads/windows</a>.
+              When the installer opens, tick
+              <strong>Add python.exe to PATH</strong>, then click
+              <em>Install Now</em>.
+            </p>
           </div>
         </div>
 
-        <p>Once activated, six commands are available:</p>
+        <!-- ----- Step 2: create a venv ----- -->
+        <h3 id="create-env">Step 2. Create a virtual environment</h3>
+        <p>
+          BIDS Manager pulls in PyQt6, mne-bids, dcm2niix, pydicom,
+          bidsschematools, and the rest of the dependency tree. Keep it in
+          its own environment so it doesn't interfere with other projects.
+        </p>
+
+        <div class="tabs" data-tabs>
+          <div class="tab-buttons" role="tablist" aria-label="Environment manager">
+            <button class="tab-btn is-active" data-tab="venv"
+                    role="tab" aria-selected="true">venv (built-in)</button>
+            <button class="tab-btn" data-tab="conda"
+                    role="tab" aria-selected="false">conda</button>
+            <button class="tab-btn" data-tab="uv"
+                    role="tab" aria-selected="false">uv</button>
+          </div>
+
+          <!-- venv -->
+          <div class="tab-panel is-active" data-panel="venv" role="tabpanel">
+            <p>The
+              <code class="inline">venv</code> module ships with every
+              Python 3.3+, so no extra install needed.
+            </p>
+<pre class="code"><span class="cmt"># create the environment</span>
+python3 -m venv ~/bidsmgr-env
+
+<span class="cmt"># activate it (macOS / Linux)</span>
+source ~/bidsmgr-env/bin/activate
+
+<span class="cmt"># activate it (Windows, PowerShell)</span>
+~/bidsmgr-env/Scripts/Activate.ps1
+</pre>
+            <p class="muted">
+              After activation your shell prompt is prefixed with
+              <code class="inline">(bidsmgr-env)</code>. Run
+              <code class="inline">deactivate</code> when you're done.
+            </p>
+          </div>
+
+          <!-- conda -->
+          <div class="tab-panel" data-panel="conda" role="tabpanel">
+            <p>
+              If you already use
+              <a href="https://docs.anaconda.com/miniconda/"
+                 target="_blank" rel="noopener">Miniconda</a> or
+              <a href="https://docs.conda.io/projects/miniforge/"
+                 target="_blank" rel="noopener">Miniforge</a>:
+            </p>
+<pre class="code"><span class="cmt"># create + activate</span>
+conda create -n bidsmgr python=3.12 -y
+conda activate bidsmgr
+</pre>
+            <p class="muted">
+              <code class="inline">conda activate</code> works in every
+              shell (bash, zsh, fish, PowerShell, cmd) once conda has
+              initialised your profile.
+            </p>
+          </div>
+
+          <!-- uv -->
+          <div class="tab-panel" data-panel="uv" role="tabpanel">
+            <p>
+              <a href="https://docs.astral.sh/uv/" target="_blank"
+                 rel="noopener">uv</a> is a fast modern Python launcher.
+              It manages Python versions and venvs in one tool.
+            </p>
+<pre class="code"><span class="cmt"># create a venv pinned to Python 3.12</span>
+uv venv ~/bidsmgr-env --python 3.12
+
+<span class="cmt"># activate it</span>
+source ~/bidsmgr-env/bin/activate
+</pre>
+            <p class="muted">
+              You can also skip the activation step and prefix every
+              <code class="inline">pip</code> /
+              <code class="inline">python</code> call with
+              <code class="inline">uv run</code>.
+            </p>
+          </div>
+        </div>
+
+        <!-- ----- Step 3: install bids-manager ----- -->
+        <h3 id="install-bidsmgr">Step 3. Install BIDS Manager</h3>
+        <p>
+          With the environment active:
+        </p>
+<pre class="code">pip install bids-manager
+</pre>
+        <p class="muted">
+          The package on PyPI is named
+          <code class="inline">bids-manager</code>. The Python import name
+          is <code class="inline">bidsmgr</code> (same pattern as
+          <code class="inline">pip install scikit-learn</code> /
+          <code class="inline">import sklearn</code>).
+          <a href="https://pypi.org/project/bids-manager/"
+             target="_blank" rel="noopener">PyPI page</a>.
+        </p>
+
+        <!-- ----- Step 4: run ----- -->
+        <h3 id="run">Step 4. Run BIDS Manager</h3>
+        <p>Launch the GUI:</p>
+<pre class="code">bidsmgr
+</pre>
+
+        <p>Or use the CLI directly. Six commands are installed:</p>
         <ul>
-          <li><code class="inline">bidsmgr</code>. Launch the GUI (Converter
-            and Editor in one window).</li>
+          <li><code class="inline">bidsmgr</code>. GUI (Converter and Editor in
+            one window).</li>
           <li><code class="inline">bidsmgr-scan</code>. Walk a raw folder and
             produce a 51-column inventory TSV.</li>
-          <li><code class="inline">bidsmgr-rebuild</code>. Re-derive BIDS
-            names from the TSV after manual edits.</li>
-          <li><code class="inline">bidsmgr-convert</code>. Run the
-            conversion to BIDS for the rows in the TSV.</li>
-          <li><code class="inline">bidsmgr-metadata</code>. Run the
-            post-conversion metadata fix-ups (field-maps,
+          <li><code class="inline">bidsmgr-rebuild</code>. Re-derive BIDS names
+            from the TSV after manual edits.</li>
+          <li><code class="inline">bidsmgr-convert</code>. Run the conversion
+            to BIDS for the rows in the TSV.</li>
+          <li><code class="inline">bidsmgr-metadata</code>. Post-conversion
+            metadata fix-ups (field-maps,
             <code class="inline">IntendedFor</code>,
             <code class="inline">scans.tsv</code>).</li>
           <li><code class="inline">bidsmgr-validate</code>. Two-layer
             validation: BIDS Manager's schema audit plus
             <code class="inline">bidsschematools</code>.</li>
         </ul>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Re-activating later.</strong>
+            <p>
+              Every new shell session needs the environment activated
+              again. For venv / uv:
+              <code class="inline">source ~/bidsmgr-env/bin/activate</code>.
+              For conda:
+              <code class="inline">conda activate bidsmgr</code>.
+            </p>
+          </div>
+        </div>
+
+        <h3>Upgrading</h3>
+<pre class="code">pip install --upgrade bids-manager
+</pre>
         <p class="muted">
-          The GUI uses the same engine; switching between GUI and CLI is
-          frictionless.
+          Close the GUI first on Windows. Newer dependency pins may
+          require recreating the venv if a pinned major version moves.
         </p>
       </div>
     </section>
@@ -403,34 +762,31 @@ bidsmgr
         <details class="disclosure">
           <summary>macOS: "unidentified developer" / app cannot be opened</summary>
           <p>
-            Apple's Gatekeeper blocks unsigned scripts on first run. After
-            you see the dialog, open
+            Gatekeeper blocks unsigned scripts on first run. After the
+            warning, open
             <strong>System Settings &rarr; Privacy &amp; Security</strong>,
-            scroll to the <em>Security</em> section, and click
-            <strong>Open Anyway</strong>. Re-run the installer. This is a
-            one-time approval.
+            scroll to <em>Security</em>, and click
+            <strong>Open Anyway</strong>. Re-run the installer. One-time
+            approval.
           </p>
         </details>
 
         <details class="disclosure">
-          <summary>macOS: installer runs on Intel Mac</summary>
+          <summary>macOS: bootstrap installer on Intel Mac</summary>
           <p>
-            The bundled macOS Python is arm64-only. On Intel Macs, install
-            via pip in a Python 3.10+ environment instead. See
-            <a href="#pip-install">pip install (existing Python)</a>.
+            The bundled macOS Python is arm64-only. On Intel Macs, use
+            <a href="#manual">Method 2 (manual install)</a> in a Python
+            3.10+ environment.
           </p>
         </details>
 
         <details class="disclosure">
           <summary>Linux: "could not load the Qt platform plugin xcb"</summary>
-          <p>
-            PyQt6 needs a system Qt platform library. On Debian / Ubuntu:
-          </p>
+          <p>PyQt6 needs the system Qt platform library.</p>
+          <p>Debian / Ubuntu:</p>
 <pre class="code">sudo apt install libxcb-cursor0 libxcb-xinerama0 libfontconfig1
 </pre>
-          <p>
-            On Fedora:
-          </p>
+          <p>Fedora:</p>
 <pre class="code">sudo dnf install xcb-util-cursor fontconfig
 </pre>
         </details>
@@ -438,8 +794,9 @@ bidsmgr
         <details class="disclosure">
           <summary>Linux: Thunar refuses to run the script on double-click</summary>
           <p>
-            By design. Run from a terminal, or enable script execution once
-            with the <code class="inline">xfconf-query</code> command from the
+            By design. Run from a terminal, or enable script execution
+            once with the
+            <code class="inline">xfconf-query</code> command from the
             Linux tab above.
           </p>
         </details>
@@ -447,30 +804,38 @@ bidsmgr
         <details class="disclosure">
           <summary>Windows: SmartScreen blocks the installer</summary>
           <p>
-            Click <strong>More info &rarr; Run anyway</strong>. The installer
-            is not code-signed yet, so SmartScreen flags any unknown
-            publisher. The download still has to come from the official
-            GitHub release link to be safe.
+            Click <strong>More info &rarr; Run anyway</strong>. The
+            installer is not code-signed yet, so SmartScreen flags any
+            unknown publisher. Make sure the download came from the
+            official GitHub release link.
           </p>
         </details>
 
         <details class="disclosure">
           <summary>Windows: update fails with "file in use"</summary>
           <p>
-            Close BIDS Manager fully before updating. From v1.0.2 the
-            in-GUI updater spawns a detached helper that handles this
-            automatically, but a manual
-            <code class="inline">pip install --upgrade</code> still needs the
-            app closed.
+            Close BIDS Manager fully before upgrading. From v1.0.2 the
+            in-GUI updater spawns a detached helper, but a manual
+            <code class="inline">pip install --upgrade</code> still needs
+            the app closed.
+          </p>
+        </details>
+
+        <details class="disclosure">
+          <summary>pip: "Could not find a version that satisfies the requirement"</summary>
+          <p>
+            Almost always a Python version mismatch. Run
+            <code class="inline">python --version</code> in the active
+            environment; you need 3.10, 3.11, 3.12, 3.13, or 3.14.
           </p>
         </details>
 
         <details class="disclosure">
           <summary>Any OS: install log</summary>
           <p>
-            Every installer writes
-            <code class="inline">~/BIDS-Manager/install.log</code>. Paste it
-            into a
+            The bootstrap installer writes
+            <code class="inline">~/BIDS-Manager/install.log</code>. Paste
+            it into a
             <a href="https://github.com/ANCPLabOldenburg/BIDS-Manager/issues"
                target="_blank" rel="noopener">GitHub issue</a>
             if you need help.
@@ -487,11 +852,10 @@ bidsmgr
         <h2>Next steps</h2>
         <ul>
           <li><a href="tutorial.html">Walk the interactive tutorial</a>. Scan,
-            inspect, convert, edit, and validate, all simulated in the
+            inspect, convert, edit, validate, all simulated in the
             browser.</li>
-          <li><a href="intro.html#how-it-works">See the workflow</a>: the
-            eight stages BIDS Manager runs and how the schema drives each
-            of them.</li>
+          <li><a href="intro.html#how-it-works">See the workflow</a>: eight
+            stages, three lenses, one schema-driven engine.</li>
           <li>Read the
             <a href="https://github.com/ANCPLabOldenburg/BIDS-Manager/blob/main/docs/architecture.md"
                target="_blank" rel="noopener">architecture write-up</a>
