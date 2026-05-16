@@ -158,7 +158,10 @@ function initTutorialScenes() {
   const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
   let current = 0;
-  let autoplay = !reducedMotion;
+  /* Manual stepping is the default. Auto-advance is off so the
+   * visitor reads each scene's explanation and clicks Next / Replay
+   * at their own pace. Pressing Play turns it on. */
+  let autoplay = false;
   let advanceTimer = null;
   let playToken = 0;
 
@@ -890,7 +893,7 @@ function initTutorialScenes() {
     activate(0);
   }
 
-  setAutoplay(!reducedMotion);
+  setAutoplay(false);   /* manual stepping by default */
 }
 
 

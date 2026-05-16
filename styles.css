@@ -1630,13 +1630,18 @@ details.disclosure p:last-child { margin-bottom: 0; }
   background: color-mix(in srgb, var(--panel) 65%, transparent);
 }
 .download-stat strong {
-  font-size: 1.6rem;
+  font-size: clamp(1.05rem, 2.6vw, 1.6rem);
   font-weight: 800;
   letter-spacing: -0.02em;
   background: linear-gradient(135deg, var(--accent), var(--purple));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  /* Shrink-fit long words like 'Siemens' so they don't blow past the
+   * card edge. */
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  line-height: 1.05;
 }
 .download-stat span {
   font-size: 0.78rem;

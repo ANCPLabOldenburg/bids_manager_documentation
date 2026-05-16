@@ -38,10 +38,6 @@
         <span class="page-toc-dot" aria-hidden="true"></span>
         Workflow
       </a>
-      <a class="page-toc-link" href="#cli">
-        <span class="page-toc-dot" aria-hidden="true"></span>
-        CLI parity
-      </a>
       <a class="page-toc-link" href="#next">
         <span class="page-toc-dot" aria-hidden="true"></span>
         Next steps
@@ -51,53 +47,64 @@
 
   <main>
     <!-- ============================================================
-         Opening + download
+         Tutorial intro + download
          ============================================================ -->
     <section class="section" id="dataset">
       <div class="container container-narrow prose">
-        <span class="section-eyebrow">Interactive tutorial</span>
-        <h1>Watch BIDS Manager work, then try it.</h1>
+        <span class="section-eyebrow">Tutorial</span>
+        <h1>How to turn raw DICOMs into BIDS, end to end.</h1>
         <p class="lead">
-          The scenes on this page simulate the GUI's reactions to a real
-          three-subject MRI dataset. Download the same dataset below to
-          follow along on your own machine.
+          This tutorial walks the BIDS Manager Converter and Editor
+          against a real Siemens MRI dataset. By the end you'll know
+          how the inspection table, the properties panel, the
+          structure filter, the BIDS preview, and the validation pane
+          work together. Step through each scene at your own pace
+          (or hit <em>Play</em> to watch it run).
         </p>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>What makes BIDS Manager different: the scan step.</strong>
+            <p>Other DICOM-to-BIDS tools require you to declare up
+              front how each series should be classified. BIDS Manager
+              <em>scans the raw data first</em> and shows you what is
+              actually inside the folders. Every series, every entity
+              guess, every confidence score. The inspection table you
+              edit is the same table the converter consumes, so what
+              you see is what gets written.</p>
+          </div>
+        </div>
 
         <div class="download-card">
           <div class="download-card-body">
-            <span class="section-eyebrow" style="margin-bottom:8px;">Tutorial data</span>
-            <h2 style="margin-top:0;">Example MRI dataset</h2>
+            <span class="section-eyebrow" style="margin-bottom:8px;">Example data</span>
+            <h2 style="margin-top:0;">Real MRI data from the ANCP Lab</h2>
             <p>
-              A real three-subject Siemens DICOM dump. Same data the
-              scenes below use; download it if you want to run BIDS
-              Manager against it yourself after watching.
+              The scenes below simulate the full GUI flow against this
+              dataset. Download it to follow along on your own machine,
+              or just read through the scenes and skip the install.
             </p>
             <p>
               <a class="btn btn-primary"
                  href="https://mega.nz/file/9I5mnCyT#TqZlTaURWaNrg3YfyVoJIoN0eM2nu-XOE11OgA4YUqg"
                  target="_blank" rel="noopener">
-                Download raw MRI dataset example
+                Download raw MRI dataset
               </a>
-            </p>
-            <p class="muted" style="margin: 0;">
-              Hosted on Mega.nz. The
-              <code class="inline">#TqZlTaURWaN...</code> fragment is
-              the AES decryption key, so the link works in any modern
-              browser without a Mega account.
             </p>
           </div>
           <div class="download-stats" aria-hidden="true">
             <div class="download-stat">
-              <strong>3</strong><span>subjects</span>
+              <strong>2</strong><span>subjects</span>
             </div>
             <div class="download-stat">
-              <strong>36</strong><span>series</span>
+              <strong>3</strong><span>folders</span>
             </div>
             <div class="download-stat">
               <strong>394</strong><span>DICOMs</span>
             </div>
             <div class="download-stat">
-              <strong>Siemens</strong><span>scanner</span>
+              <strong>3T</strong><span>Prisma</span>
             </div>
           </div>
         </div>
@@ -105,60 +112,72 @@
     </section>
 
     <!-- ============================================================
-         Dataset overview diagram
+         Dataset overview diagram (2 subjects, 3 folders)
          ============================================================ -->
     <section class="section" id="overview">
       <div class="container">
         <div class="section-header">
           <span class="section-eyebrow">Dataset overview</span>
-          <h2 class="section-title">What's inside.</h2>
+          <h2 class="section-title">2 subjects in 3 folders.</h2>
           <p class="section-lead">
-            A flat DICOM dump per subject, no series subfolders. This
-            is how Siemens scanners typically export. Pick a subject
-            below to see its series and what BIDS Manager will do
-            with each one.
+            DICOM folder names rarely match BIDS subject identities.
+            Here, <strong>sub-001</strong> was scanned twice
+            (<em>pre</em> and <em>post</em>) and the scanner exported
+            each session under its own folder. BIDS Manager clusters
+            folders into subjects by their DICOM
+            <code class="inline">PatientID</code> tag, so
+            <code class="inline">OL_0001</code> and
+            <code class="inline">OL_0002</code> become
+            <em>two sessions of one subject</em>, while
+            <code class="inline">OL_0003</code> is a different patient
+            with no session label. Click a folder card to see the
+            series inside.
           </p>
         </div>
 
-        <!-- 3-up subject summary cards. Same teaching points as the
-             plan in TUTORIAL_PLAN.md §2.4. -->
+        <!-- 3 folder cards, grouped under 2 subject identities. -->
         <div class="subject-strip">
           <article class="subject-card">
-            <span class="subject-card-eyebrow">Subject 1</span>
+            <span class="subject-card-eyebrow">Folder &middot; sub-001 / ses-pre</span>
             <h3>OL_0001</h3>
             <div class="subject-card-stats">
               <span><strong>45</strong>DICOMs</span>
               <span><strong>9</strong>series</span>
             </div>
             <p>
-              Standard pre-session protocol. T1w + two fMRI tasks
-              (sparse + rest) + two fieldmap pairs.
+              First scanning session for <strong>sub-001</strong>
+              (PatientID matches OL_0002). T1w + two fMRI tasks
+              (<code class="inline">sparse</code>,
+              <code class="inline">rest</code>) + two fieldmap pairs.
             </p>
           </article>
           <article class="subject-card">
-            <span class="subject-card-eyebrow">Subject 2</span>
+            <span class="subject-card-eyebrow">Folder &middot; sub-001 / ses-post</span>
             <h3>OL_0002</h3>
             <div class="subject-card-stats">
               <span><strong>62</strong>DICOMs</span>
               <span><strong>10</strong>series</span>
             </div>
             <p>
-              Post-session scan with <em>no anatomical reference</em>.
-              The validator will warn about it. One multiband BOLD,
-              one fieldmap pair, one physio log.
+              <em>Same patient, post-intervention</em>. Multiband
+              BOLD + 1 fieldmap pair + physio log. The scanner
+              identifies the cluster by PatientID, then BIDS Manager
+              assigns <em>ses-pre</em> / <em>ses-post</em> from the
+              StudyDate ordering.
             </p>
           </article>
           <article class="subject-card">
-            <span class="subject-card-eyebrow">Subject 3</span>
+            <span class="subject-card-eyebrow">Folder &middot; sub-002</span>
             <h3>OL_0003</h3>
             <div class="subject-card-stats">
               <span><strong>287</strong>DICOMs</span>
               <span><strong>17</strong>series</span>
             </div>
             <p>
-              Full research protocol. T2w + three fMRI tasks (multiband
-              SBRefs) + diffusion (AP runs and a PA b0 reference) +
-              two physio logs.
+              A different patient. T2w + three fMRI tasks (multiband
+              SBRefs) + diffusion (AP runs + a PA b0 that gets
+              rerouted into <em>fmap/</em>) + two physio logs. No
+              session label.
             </p>
           </article>
         </div>
@@ -627,11 +646,6 @@
                 </div>
               </div>
             </div>
-
-            <footer class="scene-cli">
-              <span class="scene-cli-label">CLI equivalent</span>
-              <pre class="code">bidsmgr-scan ~/Downloads/neuroimaging_unit_new ~/Downloads/inv.tsv</pre>
-            </footer>
           </article>
 
           <!-- ================================================
@@ -738,11 +752,6 @@
                 </div>
               </div>
             </div>
-
-            <footer class="scene-cli">
-              <span class="scene-cli-label">CLI equivalent</span>
-              <pre class="code">bidsmgr-scan ~/Downloads/neuroimaging_unit_new ~/Downloads/inv.tsv -j 4</pre>
-            </footer>
           </article>
 
           <!-- ================================================
@@ -1062,13 +1071,6 @@
                 </div>
               </div>
             </div>
-
-            <footer class="scene-cli">
-              <span class="scene-cli-label">CLI equivalent</span>
-              <pre class="code"><span class="cmt"># open the TSV in any spreadsheet to inspect / edit</span>
-open ~/Downloads/inv.tsv     <span class="cmt"># macOS</span>
-xdg-open ~/Downloads/inv.tsv <span class="cmt"># Linux</span></pre>
-            </footer>
           </article>
 
           <!-- ================================================
@@ -1317,12 +1319,6 @@ xdg-open ~/Downloads/inv.tsv <span class="cmt"># Linux</span></pre>
                 </div>
               </div>
             </div>
-
-            <footer class="scene-cli">
-              <span class="scene-cli-label">CLI equivalent</span>
-              <pre class="code"><span class="cmt"># Edit inv.tsv in any spreadsheet, then rebuild the BIDS names</span>
-bidsmgr-rebuild ~/Downloads/inv.tsv</pre>
-            </footer>
           </article>
 
           <!-- ================================================
@@ -1549,12 +1545,6 @@ bidsmgr-rebuild ~/Downloads/inv.tsv</pre>
                 </div>
               </div>
             </div>
-
-            <footer class="scene-cli">
-              <span class="scene-cli-label">CLI equivalent</span>
-              <pre class="code"><span class="cmt"># Use a spreadsheet's fill-down on the session column, then rebuild</span>
-bidsmgr-rebuild ~/Downloads/inv.tsv</pre>
-            </footer>
           </article>
 
           <!-- ================================================
@@ -1780,11 +1770,6 @@ bidsmgr-rebuild ~/Downloads/inv.tsv</pre>
                 </div>
               </div>
             </div>
-
-            <footer class="scene-cli">
-              <span class="scene-cli-label">CLI equivalent</span>
-              <pre class="code">bidsmgr-convert ~/Downloads/inv.tsv ~/Documents/bids_export -j 3</pre>
-            </footer>
           </article>
 
           <!-- ================================================
@@ -1971,13 +1956,6 @@ bidsmgr-rebuild ~/Downloads/inv.tsv</pre>
                 </div>
               </div>
             </div>
-
-            <footer class="scene-cli">
-              <span class="scene-cli-label">CLI equivalent</span>
-              <pre class="code"><span class="cmt"># Open the GUI and let it discover the dataset; or use the
-# headless metadata stage to fill placeholders programmatically.</span>
-bidsmgr-metadata ~/Documents/bids_export --fill-todos</pre>
-            </footer>
           </article>
 
           <!-- ================================================
@@ -2192,12 +2170,6 @@ bidsmgr-metadata ~/Documents/bids_export --fill-todos</pre>
                 </div>
               </div>
             </div>
-
-            <footer class="scene-cli">
-              <span class="scene-cli-label">CLI equivalent</span>
-              <pre class="code"><span class="cmt"># No CLI equivalent: the tri-view is GUI-only. The headless
-# alternative is a Jupyter notebook with nibabel + matplotlib.</span></pre>
-            </footer>
           </article>
 
           <!-- ================================================
@@ -2342,50 +2314,8 @@ bidsmgr-metadata ~/Documents/bids_export --fill-todos</pre>
                 </div>
               </div>
             </div>
-
-            <footer class="scene-cli">
-              <span class="scene-cli-label">CLI equivalent</span>
-              <pre class="code"><span class="cmt"># Two-layer validator. --strict enables bidsschematools strict mode.</span>
-bidsmgr-validate ~/Documents/bids_export
-bidsmgr-validate ~/Documents/bids_export --strict --html</pre>
-            </footer>
           </article>
         </div>
-      </div>
-    </section>
-
-    <!-- ============================================================
-         CLI parity placeholder
-         ============================================================ -->
-    <section class="section" id="cli">
-      <div class="container container-narrow prose">
-        <span class="section-eyebrow">CLI parity</span>
-        <h2 style="margin-top:0;">The same flow without the GUI</h2>
-        <p>
-          Every scene above will have its <code class="inline">bidsmgr-*</code>
-          equivalent listed here. The full flow for the example
-          dataset, end to end, is just four commands:
-        </p>
-
-<pre class="code"><span class="cmt"># 1. Scan the raw DICOM tree into an inventory TSV</span>
-bidsmgr-scan ~/Downloads/neuroimaging_unit_new ~/Downloads/inv.tsv
-
-<span class="cmt"># 2. (Optional) edit inv.tsv in any spreadsheet, then rebuild
-#    the BIDS names from your edits</span>
-bidsmgr-rebuild ~/Downloads/inv.tsv
-
-<span class="cmt"># 3. Convert. Stages per-subject and atomic-renames on success</span>
-bidsmgr-convert ~/Downloads/inv.tsv ~/Documents/bids_export
-
-<span class="cmt"># 4. Validate. Two-layer: bidsmgr's schema audit + bidsschematools</span>
-bidsmgr-validate ~/Documents/bids_export
-</pre>
-
-        <p class="muted">
-          The GUI and CLI share the same engine. Anything the
-          tutorial shows the GUI doing, you can reproduce headlessly
-          for a batch of subjects.
-        </p>
       </div>
     </section>
 
