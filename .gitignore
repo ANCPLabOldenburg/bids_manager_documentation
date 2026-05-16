@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+._*
+
+# Editor noise
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Optional local tooling (none currently, but harmless to skip)
+node_modules/
+.cache/
+dist/
+.tmp/
+
+# Local preview server logs
+*.log
+
+# Source HEICs are never committed; the JPGs under
+# ``assets/screenshots/`` are the deliverable.
+*.heic

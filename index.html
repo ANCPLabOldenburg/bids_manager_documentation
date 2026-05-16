@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BIDS Manager: schema-driven raw-to-BIDS curation. Documentation, installation guides, and an interactive tutorial.">
+  <title>BIDS Manager &middot; Documentation</title>
+  <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div data-include="header"></div>
+
+  <main>
+    <!-- ============================================================
+         Hero
+         ============================================================ -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-media" aria-hidden="true">
+        <!-- Six-shot collage. All visible at once at reduced opacity;
+             src=dark default, data-light=light variant. Theme toggle
+             swaps every shot at once via swapThemedImages(). -->
+        <img class="hero-shot shot-a"
+             src="assets/screenshots/full_converter_window_dark.png"
+             data-light="assets/screenshots/full_converter_window_light.png" alt="">
+        <img class="hero-shot shot-b"
+             src="assets/screenshots/full_editor_window_dark.png"
+             data-light="assets/screenshots/full_editor_window_light.png" alt="">
+        <img class="hero-shot shot-c"
+             src="assets/screenshots/nifti_viewer_dark.png"
+             data-light="assets/screenshots/nifti_viewer_light.png" alt="">
+        <img class="hero-shot shot-d"
+             src="assets/screenshots/inspection_window_dark.png"
+             data-light="assets/screenshots/inspection_window_light.png" alt="">
+        <img class="hero-shot shot-e"
+             src="assets/screenshots/sidecar_windows_dark.png"
+             data-light="assets/screenshots/sidecar_windows_light.png" alt="">
+        <img class="hero-shot shot-f"
+             src="assets/screenshots/inputs_and_output_trees_and_filter_dark.png"
+             data-light="assets/screenshots/inputs_and_output_trees_and_filter_light.png" alt="">
+      </div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <span class="hero-eyebrow"><strong>v1.1</strong> &middot; schema-driven engine</span>
+        <h1 id="hero-title" class="hero-title">
+          Raw-to-<em>BIDS</em><br> without the scripts.
+        </h1>
+        <p class="hero-lead">
+          BIDS Manager turns DICOM, EEG, and MEG recordings into BIDS-compliant
+          datasets with a spreadsheet you can fix at any step. One install, one
+          GUI, one CLI, the same engine underneath.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="installation.html">Install &rarr;</a>
+          <a class="btn btn-ghost"   href="intro.html">See how it works</a>
+          <a class="btn btn-ghost"   href="tutorial.html">Walk the tutorial</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Three feature cards
+         ============================================================ -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">What it does</span>
+          <h2 class="section-title">Three workflows, one tool.</h2>
+          <p class="section-lead">
+            Built around the BIDS schema as the engine, not a check at the end.
+            Same rules drive scanning, naming, GUI form generation, validation
+            and sidecar audits.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">&#x25b8;</div>
+            <h3>Convert</h3>
+            <p>
+              Scan a raw folder, review every conversion decision in a 51-column
+              TSV, run per-subject conversion with atomic rename. dcm2niix for
+              MRI; mne-bids for EEG / MEG; bidsphysio (vendored) for physio.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">&#x270e;</div>
+            <h3>Edit + validate</h3>
+            <p>
+              Open the result, navigate the BIDS tree, edit JSON sidecars in a
+              schema-aware form, inspect NIfTI volumes (tri-view + 4-D time
+              series), validate file / folder / dataset.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">&#x2742;</div>
+            <h3>Stay current</h3>
+            <p>
+              Bootstrap installers for macOS / Linux / Windows. In-GUI auto-update
+              checks PyPI on launch. The Windows file-lock problem is handled by
+              a detached helper. Themes, font scale, and logo are configurable.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         How it works teaser
+         ============================================================ -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">How it works</span>
+          <h2 class="section-title">The schema is the engine.</h2>
+          <p class="section-lead">
+            Every layer reads from the same BIDS schema: classification, naming,
+            GUI form generation, validation, sidecar audits. No heuristic files
+            to maintain, no per-site special cases.
+          </p>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:24px; align-items:center;">
+          <img src="assets/workflow/workflow.svg" alt="BIDS Manager workflow: raw data, scan, edit, convert, fix, inspect, validate, BIDS" style="width:100%; max-width:520px; margin: 0 auto;">
+          <div>
+            <p>
+              The Converter scans your raw data and produces an inventory TSV.
+              The Editor opens the converted BIDS root and lets you fix metadata
+              against the same schema. Both panels live in the same window; the
+              schema engine sits underneath them both.
+            </p>
+            <p>
+              <a class="btn btn-ghost" href="intro.html">Walk through the flow &rarr;</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Quick install
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow">
+        <div class="section-header">
+          <span class="section-eyebrow">Get started</span>
+          <h2 class="section-title">One line, on every OS.</h2>
+        </div>
+
+<pre class="code"><span class="cmt"># pip install (any OS)</span>
+pip install bids-manager
+bidsmgr
+</pre>
+
+        <p class="muted">
+          Or use the per-OS bootstrap installer for a fully isolated portable
+          Python with one double-click.
+          <a href="installation.html">Read the full installation guide &rarr;</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <div data-include="footer"></div>
+  <script src="script.js" defer></script>
+</body>
+</html>

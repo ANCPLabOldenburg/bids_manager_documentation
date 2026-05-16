@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="What BIDS Manager is, why it exists, and how the schema-driven engine works. Interactive workflow flowchart.">
+  <title>Intro &middot; BIDS Manager</title>
+  <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div data-include="header"></div>
+
+  <main>
+    <!-- ============================================================
+         Opening
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow">
+        <span class="section-eyebrow">Intro</span>
+        <h1>What is BIDS Manager?</h1>
+        <p class="lead">
+          A desktop app that turns raw MRI, EEG, and MEG recordings into
+          BIDS-compliant datasets. It scans your raw data, lets you review
+          and fix every conversion decision in a spreadsheet, runs the
+          conversion, then opens the result for metadata editing, volume
+          inspection, and validation. All in one place, without writing
+          scripts or editing JSON files by hand.
+        </p>
+
+        <h2>Why it exists</h2>
+        <p>
+          BIDS curation has historically meant gluing together a HeuDiConv
+          heuristic, a dcm2bids config, a hand-written validation report, and
+          a separate metadata fix-up step. Each tool reads BIDS slightly
+          differently; the official schema is consulted at the end (if at all).
+          v1.0 of BIDS Manager replaced that pipeline with a single
+          schema-driven engine. The same BIDS schema drives classification,
+          naming, GUI form generation, validation, and sidecar audits.
+          No heuristic files to maintain, no engine-specific surprises.
+        </p>
+
+        <h2>Who it is for</h2>
+        <ul>
+          <li><strong>Researchers</strong> who want a "scan, review, convert,
+            validate" loop with no scripting.</li>
+          <li><strong>Lab managers</strong> who need reproducible BIDS exports
+            across many subjects and modalities.</li>
+          <li><strong>Power users</strong> who prefer the CLI: five verbs
+            (<code class="inline">bidsmgr-scan</code>,
+             <code class="inline">bidsmgr-rebuild</code>,
+             <code class="inline">bidsmgr-convert</code>,
+             <code class="inline">bidsmgr-metadata</code>,
+             <code class="inline">bidsmgr-validate</code>) backed by the same
+             engine the GUI uses.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Interactive workflow flowchart
+         ============================================================ -->
+    <section class="section" id="how-it-works">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">How it works</span>
+          <h2 class="section-title">A flow with three views.</h2>
+          <p class="section-lead">
+            Same eight stages, three lenses. Click a stage to read it in
+            <strong>engine</strong> terms, <strong>data</strong> terms,
+            or where it shows up in the <strong>GUI</strong>.
+          </p>
+        </div>
+
+        <div class="workflow">
+          <div class="workflow-stage">
+            <div class="workflow-modes" role="tablist" aria-label="Flow view">
+              <button class="workflow-mode is-active" data-mode="engine" role="tab" aria-selected="true">Engine view</button>
+              <button class="workflow-mode" data-mode="data"   role="tab" aria-selected="false">Data view</button>
+              <button class="workflow-mode" data-mode="gui"    role="tab" aria-selected="false">GUI view</button>
+            </div>
+
+            <svg class="workflow-graph" viewBox="0 0 880 220"
+                 role="img" aria-label="BIDS Manager workflow">
+              <defs>
+                <filter id="wf-node-glow" x="-60%" y="-60%" width="220%" height="220%">
+                  <feDropShadow dx="0" dy="0" stdDeviation="3"
+                                flood-color="#58a6ff" flood-opacity="0.75"/>
+                  <feDropShadow dx="0" dy="0" stdDeviation="8"
+                                flood-color="#d2a8ff" flood-opacity="0.45"/>
+                </filter>
+                <filter id="wf-dot-glow" x="-200%" y="-200%" width="500%" height="500%">
+                  <feDropShadow dx="0" dy="0" stdDeviation="3"
+                                flood-color="#58a6ff" flood-opacity="0.85"/>
+                  <feDropShadow dx="0" dy="0" stdDeviation="8"
+                                flood-color="#ffffff" flood-opacity="0.45"/>
+                </filter>
+              </defs>
+
+              <!-- Single path that visits every node in order. The traveling
+                   dot rides this. -->
+              <path id="wf-main-path" class="workflow-line main-line"
+                    d="M70 110
+                       C 140 60, 200 60, 230 110
+                       C 260 160, 320 160, 350 110
+                       C 380 60, 440 60, 470 110
+                       C 500 160, 560 160, 590 110
+                       C 620 60, 680 60, 710 110
+                       C 740 160, 800 160, 830 110" />
+
+              <circle class="wf-dot workflow-dot" r="5" cx="70" cy="110" />
+
+              <!-- Nodes -->
+              <g class="workflow-node" data-node="raw" tabindex="0" role="button" aria-label="Raw data stage">
+                <circle cx="70"  cy="110" r="24"></circle>
+                <text x="70"  y="158">Raw</text>
+              </g>
+              <g class="workflow-node" data-node="scan" tabindex="0" role="button" aria-label="Scan stage">
+                <circle cx="180" cy="80"  r="24"></circle>
+                <text x="180" y="56">Scan</text>
+              </g>
+              <g class="workflow-node" data-node="edit" tabindex="0" role="button" aria-label="Edit stage">
+                <circle cx="290" cy="140" r="24"></circle>
+                <text x="290" y="184">Edit</text>
+              </g>
+              <g class="workflow-node" data-node="convert" tabindex="0" role="button" aria-label="Convert stage">
+                <circle cx="400" cy="80"  r="24"></circle>
+                <text x="400" y="56">Convert</text>
+              </g>
+              <g class="workflow-node" data-node="fix" tabindex="0" role="button" aria-label="Fix-ups stage">
+                <circle cx="510" cy="140" r="24"></circle>
+                <text x="510" y="184">Fix-ups</text>
+              </g>
+              <g class="workflow-node" data-node="inspect" tabindex="0" role="button" aria-label="Inspect stage">
+                <circle cx="620" cy="80"  r="24"></circle>
+                <text x="620" y="56">Inspect</text>
+              </g>
+              <g class="workflow-node" data-node="validate" tabindex="0" role="button" aria-label="Validate stage">
+                <circle cx="730" cy="140" r="24"></circle>
+                <text x="730" y="184">Validate</text>
+              </g>
+              <g class="workflow-node" data-node="bids" tabindex="0" role="button" aria-label="BIDS dataset stage">
+                <circle cx="830" cy="110" r="26"></circle>
+                <text x="830" y="158">BIDS</text>
+              </g>
+            </svg>
+
+            <div class="workflow-side">
+              <div class="workflow-detail" data-workflow-detail aria-live="polite">
+                <h3><span class="badge">raw</span>Raw data</h3>
+                <p>Click a stage in the diagram above to read about it.</p>
+              </div>
+              <div>
+                <h3 style="margin-top:0;">Why these eight stages?</h3>
+                <p class="muted">
+                  Most BIDS converters collapse the middle three (Edit, Convert,
+                  Fix-ups) into one black-box run. Separating them is how we
+                  give you both a spreadsheet to review beforehand and a
+                  schema-driven editor to fix after.
+                </p>
+                <p class="muted">
+                  <strong>Inspect</strong> and <strong>Validate</strong> are
+                  also separate. Inspect is interactive (the Editor pane);
+                  Validate is the audit log that can also run headlessly via
+                  <code class="inline">bidsmgr-validate</code>.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Next steps
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow">
+        <h2>Next steps</h2>
+        <ul>
+          <li><a href="installation.html">Install BIDS Manager</a> on macOS,
+            Linux, or Windows.</li>
+          <li><a href="tutorial.html">Walk the interactive tutorial</a>:
+            scan, inspect, convert, edit, validate, all simulated in the
+            browser.</li>
+          <li>Read the
+            <a href="https://github.com/ANCPLabOldenburg/BIDS-Manager/blob/main/docs/architecture.md"
+               target="_blank" rel="noopener">architecture write-up</a>
+            for the engine internals.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <div data-include="footer"></div>
+  <script src="script.js" defer></script>
+</body>
+</html>

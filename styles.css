@@ -1,0 +1,756 @@
+/* =====================================================================
+ * BIDS Manager documentation -- design system
+ *
+ * Tokens mirror the GUI's QSS palette (theme_manager.py) so the docs and
+ * the app feel like one product. Layout / motion idioms (glow filters,
+ * hero rotation, animated workflow) lifted from INDoS_BrainHack.
+ *
+ * Dark is the default; the light theme is engaged via [data-theme="light"]
+ * on <html>. The toggle persists the choice in localStorage.
+ * ===================================================================== */
+
+:root {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --bg:            #0a0e13;
+  --bg-soft:       #11161d;
+  --panel:         #161b22;
+  --panel-strong:  #1c2128;
+  --border:        rgba(255, 255, 255, 0.12);
+
+  /* Type */
+  --text:          #e6edf3;
+  --muted:         #8b949e;
+  --quiet:         #656d76;
+
+  /* Accents (match bidsmgr.gui.theme_manager DARK palette) */
+  --accent:        #58a6ff;
+  --success:       #3fb950;
+  --warning:       #d29922;
+  --error:         #f85149;
+  --purple:        #d2a8ff;
+  --teal:          #39c5cf;
+
+  /* Decorative glow tokens (from INDoS aesthetic) */
+  --glow-accent:   rgba(88, 166, 255, 0.48);
+  --glow-purple:   rgba(210, 168, 255, 0.42);
+  --glow-success:  rgba(63, 185, 80, 0.40);
+
+  --header-bg:     rgba(10, 14, 19, 0.78);
+  --shadow:        0 24px 80px rgba(0, 0, 0, 0.42);
+  --radius:        10px;
+  --max:           1180px;
+  --max-narrow:    860px;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  --bg:            #ffffff;
+  --bg-soft:       #f6f8fa;
+  --panel:         #ffffff;
+  --panel-strong:  #eef1f4;
+  --border:        rgba(18, 23, 32, 0.13);
+
+  --text:          #1f2328;
+  --muted:         #656d76;
+  --quiet:         #8c959f;
+
+  --accent:        #0969da;
+  --success:       #1a7f37;
+  --warning:       #9a6700;
+  --error:         #cf222e;
+  --purple:        #8250df;
+  --teal:          #1d7a8c;
+
+  --glow-accent:   rgba(9, 105, 218, 0.32);
+  --glow-purple:   rgba(130, 80, 223, 0.32);
+  --glow-success:  rgba(26, 127, 55, 0.30);
+
+  --header-bg:     rgba(255, 255, 255, 0.86);
+  --shadow:        0 24px 80px rgba(34, 47, 68, 0.18);
+}
+
+/* --------------------------------------------------------------------
+ * Base
+ * ------------------------------------------------------------------ */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "SF Pro Text", "Segoe UI", Inter, system-ui, -apple-system,
+               sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Subtle grid texture behind everything (INDoS pattern). */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.024) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.024) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, black, transparent 78%);
+}
+
+[data-theme="light"] body::before {
+  background:
+    linear-gradient(rgba(18, 23, 32, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(18, 23, 32, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+img { display: block; max-width: 100%; }
+code { font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace; }
+
+h1, h2, h3, h4 {
+  color: var(--text);
+  letter-spacing: -0.012em;
+  margin: 0 0 0.6em;
+  font-weight: 700;
+  line-height: 1.18;
+}
+
+h1 { font-size: clamp(2.1rem, 3.2vw, 3rem); }
+h2 { font-size: clamp(1.6rem, 2.2vw, 2.1rem); }
+h3 { font-size: 1.2rem; }
+
+p { color: var(--text); margin: 0 0 1em; }
+p.lead { font-size: 1.15rem; color: var(--muted); max-width: 60ch; }
+
+.muted { color: var(--muted); }
+.quiet { color: var(--quiet); }
+
+/* --------------------------------------------------------------------
+ * Header
+ * ------------------------------------------------------------------ */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 14px clamp(18px, 4vw, 48px);
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.brand img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.brand-name {
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2vw, 28px);
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.nav-links a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 4px 0;
+  border-bottom: 2px solid transparent;
+  transition: color 120ms ease, border-color 120ms ease;
+}
+.nav-links a:hover {
+  color: var(--text);
+}
+.nav-links a.is-active {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+}
+
+.theme-toggle {
+  min-height: 34px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 7px 14px;
+  white-space: nowrap;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+  background: rgba(88, 166, 255, 0.08);
+}
+
+[data-theme="light"] .theme-toggle {
+  background: rgba(18, 23, 32, 0.04);
+}
+
+/* --------------------------------------------------------------------
+ * Layout: main / containers
+ * ------------------------------------------------------------------ */
+
+main { display: block; }
+
+.container {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 clamp(18px, 4vw, 48px);
+}
+
+.container-narrow {
+  max-width: var(--max-narrow);
+  margin: 0 auto;
+  padding: 0 clamp(18px, 4vw, 48px);
+}
+
+.section {
+  padding: clamp(56px, 9vw, 110px) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 36px;
+}
+
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.section-eyebrow::before {
+  content: "";
+  width: 18px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 1px;
+}
+
+.section-title { margin: 0; }
+.section-lead {
+  color: var(--muted);
+  font-size: 1.05rem;
+  max-width: 64ch;
+  margin-top: 6px;
+}
+
+/* --------------------------------------------------------------------
+ * Hero (used on landing)
+ * ------------------------------------------------------------------ */
+
+.hero {
+  position: relative;
+  min-height: 78svh;
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-media,
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-media { opacity: 1; }
+
+/* Each shot pulses through opacity on its own 18s cycle, staggered via
+ * animation-delay so they appear and disappear at different positions.
+ * With six shots staggered by 3s in an 18s cycle, 2-3 shots are
+ * visible at any moment and the set rotates continuously. */
+@keyframes hero-pulse {
+  0%   { opacity: 0; transform: var(--hero-rest) scale(0.99); }
+  16%  { opacity: 0.92; transform: var(--hero-rest) scale(1); }
+  50%  { opacity: 0.92; transform: var(--hero-rest) scale(1); }
+  64%  { opacity: 0; transform: var(--hero-rest) scale(0.99); }
+  100% { opacity: 0; transform: var(--hero-rest) scale(0.99); }
+}
+
+.hero-shot {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  object-fit: cover;
+  opacity: 0;
+  animation: hero-pulse 18s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+[data-theme="light"] .hero-shot {
+  border-color: rgba(18, 23, 32, 0.16);
+}
+
+/* Stagger each shot by 3 seconds so the appearances tile around the
+ * cycle. The visible windows overlap by ~3 seconds, so the eye always
+ * sees 2-3 shots; no moment of empty hero. */
+.shot-a { animation-delay: 0s;   }
+.shot-b { animation-delay: 3s;   }
+.shot-c { animation-delay: 6s;   }
+.shot-d { animation-delay: 9s;   }
+.shot-e { animation-delay: 12s;  }
+.shot-f { animation-delay: 15s;  }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-shot { opacity: 0.5; animation: none; transform: var(--hero-rest); }
+}
+
+/* Six-shot collage. Larger main panels anchor the corners; smaller
+ * supporting shots fill the middle. Slight rotations break the grid
+ * feel; tighter widths on the secondary shots keep them subordinate
+ * to the main two. The rotation is handed to the keyframes via the
+ * ``--hero-rest`` custom property so the @keyframes hero-pulse rule
+ * can build the full transform without erasing the rotation. */
+.shot-a { top: -3%;   left: -8%;  width: min(48vw, 620px); --hero-rest: rotate(-3deg);   }
+.shot-b { top: 6%;    right: -6%; width: min(48vw, 620px); --hero-rest: rotate(2.6deg);  }
+.shot-c { bottom: -6%; left: 12%; width: min(38vw, 480px); --hero-rest: rotate(-1.5deg); }
+.shot-d { bottom: 2%;  right: 18%; width: min(34vw, 440px); --hero-rest: rotate(3deg);   }
+.shot-e { top: 40%;    left: 28%; width: min(28vw, 360px); --hero-rest: rotate(-2deg);   }
+.shot-f { top: 38%;    right: 26%; width: min(28vw, 360px); --hero-rest: rotate(2deg);   }
+
+/* On narrow viewports collapse the side shots so the hero text stays
+ * legible. Keep two anchor shots for atmosphere. */
+@media (max-width: 720px) {
+  .shot-c, .shot-d, .shot-e, .shot-f { display: none; }
+  .shot-a, .shot-b { width: 80vw; }
+  .shot-a { top: 4%; left: -20%; }
+  .shot-b { top: 50%; right: -28%; }
+}
+
+.hero-overlay {
+  background:
+    radial-gradient(110% 80% at 20% 18%, rgba(88, 166, 255, 0.18), transparent 60%),
+    radial-gradient(80% 70% at 82% 84%, rgba(210, 168, 255, 0.18), transparent 60%),
+    linear-gradient(180deg, rgba(10, 14, 19, 0.18) 0%, rgba(10, 14, 19, 0.86) 70%);
+}
+
+[data-theme="light"] .hero-overlay {
+  background:
+    radial-gradient(110% 80% at 20% 18%, rgba(9, 105, 218, 0.18), transparent 60%),
+    radial-gradient(80% 70% at 82% 84%, rgba(130, 80, 223, 0.14), transparent 60%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.0) 0%, rgba(255, 255, 255, 0.86) 70%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(56px, 8vw, 110px) clamp(18px, 4vw, 48px);
+  display: grid;
+  gap: 26px;
+  justify-items: start;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--muted);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+}
+[data-theme="light"] .hero-eyebrow { background: rgba(18, 23, 32, 0.04); }
+.hero-eyebrow strong { color: var(--accent); font-weight: 700; }
+
+.hero-title {
+  font-size: clamp(2.4rem, 5.2vw, 4.4rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  max-width: 18ch;
+  margin: 0;
+}
+.hero-title em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--accent), var(--purple));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-lead {
+  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  color: var(--muted);
+  max-width: 64ch;
+  margin: 0;
+}
+
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+/* --------------------------------------------------------------------
+ * Buttons
+ * ------------------------------------------------------------------ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 100ms ease, box-shadow 200ms ease,
+              background 120ms ease, border-color 120ms ease;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+}
+[data-theme="light"] .btn { background: rgba(18, 23, 32, 0.04); }
+
+.btn:hover { transform: translateY(-1px); }
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+  box-shadow: 0 12px 30px var(--glow-accent);
+}
+.btn-primary:hover { text-decoration: none; box-shadow: 0 14px 36px var(--glow-accent); }
+
+.btn-ghost {
+  background: transparent;
+}
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+/* --------------------------------------------------------------------
+ * Feature card grid
+ * ------------------------------------------------------------------ */
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.feature-card {
+  position: relative;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+  transition: border-color 160ms ease, transform 160ms ease;
+}
+.feature-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.feature-card .feature-icon {
+  width: 40px; height: 40px;
+  border-radius: 8px;
+  display: grid; place-items: center;
+  margin-bottom: 14px;
+  background: rgba(88, 166, 255, 0.10);
+  color: var(--accent);
+  font-size: 1.4rem;
+}
+.feature-card h3 { margin-bottom: 6px; font-size: 1.05rem; }
+.feature-card p  { color: var(--muted); margin: 0; font-size: 0.95rem; }
+
+/* --------------------------------------------------------------------
+ * Workflow animation (intro page)
+ * Lifted from INDoS's pattern, adapted for the BIDS Manager pipeline
+ * Raw  ->  Scan  ->  Edit  ->  Convert  ->  Fix  ->  Inspect  ->  Validate  ->  BIDS
+ * ------------------------------------------------------------------ */
+
+.workflow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px;
+  margin-top: 8px;
+}
+
+.workflow-stage {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+  padding: 28px;
+  box-shadow: var(--shadow);
+}
+
+.workflow-graph {
+  width: 100%;
+  max-width: 980px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.workflow-line {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.workflow-line.main-line { stroke: rgba(88, 166, 255, 0.55); stroke-width: 2.4; }
+
+.workflow-dot {
+  fill: var(--accent);
+  filter: url(#wf-dot-glow);
+}
+
+.workflow-node circle {
+  fill: var(--panel-strong);
+  stroke: var(--border);
+  stroke-width: 1.5;
+  transition: fill 240ms ease, stroke 240ms ease;
+}
+.workflow-node text {
+  fill: var(--muted);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  text-anchor: middle;
+  letter-spacing: 0.02em;
+  transition: fill 240ms ease;
+}
+.workflow-node:hover circle,
+.workflow-node.is-active circle {
+  fill: rgba(88, 166, 255, 0.12);
+  stroke: var(--accent);
+  filter: url(#wf-node-glow);
+}
+.workflow-node:hover text,
+.workflow-node.is-active text {
+  fill: var(--text);
+}
+
+.workflow-side {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.workflow-modes {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.workflow-mode {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 150ms ease;
+}
+.workflow-mode:hover  { color: var(--text); border-color: var(--accent); }
+.workflow-mode.is-active {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(88, 166, 255, 0.10);
+}
+
+.workflow-detail {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+  padding: 22px;
+  min-height: 220px;
+}
+.workflow-detail h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.workflow-detail .badge {
+  font-size: 0.72rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(88, 166, 255, 0.12);
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.workflow-detail ul { padding-left: 1.1em; margin: 0.4em 0; color: var(--muted); }
+.workflow-detail li { margin: 0.25em 0; }
+
+@media (max-width: 880px) {
+  .workflow-side { grid-template-columns: 1fr; }
+}
+
+/* --------------------------------------------------------------------
+ * Code block + inline code
+ * ------------------------------------------------------------------ */
+
+pre.code {
+  background: var(--panel-strong);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  overflow-x: auto;
+  font-size: 0.92rem;
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  line-height: 1.55;
+  color: var(--text);
+}
+pre.code .cmt  { color: var(--quiet); }
+pre.code .kw   { color: var(--purple); font-weight: 700; }
+pre.code .str  { color: var(--success); }
+
+code.inline {
+  background: var(--panel-strong);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 0.9em;
+}
+
+/* --------------------------------------------------------------------
+ * Callouts / admonitions
+ * ------------------------------------------------------------------ */
+
+.callout {
+  display: flex;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--panel);
+  margin: 18px 0;
+}
+.callout .callout-icon { font-size: 1.2rem; line-height: 1.2; }
+.callout-tip     { border-color: rgba(88, 166, 255, 0.45);  background: rgba(88, 166, 255, 0.06); }
+.callout-tip     .callout-icon { color: var(--accent); }
+.callout-warning { border-color: rgba(210, 153, 34, 0.45); background: rgba(210, 153, 34, 0.06); }
+.callout-warning .callout-icon { color: var(--warning); }
+.callout-success { border-color: rgba(63, 185, 80, 0.45); background: rgba(63, 185, 80, 0.06); }
+.callout-success .callout-icon { color: var(--success); }
+.callout strong { color: var(--text); }
+.callout p { margin: 0; color: var(--muted); }
+
+/* --------------------------------------------------------------------
+ * Footer
+ * ------------------------------------------------------------------ */
+
+.site-footer {
+  background: var(--bg-soft);
+  border-top: 1px solid var(--border);
+  padding: 36px clamp(18px, 4vw, 48px);
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+.site-footer .container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: space-between;
+}
+.site-footer a { color: var(--muted); }
+.site-footer a:hover { color: var(--accent); }
+
+/* --------------------------------------------------------------------
+ * Page-content prose container
+ * (used by installation / tutorial / future pages)
+ * ------------------------------------------------------------------ */
+
+.prose { max-width: 78ch; margin: 0 auto; }
+.prose h2 { margin-top: 2em; }
+.prose h3 { margin-top: 1.6em; }
+.prose ul,
+.prose ol { padding-left: 1.3em; }
+.prose ul li,
+.prose ol li { margin: 0.25em 0; color: var(--text); }
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.2em 0;
+  font-size: 0.94rem;
+}
+.prose th,
+.prose td {
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.prose thead th { color: var(--accent); font-weight: 700; }
+
+/* --------------------------------------------------------------------
+ * Reveal-on-scroll (IntersectionObserver)
+ * ------------------------------------------------------------------ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 600ms ease, transform 600ms ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* --------------------------------------------------------------------
+ * Responsive nips
+ * ------------------------------------------------------------------ */
+
+@media (max-width: 720px) {
+  .nav-links a:not(.is-active) { display: none; }
+  .brand img { width: 26px; height: 26px; }
+}

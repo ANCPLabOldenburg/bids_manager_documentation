@@ -1,0 +1,52 @@
+# Deploys the static site at the repo root to GitHub Pages on every
+# push to ``main``. The site has no build step (vanilla HTML / CSS /
+# JS), so we just upload the working tree as the Pages artifact.
+#
+# Before this Action takes effect you must enable Pages once in the
+# repo settings:
+#   Settings -> Pages -> Build and deployment -> Source: GitHub Actions
+#
+# After that the deploy is automatic.
+
+name: Deploy docs to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deploy; queue further runs.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

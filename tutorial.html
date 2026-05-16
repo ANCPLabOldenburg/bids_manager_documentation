@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interactive tutorial: scan, inspect, convert, edit, validate. Walk the BIDS Manager workflow step by step.">
+  <title>Tutorial &middot; BIDS Manager</title>
+  <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div data-include="header"></div>
+
+  <main>
+    <section class="section">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Tutorial</span>
+        <h1>Walk the BIDS Manager workflow</h1>
+        <p class="lead">
+          An interactive simulation of the GUI: click through the steps below
+          and watch the panels respond, no install required.
+        </p>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Technique B: simulated widgets.</strong>
+            <p>Each scene re-creates the active panel in HTML / CSS using the
+              same palette tokens as the GUI itself. Click the controls;
+              they will behave like the real thing on a short script. The
+              CLI counterpart for each scene is shown alongside.</p>
+            <p>The actual interactive scenes (scan, inspect, convert, edit,
+              validate) are authored in the next pass.</p>
+          </div>
+        </div>
+
+        <h2>Planned scenes</h2>
+        <ol>
+          <li><strong>Set raw + BIDS folders</strong> with the path bars.</li>
+          <li><strong>Run a scan</strong>: watch the spinner + status chips
+            update as the inventory builds.</li>
+          <li><strong>Inspect the table</strong>: spotlight the columns,
+            tooltip explanations on hover.</li>
+          <li><strong>Override a row</strong>: edit a cell, see the BIDS
+            preview update.</li>
+          <li><strong>Bulk-edit</strong>: multi-select rows, apply one
+            value across the selection.</li>
+          <li><strong>Run conversion</strong>: per-subject progress
+            animation, atomic rename, status chips.</li>
+          <li><strong>Open the result in Editor</strong>: BIDS tree, sidecar
+            form pane, schema-driven required / recommended / optional
+            colour legend.</li>
+          <li><strong>Inspect a NIfTI</strong>: tri-view, crosshair scrub,
+            4-D graph for BOLD.</li>
+          <li><strong>Validate the dataset</strong>: severity chips, file
+            vs folder vs dataset scope, strict BIDS toggle.</li>
+        </ol>
+
+        <p>Each scene will pair with its CLI equivalent
+          (<code class="inline">bidsmgr-scan</code>,
+           <code class="inline">bidsmgr-convert</code>,
+           <code class="inline">bidsmgr-validate</code>, etc.) so power
+           users can read both side by side.</p>
+      </div>
+    </section>
+  </main>
+
+  <div data-include="footer"></div>
+  <script src="script.js" defer></script>
+</body>
+</html>
