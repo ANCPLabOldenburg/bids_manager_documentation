@@ -66,31 +66,6 @@
           BIDS Manager. Pick the one that fits your workflow.
         </p>
 
-        <!-- Supported-platforms callout. The one-click installer ships
-             pre-built portable Python binaries, so it only works on the
-             three OS / arch combos listed here. The manual install path
-             has no such constraint. -->
-        <div class="callout callout-warning">
-          <div class="callout-icon" aria-hidden="true">&#x25c6;</div>
-          <div>
-            <strong>Supported platforms for the one-click installer</strong>
-            <ul style="margin: 6px 0 8px; padding-left: 1.2em;">
-              <li><strong>macOS</strong>: Apple Silicon only (M1, M2, M3,
-                M4 chips). Intel Macs are not supported by the installer.</li>
-              <li><strong>Linux</strong>: x86_64 only. ARM / aarch64 is
-                not supported by the installer.</li>
-              <li><strong>Windows</strong>: x86_64 only. ARM Windows is
-                not supported by the installer.</li>
-            </ul>
-            <p style="margin: 0;">
-              If your machine is on a different architecture, use
-              <a href="#manual">Method 2 (manual install)</a>. It works
-              on any platform with Python 3.10 to 3.14.
-              <a href="#arch">Not sure which architecture you have? &rarr;</a>
-            </p>
-          </div>
-        </div>
-
         <div class="method-cards">
           <a class="method-card" href="#bootstrap">
             <span class="method-badge is-rec">Recommended</span>
@@ -148,6 +123,33 @@
           platform with a single script. Run it once, and BIDS Manager shows
           up as a regular app on your machine.
         </p>
+
+        <!-- Supported-platforms warning. The one-click installer ships
+             pre-built portable Python binaries, so it only works on the
+             three OS / arch combos listed here. The manual install path
+             (Method 2) has no such constraint. Surfacing this here so
+             readers see it before they download anything. -->
+        <div class="callout callout-warning">
+          <div class="callout-icon" aria-hidden="true">&#x25c6;</div>
+          <div>
+            <strong>Supported platforms for the one-click installer</strong>
+            <ul style="margin: 6px 0 8px; padding-left: 1.2em;">
+              <li><strong>macOS</strong>: Apple Silicon only (M1, M2,
+                M3, M4 chips). Intel Macs are not supported by the
+                installer.</li>
+              <li><strong>Linux</strong>: x86_64 only. ARM / aarch64
+                is not supported by the installer.</li>
+              <li><strong>Windows</strong>: x86_64 only. ARM Windows
+                is not supported by the installer.</li>
+            </ul>
+            <p style="margin: 0;">
+              On a different architecture? Use
+              <a href="#manual">Method 2 (manual install)</a>. It
+              works on any platform with Python 3.10 to 3.14.
+              <a href="#arch">Not sure which architecture you have? &rarr;</a>
+            </p>
+          </div>
+        </div>
 
         <p>
           <a class="btn btn-primary"

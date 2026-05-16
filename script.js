@@ -44,7 +44,84 @@
   initTabs();
   initInstallPipeline();
   initPageToc();
+  initCodeCopy();
 })();
+
+
+/* ====================================================================
+ * Code copy-to-clipboard
+ *
+ * For every <pre class="code"> on the page, snapshot its plain-text
+ * contents and inject a small "Copy" button. Click copies the cached
+ * text via the async Clipboard API, with a document.execCommand
+ * fallback for older browsers / non-secure contexts. The button
+ * flashes "Copied!" (or "Failed") for 1.5 seconds.
+ *
+ * The snapshot is taken BEFORE the button is appended so the button's
+ * own label is never copied along with the code.
+ * ================================================================== */
+
+function initCodeCopy() {
+  const COPY_ICON = `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="9" y="9" width="12" height="12" rx="2"/>
+      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+    </svg>`;
+
+  document.querySelectorAll("pre.code").forEach((pre) => {
+    if (pre.dataset.copyReady) return;
+    pre.dataset.copyReady = "1";
+
+    // Snapshot the plain-text source before the button is added.
+    pre.dataset.copyText = pre.textContent;
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "code-copy";
+    btn.setAttribute("aria-label", "Copy code to clipboard");
+    btn.innerHTML = `${COPY_ICON}<span class="code-copy-label">Copy</span>`;
+    pre.appendChild(btn);
+
+    btn.addEventListener("click", () => copyFromPre(pre, btn));
+  });
+
+  async function copyFromPre(pre, btn) {
+    const text = pre.dataset.copyText || "";
+    let ok = false;
+    if (navigator.clipboard?.writeText) {
+      try { await navigator.clipboard.writeText(text); ok = true; }
+      catch { /* fall through to legacy path */ }
+    }
+    if (!ok) ok = legacyCopy(text);
+    flashCopy(btn, ok);
+  }
+
+  function legacyCopy(text) {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "absolute";
+    ta.style.left = "-9999px";
+    document.body.appendChild(ta);
+    ta.select();
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  function flashCopy(btn, ok) {
+    const label = btn.querySelector(".code-copy-label");
+    if (!label) return;
+    label.textContent = ok ? "Copied!" : "Failed";
+    btn.classList.toggle("is-copied", ok);
+    btn.classList.toggle("is-failed", !ok);
+    setTimeout(() => {
+      label.textContent = "Copy";
+      btn.classList.remove("is-copied", "is-failed");
+    }, 1500);
+  }
+}
 
 
 /* ====================================================================

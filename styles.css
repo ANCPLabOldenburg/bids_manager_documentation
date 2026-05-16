@@ -55,11 +55,24 @@
   --step6-glow:    rgba(255, 121, 198, 0.55);
   --step7-glow:    rgba(248,  81,  73, 0.55);
 
-  --header-bg:     rgba(10, 14, 19, 0.78);
+  --header-bg:     rgba(10, 14, 19, 0.62);
   --shadow:        0 24px 80px rgba(0, 0, 0, 0.42);
   --radius:        10px;
   --max:           1180px;
   --max-narrow:    860px;
+
+  /* Frosted-glass surface tokens. These are the translucent panel
+   * fills that get backdrop-blur applied. The colored blob layer
+   * (body::after) shows through and tints the glass. */
+  --panel-glass:        rgba(22, 27, 34, 0.58);
+  --panel-glass-strong: rgba(22, 27, 34, 0.78);
+  --border-glass:       rgba(255, 255, 255, 0.10);
+
+  /* Colored background blobs for the glass effect (dark theme). */
+  --blob-1:        rgba( 88, 166, 255, 0.22);
+  --blob-2:        rgba(210, 168, 255, 0.20);
+  --blob-3:        rgba( 57, 197, 207, 0.14);
+  --blob-4:        rgba( 63, 185,  80, 0.12);
 }
 
 [data-theme="light"] {
@@ -105,8 +118,20 @@
   --step6-glow:    rgba(212,  54, 140, 0.32);
   --step7-glow:    rgba(207,  34,  46, 0.32);
 
-  --header-bg:     rgba(255, 255, 255, 0.86);
+  --header-bg:     rgba(255, 255, 255, 0.62);
   --shadow:        0 24px 80px rgba(34, 47, 68, 0.18);
+
+  /* Frosted-glass surfaces (light theme). */
+  --panel-glass:        rgba(255, 255, 255, 0.62);
+  --panel-glass-strong: rgba(255, 255, 255, 0.82);
+  --border-glass:       rgba(18, 23, 32, 0.10);
+
+  /* Colored background blobs (light theme): tinted but quieter so
+   * the page surface stays bright and text readable. */
+  --blob-1:        rgba(  9, 105, 218, 0.12);
+  --blob-2:        rgba(130,  80, 223, 0.12);
+  --blob-3:        rgba( 29, 122, 140, 0.10);
+  --blob-4:        rgba( 26, 127,  55, 0.08);
 }
 
 /* --------------------------------------------------------------------
@@ -150,6 +175,35 @@ body::before {
     linear-gradient(rgba(18, 23, 32, 0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(18, 23, 32, 0.035) 1px, transparent 1px);
   background-size: 64px 64px;
+}
+
+/* Glassmorphism backdrop. Soft colored blobs sit behind everything
+ * and are blurred heavily; surface elements with backdrop-filter pick
+ * them up and tint the frosted glass. The layer drifts slowly so the
+ * tints shift over time. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: -25vh -25vw;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(38vw 38vw at 12% 18%, var(--blob-1), transparent 60%),
+    radial-gradient(46vw 46vw at 86% 28%, var(--blob-2), transparent 60%),
+    radial-gradient(34vw 34vw at 22% 88%, var(--blob-3), transparent 60%),
+    radial-gradient(38vw 38vw at 82% 86%, var(--blob-4), transparent 60%);
+  filter: blur(48px);
+  animation: blob-drift 56s ease-in-out infinite alternate;
+}
+
+@keyframes blob-drift {
+  0%   { transform: translate3d(0, 0, 0)        rotate(0deg);  }
+  50%  { transform: translate3d(-3%, 2%, 0)     rotate(2deg);  }
+  100% { transform: translate3d(3%, -2%, 0)     rotate(-2deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::after { animation: none; }
 }
 
 a { color: var(--accent); text-decoration: none; }
@@ -490,7 +544,11 @@ main { display: block; }
   background: rgba(255, 255, 255, 0.04);
   color: var(--text);
 }
-[data-theme="light"] .btn { background: rgba(18, 23, 32, 0.04); }
+/* :where() keeps this override at (0,1,0) specificity so the .btn-primary
+ * and .btn-ghost variant rules below still win in light theme. Without
+ * it, '[data-theme="light"] .btn' beats them and primary buttons render
+ * with the neutral dark tint instead of the accent color. */
+[data-theme="light"] :where(.btn) { background: rgba(18, 23, 32, 0.04); }
 
 .btn:hover { transform: translateY(-1px); }
 
@@ -520,9 +578,11 @@ main { display: block; }
 .feature-card {
   position: relative;
   padding: 24px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-glass);
   border-radius: var(--radius);
-  background: var(--panel);
+  background: var(--panel-glass);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
   transition: border-color 160ms ease, transform 160ms ease;
 }
 .feature-card:hover {
@@ -557,9 +617,11 @@ main { display: block; }
 
 .workflow-stage {
   position: relative;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-glass);
   border-radius: var(--radius);
-  background: var(--panel);
+  background: var(--panel-glass);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
   padding: 28px;
   box-shadow: var(--shadow);
 }
@@ -644,9 +706,11 @@ main { display: block; }
 }
 
 .workflow-detail {
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-glass);
   border-radius: var(--radius);
-  background: var(--panel);
+  background: var(--panel-glass);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
   padding: 22px;
   min-height: 220px;
 }
@@ -678,15 +742,73 @@ main { display: block; }
  * ------------------------------------------------------------------ */
 
 pre.code {
+  position: relative;
   background: var(--panel-strong);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 18px 20px;
+  padding-right: 90px;   /* leave room for the copy button */
   overflow-x: auto;
   font-size: 0.92rem;
   font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
   line-height: 1.55;
   color: var(--text);
+}
+
+/* --- Copy-to-clipboard button on every <pre class="code"> -----------
+ * Injected by initCodeCopy() in script.js. Frosted-glass chip in the
+ * top-right corner of the code window. On click it copies the cached
+ * plain-text contents and flashes "Copied!" for 1.5 seconds. */
+
+.code-copy {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  background: var(--panel-glass-strong);
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  border: 1px solid var(--border-glass);
+  color: var(--muted);
+  border-radius: 8px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.74rem;
+  font-weight: 600;
+  font-family: "SF Pro Text", "Segoe UI", Inter, system-ui, sans-serif;
+  letter-spacing: 0.02em;
+  opacity: 0.7;
+  transition: opacity 180ms ease, color 160ms ease,
+              border-color 160ms ease, transform 160ms ease;
+}
+.code-copy svg {
+  width: 13px;
+  height: 13px;
+  stroke-width: 2;
+  fill: none;
+  stroke: currentColor;
+}
+pre.code:hover .code-copy,
+.code-copy:focus-visible {
+  opacity: 1;
+}
+.code-copy:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+.code-copy.is-copied {
+  color: var(--success);
+  border-color: var(--success);
+  opacity: 1;
+}
+.code-copy.is-failed {
+  color: var(--error);
+  border-color: var(--error);
+  opacity: 1;
 }
 pre.code .cmt  { color: var(--quiet); }
 pre.code .kw   { color: var(--purple); font-weight: 700; }
@@ -709,8 +831,10 @@ code.inline {
   gap: 14px;
   padding: 16px 18px;
   border-radius: var(--radius);
-  border: 1px solid var(--border);
-  background: var(--panel);
+  border: 1px solid var(--border-glass);
+  background: var(--panel-glass);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
   margin: 18px 0;
 }
 .callout .callout-icon { font-size: 1.2rem; line-height: 1.2; }
@@ -867,9 +991,11 @@ code.inline {
  * ------------------------------------------------------------------ */
 
 details.disclosure {
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-glass);
   border-radius: var(--radius);
-  background: var(--panel);
+  background: var(--panel-glass);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
   padding: 0;
   margin: 18px 0;
   overflow: hidden;
@@ -938,9 +1064,11 @@ details.disclosure p:last-child { margin-bottom: 0; }
   flex-direction: column;
   gap: 14px;
   padding: 28px 26px 26px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-glass);
   border-radius: var(--radius);
-  background: var(--panel);
+  background: var(--panel-glass);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
   text-decoration: none;
   color: inherit;
   transition: border-color 180ms ease, transform 180ms ease,
@@ -1026,8 +1154,10 @@ details.disclosure p:last-child { margin-bottom: 0; }
   width: 42px;
   height: 42px;
   border-radius: 12px;
-  border: 1px solid var(--border);
-  background: var(--panel);
+  border: 1px solid var(--border-glass);
+  background: var(--panel-glass-strong);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
   color: var(--text);
   cursor: pointer;
   display: grid;
@@ -1069,13 +1199,13 @@ details.disclosure p:last-child { margin-bottom: 0; }
 
 .page-toc-panel {
   width: 232px;
-  background: var(--header-bg);
-  border: 1px solid var(--border);
+  background: var(--panel-glass-strong);
+  border: 1px solid var(--border-glass);
   border-radius: 14px;
   padding: 14px 10px;
   box-shadow: var(--shadow);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
   transform: translateX(-8px);
   opacity: 0;
   pointer-events: none;
@@ -1165,9 +1295,11 @@ details.disclosure p:last-child { margin-bottom: 0; }
 
 .install-pipeline {
   margin: 0;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-glass);
   border-radius: var(--radius);
-  background: var(--panel);
+  background: var(--panel-glass);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
   padding: clamp(22px, 3vw, 36px);
   box-shadow: var(--shadow);
   /* JS updates this when the active step changes; used by the
