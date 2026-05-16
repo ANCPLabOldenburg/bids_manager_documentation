@@ -11,6 +11,48 @@
 <body>
   <div data-include="header"></div>
 
+  <!-- Persistent left-side page TOC. Position-fixed via styles.css so
+       it floats over the layout and stays in place as the user scrolls.
+       Toggle morphs between hamburger and X. Open / closed state is
+       persisted in localStorage; scroll-spy highlights the current
+       section. Both wired up in initPageToc() (script.js). -->
+  <aside class="page-toc" data-toc aria-label="Page navigation">
+    <button class="page-toc-toggle" type="button"
+            aria-expanded="false" aria-controls="page-toc-panel"
+            aria-label="Toggle page navigation">
+      <span class="toc-bars" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </span>
+    </button>
+    <nav id="page-toc-panel" class="page-toc-panel" aria-label="Sections">
+      <span class="page-toc-title">On this page</span>
+      <a class="page-toc-link" href="#bootstrap">
+        <span class="page-toc-dot" aria-hidden="true"></span>
+        Installer
+      </a>
+      <a class="page-toc-link" href="#installer-internals">
+        <span class="page-toc-dot" aria-hidden="true"></span>
+        How it works
+      </a>
+      <a class="page-toc-link" href="#after-install">
+        <span class="page-toc-dot" aria-hidden="true"></span>
+        After install
+      </a>
+      <a class="page-toc-link" href="#manual">
+        <span class="page-toc-dot" aria-hidden="true"></span>
+        Manual install
+      </a>
+      <a class="page-toc-link" href="#arch">
+        <span class="page-toc-dot" aria-hidden="true"></span>
+        Check architecture
+      </a>
+      <a class="page-toc-link" href="#troubleshooting">
+        <span class="page-toc-dot" aria-hidden="true"></span>
+        Troubleshooting
+      </a>
+    </nav>
+  </aside>
+
   <main>
     <!-- ============================================================
          Opening: installation is easy, two methods.
@@ -48,17 +90,6 @@
             </p>
           </div>
         </div>
-
-        <!-- Sticky in-page navigation. Highlights the section currently
-             in view via initPageToc() (script.js). -->
-        <nav class="page-toc" aria-label="On this page">
-          <a class="page-toc-link" href="#bootstrap">Installer</a>
-          <a class="page-toc-link" href="#installer-internals">How it works</a>
-          <a class="page-toc-link" href="#after-install">After install</a>
-          <a class="page-toc-link" href="#manual">Manual install</a>
-          <a class="page-toc-link" href="#arch">Check architecture</a>
-          <a class="page-toc-link" href="#troubleshooting">Troubleshooting</a>
-        </nav>
 
         <div class="method-cards">
           <a class="method-card" href="#bootstrap">

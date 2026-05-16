@@ -58,9 +58,40 @@
 function initPageToc() {
   const toc = document.querySelector(".page-toc");
   if (!toc) return;
-  const links = Array.from(toc.querySelectorAll(".page-toc-link"));
+  const toggle  = toc.querySelector(".page-toc-toggle");
+  const links   = Array.from(toc.querySelectorAll(".page-toc-link"));
   if (!links.length) return;
 
+  /* ---------- open / closed state ---------- */
+  const stored = (() => {
+    try { return window.localStorage.getItem("bidsmgr-docs-toc-open"); }
+    catch { return null; }
+  })();
+  const wideEnough = window.matchMedia?.("(min-width: 1200px)").matches;
+  const initiallyOpen = stored !== null ? stored === "1" : wideEnough;
+
+  function setOpen(open) {
+    toc.classList.toggle("is-open", open);
+    if (toggle) toggle.setAttribute("aria-expanded", String(open));
+    try { window.localStorage.setItem("bidsmgr-docs-toc-open", open ? "1" : "0"); }
+    catch { /* ignore */ }
+  }
+  setOpen(initiallyOpen);
+
+  toggle?.addEventListener("click", () => {
+    setOpen(!toc.classList.contains("is-open"));
+  });
+
+  /* Esc closes the drawer (only when it's open and the toggle is focused
+   * or focus is within the drawer). */
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && toc.classList.contains("is-open")) {
+      setOpen(false);
+      toggle?.focus();
+    }
+  });
+
+  /* ---------- scroll-spy ---------- */
   const linkById = new Map();
   const sections = [];
   links.forEach((a) => {
@@ -90,7 +121,6 @@ function initPageToc() {
         else visible.delete(e.target);
       });
       if (!visible.size) return;
-      // Closest to the top (smallest positive top).
       const closest = Array.from(visible).sort(
         (a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top
       )[0];

@@ -86,13 +86,15 @@
   --glow-purple:   rgba(130, 80, 223, 0.32);
   --glow-success:  rgba(26, 127, 55, 0.30);
 
-  /* Per-step palette (light theme). */
+  /* Per-step palette (light theme). Darkened vs. dark-theme variants
+   * so the chip text and SVG labels meet WCAG AA on the panel
+   * background. */
   --step1:         #0969da;
-  --step2:         #1d7a8c;
-  --step3:         #8250df;
-  --step4:         #bf8700;
+  --step2:         #126b7c;
+  --step3:         #6f3eb3;
+  --step4:         #8a5e00;
   --step5:         #1a7f37;
-  --step6:         #d4368c;
+  --step6:         #b41f6e;
   --step7:         #cf222e;
 
   --step1-glow:    rgba(  9, 105, 218, 0.32);
@@ -1000,51 +1002,157 @@ details.disclosure p:last-child { margin-bottom: 0; }
 /* --------------------------------------------------------------------
  * Page TOC (installation.html sub-navigation)
  *
- * Sticky horizontal pill row that sits just under the main header and
- * jumps the visitor between sections. Active section is highlighted
- * via a scroll-spy in script.js (.page-toc-link.is-active).
+ * Fixed-position vertical drawer on the left edge of the viewport.
+ * Persistent across all sections. A round toggle button (hamburger /
+ * X) opens and closes the link panel; state is saved to localStorage
+ * (key: bidsmgr-docs-toc-open). Active section is highlighted via
+ * IntersectionObserver scroll-spy in script.js.
  * ------------------------------------------------------------------ */
 
 .page-toc {
-  position: sticky;
-  top: 60px;
-  z-index: 20;
+  position: fixed;
+  left: clamp(12px, 2vw, 24px);
+  top: 92px;
+  z-index: 25;
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: 2.2em 0 0;
-  padding: 8px;
+  align-items: flex-start;
+  gap: 10px;
+  pointer-events: none;   /* children opt in */
+}
+.page-toc > * { pointer-events: auto; }
+
+.page-toc-toggle {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  box-shadow: var(--shadow);
+  transition: border-color 200ms ease, color 200ms ease,
+              transform 200ms ease;
+}
+.page-toc-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+/* Hamburger that morphs into an X. Three absolutely-positioned bars
+ * translate / rotate when the panel is open. */
+.toc-bars {
+  position: relative;
+  width: 18px;
+  height: 14px;
+  display: block;
+}
+.toc-bars span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  border-radius: 1px;
+  transition: transform 260ms ease, opacity 200ms ease, top 260ms ease;
+}
+.toc-bars span:nth-child(1) { top: 0; }
+.toc-bars span:nth-child(2) { top: 6px; }
+.toc-bars span:nth-child(3) { top: 12px; }
+
+.page-toc.is-open .toc-bars span:nth-child(1) { top: 6px; transform: rotate(45deg); }
+.page-toc.is-open .toc-bars span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.page-toc.is-open .toc-bars span:nth-child(3) { top: 6px; transform: rotate(-45deg); }
+
+.page-toc-panel {
+  width: 232px;
   background: var(--header-bg);
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: 14px;
+  padding: 14px 10px;
+  box-shadow: var(--shadow);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  overflow-x: auto;
-  scrollbar-width: none;
+  transform: translateX(-8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 280ms ease, opacity 220ms ease;
 }
-.page-toc::-webkit-scrollbar { display: none; }
+.page-toc.is-open .page-toc-panel {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.page-toc-title {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  font-weight: 700;
+  padding: 4px 10px 12px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
+}
 
 .page-toc-link {
-  padding: 6px 14px;
-  border-radius: 999px;
-  color: var(--muted);
-  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 0.9rem;
   font-weight: 600;
   text-decoration: none;
-  white-space: nowrap;
   transition: color 150ms ease, background 150ms ease;
 }
+
+.page-toc-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 220ms ease, transform 240ms ease,
+              box-shadow 240ms ease;
+  flex-shrink: 0;
+}
+
 .page-toc-link:hover {
-  color: var(--text);
+  color: var(--accent);
   background: rgba(88, 166, 255, 0.10);
   text-decoration: none;
 }
+.page-toc-link:hover .page-toc-dot { background: var(--accent); }
+
 .page-toc-link.is-active {
   color: var(--accent);
   background: rgba(88, 166, 255, 0.14);
 }
-[data-theme="light"] .page-toc-link:hover    { background: rgba(9, 105, 218, 0.08); }
+.page-toc-link.is-active .page-toc-dot {
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--glow-accent);
+  transform: scale(1.5);
+}
+
+[data-theme="light"] .page-toc-link:hover     { background: rgba(9, 105, 218, 0.08); }
 [data-theme="light"] .page-toc-link.is-active { background: rgba(9, 105, 218, 0.12); }
+
+/* On viewports too narrow to host the open panel without crowding
+ * the article, hide it visually but keep it reachable via the
+ * toggle (which sits over the content edge). */
+@media (max-width: 1180px) {
+  .page-toc-panel { box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45); }
+}
+@media (max-width: 640px) {
+  .page-toc { top: 76px; left: 10px; }
+  .page-toc-panel { width: min(78vw, 280px); }
+}
 
 /* --------------------------------------------------------------------
  * Interactive install pipeline (installation.html)
@@ -1126,7 +1234,7 @@ details.disclosure p:last-child { margin-bottom: 0; }
   border-radius: 14px;
   border: 1px solid var(--border);
   background: var(--panel);
-  color: var(--muted);
+  color: var(--text);
   cursor: pointer;
   font: inherit;
   font-size: 0.86rem;
@@ -1143,7 +1251,7 @@ details.disclosure p:last-child { margin-bottom: 0; }
 }
 .pipeline-chip.is-active {
   border-color: var(--step-color);
-  background: color-mix(in srgb, var(--step-color) 14%, transparent);
+  background: color-mix(in srgb, var(--step-color) 18%, var(--panel));
   color: var(--step-color);
   box-shadow: 0 0 0 1px var(--step-color),
               0 14px 38px var(--step-glow);
@@ -1173,7 +1281,7 @@ details.disclosure p:last-child { margin-bottom: 0; }
 .pipeline-chip .chip-num {
   font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
   font-size: 0.72rem;
-  color: var(--quiet);
+  color: var(--muted);
   letter-spacing: 0.08em;
 }
 .pipeline-chip.is-active .chip-num { color: var(--step-color); }
@@ -1193,11 +1301,11 @@ details.disclosure p:last-child { margin-bottom: 0; }
 
 .pipeline-stage {
   display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
-  gap: 32px;
-  align-items: center;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
 }
-@media (max-width: 920px) {
+@media (max-width: 760px) {
   .pipeline-stage { grid-template-columns: 1fr; }
 }
 
@@ -1213,13 +1321,19 @@ details.disclosure p:last-child { margin-bottom: 0; }
                     color-mix(in srgb, var(--current-step-color) 12%, transparent),
                     transparent 60%),
     var(--bg-soft);
-  padding: 18px;
-  min-height: 320px;
-  aspect-ratio: 720 / 360;
+  padding: 16px;
+  width: 100%;
+  max-height: 320px;
+  aspect-ratio: 720 / 380;
   display: grid;
   place-items: center;
   overflow: hidden;
   transition: background 400ms ease;
+}
+/* On narrow / stacked layout, keep the illustration short so the
+ * explanation panel below it stays in view. */
+@media (max-width: 760px) {
+  .stage-illustration { max-height: 240px; }
 }
 
 .stage-illustration .stage-svg {
@@ -1236,7 +1350,7 @@ details.disclosure p:last-child { margin-bottom: 0; }
   opacity: 0;
   transition: opacity 500ms ease, filter 400ms ease;
 }
-.stage-layer.is-shown   { opacity: 0.32; }
+.stage-layer.is-shown   { opacity: 0.55; }
 .stage-layer.is-current {
   opacity: 1;
   filter: drop-shadow(0 0 10px var(--step-glow));
