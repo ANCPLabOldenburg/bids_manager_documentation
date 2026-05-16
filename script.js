@@ -46,7 +46,321 @@
   initPageToc();
   initCodeCopy();
   initDatasetOverview();
+  initTutorialScenes();
 })();
+
+
+/* ====================================================================
+ * Tutorial scenes (tutorial.html, #scenes)
+ *
+ * State machine + per-scene animation players. Markup contract:
+ *
+ *   <div class="scene-stage" data-scenes>
+ *     <ol class="scene-progress"><button data-scene-jump="N">...</ol>
+ *     <button data-scene-prev>...</button>
+ *     <button data-scene-next>...</button>
+ *     <button data-scene-play>...</button>
+ *     <button data-scene-replay>...</button>
+ *     <span data-scene-counter>...</span>
+ *     <article class="scene" data-scene="N" data-scene-key="...">
+ *       <!-- mock(s) -->
+ *     </article>
+ *   </div>
+ *
+ * Each scene's player is keyed by the scene's data-scene attribute in
+ * SCENE_PLAYERS. A play token guards against stale awaits: every new
+ * activation increments the token, and async steps short-circuit when
+ * their captured token no longer matches.
+ *
+ * Honours prefers-reduced-motion: skips the animation and jumps the
+ * mock to its final state.
+ * ================================================================== */
+
+function initTutorialScenes() {
+  const stage = document.querySelector("[data-scenes]");
+  if (!stage) return;
+
+  const scenes  = Array.from(stage.querySelectorAll(".scene[data-scene]"));
+  const dots    = Array.from(stage.querySelectorAll("[data-scene-jump]"));
+  const prevBtn = stage.querySelector("[data-scene-prev]");
+  const nextBtn = stage.querySelector("[data-scene-next]");
+  const playBtn = stage.querySelector("[data-scene-play]");
+  const replayBtn = stage.querySelector("[data-scene-replay]");
+  const counter = stage.querySelector("[data-scene-counter]");
+  if (!scenes.length) return;
+
+  const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+  let current = 0;
+  let autoplay = !reducedMotion;
+  let advanceTimer = null;
+  let playToken = 0;
+
+  /* ----------------- helpers ----------------- */
+
+  function delay(ms) {
+    return new Promise((r) => setTimeout(r, ms));
+  }
+
+  /* Token-guarded await. Resolves immediately if `cancelled()` fires
+   * during the wait so a stale player gives up its turn. */
+  function pause(ms, cancelled) {
+    return new Promise((resolve) => {
+      const t = setTimeout(() => resolve(false), ms);
+      const tick = setInterval(() => {
+        if (cancelled()) { clearTimeout(t); clearInterval(tick); resolve(true); }
+      }, 50);
+      setTimeout(() => clearInterval(tick), ms + 60);
+    });
+  }
+
+  async function typeInto(el, text, cancelled, perChar = 32) {
+    el.textContent = "";
+    el.classList.add("is-typing");
+    for (let i = 1; i <= text.length; i++) {
+      if (cancelled()) return;
+      el.textContent = text.slice(0, i);
+      await delay(perChar);
+    }
+    el.classList.remove("is-typing");
+  }
+
+  async function tweenInt(el, from, to, duration, cancelled) {
+    const start = performance.now();
+    return new Promise((resolve) => {
+      function step(now) {
+        if (cancelled()) { resolve(); return; }
+        const t = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - t, 3);   /* ease-out cubic */
+        const v = Math.round(from + (to - from) * eased);
+        el.textContent = String(v);
+        if (t < 1) requestAnimationFrame(step);
+        else resolve();
+      }
+      requestAnimationFrame(step);
+    });
+  }
+
+  /* ----------------- per-scene reset + play ----------------- */
+
+  function reset(sceneEl) {
+    const idx = parseInt(sceneEl.dataset.scene, 10);
+    const r = SCENE_RESETS[idx];
+    if (r) r(sceneEl);
+  }
+
+  function playScene(sceneEl) {
+    const idx = parseInt(sceneEl.dataset.scene, 10);
+    const myToken = ++playToken;
+    const cancelled = () => playToken !== myToken;
+    const player = SCENE_PLAYERS[idx];
+    if (!player) return Promise.resolve();
+    return player(sceneEl, cancelled).catch(() => {});
+  }
+
+  const SCENE_RESETS = {
+    1(el) {
+      const raw  = el.querySelector('[data-mock="raw"]');
+      const bids = el.querySelector('[data-mock="bids"]');
+      const scan = el.querySelector('[data-mock="scan-btn"]');
+      if (raw)  { raw.textContent  = "";  raw.classList.remove("is-typing"); }
+      if (bids) { bids.textContent = "";  bids.classList.remove("is-typing"); }
+      if (scan) scan.classList.add("is-disabled");
+    },
+    2(el) {
+      el.querySelector('[data-mock="spinner"]')?.classList.remove("is-spinning");
+      const status = el.querySelector('[data-mock="status"]');
+      if (status) status.textContent = "Idle";
+      ["chip-valid","chip-warn","chip-skip","count-subj","count-series","count-dcm"]
+        .forEach((k) => {
+          const x = el.querySelector(`[data-mock="${k}"]`);
+          if (x) x.textContent = "0";
+        });
+    },
+    3(el) {
+      el.querySelectorAll(".mock-row").forEach((r) => r.classList.remove("is-visible"));
+    },
+  };
+
+  const SCENE_PLAYERS = {
+    /* ---------- Scene 1. Pick folders. ---------- */
+    async 1(el, cancelled) {
+      const raw  = el.querySelector('[data-mock="raw"]');
+      const bids = el.querySelector('[data-mock="bids"]');
+      const scan = el.querySelector('[data-mock="scan-btn"]');
+      if (!raw || !bids) return;
+      if (reducedMotion) {
+        raw.textContent  = "~/Downloads/neuroimaging_unit_new";
+        bids.textContent = "~/Documents/bids_export";
+        scan?.classList.remove("is-disabled");
+        return;
+      }
+      await delay(280);
+      if (cancelled()) return;
+      await typeInto(raw,  "~/Downloads/neuroimaging_unit_new", cancelled, 28);
+      if (cancelled()) return;
+      await delay(400);
+      if (cancelled()) return;
+      await typeInto(bids, "~/Documents/bids_export",           cancelled, 28);
+      if (cancelled()) return;
+      scan?.classList.remove("is-disabled");
+    },
+
+    /* ---------- Scene 2. Run a scan. ---------- */
+    async 2(el, cancelled) {
+      const spinner = el.querySelector('[data-mock="spinner"]');
+      const status  = el.querySelector('[data-mock="status"]');
+      const valid   = el.querySelector('[data-mock="chip-valid"]');
+      const warn    = el.querySelector('[data-mock="chip-warn"]');
+      const skip    = el.querySelector('[data-mock="chip-skip"]');
+      const subj    = el.querySelector('[data-mock="count-subj"]');
+      const series  = el.querySelector('[data-mock="count-series"]');
+      const dcm     = el.querySelector('[data-mock="count-dcm"]');
+
+      if (reducedMotion) {
+        if (status) status.textContent = "Done";
+        if (valid)  valid.textContent  = "30";
+        if (warn)   warn.textContent   = "1";
+        if (skip)   skip.textContent   = "6";
+        if (subj)   subj.textContent   = "3";
+        if (series) series.textContent = "36";
+        if (dcm)    dcm.textContent    = "394";
+        return;
+      }
+
+      spinner?.classList.add("is-spinning");
+      const messages = [
+        "Walking ~/Downloads/neuroimaging_unit_new...",
+        "Found 394 DICOMs across 3 subjects",
+        "Reading SeriesInstanceUID for every series...",
+        "Stamping bids_guess_* entities from SeriesDescription...",
+        "Done.",
+      ];
+      for (const msg of messages) {
+        if (cancelled()) return;
+        if (status) status.textContent = msg;
+        if (msg.startsWith("Found")) {
+          await Promise.all([
+            tweenInt(subj,   0,   3, 600, cancelled),
+            tweenInt(dcm,    0, 394, 900, cancelled),
+          ]);
+        } else if (msg.startsWith("Reading")) {
+          await tweenInt(series, 0, 36, 700, cancelled);
+        }
+        await delay(700);
+      }
+      if (cancelled()) return;
+      spinner?.classList.remove("is-spinning");
+      await Promise.all([
+        tweenInt(valid, 0, 30, 800, cancelled),
+        tweenInt(warn,  0,  1, 500, cancelled),
+        tweenInt(skip,  0,  6, 600, cancelled),
+      ]);
+    },
+
+    /* ---------- Scene 3. Inspect the inventory table. ---------- */
+    async 3(el, cancelled) {
+      const rows = Array.from(el.querySelectorAll(".mock-row"));
+      if (reducedMotion) {
+        rows.forEach((r) => r.classList.add("is-visible"));
+        return;
+      }
+      for (const r of rows) {
+        if (cancelled()) return;
+        r.classList.add("is-visible");
+        await delay(60);
+      }
+    },
+  };
+
+  /* ----------------- activation + navigation ----------------- */
+
+  function activate(idx, opts = {}) {
+    if (idx < 0 || idx >= scenes.length) return;
+    current = idx;
+    scenes.forEach((s, i) => {
+      if (i === idx) s.setAttribute("data-active", "");
+      else           s.removeAttribute("data-active");
+    });
+    dots.forEach((d) => {
+      const target = parseInt(d.dataset.sceneJump, 10) - 1;
+      const on = target === idx;
+      d.classList.toggle("is-active", on);
+      d.setAttribute("aria-selected", String(on));
+    });
+    if (counter) {
+      const strong = counter.querySelector("strong");
+      if (strong) strong.textContent = String(idx + 1);
+    }
+    if (prevBtn) prevBtn.disabled = idx === 0;
+    if (nextBtn) nextBtn.disabled = idx === scenes.length - 1;
+
+    reset(scenes[idx]);
+    cancelAdvance();
+    if (!opts.silent) {
+      playScene(scenes[idx]).then(() => {
+        if (autoplay && current === idx && idx < scenes.length - 1) {
+          advanceTimer = setTimeout(() => activate(idx + 1), 2400);
+        }
+      });
+    }
+  }
+
+  function cancelAdvance() {
+    if (advanceTimer) { clearTimeout(advanceTimer); advanceTimer = null; }
+  }
+
+  function setAutoplay(on) {
+    autoplay = on;
+    if (playBtn) playBtn.textContent = on ? "Pause" : "Play";
+    if (!on) cancelAdvance();
+  }
+
+  /* --- wire controls --- */
+  dots.forEach((d) => {
+    d.addEventListener("click", () => {
+      if (d.classList.contains("is-locked")) return;
+      const target = parseInt(d.dataset.sceneJump, 10) - 1;
+      activate(target);
+    });
+  });
+  prevBtn?.addEventListener("click", () => activate(current - 1));
+  nextBtn?.addEventListener("click", () => activate(current + 1));
+  playBtn?.addEventListener("click", () => {
+    setAutoplay(!autoplay);
+    if (autoplay) activate(current);  // restart current animation
+  });
+  replayBtn?.addEventListener("click", () => activate(current));
+
+  /* Keyboard: left / right arrows step scenes when focus is in the
+   * scene stage. */
+  stage.addEventListener("keydown", (e) => {
+    if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+    if (e.key === "ArrowLeft")  { activate(current - 1); }
+    if (e.key === "ArrowRight") { activate(current + 1); }
+  });
+
+  /* Defer the first play until the scenes section enters the
+   * viewport, so visitors don't burn animation cycles offscreen. */
+  if ("IntersectionObserver" in window) {
+    let started = false;
+    const io = new IntersectionObserver((entries) => {
+      if (started) return;
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          started = true;
+          activate(0);
+          io.disconnect();
+        }
+      });
+    }, { threshold: 0.18 });
+    io.observe(stage);
+  } else {
+    activate(0);
+  }
+
+  setAutoplay(!reducedMotion);
+}
 
 
 /* ====================================================================
