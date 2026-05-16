@@ -158,20 +158,28 @@ function initTutorialScenes() {
     return player(sceneEl, cancelled).catch(() => {});
   }
 
+  const UNSET_GLYPH = "○";  /* ○ */
+  const OK_GLYPH    = "✓";  /* ✓ */
+
   const SCENE_RESETS = {
     1(el) {
-      const raw  = el.querySelector('[data-mock="raw"]');
-      const bids = el.querySelector('[data-mock="bids"]');
-      const scan = el.querySelector('[data-mock="scan-btn"]');
+      const raw      = el.querySelector('[data-mock="raw"]');
+      const bids     = el.querySelector('[data-mock="bids"]');
+      const rawGlyph = el.querySelector('[data-mock="raw-glyph"]');
+      const bidGlyph = el.querySelector('[data-mock="bids-glyph"]');
+      const scan     = el.querySelector('[data-mock="scan-btn"]');
       if (raw)  { raw.textContent  = "";  raw.classList.remove("is-typing"); }
       if (bids) { bids.textContent = "";  bids.classList.remove("is-typing"); }
+      if (rawGlyph) { rawGlyph.textContent = UNSET_GLYPH; rawGlyph.classList.remove("is-ok"); }
+      if (bidGlyph) { bidGlyph.textContent = UNSET_GLYPH; bidGlyph.classList.remove("is-ok"); }
       if (scan) scan.classList.add("is-disabled");
     },
     2(el) {
       el.querySelector('[data-mock="spinner"]')?.classList.remove("is-spinning");
       const status = el.querySelector('[data-mock="status"]');
       if (status) status.textContent = "Idle";
-      ["chip-valid","chip-warn","chip-skip","count-subj","count-series","count-dcm"]
+      ["chip-valid","chip-warn","chip-err","chip-skip",
+       "count-subj","count-series","count-dcm"]
         .forEach((k) => {
           const x = el.querySelector(`[data-mock="${k}"]`);
           if (x) x.textContent = "0";
@@ -185,13 +193,17 @@ function initTutorialScenes() {
   const SCENE_PLAYERS = {
     /* ---------- Scene 1. Pick folders. ---------- */
     async 1(el, cancelled) {
-      const raw  = el.querySelector('[data-mock="raw"]');
-      const bids = el.querySelector('[data-mock="bids"]');
-      const scan = el.querySelector('[data-mock="scan-btn"]');
+      const raw      = el.querySelector('[data-mock="raw"]');
+      const bids     = el.querySelector('[data-mock="bids"]');
+      const rawGlyph = el.querySelector('[data-mock="raw-glyph"]');
+      const bidGlyph = el.querySelector('[data-mock="bids-glyph"]');
+      const scan     = el.querySelector('[data-mock="scan-btn"]');
       if (!raw || !bids) return;
       if (reducedMotion) {
         raw.textContent  = "~/Downloads/neuroimaging_unit_new";
         bids.textContent = "~/Documents/bids_export";
+        if (rawGlyph) { rawGlyph.textContent = OK_GLYPH; rawGlyph.classList.add("is-ok"); }
+        if (bidGlyph) { bidGlyph.textContent = OK_GLYPH; bidGlyph.classList.add("is-ok"); }
         scan?.classList.remove("is-disabled");
         return;
       }
@@ -199,28 +211,34 @@ function initTutorialScenes() {
       if (cancelled()) return;
       await typeInto(raw,  "~/Downloads/neuroimaging_unit_new", cancelled, 28);
       if (cancelled()) return;
+      if (rawGlyph) { rawGlyph.textContent = OK_GLYPH; rawGlyph.classList.add("is-ok"); }
       await delay(400);
       if (cancelled()) return;
       await typeInto(bids, "~/Documents/bids_export",           cancelled, 28);
       if (cancelled()) return;
+      if (bidGlyph) { bidGlyph.textContent = OK_GLYPH; bidGlyph.classList.add("is-ok"); }
       scan?.classList.remove("is-disabled");
     },
 
-    /* ---------- Scene 2. Run a scan. ---------- */
+    /* ---------- Scene 2. Run a scan. ----------
+     * Chip targets match what bidsmgr-scan would produce on the
+     * example dataset: 30 valid, 1 warning, 0 error, 6 skipped. */
     async 2(el, cancelled) {
       const spinner = el.querySelector('[data-mock="spinner"]');
       const status  = el.querySelector('[data-mock="status"]');
       const valid   = el.querySelector('[data-mock="chip-valid"]');
       const warn    = el.querySelector('[data-mock="chip-warn"]');
+      const err     = el.querySelector('[data-mock="chip-err"]');
       const skip    = el.querySelector('[data-mock="chip-skip"]');
       const subj    = el.querySelector('[data-mock="count-subj"]');
       const series  = el.querySelector('[data-mock="count-series"]');
       const dcm     = el.querySelector('[data-mock="count-dcm"]');
 
       if (reducedMotion) {
-        if (status) status.textContent = "Done";
+        if (status) status.textContent = "Done.";
         if (valid)  valid.textContent  = "30";
         if (warn)   warn.textContent   = "1";
+        if (err)    err.textContent    = "0";
         if (skip)   skip.textContent   = "6";
         if (subj)   subj.textContent   = "3";
         if (series) series.textContent = "36";
@@ -241,8 +259,8 @@ function initTutorialScenes() {
         if (status) status.textContent = msg;
         if (msg.startsWith("Found")) {
           await Promise.all([
-            tweenInt(subj,   0,   3, 600, cancelled),
-            tweenInt(dcm,    0, 394, 900, cancelled),
+            tweenInt(subj, 0,   3, 600, cancelled),
+            tweenInt(dcm,  0, 394, 900, cancelled),
           ]);
         } else if (msg.startsWith("Reading")) {
           await tweenInt(series, 0, 36, 700, cancelled);
@@ -254,6 +272,7 @@ function initTutorialScenes() {
       await Promise.all([
         tweenInt(valid, 0, 30, 800, cancelled),
         tweenInt(warn,  0,  1, 500, cancelled),
+        tweenInt(err,   0,  0, 200, cancelled),
         tweenInt(skip,  0,  6, 600, cancelled),
       ]);
     },
