@@ -808,163 +808,257 @@
                   </div>
                 </div>
 
-                <!-- Real inventory columns: checkbox / status badge /
-                     id / ses / data / task / conf / predicted basename.
-                     Hidden columns ('dataset', 'mod', 'suffix', 'run',
-                     'sequence / source') are noted below. -->
-                <div class="mock-inv-scroll">
-                  <table class="mock-inv-table">
-                    <thead>
-                      <tr>
-                        <th class="col-cb"></th>
-                        <th class="col-status"></th>
-                        <th class="col-id">id</th>
-                        <th class="col-ses">ses</th>
-                        <th class="col-data">data</th>
-                        <th class="col-task">task</th>
-                        <th class="col-conf">conf</th>
-                        <th class="col-basename">predicted basename</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr class="mock-row" data-status="ok"      data-type="anat">
-                        <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
-                        <td class="cell-status"><span class="mock-badge badge-ok" title="ok">&#10003;</span></td>
-                        <td class="cell-id">sub-001</td>
-                        <td class="cell-ses">pre</td>
-                        <td class="cell-data"><span class="mock-chip-data">anat</span></td>
-                        <td class="cell-task">&mdash;</td>
-                        <td class="cell-conf conf-high">0.98</td>
-                        <td class="cell-basename"><code>sub-001_ses-pre_T1w</code></td>
-                      </tr>
-                      <tr class="mock-row" data-status="ok"      data-type="func">
-                        <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
-                        <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
-                        <td class="cell-id">sub-001</td>
-                        <td class="cell-ses">pre</td>
-                        <td class="cell-data"><span class="mock-chip-data">func</span></td>
-                        <td class="cell-task">rest</td>
-                        <td class="cell-conf conf-high">0.95</td>
-                        <td class="cell-basename"><code>sub-001_ses-pre_task-rest_bold</code></td>
-                      </tr>
-                      <tr class="mock-row" data-status="ok"      data-type="func">
-                        <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
-                        <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
-                        <td class="cell-id">sub-001</td>
-                        <td class="cell-ses">pre</td>
-                        <td class="cell-data"><span class="mock-chip-data">func</span></td>
-                        <td class="cell-task">sparse</td>
-                        <td class="cell-conf conf-med">0.82</td>
-                        <td class="cell-basename"><code>sub-001_ses-pre_task-sparse_bold</code></td>
-                      </tr>
-                      <tr class="mock-row" data-status="ok"      data-type="fmap">
-                        <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
-                        <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
-                        <td class="cell-id">sub-001</td>
-                        <td class="cell-ses">pre</td>
-                        <td class="cell-data"><span class="mock-chip-data">fmap</span></td>
-                        <td class="cell-task">&mdash;</td>
-                        <td class="cell-conf conf-high">0.93</td>
-                        <td class="cell-basename"><code>sub-001_ses-pre_run-01_magnitude1</code></td>
-                      </tr>
-                      <tr class="mock-row" data-status="warn"    data-type="scout">
-                        <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
-                        <td class="cell-status"><span class="mock-badge badge-warn" title="needs review">!</span></td>
-                        <td class="cell-id">sub-002</td>
-                        <td class="cell-ses">post</td>
-                        <td class="cell-data"><span class="mock-chip-data is-muted">?</span></td>
-                        <td class="cell-task">&mdash;</td>
-                        <td class="cell-conf conf-low">0.31</td>
-                        <td class="cell-basename"><em>no anatomical reference found</em></td>
-                      </tr>
-                      <tr class="mock-row" data-status="ok"      data-type="func">
-                        <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
-                        <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
-                        <td class="cell-id">sub-002</td>
-                        <td class="cell-ses">post</td>
-                        <td class="cell-data"><span class="mock-chip-data">func</span></td>
-                        <td class="cell-task">mb</td>
-                        <td class="cell-conf conf-high">0.96</td>
-                        <td class="cell-basename"><code>sub-002_ses-post_task-mb_bold</code></td>
-                      </tr>
-                      <tr class="mock-row" data-status="ok"      data-type="physio">
-                        <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
-                        <td class="cell-status"><span class="mock-badge badge-physio" title="physio">P</span></td>
-                        <td class="cell-id">sub-002</td>
-                        <td class="cell-ses">post</td>
-                        <td class="cell-data"><span class="mock-chip-data">physio</span></td>
-                        <td class="cell-task">mb</td>
-                        <td class="cell-conf conf-high">0.90</td>
-                        <td class="cell-basename"><code>sub-002_ses-post_task-mb_physio</code></td>
-                      </tr>
-                      <tr class="mock-row" data-status="ok"      data-type="anat">
-                        <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
-                        <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
-                        <td class="cell-id">sub-003</td>
-                        <td class="cell-ses">&mdash;</td>
-                        <td class="cell-data"><span class="mock-chip-data">anat</span></td>
-                        <td class="cell-task">&mdash;</td>
-                        <td class="cell-conf conf-high">0.97</td>
-                        <td class="cell-basename"><code>sub-003_acq-space_T2w</code></td>
-                      </tr>
-                      <tr class="mock-row" data-status="ok"      data-type="dwi">
-                        <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
-                        <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
-                        <td class="cell-id">sub-003</td>
-                        <td class="cell-ses">&mdash;</td>
-                        <td class="cell-data"><span class="mock-chip-data">dwi</span></td>
-                        <td class="cell-task">&mdash;</td>
-                        <td class="cell-conf conf-high">0.94</td>
-                        <td class="cell-basename"><code>sub-003_acq-15_dir-AP_dwi</code></td>
-                      </tr>
-                      <tr class="mock-row" data-status="reroute" data-type="dwi">
-                        <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
-                        <td class="cell-status"><span class="mock-badge badge-info" title="reroute">i</span></td>
-                        <td class="cell-id">sub-003</td>
-                        <td class="cell-ses">&mdash;</td>
-                        <td class="cell-data"><span class="mock-chip-data is-rerouted">fmap</span></td>
-                        <td class="cell-task">&mdash;</td>
-                        <td class="cell-conf conf-high">0.89</td>
-                        <td class="cell-basename"><code>sub-003_acq-15_dir-PA_epi</code>
-                          <small>(rerouted)</small></td>
-                      </tr>
-                      <tr class="mock-row" data-status="skip"    data-type="scout">
-                        <td class="cell-cb"><span class="mock-check"></span></td>
-                        <td class="cell-status"><span class="mock-badge badge-skip" title="skipped">&minus;</span></td>
-                        <td class="cell-id">sub-001</td>
-                        <td class="cell-ses">pre</td>
-                        <td class="cell-data"><span class="mock-chip-data is-muted">scout</span></td>
-                        <td class="cell-task">&mdash;</td>
-                        <td class="cell-conf conf-low">&mdash;</td>
-                        <td class="cell-basename"><em>(skipped)</em></td>
-                      </tr>
-                      <tr class="mock-row" data-status="skip"    data-type="sr">
-                        <td class="cell-cb"><span class="mock-check"></span></td>
-                        <td class="cell-status"><span class="mock-badge badge-skip">&minus;</span></td>
-                        <td class="cell-id">all</td>
-                        <td class="cell-ses">&mdash;</td>
-                        <td class="cell-data"><span class="mock-chip-data is-muted">sr</span></td>
-                        <td class="cell-task">&mdash;</td>
-                        <td class="cell-conf conf-low">&mdash;</td>
-                        <td class="cell-basename"><em>(skipped)</em></td>
-                      </tr>
-                    </tbody>
-                  </table>
+                <!-- Full 4-column inspector layout, matching the real
+                     Converter window: Raw FS tree + Filter / Structure
+                     + Inspection table + Properties panel. The
+                     inspection table now includes a checkbox cell,
+                     status badge, id, ses, mod, data, suffix, task,
+                     run, conf, basename and backend columns. -->
+                <div class="mock-insp-main">
+
+                  <!-- COL 1: Raw FS tree -->
+                  <div class="mock-insp-pane col-raw">
+                    <h5 class="mock-pane-title">Raw data tree</h5>
+                    <div class="fs-tree">
+                      <div class="it"><span class="arr">&#9662;</span><span class="name">neuroimaging_unit_new</span></div>
+                      <div class="it d1"><span class="arr">&#9662;</span><span class="name">OL_0001</span><span class="meta">9</span></div>
+                      <div class="it d2 skip"><span class="name">localizer_20ch_head-coil</span></div>
+                      <div class="it d2"><span class="name">ses-pre_run-01_fmap</span><span class="meta">M.P</span></div>
+                      <div class="it d2"><span class="name">ses-pre_run-02_fmap</span><span class="meta">M.P</span></div>
+                      <div class="it d2"><span class="name">ses-pre_T1w</span></div>
+                      <div class="it d2"><span class="name">ses-pre_task-sparse_bold</span></div>
+                      <div class="it d2 active"><span class="name">ses-pre_task-rest_bold</span></div>
+                      <div class="it d2 skip"><span class="name">PhoenixZIPReport</span></div>
+                      <div class="it d1"><span class="arr">&#9656;</span><span class="name">OL_0002</span><span class="meta">10</span></div>
+                      <div class="it d1"><span class="arr">&#9656;</span><span class="name">OL_0003</span><span class="meta">17</span></div>
+                    </div>
+                  </div>
+
+                  <!-- COL 2: Filter / structure -->
+                  <div class="mock-insp-pane col-filter">
+                    <h5 class="mock-pane-title">Filter / structure</h5>
+                    <div class="mod-filter">
+                      <div class="item"><span class="ck checked"></span><span class="arr">&#9662;</span><span class="name">Studyname</span><span class="count">30</span></div>
+                      <div class="item d1"><span class="ck checked"></span><span class="arr">&#9662;</span><span class="name">sub-001</span><span class="count">8</span></div>
+                      <div class="item d2"><span class="ck checked"></span><span class="arr">&#9662;</span><span class="name">ses-pre</span><span class="count">8</span></div>
+                      <div class="item d3"><span class="ck checked"></span><span class="name">anat</span><span class="count">1</span></div>
+                      <div class="item d3"><span class="ck checked"></span><span class="name">func</span><span class="count">2</span></div>
+                      <div class="item d3"><span class="ck checked"></span><span class="name">fmap</span><span class="count">4</span></div>
+                      <div class="item d3"><span class="ck"></span><span class="name">misc</span><span class="count">1</span></div>
+                      <div class="item d1"><span class="ck partial"></span><span class="arr">&#9662;</span><span class="name">sub-002</span><span class="count">10</span></div>
+                      <div class="item d2"><span class="ck partial"></span><span class="name">ses-post</span><span class="count">10</span></div>
+                      <div class="item d1"><span class="ck checked"></span><span class="arr">&#9662;</span><span class="name">sub-003</span><span class="count">12</span></div>
+                      <div class="item d2"><span class="ck checked"></span><span class="name">anat</span><span class="count">1</span></div>
+                      <div class="item d2"><span class="ck checked"></span><span class="name">func</span><span class="count">6</span></div>
+                      <div class="item d2"><span class="ck checked"></span><span class="name">dwi</span><span class="count">3</span></div>
+                      <div class="item d2"><span class="ck checked"></span><span class="name">physio</span><span class="count">2</span></div>
+                    </div>
+                  </div>
+
+                  <!-- COL 3: Inspection table -->
+                  <div class="mock-insp-pane is-table col-table">
+                    <h5 class="mock-pane-title">Inspection . 30 of 36 rows</h5>
+                    <div class="mock-inv-scroll">
+                      <table class="mock-inv-table">
+                        <thead>
+                          <tr>
+                            <th class="col-cb"></th>
+                            <th class="col-status"></th>
+                            <th class="col-id">id</th>
+                            <th class="col-ses">ses</th>
+                            <th class="col-data">data</th>
+                            <th class="col-task">task</th>
+                            <th class="col-conf">conf</th>
+                            <th class="col-basename">predicted basename</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="mock-row" data-status="ok" data-type="anat">
+                            <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
+                            <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
+                            <td class="cell-id">sub-001</td>
+                            <td class="cell-ses">pre</td>
+                            <td class="cell-data"><span class="mock-chip-data">anat</span></td>
+                            <td class="cell-task">&mdash;</td>
+                            <td class="cell-conf conf-high">0.97</td>
+                            <td class="cell-basename"><code>sub-001_ses-pre_T1w</code></td>
+                          </tr>
+                          <tr class="mock-row is-selected" data-status="ok" data-type="func">
+                            <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
+                            <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
+                            <td class="cell-id">sub-001</td>
+                            <td class="cell-ses">pre</td>
+                            <td class="cell-data"><span class="mock-chip-data">func</span></td>
+                            <td class="cell-task">rest</td>
+                            <td class="cell-conf conf-high">0.95</td>
+                            <td class="cell-basename"><code>sub-001_ses-pre_task-rest_bold</code></td>
+                          </tr>
+                          <tr class="mock-row" data-status="ok" data-type="func">
+                            <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
+                            <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
+                            <td class="cell-id">sub-001</td>
+                            <td class="cell-ses">pre</td>
+                            <td class="cell-data"><span class="mock-chip-data">func</span></td>
+                            <td class="cell-task">sparse</td>
+                            <td class="cell-conf conf-med">0.82</td>
+                            <td class="cell-basename"><code>sub-001_ses-pre_task-sparse_bold</code></td>
+                          </tr>
+                          <tr class="mock-row" data-status="ok" data-type="fmap">
+                            <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
+                            <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
+                            <td class="cell-id">sub-001</td>
+                            <td class="cell-ses">pre</td>
+                            <td class="cell-data"><span class="mock-chip-data">fmap</span></td>
+                            <td class="cell-task">&mdash;</td>
+                            <td class="cell-conf conf-high">0.93</td>
+                            <td class="cell-basename"><code>sub-001_ses-pre_run-01_magnitude1</code></td>
+                          </tr>
+                          <tr class="mock-row" data-status="warn" data-type="scout">
+                            <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
+                            <td class="cell-status"><span class="mock-badge badge-warn">!</span></td>
+                            <td class="cell-id">sub-002</td>
+                            <td class="cell-ses">post</td>
+                            <td class="cell-data"><span class="mock-chip-data is-muted">?</span></td>
+                            <td class="cell-task">&mdash;</td>
+                            <td class="cell-conf conf-low">0.31</td>
+                            <td class="cell-basename"><em>no anatomical reference found</em></td>
+                          </tr>
+                          <tr class="mock-row" data-status="ok" data-type="func">
+                            <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
+                            <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
+                            <td class="cell-id">sub-002</td>
+                            <td class="cell-ses">post</td>
+                            <td class="cell-data"><span class="mock-chip-data">func</span></td>
+                            <td class="cell-task">mb</td>
+                            <td class="cell-conf conf-high">0.96</td>
+                            <td class="cell-basename"><code>sub-002_ses-post_task-mb_bold</code></td>
+                          </tr>
+                          <tr class="mock-row" data-status="ok" data-type="physio">
+                            <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
+                            <td class="cell-status"><span class="mock-badge badge-physio">P</span></td>
+                            <td class="cell-id">sub-002</td>
+                            <td class="cell-ses">post</td>
+                            <td class="cell-data"><span class="mock-chip-data">physio</span></td>
+                            <td class="cell-task">mb</td>
+                            <td class="cell-conf conf-high">0.90</td>
+                            <td class="cell-basename"><code>sub-002_ses-post_task-mb_physio</code></td>
+                          </tr>
+                          <tr class="mock-row" data-status="ok" data-type="anat">
+                            <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
+                            <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
+                            <td class="cell-id">sub-003</td>
+                            <td class="cell-ses">&mdash;</td>
+                            <td class="cell-data"><span class="mock-chip-data">anat</span></td>
+                            <td class="cell-task">&mdash;</td>
+                            <td class="cell-conf conf-high">0.97</td>
+                            <td class="cell-basename"><code>sub-003_acq-space_T2w</code></td>
+                          </tr>
+                          <tr class="mock-row" data-status="ok" data-type="dwi">
+                            <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
+                            <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
+                            <td class="cell-id">sub-003</td>
+                            <td class="cell-ses">&mdash;</td>
+                            <td class="cell-data"><span class="mock-chip-data">dwi</span></td>
+                            <td class="cell-task">&mdash;</td>
+                            <td class="cell-conf conf-high">0.94</td>
+                            <td class="cell-basename"><code>sub-003_acq-15_dir-AP_dwi</code></td>
+                          </tr>
+                          <tr class="mock-row" data-status="reroute" data-type="dwi">
+                            <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
+                            <td class="cell-status"><span class="mock-badge badge-info">i</span></td>
+                            <td class="cell-id">sub-003</td>
+                            <td class="cell-ses">&mdash;</td>
+                            <td class="cell-data"><span class="mock-chip-data is-rerouted">fmap</span></td>
+                            <td class="cell-task">&mdash;</td>
+                            <td class="cell-conf conf-high">0.89</td>
+                            <td class="cell-basename"><code>sub-003_acq-15_dir-PA_epi</code>
+                              <small>(rerouted)</small></td>
+                          </tr>
+                          <tr class="mock-row" data-status="skip" data-type="scout">
+                            <td class="cell-cb"><span class="mock-check"></span></td>
+                            <td class="cell-status"><span class="mock-badge badge-skip">&minus;</span></td>
+                            <td class="cell-id">sub-001</td>
+                            <td class="cell-ses">pre</td>
+                            <td class="cell-data"><span class="mock-chip-data is-muted">scout</span></td>
+                            <td class="cell-task">&mdash;</td>
+                            <td class="cell-conf conf-low">&mdash;</td>
+                            <td class="cell-basename"><em>(skipped)</em></td>
+                          </tr>
+                          <tr class="mock-row" data-status="skip" data-type="sr">
+                            <td class="cell-cb"><span class="mock-check"></span></td>
+                            <td class="cell-status"><span class="mock-badge badge-skip">&minus;</span></td>
+                            <td class="cell-id">all</td>
+                            <td class="cell-ses">&mdash;</td>
+                            <td class="cell-data"><span class="mock-chip-data is-muted">sr</span></td>
+                            <td class="cell-task">&mdash;</td>
+                            <td class="cell-conf conf-low">&mdash;</td>
+                            <td class="cell-basename"><em>(skipped)</em></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <!-- COL 4: Properties / entity editor -->
+                  <div class="mock-insp-pane col-props">
+                    <h5 class="mock-pane-title">Properties . row 2 selected</h5>
+                    <div class="ent-form">
+                      <div class="ent-row">
+                        <label>datatype <span class="req">*</span></label>
+                        <select><option>func</option></select>
+                      </div>
+                      <div class="ent-row">
+                        <label>suffix <span class="req">*</span></label>
+                        <select><option>bold</option></select>
+                      </div>
+                      <hr class="ent-divider">
+                      <div class="ent-title ent-title-strong">
+                        Entities <span class="ent-meta">(schema-driven)</span>
+                      </div>
+                      <div class="ent-row"><label>sub <span class="req">*</span></label>
+                        <input value="001"></div>
+                      <div class="ent-row"><label>ses</label>
+                        <input value="pre"></div>
+                      <div class="ent-row"><label>task <span class="req">*</span></label>
+                        <input value="rest"></div>
+                      <div class="ent-row"><label>acq <span class="opt">opt</span></label>
+                        <input placeholder="&mdash;"></div>
+                      <div class="ent-row"><label>run <span class="opt">opt</span></label>
+                        <input placeholder="&mdash;"></div>
+                      <div class="ent-row"><label>echo <span class="opt">opt</span></label>
+                        <input placeholder="&mdash;"></div>
+                      <hr class="ent-divider">
+                      <div class="ent-title">Predicted path</div>
+                      <div class="ent-preview">
+                        Studyname/<br>
+                        <span class="seg">sub-001</span>/<span class="seg">ses-pre</span>/<span style="color: var(--muted)">func</span>/<br>
+                        <span class="seg">sub-001</span>_<span class="seg">ses-pre</span>_<span class="ent">task-rest</span>_<span class="suf">bold</span><span class="ext">.nii.gz</span>
+                      </div>
+                      <div class="ent-validation">
+                        <div class="item"><span class="badge ok">&#10003;</span>
+                          <span>entity set valid for <code>func/bold</code></span></div>
+                        <div class="item"><span class="badge ok">&#10003;</span>
+                          <span>basename matches schema regex</span></div>
+                        <div class="item"><span class="badge ok">&#10003;</span>
+                          <span>no path collision</span></div>
+                        <div class="item"><span class="badge info">i</span>
+                          <span>sidecar will derive TaskName, RepetitionTime, EchoTime, FlipAngle from DICOM</span></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
-                <div class="mock-inv-footer">
-                  <span class="mock-legend">
-                    <span><i class="mock-badge badge-ok">&#10003;</i> ok</span>
-                    <span><i class="mock-badge badge-warn">!</i> needs review</span>
-                    <span><i class="mock-badge badge-info">i</i> rerouted</span>
-                    <span><i class="mock-badge badge-physio">P</i> physio</span>
-                    <span><i class="mock-badge badge-skip">&minus;</i> skipped</span>
-                  </span>
-                  <span class="mock-inv-note">
-                    Additional columns (<em>dataset, mod, suffix, run,
-                    sequence/source</em>) are available via right-click
-                    in the real GUI.
-                  </span>
+                <!-- Bottom dock tabs (BIDS preview / Log / Conflicts /
+                     Statistics) and status bar. -->
+                <div class="mock-insp-dock">
+                  <button class="dock-tab is-active" type="button">BIDS preview</button>
+                  <button class="dock-tab" type="button">Log</button>
+                  <button class="dock-tab" type="button">Conflicts (1)</button>
+                  <button class="dock-tab" type="button">Statistics</button>
+                </div>
+                <div class="mock-insp-statusbar">
+                  <span>BIDS 1.10.0 . 36 rows . 3 subjects . scan finished 2 s ago</span>
+                  <span><span class="pill">30 ready . 83%</span></span>
                 </div>
               </div>
             </div>

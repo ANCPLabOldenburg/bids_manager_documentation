@@ -2866,6 +2866,313 @@ details.disclosure p:last-child { margin-bottom: 0; }
 /* --- Tight inventory scroll (Scenes 4 / 5: focused on a few rows) -- */
 .mock-inv-scroll-tight { max-height: 280px; }
 
+/* =====================================================================
+ * Full 4-column Converter inspector (Scene 3 + variants on 4-5).
+ *
+ * Ports the level of detail from BIDS-Manager/docs/gui_mockups.html:
+ * Raw FS tree | Filter / structure | Inspection table | Properties.
+ * Plus a bottom dock (BIDS preview / Log / Conflicts) and a status
+ * bar at the bottom.
+ * =================================================================== */
+
+.mock-insp-main {
+  display: grid;
+  grid-template-columns: 200px 180px minmax(0, 1fr) 280px;
+  background: var(--bg);
+  border-top: 1px solid var(--border-glass);
+  min-height: 360px;
+}
+
+.mock-insp-pane {
+  border-right: 1px solid var(--border-glass);
+  overflow: auto;
+  max-height: 520px;
+  background: var(--bg);
+  font-size: 0.74rem;
+}
+.mock-insp-pane:last-child { border-right: none; }
+.mock-insp-pane.is-table { background: var(--bg); padding: 0; }
+
+.mock-pane-title {
+  margin: 0;
+  padding: 7px 12px;
+  font-size: 0.64rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  font-weight: 700;
+  border-bottom: 1px solid var(--border-glass);
+  background: var(--panel);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+@media (max-width: 1100px) {
+  .mock-insp-main {
+    grid-template-columns: 170px 150px minmax(0, 1fr) 240px;
+  }
+}
+@media (max-width: 900px) {
+  /* On narrow viewports collapse trees + properties; keep the
+   * inspection table visible because it's the focus. */
+  .mock-insp-main { grid-template-columns: 1fr; }
+  .mock-insp-pane.col-raw,
+  .mock-insp-pane.col-filter,
+  .mock-insp-pane.col-props { max-height: 140px; }
+}
+
+/* ----- Raw FS tree (col 1) ----- */
+
+.fs-tree {
+  padding: 4px 0;
+  font-size: 0.74rem;
+}
+.fs-tree .it {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 12px;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.fs-tree .it.d1 { padding-left: 26px; }
+.fs-tree .it.d2 { padding-left: 42px; font-family: "SF Mono", "JetBrains Mono", Menlo, monospace; font-size: 0.7rem; }
+.fs-tree .arr {
+  display: inline-block;
+  width: 10px;
+  color: var(--quiet);
+  font-size: 0.7rem;
+}
+.fs-tree .meta {
+  margin-left: auto;
+  font-family: "SF Mono", "JetBrains Mono", Menlo, monospace;
+  font-size: 0.66rem;
+  color: var(--quiet);
+}
+.fs-tree .it.skip { color: var(--quiet); opacity: 0.7; }
+.fs-tree .it.active {
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  color: var(--accent);
+  border-radius: 4px;
+  margin: 0 6px;
+  padding-left: 36px;
+}
+
+/* ----- Filter / structure pane (col 2) ----- */
+
+.mod-filter {
+  padding: 4px 0;
+  font-size: 0.74rem;
+}
+.mod-filter .item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 12px;
+  color: var(--text);
+}
+.mod-filter .item.d1 { padding-left: 22px; }
+.mod-filter .item.d2 { padding-left: 36px; }
+.mod-filter .item.d3 { padding-left: 50px; }
+
+.mod-filter .ck {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  font-size: 8px;
+  color: transparent;
+  line-height: 1;
+  font-weight: 700;
+}
+.mod-filter .ck.checked {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+.mod-filter .ck.checked::before { content: "\2713"; }
+.mod-filter .ck.partial {
+  background: color-mix(in srgb, var(--accent) 32%, var(--panel));
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.mod-filter .ck.partial::before { content: "\2212"; }
+.mod-filter .arr {
+  display: inline-block;
+  width: 10px;
+  color: var(--quiet);
+  font-size: 0.7rem;
+}
+.mod-filter .name { flex: 1 1 auto; }
+.mod-filter .count {
+  font-family: "SF Mono", "JetBrains Mono", Menlo, monospace;
+  font-size: 0.66rem;
+  color: var(--quiet);
+}
+
+/* ----- Properties panel (col 4) ----- */
+
+.ent-form {
+  padding: 12px 14px;
+}
+.ent-title {
+  font-size: 0.64rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+.ent-title-strong {
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.84rem;
+  color: var(--text);
+  font-weight: 700;
+  margin-top: 6px;
+}
+.ent-title-strong .ent-meta {
+  font-size: 0.7rem;
+  color: var(--muted);
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+.ent-row {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.ent-row label {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.ent-row label .req { color: var(--error); font-weight: 800; }
+.ent-row label .opt {
+  color: var(--quiet);
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.ent-row input,
+.ent-row select {
+  padding: 3px 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--panel-strong);
+  color: var(--text);
+  font: inherit;
+  font-family: "SF Mono", "JetBrains Mono", Menlo, monospace;
+  font-size: 0.74rem;
+  width: 100%;
+}
+
+.ent-divider {
+  border: none;
+  border-top: 1px solid var(--border-glass);
+  margin: 12px 0;
+}
+
+.ent-preview {
+  padding: 9px 11px;
+  background: var(--panel-strong);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-family: "SF Mono", "JetBrains Mono", Menlo, monospace;
+  font-size: 0.72rem;
+  color: var(--text);
+  line-height: 1.65;
+  word-break: break-all;
+}
+.ent-preview .seg { color: var(--accent); }
+.ent-preview .ent { color: var(--purple); }
+.ent-preview .suf { color: var(--teal); }
+.ent-preview .ext { color: var(--muted); }
+
+.ent-validation {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+}
+.ent-validation .item {
+  display: flex;
+  gap: 6px;
+  font-size: 0.72rem;
+  color: var(--muted);
+  line-height: 1.45;
+  align-items: flex-start;
+}
+.ent-validation .badge {
+  display: inline-grid;
+  place-items: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  font-size: 0.66rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.ent-validation .badge.ok   { background: color-mix(in srgb, var(--success) 18%, transparent); color: var(--success); }
+.ent-validation .badge.info { background: color-mix(in srgb, var(--accent) 18%, transparent);  color: var(--accent);  }
+
+/* ----- Bottom dock + status bar ----- */
+
+.mock-insp-dock {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 8px;
+  border-top: 1px solid var(--border-glass);
+  background: var(--panel);
+}
+.mock-insp-dock .dock-tab {
+  padding: 5px 12px;
+  border-radius: 5px;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+.mock-insp-dock .dock-tab.is-active {
+  background: color-mix(in srgb, var(--accent) 14%, var(--panel));
+  color: var(--accent);
+}
+
+.mock-insp-statusbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 14px;
+  border-top: 1px solid var(--border-glass);
+  background: color-mix(in srgb, var(--panel) 80%, transparent);
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+.mock-insp-statusbar .pill {
+  display: inline-block;
+  padding: 1px 8px;
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  color: var(--accent);
+  border-radius: 999px;
+  font-weight: 700;
+}
+
 /* --- Selected row + editable cell (Scene 4) ---- */
 
 .mock-row.is-selected.is-visible {
