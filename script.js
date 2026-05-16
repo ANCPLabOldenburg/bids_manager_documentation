@@ -292,18 +292,12 @@ function initTutorialScenes() {
       if (propsSes) propsSes.value = "pre";
     },
     6(el) {
-      ["prog-0001","prog-0002","prog-0003"].forEach((k) => {
-        const fill = el.querySelector(`[data-mock="${k}"]`);
-        if (fill) fill.style.setProperty("--prog", "0%");
-      });
-      ["pct-0001","pct-0002","pct-0003"].forEach((k) => {
-        const pct = el.querySelector(`[data-mock="${k}"]`);
-        if (pct) pct.textContent = "0%";
-      });
       const counter = el.querySelector('[data-mock="conv-counter"]');
-      if (counter) counter.textContent = "0 / 30 series converted";
-      const title = el.querySelector('[data-mock="conv-title"]');
-      if (title) title.textContent = "Converting...";
+      if (counter) counter.textContent = "0";
+      const status = el.querySelector('[data-mock="conv-status"]');
+      if (status) status.textContent = "Converting...";
+      const stage = el.querySelector('[data-mock="conv-stage"]');
+      if (stage) stage.textContent = "BIDS 1.10.0 . converting series 0 / 30";
       el.querySelector('[data-mock="conv-spinner"]')?.classList.add("is-spinning");
       const log = el.querySelector('[data-mock="log"]');
       if (log) log.innerHTML = "";
@@ -552,103 +546,91 @@ function initTutorialScenes() {
     },
 
     /* ---------- Scene 6. Run the conversion.
-     * Three per-subject progress bars tween at staggered rates while
-     * a log pane streams realistic engine output. The counter ticks
-     * up as series complete. */
+     * Identical to the real GUI's conversion flow: no fake per-subject
+     * progress bars (the real app doesn't have them yet). Instead the
+     * spinner spins, the toolbar status text streams, the Log dock tab
+     * scrolls through realistic engine output, and a counter ticks up
+     * in the Properties pane + status bar. */
     async 6(el, cancelled) {
-      const subjects = [
-        { key: "0001", ms: 4200, weight: 9  },
-        { key: "0002", ms: 5400, weight: 10 },
-        { key: "0003", ms: 8200, weight: 11 },   /* 30 = 9 + 10 + 11 */
-      ];
       const counter = el.querySelector('[data-mock="conv-counter"]');
-      const title   = el.querySelector('[data-mock="conv-title"]');
+      const status  = el.querySelector('[data-mock="conv-status"]');
+      const stage   = el.querySelector('[data-mock="conv-stage"]');
       const spinner = el.querySelector('[data-mock="conv-spinner"]');
       const log     = el.querySelector('[data-mock="log"]');
 
+      /* Each log entry carries: [tag, message, series-delta]. The
+       * series-delta is how many of the 30 total series the entry
+       * accounts for; the counter ticks up by that amount when the
+       * line is appended. */
       const LOG = [
-        ["scan",  "using rebuild_from_entities to refresh BIDS names"],
-        ["stage", "[OL_0001] staging at /tmp/.tmp_bidsmgr/sub-001/"],
-        ["stage", "[OL_0001] dcm2niix: ses-pre/anat/sub-001_ses-pre_T1w.nii.gz"],
-        ["stage", "[OL_0001] dcm2niix: ses-pre/func/sub-001_ses-pre_task-rest_bold.nii.gz"],
-        ["fixup", "[OL_0001] fmap fixups: IntendedFor -> rest_bold, sparse_bold"],
-        ["done",  "[OL_0001] committed atomically (9 series)"],
-        ["stage", "[OL_0002] staging at /tmp/.tmp_bidsmgr/sub-002/"],
-        ["stage", "[OL_0002] dcm2niix: ses-post/func/sub-002_ses-post_task-mb_bold.nii.gz"],
-        ["stage", "[OL_0002] physio: ses-post/func/sub-002_ses-post_task-mb_physio.tsv.gz"],
-        ["warn",  "[OL_0002] no anatomical reference; will flag in validation"],
-        ["done",  "[OL_0002] committed atomically (10 series)"],
-        ["stage", "[OL_0003] staging at /tmp/.tmp_bidsmgr/sub-003/"],
-        ["stage", "[OL_0003] dcm2niix: anat/sub-003_acq-space_T2w.nii.gz"],
-        ["stage", "[OL_0003] dcm2niix: dwi/sub-003_acq-15_dir-AP_dwi.nii.gz"],
-        ["fixup", "[OL_0003] classifier: dir-PA b0 rerouted to fmap/_epi"],
-        ["done",  "[OL_0003] committed atomically (11 series)"],
-        ["done",  "30 series -> BIDS . 0 errors . 1 warning"],
+        ["scan",  "[scan]  rebuild_from_entities() refreshing BIDS names",                   0],
+        ["stage", "[OL_0001] staging at /tmp/.tmp_bidsmgr/sub-001/",                         0],
+        ["stage", "[OL_0001] dcm2niix: anat/sub-001_ses-pre_T1w.nii.gz",                     1],
+        ["stage", "[OL_0001] dcm2niix: func/sub-001_ses-pre_task-rest_bold.nii.gz",          1],
+        ["stage", "[OL_0001] dcm2niix: func/sub-001_ses-pre_task-sparse_bold.nii.gz",        1],
+        ["stage", "[OL_0001] dcm2niix: fmap/sub-001_ses-pre_run-01_magnitude1.nii.gz",       1],
+        ["stage", "[OL_0001] dcm2niix: fmap/sub-001_ses-pre_run-01_phasediff.nii.gz",        1],
+        ["stage", "[OL_0001] dcm2niix: fmap/sub-001_ses-pre_run-02_magnitude1.nii.gz",       1],
+        ["stage", "[OL_0001] dcm2niix: fmap/sub-001_ses-pre_run-02_phasediff.nii.gz",        1],
+        ["fixup", "[OL_0001] fmap fixups: IntendedFor -> rest_bold, sparse_bold",            0],
+        ["done",  "[OL_0001] committed atomically (8 series)",                               1],
+        ["stage", "[OL_0002] staging at /tmp/.tmp_bidsmgr/sub-002/",                         0],
+        ["stage", "[OL_0002] dcm2niix: func/sub-002_ses-post_task-mb_sbref.nii.gz",          1],
+        ["stage", "[OL_0002] dcm2niix: func/sub-002_ses-post_task-mb_bold.nii.gz",           1],
+        ["stage", "[OL_0002] physio: func/sub-002_ses-post_task-mb_physio.tsv.gz",           1],
+        ["stage", "[OL_0002] dcm2niix: fmap/sub-002_ses-post_run-01_magnitude1.nii.gz",      1],
+        ["stage", "[OL_0002] dcm2niix: fmap/sub-002_ses-post_run-01_phasediff.nii.gz",       1],
+        ["warn",  "[OL_0002] no anatomical reference; will flag in validation",              0],
+        ["done",  "[OL_0002] committed atomically (5 series)",                               1],
+        ["stage", "[OL_0003] staging at /tmp/.tmp_bidsmgr/sub-003/",                         0],
+        ["stage", "[OL_0003] dcm2niix: anat/sub-003_acq-space_T2w.nii.gz",                   1],
+        ["stage", "[OL_0003] dcm2niix: func/sub-003_task-dmaging_run-01_bold.nii.gz",        2],
+        ["stage", "[OL_0003] dcm2niix: func/sub-003_task-dmaging_run-02_bold.nii.gz",        2],
+        ["stage", "[OL_0003] dcm2niix: func/sub-003_task-uebung_bold.nii.gz",                2],
+        ["stage", "[OL_0003] physio: 2 PhysioLog series",                                    2],
+        ["stage", "[OL_0003] dcm2niix: dwi/sub-003_acq-15_dir-AP_dwi.nii.gz",                2],
+        ["fixup", "[OL_0003] classifier: acq-15_dir-PA b0 rerouted to fmap/_epi",            0],
+        ["done",  "[OL_0003] committed atomically (12 series)",                              5],
+        ["done",  "30 series -> BIDS . 0 errors . 1 warning",                                0],
       ];
 
+      function appendLine(tag, msg) {
+        if (!log) return;
+        const line = document.createElement("span");
+        line.className = `mock-log-line log-tag-${tag}`;
+        line.textContent = msg + "\n";
+        log.appendChild(line);
+        log.scrollTop = log.scrollHeight;
+      }
+
       if (reducedMotion) {
-        subjects.forEach((s) => {
-          el.querySelector(`[data-mock="prog-${s.key}"]`)?.style.setProperty("--prog", "100%");
-          const pct = el.querySelector(`[data-mock="pct-${s.key}"]`);
-          if (pct) pct.textContent = "100%";
-        });
-        if (counter) counter.textContent = "30 / 30 series converted";
-        if (title)   title.textContent   = "Done.";
+        if (status)  status.textContent  = "Done.";
+        if (counter) counter.textContent = "30";
+        if (stage)   stage.textContent   = "BIDS 1.10.0 . converted 30 / 30 series";
         spinner?.classList.remove("is-spinning");
-        if (log) {
-          log.innerHTML = LOG.map(([tag, msg]) =>
-            `<span class="mock-log-line log-tag-${tag}">${escapeHtml(msg)}</span>`).join("\n") + "\n";
-        }
+        LOG.forEach(([t, m]) => appendLine(t, m));
         return;
       }
 
-      /* Stream log lines in parallel with progress. */
-      const totalWeight = subjects.reduce((s, x) => s + x.weight, 0);
-      let logged = 0;
-      const logInterval = setInterval(() => {
-        if (cancelled()) { clearInterval(logInterval); return; }
-        if (logged >= LOG.length) { clearInterval(logInterval); return; }
-        if (log) {
-          const [tag, msg] = LOG[logged];
-          const line = document.createElement("span");
-          line.className = `mock-log-line log-tag-${tag}`;
-          line.textContent = msg + "\n";
-          log.appendChild(line);
-          log.scrollTop = log.scrollHeight;
+      spinner?.classList.add("is-spinning");
+      let done = 0;
+      for (const [tag, msg, delta] of LOG) {
+        if (cancelled()) return;
+        appendLine(tag, msg);
+        done += delta;
+        if (counter) counter.textContent = String(done);
+        if (stage)   stage.textContent   = done < 30
+          ? `BIDS 1.10.0 . converting series ${done} / 30`
+          : "BIDS 1.10.0 . converted 30 / 30 series";
+        if (status) {
+          if      (tag === "stage") status.textContent = "Running dcm2niix...";
+          else if (tag === "fixup") status.textContent = "Cross-file fixups...";
+          else if (tag === "warn")  status.textContent = "Warning logged";
+          else if (tag === "done"  && done >= 30) status.textContent = "Done.";
         }
-        logged++;
-      }, 440);
-
-      /* Per-subject progress bars; advance counter as each completes. */
-      let completedWeight = 0;
-      const promises = subjects.map((s) => new Promise((resolve) => {
-        const start = performance.now();
-        const fill  = el.querySelector(`[data-mock="prog-${s.key}"]`);
-        const pct   = el.querySelector(`[data-mock="pct-${s.key}"]`);
-        function step(now) {
-          if (cancelled()) { resolve(); return; }
-          const t = Math.min((now - start) / s.ms, 1);
-          const eased = 1 - Math.pow(1 - t, 2);
-          const v = Math.round(eased * 100);
-          if (fill) fill.style.setProperty("--prog", v + "%");
-          if (pct)  pct.textContent = v + "%";
-          const seriesNow = Math.round(((completedWeight + s.weight * eased) / totalWeight) * 30);
-          if (counter) counter.textContent = `${seriesNow} / 30 series converted`;
-          if (t < 1) requestAnimationFrame(step);
-          else { completedWeight += s.weight; resolve(); }
-        }
-        requestAnimationFrame(step);
-      }));
-      await Promise.all(promises);
-      if (cancelled()) { clearInterval(logInterval); return; }
-      /* Make sure the log finishes streaming. */
-      while (logged < LOG.length) {
-        if (cancelled()) { clearInterval(logInterval); return; }
-        await delay(120);
+        await delay(310);
       }
-      clearInterval(logInterval);
-      if (counter) counter.textContent = "30 / 30 series converted";
-      if (title)   title.textContent   = "Done.";
+      if (cancelled()) return;
       spinner?.classList.remove("is-spinning");
     },
 

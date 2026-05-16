@@ -1579,6 +1579,7 @@ bidsmgr-rebuild ~/Downloads/inv.tsv</pre>
 
             <div class="scene-body">
               <div class="scene-mock scene-mock-converter">
+                <!-- Top bar (Run conversion pressed). -->
                 <div class="mock-topbar">
                   <span class="mock-topbar-brand">
                     <span class="mock-topbar-logo" aria-hidden="true">B</span>
@@ -1595,57 +1596,187 @@ bidsmgr-rebuild ~/Downloads/inv.tsv</pre>
                   </button>
                 </div>
 
-                <div class="mock-convert">
-                  <div class="mock-convert-header">
-                    <span class="mock-convert-title">
-                      <span class="mock-spinner is-spinning"
-                            data-mock="conv-spinner" aria-hidden="true"></span>
-                      <strong data-mock="conv-title">Converting&hellip;</strong>
+                <!-- Pathbars + scan toolbar. During conversion the
+                     spinner spins, the status text streams the engine's
+                     stage, and the chips reflect the row counts at the
+                     time of the convert. -->
+                <div class="mock-pathbars">
+                  <div class="mock-pathbar-row">
+                    <span class="mock-pathbar-label">Raw input</span>
+                    <span class="mock-pathbar-field">
+                      <span class="mock-pathbar-glyph is-ok">&#10003;</span>
+                      <span class="mock-pathbar-value">~/Downloads/neuroimaging_unit_new</span>
                     </span>
-                    <span class="mock-convert-counter"
-                          data-mock="conv-counter">0 / 30 series converted</span>
+                    <button class="mock-tb-ghost" type="button">change&hellip;</button>
+                  </div>
+                  <div class="mock-pathbar-row">
+                    <span class="mock-pathbar-label">BIDS output</span>
+                    <span class="mock-pathbar-field">
+                      <span class="mock-pathbar-glyph is-ok">&#10003;</span>
+                      <span class="mock-pathbar-value">~/Documents/bids_export</span>
+                    </span>
+                    <button class="mock-tb-ghost" type="button">change&hellip;</button>
+                  </div>
+                </div>
+
+                <div class="mock-tb">
+                  <button class="mock-tb-btn" type="button">Scan&hellip;</button>
+                  <span class="mock-tb-mini-label">TSV:</span>
+                  <span class="mock-tb-input">inventory.tsv</span>
+                  <span class="mock-tb-sep" aria-hidden="true"></span>
+                  <div class="mock-tb-chips">
+                    <span class="mock-tb-chip chip-success"><strong>30</strong> valid</span>
+                    <span class="mock-tb-chip chip-warn"><strong>1</strong> warnings</span>
+                    <span class="mock-tb-chip chip-err"><strong>0</strong> error</span>
+                    <span class="mock-tb-chip chip-default"><strong>6</strong> skipped</span>
+                  </div>
+                  <span class="mock-spinner is-spinning"
+                        data-mock="conv-spinner" aria-hidden="true"></span>
+                  <span class="mock-tb-status" data-mock="conv-status">
+                    Converting...
+                  </span>
+                </div>
+
+                <!-- Splitter remains visible during conversion (the
+                     real GUI doesn't tear it down). The inspection
+                     table is read-only here; backend column hints
+                     which backend each row is going through. -->
+                <div class="mock-insp-main">
+
+                  <div class="mock-insp-pane col-raw">
+                    <h5 class="mock-pane-title">Raw data tree</h5>
+                    <div class="fs-tree">
+                      <div class="it"><span class="arr">&#9662;</span><span class="name">neuroimaging_unit_new</span></div>
+                      <div class="it d1"><span class="arr">&#9662;</span><span class="name">OL_0001</span><span class="meta">9</span></div>
+                      <div class="it d2 skip"><span class="name">localizer_20ch_head-coil</span></div>
+                      <div class="it d2"><span class="name">ses-pre_run-01_fmap</span><span class="meta">M.P</span></div>
+                      <div class="it d2"><span class="name">ses-pre_T1w</span></div>
+                      <div class="it d2"><span class="name">ses-pre_task-sparse_bold</span></div>
+                      <div class="it d2"><span class="name">ses-pre_task-rest_bold</span></div>
+                      <div class="it d1"><span class="arr">&#9656;</span><span class="name">OL_0002</span><span class="meta">10</span></div>
+                      <div class="it d1"><span class="arr">&#9656;</span><span class="name">OL_0003</span><span class="meta">17</span></div>
+                    </div>
                   </div>
 
-                  <div class="mock-progress-list">
-                    <div class="mock-progress-row">
-                      <span class="mock-progress-label">OL_0001</span>
-                      <div class="mock-progress-bar">
-                        <div class="mock-progress-fill"
-                             data-mock="prog-0001"
-                             style="--prog: 0%;"></div>
-                      </div>
-                      <span class="mock-progress-pct"
-                            data-mock="pct-0001">0%</span>
-                    </div>
-                    <div class="mock-progress-row">
-                      <span class="mock-progress-label">OL_0002</span>
-                      <div class="mock-progress-bar">
-                        <div class="mock-progress-fill"
-                             data-mock="prog-0002"
-                             style="--prog: 0%;"></div>
-                      </div>
-                      <span class="mock-progress-pct"
-                            data-mock="pct-0002">0%</span>
-                    </div>
-                    <div class="mock-progress-row">
-                      <span class="mock-progress-label">OL_0003</span>
-                      <div class="mock-progress-bar">
-                        <div class="mock-progress-fill"
-                             data-mock="prog-0003"
-                             style="--prog: 0%;"></div>
-                      </div>
-                      <span class="mock-progress-pct"
-                            data-mock="pct-0003">0%</span>
+                  <div class="mock-insp-pane col-filter">
+                    <h5 class="mock-pane-title">Filter / structure</h5>
+                    <div class="mod-filter">
+                      <div class="item"><span class="ck checked"></span><span class="arr">&#9662;</span><span class="name">Studyname</span><span class="count">30</span></div>
+                      <div class="item d1"><span class="ck checked"></span><span class="arr">&#9656;</span><span class="name">sub-001</span><span class="count">8</span></div>
+                      <div class="item d1"><span class="ck partial"></span><span class="arr">&#9656;</span><span class="name">sub-002</span><span class="count">10</span></div>
+                      <div class="item d1"><span class="ck checked"></span><span class="arr">&#9656;</span><span class="name">sub-003</span><span class="count">12</span></div>
                     </div>
                   </div>
 
-                  <div class="mock-log-wrap">
-                    <div class="mock-log-header">
-                      <span>log</span>
-                      <span class="muted">streaming</span>
+                  <div class="mock-insp-pane is-table col-table">
+                    <h5 class="mock-pane-title">Inspection . converting</h5>
+                    <div class="mock-inv-scroll">
+                      <table class="mock-inv-table">
+                        <thead>
+                          <tr>
+                            <th class="col-cb"></th>
+                            <th class="col-status"></th>
+                            <th class="col-id">id</th>
+                            <th class="col-ses">ses</th>
+                            <th class="col-data">data</th>
+                            <th class="col-task">task</th>
+                            <th class="col-basename">predicted basename</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="mock-row" data-status="ok" data-type="anat">
+                            <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
+                            <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
+                            <td class="cell-id">sub-001</td>
+                            <td class="cell-ses">pre</td>
+                            <td class="cell-data"><span class="mock-chip-data">anat</span></td>
+                            <td class="cell-task">&mdash;</td>
+                            <td class="cell-basename"><code>sub-001_ses-pre_T1w</code></td>
+                          </tr>
+                          <tr class="mock-row" data-status="ok" data-type="func">
+                            <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
+                            <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
+                            <td class="cell-id">sub-001</td>
+                            <td class="cell-ses">pre</td>
+                            <td class="cell-data"><span class="mock-chip-data">func</span></td>
+                            <td class="cell-task">rest</td>
+                            <td class="cell-basename"><code>sub-001_ses-pre_task-rest_bold</code></td>
+                          </tr>
+                          <tr class="mock-row" data-status="ok" data-type="fmap">
+                            <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
+                            <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
+                            <td class="cell-id">sub-001</td>
+                            <td class="cell-ses">pre</td>
+                            <td class="cell-data"><span class="mock-chip-data">fmap</span></td>
+                            <td class="cell-task">&mdash;</td>
+                            <td class="cell-basename"><code>sub-001_ses-pre_run-01_magnitude1</code></td>
+                          </tr>
+                          <tr class="mock-row" data-status="ok" data-type="func">
+                            <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
+                            <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
+                            <td class="cell-id">sub-002</td>
+                            <td class="cell-ses">post</td>
+                            <td class="cell-data"><span class="mock-chip-data">func</span></td>
+                            <td class="cell-task">mb</td>
+                            <td class="cell-basename"><code>sub-002_ses-post_task-mb_bold</code></td>
+                          </tr>
+                          <tr class="mock-row" data-status="ok" data-type="dwi">
+                            <td class="cell-cb"><span class="mock-check is-on">&#10003;</span></td>
+                            <td class="cell-status"><span class="mock-badge badge-ok">&#10003;</span></td>
+                            <td class="cell-id">sub-003</td>
+                            <td class="cell-ses">&mdash;</td>
+                            <td class="cell-data"><span class="mock-chip-data">dwi</span></td>
+                            <td class="cell-task">&mdash;</td>
+                            <td class="cell-basename"><code>sub-003_acq-15_dir-AP_dwi</code></td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
-                    <pre class="mock-log" data-mock="log"></pre>
                   </div>
+
+                  <div class="mock-insp-pane col-props">
+                    <h5 class="mock-pane-title">Properties</h5>
+                    <div class="ent-form">
+                      <p class="muted" style="font-size: 0.74rem; margin: 0;">
+                        Conversion in progress. The Log tab below shows
+                        the engine's stages in real time.
+                      </p>
+                      <hr class="ent-divider">
+                      <div class="ent-title">Backend assignments</div>
+                      <p class="muted" style="font-size: 0.72rem; margin: 0 0 6px;">
+                        <strong style="color: var(--text);">Dcm2niixDirect</strong>
+                        . anat / func / dwi / fmap (29 rows)
+                      </p>
+                      <p class="muted" style="font-size: 0.72rem; margin: 0;">
+                        <strong style="color: var(--text);">PhysioDcmBackend</strong>
+                        . physio (1 row)
+                      </p>
+                      <hr class="ent-divider">
+                      <div class="ent-title">Counter</div>
+                      <div class="ent-preview">
+                        <strong data-mock="conv-counter">0</strong>
+                        / 30 series converted
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Bottom dock: the Log tab is active during the
+                     conversion (instead of the BIDS preview). -->
+                <div class="mock-insp-dock">
+                  <button class="dock-tab" type="button">BIDS preview</button>
+                  <button class="dock-tab is-active" type="button">Log</button>
+                  <button class="dock-tab" type="button">Conflicts</button>
+                  <button class="dock-tab" type="button">Statistics</button>
+                </div>
+                <div class="mock-dock-content">
+                  <pre class="mock-log" data-mock="log"></pre>
+                </div>
+                <div class="mock-insp-statusbar">
+                  <span data-mock="conv-stage">
+                    BIDS 1.10.0 . converting series 0 / 30
+                  </span>
+                  <span><span class="pill">in progress</span></span>
                 </div>
               </div>
             </div>

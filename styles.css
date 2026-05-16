@@ -3155,6 +3155,26 @@ details.disclosure p:last-child { margin-bottom: 0; }
   color: var(--accent);
 }
 
+/* Dock content area (Scene 6: Log tab shows streaming engine output
+ * below the dock tab strip). */
+.mock-dock-content {
+  background: var(--bg);
+  border-top: 1px solid var(--border-glass);
+}
+.mock-dock-content .mock-log {
+  margin: 0;
+  padding: 10px 14px;
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.76rem;
+  line-height: 1.55;
+  color: var(--text);
+  height: 160px;
+  overflow-y: auto;
+  white-space: pre;
+  background: var(--bg);
+  border: none;
+}
+
 .mock-insp-statusbar {
   display: flex;
   justify-content: space-between;
