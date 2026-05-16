@@ -226,55 +226,51 @@
           <!-- ============== Converter tour ============== -->
           <div class="tab-panel is-active" data-panel="converter"
                role="tabpanel">
-            <div class="gui-tour" data-tour="converter">
-              <div class="gui-tour-image">
-                <img src="assets/screenshots/full_converter_window_dark.png"
-                     data-light="assets/screenshots/full_converter_window_light.png"
-                     alt="Full BIDS Manager Converter window with numbered markers"
-                     loading="lazy">
-                <!-- Markers positioned in % so they scale with the image. -->
-                <button class="gui-tour-marker" data-marker="1" type="button"
-                        style="left: 13%; top: 5%;"
-                        aria-label="Marker 1: View switcher">1</button>
-                <button class="gui-tour-marker" data-marker="2" type="button"
-                        style="left: 28%; top: 14%;"
-                        aria-label="Marker 2: PathBars">2</button>
-                <button class="gui-tour-marker" data-marker="3" type="button"
-                        style="left: 50%; top: 25%;"
-                        aria-label="Marker 3: Scan toolbar">3</button>
-                <button class="gui-tour-marker" data-marker="4" type="button"
-                        style="left: 6%; top: 50%;"
-                        aria-label="Marker 4: Raw data tree">4</button>
-                <button class="gui-tour-marker" data-marker="5" type="button"
-                        style="left: 24%; top: 56%;"
-                        aria-label="Marker 5: Output data tree + Filter">5</button>
-                <button class="gui-tour-marker" data-marker="6" type="button"
-                        style="left: 56%; top: 56%;"
-                        aria-label="Marker 6: Inspection table">6</button>
-                <button class="gui-tour-marker" data-marker="7" type="button"
-                        style="left: 92%; top: 50%;"
-                        aria-label="Marker 7: Properties panel">7</button>
-                <button class="gui-tour-marker" data-marker="8" type="button"
-                        style="left: 70%; top: 92%;"
-                        aria-label="Marker 8: BIDS preview &amp; log dock">8</button>
-              </div>
+            <p class="muted gui-tour-hint">
+              Click any number on the screenshot to see what that
+              section does. Click again (or press <kbd>Esc</kbd>) to
+              dismiss.
+            </p>
 
-              <ol class="gui-tour-legend" data-tour-legend>
-                <li data-marker="1">
+            <div class="gui-tour" data-tour="converter">
+              <img class="gui-tour-img"
+                   src="assets/screenshots/full_converter_window_dark.png"
+                   data-light="assets/screenshots/full_converter_window_light.png"
+                   alt="Full BIDS Manager Converter window with numbered markers"
+                   loading="lazy">
+
+              <!-- One anchor per marker; the anchor positions both
+                   the marker and its popover. data-pos picks which
+                   side of the marker the popover hangs off. -->
+
+              <span class="gui-tour-anchor" style="left: 11%; top: 4%;">
+                <button class="gui-tour-marker" data-marker="1"
+                        type="button" aria-label="View switcher">1</button>
+                <div class="gui-tour-pop" data-pos="bottom" role="tooltip">
                   <strong>View switcher</strong>
                   <p>Toggles between the <em>Converter</em> (raw
                     &rarr; BIDS) and the <em>Editor</em> (read, fix,
                     validate). Settings and the theme toggle live on
                     the same top bar.</p>
-                </li>
-                <li data-marker="2">
+                </div>
+              </span>
+
+              <span class="gui-tour-anchor" style="left: 30%; top: 13%;">
+                <button class="gui-tour-marker" data-marker="2"
+                        type="button" aria-label="PathBars">2</button>
+                <div class="gui-tour-pop" data-pos="bottom" role="tooltip">
                   <strong>PathBars</strong>
                   <p>Tell BIDS Manager where your raw DICOM data
                     lives, and where the BIDS dataset should land. The
                     glyph on the left flips from circle to check when
-                    the path is valid.</p>
-                </li>
-                <li data-marker="3">
+                    a path is valid.</p>
+                </div>
+              </span>
+
+              <span class="gui-tour-anchor" style="left: 50%; top: 25%;">
+                <button class="gui-tour-marker" data-marker="3"
+                        type="button" aria-label="Scan toolbar">3</button>
+                <div class="gui-tour-pop" data-pos="bottom" role="tooltip">
                   <strong>Scan toolbar</strong>
                   <p>The <em>Scan&hellip;</em> button kicks off the
                     inventory walker. <em>TSV:</em> names the inventory
@@ -283,22 +279,36 @@
                     up live as the walker enumerates each series.
                     <em>Run conversion</em> stays disabled until the
                     scan finishes.</p>
-                </li>
-                <li data-marker="4">
+                </div>
+              </span>
+
+              <span class="gui-tour-anchor" style="left: 6%; top: 50%;">
+                <button class="gui-tour-marker" data-marker="4"
+                        type="button" aria-label="Raw data tree">4</button>
+                <div class="gui-tour-pop" data-pos="right" role="tooltip">
                   <strong>Raw data tree</strong>
                   <p>Browse the raw DICOM input folder, subject by
                     subject. Read-only here; it's a navigator, not an
                     editor.</p>
-                </li>
-                <li data-marker="5">
+                </div>
+              </span>
+
+              <span class="gui-tour-anchor" style="left: 24%; top: 56%;">
+                <button class="gui-tour-marker" data-marker="5"
+                        type="button" aria-label="Output tree and Filter">5</button>
+                <div class="gui-tour-pop" data-pos="bottom" role="tooltip">
                   <strong>Output tree &amp; structure filter</strong>
-                  <p>Below the raw tree, the future BIDS layout
-                    (<em>OUTPUT DATA TREE</em>). The middle pane
-                    (<em>FILTER / STRUCTURE</em>) shows the schema-grouped
-                    view of every series, with quick filtering by
-                    entity.</p>
-                </li>
-                <li data-marker="6">
+                  <p>The future BIDS layout
+                    (<em>OUTPUT DATA TREE</em>) and a schema-grouped
+                    structure view (<em>FILTER / STRUCTURE</em>) of
+                    every series, with quick filtering by entity.</p>
+                </div>
+              </span>
+
+              <span class="gui-tour-anchor" style="left: 58%; top: 56%;">
+                <button class="gui-tour-marker" data-marker="6"
+                        type="button" aria-label="Inspection table">6</button>
+                <div class="gui-tour-pop" data-pos="top" role="tooltip">
                   <strong>Inspection table</strong>
                   <p>The centre of gravity. One row per DICOM series,
                     with the <em>predicted basename</em>, datatype,
@@ -306,57 +316,64 @@
                     conversion decision is editable here; the
                     schema-driven classifier's guesses are just
                     defaults.</p>
-                </li>
-                <li data-marker="7">
+                </div>
+              </span>
+
+              <span class="gui-tour-anchor" style="left: 92%; top: 50%;">
+                <button class="gui-tour-marker" data-marker="7"
+                        type="button" aria-label="Properties panel">7</button>
+                <div class="gui-tour-pop" data-pos="left" role="tooltip">
                   <strong>Properties panel</strong>
                   <p>Schema-aware editor for the currently-selected
                     row. Shows only the entities valid for that row's
                     datatype + suffix, with required fields marked
                     with a red asterisk. The <em>PREDICTED PATH</em>
                     at the bottom updates as you type.</p>
-                </li>
-                <li data-marker="8">
+                </div>
+              </span>
+
+              <span class="gui-tour-anchor" style="left: 70%; top: 92%;">
+                <button class="gui-tour-marker" data-marker="8"
+                        type="button" aria-label="BIDS preview and log dock">8</button>
+                <div class="gui-tour-pop" data-pos="top" role="tooltip">
                   <strong>BIDS preview &amp; log dock</strong>
                   <p>Bottom dock with tabs: <em>BIDS preview</em>
                     (the future filesystem layout), <em>Log</em> (engine
                     output), <em>Conflicts</em> and <em>Statistics</em>.</p>
-                </li>
-              </ol>
+                </div>
+              </span>
             </div>
           </div>
 
           <!-- ============== Editor tour ============== -->
           <div class="tab-panel" data-panel="editor" role="tabpanel">
-            <div class="gui-tour" data-tour="editor">
-              <div class="gui-tour-image">
-                <img src="assets/screenshots/full_editor_window_dark.png"
-                     data-light="assets/screenshots/full_editor_window_light.png"
-                     alt="Full BIDS Manager Editor window with numbered markers"
-                     loading="lazy">
-                <button class="gui-tour-marker" data-marker="1" type="button"
-                        style="left: 14%; top: 5%;"
-                        aria-label="Marker 1: View switcher">1</button>
-                <button class="gui-tour-marker" data-marker="2" type="button"
-                        style="left: 50%; top: 8%;"
-                        aria-label="Marker 2: Editor toolbar">2</button>
-                <button class="gui-tour-marker" data-marker="3" type="button"
-                        style="left: 6%; top: 50%;"
-                        aria-label="Marker 3: BIDS dataset tree">3</button>
-                <button class="gui-tour-marker" data-marker="4" type="button"
-                        style="left: 40%; top: 50%;"
-                        aria-label="Marker 4: File viewer">4</button>
-                <button class="gui-tour-marker" data-marker="5" type="button"
-                        style="left: 87%; top: 50%;"
-                        aria-label="Marker 5: Validation pane">5</button>
-              </div>
+            <p class="muted gui-tour-hint">
+              Click any number on the screenshot to see what that
+              section does. Click again (or press <kbd>Esc</kbd>) to
+              dismiss.
+            </p>
 
-              <ol class="gui-tour-legend" data-tour-legend>
-                <li data-marker="1">
+            <div class="gui-tour" data-tour="editor">
+              <img class="gui-tour-img"
+                   src="assets/screenshots/full_editor_window_dark.png"
+                   data-light="assets/screenshots/full_editor_window_light.png"
+                   alt="Full BIDS Manager Editor window with numbered markers"
+                   loading="lazy">
+
+              <span class="gui-tour-anchor" style="left: 14%; top: 4%;">
+                <button class="gui-tour-marker" data-marker="1"
+                        type="button" aria-label="View switcher">1</button>
+                <div class="gui-tour-pop" data-pos="bottom" role="tooltip">
                   <strong>View switcher</strong>
                   <p>You're in the <em>Editor</em>: read the converted
                     BIDS dataset, edit sidecars, run validation.</p>
-                </li>
-                <li data-marker="2">
+                </div>
+              </span>
+
+              <span class="gui-tour-anchor" style="left: 50%; top: 8%;">
+                <button class="gui-tour-marker" data-marker="2"
+                        type="button" aria-label="Editor toolbar">2</button>
+                <div class="gui-tour-pop" data-pos="bottom" role="tooltip">
                   <strong>Editor toolbar</strong>
                   <p><em>Open BIDS root</em> picks the dataset.
                     <em>Validate file / folder / dataset</em> run audits
@@ -364,29 +381,44 @@
                     swaps the validator's leniency; the severity chips
                     summarise the current dataset's issues; the
                     BusySpinner ticks while validation is running.</p>
-                </li>
-                <li data-marker="3">
+                </div>
+              </span>
+
+              <span class="gui-tour-anchor" style="left: 6%; top: 50%;">
+                <button class="gui-tour-marker" data-marker="3"
+                        type="button" aria-label="BIDS dataset tree">3</button>
+                <div class="gui-tour-pop" data-pos="right" role="tooltip">
                   <strong>BIDS dataset tree</strong>
                   <p>The converted BIDS layout with a status dot per
                     file: green for clean, amber for warnings, red
                     for errors. Click a file to open it in the
-                    center pane.</p>
-                </li>
-                <li data-marker="4">
+                    centre pane.</p>
+                </div>
+              </span>
+
+              <span class="gui-tour-anchor" style="left: 40%; top: 50%;">
+                <button class="gui-tour-marker" data-marker="4"
+                        type="button" aria-label="File viewer">4</button>
+                <div class="gui-tour-pop" data-pos="top" role="tooltip">
                   <strong>File viewer (extension-routed)</strong>
-                  <p>JSON sidecars open a schema-aware form (with
+                  <p>JSON sidecars open a schema-aware form (with a
                     Tree view fallback). TSV files open an editable
                     table. NIfTI files open the tri-view +
                     4-D graph viewer.</p>
-                </li>
-                <li data-marker="5">
+                </div>
+              </span>
+
+              <span class="gui-tour-anchor" style="left: 87%; top: 50%;">
+                <button class="gui-tour-marker" data-marker="5"
+                        type="button" aria-label="Validation pane">5</button>
+                <div class="gui-tour-pop" data-pos="left" role="tooltip">
                   <strong>Validation pane</strong>
                   <p>Severity-coloured issue list. Click an item to
                     jump to the offending file. The list updates
                     automatically when you fix something in the file
                     viewer.</p>
-                </li>
-              </ol>
+                </div>
+              </span>
             </div>
           </div>
         </div>
@@ -514,12 +546,26 @@
 
             <div class="scene-body">
               <div class="scene-mock scene-mock-converter">
-                <!-- Window chrome -->
-                <div class="mock-windowbar">
-                  <span class="mock-window-dots" aria-hidden="true">
-                    <span></span><span></span><span></span>
+                <!-- App top bar: brand + view switcher + Settings + Run.
+                     Matches the real BIDS Manager header. -->
+                <div class="mock-topbar">
+                  <span class="mock-topbar-brand">
+                    <span class="mock-topbar-logo" aria-hidden="true">B</span>
+                    <span>BIDS Manager</span>
                   </span>
-                  <span class="mock-window-title">BIDS Manager . Converter</span>
+                  <div class="mock-topbar-switch" role="tablist"
+                       aria-label="View">
+                    <button class="mock-switch-btn is-active" type="button"
+                            role="tab" aria-selected="true">Converter</button>
+                    <button class="mock-switch-btn" type="button"
+                            role="tab" aria-selected="false">Editor</button>
+                  </div>
+                  <span class="mock-tb-grow" aria-hidden="true"></span>
+                  <button class="mock-tb-btn" type="button">Settings&hellip;</button>
+                  <button class="mock-tb-btn-primary is-disabled"
+                          type="button" data-mock="run-btn">
+                    Run conversion
+                  </button>
                 </div>
 
                 <!-- PathBars (Raw input + BIDS output), styled like the
@@ -546,9 +592,7 @@
                   </div>
                 </div>
 
-                <!-- Main converter toolbar (left to right):
-                     Scan  TSV: [name]  |  4 chips  spinner status
-                     Settings  Run conversion -->
+                <!-- Scan toolbar (real one, just Scan + TSV + chips). -->
                 <div class="mock-tb">
                   <button class="mock-tb-btn is-disabled" type="button"
                           data-mock="scan-btn">Scan&hellip;</button>
@@ -569,13 +613,6 @@
                       <strong>0</strong> skipped
                     </span>
                   </div>
-                  <span class="mock-tb-grow" aria-hidden="true"></span>
-                  <button class="mock-tb-btn is-disabled" type="button">
-                    Settings&hellip;
-                  </button>
-                  <button class="mock-tb-btn-primary is-disabled" type="button">
-                    Run conversion
-                  </button>
                 </div>
               </div>
             </div>
@@ -606,11 +643,22 @@
 
             <div class="scene-body">
               <div class="scene-mock scene-mock-converter">
-                <div class="mock-windowbar">
-                  <span class="mock-window-dots" aria-hidden="true">
-                    <span></span><span></span><span></span>
+                <!-- Top bar. Run conversion is still disabled during
+                     scan; it only enables after the scan completes. -->
+                <div class="mock-topbar">
+                  <span class="mock-topbar-brand">
+                    <span class="mock-topbar-logo" aria-hidden="true">B</span>
+                    <span>BIDS Manager</span>
                   </span>
-                  <span class="mock-window-title">BIDS Manager . Scanning</span>
+                  <div class="mock-topbar-switch">
+                    <button class="mock-switch-btn is-active" type="button">Converter</button>
+                    <button class="mock-switch-btn" type="button">Editor</button>
+                  </div>
+                  <span class="mock-tb-grow" aria-hidden="true"></span>
+                  <button class="mock-tb-btn" type="button">Settings&hellip;</button>
+                  <button class="mock-tb-btn-primary is-disabled" type="button">
+                    Run conversion
+                  </button>
                 </div>
 
                 <!-- PathBars compact, already filled in. -->
@@ -633,8 +681,9 @@
                   </div>
                 </div>
 
-                <!-- Main toolbar, active state. The Scan button is
-                     pressed; spinner spins; chips update live. -->
+                <!-- Scan toolbar, scanning state. Scan pressed,
+                     spinner spins, chips tween live, status text
+                     streams the engine's stages. -->
                 <div class="mock-tb">
                   <button class="mock-tb-btn is-pressed" type="button">
                     Scan&hellip;
@@ -659,11 +708,6 @@
                   <span class="mock-spinner" data-mock="spinner"
                         aria-hidden="true"></span>
                   <span class="mock-tb-status" data-mock="status">Idle</span>
-                  <span class="mock-tb-grow" aria-hidden="true"></span>
-                  <button class="mock-tb-btn" type="button">Settings&hellip;</button>
-                  <button class="mock-tb-btn-primary is-disabled" type="button">
-                    Run conversion
-                  </button>
                 </div>
 
                 <!-- Big counter tiles below toolbar -->
@@ -713,14 +757,25 @@
 
             <div class="scene-body">
               <div class="scene-mock scene-mock-converter">
-                <div class="mock-windowbar">
-                  <span class="mock-window-dots" aria-hidden="true">
-                    <span></span><span></span><span></span>
+                <!-- Top bar. Scan is done, so Run conversion is now
+                     primary-enabled and ready to be clicked. -->
+                <div class="mock-topbar">
+                  <span class="mock-topbar-brand">
+                    <span class="mock-topbar-logo" aria-hidden="true">B</span>
+                    <span>BIDS Manager</span>
                   </span>
-                  <span class="mock-window-title">BIDS Manager . Inventory (12 of 36 rows shown)</span>
+                  <div class="mock-topbar-switch">
+                    <button class="mock-switch-btn is-active" type="button">Converter</button>
+                    <button class="mock-switch-btn" type="button">Editor</button>
+                  </div>
+                  <span class="mock-tb-grow" aria-hidden="true"></span>
+                  <button class="mock-tb-btn" type="button">Settings&hellip;</button>
+                  <button class="mock-tb-btn-primary" type="button">
+                    Run conversion
+                  </button>
                 </div>
 
-                <!-- Compact toolbar (post-scan state, chips final). -->
+                <!-- Compact scan toolbar (post-scan state, chips final). -->
                 <div class="mock-tb mock-tb-compact">
                   <button class="mock-tb-btn" type="button">Scan&hellip;</button>
                   <span class="mock-tb-mini-label">TSV:</span>
@@ -740,11 +795,6 @@
                       <strong>6</strong> skipped
                     </span>
                   </div>
-                  <span class="mock-tb-grow" aria-hidden="true"></span>
-                  <button class="mock-tb-btn" type="button">Settings&hellip;</button>
-                  <button class="mock-tb-btn-primary" type="button">
-                    Run conversion
-                  </button>
                 </div>
 
                 <!-- Real inventory columns: checkbox / status badge /

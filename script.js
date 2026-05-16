@@ -54,52 +54,63 @@
 /* ====================================================================
  * GUI tour (tutorial.html, #gui-tour)
  *
- * For each [data-tour] container: wire its numbered markers (overlaid
- * on the screenshot) to the matching legend cards by data-marker. On
- * hover, transient highlight; on click, pin the highlight until the
- * user clicks the same item again (or another marker).
+ * Click a numbered marker on the screenshot to open the matching
+ * popover bubble in place. Clicking the same marker again, another
+ * marker, anywhere outside, or pressing Esc dismisses. Only one
+ * popover at a time per tour.
  *
  * Independent per-tour state lets the Converter and Editor tours
  * coexist on the same page without leakage.
  * ================================================================== */
 
 function initGuiTour() {
-  document.querySelectorAll("[data-tour]").forEach((tour) => {
-    const markers = Array.from(tour.querySelectorAll(".gui-tour-marker"));
-    const items   = Array.from(tour.querySelectorAll("[data-tour-legend] li"));
-    if (!markers.length || !items.length) return;
+  const tours = Array.from(document.querySelectorAll("[data-tour]"));
+  if (!tours.length) return;
 
-    let pinned = null;
+  tours.forEach((tour) => {
+    const anchors = Array.from(tour.querySelectorAll(".gui-tour-anchor"));
+    if (!anchors.length) return;
 
-    function highlight(num) {
-      markers.forEach((m) => m.classList.toggle("is-active", m.dataset.marker === num));
-      items.forEach((i) => i.classList.toggle("is-active", i.dataset.marker === num));
-    }
-    function unhighlight() {
-      if (pinned) { highlight(pinned); return; }
-      markers.forEach((m) => m.classList.remove("is-active"));
-      items.forEach((i) => i.classList.remove("is-active"));
-    }
-    function togglePin(num) {
-      pinned = pinned === num ? null : num;
-      if (pinned) highlight(pinned);
-      else unhighlight();
+    let openAnchor = null;
+
+    function close() {
+      if (!openAnchor) return;
+      openAnchor.querySelector(".gui-tour-marker")?.classList.remove("is-active");
+      openAnchor.querySelector(".gui-tour-pop")?.classList.remove("is-shown");
+      openAnchor = null;
     }
 
-    function wire(el, num) {
-      el.addEventListener("mouseenter", () => highlight(num));
-      el.addEventListener("focus",      () => highlight(num));
-      el.addEventListener("mouseleave", unhighlight);
-      el.addEventListener("blur",       unhighlight);
-      el.addEventListener("click",      () => togglePin(num));
+    function open(anchor) {
+      if (openAnchor === anchor) { close(); return; }
+      close();
+      anchor.querySelector(".gui-tour-marker")?.classList.add("is-active");
+      anchor.querySelector(".gui-tour-pop")?.classList.add("is-shown");
+      openAnchor = anchor;
     }
 
-    markers.forEach((m) => wire(m, m.dataset.marker));
-    items.forEach((i)   => wire(i, i.dataset.marker));
+    anchors.forEach((anchor) => {
+      const marker = anchor.querySelector(".gui-tour-marker");
+      const pop    = anchor.querySelector(".gui-tour-pop");
+      marker?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        open(anchor);
+      });
+      /* Clicking inside the popover should not bubble up to the
+       * document-level close handler. */
+      pop?.addEventListener("click", (e) => e.stopPropagation());
+    });
 
-    /* Esc clears the pin. */
-    tour.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && pinned) { pinned = null; unhighlight(); }
+    /* Click anywhere else in the document (or in the tour but not
+     * on a marker / popover) closes the open popover. */
+    document.addEventListener("click", (e) => {
+      if (!openAnchor) return;
+      if (openAnchor.contains(e.target)) return;
+      close();
+    });
+
+    /* Esc closes whichever popover is open. */
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && openAnchor) close();
     });
   });
 }

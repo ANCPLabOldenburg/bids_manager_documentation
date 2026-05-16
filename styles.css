@@ -1884,42 +1884,60 @@ details.disclosure p:last-child { margin-bottom: 0; }
  * GUI tour (tutorial.html, #gui-tour)
  *
  * Annotated screenshots of the real Converter / Editor windows.
- * Numbered markers float on top of the image; the matching legend
- * card on the right (or below, on narrow) highlights in sync.
- * Hover or click a marker, or the legend card, to wire them.
+ * The screenshot fills the section's full width. Numbered markers
+ * are absolutely positioned in percentages so they scale with the
+ * image. Each marker has a sibling popover bubble that pops up at
+ * the marker's location when clicked. Only one popover at a time;
+ * clicking outside, on another marker, or Esc dismisses.
  * ------------------------------------------------------------------ */
 
-.gui-tour {
-  display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
-  gap: 24px;
-  margin-top: 16px;
-  align-items: start;
+.gui-tour-hint {
+  font-size: 0.86rem;
+  margin: 0 0 14px;
 }
-@media (max-width: 940px) {
-  .gui-tour { grid-template-columns: 1fr; }
+.gui-tour-hint kbd {
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  padding: 1px 6px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--panel-strong);
+  color: var(--text);
+  vertical-align: 1px;
 }
 
-.gui-tour-image {
+.gui-tour {
   position: relative;
+  margin: 0;
   border: 1px solid var(--border-glass);
-  border-radius: 12px;
+  border-radius: 14px;
   overflow: hidden;
   background: var(--bg-soft);
   box-shadow: var(--shadow);
-  /* contain markers inside the rounded corners */
   isolation: isolate;
 }
-.gui-tour-image img {
+.gui-tour-img {
+  display: block;
   width: 100%;
   height: auto;
-  display: block;
+}
+
+/* Anchor: a 0-size point at the (left, top) coordinate of the
+ * marker. The marker is absolutely positioned relative to this
+ * anchor (centered on it); the popover hangs off the anchor at a
+ * direction picked per-marker via data-pos. */
+.gui-tour-anchor {
+  position: absolute;
+  width: 0;
+  height: 0;
 }
 
 .gui-tour-marker {
   position: absolute;
-  width: 30px;
-  height: 30px;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   border: 2px solid var(--accent);
   background: color-mix(in srgb, var(--bg) 88%, transparent);
@@ -1927,7 +1945,7 @@ details.disclosure p:last-child { margin-bottom: 0; }
   -webkit-backdrop-filter: blur(4px);
   color: var(--accent);
   font-weight: 800;
-  font-size: 0.86rem;
+  font-size: 0.92rem;
   font-family: "SF Pro Text", "Segoe UI", Inter, system-ui, sans-serif;
   cursor: pointer;
   display: grid;
@@ -1939,7 +1957,7 @@ details.disclosure p:last-child { margin-bottom: 0; }
               background 220ms ease, color 220ms ease;
   animation: gui-marker-pulse 2.6s ease-in-out infinite;
   padding: 0;
-  z-index: 1;
+  z-index: 2;
 }
 .gui-tour-marker:hover,
 .gui-tour-marker.is-active {
@@ -1957,83 +1975,104 @@ details.disclosure p:last-child { margin-bottom: 0; }
   50%      { box-shadow: 0 0 0 10px color-mix(in srgb, var(--accent) 8%, transparent),
                           0 8px 22px color-mix(in srgb, var(--accent) 25%, transparent); }
 }
-
 @media (prefers-reduced-motion: reduce) {
   .gui-tour-marker { animation: none; }
 }
 
-.gui-tour-legend {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-height: 640px;
-  overflow-y: auto;
-  padding-right: 4px;
+/* Popover bubble. Hidden by default; .is-shown reveals it. Position
+ * is per-anchor via data-pos: bottom (default), top, left, right.
+ * The transform places the bubble offset from the anchor center,
+ * leaving room for a small caret pointing back at the marker. */
+.gui-tour-pop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300px;
+  max-width: 86vw;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--accent);
+  background: var(--panel-glass-strong);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  box-shadow: 0 18px 48px color-mix(in srgb, var(--accent) 26%, transparent),
+              0 4px 16px rgba(0, 0, 0, 0.32);
+  z-index: 3;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 200ms ease, transform 220ms ease, visibility 200ms;
 }
-.gui-tour-legend::-webkit-scrollbar { width: 6px; }
-.gui-tour-legend::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 999px;
+.gui-tour-pop.is-shown {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
-.gui-tour-legend li {
-  position: relative;
-  padding: 14px 16px 14px 56px;
-  border: 1px solid var(--border-glass);
-  border-radius: 10px;
-  background: var(--panel-glass);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  cursor: pointer;
-  transition: border-color 180ms ease, background 180ms ease,
-              transform 200ms ease, box-shadow 220ms ease;
-}
-.gui-tour-legend li::before {
-  content: attr(data-marker);
+/* Default position: BELOW the marker. */
+.gui-tour-pop                       { transform: translate(-50%, 24px); }
+.gui-tour-pop.is-shown              { transform: translate(-50%, 18px); }
+.gui-tour-pop[data-pos="top"]       { transform: translate(-50%, calc(-100% - 24px)); }
+.gui-tour-pop[data-pos="top"].is-shown
+                                    { transform: translate(-50%, calc(-100% - 18px)); }
+.gui-tour-pop[data-pos="left"]      { transform: translate(calc(-100% - 24px), -50%); }
+.gui-tour-pop[data-pos="left"].is-shown
+                                    { transform: translate(calc(-100% - 18px), -50%); }
+.gui-tour-pop[data-pos="right"]     { transform: translate(24px, -50%); }
+.gui-tour-pop[data-pos="right"].is-shown
+                                    { transform: translate(18px, -50%); }
+
+/* Caret: a small square rotated 45deg, anchored to the popover edge
+ * facing the marker. */
+.gui-tour-pop::before {
+  content: "";
   position: absolute;
-  left: 14px;
-  top: 14px;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--accent) 14%, transparent);
-  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
-  color: var(--accent);
-  font-weight: 800;
-  font-size: 0.82rem;
-  display: grid;
-  place-items: center;
-  font-family: "SF Pro Text", "Segoe UI", Inter, system-ui, sans-serif;
-  transition: background 200ms ease, border-color 200ms ease,
-              transform 200ms ease;
+  width: 12px;
+  height: 12px;
+  background: inherit;
+  border: 1px solid var(--accent);
+  /* same blur/saturate as the popover so the caret picks up the
+   * frosted glass tint */
+  backdrop-filter: blur(18px) saturate(150%);
 }
-.gui-tour-legend li:hover,
-.gui-tour-legend li.is-active {
-  border-color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 8%, var(--panel));
-  transform: translateY(-1px);
-  box-shadow: 0 10px 28px color-mix(in srgb, var(--accent) 22%, transparent);
+.gui-tour-pop                  ::before { /* default: pop is below marker, caret on top edge */
+  left: 50%; top: -7px;
+  transform: translateX(-50%) rotate(45deg);
+  border-right: none; border-bottom: none;
 }
-.gui-tour-legend li:hover::before,
-.gui-tour-legend li.is-active::before {
-  background: var(--accent);
-  color: var(--bg);
-  border-color: var(--accent);
-  transform: scale(1.06);
+.gui-tour-pop[data-pos="top"]  ::before { /* pop is above, caret on bottom edge */
+  left: 50%; bottom: -7px; top: auto;
+  transform: translateX(-50%) rotate(45deg);
+  border-left: none; border-top: none;
 }
-.gui-tour-legend strong {
+.gui-tour-pop[data-pos="left"] ::before { /* pop is to the left, caret on right edge */
+  right: -7px; top: 50%; left: auto;
+  transform: translateY(-50%) rotate(45deg);
+  border-left: none; border-bottom: none;
+}
+.gui-tour-pop[data-pos="right"]::before { /* pop is to the right, caret on left edge */
+  left: -7px; top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  border-right: none; border-top: none;
+}
+
+.gui-tour-pop strong {
   display: block;
-  margin-bottom: 4px;
-  font-size: 0.96rem;
+  margin-bottom: 6px;
+  font-size: 0.98rem;
   color: var(--text);
 }
-.gui-tour-legend p {
+.gui-tour-pop p {
   margin: 0;
   font-size: 0.86rem;
-  color: var(--muted);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* Narrow viewports: shrink markers, narrower popover. */
+@media (max-width: 720px) {
+  .gui-tour-marker { width: 26px; height: 26px; font-size: 0.78rem; }
+  .gui-tour-pop    { width: min(80vw, 280px); }
 }
 
 /* --------------------------------------------------------------------
@@ -2247,7 +2286,71 @@ details.disclosure p:last-child { margin-bottom: 0; }
   font-size: 0.82rem;   /* GUI baseline 11px -> 13px-ish in docs */
 }
 
-/* --- Window chrome (top bar) ---- */
+/* --- Real app top bar (brand + view switcher + Settings + Run) ---- */
+
+.mock-topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  min-height: 52px;
+  border-bottom: 1px solid var(--border-glass);
+  background: color-mix(in srgb, var(--panel) 78%, transparent);
+}
+
+.mock-topbar-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+.mock-topbar-logo {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, var(--accent), var(--purple));
+  color: var(--bg);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  box-shadow: 0 4px 12px var(--glow-accent);
+}
+
+.mock-topbar-switch {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--panel-strong);
+  margin-left: 6px;
+}
+.mock-switch-btn {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  padding: 4px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  transition: color 140ms ease, background 140ms ease;
+}
+.mock-switch-btn:hover { color: var(--text); }
+.mock-switch-btn.is-active {
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, var(--panel));
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+/* --- Legacy window-chrome variant (kept in case any other surface
+ *     still references it; nothing on the tutorial page does). --- */
 
 .mock-windowbar {
   display: flex;
