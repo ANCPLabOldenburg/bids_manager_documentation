@@ -733,6 +733,155 @@ code.inline {
 .prose thead th { color: var(--accent); font-weight: 700; }
 
 /* --------------------------------------------------------------------
+ * Tabs (per-OS, used on installation.html)
+ *
+ * Buttons are pill-shaped chips like the workflow modes. Panels live in
+ * a sibling .tab-panels container; the JS toggles .is-active. Hidden
+ * panels are display:none so their <pre> blocks do not steal layout.
+ * ------------------------------------------------------------------ */
+
+.tabs {
+  margin: 1.4em 0 1.2em;
+}
+
+.tab-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.tab-btn {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: color 150ms ease, border-color 150ms ease, background 150ms ease;
+}
+.tab-btn:hover { color: var(--text); border-color: var(--accent); }
+.tab-btn.is-active {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(88, 166, 255, 0.10);
+}
+
+.tab-panel { display: none; }
+.tab-panel.is-active { display: block; }
+
+/* --------------------------------------------------------------------
+ * Numbered steps (used on installation.html)
+ *
+ * Custom counters render the leading number as an accent-coloured pill
+ * so the steps read like a short recipe, not a generic ordered list.
+ * ------------------------------------------------------------------ */
+
+.steps {
+  list-style: none;
+  counter-reset: step;
+  padding: 0;
+  margin: 1.2em 0 1.4em;
+}
+
+.steps > li {
+  counter-increment: step;
+  position: relative;
+  padding: 4px 0 4px 44px;
+  margin: 0 0 16px;
+  min-height: 28px;
+  color: var(--text);
+}
+
+.steps > li::before {
+  content: counter(step);
+  position: absolute;
+  top: 2px;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(88, 166, 255, 0.14);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.85rem;
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  border: 1px solid rgba(88, 166, 255, 0.45);
+}
+
+[data-theme="light"] .steps > li::before {
+  background: rgba(9, 105, 218, 0.10);
+  border-color: rgba(9, 105, 218, 0.45);
+}
+
+.steps > li pre.code { margin: 10px 0 0; }
+
+/* --------------------------------------------------------------------
+ * Disclosure (<details>) (used on installation.html)
+ *
+ * Native <details> styled to match the callout card. The triangle is
+ * replaced with a custom rotating chevron so the open / closed state
+ * is consistent across browsers.
+ * ------------------------------------------------------------------ */
+
+details.disclosure {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+  padding: 0;
+  margin: 18px 0;
+  overflow: hidden;
+  transition: border-color 160ms ease;
+}
+details.disclosure[open] {
+  border-color: rgba(88, 166, 255, 0.45);
+}
+
+details.disclosure > summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  color: var(--text);
+}
+details.disclosure > summary::-webkit-details-marker { display: none; }
+
+details.disclosure > summary::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--accent);
+  border-bottom: 2px solid var(--accent);
+  transform: rotate(-45deg);
+  transition: transform 180ms ease;
+  flex-shrink: 0;
+}
+details.disclosure[open] > summary::before {
+  transform: rotate(45deg);
+}
+
+details.disclosure > :not(summary) {
+  padding: 0 18px;
+}
+details.disclosure > :first-of-type:not(summary) { padding-top: 4px; }
+details.disclosure > :last-child { padding-bottom: 16px; }
+
+details.disclosure p,
+details.disclosure ol,
+details.disclosure ul {
+  color: var(--text);
+}
+details.disclosure p:last-child { margin-bottom: 0; }
+
+/* --------------------------------------------------------------------
  * Reveal-on-scroll (IntersectionObserver)
  * ------------------------------------------------------------------ */
 

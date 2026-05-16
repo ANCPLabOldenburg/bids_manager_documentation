@@ -41,7 +41,65 @@
   highlightActiveNavLink();
   initScrollReveal();
   initWorkflowFlowchart();
+  initTabs();
 })();
+
+
+/* ====================================================================
+ * Tabs (per-OS sections on installation.html)
+ *
+ * Markup contract:
+ *   <div class="tabs" data-tabs>
+ *     <div class="tab-buttons"><button data-tab="key">...</button>...</div>
+ *     <div class="tab-panel" data-panel="key">...</div>
+ *     ...
+ *   </div>
+ *
+ * Each [data-tabs] block is wired independently so the same page can
+ * host several tab groups without interference.
+ * ================================================================== */
+
+function initTabs() {
+  const osDefault = detectOsKey();
+
+  document.querySelectorAll("[data-tabs]").forEach((group) => {
+    const buttons = Array.from(group.querySelectorAll(".tab-btn"));
+    const panels  = Array.from(group.querySelectorAll(".tab-panel"));
+    if (!buttons.length || !panels.length) return;
+
+    function activate(key) {
+      buttons.forEach((b) => {
+        const on = b.dataset.tab === key;
+        b.classList.toggle("is-active", on);
+        b.setAttribute("aria-selected", String(on));
+      });
+      panels.forEach((p) => {
+        p.classList.toggle("is-active", p.dataset.panel === key);
+      });
+    }
+
+    buttons.forEach((b) => {
+      b.addEventListener("click", () => activate(b.dataset.tab));
+    });
+
+    /* If the group exposes one of the known OS keys, preselect the
+     * visitor's OS. Otherwise leave the markup default alone. */
+    if (osDefault && buttons.some((b) => b.dataset.tab === osDefault)) {
+      activate(osDefault);
+    }
+  });
+}
+
+
+/* Map navigator.userAgentData / navigator.platform to one of the three
+ * keys used by the per-OS tab groups. Returns null if unrecognised. */
+function detectOsKey() {
+  const ua = `${navigator.userAgent || ""} ${navigator.platform || ""}`.toLowerCase();
+  if (ua.includes("win")) return "windows";
+  if (ua.includes("mac") || ua.includes("darwin")) return "macos";
+  if (ua.includes("linux") || ua.includes("x11") || ua.includes("bsd")) return "linux";
+  return null;
+}
 
 
 /* ====================================================================

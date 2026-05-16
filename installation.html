@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Install BIDS Manager on macOS, Linux, or Windows. Bootstrap installer or pip.">
+  <meta name="description" content="Install BIDS Manager on macOS, Linux, or Windows. One-click bootstrap installer or pip install.">
   <title>Installation &middot; BIDS Manager</title>
   <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
   <link rel="stylesheet" href="styles.css">
@@ -12,32 +12,490 @@
   <div data-include="header"></div>
 
   <main>
+    <!-- ============================================================
+         Opening
+         ============================================================ -->
     <section class="section">
       <div class="container container-narrow prose">
         <span class="section-eyebrow">Installation</span>
         <h1>Install BIDS Manager</h1>
         <p class="lead">
-          Two paths: a one-double-click bootstrap installer per OS, or
-          <code class="inline">pip install bids-manager</code> in an
-          existing Python environment.
+          Two paths. A one-double-click bootstrap installer for each OS that
+          pulls a portable Python 3.10, builds an isolated environment, and
+          registers a native launcher. Or
+          <code class="inline">pip install bids-manager</code> in any Python
+          3.10 to 3.14 you already have.
         </p>
 
         <div class="callout callout-tip">
           <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
           <div>
-            <strong>Coming soon.</strong>
-            <p>Per-OS bootstrap walkthroughs, "what the installer does"
-              dropdown, pip path, and troubleshooting tips will be authored
-              here in the next pass.</p>
+            <strong>No system Python required.</strong>
+            <p>The bootstrap installer downloads its own portable Python so
+              nothing on your machine is changed. Uninstall is a single
+              double-click and removes everything cleanly.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Bootstrap installer (per-OS tabs)
+         ============================================================ -->
+    <section class="section" id="bootstrap">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Recommended</span>
+        <h2 style="margin-top:0;">Bootstrap installer</h2>
+        <p>
+          One ZIP for all three OSes. Inside is one folder per platform with a
+          single script to run.
+        </p>
+
+        <p>
+          <a class="btn btn-primary"
+             href="https://github.com/ANCPLabOldenburg/BIDS-Manager/raw/main/Installers/Installers.zip">
+            Download Installers.zip
+          </a>
+        </p>
+
+        <p class="muted">
+          Unzip it, open the folder for your operating system, and follow the
+          steps below.
+        </p>
+
+        <div class="tabs" data-tabs>
+          <div class="tab-buttons" role="tablist" aria-label="Operating system">
+            <button class="tab-btn is-active" data-tab="macos"
+                    role="tab" aria-selected="true">macOS</button>
+            <button class="tab-btn" data-tab="linux"
+                    role="tab" aria-selected="false">Linux</button>
+            <button class="tab-btn" data-tab="windows"
+                    role="tab" aria-selected="false">Windows</button>
+          </div>
+
+          <!-- ----- macOS ----- -->
+          <div class="tab-panel is-active" data-panel="macos" role="tabpanel">
+            <p>
+              The macOS installer is built for Apple Silicon (arm64). On
+              Intel Macs, use the
+              <a href="#pip-install">pip install path</a> instead.
+            </p>
+
+            <ol class="steps">
+              <li>
+                <strong>Double-click</strong>
+                <code class="inline">install_BIDS_Manager.command</code>
+                inside the <code class="inline">MacOS/</code> folder.
+              </li>
+              <li>
+                macOS shows an
+                <em>unidentified developer</em> warning. Click
+                <strong>Done</strong>. The OS has now seen the file and lets
+                you whitelist it.
+              </li>
+              <li>
+                Open <strong>System Settings &rarr; Privacy &amp; Security</strong>,
+                scroll to the <em>Security</em> section, and click
+                <strong>Open Anyway</strong> next to the blocked script.
+              </li>
+              <li>
+                Re-double-click the script. A terminal opens and the install
+                runs (3 to 5 minutes on a typical connection).
+              </li>
+              <li>
+                When it finishes, launch BIDS Manager from
+                <strong>Applications</strong>, Launchpad, or Spotlight. The
+                app icon is registered in
+                <code class="inline">~/Applications/BIDS-Manager.app</code>.
+              </li>
+            </ol>
+
+            <div class="callout callout-tip">
+              <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+              <div>
+                <strong>Prefer the terminal?</strong>
+                <p>
+                  Open Terminal in the <code class="inline">MacOS/</code>
+                  folder and run
+                  <code class="inline">./install_BIDS_Manager.command</code>.
+                  Same result, no Gatekeeper dialog.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ----- Linux ----- -->
+          <div class="tab-panel" data-panel="linux" role="tabpanel">
+            <p>
+              The Linux installer is built for x86_64. It registers BIDS
+              Manager in your application menu with the app icon, so it can
+              be launched like any other app afterwards.
+            </p>
+
+            <ol class="steps">
+              <li>
+                Open a terminal in the <code class="inline">Linux/</code>
+                folder (right-click in the file manager &rarr;
+                <em>Open terminal here</em>, or
+                <code class="inline">cd</code> manually).
+              </li>
+              <li>
+                Make the script executable.
+<pre class="code">chmod +x install_BIDS_Manager.sh
+</pre>
+              </li>
+              <li>
+                Run it.
+<pre class="code">./install_BIDS_Manager.sh
+</pre>
+              </li>
+              <li>
+                When it finishes, launch BIDS Manager from your application
+                menu or run <code class="inline">bidsmgr</code> in any
+                terminal.
+              </li>
+            </ol>
+
+            <div class="callout callout-warning">
+              <div class="callout-icon" aria-hidden="true">&#x25c6;</div>
+              <div>
+                <strong>XFCE / Thunar users.</strong>
+                <p>
+                  By default Thunar refuses to execute shell scripts on
+                  double-click. Either run the script from a terminal (as
+                  above), or enable script execution once with:
+                </p>
+<pre class="code">xfconf-query --channel thunar \
+  --property /misc-exec-shell-scripts-by-default \
+  --create --type bool --set true
+</pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- ----- Windows ----- -->
+          <div class="tab-panel" data-panel="windows" role="tabpanel">
+            <p>
+              The Windows installer is built for x86_64 (Windows 10 and
+              Windows 11). It places a Desktop shortcut and a Start Menu
+              entry with the BIDS Manager icon.
+            </p>
+
+            <ol class="steps">
+              <li>
+                Inside the unzipped <code class="inline">Windows/</code>
+                folder, <strong>double-click</strong>
+                <code class="inline">install_BIDS_Manager.bat</code>.
+              </li>
+              <li>
+                SmartScreen may show a blue
+                <em>Windows protected your PC</em> banner. Click
+                <strong>More info &rarr; Run anyway</strong>.
+              </li>
+              <li>
+                A console opens and the install runs. When it finishes, a
+                <strong>BIDS-Manager</strong> shortcut appears on your
+                Desktop and in the Start Menu.
+              </li>
+              <li>
+                Double-click the Desktop shortcut to launch.
+              </li>
+            </ol>
+
+            <div class="callout callout-tip">
+              <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+              <div>
+                <strong>First launch is slower.</strong>
+                <p>
+                  The first time the app starts, it pre-compiles the embedded
+                  Python and caches the BIDS schema. Subsequent launches are
+                  fast.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
-        <h2>Placeholder outline</h2>
+        <!-- "What the installer does" disclosure -->
+        <details class="disclosure">
+          <summary>What does the installer do?</summary>
+          <ol>
+            <li>Creates a <code class="inline">BIDS-Manager/</code> folder in
+              your home directory.</li>
+            <li>Downloads a portable Python 3.10 build (Apple Silicon arm64,
+              Linux x86_64, or Windows embeddable depending on your OS).</li>
+            <li>Extracts it under
+              <code class="inline">~/BIDS-Manager/</code> so nothing touches
+              your system Python.</li>
+            <li>Creates a virtual environment with that Python.</li>
+            <li>Runs <code class="inline">pip install bids-manager</code>
+              inside the environment (pulls in PyQt6, mne-bids, dcm2niix,
+              pydicom, bidsschematools, and the rest).</li>
+            <li>Registers a native launcher: a Desktop and Start Menu
+              shortcut on Windows, a <code class="inline">.app</code> bundle
+              under <code class="inline">~/Applications/</code> on macOS, an
+              application-menu entry with the app icon on Linux.</li>
+            <li>Writes an uninstaller alongside the launcher.</li>
+          </ol>
+          <p class="muted">
+            BIDS Manager is pinned to Python 3.10 inside the bundle so every
+            installation behaves identically. The Python you have on your
+            system is left untouched.
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         After install
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">After install</span>
+        <h2 style="margin-top:0;">Launch and uninstall</h2>
+
+        <table>
+          <thead>
+            <tr><th>OS</th><th>Launch</th><th>Uninstall</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>macOS</strong></td>
+              <td><code class="inline">~/Applications/BIDS-Manager.app</code>
+                (also in Launchpad / Spotlight)</td>
+              <td>Drag the <code class="inline">.app</code> to the Trash and
+                run
+                <code class="inline">~/BIDS-Manager/uninstall_BIDS_Manager.command</code></td>
+            </tr>
+            <tr>
+              <td><strong>Linux</strong></td>
+              <td><em>BIDS-Manager</em> in the application menu, or
+                <code class="inline">bidsmgr</code> from any terminal</td>
+              <td><code class="inline">~/BIDS-Manager/uninstall_BIDS_Manager.sh</code></td>
+            </tr>
+            <tr>
+              <td><strong>Windows</strong></td>
+              <td>Desktop shortcut <em>BIDS-Manager</em>, or Start Menu
+                entry under <em>BIDS-Manager</em></td>
+              <td>Desktop shortcut <em>Uninstall BIDS-Manager</em>, or
+                <code class="inline">%USERPROFILE%\BIDS-Manager\uninstall_BIDS_Manager.bat</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Where things are installed</h3>
+        <table>
+          <thead>
+            <tr><th>OS</th><th>Install root</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>macOS</strong></td>
+              <td><code class="inline">/Users/&lt;you&gt;/BIDS-Manager/</code></td>
+            </tr>
+            <tr>
+              <td><strong>Linux</strong></td>
+              <td><code class="inline">/home/&lt;you&gt;/BIDS-Manager/</code></td>
+            </tr>
+            <tr>
+              <td><strong>Windows</strong></td>
+              <td><code class="inline">C:\Users\&lt;you&gt;\BIDS-Manager\</code></td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="muted">
+          The folder contains the portable Python, the virtual environment,
+          the launcher and uninstaller scripts, and an
+          <code class="inline">install.log</code> for diagnostics.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         pip install path
+         ============================================================ -->
+    <section class="section" id="pip-install">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Alternative</span>
+        <h2 style="margin-top:0;">pip install (existing Python)</h2>
+        <p>
+          If you already manage a Python environment (conda, venv, uv, pyenv,
+          whatever), install BIDS Manager directly. Supported on Python 3.10
+          through 3.14.
+        </p>
+
+<pre class="code"><span class="cmt"># in a fresh virtual environment</span>
+pip install bids-manager
+bidsmgr
+</pre>
+
+        <p class="muted">
+          PyPI: <a href="https://pypi.org/project/bids-manager/"
+                  target="_blank" rel="noopener">pypi.org/project/bids-manager</a>.
+          The package name is <code class="inline">bids-manager</code>; the
+          Python import name is <code class="inline">bidsmgr</code> (same
+          pattern as <code class="inline">pip install scikit-learn</code> /
+          <code class="inline">import sklearn</code>).
+        </p>
+
+        <h3>Command-line use</h3>
+        <p>
+          Activate the bundled environment to get the CLI on your PATH. The
+          installer set it up at <code class="inline">~/BIDS-Manager/env/</code>.
+        </p>
+
+        <div class="tabs" data-tabs>
+          <div class="tab-buttons" role="tablist" aria-label="Activate venv">
+            <button class="tab-btn is-active" data-tab="macos"
+                    role="tab" aria-selected="true">macOS</button>
+            <button class="tab-btn" data-tab="linux"
+                    role="tab" aria-selected="false">Linux</button>
+            <button class="tab-btn" data-tab="windows"
+                    role="tab" aria-selected="false">Windows</button>
+          </div>
+          <div class="tab-panel is-active" data-panel="macos" role="tabpanel">
+<pre class="code">source ~/BIDS-Manager/env/bin/activate
+</pre>
+          </div>
+          <div class="tab-panel" data-panel="linux" role="tabpanel">
+<pre class="code">source ~/BIDS-Manager/env/bin/activate
+</pre>
+          </div>
+          <div class="tab-panel" data-panel="windows" role="tabpanel">
+<pre class="code">%USERPROFILE%\BIDS-Manager\env\Scripts\activate
+</pre>
+          </div>
+        </div>
+
+        <p>Once activated, six commands are available:</p>
         <ul>
-          <li>Bootstrap installer (macOS / Linux / Windows tabs)</li>
-          <li>pip install path for users with their own Python</li>
-          <li>What the installer does behind the scenes</li>
-          <li>Per-OS troubleshooting</li>
+          <li><code class="inline">bidsmgr</code>. Launch the GUI (Converter
+            and Editor in one window).</li>
+          <li><code class="inline">bidsmgr-scan</code>. Walk a raw folder and
+            produce a 51-column inventory TSV.</li>
+          <li><code class="inline">bidsmgr-rebuild</code>. Re-derive BIDS
+            names from the TSV after manual edits.</li>
+          <li><code class="inline">bidsmgr-convert</code>. Run the
+            conversion to BIDS for the rows in the TSV.</li>
+          <li><code class="inline">bidsmgr-metadata</code>. Run the
+            post-conversion metadata fix-ups (field-maps,
+            <code class="inline">IntendedFor</code>,
+            <code class="inline">scans.tsv</code>).</li>
+          <li><code class="inline">bidsmgr-validate</code>. Two-layer
+            validation: BIDS Manager's schema audit plus
+            <code class="inline">bidsschematools</code>.</li>
+        </ul>
+        <p class="muted">
+          The GUI uses the same engine; switching between GUI and CLI is
+          frictionless.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Troubleshooting
+         ============================================================ -->
+    <section class="section" id="troubleshooting">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Troubleshooting</span>
+        <h2 style="margin-top:0;">If something goes wrong</h2>
+
+        <details class="disclosure">
+          <summary>macOS: "unidentified developer" / app cannot be opened</summary>
+          <p>
+            Apple's Gatekeeper blocks unsigned scripts on first run. After
+            you see the dialog, open
+            <strong>System Settings &rarr; Privacy &amp; Security</strong>,
+            scroll to the <em>Security</em> section, and click
+            <strong>Open Anyway</strong>. Re-run the installer. This is a
+            one-time approval.
+          </p>
+        </details>
+
+        <details class="disclosure">
+          <summary>macOS: installer runs on Intel Mac</summary>
+          <p>
+            The bundled macOS Python is arm64-only. On Intel Macs, install
+            via pip in a Python 3.10+ environment instead. See
+            <a href="#pip-install">pip install (existing Python)</a>.
+          </p>
+        </details>
+
+        <details class="disclosure">
+          <summary>Linux: "could not load the Qt platform plugin xcb"</summary>
+          <p>
+            PyQt6 needs a system Qt platform library. On Debian / Ubuntu:
+          </p>
+<pre class="code">sudo apt install libxcb-cursor0 libxcb-xinerama0 libfontconfig1
+</pre>
+          <p>
+            On Fedora:
+          </p>
+<pre class="code">sudo dnf install xcb-util-cursor fontconfig
+</pre>
+        </details>
+
+        <details class="disclosure">
+          <summary>Linux: Thunar refuses to run the script on double-click</summary>
+          <p>
+            By design. Run from a terminal, or enable script execution once
+            with the <code class="inline">xfconf-query</code> command from the
+            Linux tab above.
+          </p>
+        </details>
+
+        <details class="disclosure">
+          <summary>Windows: SmartScreen blocks the installer</summary>
+          <p>
+            Click <strong>More info &rarr; Run anyway</strong>. The installer
+            is not code-signed yet, so SmartScreen flags any unknown
+            publisher. The download still has to come from the official
+            GitHub release link to be safe.
+          </p>
+        </details>
+
+        <details class="disclosure">
+          <summary>Windows: update fails with "file in use"</summary>
+          <p>
+            Close BIDS Manager fully before updating. From v1.0.2 the
+            in-GUI updater spawns a detached helper that handles this
+            automatically, but a manual
+            <code class="inline">pip install --upgrade</code> still needs the
+            app closed.
+          </p>
+        </details>
+
+        <details class="disclosure">
+          <summary>Any OS: install log</summary>
+          <p>
+            Every installer writes
+            <code class="inline">~/BIDS-Manager/install.log</code>. Paste it
+            into a
+            <a href="https://github.com/ANCPLabOldenburg/BIDS-Manager/issues"
+               target="_blank" rel="noopener">GitHub issue</a>
+            if you need help.
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Next steps
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow prose">
+        <h2>Next steps</h2>
+        <ul>
+          <li><a href="tutorial.html">Walk the interactive tutorial</a>. Scan,
+            inspect, convert, edit, and validate, all simulated in the
+            browser.</li>
+          <li><a href="intro.html#how-it-works">See the workflow</a>: the
+            eight stages BIDS Manager runs and how the schema drives each
+            of them.</li>
+          <li>Read the
+            <a href="https://github.com/ANCPLabOldenburg/BIDS-Manager/blob/main/docs/architecture.md"
+               target="_blank" rel="noopener">architecture write-up</a>
+            for the engine internals.</li>
         </ul>
       </div>
     </section>
