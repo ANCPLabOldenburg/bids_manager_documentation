@@ -41,98 +41,85 @@
       </div>
       <div class="hero-overlay"></div>
       <div class="hero-content">
-        <span class="hero-eyebrow"><strong>v1.1</strong> &middot; schema-driven engine</span>
-        <h1 id="hero-title" class="hero-title">
-          Raw-to-<em>BIDS</em><br> without the scripts.
-        </h1>
+        <h1 id="hero-title" class="hero-title"><em>BIDS</em> Manager</h1>
+        <p class="hero-tagline">Raw-to-BIDS without custom scripts.</p>
         <p class="hero-lead">
-          BIDS Manager turns DICOM, EEG, and MEG recordings into BIDS-compliant
-          datasets with a spreadsheet you can fix at any step. One install, one
-          GUI, one CLI, the same engine underneath.
+          BIDS Manager brings raw-to-BIDS conversion for MRI, EEG, MEG,
+          and physiological recordings into a single integrated workflow.
+          Its intuitive graphical user interface supports interactive metadata
+          inspection, dataset curation, conversion, and validation while
+          orchestrating powerful backend data-management algorithms and
+          conversion engines.
         </p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="installation.html">Install &rarr;</a>
-          <a class="btn btn-ghost"   href="intro.html">See how it works</a>
-          <a class="btn btn-ghost"   href="tutorial.html">Walk the tutorial</a>
+          <a class="btn btn-ghost"   href="intro.html">How it works</a>
+          <a class="btn btn-ghost"   href="tutorial.html">Try the tutorial</a>
         </div>
       </div>
     </section>
 
     <!-- ============================================================
-         Three feature cards
+         What makes it different (4 flat statements)
          ============================================================ -->
     <section class="section">
-      <div class="container">
+      <div class="container container-narrow">
         <div class="section-header">
-          <span class="section-eyebrow">What it does</span>
-          <h2 class="section-title">Three workflows, one tool.</h2>
+          <h2 class="section-title">Make raw-to-BIDS less painful.</h2>
           <p class="section-lead">
-            Built around the BIDS schema as the engine, not a check at the end.
-            Same rules drive scanning, naming, GUI form generation, validation
-            and sidecar audits.
+            Less fragmented, less error-prone, more transparent. One tool
+            for the whole BIDS workflow, available as a GUI or a CLI.
           </p>
         </div>
 
-        <div class="feature-grid">
-          <article class="feature-card">
-            <div class="feature-icon" aria-hidden="true">&#x25b8;</div>
-            <h3>Convert</h3>
+        <div class="points">
+          <div class="point">
+            <h3>One workflow for MRI, EEG, MEG, and physio.</h3>
             <p>
-              Scan a raw folder, review every conversion decision in a 51-column
-              TSV, run per-subject conversion with atomic rename. dcm2niix for
-              MRI; mne-bids for EEG / MEG; bidsphysio (vendored) for physio.
+              BIDS Manager wires the trusted converters
+              (<a href="https://github.com/rordenlab/dcm2niix" target="_blank" rel="noopener">dcm2niix</a>,
+              <a href="https://mne.tools/mne-bids/" target="_blank" rel="noopener">mne-bids</a>,
+              <a href="https://github.com/cbinyu/bidsphysio" target="_blank" rel="noopener">bidsphysio</a>)
+              into one orchestrated pipeline. No tool-switching, no
+              per-modality commands, no separate installs.
             </p>
-          </article>
+          </div>
 
-          <article class="feature-card">
-            <div class="feature-icon" aria-hidden="true">&#x270e;</div>
-            <h3>Edit + validate</h3>
+          <div class="point">
+            <h3>Scans data and metadata inside every file.</h3>
             <p>
-              Open the result, navigate the BIDS tree, edit JSON sidecars in a
-              schema-aware form, inspect NIfTI volumes (tri-view + 4-D time
-              series), validate file / folder / dataset.
+              Builds a complete picture of each acquisition, study, and
+              dataset by reading DICOM headers, EEG / MEG file metadata,
+              and sidecars. Most converters only read filenames.
+              BIDS Manager looks inside.
             </p>
-          </article>
+          </div>
 
-          <article class="feature-card">
-            <div class="feature-icon" aria-hidden="true">&#x2742;</div>
-            <h3>Stay current</h3>
+          <div class="point">
+            <h3>Curate before you convert.</h3>
             <p>
-              Bootstrap installers for macOS / Linux / Windows. In-GUI auto-update
-              checks PyPI on launch. The Windows file-lock problem is handled by
-              a detached helper. Themes, font scale, and logo are configurable.
+              Review every acquisition in an interactive table. Filter out
+              localizers, calibrations, and failed runs. Preview the exact
+              BIDS tree before anything is written to disk.
             </p>
-          </article>
-        </div>
-      </div>
-    </section>
+          </div>
 
-    <!-- ============================================================
-         How it works teaser
-         ============================================================ -->
-    <section class="section">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-eyebrow">How it works</span>
-          <h2 class="section-title">The schema is the engine.</h2>
-          <p class="section-lead">
-            Every layer reads from the same BIDS schema: classification, naming,
-            GUI form generation, validation, sidecar audits. No heuristic files
-            to maintain, no per-site special cases.
-          </p>
-        </div>
-
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:24px; align-items:center;">
-          <img src="assets/workflow/workflow.svg" alt="BIDS Manager workflow: raw data, scan, edit, convert, fix, inspect, validate, BIDS" style="width:100%; max-width:520px; margin: 0 auto;">
-          <div>
+          <div class="point">
+            <h3>Automatic metadata enrichment.</h3>
             <p>
-              The Converter scans your raw data and produces an inventory TSV.
-              The Editor opens the converted BIDS root and lets you fix metadata
-              against the same schema. Both panels live in the same window; the
-              schema engine sits underneath them both.
+              After conversion, an enrichment algorithm fills required
+              sidecar fields from the scanned metadata and the BIDS schema.
+              Every decision is logged, so you can review or override it.
             </p>
+          </div>
+
+          <div class="point">
+            <h3>Built on the official BIDS schema.</h3>
             <p>
-              <a class="btn btn-ghost" href="intro.html">Walk through the flow &rarr;</a>
+              Naming, structure, and validation come from the
+              <a href="https://github.com/bids-standard/bids-specification" target="_blank" rel="noopener">official BIDS schema</a>,
+              not handwritten rules. The same source of truth drives
+              classification, file naming, and the built-in validator.
             </p>
           </div>
         </div>
@@ -140,25 +127,34 @@
     </section>
 
     <!-- ============================================================
-         Quick install
+         Install pitch (text only; full guide on installation.html)
          ============================================================ -->
     <section class="section">
       <div class="container container-narrow">
         <div class="section-header">
-          <span class="section-eyebrow">Get started</span>
-          <h2 class="section-title">One line, on every OS.</h2>
+          <h2 class="section-title">Install in one click.</h2>
         </div>
-
-<pre class="code"><span class="cmt"># pip install (any OS)</span>
-pip install bids-manager
-bidsmgr
-</pre>
-
-        <p class="muted">
-          Or use the per-OS bootstrap installer for a fully isolated portable
-          Python with one double-click.
-          <a href="installation.html">Read the full installation guide &rarr;</a>
+        <p class="section-lead">
+          Bootstrap installers for macOS, Linux, and Windows set up a portable
+          Python environment and register a native app launcher. No setup
+          required. Python users can install from PyPI instead.
         </p>
+        <p>
+          <a class="btn btn-primary" href="installation.html">Read the installation guide &rarr;</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Footer CTA
+         ============================================================ -->
+    <section class="section section-cta">
+      <div class="container container-narrow cta-strip">
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="installation.html">Install &rarr;</a>
+          <a class="btn btn-ghost"   href="intro.html">How it works</a>
+          <a class="btn btn-ghost"   href="tutorial.html">Try the tutorial</a>
+        </div>
       </div>
     </section>
   </main>

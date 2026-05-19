@@ -48,6 +48,9 @@
   initDatasetOverview();
   initGuiTour();
   initTutorialScenes();
+  initInspectSubScenes();
+  initEditorSubSteps();
+  initScanSubSteps();
 })();
 
 
@@ -258,43 +261,6 @@ function initTutorialScenes() {
       el.querySelectorAll(".mock-row").forEach((r) => r.classList.remove("is-visible"));
     },
     4(el) {
-      el.querySelectorAll(".mock-row").forEach((r) => r.classList.add("is-visible"));
-      const cell      = el.querySelector('[data-mock="task-cell"]');
-      const preview   = el.querySelector('[data-mock="preview-path"]');
-      const basename  = el.querySelector('[data-mock="row-basename"]');
-      const propsTask = el.querySelector('[data-mock="props-task"]');
-      const propsEnt  = el.querySelector('[data-mock="props-task-ent"]');
-      const propsPin  = el.querySelector('[data-mock="props-task-pin"]');
-      if (cell)      { cell.textContent      = "sparse"; cell.classList.remove("is-editing"); }
-      if (basename)   basename.textContent  = "sub-001_ses-pre_task-sparse_bold";
-      if (preview)    preview.textContent   =
-        "sub-001/ses-pre/func/sub-001_ses-pre_task-sparse_bold.nii.gz";
-      if (propsTask)  propsTask.value       = "sparse";
-      if (propsEnt)   propsEnt.textContent  = "task-sparse";
-      if (propsPin)   propsPin.textContent  = "sparse";
-    },
-    5(el) {
-      el.querySelectorAll(".mock-row").forEach((r) => r.classList.add("is-visible"));
-      /* Selection state and bulk-edit values reset to 'pre'. */
-      el.querySelectorAll('[data-mock="bulk-row"]')
-        .forEach((r) => r.classList.remove("is-selected"));
-      el.querySelectorAll('[data-mock="bulk-ses"]')
-        .forEach((s) => { s.textContent = "pre"; });
-      const bn1 = el.querySelector('[data-mock="bulk-bn-1"]');
-      const bn2 = el.querySelector('[data-mock="bulk-bn-2"]');
-      const bn3 = el.querySelector('[data-mock="bulk-bn-3"]');
-      if (bn1) bn1.textContent = "sub-001_ses-pre_T1w";
-      if (bn2) bn2.textContent = "sub-001_ses-pre_task-rest_bold";
-      if (bn3) bn3.textContent = "sub-001_ses-pre_run-01_magnitude1";
-      const dialog = el.querySelector('[data-mock="bulk-dialog"]');
-      if (dialog) dialog.classList.remove("is-shown");
-      const input = el.querySelector('[data-mock="bulk-input"]');
-      if (input) { input.value = ""; input.classList.remove("is-typing"); }
-      el.querySelector('[data-mock="bulk-btn"]')?.classList.remove("is-pressed");
-      const propsSes = el.querySelector('[data-mock="bulk-props-ses"]');
-      if (propsSes) propsSes.value = "pre";
-    },
-    6(el) {
       const counter = el.querySelector('[data-mock="conv-counter"]');
       if (counter) counter.textContent = "0";
       const status = el.querySelector('[data-mock="conv-status"]');
@@ -305,17 +271,17 @@ function initTutorialScenes() {
       const log = el.querySelector('[data-mock="log"]');
       if (log) log.innerHTML = "";
     },
-    7(el) {
+    5(el) {
       const form = el.querySelector('[data-mock="sidecar-form"]');
       if (form) form.innerHTML = "";
     },
-    8(el) {
+    6(el) {
       /* Reset crosshair positions to centre. */
       el.querySelectorAll(".mock-crosshair").forEach((line) => {
         line.style.transform = "";
       });
     },
-    9(el) {
+    7(el) {
       const list = el.querySelector('[data-mock="val-list"]');
       if (list) list.innerHTML = "";
       ["val-err","val-warn","val-hint"].forEach((k) => {
@@ -441,127 +407,16 @@ function initTutorialScenes() {
      * properties pane's task input, the predicted-path preview, the
      * row's basename, and the BIDS preview strip all update in step
      * (everything stays consistent like in the real GUI). */
-    async 4(el, cancelled) {
-      const cell      = el.querySelector('[data-mock="task-cell"]');
-      const basename  = el.querySelector('[data-mock="row-basename"]');
-      const preview   = el.querySelector('[data-mock="preview-path"]');
-      const propsTask = el.querySelector('[data-mock="props-task"]');
-      const propsEnt  = el.querySelector('[data-mock="props-task-ent"]');
-      const propsPin  = el.querySelector('[data-mock="props-task-pin"]');
-      if (!cell) return;
-
-      function setTask(task) {
-        const display = task || "...";
-        const bn      = `sub-001_ses-pre_task-${display}_bold`;
-        if (basename)  basename.textContent  = bn;
-        if (preview)   preview.textContent   = `sub-001/ses-pre/func/${bn}.nii.gz`;
-        if (propsTask) propsTask.value       = task;
-        if (propsEnt)  propsEnt.textContent  = `task-${display}`;
-        if (propsPin)  propsPin.textContent  = display;
-      }
-
-      if (reducedMotion) {
-        cell.textContent = "motor";
-        setTask("motor");
-        return;
-      }
-
-      await delay(500);
-      if (cancelled()) return;
-      cell.classList.add("is-editing");
-      await delay(500);
-      if (cancelled()) return;
-      for (let i = "sparse".length; i > 0; i--) {
-        if (cancelled()) return;
-        cell.textContent = "sparse".slice(0, i - 1);
-        setTask(cell.textContent);
-        await delay(60);
-      }
-      await delay(200);
-      if (cancelled()) return;
-      const target = "motor";
-      for (let i = 1; i <= target.length; i++) {
-        if (cancelled()) return;
-        cell.textContent = target.slice(0, i);
-        setTask(cell.textContent);
-        await delay(90);
-      }
-      await delay(400);
-      if (cancelled()) return;
-      cell.classList.remove("is-editing");
-    },
-
     /* ---------- Scene 5. Bulk-edit across rows.
      * Selects 3 OL_0001 rows, opens the Bulk-edit dialog, types
      * 'baseline' as the new session, and applies. */
-    async 5(el, cancelled) {
-      const rows    = Array.from(el.querySelectorAll('[data-mock="bulk-row"]'));
-      const button  = el.querySelector('[data-mock="bulk-btn"]');
-      const dialog  = el.querySelector('[data-mock="bulk-dialog"]');
-      const input   = el.querySelector('[data-mock="bulk-input"]');
-      const sesEls  = Array.from(el.querySelectorAll('[data-mock="bulk-ses"]'));
-      const bn1 = el.querySelector('[data-mock="bulk-bn-1"]');
-      const bn2 = el.querySelector('[data-mock="bulk-bn-2"]');
-      const bn3 = el.querySelector('[data-mock="bulk-bn-3"]');
-
-      const propsSes = el.querySelector('[data-mock="bulk-props-ses"]');
-
-      function applySession(value) {
-        sesEls.forEach((s) => { s.textContent = value; });
-        if (bn1) bn1.textContent = `sub-001_ses-${value}_T1w`;
-        if (bn2) bn2.textContent = `sub-001_ses-${value}_task-rest_bold`;
-        if (bn3) bn3.textContent = `sub-001_ses-${value}_run-01_magnitude1`;
-        if (propsSes) propsSes.value = value;
-      }
-
-      if (reducedMotion) {
-        rows.forEach((r) => r.classList.add("is-selected"));
-        applySession("baseline");
-        return;
-      }
-
-      await delay(400);
-      if (cancelled()) return;
-      /* Multi-select rows one at a time (shift-click feel). */
-      for (const r of rows) {
-        if (cancelled()) return;
-        r.classList.add("is-selected");
-        await delay(280);
-      }
-      await delay(300);
-      if (cancelled()) return;
-      button?.classList.add("is-pressed");
-      await delay(180);
-      button?.classList.remove("is-pressed");
-      dialog?.classList.add("is-shown");
-      await delay(400);
-      if (cancelled()) return;
-      if (input) {
-        input.classList.add("is-typing");
-        input.focus({ preventScroll: true });
-        const target = "baseline";
-        for (let i = 1; i <= target.length; i++) {
-          if (cancelled()) return;
-          input.value = target.slice(0, i);
-          await delay(70);
-        }
-        input.classList.remove("is-typing");
-      }
-      await delay(450);
-      if (cancelled()) return;
-      /* Apply: all 3 session cells flip to 'baseline'. */
-      applySession("baseline");
-      await delay(250);
-      dialog?.classList.remove("is-shown");
-    },
-
     /* ---------- Scene 6. Run the conversion.
      * Identical to the real GUI's conversion flow: no fake per-subject
      * progress bars (the real app doesn't have them yet). Instead the
      * spinner spins, the toolbar status text streams, the Log dock tab
      * scrolls through realistic engine output, and a counter ticks up
      * in the Properties pane + status bar. */
-    async 6(el, cancelled) {
+    async 4(el, cancelled) {
       const counter = el.querySelector('[data-mock="conv-counter"]');
       const status  = el.querySelector('[data-mock="conv-status"]');
       const stage   = el.querySelector('[data-mock="conv-stage"]');
@@ -601,7 +456,11 @@ function initTutorialScenes() {
         ["fixup", "classifier: acq-15_dir-PA b0 rerouted to fmap/_epi",                         0],
         ["fixup", "IntendedFor: wrote 3 entries into sub-002_acq-epse2_dir-AP_epi.json",        0],
         ["done",  "committed sub-002 to bids_export/neuroimaging_unit_new/sub-002",             0],
-        ["done",  "21 series -> BIDS . validate to see 6 missing TaskName errors",              0],
+        ["done",  "21 series -> BIDS . conversion stage finished",                              0],
+        ["enrich","bidsmgr-metadata: scanning 27 sidecars + dataset_description.json",          0],
+        ["enrich","bidsmgr-metadata: filled 10 sidecar fields from inventory + schema",         0],
+        ["enrich","bidsmgr-metadata: 7 TODO placeholders remain in recommended fields",         0],
+        ["done",  "BIDS dataset ready . validate to confirm",                                   0],
       ];
 
       function appendLine(tag, msg) {
@@ -616,7 +475,7 @@ function initTutorialScenes() {
       if (reducedMotion) {
         if (status)  status.textContent  = "Done.";
         if (counter) counter.textContent = "21";
-        if (stage)   stage.textContent   = "BIDS 1.10.0 . converted 21 / 21 series";
+        if (stage)   stage.textContent   = "BIDS 1.10.0 . enriched 21 / 21 series";
         spinner?.classList.remove("is-spinning");
         LOG.forEach(([t, m]) => appendLine(t, m));
         return;
@@ -624,19 +483,28 @@ function initTutorialScenes() {
 
       spinner?.classList.add("is-spinning");
       let done = 0;
+      let enrichSeen = false;
       for (const [tag, msg, delta] of LOG) {
         if (cancelled()) return;
         appendLine(tag, msg);
         done += delta;
         if (counter) counter.textContent = String(done);
-        if (stage)   stage.textContent   = done < 30
-          ? `BIDS 1.10.0 . converting series ${done} / 21`
-          : "BIDS 1.10.0 . converted 21 / 21 series";
+        if (tag === "enrich") enrichSeen = true;
+        if (stage) {
+          if (enrichSeen) {
+            stage.textContent = "BIDS 1.10.0 . enriching sidecars (21 / 21 series staged)";
+          } else if (done < 21) {
+            stage.textContent = `BIDS 1.10.0 . converting series ${done} / 21`;
+          } else {
+            stage.textContent = "BIDS 1.10.0 . converted 21 / 21 series";
+          }
+        }
         if (status) {
-          if      (tag === "stage") status.textContent = "Running dcm2niix...";
-          else if (tag === "fixup") status.textContent = "Cross-file fixups...";
-          else if (tag === "warn")  status.textContent = "Warning logged";
-          else if (tag === "done"  && done >= 21) status.textContent = "Done.";
+          if      (tag === "stage")  status.textContent = "Running dcm2niix...";
+          else if (tag === "fixup")  status.textContent = "Cross-file fixups...";
+          else if (tag === "enrich") status.textContent = "Enriching metadata...";
+          else if (tag === "warn")   status.textContent = "Warning logged";
+          else if (tag === "done"  && enrichSeen) status.textContent = "Done.";
         }
         await delay(310);
       }
@@ -650,7 +518,7 @@ function initTutorialScenes() {
      * which colors the 4-px stripe on the left, mirroring the real
      * SidecarFormPane. Value-type also matters: str vs num drives
      * the syntax-coloured value styling. */
-    async 7(el, cancelled) {
+    async 5(el, cancelled) {
       const form = el.querySelector('[data-mock="sidecar-form"]');
       if (!form) return;
       /* Real-ish content from the OL_0001 T1w.json. The 'kind'
@@ -701,7 +569,7 @@ function initTutorialScenes() {
     /* ---------- Scene 8. Inspect a NIfTI tri-view.
      * Sweeps the shared crosshair so each tile's lines move in
      * concert, mimicking the synced cursor in the real viewer. */
-    async 8(el, cancelled) {
+    async 6(el, cancelled) {
       const tiles = Array.from(el.querySelectorAll(".mock-nifti-tile"));
       if (reducedMotion || !tiles.length) return;
 
@@ -729,10 +597,12 @@ function initTutorialScenes() {
 
     /* ---------- Scene 9. Validate the dataset.
      * Spinner + 'Validating...' for a beat; then severity chips tween
-     * to 0 errors / 1 warning / 2 hints, and three issue rows appear
+     * to 0 errors / 7 warnings / 0 hints, and seven issue rows appear
      * one at a time matching what bidsmgr-validate emits on this
-     * specific dataset. */
-    async 9(el, cancelled) {
+     * specific dataset. The dataset is BIDS-valid: every warning is
+     * a TODO placeholder the metadata enrichment could not auto-fill
+     * (License, Authors, Instructions, TaskDescription, etc.). */
+    async 7(el, cancelled) {
       const btn      = el.querySelector('[data-mock="validate-btn"]');
       const spinner  = el.querySelector('[data-mock="val-spinner"]');
       const summary  = el.querySelector('[data-mock="val-summary"]');
@@ -741,36 +611,41 @@ function initTutorialScenes() {
       const hintEl   = el.querySelector('[data-mock="val-hint"]');
       const list     = el.querySelector('[data-mock="val-list"]');
 
-      /* Real validate.log output: 6 errors total, one per task BOLD
-       * sidecar (all six are missing the required TaskName field).
-       * Each file also misses 4 recommended fields (Instructions,
-       * TaskDescription, CogAtlasID, CogPOID) but those don't get
-       * promoted to errors in non-strict mode. The list below
-       * shows the representative samples; the chip count uses 6. */
+      /* Real validate.log output: 0 errors, 7 file-level warnings.
+       * dataset_description.json carries 6 dataset-metadata TODOs
+       * (License, Authors, Acknowledgements, HowToAcknowledge,
+       * Funding, EthicsApprovals). The six task BOLD sidecars each
+       * carry 4 recommended-field TODOs (Instructions,
+       * TaskDescription, CogAtlasID, CogPOID). The dataset is
+       * BIDS-valid; the warnings are nudges to fill optional fields. */
       const ISSUES = [
-        { sev: "err", icon: "✕",
-          title: "sub-001_ses-pre_task-rest_bold.json: missing required TaskName",
-          desc:  "<code>bids.required_sidecar_field_missing</code>. The BIDS schema requires <code>TaskName</code> on every BOLD sidecar. Click the row to open the file; the Editor's auto-fill button will set it from the BIDS task entity.",
+        { sev: "warn", icon: "!",
+          title: "dataset_description.json: 6 TODO placeholders",
+          desc:  "<code>bidsmgr.todo_placeholder</code>. License, Authors, Acknowledgements, HowToAcknowledge, Funding, and EthicsApprovals were emitted as <code>TODO</code> by the enrichment engine because no inventory column carries them. Open the file in the Editor and fill them once.",
+          target: "" },
+        { sev: "warn", icon: "!",
+          title: "sub-001_ses-pre_task-rest_bold.json: 4 TODO placeholders",
+          desc:  "<code>bidsmgr.todo_placeholder</code>. Instructions, TaskDescription, CogAtlasID, CogPOID. Recommended task-description fields; the enrichment fills the BIDS task entity but not the prose.",
           target: "sub-001/ses-pre/func/" },
-        { sev: "err", icon: "✕",
-          title: "sub-001_ses-pre_task-sparse_bold.json: missing required TaskName",
-          desc:  "<code>bids.required_sidecar_field_missing</code>. Same fix path: open the sidecar, click <em>Auto-fill</em>.",
+        { sev: "warn", icon: "!",
+          title: "sub-001_ses-pre_task-sparse_bold.json: 4 TODO placeholders",
+          desc:  "<code>bidsmgr.todo_placeholder</code>. Same recommended-field set as the rest run.",
           target: "sub-001/ses-pre/func/" },
-        { sev: "err", icon: "✕",
-          title: "sub-001_ses-post_task-mb_bold.json: missing required TaskName",
-          desc:  "<code>bids.required_sidecar_field_missing</code>. The session-post multiband task fails the same rule.",
+        { sev: "warn", icon: "!",
+          title: "sub-001_ses-post_task-mb_bold.json: 4 TODO placeholders",
+          desc:  "<code>bidsmgr.todo_placeholder</code>. The session-post multiband task carries the same recommended-field gaps.",
           target: "sub-001/ses-post/func/" },
-        { sev: "err", icon: "✕",
-          title: "sub-002_task-dmaging_run-1_bold.json: missing required TaskName",
-          desc:  "<code>bids.required_sidecar_field_missing</code>. The two dmaging runs and the uebung task all share this finding.",
+        { sev: "warn", icon: "!",
+          title: "sub-002_task-dmaging_run-1_bold.json: 4 TODO placeholders",
+          desc:  "<code>bidsmgr.todo_placeholder</code>. Same set on sub-002's first dmaging run.",
           target: "sub-002/func/" },
-        { sev: "err", icon: "✕",
-          title: "sub-002_task-dmaging_run-2_bold.json: missing required TaskName",
-          desc:  "<code>bids.required_sidecar_field_missing</code>.",
+        { sev: "warn", icon: "!",
+          title: "sub-002_task-dmaging_run-2_bold.json: 4 TODO placeholders",
+          desc:  "<code>bidsmgr.todo_placeholder</code>.",
           target: "sub-002/func/" },
-        { sev: "err", icon: "✕",
-          title: "sub-002_task-uebung_bold.json: missing required TaskName",
-          desc:  "<code>bids.required_sidecar_field_missing</code>.",
+        { sev: "warn", icon: "!",
+          title: "sub-002_task-uebung_bold.json: 4 TODO placeholders",
+          desc:  "<code>bidsmgr.todo_placeholder</code>.",
           target: "sub-002/func/" },
       ];
 
@@ -791,10 +666,10 @@ function initTutorialScenes() {
       }
 
       if (reducedMotion) {
-        if (errEl)   errEl.textContent   = "6";
-        if (warnEl)  warnEl.textContent  = "0";
+        if (errEl)   errEl.textContent   = "0";
+        if (warnEl)  warnEl.textContent  = "7";
         if (hintEl)  hintEl.textContent  = "0";
-        if (summary) summary.textContent = "6 errors";
+        if (summary) summary.textContent = "0 errors, 7 warnings";
         spinner?.classList.remove("is-spinning");
         if (list) { list.innerHTML = ""; ISSUES.forEach(addIssue); }
         return;
@@ -807,10 +682,10 @@ function initTutorialScenes() {
       if (cancelled()) return;
 
       btn?.classList.remove("is-pressed");
-      if (summary) summary.textContent = "6 errors";
+      if (summary) summary.textContent = "0 errors, 7 warnings";
       await Promise.all([
-        tweenInt(errEl,  0, 6, 800, cancelled),
-        tweenInt(warnEl, 0, 0, 200, cancelled),
+        tweenInt(errEl,  0, 0, 200, cancelled),
+        tweenInt(warnEl, 0, 7, 800, cancelled),
         tweenInt(hintEl, 0, 0, 200, cancelled),
       ]);
       spinner?.classList.remove("is-spinning");
@@ -1650,6 +1525,428 @@ function initScrollReveal() {
  * description set so the same diagram tells three stories.
  * ================================================================== */
 
+/* ======================================================================
+ *  Inspect scene (Scene 3): sub-scene state machine
+ *
+ *  Scene 3 hosts one full 4-column Converter mock and 5 sub-scenes that
+ *  walk the visitor through each pane. The stepper buttons set the
+ *  mock's `data-substep` attribute, which CSS uses to flip the focus /
+ *  dim modifiers on each pane. Per-sub-scene animations run on entry.
+ * ================================================================== */
+
+function initInspectSubScenes() {
+  const mock = document.querySelector("[data-inspect-mock]");
+  if (!mock) return;
+  const stepper = document.querySelector("[data-inspect-stepper]");
+  if (!stepper) return;
+
+  const steps = Array.from(stepper.querySelectorAll(".inspect-step"));
+  const captions = Array.from(
+    document.querySelectorAll(".inspect-caption")
+  );
+  const reduced =
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+  /* Cancel any running per-sub-scene animation when the user advances
+   * to another step. The cancel token is bumped on every activate(). */
+  let activeToken = 0;
+  const cancelled = (token) => () => token !== activeToken;
+  const delay = (ms) =>
+    new Promise((res) => setTimeout(res, reduced ? 0 : ms));
+
+  function clearFlashes() {
+    mock.querySelectorAll(".is-editing, .is-flashing, .is-highlight, .is-bulk-selected")
+      .forEach((el) => {
+        el.classList.remove("is-editing", "is-flashing", "is-highlight", "is-bulk-selected");
+      });
+    /* Reset task cell + props field + preview span to the canonical
+     * values so re-entering a sub-step starts from a known state. */
+    const taskCell = mock.querySelector("[data-cell-task]");
+    const propsTask = mock.querySelector("[data-props-task]");
+    const previewTask = mock.querySelector("[data-props-preview-task]");
+    const baseCode = mock.querySelector("[data-cell-basename]");
+    if (taskCell) taskCell.textContent = "rest";
+    if (propsTask) propsTask.textContent = "rest";
+    if (previewTask) previewTask.textContent = "task-rest";
+    if (baseCode) baseCode.textContent = "sub-001_ses-pre_task-rest_bold";
+    /* Reset filter check + the two fmap row checkboxes the sub-step 5
+     * animation flips off. */
+    const filterRow = mock.querySelector('[data-filter-key="sub-001-ses-pre-fmap"]');
+    if (filterRow) {
+      const ck = filterRow.querySelector(".ck");
+      ck?.classList.add("is-checked");
+    }
+    mock
+      .querySelectorAll('[data-row-key="fmap-pre-1"] .gui-cb, [data-row-key="fmap-pre-2"] .gui-cb')
+      .forEach((cb) => {
+        cb.classList.add("is-on");
+        cb.innerHTML = "&#10003;";
+      });
+    /* Reset bulk-edit dialog + restore original basenames. */
+    const dialog = mock.querySelector("[data-bulk-dialog]");
+    dialog?.classList.remove("is-shown");
+    const bulkInput = mock.querySelector("[data-bulk-input]");
+    if (bulkInput) { bulkInput.value = ""; bulkInput.classList.remove("is-typing"); }
+    mock.querySelectorAll("code[data-bulk-orig]").forEach((code) => {
+      const orig = code.dataset.bulkOrig;
+      if (orig) {
+        code.textContent = orig;
+        delete code.dataset.bulkOrig;
+      }
+    });
+  }
+
+  async function playSubScene(n, isCancelled) {
+    /* Sub-scene 1: nothing to animate; the focus comes from CSS. */
+    if (n === 1) return;
+
+    if (n === 2) {
+      /* Sub-scene 2: pulse the selected row + the Properties panel as
+       * if the user just clicked. The Properties panel already shows
+       * the row's entities; we just draw attention to the link. */
+      const row = mock.querySelector('[data-row-key="rest"]');
+      const props = mock.querySelector('.gui-pane[data-pane="properties"]');
+      row?.classList.add("is-highlight");
+      props?.animate?.(
+        [
+          { boxShadow: "inset 0 0 0 1px rgba(88, 166, 255, 0.55)" },
+          { boxShadow: "inset 0 0 0 4px rgba(88, 166, 255, 0.85)" },
+          { boxShadow: "inset 0 0 0 1px rgba(88, 166, 255, 0.55)" },
+        ],
+        { duration: 900, iterations: 1, easing: "ease-out" }
+      );
+      await delay(900);
+      if (isCancelled()) return;
+      row?.classList.remove("is-highlight");
+      return;
+    }
+
+    if (n === 3) {
+      /* Sub-scene 3: bidirectional edit propagation. Type 'motor' into
+       * the table's task cell, then into the Properties task field. */
+      const taskCell = mock.querySelector("[data-cell-task]");
+      const propsTask = mock.querySelector("[data-props-task]");
+      const previewTask = mock.querySelector("[data-props-preview-task]");
+      const baseCode = mock.querySelector("[data-cell-basename]");
+      if (!taskCell || !propsTask || !previewTask || !baseCode) return;
+
+      taskCell.classList.add("is-editing");
+      propsTask.classList.add("is-editing");
+      previewTask.classList.add("is-editing");
+
+      const target = "motor";
+      for (let i = 1; i <= target.length; i++) {
+        if (isCancelled()) return;
+        const partial = target.slice(0, i);
+        taskCell.textContent = partial;
+        propsTask.textContent = partial;
+        previewTask.textContent = `task-${partial}`;
+        baseCode.textContent = `sub-001_ses-pre_task-${partial}_bold`;
+        await delay(110);
+      }
+      await delay(700);
+      taskCell.classList.remove("is-editing");
+      propsTask.classList.remove("is-editing");
+      previewTask.classList.remove("is-editing");
+      return;
+    }
+
+    if (n === 4) {
+      /* Sub-step 4: Bulk-edit. Highlight five sub-001 ses-pre rows,
+       * open the dialog overlay, type "baseline" into the input,
+       * click Apply, then every selected row's basename flips from
+       * ses-pre to ses-baseline. */
+      const SES_PRE_KEYS = ["t1w", "rest", "sparse", "fmap-pre-1", "fmap-pre-2"];
+      const rows = SES_PRE_KEYS
+        .map((k) => mock.querySelector(`[data-row-key="${k}"]`))
+        .filter(Boolean);
+      const dialog = mock.querySelector("[data-bulk-dialog]");
+      const input = mock.querySelector("[data-bulk-input]");
+      const help = mock.querySelector("[data-bulk-help]");
+      const count = mock.querySelector("[data-bulk-count]");
+      const apply = mock.querySelector("[data-bulk-apply]");
+
+      /* Reset to a clean slate */
+      rows.forEach((r) => r.classList.remove("is-bulk-selected", "is-flashing"));
+      if (input) { input.value = ""; }
+
+      /* Step A: select the 5 rows. */
+      for (const r of rows) {
+        if (isCancelled()) return;
+        r.classList.add("is-bulk-selected");
+        await delay(120);
+      }
+      if (count) count.textContent = `${rows.length} rows selected`;
+      if (help) help.textContent = `Selection: ${rows.length} rows under sub-001 / ses-pre`;
+      await delay(300);
+      if (isCancelled()) return;
+
+      /* Step B: open the dialog. */
+      dialog?.classList.add("is-shown");
+      await delay(400);
+      if (isCancelled()) return;
+
+      /* Step C: type "baseline" into the input. */
+      if (input) {
+        input.classList.add("is-typing");
+        const target = "baseline";
+        for (let i = 1; i <= target.length; i++) {
+          if (isCancelled()) return;
+          input.value = target.slice(0, i);
+          await delay(90);
+        }
+        input.classList.remove("is-typing");
+      }
+      await delay(400);
+      if (isCancelled()) return;
+
+      /* Step D: pulse Apply and rewrite each row's basename. */
+      apply?.classList.add("is-pressed");
+      await delay(180);
+      apply?.classList.remove("is-pressed");
+      for (const r of rows) {
+        if (isCancelled()) return;
+        const code = r.querySelector("code");
+        if (code) {
+          const orig = code.dataset.bulkOrig || code.textContent;
+          code.dataset.bulkOrig = orig;
+          code.textContent = orig.replace("ses-pre", "ses-baseline");
+        }
+        r.classList.add("is-flashing");
+        await delay(110);
+      }
+      await delay(800);
+      if (isCancelled()) return;
+
+      /* Step E: close the dialog; rows stay marked so the visitor
+       * can still see the result while the caption is read. */
+      dialog?.classList.remove("is-shown");
+      await delay(300);
+      rows.forEach((r) => r.classList.remove("is-flashing"));
+      return;
+    }
+
+    if (n === 5) {
+      /* Sub-step 5: Filter pane. Uncheck the sub-001 / ses-pre /
+       * fmap node; the two matching rows in the Inspection table
+       * flip their row-checkboxes from on -> off (the user-visible
+       * link between the filter view and the table). */
+      const filterRow = mock.querySelector(
+        '[data-filter-key="sub-001-ses-pre-fmap"]'
+      );
+      const fmapRows = Array.from(mock.querySelectorAll(
+        '[data-row-key="fmap-pre-1"], [data-row-key="fmap-pre-2"]'
+      ));
+      const fmapCbs = fmapRows.map((r) => r.querySelector(".gui-cb")).filter(Boolean);
+
+      /* Brief settle before the click, then uncheck the filter. */
+      await delay(200);
+      if (isCancelled()) return;
+      const ck = filterRow?.querySelector(".ck");
+      ck?.classList.remove("is-checked");
+      filterRow?.classList.add("is-flashing");
+      await delay(220);
+      if (isCancelled()) return;
+
+      /* Flip the two table row checkboxes in sequence so the user
+       * can see the propagation from the filter to the table. */
+      for (const cb of fmapCbs) {
+        if (isCancelled()) return;
+        cb.classList.remove("is-on");
+        cb.innerHTML = "";
+        const row = cb.closest(".gui-inv-row");
+        row?.classList.add("is-flashing");
+        await delay(180);
+      }
+
+      await delay(1000);
+      if (isCancelled()) return;
+      filterRow?.classList.remove("is-flashing");
+      fmapRows.forEach((r) => r.classList.remove("is-flashing"));
+      return;
+    }
+
+  }
+
+  function activate(n) {
+    activeToken += 1;
+    const token = activeToken;
+    clearFlashes();
+    mock.setAttribute("data-substep", String(n));
+    steps.forEach((b) => {
+      b.classList.toggle(
+        "is-active",
+        Number(b.dataset.substep) === n
+      );
+    });
+    captions.forEach((c) => {
+      c.classList.toggle(
+        "is-active",
+        Number(c.dataset.caption) === n
+      );
+    });
+    playSubScene(n, cancelled(token));
+  }
+
+  steps.forEach((b) => {
+    b.addEventListener("click", () => {
+      activate(Number(b.dataset.substep));
+    });
+  });
+
+  /* Boot in Sub-scene 1. */
+  activate(1);
+}
+
+
+/* ======================================================================
+ *  Scan scene (Step 2): sub-step state machine
+ *
+ *  Two sub-steps: the screen recording, and a chip-click explainer
+ *  with a mock IssuesDialog.
+ * ==================================================================== */
+
+function initScanSubSteps() {
+  const stepper = document.querySelector("[data-scan-stepper]");
+  if (!stepper) return;
+  const body = document.querySelector("[data-scan-body]");
+  if (!body) return;
+  const steps = Array.from(stepper.querySelectorAll(".inspect-step"));
+  const captions = Array.from(
+    document.querySelectorAll(".inspect-caption[data-scan-caption]")
+  );
+  const views = Array.from(body.querySelectorAll("[data-scan-view]"));
+
+  function activate(n) {
+    body.setAttribute("data-scan-step", String(n));
+    steps.forEach((b) => {
+      b.classList.toggle("is-active", Number(b.dataset.scanStep) === n);
+    });
+    captions.forEach((c) => {
+      c.classList.toggle("is-active", Number(c.dataset.scanCaption) === n);
+    });
+    const target = n === 1 ? "recording" : "chips";
+    views.forEach((v) => {
+      v.hidden = v.dataset.scanView !== target;
+    });
+  }
+
+  steps.forEach((b) => {
+    b.addEventListener("click", () => activate(Number(b.dataset.scanStep)));
+  });
+
+  activate(1);
+}
+
+
+/* ======================================================================
+ *  Editor scene (Step 5): sub-step state machine
+ *
+ *  Step 5 hosts one Editor mock and 5 sub-steps:
+ *    1. Editor open, no audit yet (chips 0/0/0, validation pane hint)
+ *    2. After Validate dataset (chips 55/7/0, validation results)
+ *    3. Warnings chip click (sub-step 2 state + dialog overlay open)
+ *    4. Sidecar Tree view focus (chips/results stay, view swap)
+ *    5. TSV viewer focus (chips/results stay, view swap)
+ * ==================================================================== */
+
+function initEditorSubSteps() {
+  const mock = document.querySelector("[data-editor-mock]");
+  if (!mock) return;
+  const stepper = document.querySelector("[data-editor-stepper]");
+  if (!stepper) return;
+
+  const steps = Array.from(stepper.querySelectorAll(".inspect-step"));
+  const captions = Array.from(
+    document.querySelectorAll(".inspect-caption[data-editor-caption]")
+  );
+  const centerViews = Array.from(
+    mock.querySelectorAll("[data-editor-view]")
+  );
+  const validationViews = Array.from(
+    mock.querySelectorAll("[data-editor-validation-view]")
+  );
+  const centerTitle = mock.querySelector("[data-editor-center-title]");
+  const centerMeta = mock.querySelector("[data-editor-center-meta]");
+  const warningsDialog = mock.querySelector("[data-editor-warnings]");
+  const chipNums = {
+    ok:   mock.querySelector('[data-editor-chip-num="ok"]'),
+    warn: mock.querySelector('[data-editor-chip-num="warn"]'),
+    err:  mock.querySelector('[data-editor-chip-num="err"]'),
+  };
+
+  const STATES = {
+    1: { view: "sidecar-bids", title: "sub-001_ses-pre_task-rest_bold.json", meta: "SIDECAR", validation: "empty",   dialog: false, treeRow: "rest-json",        chips: { ok: "0",  warn: "0", err: "0" } },
+    2: { view: "sidecar-bids", title: "sub-001_ses-pre_task-rest_bold.json", meta: "SIDECAR", validation: "results", dialog: false, treeRow: "rest-json",        chips: { ok: "55", warn: "7", err: "0" } },
+    3: { view: "sidecar-bids", title: "sub-001_ses-pre_task-rest_bold.json", meta: "SIDECAR", validation: "results", dialog: true,  treeRow: "rest-json",        chips: { ok: "55", warn: "7", err: "0" } },
+    4: { view: "sidecar-tree", title: "sub-001_ses-pre_task-rest_bold.json", meta: "SIDECAR", validation: "results", dialog: false, treeRow: "rest-json",        chips: { ok: "55", warn: "7", err: "0" } },
+    5: { view: "tsv",          title: "participants.tsv",                    meta: "TABLE",   validation: "results", dialog: false, treeRow: "participants-tsv", chips: { ok: "55", warn: "7", err: "0" } },
+  };
+
+  const treeRows = Array.from(mock.querySelectorAll("[data-tree-row]"));
+
+  function showView(name) {
+    centerViews.forEach((v) => {
+      v.hidden = v.dataset.editorView !== name;
+    });
+  }
+  function showValidationView(name) {
+    validationViews.forEach((v) => {
+      v.hidden = v.dataset.editorValidationView !== name;
+    });
+  }
+
+  function activate(n) {
+    const state = STATES[n];
+    if (!state) return;
+    mock.setAttribute("data-editor-step", String(n));
+    steps.forEach((b) => {
+      b.classList.toggle(
+        "is-active",
+        Number(b.dataset.editorStep) === n,
+      );
+    });
+    captions.forEach((c) => {
+      c.classList.toggle(
+        "is-active",
+        Number(c.dataset.editorCaption) === n,
+      );
+    });
+    showView(state.view);
+    showValidationView(state.validation);
+    if (centerTitle) centerTitle.textContent = state.title;
+    if (centerMeta) centerMeta.textContent = state.meta;
+    Object.entries(state.chips).forEach(([k, v]) => {
+      const el = chipNums[k];
+      if (el) el.textContent = v;
+    });
+    if (warningsDialog) {
+      warningsDialog.hidden = !state.dialog;
+      warningsDialog.classList.toggle("is-open", !!state.dialog);
+    }
+    treeRows.forEach((row) => {
+      row.classList.toggle("is-selected", row.dataset.treeRow === state.treeRow);
+    });
+  }
+
+  /* Stepper click + chip click both jump to a sub-step.
+   * The warnings/error chips act as a shortcut to sub-step 3. */
+  steps.forEach((b) => {
+    b.addEventListener("click", () => activate(Number(b.dataset.editorStep)));
+  });
+  mock.querySelectorAll("[data-editor-chip-trigger]").forEach((chip) => {
+    chip.addEventListener("click", () => activate(3));
+  });
+  if (warningsDialog) {
+    warningsDialog.querySelectorAll(".gui-warnings-dialog-close, .gui-warnings-dialog-actions .gui-tb-btn")
+      .forEach((btn) => btn.addEventListener("click", () => activate(2)));
+  }
+
+  /* Boot on sub-step 1. */
+  activate(1);
+}
+
+
 function initWorkflowFlowchart() {
   const svg = document.querySelector(".workflow-graph");
   if (!svg) return;
@@ -1661,34 +1958,34 @@ function initWorkflowFlowchart() {
    * data-node attribute on the SVG group nodes. */
   const STORIES = {
     engine: {
-      raw:     ["Raw data",   "DICOM directories, EEG and MEG recordings, optional physio."],
-      scan:    ["Schema scan", "<code>inventory/</code> walkers stamp each row with a <code>bids_guess_*</code> entity tuple drawn from the BIDS schema."],
-      edit:    ["Plan edits",  "User overrides land in the inventory TSV. The same schema engine validates the entity set before conversion runs."],
-      convert: ["Convert",    "Per-task dispatch: <code>Dcm2niixDirect</code>, <code>MneBidsBackend</code>, <code>PhysioDcmBackend</code> (vendored bidsphysio)."],
-      fix:     ["Fix-ups",    "Field-maps re-named, <code>IntendedFor</code> resolved, <code>scans.tsv</code> stitched together."],
-      inspect: ["Inspect",    "The Editor reads every sidecar against the same schema and reports missing / wrong / deprecated fields."],
-      validate:["Validate",   "Two-layer: bidsmgr's schema audit plus the official <code>bidsschematools</code> validator (optional strict mode)."],
-      bids:    ["BIDS",       "A schema-compliant dataset with provenance preserved in the <code>.bidsmgr/</code> event log."],
+      raw:      ["Raw data",       "A folder of DICOM, EDF, BDF, BrainVision, FIF, CTF, or Siemens CMRR physio recordings. No preprocessing required; the scanner handles whatever is on disk."],
+      scan:     ["Schema scan",    "Walks the folder recursively. Reads DICOM headers, <code>mne.info</code> from EEG / MEG files, and sidecar JSONs. Each row is stamped with a schema-derived BIDS guess from a chain of classifiers (BidsGuess, sequence dictionary, B0-reference reroute, DWI derivative detection)."],
+      curate:   ["Curate",         "User overrides land in the inventory TSV. Any cell is editable; the schema engine validates the entity set before conversion. Bulk-edit applies one value across a multi-row selection."],
+      convert:  ["Convert",        "Per-task dispatch: <code>dcm2niix</code> for DICOM, <code>mne-bids</code> for EEG / MEG / iEEG / NIRS, <code>bidsphysio</code> for Siemens CMRR physio. Each row runs into a per-subject staging directory; on success the staging is atomically renamed into the BIDS root."],
+      enrich:   ["Enrich",         "Schema-driven enrichment runs automatically after conversion. The metadata engine walks the BIDS tree, looks up each <code>(datatype, suffix)</code> sidecar's required fields, and fills them from the captured metadata. Modality-agnostic. Every decision is logged in <code>metadata_report.json</code>."],
+      fixups:   ["Manual fix-ups", "Whatever the enrichment could not infer. The Editor exposes every sidecar through a schema-aware form, every TSV through an editable table, and every NIfTI through a tri-view plus 4-D time-series viewer. Edits go straight to disk."],
+      validate: ["Validate",       "Two-layer validator. Layer 1 audits filenames and folder structure; layer 2 audits sidecar fields against the schema. Severities tagged. Optionally chains the official <code>bidsschematools</code> strict-mode pass."],
+      bids:     ["BIDS",           "A schema-compliant BIDS dataset, with provenance preserved in the <code>.bidsmgr/</code> event log: every user decision, every override, every conversion run, every validation result."],
     },
     data: {
-      raw:     ["Raw data",   "What you point the tool at: <code>raw/</code> with DICOM tree, EDF / BDF / FIF / MEG, plus PMU / BioPac when present."],
-      scan:    ["inventory.tsv", "51 columns. One row per series or source file. Re-runnable + diff-able."],
-      edit:    ["Per-row overrides", "Spreadsheet-style: cells override the schema guess for a series. Bulk-edit applies one value to a selection."],
-      convert: ["NIfTI + sidecars", "BIDS layout under <code>bids/</code>, per-subject atomic rename from staging."],
-      fix:     ["Cross-file metadata", "<code>fmap/*.json</code>, <code>scans.tsv</code>, <code>participants.tsv</code> populated from the inventory."],
-      inspect: ["Sidecar audit", "Per-(datatype, suffix) schema view; missing required fields flagged inline."],
-      validate:["Validation report", "Severity-tagged file list + folder rollups + dataset-level rules."],
-      bids:    ["BIDS dataset", "Ready to share, archive, or feed into MNE / FSL / nipype / SPM pipelines."],
+      raw:      ["Raw folder",         "What you point the tool at. A messy folder with mixed subjects, partial runs, calibration scans, and whatever naming the operator chose during acquisition."],
+      scan:     ["Inventory TSV",      "51 columns, one row per series or source file. Re-runnable, diff-able, openable in any spreadsheet tool."],
+      curate:   ["Overrides + bulk edit", "Per-row overrides plus the bulk-edit selection. A preview column shows the resulting BIDS basename as you type."],
+      convert:  ["BIDS layout",        "Per-modality BIDS files written under <code>bids_root/sub-XXX/ses-YY/</code>: NIfTI for MRI; native EEG / MEG / iEEG data files with channel and electrode TSVs; TSV.gz for physio. Each output paired with its JSON sidecar. Atomic per-subject staging means an interrupted run never leaves a half-built subject behind."],
+      enrich:   ["Populated sidecars", "Sidecar JSONs get TaskName, EchoTime, RepetitionTime, IntendedFor, EffectiveSamplingFrequency, channel types, and the rest of the required fields. <code>metadata_report.json</code> captures every decision."],
+      fixups:   ["Manual edits",       "Targeted edits to sidecar JSONs, TSVs, and filenames. Independently version-controllable: every change shows up in <code>git diff</code>."],
+      validate: ["Validation report",  "Severity-tagged file list, folder rollups, and dataset-level rules. HTML report optional."],
+      bids:     ["BIDS dataset",       "Ready to share, archive, or feed into MNE / FSL / SPM / Nipype. <code>dataset_description.json</code>, <code>participants.tsv</code>, README, and CHANGES all populated."],
     },
     gui: {
-      raw:     ["Raw data tree pane", "Left column of the Converter view. Browse the raw input root."],
-      scan:    ["Scan button + inspection table", "Toolbar Scan kicks the worker; results populate the table in the middle."],
-      edit:    ["Inspection table + Bulk edit", "Edit cells inline, multi-select then click Bulk edit to apply across rows."],
-      convert: ["Run conversion button", "Right side of the toolbar. Spawns the converter worker, status chips update live."],
-      fix:     ["Post-convert chain (Settings)", "Run metadata + validate as part of the conversion pipeline."],
-      inspect: ["Editor sidecar form pane", "Switch to Editor, click a JSON. Schema-driven form + Tree view."],
-      validate:["Editor validation pane", "Validate file / folder / dataset; severity chips at the top."],
-      bids:    ["BIDS tree pane (Editor)", "Browse the converted dataset with per-file status badges."],
+      raw:      ["Raw FS pane",                  "Left column of the Converter view. Browse the input folder to see what is actually there before scanning."],
+      scan:     ["Scan button + inspection table", "The Scan toolbar button kicks the scanner worker; results populate the inspection table in the middle column."],
+      curate:   ["Inspection table + filters",   "Edit cells inline, multi-select for bulk edit, filter by modality, subject, or status. The Properties pane shows the resulting BIDS basename for the highlighted row."],
+      convert:  ["Run conversion button",       "Right side of the toolbar. The converter worker runs in the background; status chips and the log dock update live."],
+      enrich:   ["Post-convert chain",          "Settings &rarr; Convert &rarr; Post-convert chain. Toggle the metadata step on or off; it runs as part of the conversion pipeline with no separate user action."],
+      fixups:   ["Editor view",                 "Open the BIDS root in the Editor. Click any file in the BIDS tree to open it in the appropriate viewer: NIfTI tri-view, schema-aware sidecar form, or editable TSV table."],
+      validate: ["Validation pane",             "Validate file, validate folder, or validate dataset buttons in the Editor toolbar. Severity chips at the top of the pane. Click any issue to jump to the offending file."],
+      bids:     ["BIDS tree pane",              "In the Editor: browse the converted dataset with per-file status badges. Right-click a node to see its provenance."],
     },
   };
 
@@ -1698,12 +1995,18 @@ function initWorkflowFlowchart() {
   /* ---------- node interactivity ---------- */
   const nodes = Array.from(svg.querySelectorAll("[data-node]"));
 
+  /* Pretty-print compound node keys for the badge. The data-node
+   * attribute uses single-word keys so it stays HTML/JS-safe, but the
+   * visible badge can use a more natural form. */
+  const BADGE_LABEL = { fixups: "fix-ups" };
+
   function describe(nodeKey) {
     const data = STORIES[currentMode]?.[nodeKey];
     if (!data) return;
     const [title, body] = data;
+    const badge = BADGE_LABEL[nodeKey] || nodeKey;
     detail.innerHTML = `
-      <h3><span class="badge">${nodeKey}</span>${title}</h3>
+      <h3><span class="badge">${badge}</span>${title}</h3>
       <p>${body}</p>
     `;
   }
@@ -1736,11 +2039,35 @@ function initWorkflowFlowchart() {
     });
   });
 
-  /* ---------- traveling dot ---------- */
+  /* ---------- traveling dot + trail reveal + node pulse ---------- */
   const mainPath = svg.querySelector("#wf-main-path");
+  const trailPath = svg.querySelector("#wf-trail-path");
   const dot = svg.querySelector(".wf-dot");
-  if (mainPath && dot && !window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
+  const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+  if (mainPath && dot && !reduceMotion) {
     const length = mainPath.getTotalLength();
+
+    /* Trail: dasharray = path length so dashoffset controls how much of
+     * the bright accent stroke is visible. JS animates dashoffset from
+     * length (invisible) to 0 (fully revealed) over the loop; when the
+     * dot wraps back to the start the offset jumps back to length and
+     * the trail visually resets in sync with the dot. */
+    if (trailPath) {
+      trailPath.style.strokeDasharray = `${length}`;
+      trailPath.style.strokeDashoffset = `${length}`;
+    }
+
+    /* Cache node centers for the "dot is near this node" pulse check. */
+    const nodeCenters = nodes.map((n) => {
+      const c = n.querySelector("circle");
+      return {
+        el: n,
+        cx: parseFloat(c.getAttribute("cx")),
+        cy: parseFloat(c.getAttribute("cy")),
+      };
+    });
+
     let start = null;
     const duration = 9000;
     function step(ts) {
@@ -1749,6 +2076,23 @@ function initWorkflowFlowchart() {
       const pt = mainPath.getPointAtLength(length * progress);
       dot.setAttribute("cx", pt.x.toFixed(2));
       dot.setAttribute("cy", pt.y.toFixed(2));
+
+      if (trailPath) {
+        trailPath.style.strokeDashoffset = (length * (1 - progress)).toFixed(2);
+      }
+
+      /* Pulse any node the dot is close to. The class self-removes after
+       * 900ms (matching the CSS animation duration) so each pass-through
+       * triggers a fresh pulse. */
+      nodeCenters.forEach((nc) => {
+        const dx = pt.x - nc.cx;
+        const dy = pt.y - nc.cy;
+        if (Math.hypot(dx, dy) < 14 && !nc.el.classList.contains("is-passing")) {
+          nc.el.classList.add("is-passing");
+          setTimeout(() => nc.el.classList.remove("is-passing"), 900);
+        }
+      });
+
       requestAnimationFrame(step);
     }
     requestAnimationFrame(step);

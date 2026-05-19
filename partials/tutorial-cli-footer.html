@@ -1,0 +1,29 @@
+<section class="section tutorial-cli-footer">
+  <div class="container container-narrow">
+    <details open>
+      <summary><strong>What we ran behind the scenes.</strong></summary>
+      <p class="muted">
+        Every scene above runs through the same engine the CLI exposes.
+        Once your dataset is downloaded you can reproduce the entire
+        walkthrough with these four commands:
+      </p>
+<pre class="code"><span class="cmt"># 1. Scan the raw folder and write the inventory TSV</span>
+bidsmgr-scan &lt;raw_root&gt; &lt;inventory.tsv&gt; --probe-convert -j 4
+
+<span class="cmt"># 2. Convert each row using the right backend per modality</span>
+bidsmgr-convert &lt;inventory.tsv&gt; &lt;bids_parent&gt; --raw-root &lt;raw_root&gt; -j 4
+
+<span class="cmt"># 3. Auto-fill required sidecar fields after conversion</span>
+bidsmgr-metadata &lt;bids_root&gt; --fill-todos
+
+<span class="cmt"># 4. Validate the result against the BIDS schema</span>
+bidsmgr-validate &lt;bids_root&gt;
+</pre>
+      <p class="muted" style="margin-top: 14px;">
+        The GUI runs the same engine. Use whichever interface fits the
+        task: visual review for one-off datasets, scripts for cohort
+        runs.
+      </p>
+    </details>
+  </div>
+</section>

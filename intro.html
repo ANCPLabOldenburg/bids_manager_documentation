@@ -20,24 +20,134 @@
         <span class="section-eyebrow">Intro</span>
         <h1>What is BIDS Manager?</h1>
         <p class="lead">
-          A desktop app that turns raw MRI, EEG, and MEG recordings into
-          BIDS-compliant datasets. It scans your raw data, lets you review
-          and fix every conversion decision in a spreadsheet, runs the
-          conversion, then opens the result for metadata editing, volume
-          inspection, and validation. All in one place, without writing
-          scripts or editing JSON files by hand.
+          BIDS Manager is a multimodal raw-to-BIDS conversion and curation
+          tool. It covers the full BIDS workflow for MRI, EEG, MEG, and
+          physiological recordings in a single integrated environment,
+          with the official BIDS schema as the source of truth for
+          naming, structure, and validation.
+        </p>
+
+        <p>
+          Rather than reinventing the engines that convert each modality,
+          BIDS Manager wraps the trusted community-maintained ones:
+        </p>
+
+        <ul>
+          <li>
+            <a href="https://github.com/rordenlab/dcm2niix" target="_blank" rel="noopener"><strong>dcm2niix</strong></a>
+            for DICOM-to-NIfTI conversion of MRI data.
+          </li>
+          <li>
+            <a href="https://mne.tools/mne-bids/" target="_blank" rel="noopener"><strong>mne-bids</strong></a>
+            for EEG, MEG, iEEG, and NIRS recordings.
+          </li>
+          <li>
+            <a href="https://github.com/cbinyu/bidsphysio" target="_blank" rel="noopener"><strong>bidsphysio</strong></a>
+            for Siemens CMRR physiological data.
+          </li>
+        </ul>
+
+        <p>
+          On top of these backends, BIDS Manager adds an integrated
+          orchestration layer:
+        </p>
+
+        <ul>
+          <li>
+            A <strong>unified scanner</strong> that reads metadata from
+            inside every raw file across all modalities.
+          </li>
+          <li>
+            An <strong>interactive curation surface</strong> where users
+            review, filter, and edit the planned conversion before any
+            byte is written to disk.
+          </li>
+          <li>
+            A <strong>metadata enrichment algorithm</strong> that fills
+            required sidecar fields after conversion, with an audit log
+            of every decision.
+          </li>
+          <li>
+            A <strong>schema-driven validator</strong> that audits the
+            resulting dataset against the BIDS standard.
+          </li>
+        </ul>
+
+        <p>
+          BIDS Manager exposes this orchestration through two surfaces.
+          The <strong>graphical user interface</strong> automates and
+          semi-automates the decisions visually, with an interactive
+          table, an inspection view, and a built-in NIfTI viewer. The
+          <strong>command-line interface</strong> offers five verbs
+          (<code class="inline">bidsmgr-scan</code>,
+          <code class="inline">bidsmgr-rebuild</code>,
+          <code class="inline">bidsmgr-convert</code>,
+          <code class="inline">bidsmgr-metadata</code>,
+          <code class="inline">bidsmgr-validate</code>) for scripted,
+          headless, or pipeline use.
+        </p>
+
+        <p>
+          Both surfaces drive the same engine. A scan run from the CLI
+          produces the same inventory the GUI populates; an edit made
+          in the GUI is replayable from the CLI.
         </p>
 
         <h2>Why it exists</h2>
         <p>
-          BIDS curation has historically meant gluing together a HeuDiConv
-          heuristic, a dcm2bids config, a hand-written validation report, and
-          a separate metadata fix-up step. Each tool reads BIDS slightly
-          differently; the official schema is consulted at the end (if at all).
-          v1.0 of BIDS Manager replaced that pipeline with a single
-          schema-driven engine. The same BIDS schema drives classification,
-          naming, GUI form generation, validation, and sidecar audits.
-          No heuristic files to maintain, no engine-specific surprises.
+          Raw datasets are rarely as clean as the conversion process
+          assumes. Real sessions accumulate complications:
+        </p>
+
+        <ul>
+          <li>DICOMs from one subject can land in the wrong subject folder.</li>
+          <li>An interrupted run leaves behind residual volumes.</li>
+          <li>A bad scan is re-run on the spot, leaving both attempts in the same folder.</li>
+          <li>Calibration scans, localizers, and scanner reports mix with the acquisitions of interest.</li>
+          <li>Naming drifts when the protocol changed mid-study.</li>
+          <li>The expected session is missing a run, or has one extra.</li>
+        </ul>
+
+        <p>
+          Most conversion tools require the user to declare what is in
+          the folder up front. They expect a heuristic file or a
+          configuration that encodes the expected structure:
+          <em>this acquisition is the T1w; this one is the rest BOLD;
+          ignore the localizers</em>. That design assumes the user knows
+          exactly what happened during every session, every run.
+        </p>
+
+        <p>
+          That assumption is fragile. Users routinely work with data
+          they did not acquire: a colleague's project, a multi-site
+          dataset, an archive from a former lab member. Even when the
+          user was the operator, weeks or months later the memory of
+          <em>"we restarted run 02 because the subject moved"</em> is
+          gone. When the actual data does not match the configuration,
+          the conversion silently mislabels rows, skips legitimate
+          acquisitions, or worse, produces a BIDS-valid output that is
+          structurally correct but wrong about what each file is.
+        </p>
+
+        <p>
+          BIDS Manager takes a different approach. Before any
+          conversion execution, it scans the raw folder and presents every
+          acquisition the way it actually exists on disk: subject,
+          session, run, modality, file count, scanner timestamps,
+          image type, sequence parameters. Mixed subjects show up as
+          separate rows in the same folder. Residual volumes appear
+          with their reduced file counts visible. Repeated sequences
+          are listed side by side, with the timestamps that let the
+          user pick the right take. Calibration and localizer series
+          are marked for skipping, but the user reviews and confirms
+          every decision before anything is written to disk.
+        </p>
+
+        <p>
+          The conversion then encodes what the user
+          <strong>actually sees and chooses</strong>, not what a
+          configuration file <strong>assumes</strong> about the
+          session.
         </p>
 
         <h2>Who it is for</h2>
@@ -46,13 +156,9 @@
             validate" loop with no scripting.</li>
           <li><strong>Lab managers</strong> who need reproducible BIDS exports
             across many subjects and modalities.</li>
-          <li><strong>Power users</strong> who prefer the CLI: five verbs
-            (<code class="inline">bidsmgr-scan</code>,
-             <code class="inline">bidsmgr-rebuild</code>,
-             <code class="inline">bidsmgr-convert</code>,
-             <code class="inline">bidsmgr-metadata</code>,
-             <code class="inline">bidsmgr-validate</code>) backed by the same
-             engine the GUI uses.</li>
+          <li><strong>Power users</strong> who want to build or adapt
+            their own scripts on top of the core algorithms BIDS Manager
+            exposes through its CLI.</li>
         </ul>
       </div>
     </section>
@@ -64,11 +170,33 @@
       <div class="container">
         <div class="section-header">
           <span class="section-eyebrow">How it works</span>
-          <h2 class="section-title">A flow with three views.</h2>
-          <p class="section-lead">
-            Same eight stages, three lenses. Click a stage to read it in
-            <strong>engine</strong> terms, <strong>data</strong> terms,
-            or where it shows up in the <strong>GUI</strong>.
+          <h2 class="section-title">Eight stages, three views.</h2>
+        </div>
+
+        <div class="workflow-intro">
+          <p>
+            The workflow runs in eight stages that alternate between
+            user-driven and engine-driven steps:
+          </p>
+          <p>
+            <strong>Raw</strong> is the unprocessed input folder.
+            <strong>Scan</strong> walks the folder and reads metadata
+            from inside every file. <strong>Curate</strong> is where
+            the user reviews the inventory and decides what to convert,
+            filter, or override. <strong>Convert</strong> runs the
+            right backend for each modality and writes the
+            BIDS-organized data files with their sidecars.
+            <strong>Enrich</strong> automatically fills
+            required sidecar fields using the captured metadata and
+            the BIDS schema. <strong>Fix-ups</strong> is the manual
+            stage where the user opens the Editor and adjusts anything
+            the enrichment could not infer. <strong>Validate</strong>
+            audits the result against the schema.
+            <strong>BIDS</strong> is the finished, validated dataset.
+          </p>
+          <p>
+            Click any stage in the diagram below to read it as engine
+            internals, data artefacts, or GUI panels.
           </p>
         </div>
 
@@ -95,11 +223,48 @@
                   <feDropShadow dx="0" dy="0" stdDeviation="8"
                                 flood-color="#ffffff" flood-opacity="0.45"/>
                 </filter>
+
+                <!-- MDI6 icons, downloaded from @mdi/svg. Each path uses
+                     currentColor so the workflow-icon CSS class can tint
+                     them per palette / state. -->
+                <symbol id="wf-icon-raw" viewBox="0 0 24 24">
+                  <path fill="currentColor" pointer-events="none" d="M22,4A2,2 0 0,1 24,6V16A2,2 0 0,1 22,18H6A2,2 0 0,1 4,16V4A2,2 0 0,1 6,2H12L14,4H22M2,6V20H20V22H2A2,2 0 0,1 0,20V11H0V6H2M6,6V16H22V6H6Z"/>
+                </symbol>
+                <symbol id="wf-icon-scan" viewBox="0 0 24 24">
+                  <path fill="currentColor" pointer-events="none" d="M17 22V20H20V17H22V20.5C22 20.89 21.84 21.24 21.54 21.54C21.24 21.84 20.89 22 20.5 22H17M7 22H3.5C3.11 22 2.76 21.84 2.46 21.54C2.16 21.24 2 20.89 2 20.5V17H4V20H7V22M17 2H20.5C20.89 2 21.24 2.16 21.54 2.46C21.84 2.76 22 3.11 22 3.5V7H20V4H17V2M7 2V4H4V7H2V3.5C2 3.11 2.16 2.76 2.46 2.46C2.76 2.16 3.11 2 3.5 2H7M10.5 6C13 6 15 8 15 10.5C15 11.38 14.75 12.2 14.31 12.9L17.57 16.16L16.16 17.57L12.9 14.31C12.2 14.75 11.38 15 10.5 15C8 15 6 13 6 10.5C6 8 8 6 10.5 6M10.5 8C9.12 8 8 9.12 8 10.5C8 11.88 9.12 13 10.5 13C11.88 13 13 11.88 13 10.5C13 9.12 11.88 8 10.5 8Z"/>
+                </symbol>
+                <symbol id="wf-icon-curate" viewBox="0 0 24 24">
+                  <path fill="currentColor" pointer-events="none" d="M21.7,13.35L20.7,14.35L18.65,12.3L19.65,11.3C19.86,11.08 20.21,11.08 20.42,11.3L21.7,12.58C21.92,12.79 21.92,13.14 21.7,13.35M12,18.94L18.07,12.88L20.12,14.93L14.06,21H12V18.94M4,2H18A2,2 0 0,1 20,4V8.17L16.17,12H12V16.17L10.17,18H4A2,2 0 0,1 2,16V4A2,2 0 0,1 4,2M4,6V10H10V6H4M12,6V10H18V6H12M4,12V16H10V12H4Z"/>
+                </symbol>
+                <symbol id="wf-icon-convert" viewBox="0 0 24 24">
+                  <path fill="currentColor" pointer-events="none" d="M21,9L17,5V8H10V10H17V13M7,11L3,15L7,19V16H14V14H7V11Z"/>
+                </symbol>
+                <symbol id="wf-icon-enrich" viewBox="0 0 24 24">
+                  <path fill="currentColor" pointer-events="none" d="M7.5,5.6L5,7L6.4,4.5L5,2L7.5,3.4L10,2L8.6,4.5L10,7L7.5,5.6M19.5,15.4L22,14L20.6,16.5L22,19L19.5,17.6L17,19L18.4,16.5L17,14L19.5,15.4M22,2L20.6,4.5L22,7L19.5,5.6L17,7L18.4,4.5L17,2L19.5,3.4L22,2M13.34,12.78L15.78,10.34L13.66,8.22L11.22,10.66L13.34,12.78M14.37,7.29L16.71,9.63C17.1,10 17.1,10.65 16.71,11.04L5.04,22.71C4.65,23.1 4,23.1 3.63,22.71L1.29,20.37C0.9,20 0.9,19.35 1.29,18.96L12.96,7.29C13.35,6.9 14,6.9 14.37,7.29Z"/>
+                </symbol>
+                <symbol id="wf-icon-fixups" viewBox="0 0 24 24">
+                  <path fill="currentColor" pointer-events="none" d="M22.61,19L13.53,9.91C14.46,7.57 14,4.81 12.09,2.91C9.79,0.61 6.21,0.4 3.66,2.26L7.5,6.11L6.08,7.5L2.25,3.69C0.39,6.23 0.6,9.82 2.9,12.11C4.76,13.97 7.47,14.46 9.79,13.59L18.9,22.7C19.29,23.09 19.92,23.09 20.31,22.7L22.61,20.4C23,20 23,19.39 22.61,19M19.61,20.59L10.15,11.13C9.54,11.58 8.86,11.85 8.15,11.95C6.79,12.15 5.36,11.74 4.32,10.7C3.37,9.76 2.93,8.5 3,7.26L6.09,10.35L10.33,6.11L7.24,3C8.5,2.95 9.73,3.39 10.68,4.33C11.76,5.41 12.17,6.9 11.92,8.29C11.8,9 11.5,9.66 11.04,10.25L20.5,19.7L19.61,20.59Z"/>
+                </symbol>
+                <symbol id="wf-icon-validate" viewBox="0 0 24 24">
+                  <path fill="currentColor" pointer-events="none" d="M21,11C21,16.55 17.16,21.74 12,23C6.84,21.74 3,16.55 3,11V5L12,1L21,5V11M12,21C15.75,20 19,15.54 19,11.22V6.3L12,3.18L5,6.3V11.22C5,15.54 8.25,20 12,21M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9"/>
+                </symbol>
+                <symbol id="wf-icon-bids" viewBox="0 0 24 24">
+                  <path fill="currentColor" pointer-events="none" d="M12 2C11.8 2 11.6 2.1 11.4 2.2L3.5 6.6C3.2 6.8 3 7.1 3 7.5V16.5C3 16.9 3.2 17.2 3.5 17.4L11.4 21.8C11.6 21.9 11.8 22 12 22S12.4 21.9 12.6 21.8L13.5 21.3C13.2 20.7 13.1 20 13 19.3V12.6L19 9.2V13C19.7 13 20.4 13.1 21 13.3V7.5C21 7.1 20.8 6.8 20.5 6.6L12.6 2.2C12.4 2.1 12.2 2 12 2M12 4.2L18 7.5L16 8.6L10.1 5.2L12 4.2M8.1 6.3L14 9.8L12 10.9L6 7.5L8.1 6.3M5 9.2L11 12.6V19.3L5 15.9V9.2M21.3 15.8L17.7 19.4L16.1 17.8L15 19L17.8 22L22.6 17.2L21.3 15.8Z"/>
+                </symbol>
               </defs>
 
-              <!-- Single path that visits every node in order. The traveling
-                   dot rides this. -->
+              <!-- Two paths overlaid: a dim main line (always visible) and
+                   a bright trail that the JS reveals progressively behind
+                   the dot via stroke-dashoffset. -->
               <path id="wf-main-path" class="workflow-line main-line"
+                    d="M70 110
+                       C 140 60, 200 60, 230 110
+                       C 260 160, 320 160, 350 110
+                       C 380 60, 440 60, 470 110
+                       C 500 160, 560 160, 590 110
+                       C 620 60, 680 60, 710 110
+                       C 740 160, 800 160, 830 110" />
+              <path id="wf-trail-path" class="workflow-line trail-line"
                     d="M70 110
                        C 140 60, 200 60, 230 110
                        C 260 160, 320 160, 350 110
@@ -110,37 +275,46 @@
 
               <circle class="wf-dot workflow-dot" r="5" cx="70" cy="110" />
 
-              <!-- Nodes -->
+              <!-- Nodes. Each node has a circle, a centered icon via <use>,
+                   and a label. data-node keys drive the JS narrative. -->
               <g class="workflow-node" data-node="raw" tabindex="0" role="button" aria-label="Raw data stage">
                 <circle cx="70"  cy="110" r="24"></circle>
+                <use class="workflow-icon" href="#wf-icon-raw"      x="59"  y="99"  width="22" height="22"/>
                 <text x="70"  y="158">Raw</text>
               </g>
               <g class="workflow-node" data-node="scan" tabindex="0" role="button" aria-label="Scan stage">
                 <circle cx="180" cy="80"  r="24"></circle>
+                <use class="workflow-icon" href="#wf-icon-scan"     x="169" y="69"  width="22" height="22"/>
                 <text x="180" y="56">Scan</text>
               </g>
-              <g class="workflow-node" data-node="edit" tabindex="0" role="button" aria-label="Edit stage">
+              <g class="workflow-node" data-node="curate" tabindex="0" role="button" aria-label="Curate stage">
                 <circle cx="290" cy="140" r="24"></circle>
-                <text x="290" y="184">Edit</text>
+                <use class="workflow-icon" href="#wf-icon-curate"   x="279" y="129" width="22" height="22"/>
+                <text x="290" y="184">Curate</text>
               </g>
               <g class="workflow-node" data-node="convert" tabindex="0" role="button" aria-label="Convert stage">
                 <circle cx="400" cy="80"  r="24"></circle>
+                <use class="workflow-icon" href="#wf-icon-convert"  x="389" y="69"  width="22" height="22"/>
                 <text x="400" y="56">Convert</text>
               </g>
-              <g class="workflow-node" data-node="fix" tabindex="0" role="button" aria-label="Fix-ups stage">
+              <g class="workflow-node" data-node="enrich" tabindex="0" role="button" aria-label="Enrich stage">
                 <circle cx="510" cy="140" r="24"></circle>
-                <text x="510" y="184">Fix-ups</text>
+                <use class="workflow-icon" href="#wf-icon-enrich"   x="499" y="129" width="22" height="22"/>
+                <text x="510" y="184">Enrich</text>
               </g>
-              <g class="workflow-node" data-node="inspect" tabindex="0" role="button" aria-label="Inspect stage">
+              <g class="workflow-node" data-node="fixups" tabindex="0" role="button" aria-label="Fix-ups stage">
                 <circle cx="620" cy="80"  r="24"></circle>
-                <text x="620" y="56">Inspect</text>
+                <use class="workflow-icon" href="#wf-icon-fixups"   x="609" y="69"  width="22" height="22"/>
+                <text x="620" y="56">Fix-ups</text>
               </g>
               <g class="workflow-node" data-node="validate" tabindex="0" role="button" aria-label="Validate stage">
                 <circle cx="730" cy="140" r="24"></circle>
+                <use class="workflow-icon" href="#wf-icon-validate" x="719" y="129" width="22" height="22"/>
                 <text x="730" y="184">Validate</text>
               </g>
               <g class="workflow-node" data-node="bids" tabindex="0" role="button" aria-label="BIDS dataset stage">
                 <circle cx="830" cy="110" r="26"></circle>
+                <use class="workflow-icon" href="#wf-icon-bids"     x="818" y="98"  width="24" height="24"/>
                 <text x="830" y="158">BIDS</text>
               </g>
             </svg>
@@ -151,18 +325,18 @@
                 <p>Click a stage in the diagram above to read about it.</p>
               </div>
               <div>
-                <h3 style="margin-top:0;">Why these eight stages?</h3>
+                <h3 style="margin-top:0;">Why eight stages?</h3>
                 <p class="muted">
-                  Most BIDS converters collapse the middle three (Edit, Convert,
-                  Fix-ups) into one black-box run. Separating them is how we
-                  give you both a spreadsheet to review beforehand and a
-                  schema-driven editor to fix after.
+                  Most BIDS converters collapse the middle stages into one
+                  opaque run. Splitting them is what lets the user review
+                  the inventory before any conversion runs, and review the
+                  converted result before any validation.
                 </p>
                 <p class="muted">
-                  <strong>Inspect</strong> and <strong>Validate</strong> are
-                  also separate. Inspect is interactive (the Editor pane);
-                  Validate is the audit log that can also run headlessly via
-                  <code class="inline">bidsmgr-validate</code>.
+                  <strong>Enrich</strong> and <strong>Fix-ups</strong> have
+                  different drivers. Enrich is automatic: a schema-driven
+                  algorithm fills what it can. Fix-ups is interactive: the
+                  user resolves what the algorithm could not.
                 </p>
               </div>
             </div>

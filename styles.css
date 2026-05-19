@@ -514,6 +514,16 @@ main { display: block; }
   color: transparent;
 }
 
+.hero-tagline {
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+  color: var(--text);
+  font-weight: 600;
+  max-width: 30ch;
+  margin: 0;
+}
+
 .hero-lead {
   font-size: clamp(1.05rem, 1.5vw, 1.25rem);
   color: var(--muted);
@@ -603,9 +613,50 @@ main { display: block; }
 .feature-card p  { color: var(--muted); margin: 0; font-size: 0.95rem; }
 
 /* --------------------------------------------------------------------
+ * Points: flat, no-card list used on the landing page
+ * ------------------------------------------------------------------ */
+
+.points {
+  display: grid;
+  gap: 28px;
+}
+
+.point {
+  padding-left: 18px;
+  border-left: 2px solid var(--border-glass);
+  transition: border-color 160ms ease;
+}
+.point:hover {
+  border-left-color: var(--accent);
+}
+.point h3 {
+  margin: 0 0 6px;
+  color: var(--text);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.point p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* --------------------------------------------------------------------
+ * Centered CTA strip (used at the foot of the landing page)
+ * ------------------------------------------------------------------ */
+
+.cta-strip {
+  text-align: center;
+}
+.cta-strip .hero-actions {
+  justify-content: center;
+}
+
+/* --------------------------------------------------------------------
  * Workflow animation (intro page)
- * Lifted from INDoS's pattern, adapted for the BIDS Manager pipeline
- * Raw  ->  Scan  ->  Edit  ->  Convert  ->  Fix  ->  Inspect  ->  Validate  ->  BIDS
+ * Eight stages:
+ * Raw  ->  Scan  ->  Curate  ->  Convert  ->  Enrich  ->  Fix-ups  ->  Validate  ->  BIDS
  * ------------------------------------------------------------------ */
 
 .workflow {
@@ -732,6 +783,90 @@ main { display: block; }
 }
 .workflow-detail ul { padding-left: 1.1em; margin: 0.4em 0; color: var(--muted); }
 .workflow-detail li { margin: 0.25em 0; }
+
+/* --- Intro prose paragraph above the flowchart -------------------- */
+.workflow-intro {
+  max-width: 860px;
+  margin: 0 auto 28px;
+  color: var(--muted);
+}
+.workflow-intro p {
+  margin: 0 0 12px;
+  line-height: 1.65;
+}
+.workflow-intro p:last-child { margin-bottom: 0; }
+.workflow-intro strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* --- Trail path: bright accent stroke that the JS reveals behind the
+ *     traveling dot via stroke-dashoffset (set by initWorkflowFlowchart). */
+.workflow-line.trail-line {
+  stroke: var(--accent);
+  stroke-width: 3;
+  opacity: 0.95;
+  filter: drop-shadow(0 0 4px var(--glow-accent));
+  /* Initial state: trail hidden via a large dash gap. JS replaces these
+   * values with the actual path length on init, then animates
+   * strokeDashoffset from length (invisible) to 0 (fully revealed)
+   * over the 9-second loop. The large default prevents a one-frame
+   * flash of the fully-drawn trail before JS runs. */
+  stroke-dasharray: 9999;
+  stroke-dashoffset: 9999;
+}
+
+/* --- Icons inside each node ---------------------------------------- */
+.workflow-icon {
+  color: var(--muted);
+  transition: color 240ms ease;
+  pointer-events: none;  /* let clicks fall through to the parent <g> */
+}
+.workflow-node:hover .workflow-icon,
+.workflow-node.is-active .workflow-icon {
+  color: var(--accent);
+}
+
+/* Make the entire node group clickable as one shape so clicks anywhere
+ * inside the bounding box (icon, circle, label area, dead space) fire
+ * the node's handler. pointer-events: none on .workflow-icon above is
+ * still useful so the icon never becomes the event target itself, but
+ * this rule guarantees the click is registered against the parent group
+ * regardless of <use> shadow-tree quirks in different browsers. */
+.workflow-node {
+  pointer-events: bounding-box;
+  cursor: pointer;
+}
+
+/* --- Node pulse on dot arrival (added by JS as .is-passing) -------- */
+.workflow-node.is-passing > circle {
+  animation: wf-circle-pulse 0.9s ease-out;
+}
+.workflow-node.is-passing > .workflow-icon {
+  animation: wf-icon-pulse 0.9s ease-out;
+}
+@keyframes wf-circle-pulse {
+  0%   { stroke: var(--border); stroke-width: 1.5; }
+  30%  { stroke: var(--accent); stroke-width: 3.5; filter: url(#wf-node-glow); }
+  100% { stroke: var(--border); stroke-width: 1.5; filter: none; }
+}
+@keyframes wf-icon-pulse {
+  0%, 100% { color: var(--muted); }
+  30%      { color: var(--accent); }
+}
+
+/* Respect reduced-motion: stop the pulse + trail animations and show the
+ * trail fully revealed at lower opacity, so static visitors still see the
+ * full path emphasised. */
+@media (prefers-reduced-motion: reduce) {
+  .workflow-line.trail-line {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+    opacity: 0.6;
+  }
+  .workflow-node.is-passing > circle,
+  .workflow-node.is-passing > .workflow-icon { animation: none; }
+}
 
 @media (max-width: 880px) {
   .workflow-side { grid-template-columns: 1fr; }
@@ -2340,66 +2475,102 @@ details.disclosure p:last-child { margin-bottom: 0; }
 
 /* --- Real app top bar (brand + view switcher + Settings + Run) ---- */
 
+/* ---- Top header (QFrame#top-header).
+ *      Matches `theme.qss` #top-header: background surface, 1px bottom
+ *      border, 48 px tall, horizontal margins 14, vertical 6. ---- */
 .mock-topbar {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 14px;
-  min-height: 52px;
-  border-bottom: 1px solid var(--border-glass);
-  background: color-mix(in srgb, var(--panel) 78%, transparent);
+  gap: 10px;
+  padding: 6px 14px;
+  min-height: 48px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
 }
 
 .mock-topbar-brand {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  font-weight: 700;
-  font-size: 0.9rem;
+  gap: 10px;
   color: var(--text);
   letter-spacing: -0.01em;
 }
+.mock-topbar-name {
+  font-size: 1rem;          /* 16 px, matches QSS #brand-name */
+  font-weight: 600;
+  color: var(--text);
+}
 .mock-topbar-logo {
-  display: inline-grid;
-  place-items: center;
-  width: 22px;
-  height: 22px;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
   border-radius: 6px;
-  background: linear-gradient(135deg, var(--accent), var(--purple));
-  color: var(--bg);
-  font-size: 0.74rem;
+  object-fit: contain;
+  flex-shrink: 0;
+  font-size: 0.8rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   box-shadow: 0 4px 12px var(--glow-accent);
 }
 
+/* View pills (QPushButton#view-pill) live as plain buttons in a row,
+ * not wrapped in a rounded pill container. Real GUI uses rectangular
+ * pills (border-radius 5 px) that get an accent background when
+ * checked. Spacing 6 px between pills. */
 .mock-topbar-switch {
   display: inline-flex;
   align-items: center;
-  padding: 3px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--panel-strong);
+  gap: 6px;
   margin-left: 6px;
-}
-.mock-switch-btn {
+  padding: 0;
   border: none;
   background: transparent;
+}
+.mock-switch-btn {
+  border: 1px solid transparent;
+  background: transparent;
   color: var(--muted);
-  padding: 4px 14px;
-  border-radius: 999px;
+  padding: 5px 16px;
+  min-width: 76px;
+  border-radius: 5px;
   cursor: pointer;
   font: inherit;
   font-size: 0.78rem;
-  font-weight: 600;
-  transition: color 140ms ease, background 140ms ease;
+  font-weight: 500;
+  transition: color 140ms ease, background 140ms ease,
+              border-color 140ms ease;
 }
-.mock-switch-btn:hover { color: var(--text); }
+.mock-switch-btn:hover {
+  color: var(--text);
+  background: var(--panel-strong);
+}
 .mock-switch-btn.is-active {
   color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 14%, var(--panel));
-  box-shadow: 0 0 0 1px var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--panel));
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  font-weight: 600;
 }
+
+/* Theme toggle (QPushButton#theme-toggle): icon-only square button at
+ * the far right of the top header. 32x28 in the real GUI. */
+.mock-theme-toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 28px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--panel-strong);
+  color: var(--text);
+  cursor: pointer;
+  padding: 0;
+  transition: background 140ms ease, border-color 140ms ease;
+}
+.mock-theme-toggle:hover {
+  background: var(--border);
+  border-color: var(--accent);
+}
+.mock-theme-toggle svg { display: block; }
 
 /* --- Legacy window-chrome variant (kept in case any other surface
  *     still references it; nothing on the tutorial page does). --- */
@@ -2548,6 +2719,68 @@ details.disclosure p:last-child { margin-bottom: 0; }
   color: var(--quiet);
   cursor: default;
   opacity: 0.5;
+}
+
+/* Toggle-style toolbar button (QPushButton#tb-btn-toggle). Greyed by
+ * default; flips to a purple highlight when its toggle is "on". */
+.mock-tb-btn-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  padding: 5px 11px;
+  border-radius: 6px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 500;
+  transition: color 140ms ease, border-color 140ms ease,
+              background 140ms ease;
+}
+.mock-tb-btn-toggle:hover {
+  color: var(--text);
+  background: var(--panel-strong);
+}
+.mock-tb-btn-toggle.is-active,
+.mock-tb-btn-toggle[aria-pressed="true"] {
+  color: var(--purple);
+  border-color: color-mix(in srgb, var(--purple) 55%, transparent);
+  background: color-mix(in srgb, var(--purple) 14%, transparent);
+}
+.mock-tb-btn-toggle.is-disabled {
+  color: var(--quiet);
+  cursor: default;
+  opacity: 0.5;
+}
+
+/* Inline SVG icons inside toolbar buttons (real GUI gets these from
+ * qtawesome MDI6 glyphs). Keep the icon vertically centred next to
+ * the label. */
+.mock-tb-btn .mock-tb-icon,
+.mock-tb-btn-toggle .mock-tb-icon,
+.mock-tb-btn-primary .mock-tb-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 2px;
+  color: currentColor;
+}
+.mock-tb-btn .mock-tb-icon svg,
+.mock-tb-btn-toggle .mock-tb-icon svg,
+.mock-tb-btn-primary .mock-tb-icon svg {
+  display: block;
+}
+.mock-tb-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.mock-tb-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .mock-tb-btn-primary {
@@ -3493,6 +3726,7 @@ details.disclosure p:last-child { margin-bottom: 0; }
 .mock-log-line.log-tag-scan      { color: var(--accent); }
 .mock-log-line.log-tag-stage     { color: var(--purple); }
 .mock-log-line.log-tag-fixup     { color: var(--teal);   }
+.mock-log-line.log-tag-enrich    { color: #ff79c6; font-weight: 600; }
 .mock-log-line.log-tag-done      { color: var(--success); font-weight: 700; }
 .mock-log-line.log-tag-warn      { color: var(--warning); }
 @keyframes log-fade {
@@ -4251,10 +4485,2587 @@ details.disclosure p:last-child { margin-bottom: 0; }
 }
 
 /* --------------------------------------------------------------------
+ * GUI-faithful mock (.scene-mock-gui)
+ *
+ * A 1:1 visual re-implementation of the real BIDS Manager Qt window
+ * for the tutorial scenes. Selectors are scoped to .scene-mock-gui so
+ * the older .mock-* styling on other scenes is unaffected.
+ *
+ * Palette + metrics mirror bidsmgr/gui/theme.qss and theme_manager.py
+ * `DARK` exactly:
+ *   bg        #0a0e13   (app background)
+ *   surface   #11161d   (#top-header, panes, code areas)
+ *   surface2  #161b22   (#pathbar, #toolbar)
+ *   surface3  #1c2128   (#tb-btn, #tb-input, theme-toggle)
+ *   border    #21262d   (1 px borders)
+ *   subtle    #1a1f26   (pathbar bottom)
+ *   text      #e6edf3
+ *   dim       #8b949e
+ *   muted     #656d76
+ *   accent    #58a6ff
+ *
+ * Font baseline: 11 px to match QSS rule on every Q* widget.
+ * ------------------------------------------------------------------ */
+
+.scene-mock-gui {
+  /* Override .scene-mock's frosted glass with a solid desktop-app
+   * background. Sharp 6 px corners read more like a Qt window than
+   * the 12 px we use for cards across the docs. */
+  background: #0a0e13;
+  border: 1px solid #21262d;
+  border-radius: 6px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+               "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  font-size: 11px;
+  color: #e6edf3;
+  overflow: hidden;
+}
+
+/* ---- #top-header (48 px tall) ---- */
+.scene-mock-gui .gui-topheader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  height: 48px;
+  background: #11161d;
+  border-bottom: 1px solid #21262d;
+}
+.scene-mock-gui .gui-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.scene-mock-gui .gui-logo {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  object-fit: contain;
+  flex-shrink: 0;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.scene-mock-gui .gui-brand-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #e6edf3;
+  letter-spacing: -0.01em;
+  margin-left: 2px;
+}
+
+/* View pills (Converter | Editor). Real GUI uses rectangular pills
+ * with 5 px radius; checked = accent-bg + accent text + accent border. */
+.scene-mock-gui .gui-view-pill {
+  border: 1px solid transparent;
+  background: transparent;
+  color: #8b949e;
+  padding: 5px 16px;
+  min-width: 76px;
+  border-radius: 5px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-left: 6px;
+  transition: background 140ms ease, color 140ms ease,
+              border-color 140ms ease;
+}
+.scene-mock-gui .gui-view-pill:hover {
+  color: #e6edf3;
+  background: #1c2128;
+}
+.scene-mock-gui .gui-view-pill.is-checked {
+  background: rgba(88, 166, 255, 0.12);
+  color: #58a6ff;
+  border-color: rgba(88, 166, 255, 0.40);
+  font-weight: 600;
+}
+
+.scene-mock-gui .gui-grow { flex: 1 1 auto; }
+
+/* Theme toggle button: 32x28, square, sun icon by default. */
+.scene-mock-gui .gui-theme-toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 28px;
+  border-radius: 4px;
+  border: 1px solid #21262d;
+  background: #1c2128;
+  color: #e6edf3;
+  cursor: pointer;
+  padding: 0;
+  transition: background 140ms ease;
+}
+.scene-mock-gui .gui-theme-toggle:hover { background: #21262d; }
+.scene-mock-gui .gui-theme-toggle svg { display: block; }
+
+/* ---- #pathbar (per row) ---- */
+.scene-mock-gui .gui-pathbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  background: #161b22;
+  border-bottom: 1px solid #1a1f26;
+}
+.scene-mock-gui .gui-path-label {
+  color: #8b949e;
+  font-size: 11px;
+  min-width: 80px;
+}
+.scene-mock-gui .gui-path-field {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1 1 auto;
+  min-width: 0;
+  background: #0a0e13;
+  border: 1px solid #21262d;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-family: "SF Mono", "Menlo", "Monaco", "Consolas", monospace;
+  font-size: 11px;
+  color: #e6edf3;
+  overflow: hidden;
+}
+.scene-mock-gui .gui-path-glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  color: #8b949e;
+  font-weight: 700;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.scene-mock-gui .gui-path-glyph.is-ok {
+  color: #3fb950;
+}
+.scene-mock-gui .gui-path-value {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.scene-mock-gui .gui-path-value.is-typing::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 0.9em;
+  background: currentColor;
+  margin-left: 1px;
+  vertical-align: -1px;
+  animation: mock-cursor 800ms steps(2) infinite;
+}
+
+/* Ghost button (change…). QSS #tb-btn-ghost. */
+.scene-mock-gui .gui-tb-ghost {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #8b949e;
+  padding: 4px 9px;
+  border-radius: 4px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  flex-shrink: 0;
+  transition: color 140ms ease, background 140ms ease;
+}
+.scene-mock-gui .gui-tb-ghost:hover {
+  color: #e6edf3;
+  background: #1c2128;
+}
+
+/* ---- #toolbar (44 px) ---- */
+.scene-mock-gui .gui-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  height: 44px;
+  background: #161b22;
+  border-bottom: 1px solid #21262d;
+}
+
+/* Standard tb-btn: surface3 bg, 1 px border, 4 px radius, 11 px text */
+.scene-mock-gui .gui-tb-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #1c2128;
+  border: 1px solid #21262d;
+  color: #e6edf3;
+  padding: 4px 11px;
+  border-radius: 4px;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 140ms ease, border-color 140ms ease;
+}
+.scene-mock-gui .gui-tb-btn:hover { background: #21262d; }
+.scene-mock-gui .gui-tb-btn.is-disabled {
+  color: #656d76;
+  background: #161b22;
+  cursor: default;
+}
+
+/* Primary tb-btn-primary: accent bg + #primary_btn_text (#0a0e13) */
+.scene-mock-gui .gui-tb-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #58a6ff;
+  border: 1px solid #58a6ff;
+  color: #0a0e13;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: filter 140ms ease;
+}
+.scene-mock-gui .gui-tb-btn-primary:hover { filter: brightness(1.08); }
+.scene-mock-gui .gui-tb-btn-primary.is-disabled {
+  background: #1c2128;
+  border-color: #21262d;
+  color: #656d76;
+  cursor: default;
+}
+
+.scene-mock-gui .gui-tb-icon { display: inline-block; flex-shrink: 0; }
+
+/* Tiny "TSV:" label before the input. */
+.scene-mock-gui .gui-tb-mini-label {
+  color: #8b949e;
+  font-size: 11px;
+}
+
+/* Toolbar input. Compact, surface3 bg. */
+.scene-mock-gui .gui-tb-input {
+  background: #1c2128;
+  color: #e6edf3;
+  border: 1px solid #21262d;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font: inherit;
+  font-size: 11px;
+  font-family: "SF Mono", "Menlo", "Monaco", monospace;
+  width: 140px;
+}
+.scene-mock-gui .gui-tb-input:focus {
+  outline: none;
+  border-color: #58a6ff;
+}
+
+/* Vertical separator (QFrame#vsep). 1 px wide, 4 px margin top/bottom. */
+.scene-mock-gui .gui-vsep {
+  display: inline-block;
+  width: 1px;
+  align-self: stretch;
+  background: #21262d;
+  margin: 4px 4px;
+}
+
+/* Status chips (QLabel[chipKind]). 11 px text, 9 px border radius,
+ * tinted to the kind. Idle (zero values) uses the default surface3
+ * fill that the QSS gives QLabel[chipKind] without a specific kind. */
+.scene-mock-gui .gui-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 8px;
+  border-radius: 9px;
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid #21262d;
+  background: #1c2128;
+  color: #8b949e;
+  white-space: nowrap;
+}
+.scene-mock-gui .gui-chip.chip-success {
+  background: rgba(63, 185, 80, 0.12);
+  border-color: rgba(63, 185, 80, 0.30);
+  color: #3fb950;
+}
+.scene-mock-gui .gui-chip.chip-warn {
+  background: rgba(210, 153, 34, 0.12);
+  border-color: rgba(210, 153, 34, 0.30);
+  color: #d29922;
+}
+.scene-mock-gui .gui-chip.chip-err {
+  background: rgba(248, 81, 73, 0.12);
+  border-color: rgba(248, 81, 73, 0.30);
+  color: #f85149;
+}
+
+/* BusySpinner placeholder. Hidden when idle; spins when .is-spinning. */
+.scene-mock-gui .gui-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #21262d;
+  border-top-color: #58a6ff;
+  visibility: hidden;
+}
+.scene-mock-gui .gui-spinner.is-spinning {
+  visibility: visible;
+  animation: gui-spin 0.9s linear infinite;
+}
+@keyframes gui-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---- Sub-scene stepper (Scene 3 only) ---- */
+.inspect-stepper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+.inspect-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--panel-strong);
+  border: 1px solid var(--border-glass);
+  border-radius: 999px;
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: color 160ms ease, border-color 160ms ease,
+              background 160ms ease;
+}
+.inspect-step:hover {
+  color: var(--text);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+}
+.inspect-step.is-active {
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, var(--panel));
+  border-color: var(--accent);
+  font-weight: 600;
+}
+.inspect-step-num {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--border);
+  color: var(--text);
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.inspect-step.is-active .inspect-step-num {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* Per-sub-scene caption shown above the mock. Only the one matching
+ * the active step is visible. */
+.inspect-captions {
+  margin-top: 18px;
+}
+.inspect-caption {
+  display: none;
+  padding: 14px 18px;
+  border-left: 3px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 6%, var(--panel));
+  border-radius: 0 8px 8px 0;
+  color: var(--text);
+}
+.inspect-caption.is-active { display: block; }
+.inspect-caption strong { color: var(--accent); font-weight: 700; }
+.inspect-caption p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  line-height: 1.55;
+  font-size: 0.92rem;
+}
+
+/* ====================================================================
+ * Scene 3: 3-column panel splitter (gui-converter-body)
+ * Stripped down to the three teaching panels:
+ *   [filter] | [inspection] | [properties]
+ *   sizes:   220       1fr (wide)       320
+ * The full window chrome (top header, pathbars, toolbar, FS trees,
+ * bottom dock, statusbar) is omitted — Scene 3 teaches the panels in
+ * isolation so the inspection table gets the room it needs.
+ * ==================================================================== */
+
+.gui-converter-body {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr) 320px;
+  min-height: 520px;
+  max-height: 620px;
+  background: #0a0e13;
+  border-bottom: 1px solid #21262d;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+[data-theme="light"] .gui-converter-body {
+  background: #ffffff;
+  border-color: #d0d7de;
+}
+
+/* Mobile fallback: stack the columns. The mock is primarily a desktop
+ * pattern; on narrow viewports we collapse to one column and let the
+ * user scroll. */
+@media (max-width: 1024px) {
+  .gui-converter-body {
+    grid-template-columns: 1fr;
+    max-height: none;
+  }
+}
+
+/* ---- gui-pane (base) ---- */
+.gui-pane {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  border-right: 1px solid #21262d;
+  background: #11161d;
+  transition: opacity 240ms ease, background 240ms ease;
+}
+.gui-pane:last-child { border-right: none; }
+.gui-pane.is-dim { opacity: 0.45; }
+.gui-pane.is-focus {
+  background: #161b22;
+  box-shadow: inset 0 0 0 1px rgba(88, 166, 255, 0.45);
+}
+
+[data-theme="light"] .gui-pane { background: #f6f8fa; border-color: #d0d7de; }
+[data-theme="light"] .gui-pane.is-focus { background: #ffffff; box-shadow: inset 0 0 0 1px rgba(9, 105, 218, 0.40); }
+
+/* gui-pane-header (#pane-h5 in the real QSS) */
+.gui-pane-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  background: #11161d;
+  color: #8b949e;
+  border-bottom: 1px solid #1a1f26;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.gui-pane-header-meta {
+  margin-left: auto;
+  font-size: 10px;
+  color: #656d76;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: none;
+}
+[data-theme="light"] .gui-pane-header { background: #f6f8fa; color: #656d76; border-color: #e5e7ea; }
+
+/* ---- gui-fs-col: vertical split of raw + output FS trees ---- */
+.gui-fs-col {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+.gui-fs {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-bottom: 1px solid #21262d;
+}
+.gui-fs:last-child { border-bottom: none; }
+.gui-fs-body {
+  overflow: auto;
+  padding: 6px 8px;
+  font-family: "SF Mono", "Menlo", "Monaco", monospace;
+  font-size: 11px;
+  color: #e6edf3;
+  flex: 1 1 auto;
+}
+[data-theme="light"] .gui-fs-body { color: #1f2328; }
+.gui-fs-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 6px;
+  white-space: nowrap;
+  cursor: default;
+  border-radius: 3px;
+}
+.gui-fs-item:hover { background: #161b22; }
+[data-theme="light"] .gui-fs-item:hover { background: #eef1f4; }
+.gui-fs-item .chev {
+  display: inline-block;
+  width: 12px;
+  color: #8b949e;
+  text-align: center;
+}
+.gui-fs-item .name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.gui-fs-item .meta {
+  font-size: 10px;
+  color: #656d76;
+  font-weight: 600;
+}
+.gui-fs-item.d1 { padding-left: 18px; }
+.gui-fs-item.d2 { padding-left: 30px; }
+.gui-fs-item.d3 { padding-left: 42px; }
+.gui-fs-item.d4 { padding-left: 54px; }
+.gui-fs-item.is-skip .name { color: #656d76; text-decoration: line-through; }
+.gui-fs-item.is-skip:hover .name { color: #8b949e; }
+.gui-fs-item.is-folder .name { font-weight: 600; }
+.gui-fs-item.is-highlight {
+  background: rgba(88, 166, 255, 0.18);
+  outline: 1px solid rgba(88, 166, 255, 0.55);
+}
+
+/* ---- gui-filter-pane ---- */
+.gui-filter-body {
+  overflow: auto;
+  padding: 6px 8px;
+  font-size: 11px;
+  color: #e6edf3;
+  flex: 1 1 auto;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+[data-theme="light"] .gui-filter-body { color: #1f2328; }
+.gui-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px;
+  border-radius: 3px;
+  cursor: default;
+  white-space: nowrap;
+  transition: background 200ms ease;
+}
+.gui-filter-row:hover { background: #161b22; }
+[data-theme="light"] .gui-filter-row:hover { background: #eef1f4; }
+.gui-filter-row.d1 { padding-left: 16px; }
+.gui-filter-row.d2 { padding-left: 28px; }
+.gui-filter-row.d3 { padding-left: 40px; }
+.gui-filter-row .chev {
+  display: inline-block;
+  width: 12px;
+  color: #8b949e;
+  text-align: center;
+}
+.gui-filter-row .name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.gui-filter-row .count {
+  font-size: 10px;
+  color: #656d76;
+  font-weight: 700;
+  background: rgba(88, 166, 255, 0.08);
+  padding: 1px 6px;
+  border-radius: 999px;
+  border: 1px solid rgba(88, 166, 255, 0.20);
+}
+.gui-filter-row.is-folder .name { font-weight: 600; }
+.gui-filter-row.is-unchecked .name { color: #656d76; opacity: 0.7; }
+[data-theme="light"] .gui-filter-row .count {
+  color: #656d76;
+  background: rgba(9, 105, 218, 0.06);
+  border-color: rgba(9, 105, 218, 0.20);
+}
+
+/* Tri-state checkbox: empty, partial, checked. */
+.ck {
+  display: inline-grid;
+  place-items: center;
+  width: 13px;
+  height: 13px;
+  border: 1px solid #21262d;
+  background: #0a0e13;
+  border-radius: 3px;
+  flex-shrink: 0;
+  transition: background 160ms ease, border-color 160ms ease;
+}
+.ck.is-checked {
+  background: #58a6ff;
+  border-color: #58a6ff;
+  color: #0a0e13;
+}
+.ck.is-checked::after {
+  content: "";
+  width: 7px;
+  height: 4px;
+  border-left: 2px solid #0a0e13;
+  border-bottom: 2px solid #0a0e13;
+  transform: rotate(-45deg) translate(1px, -1px);
+}
+.ck.is-partial {
+  background: #1c2128;
+  border-color: #58a6ff;
+}
+.ck.is-partial::after {
+  content: "";
+  width: 7px;
+  height: 2px;
+  background: #58a6ff;
+}
+[data-theme="light"] .ck {
+  background: #ffffff;
+  border-color: #d0d7de;
+}
+[data-theme="light"] .ck.is-checked {
+  background: #0969da;
+  border-color: #0969da;
+}
+[data-theme="light"] .ck.is-checked::after {
+  border-left-color: #ffffff;
+  border-bottom-color: #ffffff;
+}
+
+/* ---- gui-table-pane (#inspection-table style) ---- */
+.gui-table-pane {
+  background: #0a0e13;
+}
+[data-theme="light"] .gui-table-pane { background: #ffffff; }
+
+.gui-table-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+.gui-inv-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  color: #e6edf3;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+[data-theme="light"] .gui-inv-table { color: #1f2328; }
+
+.gui-inv-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #11161d;
+  color: #8b949e;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 6px 8px;
+  border-bottom: 1px solid #21262d;
+  text-align: left;
+  white-space: nowrap;
+}
+[data-theme="light"] .gui-inv-table thead th { background: #f6f8fa; color: #656d76; border-color: #d0d7de; }
+
+.gui-inv-table tbody td {
+  padding: 4px 8px;
+  border-bottom: 1px solid #1a1f26;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+[data-theme="light"] .gui-inv-table tbody td { border-color: #e5e7ea; }
+
+.gui-inv-row { transition: background 200ms ease; }
+.gui-inv-row:hover { background: #161b22; }
+.gui-inv-row.is-selected {
+  background: rgba(88, 166, 255, 0.10);
+  outline: 1px solid rgba(88, 166, 255, 0.35);
+}
+.gui-inv-row.is-skip { color: #656d76; }
+.gui-inv-row.is-skip code { color: #656d76; }
+.gui-inv-row.is-skip em { font-style: italic; color: #656d76; }
+[data-theme="light"] .gui-inv-row:hover { background: #eef1f4; }
+[data-theme="light"] .gui-inv-row.is-selected { background: rgba(9, 105, 218, 0.10); outline-color: rgba(9, 105, 218, 0.40); }
+
+.gui-inv-table .col-cb { width: 28px; }
+.gui-inv-table .col-status { width: 22px; }
+.gui-inv-table .col-id { width: 60px; }
+.gui-inv-table .col-data { width: 50px; }
+.gui-inv-table .col-suffix { width: 80px; }
+.gui-inv-table .col-task { width: 70px; }
+.gui-inv-table .col-run { width: 40px; }
+.gui-inv-table .col-conf { width: 50px; }
+.gui-inv-table .col-seq { width: 22ch; }
+
+.gui-inv-table .cell-id   { font-family: "SF Mono", "Menlo", monospace; }
+.gui-inv-table .cell-task { font-weight: 600; }
+.gui-inv-table .cell-seq  { font-family: "SF Mono", "Menlo", monospace; color: #8b949e; }
+.gui-inv-table .cell-basename {
+  font-family: "SF Mono", "Menlo", monospace;
+  color: #e6edf3;
+}
+.gui-inv-table .cell-basename code {
+  background: transparent;
+  font-family: inherit;
+  color: inherit;
+}
+.gui-inv-table .cell-basename small { color: #d2a8ff; margin-left: 6px; }
+.gui-inv-table .cell-rerouted { color: #d2a8ff; font-weight: 600; }
+[data-theme="light"] .gui-inv-table .cell-rerouted { color: #8250df; }
+[data-theme="light"] .gui-inv-table .cell-seq { color: #656d76; }
+[data-theme="light"] .gui-inv-table .cell-basename small { color: #8250df; }
+
+.cell-conf {
+  font-family: "SF Mono", "Menlo", monospace;
+  font-weight: 700;
+}
+.cell-conf.conf-high { color: #3fb950; }
+.cell-conf.conf-med  { color: #d29922; }
+.cell-conf.conf-low  { color: #f85149; }
+[data-theme="light"] .cell-conf.conf-high { color: #1a7f37; }
+[data-theme="light"] .cell-conf.conf-med  { color: #9a6700; }
+[data-theme="light"] .cell-conf.conf-low  { color: #cf222e; }
+
+.gui-cb {
+  display: inline-grid;
+  place-items: center;
+  width: 14px;
+  height: 14px;
+  border: 1px solid #21262d;
+  background: #0a0e13;
+  border-radius: 3px;
+  color: transparent;
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 700;
+}
+.gui-cb.is-on {
+  background: #58a6ff;
+  border-color: #58a6ff;
+  color: #0a0e13;
+}
+[data-theme="light"] .gui-cb { background: #ffffff; border-color: #d0d7de; }
+[data-theme="light"] .gui-cb.is-on { background: #0969da; border-color: #0969da; color: #ffffff; }
+
+.gui-row-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #656d76;
+}
+.gui-row-dot.dot-ok    { background: #3fb950; }
+.gui-row-dot.dot-warn  { background: #d29922; }
+.gui-row-dot.dot-err   { background: #f85149; }
+.gui-row-dot.dot-info  { background: #d2a8ff; }
+.gui-row-dot.dot-skip  { background: #656d76; }
+
+.gui-table-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: #11161d;
+  border-top: 1px solid #21262d;
+}
+[data-theme="light"] .gui-table-footer { background: #f6f8fa; border-color: #d0d7de; }
+
+.gui-table-footer .gui-tb-btn,
+.gui-table-footer .gui-tb-btn-toggle {
+  font-size: 11px;
+  padding: 4px 11px;
+}
+
+/* ---- gui-tb-btn-toggle (used in inspection footer and other toggles) ---- */
+.scene-mock-gui .gui-tb-btn-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px solid #21262d;
+  color: #8b949e;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 140ms ease, color 140ms ease;
+}
+.scene-mock-gui .gui-tb-btn-toggle:hover { color: #e6edf3; background: #1c2128; }
+.scene-mock-gui .gui-tb-btn-toggle[aria-pressed="true"] {
+  background: rgba(210, 168, 255, 0.12);
+  border-color: rgba(210, 168, 255, 0.40);
+  color: #d2a8ff;
+}
+[data-theme="light"] .scene-mock-gui .gui-tb-btn-toggle { color: #656d76; border-color: #d0d7de; }
+[data-theme="light"] .scene-mock-gui .gui-tb-btn-toggle:hover { color: #1f2328; background: #eef1f4; }
+[data-theme="light"] .scene-mock-gui .gui-tb-btn-toggle[aria-pressed="true"] {
+  background: rgba(130, 80, 223, 0.10);
+  border-color: rgba(130, 80, 223, 0.40);
+  color: #8250df;
+}
+
+/* ---- gui-props-pane ---- */
+.gui-props-body {
+  overflow: auto;
+  padding: 12px 14px 16px;
+  font-size: 11px;
+  flex: 1 1 auto;
+}
+.gui-props-section {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 12px;
+}
+.gui-props-row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  align-items: center;
+  gap: 10px;
+}
+.gui-props-label {
+  color: #8b949e;
+  font-size: 11px;
+  text-transform: lowercase;
+  font-weight: 500;
+}
+.gui-props-label .req {
+  color: #f85149;
+  font-weight: 700;
+  margin-left: 2px;
+}
+.gui-props-label .rec {
+  color: #58a6ff;
+  font-size: 9px;
+  text-transform: uppercase;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: rgba(88, 166, 255, 0.10);
+  margin-left: 4px;
+  font-weight: 700;
+}
+.gui-props-label .opt {
+  color: #656d76;
+  font-size: 9px;
+  text-transform: uppercase;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: #1c2128;
+  border: 1px solid #21262d;
+  margin-left: 4px;
+  font-weight: 700;
+}
+.gui-props-value,
+.gui-props-input {
+  background: #0a0e13;
+  border: 1px solid #21262d;
+  color: #e6edf3;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-family: "SF Mono", "Menlo", monospace;
+  font-size: 11px;
+  min-height: 22px;
+}
+.gui-props-input.is-readonly {
+  color: #8b949e;
+  background: #161b22;
+}
+.gui-props-input.placeholder { color: #656d76; }
+.gui-props-input:focus,
+.gui-props-input.is-editing {
+  outline: none;
+  border-color: #58a6ff;
+  box-shadow: 0 0 0 1px rgba(88, 166, 255, 0.30);
+}
+[data-theme="light"] .gui-props-value,
+[data-theme="light"] .gui-props-input { background: #ffffff; border-color: #d0d7de; color: #1f2328; }
+[data-theme="light"] .gui-props-input.is-readonly { background: #f6f8fa; color: #656d76; }
+[data-theme="light"] .gui-props-label .rec { color: #0969da; background: rgba(9, 105, 218, 0.08); }
+[data-theme="light"] .gui-props-label .opt { background: #f6f8fa; border-color: #d0d7de; }
+
+.gui-props-title {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #8b949e;
+  margin: 14px 0 8px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #1a1f26;
+}
+.gui-props-title .muted {
+  font-size: 9px;
+  font-weight: 500;
+  color: #656d76;
+  letter-spacing: 0.5px;
+  text-transform: lowercase;
+  margin-left: 6px;
+}
+[data-theme="light"] .gui-props-title { color: #656d76; border-color: #e5e7ea; }
+
+.gui-props-preview {
+  background: #11161d;
+  border: 1px solid #21262d;
+  border-radius: 4px;
+  padding: 10px 12px;
+  font-family: "SF Mono", "Menlo", monospace;
+  font-size: 11px;
+  color: #e6edf3;
+  line-height: 1.5;
+  word-break: break-all;
+}
+.gui-props-preview .seg  { color: #58a6ff; font-weight: 600; }
+.gui-props-preview .ent  { color: #d2a8ff; font-weight: 600; }
+.gui-props-preview .suf  { color: #3fb950; font-weight: 600; }
+.gui-props-preview .ext  { color: #656d76; }
+.gui-props-preview .dim  { color: #656d76; }
+[data-theme="light"] .gui-props-preview { background: #f6f8fa; border-color: #d0d7de; color: #1f2328; }
+[data-theme="light"] .gui-props-preview .seg { color: #0969da; }
+[data-theme="light"] .gui-props-preview .ent { color: #8250df; }
+[data-theme="light"] .gui-props-preview .suf { color: #1a7f37; }
+
+.gui-props-provenance {
+  font-size: 11px;
+  color: #8b949e;
+  line-height: 1.55;
+}
+.gui-props-provenance p {
+  margin: 0 0 6px;
+}
+.gui-props-provenance strong { color: #e6edf3; }
+[data-theme="light"] .gui-props-provenance { color: #656d76; }
+[data-theme="light"] .gui-props-provenance strong { color: #1f2328; }
+
+/* ---- Bottom dock + statusbar ---- */
+.gui-dock {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0 12px;
+  background: #11161d;
+  border-bottom: 1px solid #21262d;
+  height: 28px;
+}
+.gui-dock-tab {
+  border: none;
+  background: transparent;
+  color: #8b949e;
+  padding: 6px 12px;
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+.gui-dock-tab:hover { color: #e6edf3; }
+.gui-dock-tab.is-active {
+  color: #58a6ff;
+  border-bottom-color: #58a6ff;
+}
+[data-theme="light"] .gui-dock { background: #f6f8fa; border-color: #d0d7de; }
+[data-theme="light"] .gui-dock-tab { color: #656d76; }
+[data-theme="light"] .gui-dock-tab:hover { color: #1f2328; }
+[data-theme="light"] .gui-dock-tab.is-active { color: #0969da; border-bottom-color: #0969da; }
+
+.gui-statusbar {
+  display: flex;
+  align-items: center;
+  padding: 5px 14px;
+  background: #0a0e13;
+  border-top: 1px solid #21262d;
+  font-size: 11px;
+  color: #8b949e;
+  height: 24px;
+}
+.gui-statusbar-right { margin-left: auto; }
+.gui-status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: rgba(63, 185, 80, 0.14);
+  border: 1px solid rgba(63, 185, 80, 0.30);
+  color: #3fb950;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+[data-theme="light"] .gui-statusbar { background: #ffffff; border-color: #d0d7de; color: #656d76; }
+[data-theme="light"] .gui-status-pill { background: rgba(26, 127, 55, 0.10); border-color: rgba(26, 127, 55, 0.30); color: #1a7f37; }
+
+/* ---- Scene recording figure (used in Step 2: Run a scan) ----
+ * Wraps a captured screen recording (converted to GIF) so it lands
+ * in a Qt-window-like frame matching the rest of the GUI mocks.
+ *
+ * The parent .container caps at 1180 px which is too narrow for the
+ * recording's 7.7:1 aspect ratio (it would render only ~150 px tall
+ * at that width). The figure breaks out of the container using the
+ * classic centered-extend technique: position relative, left 50 %,
+ * transform translateX(-50 %), so it can use up to 1600 px or the
+ * viewport width (whichever is smaller). */
+/* ====================================================================
+ * Modality tutorial pages: dataset tree + results grid + tags
+ * ==================================================================== */
+
+/* File / folder tree visualization */
+.dataset-tree {
+  margin: 20px 0;
+  padding: 14px 18px;
+  background: var(--panel-strong);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: "SF Mono", "Menlo", monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+.dataset-tree-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 4px;
+  white-space: nowrap;
+  flex-wrap: wrap;
+}
+.dataset-tree-row.d1 { padding-left: 22px; }
+.dataset-tree-row.d2 { padding-left: 44px; }
+.dataset-tree-row.d3 { padding-left: 66px; }
+.dataset-tree-row .chev {
+  display: inline-block;
+  width: 14px;
+  text-align: center;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.dataset-tree-row .name { color: var(--text); }
+.dataset-tree-row.is-folder .name { color: var(--accent); font-weight: 600; }
+.dataset-tree-row .meta {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--muted);
+  background: rgba(88, 166, 255, 0.10);
+  padding: 1px 8px;
+  border-radius: 999px;
+}
+.dataset-tree-row.muted { color: var(--muted); padding-top: 0; padding-bottom: 0; }
+.dataset-tree-row.muted .name { color: var(--muted); }
+.dataset-tree-row .muted { color: var(--muted); }
+
+/* Inline tags next to filenames or folder names */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.tag-info {
+  background: rgba(88, 166, 255, 0.14);
+  color: var(--accent);
+}
+.tag-accent {
+  background: rgba(210, 168, 255, 0.14);
+  color: var(--purple);
+}
+.tag-muted {
+  background: rgba(101, 109, 118, 0.18);
+  color: var(--muted);
+}
+.tag-warn {
+  background: rgba(210, 153, 34, 0.16);
+  color: var(--warning);
+}
+
+/* The 3-up "what you'll see" results grid */
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin: 22px 0;
+}
+.results-card {
+  padding: 18px 18px 16px;
+  background: var(--panel-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.results-card-eyebrow {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.results-card-num {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.results-card-label {
+  display: block;
+  font-size: 0.84rem;
+  color: var(--muted);
+  margin-top: 2px;
+  margin-bottom: 10px;
+}
+.results-card p.muted {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* The EEG protocol mapping table */
+.dataset-protocol {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 0.92rem;
+}
+.dataset-protocol th,
+.dataset-protocol td {
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.dataset-protocol th {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ====================================================================
+ * Step 2 sub-step 2: chip-click explainer + IssuesDialog mock
+ * ==================================================================== */
+
+.scan-chip-explainer {
+  display: grid;
+  gap: 28px;
+}
+.scan-chip-explainer[hidden] { display: none; }
+.scan-chip-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 18px;
+  background: #11161d;
+  border: 1px solid #21262d;
+  border-radius: 6px;
+  align-self: start;
+}
+[data-theme="light"] .scan-chip-row {
+  background: #f6f8fa;
+  border-color: #d0d7de;
+}
+
+.scan-chip-row .gui-chip.is-clickable {
+  cursor: pointer;
+  transition: filter 160ms ease, transform 160ms ease;
+}
+.scan-chip-row .gui-chip.is-clickable:hover {
+  filter: brightness(1.2);
+  transform: translateY(-1px);
+}
+
+.scan-chip-key {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+.scan-chip-key li {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  align-items: start;
+  gap: 16px;
+}
+.scan-chip-key .legend-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.legend-pill.legend-success {
+  background: rgba(63, 185, 80, 0.14);
+  color: #3fb950;
+}
+.legend-pill.legend-warn {
+  background: rgba(210, 153, 34, 0.14);
+  color: #d29922;
+}
+.legend-pill.legend-err {
+  background: rgba(248, 81, 73, 0.14);
+  color: #f85149;
+}
+.legend-pill.legend-skip {
+  background: rgba(101, 109, 118, 0.18);
+  color: #8b949e;
+}
+
+/* IssuesDialog mock (drops in the chip-explainer flow) */
+.mock-issues-dialog {
+  margin: 0;
+  max-width: 720px;
+  background: #11161d;
+  border: 1px solid #21262d;
+  border-radius: 8px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+[data-theme="light"] .mock-issues-dialog {
+  background: #ffffff;
+  border-color: #d0d7de;
+  box-shadow: 0 16px 40px rgba(31, 35, 40, 0.10);
+}
+
+.mock-issues-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 12px 16px;
+  background: #161b22;
+  border-bottom: 1px solid #21262d;
+}
+.mock-issues-dialog-title {
+  color: #e6edf3;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.mock-issues-dialog-subtitle {
+  flex-basis: 100%;
+  margin-top: 4px;
+  color: #8b949e;
+  font-size: 0.82rem;
+  font-weight: 400;
+}
+[data-theme="light"] .mock-issues-dialog-subtitle { color: #656d76; }
+.mock-issues-dialog-close {
+  background: transparent;
+  border: none;
+  color: #8b949e;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.mock-issues-dialog-close:hover { background: #1c2128; color: #e6edf3; }
+[data-theme="light"] .mock-issues-dialog-header { background: #f6f8fa; border-color: #d0d7de; }
+[data-theme="light"] .mock-issues-dialog-title { color: #1f2328; }
+[data-theme="light"] .mock-issues-dialog-close { color: #656d76; }
+
+.mock-issues-dialog-body {
+  padding: 14px 16px;
+  display: grid;
+  gap: 10px;
+}
+.mock-issue-card {
+  background: #0a0e13;
+  border: 1px solid #21262d;
+  border-radius: 6px;
+  padding: 10px 14px;
+}
+[data-theme="light"] .mock-issue-card { background: #ffffff; border-color: #d0d7de; }
+.mock-issue-card header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.mock-issue-row {
+  background: transparent;
+  border: none;
+  color: #58a6ff;
+  font-family: "SF Mono", "Menlo", monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  flex: 1 1 auto;
+}
+.mock-issue-row:hover { text-decoration: underline; }
+[data-theme="light"] .mock-issue-row { color: #0969da; }
+.mock-issue-jump {
+  color: #8b949e;
+  font-size: 0.7rem;
+}
+.mock-issue-msg {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 10px;
+  align-items: start;
+  padding: 8px 10px;
+  border-radius: 4px;
+  background: rgba(210, 153, 34, 0.08);
+  border-left: 3px solid #d29922;
+}
+.mock-issue-msg.sev-err {
+  background: rgba(248, 81, 73, 0.08);
+  border-left-color: #f85149;
+}
+.mock-issue-msg .b {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(210, 153, 34, 0.2);
+  color: #d29922;
+  font-weight: 700;
+}
+.mock-issue-msg.sev-err .b {
+  background: rgba(248, 81, 73, 0.2);
+  color: #f85149;
+}
+.mock-issue-msg .rule {
+  color: #d29922;
+  font-family: "SF Mono", "Menlo", monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.mock-issue-msg.sev-err .rule { color: #f85149; }
+.mock-issue-msg .body {
+  color: #8b949e;
+  font-size: 0.84rem;
+  margin-top: 2px;
+  line-height: 1.5;
+}
+[data-theme="light"] .mock-issue-msg .body { color: #656d76; }
+
+/* ====================================================================
+ * Scene 5 (Editor): 3-column editor body
+ * Layout matches editor_panel.py:
+ *   [BIDS tree] | [center viewer] | [validation pane]
+ *   widths:    240px      1fr            320px
+ * ==================================================================== */
+
+.gui-editor-body {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr) 320px;
+  min-height: 520px;
+  max-height: 620px;
+  background: #0a0e13;
+  border-radius: 6px;
+  overflow: hidden;
+}
+[data-theme="light"] .gui-editor-body { background: #ffffff; }
+
+@media (max-width: 1024px) {
+  .gui-editor-body {
+    grid-template-columns: 1fr;
+    max-height: none;
+  }
+}
+
+/* ---- gui-bids-tree-pane ---- */
+.gui-bids-tree { overflow: auto; padding: 6px 8px; flex: 1 1 auto; font-family: "SF Mono", "Menlo", monospace; font-size: 11px; }
+.gui-bids-tree-rows { display: block; }
+.gui-bids-empty {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 36px 18px;
+  color: #8b949e;
+  height: 100%;
+}
+.gui-bids-empty p { margin: 4px 0; }
+.gui-bids-empty .muted { color: #656d76; font-size: 10px; }
+
+.gui-bids-tree .gui-fs-item {
+  padding: 3px 6px;
+  position: relative;
+}
+.gui-bids-tree .gui-fs-item.is-selected {
+  background: rgba(88, 166, 255, 0.18);
+}
+.gui-bids-tree .gui-fs-item .tree-glyph {
+  display: inline-grid;
+  place-items: center;
+  width: 16px;
+  height: 14px;
+  border-radius: 3px;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-right: 2px;
+}
+.gui-bids-tree .gui-fs-item .tree-glyph.json {
+  background: rgba(210, 168, 255, 0.18);
+  color: #d2a8ff;
+}
+.gui-bids-tree .gui-fs-item .tree-glyph.tsv {
+  background: rgba(57, 197, 207, 0.18);
+  color: #39c5cf;
+}
+.gui-bids-tree .gui-fs-item .tree-glyph.nii {
+  background: rgba(88, 166, 255, 0.18);
+  color: #58a6ff;
+}
+.gui-bids-tree .gui-fs-item .tree-glyph.txt {
+  background: rgba(101, 109, 118, 0.18);
+  color: #8b949e;
+}
+.gui-bids-tree .gui-fs-item .gui-row-dot {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+}
+
+/* ---- gui-editor-center (the extension-routed viewer) ---- */
+.gui-editor-center {
+  display: flex;
+  flex-direction: column;
+  background: #0a0e13;
+}
+[data-theme="light"] .gui-editor-center { background: #ffffff; }
+
+.gui-editor-empty {
+  flex: 1 1 auto;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  color: #8b949e;
+}
+.gui-editor-empty-card { text-align: center; max-width: 360px; }
+.gui-editor-empty-card svg { color: #656d76; margin-bottom: 12px; }
+.gui-editor-empty-card p { margin: 4px 0; }
+.gui-editor-empty-card .muted { color: #656d76; font-size: 11px; }
+
+/* Tabs / toolbar above the sidecar form */
+.gui-sidecar-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: #11161d;
+  border-bottom: 1px solid #1a1f26;
+  flex-shrink: 0;
+}
+[data-theme="light"] .gui-sidecar-tabs { background: #f6f8fa; border-color: #e5e7ea; }
+
+.gui-sidecar-tab {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #8b949e;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.gui-sidecar-tab:hover { color: #e6edf3; background: #1c2128; }
+.gui-sidecar-tab.is-active {
+  color: #58a6ff;
+  background: rgba(88, 166, 255, 0.12);
+  border-color: rgba(88, 166, 255, 0.40);
+  font-weight: 600;
+}
+.gui-tsv-name {
+  font-family: "SF Mono", "Menlo", monospace;
+  font-size: 11px;
+  color: #e6edf3;
+  padding: 4px 6px;
+}
+
+/* Sidecar form (REQ / REC / OPT / DEP stripe pattern) */
+.gui-sidecar-legend {
+  display: flex;
+  gap: 6px;
+  padding: 6px 10px;
+  background: #0a0e13;
+  border-bottom: 1px solid #1a1f26;
+  flex-shrink: 0;
+}
+.legend-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.legend-pill::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+.legend-req { color: #f85149; }
+.legend-req::before { background: #f85149; }
+.legend-rec { color: #d29922; }
+.legend-rec::before { background: #d29922; }
+.legend-opt { color: #8b949e; }
+.legend-opt::before { background: #8b949e; }
+.legend-dep { color: #656d76; }
+.legend-dep::before { background: #656d76; }
+
+.gui-sidecar-form {
+  flex: 1 1 auto;
+  overflow: auto;
+  font-family: "SF Mono", "Menlo", monospace;
+  font-size: 11px;
+}
+.sc-field {
+  position: relative;
+  display: grid;
+  grid-template-columns: 4px 1fr 1.4fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 14px 6px 0;
+  border-bottom: 1px solid #1a1f26;
+}
+[data-theme="light"] .sc-field { border-color: #e5e7ea; }
+.sc-field .req-stripe {
+  width: 4px;
+  align-self: stretch;
+}
+.sc-field.kind-req .req-stripe { background: #f85149; }
+.sc-field.kind-rec .req-stripe { background: #d29922; }
+.sc-field.kind-opt .req-stripe { background: #8b949e; }
+.sc-field.kind-dep .req-stripe { background: repeating-linear-gradient(0deg, #656d76 0 3px, transparent 3px 6px); }
+.sc-field.is-invalid {
+  background: rgba(248, 81, 73, 0.08);
+}
+.sc-key { color: #e6edf3; padding-left: 12px; }
+[data-theme="light"] .sc-key { color: #1f2328; }
+.sc-key .req-mark { color: #f85149; font-weight: 700; margin-left: 2px; }
+.sc-val { color: #e6edf3; padding-right: 8px; }
+.sc-val.str { color: #3fb950; }
+.sc-val.num { color: #58a6ff; }
+.sc-val.placeholder { color: #d29922; font-style: italic; }
+[data-theme="light"] .sc-val.str { color: #1a7f37; }
+[data-theme="light"] .sc-val.num { color: #0969da; }
+[data-theme="light"] .sc-val.placeholder { color: #9a6700; }
+.sc-flag {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: rgba(248, 81, 73, 0.18);
+  color: #f85149;
+  font-weight: 700;
+}
+
+/* JSON tree view */
+.gui-json-tree {
+  flex: 1 1 auto;
+  overflow: auto;
+  padding: 10px 14px;
+  font-family: "SF Mono", "Menlo", monospace;
+  font-size: 11px;
+  color: #e6edf3;
+  background: #0a0e13;
+}
+[data-theme="light"] .gui-json-tree { color: #1f2328; background: #ffffff; }
+.json-row { padding: 1px 0; }
+.json-row.d1 { padding-left: 18px; }
+.json-row.d2 { padding-left: 36px; }
+.json-key { color: #d2a8ff; }
+.json-val.str { color: #3fb950; }
+.json-val.num { color: #58a6ff; }
+.json-val.placeholder { color: #d29922; font-style: italic; }
+[data-theme="light"] .json-key { color: #8250df; }
+[data-theme="light"] .json-val.str { color: #1a7f37; }
+[data-theme="light"] .json-val.num { color: #0969da; }
+
+/* TSV viewer */
+.gui-tsv-viewer { display: flex; flex-direction: column; flex: 1 1 auto; overflow: hidden; }
+.gui-tsv-viewer[hidden] { display: none; }
+.gui-tsv-scroll { flex: 1 1 auto; overflow: auto; }
+.gui-tsv-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "SF Mono", "Menlo", monospace;
+  font-size: 11px;
+  color: #e6edf3;
+}
+[data-theme="light"] .gui-tsv-table { color: #1f2328; }
+.gui-tsv-table thead th {
+  background: #11161d;
+  color: #8b949e;
+  font-weight: 600;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 6px 10px;
+  border-bottom: 1px solid #21262d;
+  text-align: left;
+}
+.gui-tsv-table tbody td {
+  padding: 5px 10px;
+  border-bottom: 1px solid #1a1f26;
+}
+[data-theme="light"] .gui-tsv-table thead th { background: #f6f8fa; color: #656d76; border-color: #d0d7de; }
+[data-theme="light"] .gui-tsv-table tbody td { border-color: #e5e7ea; }
+
+/* Validation pane */
+.gui-validation-pane { background: #0a0e13; display: flex; flex-direction: column; }
+[data-theme="light"] .gui-validation-pane { background: #ffffff; }
+.gui-validation-body { flex: 1 1 auto; overflow: auto; padding: 10px 12px; font-size: 11px; }
+.gui-validation-empty { text-align: center; padding: 24px 12px; color: #656d76; }
+.gui-validation-empty .muted { color: #8b949e; font-size: 11px; }
+.gui-validation-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 4px 10px;
+  border-bottom: 1px solid #1a1f26;
+  font-weight: 600;
+  color: #e6edf3;
+  margin-bottom: 8px;
+}
+.gui-validation-summary .muted { color: #d29922; font-weight: 700; }
+.gui-validation-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.gui-validation-row {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid #21262d;
+  border-radius: 4px;
+  background: #11161d;
+  cursor: pointer;
+}
+.gui-validation-row.sev-warn { border-left: 3px solid #d29922; }
+.gui-validation-row.sev-err  { border-left: 3px solid #f85149; }
+.gui-validation-row.sev-ok   { border-left: 3px solid #3fb950; }
+.gui-validation-row .sev-icon {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(210, 153, 34, 0.15);
+  color: #d29922;
+  font-weight: 700;
+}
+.gui-validation-row .rule {
+  color: #58a6ff;
+  font-family: "SF Mono", "Menlo", monospace;
+  font-size: 10px;
+  font-weight: 700;
+}
+.gui-validation-row .path {
+  color: #e6edf3;
+  font-family: "SF Mono", "Menlo", monospace;
+  font-size: 10px;
+  word-break: break-all;
+  margin-top: 2px;
+}
+.gui-validation-row .body {
+  color: #8b949e;
+  font-size: 11px;
+  margin-top: 2px;
+}
+[data-theme="light"] .gui-validation-row { background: #f6f8fa; border-color: #d0d7de; }
+[data-theme="light"] .gui-validation-row .path { color: #1f2328; }
+[data-theme="light"] .gui-validation-row .body { color: #656d76; }
+[data-theme="light"] .gui-validation-row .rule { color: #0969da; }
+
+/* ====================================================================
+ * Editor stepper sub-step focus rules (5-substep flow)
+ *   1. no audit yet         -> validation pane highlighted
+ *   2. validate dataset run -> Validate dataset button + chips ring
+ *   3. chip-click dialog    -> warnings chip + dialog overlay
+ *   4. sidecar tree edit    -> centre pane
+ *   5. tsv edit             -> centre pane
+ * ==================================================================== */
+.scene-mock-editor[data-editor-step="1"] .gui-pane[data-pane="validation"] { box-shadow: inset 0 0 0 1px rgba(88, 166, 255, 0.55); }
+.scene-mock-editor[data-editor-step="1"] .gui-row-dot { background: #30363d; }
+.scene-mock-editor[data-editor-step="1"] .sc-todo .sc-flag { visibility: hidden; }
+.scene-mock-editor[data-editor-step="1"] .sc-todo .sc-val.placeholder { color: #6e7681; }
+
+.scene-mock-editor[data-editor-step="2"] [data-editor-btn="vdataset"] { box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.55); }
+.scene-mock-editor[data-editor-step="2"] .gui-chip.chip-warn { box-shadow: 0 0 0 1px rgba(210, 153, 34, 0.55); }
+
+.scene-mock-editor[data-editor-step="3"] .gui-chip.chip-warn { box-shadow: 0 0 0 2px rgba(210, 153, 34, 0.85); }
+
+.scene-mock-editor[data-editor-step="4"] .gui-pane[data-pane="center"] { box-shadow: inset 0 0 0 1px rgba(88, 166, 255, 0.55); }
+.scene-mock-editor[data-editor-step="5"] .gui-pane[data-pane="center"] { box-shadow: inset 0 0 0 1px rgba(88, 166, 255, 0.55); }
+
+/* Warn / err chips are clickable shortcuts to the warnings dialog. */
+.gui-chip.is-clickable { cursor: pointer; transition: filter 160ms ease, transform 160ms ease; }
+.gui-chip.is-clickable:hover { filter: brightness(1.18); transform: translateY(-1px); }
+
+/* ====================================================================
+ * Validation pane (Step 5 sub-steps 2-5): grouped section cards
+ * ==================================================================== */
+.gui-validation-section { margin-bottom: 14px; }
+.gui-validation-section-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #8b949e;
+  margin-bottom: 6px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid #21262d;
+}
+.gui-validation-card {
+  background: #11161d;
+  border: 1px solid #21262d;
+  border-left: 3px solid #d29922;
+  border-radius: 5px;
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  display: grid;
+  gap: 4px;
+}
+.gui-validation-card.sev-warn { border-left-color: #d29922; }
+.gui-validation-card.sev-err  { border-left-color: #f85149; }
+.gui-validation-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+.gui-validation-rule {
+  color: #d29922;
+  font-family: "SF Mono", "JetBrains Mono", Menlo, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.gui-validation-card-body {
+  margin: 0;
+  font-size: 11px;
+  color: #c9d1d9;
+  line-height: 1.45;
+}
+.gui-validation-card-tag {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: rgba(88, 166, 255, 0.18);
+  color: #79c0ff;
+  font-size: 10px;
+  font-weight: 600;
+  font-family: "SF Mono", "JetBrains Mono", Menlo, monospace;
+}
+.gui-validation-card-action {
+  align-self: end;
+  padding: 3px 10px;
+  background: #21262d;
+  border: 1px solid #30363d;
+  border-radius: 4px;
+  color: #c9d1d9;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.gui-validation-card-action:hover { background: #30363d; color: #e6edf3; }
+.gui-validation-footer {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #21262d;
+  font-size: 11px;
+  color: #8b949e;
+  display: grid;
+  gap: 3px;
+}
+.gui-validation-footer strong { color: #e6edf3; }
+[data-theme="light"] .gui-validation-section-label { color: #656d76; border-color: #d0d7de; }
+[data-theme="light"] .gui-validation-card { background: #f6f8fa; border-color: #d0d7de; }
+[data-theme="light"] .gui-validation-rule { color: #9a6700; }
+[data-theme="light"] .gui-validation-card-body { color: #1f2328; }
+[data-theme="light"] .gui-validation-card-tag { background: rgba(9, 105, 218, 0.12); color: #0969da; }
+[data-theme="light"] .gui-validation-card-action { background: #ffffff; border-color: #d0d7de; color: #1f2328; }
+[data-theme="light"] .gui-validation-footer { color: #656d76; border-color: #d0d7de; }
+[data-theme="light"] .gui-validation-footer strong { color: #1f2328; }
+
+/* ====================================================================
+ * Warnings chip-click dialog overlay (Step 5 sub-step 3)
+ * ==================================================================== */
+.gui-warnings-dialog {
+  position: absolute;
+  inset: 0;
+  background: rgba(1, 4, 9, 0.55);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  z-index: 5;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+.gui-warnings-dialog.is-open { opacity: 1; pointer-events: auto; }
+.gui-warnings-dialog[hidden] { display: none; }
+.gui-warnings-dialog-card {
+  width: min(720px, 100%);
+  max-height: 88%;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.gui-warnings-dialog-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  background: #161b22;
+  border-bottom: 1px solid #21262d;
+}
+.gui-warnings-dialog-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(210, 153, 34, 0.22);
+  color: #d29922;
+  font-weight: 700;
+}
+.gui-warnings-dialog-title {
+  display: block;
+  color: #e6edf3;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.gui-warnings-dialog-subtitle {
+  display: block;
+  margin-top: 2px;
+  color: #8b949e;
+  font-size: 0.78rem;
+}
+.gui-warnings-dialog-close {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: #8b949e;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.gui-warnings-dialog-close:hover { background: #1c2128; color: #e6edf3; }
+.gui-warnings-dialog-body {
+  flex: 1 1 auto;
+  overflow: auto;
+  padding: 12px 14px;
+  display: grid;
+  gap: 14px;
+}
+.gui-warnings-group {
+  border: 1px solid #21262d;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #0a0e13;
+}
+.gui-warnings-group > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 12px;
+  background: #161b22;
+  border-bottom: 1px solid #21262d;
+}
+.gui-warnings-group-path {
+  color: #8b949e;
+  font-family: "SF Mono", "JetBrains Mono", Menlo, monospace;
+  font-size: 11px;
+}
+.gui-warnings-group-jump {
+  color: #58a6ff;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.gui-warnings-row {
+  display: grid;
+  grid-template-columns: max-content 1fr max-content;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 12px;
+  border-top: 1px solid #11161d;
+  border-left: 3px solid transparent;
+}
+.gui-warnings-row:first-of-type { border-top: none; }
+.gui-warnings-row.sev-warn { border-left-color: #d29922; }
+.gui-warnings-row.sev-err  { border-left-color: #f85149; }
+.gui-warnings-rule {
+  color: #d29922;
+  font-family: "SF Mono", "JetBrains Mono", Menlo, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.gui-warnings-msg {
+  color: #c9d1d9;
+  font-size: 11px;
+}
+.gui-warnings-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.gui-warnings-dialog-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #161b22;
+  border-top: 1px solid #21262d;
+}
+[data-theme="light"] .gui-warnings-dialog { background: rgba(140, 149, 159, 0.4); }
+[data-theme="light"] .gui-warnings-dialog-card { background: #ffffff; border-color: #d0d7de; }
+[data-theme="light"] .gui-warnings-dialog-header { background: #f6f8fa; border-color: #d0d7de; }
+[data-theme="light"] .gui-warnings-dialog-title { color: #1f2328; }
+[data-theme="light"] .gui-warnings-dialog-subtitle { color: #656d76; }
+[data-theme="light"] .gui-warnings-group { background: #ffffff; border-color: #d0d7de; }
+[data-theme="light"] .gui-warnings-group > header { background: #f6f8fa; border-color: #d0d7de; }
+[data-theme="light"] .gui-warnings-group-path { color: #656d76; }
+[data-theme="light"] .gui-warnings-rule { color: #9a6700; }
+[data-theme="light"] .gui-warnings-msg { color: #1f2328; }
+[data-theme="light"] .gui-warnings-dialog-actions { background: #f6f8fa; border-color: #d0d7de; }
+
+/* ====================================================================
+ * TSV viewer additions: row-number column + footer
+ * ==================================================================== */
+.gui-tsv-table .gui-tsv-rownum {
+  width: 28px;
+  color: #6e7681;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  padding-right: 8px;
+  background: rgba(255, 255, 255, 0.02);
+}
+.gui-tsv-footer {
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-top: 1px solid #21262d;
+  background: #0d1117;
+  font-size: 11px;
+  color: #8b949e;
+}
+[data-theme="light"] .gui-tsv-footer { background: #f6f8fa; border-color: #d0d7de; color: #656d76; }
+[data-theme="light"] .gui-tsv-table .gui-tsv-rownum { color: #8c959f; background: rgba(0, 0, 0, 0.02); }
+
+/* Allow the editor mock to host the warnings dialog overlay. */
+.scene-mock-editor { position: relative; }
+
+/* Toggle widget (Strict BIDS) */
+.gui-toggle {
+  display: inline-flex;
+  align-items: center;
+  width: 28px;
+  height: 16px;
+  background: #21262d;
+  border-radius: 999px;
+  padding: 2px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.gui-toggle.is-on { background: #58a6ff; }
+.gui-toggle-knob {
+  width: 12px;
+  height: 12px;
+  background: #e6edf3;
+  border-radius: 50%;
+  transition: transform 160ms ease;
+}
+.gui-toggle.is-on .gui-toggle-knob { transform: translateX(12px); }
+
+/* ---- Placeholder card for scenes whose recording is not yet captured ---- */
+.scene-mock-placeholder {
+  display: grid;
+  place-items: center;
+  padding: 48px 24px;
+  min-height: 280px;
+  background: var(--panel-glass);
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+}
+.scene-mock-placeholder-card {
+  max-width: 480px;
+  text-align: center;
+  color: var(--muted);
+}
+.scene-mock-placeholder-eyebrow {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(88, 166, 255, 0.10);
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.scene-mock-placeholder h4 {
+  margin: 0 0 10px;
+  color: var(--text);
+  font-size: 1.1rem;
+}
+.scene-mock-placeholder p {
+  margin: 0;
+  line-height: 1.55;
+  font-size: 0.95rem;
+}
+
+/* Scan recording sits inside the parent .container (max-width 1180 px).
+ * No full-bleed; the image fills the available column width and stops
+ * there. The Qt-window-like border + drop shadow live on the image
+ * itself so they hug the recording. */
+.scene-recording {
+  margin: 0;
+  width: 100%;
+  text-align: center;
+}
+.scene-recording img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #0a0e13;
+  border: 1px solid #21262d;
+  border-radius: 6px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+[data-theme="light"] .scene-recording img {
+  background: #ffffff;
+  border-color: #d0d7de;
+  box-shadow: 0 16px 40px rgba(31, 35, 40, 0.12);
+}
+
+/* Step 6 NIfTI recording: ship a dark gif + a light gif, show the
+ * one that matches the active theme so the recording chrome matches
+ * the page chrome around it. */
+.scene-nifti-recording .nifti-recording-light { display: none; }
+[data-theme="light"] .scene-nifti-recording .nifti-recording-dark  { display: none; }
+[data-theme="light"] .scene-nifti-recording .nifti-recording-light { display: block; }
+
+/* ---- Sub-scene focus state machine ----
+ * Per-sub-scene `[data-substep="N"]` flips which pane is highlighted
+ * and which are dimmed. JS in script.js syncs the data-substep with
+ * the active step button. Four sub-scenes total. */
+
+.scene-mock-inspect[data-substep="1"] .gui-pane[data-pane="table"]      { box-shadow: inset 0 0 0 1px rgba(88, 166, 255, 0.55); background: #161b22; }
+.scene-mock-inspect[data-substep="1"] .gui-pane[data-pane="filter"]     { opacity: 0.55; }
+.scene-mock-inspect[data-substep="1"] .gui-pane[data-pane="properties"] { opacity: 0.55; }
+
+.scene-mock-inspect[data-substep="2"] .gui-pane[data-pane="table"]      { box-shadow: inset 0 0 0 1px rgba(88, 166, 255, 0.35); }
+.scene-mock-inspect[data-substep="2"] .gui-pane[data-pane="properties"] { box-shadow: inset 0 0 0 1px rgba(88, 166, 255, 0.55); background: #161b22; }
+.scene-mock-inspect[data-substep="2"] .gui-pane[data-pane="filter"]     { opacity: 0.45; }
+
+.scene-mock-inspect[data-substep="3"] .gui-pane[data-pane="table"]      { box-shadow: inset 0 0 0 1px rgba(88, 166, 255, 0.55); background: #161b22; }
+.scene-mock-inspect[data-substep="3"] .gui-pane[data-pane="properties"] { box-shadow: inset 0 0 0 1px rgba(88, 166, 255, 0.55); background: #161b22; }
+.scene-mock-inspect[data-substep="3"] .gui-pane[data-pane="filter"]     { opacity: 0.45; }
+
+/* Sub-step 4: Bulk-edit. Table is the focus (where the multi-select
+ * happens); dialog overlay sits on top of the table. */
+.scene-mock-inspect[data-substep="4"] .gui-pane[data-pane="table"]      { box-shadow: inset 0 0 0 1px rgba(88, 166, 255, 0.55); background: #161b22; }
+.scene-mock-inspect[data-substep="4"] .gui-pane[data-pane="filter"]     { opacity: 0.45; }
+.scene-mock-inspect[data-substep="4"] .gui-pane[data-pane="properties"] { opacity: 0.45; }
+
+/* Sub-step 5: Filter pane focus. */
+.scene-mock-inspect[data-substep="5"] .gui-pane[data-pane="filter"]     { box-shadow: inset 0 0 0 1px rgba(88, 166, 255, 0.55); background: #161b22; }
+.scene-mock-inspect[data-substep="5"] .gui-pane[data-pane="table"]      { box-shadow: inset 0 0 0 1px rgba(88, 166, 255, 0.35); }
+.scene-mock-inspect[data-substep="5"] .gui-pane[data-pane="properties"] { opacity: 0.45; }
+
+/* Multi-select highlight on inventory rows (used in sub-step 4). */
+.scene-mock-inspect .gui-inv-row.is-bulk-selected {
+  background: rgba(88, 166, 255, 0.18);
+  outline: 1px solid rgba(88, 166, 255, 0.55);
+}
+
+/* Bulk-edit dialog overlay (Sub-step 4). Lives inside .gui-table-pane
+ * and is absolute-positioned. Initially hidden; JS adds .is-shown. */
+.scene-mock-inspect .gui-table-pane { position: relative; }
+.gui-bulk-dialog {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 14, 19, 0.55);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 240ms ease;
+  z-index: 5;
+}
+.gui-bulk-dialog.is-shown {
+  opacity: 1;
+  pointer-events: auto;
+}
+.gui-bulk-dialog-card {
+  width: min(320px, 80%);
+  background: #11161d;
+  border: 1px solid #21262d;
+  border-radius: 6px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55);
+  padding: 14px 16px;
+  color: #e6edf3;
+  font-size: 11px;
+}
+.gui-bulk-dialog-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  margin-bottom: 12px;
+}
+.gui-bulk-dialog-count {
+  display: inline-flex;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: rgba(88, 166, 255, 0.14);
+  color: #58a6ff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.gui-bulk-dialog-row {
+  display: grid;
+  grid-template-columns: 78px 1fr;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.gui-bulk-dialog-row label {
+  color: #8b949e;
+  font-size: 11px;
+}
+.gui-bulk-dialog-select,
+.gui-bulk-dialog-input {
+  background: #0a0e13;
+  border: 1px solid #21262d;
+  color: #e6edf3;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-family: "SF Mono", "Menlo", monospace;
+  font-size: 11px;
+}
+.gui-bulk-dialog-input.is-typing {
+  border-color: #58a6ff;
+  box-shadow: 0 0 0 1px rgba(88, 166, 255, 0.30);
+}
+.gui-bulk-dialog-help {
+  font-size: 10px;
+  color: #8b949e;
+  padding: 6px 0 10px;
+  border-bottom: 1px solid #1a1f26;
+  margin-bottom: 10px;
+}
+.gui-bulk-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.gui-bulk-dialog-actions .gui-tb-btn-primary.is-pressed {
+  filter: brightness(0.92);
+}
+
+[data-theme="light"] .gui-bulk-dialog { background: rgba(31, 35, 40, 0.30); }
+[data-theme="light"] .gui-bulk-dialog-card { background: #ffffff; border-color: #d0d7de; color: #1f2328; }
+[data-theme="light"] .gui-bulk-dialog-count { background: rgba(9, 105, 218, 0.12); color: #0969da; }
+[data-theme="light"] .gui-bulk-dialog-row label { color: #656d76; }
+[data-theme="light"] .gui-bulk-dialog-select,
+[data-theme="light"] .gui-bulk-dialog-input { background: #ffffff; border-color: #d0d7de; color: #1f2328; }
+[data-theme="light"] .gui-bulk-dialog-help { color: #656d76; border-color: #e5e7ea; }
+
+/* Edit-propagation flash (Sub-scene 3). The task cell + props field +
+ * preview span all carry data-cell-task / data-props-task / etc. The
+ * JS adds .is-editing for the moment of change. */
+.scene-mock-inspect .cell-task.is-editing,
+.scene-mock-inspect [data-props-task].is-editing,
+.scene-mock-inspect [data-props-preview-task].is-editing {
+  background: rgba(88, 166, 255, 0.22);
+  color: #58a6ff;
+  border-radius: 3px;
+  padding: 0 4px;
+  transition: background 200ms ease, color 200ms ease;
+}
+
+/* Filter pane uncheck flash (Sub-scene 4) */
+.scene-mock-inspect [data-flash-target].is-flashing {
+  background: rgba(248, 81, 73, 0.16);
+  outline: 1px solid rgba(248, 81, 73, 0.40);
+  transition: background 240ms ease, outline-color 240ms ease;
+}
+
+/* FS click highlight (Sub-scene 5) */
+.scene-mock-inspect [data-fs-row].is-highlight,
+.scene-mock-inspect [data-row-key].is-highlight {
+  background: rgba(88, 166, 255, 0.22);
+  outline: 1px solid rgba(88, 166, 255, 0.55);
+}
+
+/* Light-theme overrides for the GUI mock. The docs site's light
+ * theme triggers via [data-theme="light"] on <html>, so we mirror
+ * the GUI's LIGHT palette here. */
+[data-theme="light"] .scene-mock-gui {
+  background: #ffffff;
+  border-color: #d0d7de;
+  color: #1f2328;
+  box-shadow: 0 16px 40px rgba(31, 35, 40, 0.12);
+}
+[data-theme="light"] .scene-mock-gui .gui-topheader { background: #f6f8fa; border-color: #d0d7de; }
+[data-theme="light"] .scene-mock-gui .gui-pathbar  { background: #ffffff; border-color: #e5e7ea; }
+[data-theme="light"] .scene-mock-gui .gui-toolbar  { background: #ffffff; border-color: #d0d7de; }
+[data-theme="light"] .scene-mock-gui .gui-brand-name { color: #1f2328; }
+[data-theme="light"] .scene-mock-gui .gui-view-pill  { color: #656d76; }
+[data-theme="light"] .scene-mock-gui .gui-view-pill.is-checked {
+  background: rgba(9, 105, 218, 0.08);
+  color: #0969da;
+  border-color: rgba(9, 105, 218, 0.32);
+}
+[data-theme="light"] .scene-mock-gui .gui-theme-toggle { background: #eef1f4; color: #1f2328; border-color: #d0d7de; }
+[data-theme="light"] .scene-mock-gui .gui-path-label   { color: #656d76; }
+[data-theme="light"] .scene-mock-gui .gui-path-field   { background: #ffffff; border-color: #d0d7de; color: #1f2328; }
+[data-theme="light"] .scene-mock-gui .gui-path-glyph   { color: #656d76; }
+[data-theme="light"] .scene-mock-gui .gui-tb-ghost     { color: #656d76; }
+[data-theme="light"] .scene-mock-gui .gui-tb-ghost:hover { color: #1f2328; background: #eef1f4; }
+[data-theme="light"] .scene-mock-gui .gui-tb-btn       { background: #eef1f4; color: #1f2328; border-color: #d0d7de; }
+[data-theme="light"] .scene-mock-gui .gui-tb-btn:hover { background: #d0d7de; }
+[data-theme="light"] .scene-mock-gui .gui-tb-btn.is-disabled { color: #8c959f; background: #f6f8fa; }
+[data-theme="light"] .scene-mock-gui .gui-tb-btn-primary { background: #0969da; border-color: #0969da; color: #ffffff; }
+[data-theme="light"] .scene-mock-gui .gui-tb-btn-primary.is-disabled { background: #eef1f4; border-color: #d0d7de; color: #8c959f; }
+[data-theme="light"] .scene-mock-gui .gui-tb-input { background: #ffffff; border-color: #d0d7de; color: #1f2328; }
+[data-theme="light"] .scene-mock-gui .gui-tb-mini-label { color: #656d76; }
+[data-theme="light"] .scene-mock-gui .gui-vsep         { background: #d0d7de; }
+[data-theme="light"] .scene-mock-gui .gui-chip         { background: #eef1f4; border-color: #d0d7de; color: #656d76; }
+[data-theme="light"] .scene-mock-gui .gui-chip.chip-success { background: rgba(26, 127, 55, 0.10); border-color: rgba(26, 127, 55, 0.30); color: #1a7f37; }
+[data-theme="light"] .scene-mock-gui .gui-chip.chip-warn    { background: rgba(154, 103, 0, 0.10); border-color: rgba(154, 103, 0, 0.30); color: #9a6700; }
+[data-theme="light"] .scene-mock-gui .gui-chip.chip-err     { background: rgba(207, 34, 46, 0.10); border-color: rgba(207, 34, 46, 0.30); color: #cf222e; }
+
+/* --------------------------------------------------------------------
+ * Tutorial landing: modality picker + workflow mini + checklist
+ * ------------------------------------------------------------------ */
+
+/* Back-to-landing breadcrumb (top of every per-modality tutorial) */
+.tutorial-back-bar {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel-strong);
+}
+.tutorial-back-bar .container {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+.tutorial-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.tutorial-back-link:hover { color: var(--accent); }
+
+/* Compact 8-step workflow mini-strip on the landing */
+.workflow-mini {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px 18px;
+  padding: 0;
+  margin: 24px 0 0;
+  list-style: none;
+  counter-reset: workflow;
+}
+.workflow-mini li {
+  position: relative;
+  padding: 12px 14px 12px 40px;
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius);
+  background: var(--panel-glass);
+  color: var(--muted);
+  font-size: 0.93rem;
+  counter-increment: workflow;
+}
+.workflow-mini li::before {
+  content: counter(workflow);
+  position: absolute;
+  left: 12px; top: 50%;
+  transform: translateY(-50%);
+  width: 22px; height: 22px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: rgba(88, 166, 255, 0.14);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+}
+.workflow-mini li strong { color: var(--text); font-weight: 700; }
+
+/* Checklist (used on landing) */
+.checklist {
+  padding: 0;
+  margin: 22px 0 0;
+  list-style: none;
+  display: grid;
+  gap: 14px;
+}
+.checklist li {
+  position: relative;
+  padding: 14px 18px 14px 46px;
+  border-left: 2px solid var(--border-glass);
+  color: var(--muted);
+  line-height: 1.6;
+}
+.checklist li::before {
+  content: "";
+  position: absolute;
+  left: 16px; top: 18px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: rgba(88, 166, 255, 0.14);
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+.checklist li strong { color: var(--text); }
+.checklist[type="1"], ol.checklist { list-style: none; }
+ol.checklist { counter-reset: checklist; }
+ol.checklist li::before {
+  content: counter(checklist);
+  counter-increment: checklist;
+  display: grid;
+  place-items: center;
+  background: rgba(88, 166, 255, 0.14);
+  box-shadow: none;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.78rem;
+  width: 22px; height: 22px;
+  left: 12px; top: 14px;
+}
+ol.checklist li {
+  padding-left: 50px;
+}
+
+/* Modality picker grid (4 cards) */
+.modality-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 22px;
+  margin-top: 28px;
+}
+
+.modality-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 26px 24px 22px;
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius);
+  background: var(--panel-glass);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  transition: border-color 180ms ease, transform 180ms ease;
+  overflow: hidden;
+}
+.modality-card::before {
+  /* Top accent stripe per modality */
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--accent);
+  opacity: 0.85;
+}
+.modality-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.modality-card .modality-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(88, 166, 255, 0.12);
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  align-self: flex-start;
+  margin-bottom: 4px;
+}
+.modality-card h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  line-height: 1.3;
+}
+.modality-card .modality-meta {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.84rem;
+  letter-spacing: 0.02em;
+}
+.modality-card .modality-desc {
+  margin: 6px 0 14px;
+  color: var(--text);
+  font-size: 0.97rem;
+  line-height: 1.55;
+}
+.modality-card .modality-actions {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Per-modality accent palette */
+.modality-card.mod-mri::before     { background: var(--accent); }
+.modality-card.mod-mri .modality-badge { background: rgba(88, 166, 255, 0.14); color: var(--accent); }
+
+.modality-card.mod-eeg::before     { background: var(--success); }
+.modality-card.mod-eeg .modality-badge { background: rgba(63, 185, 80, 0.16); color: var(--success); }
+
+.modality-card.mod-meg::before     { background: var(--teal); }
+.modality-card.mod-meg .modality-badge { background: rgba(57, 197, 207, 0.16); color: var(--teal); }
+
+.modality-card.mod-mri-adv::before { background: var(--purple); }
+.modality-card.mod-mri-adv .modality-badge { background: rgba(210, 168, 255, 0.16); color: var(--purple); }
+
+/* "Coming soon" stub layout on per-modality pages */
+.tutorial-stub {
+  margin-top: 28px;
+  padding: 22px 24px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  background: rgba(88, 166, 255, 0.04);
+}
+.tutorial-stub h2 {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+}
+.tutorial-stub ul {
+  margin: 0;
+  padding-left: 1.1em;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* After-tutorial recap (shared partial) */
+.tutorial-after h2 {
+  margin-top: 28px;
+}
+.tutorial-after h2:first-child { margin-top: 0; }
+.tutorial-after p > .btn + .btn { margin-left: 8px; }
+
+/* CLI footer panel (shared partial) */
+.tutorial-cli-footer details {
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius);
+  background: var(--panel-glass);
+  padding: 18px 22px;
+}
+.tutorial-cli-footer summary {
+  cursor: pointer;
+  font-size: 1.02rem;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+.tutorial-cli-footer summary::marker { color: var(--accent); }
+
+/* --------------------------------------------------------------------
  * Responsive nips
  * ------------------------------------------------------------------ */
 
 @media (max-width: 720px) {
   .nav-links a:not(.is-active) { display: none; }
   .brand img { width: 26px; height: 26px; }
+}
+
+/* ====================================================================
+ * CLI reference (Section 7): definition list for command arguments.
+ * Each dt is a flag / positional name; the dd that follows is its
+ * description. Two-column grid on wide screens, stacked on narrow.
+ * ==================================================================== */
+.cli-args {
+  display: grid;
+  grid-template-columns: minmax(220px, max-content) 1fr;
+  column-gap: 28px;
+  row-gap: 14px;
+  margin: 14px 0 22px;
+  padding: 0;
+}
+.cli-args dt {
+  margin: 0;
+  padding-top: 2px;
+  font-size: 0.92rem;
+  line-height: 1.35;
+  color: var(--text);
+}
+.cli-args dt code {
+  white-space: nowrap;
+}
+.cli-args dd {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.cli-args dd code {
+  white-space: nowrap;
+}
+.prose .cli-args + h4,
+.prose h4 {
+  margin: 22px 0 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+@media (max-width: 720px) {
+  .cli-args { grid-template-columns: 1fr; row-gap: 6px; }
+  .cli-args dt { padding-top: 14px; border-top: 1px solid var(--border-glass); }
+  .cli-args dt:first-of-type { border-top: none; padding-top: 0; }
 }

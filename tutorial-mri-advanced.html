@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MRI advanced walkthrough for BIDS Manager: a richer Siemens dataset with DWI derivatives, physio, multiple anatomical contrasts.">
+  <title>MRI advanced tutorial &middot; BIDS Manager</title>
+  <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div data-include="header"></div>
+
+  <div data-include="tutorial-back-to-landing"></div>
+
+  <main>
+    <!-- ============================================================
+         Hero
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">MRI advanced tutorial</span>
+        <h1>MRI: the rich-protocol deep dive.</h1>
+        <p class="lead">
+          A second Oldenburg MRI sample, picked to push the engine
+          harder than the primary tutorial dataset. Three source
+          folders that cluster to two BIDS subjects, six anatomical
+          contrasts (T1w / T2w / T2starw / FLAIR), BOLD with SBRefs,
+          DWI with scanner-derived FA / colFA / trace / TENSOR maps,
+          fmap pairs, and Siemens CMRR physio. Walk this after the
+          primary MRI tutorial; the GUI flow is identical.
+        </p>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>This dataset exercises the classifier's quirks.</strong>
+            <p>The primary MRI tutorial uses a clean dataset with
+              one anatomy, one BOLD, one DWI, one fmap pair. This
+              one piles on: multiple anatomy contrasts, DWI
+              derivatives (FA / colFA / trace / TENSOR) that the
+              BIDS schema 1.11+ treats as first-class suffixes, a
+              PA-direction DWI that gets rerouted to
+              <code class="inline">fmap/_epi</code> as the B0
+              reference for distortion correction, and CMRR physio
+              that converts via the vendored
+              <code class="inline">bidsphysio</code> backend.</p>
+          </div>
+        </div>
+
+        <div class="download-card">
+          <div class="download-card-body">
+            <span class="section-eyebrow" style="margin-bottom:8px;">Example data</span>
+            <h2 style="margin-top:0;">Oldenburg neuroimaging unit (3 folders / 2 BIDS subjects)</h2>
+            <p>
+              Three source folders (<code class="inline">OL_3844</code>,
+              <code class="inline">OL_3845</code>,
+              <code class="inline">OL_3846</code>) clustered by
+              PatientID. The first two share
+              <code class="inline">XX00XX00</code> and collapse into
+              <code class="inline">sub-001</code> with ses-pre /
+              ses-post. The third is a different PatientID
+              (<code class="inline">YY11YY11</code>) and stands
+              alone as <code class="inline">sub-002</code>.
+            </p>
+            <p>
+              <a class="btn btn-primary"
+                 href="https://mega.nz/file/1AYlkTbA#2ZEU0bIo_olZdtBoXgx4nlkZCBeb0pIm99wqq9lS3B4"
+                 target="_blank" rel="noopener">
+                Download MRI advanced dataset &rarr;
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Dataset overview
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Dataset overview</span>
+        <h2>3 folders &rarr; 2 BIDS subjects.</h2>
+
+        <div class="results-grid">
+          <div class="results-card">
+            <span class="results-card-eyebrow">sub-001</span>
+            <strong class="results-card-num">2 folders</strong>
+            <span class="results-card-label">PatientID XX00XX00</span>
+            <p class="muted">
+              <code class="inline">OL_3844</code> &rarr; ses-pre.
+              <code class="inline">OL_3845</code> &rarr; ses-post.
+              StudyDate ordering drives which folder gets which
+              session label.
+            </p>
+          </div>
+          <div class="results-card">
+            <span class="results-card-eyebrow">sub-002</span>
+            <strong class="results-card-num">1 folder</strong>
+            <span class="results-card-label">PatientID YY11YY11</span>
+            <p class="muted">
+              <code class="inline">OL_3846</code> stands alone. No
+              second session, so no ses entity is written.
+            </p>
+          </div>
+          <div class="results-card">
+            <span class="results-card-eyebrow">Modality mix</span>
+            <strong class="results-card-num">10</strong>
+            <span class="results-card-label">distinct datatypes</span>
+            <p class="muted">
+              T1w, T2w, T2starw, FLAIR, BOLD, SBRef, DWI, DWI
+              derivatives (FA / colFA / trace / TENSOR), fmap
+              (magnitude1 / phasediff / epi), physio,
+              scout / Phoenix report (skipped).
+            </p>
+          </div>
+        </div>
+
+        <h3>Notable classifier moves on this dataset</h3>
+        <ul class="checklist">
+          <li>
+            <strong>Subject identity clustering.</strong> The
+            <code class="inline">subject_identity.cluster_subjects</code>
+            module reads the DICOM PatientID + PatientName, then
+            groups folders. Three folders &rarr; two clusters &rarr;
+            two BIDS subjects with the appropriate session split.
+          </li>
+          <li>
+            <strong>DWI derivative detection.</strong> The classifier
+            recognises FA / colFA / trace / TENSOR series as
+            scanner-derived derivatives and writes them with the BIDS
+            1.11+ suffixes
+            (<code class="inline">_FA</code>,
+            <code class="inline">_colFA</code>,
+            <code class="inline">_trace</code>,
+            <code class="inline">_TENSOR</code>) in
+            <code class="inline">dwi/</code> rather than dropping
+            them.
+          </li>
+          <li>
+            <strong>B0-reference reroute.</strong> The PA-direction
+            DWI series (a single-volume acquisition with reversed
+            phase encoding) is automatically rerouted to
+            <code class="inline">fmap/_epi</code> so it can serve as
+            the B0 reference for distortion correction of the
+            AP-direction DWIs.
+          </li>
+          <li>
+            <strong>Phoenix and scouts auto-skipped.</strong> 19 rows
+            on this dataset (3 folders &times; 4 AAHead Scout
+            variants + 1 PhoenixZIPReport, plus a few extra
+            calibration variants) come pre-marked with
+            <code class="inline">bids_guess_skip = true</code>. The
+            user can re-include any of them, but the default is
+            "drop these".
+          </li>
+          <li>
+            <strong>CMRR physio.</strong> Three physio logs
+            (PhysioLog Siemens CMRR format) are dispatched to the
+            <code class="inline">PhysioDcmBackend</code> which uses
+            the vendored <code class="inline">bidsphysio</code>. Two
+            of three succeed on this dataset; one is corrupted at
+            source and fails cleanly with
+            <code class="inline">bidsphysio produced no output
+            files</code>. The Convert log surfaces the failure
+            without aborting the rest.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CLI numbers
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">What you'll see</span>
+        <h2>Real numbers from the advanced MRI pipeline.</h2>
+        <p>
+          Same four commands as the primary MRI tutorial. The
+          difference is in the breadth of modalities and the
+          classifier's reroute / derivative-detection logic.
+        </p>
+
+        <div class="results-grid">
+          <div class="results-card">
+            <span class="results-card-eyebrow">Scan</span>
+            <strong class="results-card-num">51 / 19</strong>
+            <span class="results-card-label">inv rows / skipped</span>
+            <p class="muted">
+              <code class="inline">--probe-convert</code> on this
+              dataset takes ~30 s on a Mac (one dcm2niix probe per
+              series). 32 keepers across both subjects, 19 auto-
+              skipped (scouts, Phoenix reports, calibrations).
+            </p>
+          </div>
+          <div class="results-card">
+            <span class="results-card-eyebrow">Convert</span>
+            <strong class="results-card-num">32 NIfTI + 9 physio</strong>
+            <span class="results-card-label">files written</span>
+            <p class="muted">
+              32 NIfTI files (anat / func / dwi / fmap), 9 physio
+              TSV.gz (the successful PhysioLog rows), 44 sidecar
+              JSONs. 3 physio rows fail cleanly with the
+              "bidsphysio produced no output files" warning.
+            </p>
+          </div>
+          <div class="results-card">
+            <span class="results-card-eyebrow">Validate</span>
+            <strong class="results-card-num">75 / 5 / 0</strong>
+            <span class="results-card-label">ok / warn / err</span>
+            <p class="muted">
+              Zero errors. The 5 warnings are TODO placeholders the
+              enrichment cannot infer: License / Authors in
+              dataset_description.json, plus
+              <code class="inline">Instructions</code> /
+              <code class="inline">TaskDescription</code> on the BOLD
+              sidecars. Fillable in the Editor in one pass.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         What's different from the primary MRI walkthrough
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">What's different vs the primary MRI tutorial</span>
+        <h2>Same engine, more data variety.</h2>
+        <ul class="checklist">
+          <li>
+            <strong>More than one anatomical contrast.</strong> The
+            primary dataset has T1w + T2w. This one has T1w + T2w +
+            T2starw + FLAIR. All four route to
+            <code class="inline">anat/</code> with the correct
+            suffix; no per-row override needed.
+          </li>
+          <li>
+            <strong>DWI scanner-derivative detection in action.</strong>
+            BIDS 1.11+ promoted FA, colFA, trace, and TENSOR to
+            first-class suffixes; older pipelines either dropped
+            them or hand-coded a derivative layout. The classifier
+            recognises them natively.
+          </li>
+          <li>
+            <strong>The B0 reroute.</strong> Watch the Convert log
+            for <code class="inline">classifier: acq-15_dir-PA b0
+            rerouted to fmap/_epi</code>. The PA-direction
+            single-volume DWI becomes the BIDS-required reference
+            for distortion correction without a heuristic file.
+          </li>
+          <li>
+            <strong>Partial physio failures.</strong> Three of the
+            CMRR physio rows fail cleanly. The dataset is still
+            BIDS-valid because the failed rows do not write incomplete
+            output (the per-subject staging is atomic). The Convert
+            scene in the GUI surfaces the failures in the Log dock.
+          </li>
+          <li>
+            <strong>Highlight aborts becomes useful.</strong> The
+            inspection-pane footer's <em>Highlight aborts</em> toggle
+            tints suspected-abort rows purple. On the primary dataset
+            it does nothing (no aborts). Here it lights up the
+            scout-with-MPR pairs the classifier already auto-deselected.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Walk the GUI / CLI walkthrough on the main tutorial page
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow prose">
+        <p style="margin-top: 8px;">
+          <a class="btn btn-primary" href="tutorial.html#scenes">Walk the GUI tutorial &rarr;</a>
+          <a class="btn btn-ghost" href="tutorial.html#cli">See the CLI walkthrough</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <div data-include="footer"></div>
+  <script src="script.js" defer></script>
+</body>
+</html>
