@@ -51,6 +51,7 @@
   initInspectSubScenes();
   initEditorSubSteps();
   initScanSubSteps();
+  initHeroJourney();
 })();
 
 
@@ -1447,6 +1448,7 @@ function initThemeToggle() {
       toggle.setAttribute("aria-pressed", String(isLight));
     }
     swapThemedImages(theme);
+    swapHeroBrains(theme);
   }
   apply(initial);
 
@@ -1469,6 +1471,23 @@ function swapThemedImages(theme) {
     if (!img.dataset.dark) img.dataset.dark = img.getAttribute("src");
     const target = theme === "light" ? img.dataset.light : img.dataset.dark;
     if (img.getAttribute("src") !== target) img.setAttribute("src", target);
+  });
+}
+
+
+/* Hero brain glyphs come in matched light / dark pairs:
+ *   - assets/brand/brain-start.png    + brain-start-white.png
+ *   - assets/brand/strong-brain.png   + strong-brain-white.png
+ * Each <image data-brain-base="NAME"> in the hero SVG picks up its
+ * href from the active theme: black line-art on light, white line-art
+ * on dark. Avoids the CSS `filter: invert()` route, which composes
+ * unpredictably with the SVG drop-shadow filter on the parent group. */
+function swapHeroBrains(theme) {
+  const dark = theme !== "light";
+  const suffix = dark ? "-white" : "";
+  document.querySelectorAll("[data-brain-base]").forEach((img) => {
+    const base = img.dataset.brainBase;
+    img.setAttribute("href", `assets/brand/${base}${suffix}.png`);
   });
 }
 
@@ -1944,6 +1963,330 @@ function initEditorSubSteps() {
 
   /* Boot on sub-step 1. */
   activate(1);
+}
+
+
+/* ======================================================================
+ *  Hero workflow journey widget (BrainHack-style).
+ *
+ *  Lifted from INDoS BrainHack's initWorkflowGraph and adapted: the
+ *  six nodes are relabelled to the BIDS Manager workflow stages, the
+ *  final-stage brain swaps to BIDS Manager's strong-brain glyph, and
+ *  the BrainHack "fly off and pop title" finale is replaced by a
+ *  hold: the strong-brain stays planted on station 6 (BIDS) with a
+ *  sustained pulsing halo (CSS `brainHaloFinal` keyframe driven by
+ *  the stage-5 class). Click again to replay.
+ * ==================================================================== */
+
+function initHeroJourney() {
+  /* Use the .workflow-animation selector (only the hero SVG has it)
+   * so this initializer doesn't accidentally pick up the intro
+   * page's .workflow-graph and clobber it. */
+  const workflowGraph = document.querySelector(".workflow-animation");
+  if (!workflowGraph) return;
+  if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+
+  const paths = [
+    {
+      path: workflowGraph.querySelector("#workflow-main-path"),
+      dot: workflowGraph.querySelector(".dot-main"),
+      duration: 8400,
+      offset: 0,
+      main: true,
+    },
+  ].filter(({ path, dot }) => path && dot);
+
+  if (!paths.length) return;
+
+  const lengths = new Map(paths.map(({ path }) => [path, path.getTotalLength()]));
+
+  const spotlight = workflowGraph.querySelector(".workflow-spotlight");
+  /* Seven nodes, each transform-anchored at its exact (x, y) on the
+   * sinusoidal main path. Coordinates here match the path's seven
+   * anchor points so the spotlight and the click-brain land dead
+   * centre on each glyph. */
+  const nodes = [
+    { selector: ".raw-node",     x: 70,  y: 125 },
+    { selector: ".scan-node",    x: 195, y: 70  },
+    { selector: ".curate-node",  x: 320, y: 125 },
+    { selector: ".bids-node",    x: 445, y: 180 },
+    { selector: ".assess-node",  x: 570, y: 125 },
+    { selector: ".control-node", x: 695, y: 70  },
+    { selector: ".report-node",  x: 820, y: 125 },
+  ].map((node) => ({ ...node, element: workflowGraph.querySelector(node.selector) }));
+
+  function highlightNearestNode(point) {
+    if (workflowGraph.classList.contains("is-stepping")) return;
+
+    let closest = null;
+    let closestDistance = Infinity;
+
+    nodes.forEach((node) => {
+      const distance = Math.hypot(point.x - node.x, point.y - node.y);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closest = node;
+      }
+    });
+
+    nodes.forEach(({ element }) => {
+      element?.classList.remove("is-path-active");
+      element?.removeAttribute("filter");
+    });
+    if (closest && closestDistance < 46) {
+      closest.element?.classList.add("is-path-active");
+      closest.element?.setAttribute("filter", "url(#workflow-node-glow)");
+    }
+  }
+
+  function moveDot(path, dot, progress, isMain = false) {
+    const length = lengths.get(path);
+    const point = path.getPointAtLength(length * progress);
+    dot.setAttribute("cx", point.x.toFixed(2));
+    dot.setAttribute("cy", point.y.toFixed(2));
+    if (isMain) highlightNearestNode(point);
+  }
+
+  function animateDots(timestamp) {
+    paths.forEach(({ path, dot, duration, offset, main }) => {
+      const progress = ((timestamp / duration + offset) % 1);
+      moveDot(path, dot, progress, Boolean(main));
+    });
+    window.requestAnimationFrame(animateDots);
+  }
+
+  window.requestAnimationFrame(animateDots);
+
+  const clickBrain = workflowGraph.querySelector(".click-brain");
+  const flash = workflowGraph.querySelector(".workflow-flash");
+  const heroTitle = document.querySelector(".hero-title");
+  const finaleAudio = document.querySelector("[data-hero-finale-audio]");
+  if (finaleAudio) finaleAudio.volume = 0.75;
+  let audioUnlocked = false;
+  /* Browsers gate audio.play() behind a recent user gesture. The
+   * finale fires ~5 s after the click via requestAnimationFrame, by
+   * which point Safari and Chrome have dropped the gesture context.
+   * We unlock the audio on the click itself by attempting a silent
+   * play() + immediate pause(); after that the element is allowed
+   * to play() later in the same session. */
+  function unlockFinaleAudio() {
+    if (!finaleAudio || audioUnlocked) return;
+    finaleAudio.muted = true;
+    const p = finaleAudio.play();
+    const settle = () => {
+      finaleAudio.pause();
+      finaleAudio.currentTime = 0;
+      finaleAudio.muted = false;
+      audioUnlocked = true;
+    };
+    if (p && typeof p.then === "function") {
+      p.then(settle).catch(() => { finaleAudio.muted = false; });
+    } else {
+      settle();
+    }
+  }
+  const flashColors = ["#b8f46d", "#4de3ff", "#ff8b6b", "#bda6ff", "#fff06a", "#52ffa8"];
+  let clickAnimationFrame;
+  let cleanupTimer;
+
+  function setClickBrainStage(stage) {
+    if (!clickBrain) return;
+    clickBrain.classList.remove("stage-0", "stage-1", "stage-2", "stage-3", "stage-4", "stage-5");
+    clickBrain.classList.add(`stage-${stage}`);
+  }
+
+  function clearNodeFocus() {
+    window.cancelAnimationFrame(clickAnimationFrame);
+    window.clearTimeout(cleanupTimer);
+    workflowGraph.classList.remove("is-stepping");
+    spotlight?.classList.remove("is-visible");
+    clickBrain?.classList.remove("is-visible", "is-finale-lifted");
+    heroTitle?.classList.remove("is-mega-glow");
+    if (finaleAudio && !finaleAudio.paused) {
+      finaleAudio.pause();
+      finaleAudio.currentTime = 0;
+    }
+    nodes.forEach(({ element }) => {
+      element?.classList.remove("is-active", "is-path-active");
+      element?.removeAttribute("filter");
+    });
+    setClickBrainStage(0);
+  }
+
+  function easeInOut(t) {
+    return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  }
+
+  function randomFlashColor() {
+    return flashColors[Math.floor(Math.random() * flashColors.length)];
+  }
+
+  function flashNode(node, stage) {
+    nodes.forEach(({ element }) => {
+      element?.classList.remove("is-active", "is-path-active");
+      element?.removeAttribute("filter");
+    });
+    node.element?.classList.add("is-active");
+    node.element?.setAttribute("filter", "url(#workflow-node-glow)");
+
+    const color = randomFlashColor();
+    if (spotlight) {
+      spotlight.style.color = color;
+      spotlight.style.fill = color;
+      spotlight.setAttribute("fill", color);
+      spotlight.setAttribute("cx", String(node.x));
+      spotlight.setAttribute("cy", String(node.y));
+      spotlight.setAttribute("r", String(20 + stage * 2.2));
+      spotlight.classList.add("is-visible");
+    }
+
+    if (flash) {
+      flash.style.color = color;
+      flash.style.stroke = color;
+      flash.setAttribute("stroke", color);
+      flash.setAttribute("cx", String(node.x));
+      flash.setAttribute("cy", String(node.y));
+      flash.classList.remove("is-flashing");
+      void flash.getBoundingClientRect();
+      flash.classList.add("is-flashing");
+    }
+  }
+
+  function positionBrain(x, y, stage, extraScale = 1) {
+    if (!clickBrain) return;
+    const scale = (0.92 + stage * 0.095) * extraScale;
+    clickBrain.setAttribute("transform", `translate(${x.toFixed(2)} ${y.toFixed(2)}) scale(${scale.toFixed(3)})`);
+    setClickBrainStage(stage);
+    clickBrain.classList.add("is-visible");
+  }
+
+  function positionBrainFinale(x, y) {
+    /* The strong-brain at the end of the journey: big and drifting
+     * DOWN past the BIDS station so the muscled glyph dominates the
+     * hero. The Y offset is intentionally large enough to push the
+     * brain below the path line. */
+    if (!clickBrain) return;
+    const droppedY = y + 210;          // drop the strong-brain DOWN well past the hero
+    const scale = 2.7;
+    clickBrain.setAttribute("transform", `translate(${x.toFixed(2)} ${droppedY.toFixed(2)}) scale(${scale.toFixed(3)})`);
+    setClickBrainStage(5);
+    clickBrain.classList.add("is-visible", "is-finale-lifted");
+  }
+
+  function animateBetween(from, to, stage, duration, onDone) {
+    const start = performance.now();
+
+    function frame(now) {
+      const rawProgress = Math.min(1, (now - start) / duration);
+      const progress = easeInOut(rawProgress);
+      const x = from.x + (to.x - from.x) * progress;
+      const y = from.y + (to.y - from.y) * progress;
+      positionBrain(x, y, stage);
+
+      if (rawProgress < 1) {
+        clickAnimationFrame = window.requestAnimationFrame(frame);
+      } else {
+        onDone?.();
+      }
+    }
+
+    clickAnimationFrame = window.requestAnimationFrame(frame);
+  }
+
+  /* BIDS Manager finale: the strong-brain settles at the BIDS
+   * station, grows large, and floats UP above the path while the
+   * green halo keeps pulsing (CSS keyframe on .stage-5
+   * .click-brain-halo). The lift is animated by tweening Y in a
+   * short follow-up frame loop after the brain reaches the BIDS
+   * station, so the transition reads as a single graceful rise. */
+  function showFinale(from) {
+    animateBetween(from, from, 5, 240, () => {
+      const startY = from.y;
+      const endY = from.y + 210;         // drift DOWN well past the hero
+      const startScale = 1.55;
+      const endScale = 2.7;              // grow large enough to dominate the hero
+      const dur = 620;
+      const t0 = performance.now();
+      function drift(now) {
+        const raw = Math.min(1, (now - t0) / dur);
+        const eased = easeInOut(raw);
+        const y = startY + (endY - startY) * eased;
+        const scale = startScale + (endScale - startScale) * eased;
+        clickBrain?.setAttribute(
+          "transform",
+          `translate(${from.x.toFixed(2)} ${y.toFixed(2)}) scale(${scale.toFixed(3)})`,
+        );
+        if (raw < 1) {
+          clickAnimationFrame = window.requestAnimationFrame(drift);
+        } else {
+          clickBrain?.classList.add("is-finale-lifted");
+          /* Light up the BIDS Manager title with a multicolor
+           * glow synchronized with the strong-brain reveal. */
+          heroTitle?.classList.add("is-mega-glow");
+          /* Heavenly-choir cue. The audio was unlocked at click
+           * time (unlockFinaleAudio) so this play() should resolve
+           * even though we're inside a RAF callback far from the
+           * original user gesture. Any rejection is logged so
+           * future regressions are visible in the console. */
+          if (finaleAudio) {
+            finaleAudio.currentTime = 0;
+            const p = finaleAudio.play();
+            if (p && typeof p.catch === "function") {
+              p.catch((err) =>
+                console.warn("[hero-journey] choir play() rejected:", err)
+              );
+            }
+          }
+          /* Hold the finale for 10 s, then quietly tear it down so
+           * the hero settles back to a calm state. The user can
+           * always click the SVG again to replay. */
+          cleanupTimer = window.setTimeout(clearNodeFocus, 10000);
+        }
+      }
+      setClickBrainStage(5);
+      clickAnimationFrame = window.requestAnimationFrame(drift);
+    });
+  }
+
+  function runNodeSpotlight() {
+    clearNodeFocus();
+    workflowGraph.classList.add("is-stepping");
+    let index = 0;
+
+    positionBrain(nodes[0].x, nodes[0].y, 0);
+    flashNode(nodes[0], 0);
+
+    function nextSegment() {
+      if (index >= nodes.length - 1) {
+        showFinale(nodes[nodes.length - 1]);
+        return;
+      }
+
+      const from = nodes[index];
+      const to = nodes[index + 1];
+      const nextStage = Math.min(5, index + 1);
+      index += 1;
+
+      animateBetween(from, to, nextStage, 680, () => {
+        flashNode(to, nextStage);
+        cleanupTimer = window.setTimeout(nextSegment, 190);
+      });
+    }
+
+    cleanupTimer = window.setTimeout(nextSegment, 260);
+  }
+
+  workflowGraph.addEventListener("click", () => {
+    unlockFinaleAudio();
+    runNodeSpotlight();
+  });
+  workflowGraph.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      unlockFinaleAudio();
+      runNodeSpotlight();
+    }
+  });
 }
 
 

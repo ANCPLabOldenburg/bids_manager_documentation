@@ -32,6 +32,12 @@
   --purple:        #d2a8ff;
   --teal:          #39c5cf;
 
+  /* Hero-journey palette (BrainHack-style workflow widget colors). */
+  --cyan:          #4de3ff;
+  --lime:          #b8f46d;
+  --coral:         #ff8b6b;
+  --violet:        #bda6ff;
+
   /* Decorative glow tokens (from INDoS aesthetic) */
   --glow-accent:   rgba(88, 166, 255, 0.48);
   --glow-purple:   rgba(210, 168, 255, 0.42);
@@ -94,6 +100,12 @@
   --error:         #cf222e;
   --purple:        #8250df;
   --teal:          #1d7a8c;
+
+  /* Hero-journey palette (light variants of BrainHack colors). */
+  --cyan:          #067f9a;
+  --lime:          #3f7c14;
+  --coral:         #b94f33;
+  --violet:        #6550b8;
 
   --glow-accent:   rgba(9, 105, 218, 0.32);
   --glow-purple:   rgba(130, 80, 223, 0.32);
@@ -499,6 +511,370 @@ main { display: block; }
 [data-theme="light"] .hero-eyebrow { background: rgba(18, 23, 32, 0.04); }
 .hero-eyebrow strong { color: var(--accent); font-weight: 700; }
 
+/* ====================================================================
+ * Hero workflow journey (BrainHack-style SVG widget).
+ * All rules are scoped to `.workflow-animation` (only the hero SVG
+ * carries that class) so they do NOT bleed into the intro page's
+ * workflow diagram, which shares the `.workflow-graph` class but
+ * uses its own styling.
+ * ==================================================================== */
+.workflow-animation {
+  width: min(820px, 100%);
+  height: auto;
+  margin: -10px 0 -28px;
+  opacity: 0.96;
+  display: block;
+  overflow: visible;
+  cursor: pointer;
+  outline: none;
+}
+
+.workflow-animation:focus-visible {
+  filter: drop-shadow(0 0 0.75rem rgba(77, 227, 255, 0.5));
+}
+
+.workflow-click-hint {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin: 0 0 18px;
+  padding: 7px 15px;
+  border: 1px solid rgba(77, 227, 255, 0.42);
+  border-radius: 999px;
+  background: rgba(8, 9, 13, 0.7);
+  color: #eef7ff;
+  font-size: 12px;
+  font-weight: 820;
+  line-height: 1;
+  opacity: 0.82;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.workflow-animation:hover + .workflow-click-hint,
+.workflow-animation:focus-visible + .workflow-click-hint,
+.workflow-click-hint:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+.workflow-animation.is-stepping + .workflow-click-hint {
+  opacity: 0;
+}
+
+.workflow-animation .workflow-line {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 10 12;
+  animation: workflowDash 3.8s linear infinite;
+}
+
+.workflow-animation .main-line  { stroke: rgba(77, 227, 255, 0.58); }
+.workflow-animation .audit-line { stroke: rgba(184, 244, 109, 0.58); stroke-width: 2.4; animation-duration: 4.4s; }
+.workflow-animation .qc-line    { stroke: rgba(255, 139, 107, 0.64); stroke-width: 2.4; animation-duration: 4.1s; }
+
+/* The node "disc" (background circle behind each MDI icon). */
+.workflow-animation .node-disc {
+  fill: rgba(8, 9, 13, 0.62);
+  stroke: rgba(239, 247, 255, 0.88);
+  stroke-width: 2;
+  transition: fill 220ms ease, stroke 220ms ease, stroke-width 220ms ease;
+}
+.workflow-animation .node-icon {
+  color: rgba(239, 247, 255, 0.96);
+  pointer-events: none;
+  transition: color 220ms ease, transform 220ms ease;
+}
+
+.workflow-animation .workflow-node            { animation: workflowNodePulse 4.8s ease-in-out infinite; cursor: pointer; }
+.workflow-animation.is-stepping .workflow-node { animation: none; opacity: 0.64; transition: opacity 180ms ease, filter 180ms ease; }
+.workflow-animation .workflow-node.is-active,
+.workflow-animation .workflow-node.is-path-active {
+  opacity: 1;
+  -webkit-filter: url(#workflow-node-glow);
+          filter: url(#workflow-node-glow);
+}
+.workflow-animation .workflow-node.is-active .node-disc,
+.workflow-animation .workflow-node.is-path-active .node-disc {
+  stroke: rgba(255, 255, 255, 0.98);
+  stroke-width: 2.8;
+}
+.workflow-animation .workflow-node.is-active .node-icon,
+.workflow-animation .workflow-node.is-path-active .node-icon {
+  color: #ffffff;
+}
+
+.workflow-animation .scan-node    { animation-delay: 0.35s; }
+.workflow-animation .bids-node    { animation-delay: 0.7s;  }
+.workflow-animation .assess-node  { animation-delay: 1.05s; }
+.workflow-animation .control-node { animation-delay: 1.4s;  }
+.workflow-animation .report-node  { animation-delay: 1.75s; }
+
+.workflow-animation .workflow-node text {
+  fill: #f4f7fb;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-anchor: middle;
+}
+
+.workflow-animation .workflow-mini-graph path   { fill: none; stroke: rgba(189, 166, 255, 0.74); stroke-width: 2; }
+.workflow-animation .workflow-mini-graph circle { fill: var(--violet); }
+
+.workflow-animation .travel-dot {
+  opacity: 0.95;
+  pointer-events: none;
+  -webkit-filter: url(#workflow-dot-glow);
+          filter: url(#workflow-dot-glow);
+}
+.workflow-animation .dot-main  { color: var(--lime);  fill: var(--lime);  }
+.workflow-animation .dot-audit { color: var(--cyan);  fill: var(--cyan);  }
+.workflow-animation .dot-qc    { color: var(--coral); fill: var(--coral); }
+
+.workflow-animation .workflow-spotlight {
+  fill: currentColor;
+  color: var(--lime);
+  opacity: 0;
+  pointer-events: none;
+  -webkit-filter: url(#workflow-spotlight-glow);
+          filter: url(#workflow-spotlight-glow);
+  transition: opacity 160ms ease, r 160ms ease;
+}
+.workflow-animation .workflow-spotlight.is-visible { opacity: 0.96; }
+
+.workflow-animation .workflow-flash {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 4;
+  opacity: 0;
+  pointer-events: none;
+  -webkit-filter: url(#workflow-flash-glow);
+          filter: url(#workflow-flash-glow);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.workflow-animation .workflow-flash.is-flashing { animation: nodeFlash 520ms ease-out both; }
+
+.workflow-animation .click-brain {
+  opacity: 0;
+  pointer-events: none;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: opacity 160ms ease, transform 220ms ease;
+  -webkit-filter: url(#workflow-brain-glow);
+          filter: url(#workflow-brain-glow);
+}
+.workflow-animation .click-brain.is-visible { opacity: 1; }
+
+.workflow-animation .click-brain-halo {
+  fill: rgba(7, 10, 16, 0.9);
+  stroke: rgba(77, 227, 255, 0.72);
+  stroke-width: 2;
+  opacity: 0.94;
+  animation: brainHalo 1.2s ease-in-out infinite;
+  /* Smooth the r / stroke / fill change when the finale promotes
+   * the halo from the small workflow size to the big lifted size,
+   * so it grows in place instead of looking like a second halo
+   * pops in. */
+  transition: r 620ms cubic-bezier(.16, 1, .3, 1),
+              stroke 480ms ease,
+              stroke-width 480ms ease,
+              fill 480ms ease;
+}
+
+.workflow-animation .brain-image {
+  -webkit-filter: none;
+          filter: none;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: opacity 220ms ease, transform 220ms ease, filter 220ms ease;
+}
+
+.workflow-animation .brain-final { opacity: 0; }
+
+/* Brain swap. The plain-brain stays visible all the way through the
+ * Convert station; the strong-brain only starts to bleed in at
+ * Enrich and fully takes over at Validate / BIDS. This makes the
+ * "you finished converting -> your dataset is now strong" beat
+ * narratively obvious. Stages map to nodes:
+ *   0=Raw  1=Scan  2=Curate  3=Convert  4=Enrich  5=Validate/BIDS */
+.workflow-animation .click-brain.stage-0 .brain-start,
+.workflow-animation .click-brain.stage-1 .brain-start,
+.workflow-animation .click-brain.stage-2 .brain-start,
+.workflow-animation .click-brain.stage-3 .brain-start { opacity: 1; }
+.workflow-animation .click-brain.stage-4 .brain-start { opacity: 0.42; }
+.workflow-animation .click-brain.stage-5 .brain-start { opacity: 0; }
+
+.workflow-animation .click-brain.stage-0 .brain-final,
+.workflow-animation .click-brain.stage-1 .brain-final,
+.workflow-animation .click-brain.stage-2 .brain-final,
+.workflow-animation .click-brain.stage-3 .brain-final { opacity: 0; }
+.workflow-animation .click-brain.stage-4 .brain-final { opacity: 0.7; }
+.workflow-animation .click-brain.stage-5 .brain-final { opacity: 1; }
+
+.workflow-animation .click-brain.stage-3,
+.workflow-animation .click-brain.stage-4,
+.workflow-animation .click-brain.stage-5 {
+  -webkit-filter: url(#workflow-brain-glow);
+          filter: url(#workflow-brain-glow);
+}
+
+.workflow-animation .click-brain.stage-5 .click-brain-halo {
+  stroke: rgba(63, 185, 80, 0.85);
+  stroke-width: 3;
+  animation: brainHaloFinal 1.6s ease-in-out infinite;
+}
+.workflow-animation .click-brain.is-finale-lifted .click-brain-halo {
+  /* Inner halo at the finale: a very wide thin ring orbiting well
+   * outside the strong-brain. r grows; stroke shrinks so the ring
+   * reads as a delicate hoop, not a thick band. */
+  r: 520;
+  stroke-width: 2.4;
+  fill: rgba(7, 10, 16, 0.10);
+  opacity: 0.95;
+  animation:
+    brainHaloMega   2.4s ease-in-out infinite,
+    brainHaloHueCycle 5.2s linear infinite;
+}
+[data-theme="light"] .workflow-animation .click-brain.is-finale-lifted .click-brain-halo {
+  /* Same colour-cycle but with the BIDS Manager light-theme palette
+   * (deeper hues) so the halo stays visible against the bright
+   * hero collage. */
+  fill: rgba(26, 127, 55, 0.06);
+  animation:
+    brainHaloMega       2.4s ease-in-out infinite,
+    brainHaloHueCycleLight 5.2s linear infinite;
+}
+
+@keyframes brainHaloHueCycle {
+  0%, 100% { stroke: rgba(184, 244, 109, 0.92); }  /* lime   */
+  25%      { stroke: rgba( 77, 227, 255, 0.92); }  /* cyan   */
+  50%      { stroke: rgba(255, 139, 107, 0.92); }  /* coral  */
+  75%      { stroke: rgba(189, 166, 255, 0.92); }  /* violet */
+}
+@keyframes brainHaloHueCycleLight {
+  0%, 100% { stroke: rgba( 26, 127,  55, 0.95); }
+  25%      { stroke: rgba(  9, 105, 218, 0.95); }
+  50%      { stroke: rgba(185,  79,  51, 0.95); }
+  75%      { stroke: rgba(101,  80, 184, 0.95); }
+}
+
+/* ----- Concentric multicolor ripple rings (finale only) -----
+ * Four circles, all centred at the click-brain origin, all starting
+ * with the same base r=60. Hidden until the finale-lifted state,
+ * then each ring runs the same expand + fade keyframe with a
+ * staggered animation-delay so the rings ripple outward
+ * continuously like dropping a stone in water. Colours match the
+ * BrainHack accent palette: lime / cyan / coral / violet. */
+.workflow-animation .brain-halo-ring {
+  fill: none;
+  stroke-width: 3;
+  pointer-events: none;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.workflow-animation .click-brain.is-finale-lifted .brain-halo-ring {
+  animation: brainRingRipple 2800ms ease-out infinite;
+}
+.workflow-animation .brain-halo-ring.ring-1 { stroke: #b8f46d; animation-delay: 0s;    }  /* lime   */
+.workflow-animation .brain-halo-ring.ring-2 { stroke: #4de3ff; animation-delay: 0.7s;  }  /* cyan   */
+.workflow-animation .brain-halo-ring.ring-3 { stroke: #ff8b6b; animation-delay: 1.4s;  }  /* coral  */
+.workflow-animation .brain-halo-ring.ring-4 { stroke: #bda6ff; animation-delay: 2.1s;  }  /* violet */
+[data-theme="light"] .workflow-animation .brain-halo-ring.ring-1 { stroke: #1a7f37; }
+[data-theme="light"] .workflow-animation .brain-halo-ring.ring-2 { stroke: #0969da; }
+[data-theme="light"] .workflow-animation .brain-halo-ring.ring-3 { stroke: #b94f33; }
+[data-theme="light"] .workflow-animation .brain-halo-ring.ring-4 { stroke: #6550b8; }
+
+@keyframes brainRingRipple {
+  /* Start small + bright, swell to ~3x the base radius and fade to
+   * zero. Combined with the click-brain parent scale of 2.7, the
+   * outermost peak diameter is ~970 visible pixels — dominant
+   * but capped because the stroke goes invisible at the end. */
+  0%   { transform: scale(0.6); opacity: 0.85; stroke-width: 5; }
+  40%  { opacity: 0.7; }
+  100% { transform: scale(3.0); opacity: 0;    stroke-width: 1; }
+}
+
+/* Theme-sensitive brains. The hrefs are swapped by JS in
+ * `swapHeroBrains(theme)` (called from initThemeToggle.apply), so the
+ * brain images are physically the right colour in each theme — no
+ * filter trickery, which composed unpredictably with the SVG
+ * drop-shadow filter on the parent group. */
+
+[data-theme="light"] .workflow-animation .click-brain,
+[data-theme="light"] .workflow-animation .click-brain.stage-3,
+[data-theme="light"] .workflow-animation .click-brain.stage-4,
+[data-theme="light"] .workflow-animation .click-brain.stage-5 {
+  /* In light theme the lime / cyan / coral SVG drop-shadow stack
+   * disappears against the bright hero. Swap to a pure-white triple-
+   * shadow filter so the muscled glyph keeps its glow halo. */
+  -webkit-filter: url(#workflow-brain-glow-light);
+          filter: url(#workflow-brain-glow-light);
+}
+
+[data-theme="light"] .workflow-animation .node-disc {
+  fill: rgba(255, 255, 255, 0.78);
+  stroke: rgba(18, 23, 32, 0.78);
+}
+[data-theme="light"] .workflow-animation .node-icon {
+  color: var(--text);
+}
+[data-theme="light"] .workflow-animation .workflow-node text {
+  fill: var(--text);
+}
+[data-theme="light"] .workflow-animation .click-brain-halo {
+  fill: rgba(255, 255, 255, 0.94);
+  stroke: rgba(6, 127, 154, 0.74);
+}
+[data-theme="light"] .workflow-click-hint {
+  border-color: rgba(6, 127, 154, 0.42);
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--text);
+}
+
+@keyframes workflowDash {
+  to { stroke-dashoffset: -44; }
+}
+
+@keyframes workflowNodePulse {
+  0%, 100% { opacity: 0.82; }
+  45%      { opacity: 1; }
+}
+
+@keyframes brainHalo {
+  0%, 100% { transform: scale(0.92); }
+  50%      { transform: scale(1.08); }
+}
+
+@keyframes brainHaloFinal {
+  0%, 100% { transform: scale(1.0); opacity: 0.94; }
+  50%      { transform: scale(1.5); opacity: 0.45; }
+}
+@keyframes brainHaloMega {
+  /* Subtle breath at the lifted size: never collapse to a small
+   * disc, just gently swell ~10% off the big halo's edge. */
+  0%, 100% { transform: scale(1.0);  opacity: 0.92; }
+  50%      { transform: scale(1.10); opacity: 0.62; }
+}
+
+@keyframes nodeFlash {
+  0%   { opacity: 0.95; stroke-width: 6; transform: scale(0.25); }
+  58%  { opacity: 0.9; }
+  100% { opacity: 0; stroke-width: 1; transform: scale(3.2); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workflow-animation .workflow-line,
+  .workflow-animation .workflow-node,
+  .workflow-animation .click-brain,
+  .workflow-animation .click-brain-halo,
+  .workflow-animation .click-brain.stage-5 .click-brain-halo {
+    animation: none !important;
+  }
+}
+
 .hero-title {
   font-size: clamp(2.4rem, 5.2vw, 4.4rem);
   line-height: 1.04;
@@ -512,6 +888,120 @@ main { display: block; }
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+/* Title neon glow during the finale.
+ *
+ * Each letter glows from the inside out: a near-white inner halo
+ * (the bright "tube" core) wrapped in larger, cycling coloured
+ * blurs (the surrounding luminance). The whole thing breathes on
+ * one keyframe; a second keyframe cross-fades the hot colour so
+ * the neon shifts hue too. The gradient <em> must drop its
+ * gradient fill during the glow so the text-shadow can paint
+ * around solid glyphs rather than transparent ones. */
+.hero-title.is-mega-glow {
+  color: #ffffff;
+  animation: heroTitleNeon 2.4s ease-in-out infinite;
+}
+.hero-title.is-mega-glow em {
+  background: none;
+  -webkit-background-clip: initial;
+          background-clip: initial;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  animation: heroEmNeon 2.4s ease-in-out infinite;
+}
+
+@keyframes heroTitleNeon {
+  0%, 100% {
+    text-shadow:
+      0 0  3px rgba(255, 255, 255, 1),
+      0 0  8px rgba(255, 255, 255, 0.95),
+      0 0 18px rgba(184, 244, 109, 0.92),
+      0 0 32px rgba( 77, 227, 255, 0.78),
+      0 0 56px rgba(255, 139, 107, 0.55),
+      0 0 90px rgba(189, 166, 255, 0.40);
+  }
+  50% {
+    text-shadow:
+      0 0  4px rgba(255, 255, 255, 1),
+      0 0 10px rgba(255, 255, 255, 1),
+      0 0 22px rgba( 77, 227, 255, 0.95),
+      0 0 40px rgba(255, 139, 107, 0.80),
+      0 0 70px rgba(189, 166, 255, 0.60),
+      0 0 110px rgba(184, 244, 109, 0.45);
+  }
+}
+
+/* The em gets its own keyframe so the "BIDS" word can shift hue at
+ * a different phase than the rest of the title; the result reads
+ * like two neon tubes wired in series. */
+@keyframes heroEmNeon {
+  0%, 100% {
+    text-shadow:
+      0 0  3px rgba(255, 255, 255, 1),
+      0 0  9px rgba(255, 255, 255, 0.95),
+      0 0 20px rgba( 77, 227, 255, 0.95),
+      0 0 36px rgba(189, 166, 255, 0.75),
+      0 0 64px rgba(184, 244, 109, 0.50);
+  }
+  50% {
+    text-shadow:
+      0 0  4px rgba(255, 255, 255, 1),
+      0 0 12px rgba(255, 255, 255, 1),
+      0 0 26px rgba(255, 139, 107, 0.95),
+      0 0 46px rgba(184, 244, 109, 0.80),
+      0 0 80px rgba( 77, 227, 255, 0.55);
+  }
+}
+
+[data-theme="light"] .hero-title.is-mega-glow {
+  /* Light theme: keep the glow palette but the text core stays
+   * dark so the title is still legible against the bright hero.
+   * Coloured halos around dark letters read as "letters caught in
+   * a neon light". */
+  color: var(--text);
+  animation: heroTitleNeonLight 2.4s ease-in-out infinite;
+}
+[data-theme="light"] .hero-title.is-mega-glow em {
+  color: var(--accent);
+  -webkit-text-fill-color: var(--accent);
+  animation: heroEmNeonLight 2.4s ease-in-out infinite;
+}
+
+@keyframes heroTitleNeonLight {
+  0%, 100% {
+    text-shadow:
+      0 0  4px rgba(255, 255, 255, 0.95),
+      0 0 12px rgba( 26, 127,  55, 0.80),
+      0 0 24px rgba(  9, 105, 218, 0.68),
+      0 0 44px rgba(185,  79,  51, 0.48),
+      0 0 72px rgba(101,  80, 184, 0.35);
+  }
+  50% {
+    text-shadow:
+      0 0  6px rgba(255, 255, 255, 1),
+      0 0 16px rgba(  9, 105, 218, 0.88),
+      0 0 32px rgba(185,  79,  51, 0.72),
+      0 0 56px rgba(101,  80, 184, 0.55),
+      0 0 90px rgba( 26, 127,  55, 0.40);
+  }
+}
+@keyframes heroEmNeonLight {
+  0%, 100% {
+    text-shadow:
+      0 0  4px rgba(255, 255, 255, 1),
+      0 0 14px rgba(  9, 105, 218, 0.90),
+      0 0 28px rgba(101,  80, 184, 0.72),
+      0 0 50px rgba( 26, 127,  55, 0.48);
+  }
+  50% {
+    text-shadow:
+      0 0  6px rgba(255, 255, 255, 1),
+      0 0 18px rgba(185,  79,  51, 0.90),
+      0 0 36px rgba( 26, 127,  55, 0.78),
+      0 0 64px rgba(  9, 105, 218, 0.55);
+  }
 }
 
 .hero-tagline {
