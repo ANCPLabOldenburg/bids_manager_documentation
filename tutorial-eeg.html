@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="EEG walkthrough for BIDS Manager: PhysioNet motor-imagery dataset, scan to validate, step by step.">
+  <title>EEG tutorial &middot; BIDS Manager</title>
+  <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div data-include="header"></div>
+
+  <div data-include="tutorial-back-to-landing"></div>
+
+  <main>
+    <!-- ============================================================
+         Hero
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">EEG tutorial</span>
+        <h1>EEG: convert a 28-run motor-imagery dataset.</h1>
+        <p class="lead">
+          PhysioNet's motor-imagery sample data. Two subjects, fourteen
+          EDF runs each, packaged with binary <code class="inline">.edf.event</code>
+          annotation files. The whole pipeline (scan, convert,
+          enrich, validate) runs in under a minute on this dataset.
+        </p>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>The EEG curation story is simpler than MRI's.</strong>
+            <p>No DICOM clustering, no fmaps, no IntendedFor.
+              But EEG datasets carry one quirk that needs human
+              attention before conversion: the scanner-derived
+              <em>task</em> entity defaults to the EDF filename
+              token (<code class="inline">S001R01</code>,
+              <code class="inline">S001R02</code>, &hellip;). Users
+              have to relabel each run with the real protocol task
+              name. We walk that step below.</p>
+          </div>
+        </div>
+
+        <div class="download-card">
+          <div class="download-card-body">
+            <span class="section-eyebrow" style="margin-bottom:8px;">Example data</span>
+            <h2 style="margin-top:0;">PhysioNet motor imagery (2 subjects)</h2>
+            <p>
+              Mirror of the standard PhysioNet motor-imagery format.
+              Two subject folders (<code class="inline">S001</code>,
+              <code class="inline">S002</code>); each has 14
+              <code class="inline">.edf</code> recordings plus their
+              binary <code class="inline">.edf.event</code>
+              annotation siblings.
+            </p>
+            <p>
+              <a class="btn btn-primary"
+                 href="https://mega.nz/file/1EZwEJrS#trD4vdyyKR8pMAAfellrdIwgkhLCJITB0oH4R9ZpIUI"
+                 target="_blank" rel="noopener">
+                Download EEG sample dataset &rarr;
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Dataset overview
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Dataset overview</span>
+        <h2>2 subjects, 28 EDF files.</h2>
+        <p>
+          Standard PhysioNet motor-imagery layout. Each subject has
+          14 runs (<code class="inline">R01</code> &hellip;
+          <code class="inline">R14</code>). Each
+          <code class="inline">.edf</code> is paired with a binary
+          <code class="inline">.edf.event</code> annotation file the
+          mne-bids backend reads alongside.
+        </p>
+
+        <div class="dataset-tree">
+          <div class="dataset-tree-row is-folder is-open">
+            <span class="chev">&#9662;</span>
+            <span class="name">EEG_motor_imagery_sample_data/</span>
+            <span class="meta">28 recordings</span>
+          </div>
+          <div class="dataset-tree-row d1 is-folder is-open">
+            <span class="chev">&#9662;</span>
+            <span class="name">S001/</span>
+            <span class="meta">14 runs</span>
+          </div>
+          <div class="dataset-tree-row d2"><span class="name">S001R01.edf</span> <span class="muted">+ .edf.event</span></div>
+          <div class="dataset-tree-row d2"><span class="name">S001R02.edf</span> <span class="muted">+ .edf.event</span></div>
+          <div class="dataset-tree-row d2"><span class="name">S001R03.edf</span> <span class="muted">+ .edf.event</span> <span class="tag tag-warn">empty events</span></div>
+          <div class="dataset-tree-row d2 muted">S001R04.edf &hellip; S001R14.edf</div>
+          <div class="dataset-tree-row d1 is-folder is-open">
+            <span class="chev">&#9662;</span>
+            <span class="name">S002/</span>
+            <span class="meta">14 runs</span>
+          </div>
+          <div class="dataset-tree-row d2 muted">S002R01.edf &hellip; S002R14.edf</div>
+          <div class="dataset-tree-row d1 muted">64_channel_sharbrough.png, .pdf, RECORDS, SHA256SUMS, wfdbcal</div>
+        </div>
+
+        <h3>The PhysioNet motor-imagery protocol</h3>
+        <p>
+          R01-R14 follow a fixed protocol; the recording filenames
+          give no hint of the underlying task. Re-labelling them in
+          the Inspection table before conversion gives every BIDS
+          file a meaningful task entity. Common mapping:
+        </p>
+
+        <table class="dataset-protocol">
+          <thead>
+            <tr>
+              <th>EDF token</th>
+              <th>Real task</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code class="inline">R01</code></td><td>baseline_eyes_open</td></tr>
+            <tr><td><code class="inline">R02</code></td><td>baseline_eyes_closed</td></tr>
+            <tr><td><code class="inline">R03</code></td><td>open_fist_real</td></tr>
+            <tr><td><code class="inline">R04</code></td><td>open_fist_imagined</td></tr>
+            <tr><td><code class="inline">R05</code></td><td>both_fists_real</td></tr>
+            <tr><td><code class="inline">R06</code></td><td>both_fists_imagined</td></tr>
+            <tr><td><code class="inline">R07-R10</code></td><td>(repeats R03-R06)</td></tr>
+            <tr><td><code class="inline">R11-R14</code></td><td>(repeats R03-R06 again)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         The CLI numbers
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">What you'll see</span>
+        <h2>Real numbers from the EEG pipeline.</h2>
+        <p>
+          The same four commands you saw in the MRI tutorial work
+          unchanged on the EEG dataset. Real outputs captured on
+          the local copy of this sample:
+        </p>
+
+        <div class="results-grid">
+          <div class="results-card">
+            <span class="results-card-eyebrow">Scan</span>
+            <strong class="results-card-num">28</strong>
+            <span class="results-card-label">inventory rows</span>
+            <p class="muted">One row per <code class="inline">.edf</code>.
+              No skips (no scouts or scanner reports to flag).
+              Subject identity comes from path prefix (<code class="inline">S001</code>
+              &rarr; <code class="inline">sub-001</code>).</p>
+          </div>
+          <div class="results-card">
+            <span class="results-card-eyebrow">Convert</span>
+            <strong class="results-card-num">27 / 28</strong>
+            <span class="results-card-label">runs written</span>
+            <p class="muted">mne-bids writes each EDF as a BIDS-named
+              <code class="inline">.edf</code> with a matching channel
+              TSV, events TSV, and JSON sidecar. One row fails on
+              this dataset: <code class="inline">sub-001_task-S001R03_run-3</code>
+              has an empty events table that mne-bids cannot encode.
+              The Log dock prints the failure cleanly; the rest
+              completes.</p>
+          </div>
+          <div class="results-card">
+            <span class="results-card-eyebrow">Validate</span>
+            <strong class="results-card-num">113 / 29 / 0</strong>
+            <span class="results-card-label">ok / warn / err</span>
+            <p class="muted">Zero errors. The 29 warnings are all
+              <code class="inline">bidsmgr.todo_placeholder</code>:
+              the dataset-level fields (License, Authors, etc.) and
+              the EEG-specific recommended fields
+              (<code class="inline">ManufacturersModelName</code>,
+              <code class="inline">SoftwareVersions</code>) that the
+              enrichment cannot infer without help.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         What's different from the MRI walkthrough
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">What's different vs MRI</span>
+        <h2>One workflow, modality-specific quirks.</h2>
+        <ul class="checklist">
+          <li>
+            <strong>No DICOM clustering.</strong> EEG subjects come
+            from the folder name (<code class="inline">S001</code> &rarr;
+            <code class="inline">sub-001</code>). PatientID is not in
+            the EDF header.
+          </li>
+          <li>
+            <strong>Task names need user override.</strong> The
+            classifier writes the EDF filename token
+            (<code class="inline">S001R01</code>) into the
+            <code class="inline">task</code> column. The user types
+            the real protocol task in the Inspection table before
+            conversion; the BIDS basename updates live (see Step 3,
+            sub-step 3 in the MRI walkthrough).
+          </li>
+          <li>
+            <strong>One bulk edit relabels every run.</strong>
+            Cmd-/shift-click selects every row ending in
+            <code class="inline">R01</code> across both subjects,
+            then Bulk edit applies the real task name to all of
+            them in one move.
+          </li>
+          <li>
+            <strong>Different backend.</strong> The Convert step
+            calls <code class="inline">mne-bids</code>
+            (<code class="inline">write_raw_bids</code>) instead of
+            <code class="inline">dcm2niix</code>. Same orchestration
+            layer.
+          </li>
+          <li>
+            <strong>No fmap fixups.</strong> EEG sidecars do not
+            carry <code class="inline">IntendedFor</code>. The Convert
+            step's "fmap fixups" lines that appear on MRI do not
+            stream here.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Walk the GUI / CLI walkthrough on the main tutorial page
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow prose">
+        <p style="margin-top: 8px;">
+          <a class="btn btn-primary" href="tutorial.html#scenes">Walk the GUI tutorial &rarr;</a>
+          <a class="btn btn-ghost" href="tutorial.html#cli">See the CLI walkthrough</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <div data-include="footer"></div>
+  <script src="script.js" defer></script>
+</body>
+</html>

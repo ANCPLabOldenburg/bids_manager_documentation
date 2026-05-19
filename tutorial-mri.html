@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MRI primary dataset for the BIDS Manager tutorial: a 3-folder Oldenburg Siemens dataset that clusters to 2 BIDS subjects.">
+  <title>MRI primary dataset &middot; BIDS Manager</title>
+  <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div data-include="header"></div>
+
+  <div data-include="tutorial-back-to-landing"></div>
+
+  <main>
+    <!-- ============================================================
+         Hero
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">MRI primary dataset</span>
+        <h1>The dataset the tutorial walks through.</h1>
+        <p class="lead">
+          A 3-folder Oldenburg Siemens dataset that clusters to two
+          BIDS subjects. T1w + T2w anatomicals, BOLD with a multiband
+          variant, DWI with fmap pair, and Siemens CMRR physio. The
+          cleanest end-to-end example, picked as the GUI walkthrough's
+          backing data because every datatype in the workflow appears
+          at least once.
+        </p>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>The point of this dataset: subject clustering.</strong>
+            <p>DICOM folder names rarely match BIDS subject identities.
+              Here, <strong>sub-001</strong> was scanned twice
+              (<em>pre</em> and <em>post</em>) and the scanner exported
+              each session under its own folder. BIDS Manager clusters
+              folders into subjects by their DICOM
+              <code class="inline">PatientID</code> tag, so
+              <code class="inline">OL_0001</code> and
+              <code class="inline">OL_0002</code> become two sessions
+              of one subject, while <code class="inline">OL_0003</code>
+              is a different patient with no session label.</p>
+          </div>
+        </div>
+
+        <div class="download-card">
+          <div class="download-card-body">
+            <span class="section-eyebrow" style="margin-bottom:8px;">Example data</span>
+            <h2 style="margin-top:0;">Oldenburg neuroimaging unit (3 folders / 2 BIDS subjects)</h2>
+            <p>
+              Three source folders. The first two
+              (<code class="inline">OL_0001</code>,
+              <code class="inline">OL_0002</code>) share a PatientID
+              and collapse into <code class="inline">sub-001</code>
+              with <em>ses-pre</em> / <em>ses-post</em>. The third
+              (<code class="inline">OL_0003</code>) stands alone as
+              <code class="inline">sub-002</code> with no session
+              entity.
+            </p>
+            <p>
+              <a class="btn btn-primary"
+                 href="https://mega.nz/file/9I5mnCyT#TqZlTaURWaNrg3YfyVoJIoN0eM2nu-XOE11OgA4YUqg"
+                 target="_blank" rel="noopener">
+                Download MRI primary dataset &rarr;
+              </a>
+            </p>
+          </div>
+          <div class="download-stats" aria-hidden="true">
+            <div class="download-stat">
+              <strong>2</strong><span>subjects</span>
+            </div>
+            <div class="download-stat">
+              <strong>3</strong><span>folders</span>
+            </div>
+            <div class="download-stat">
+              <strong>394</strong><span>DICOMs</span>
+            </div>
+            <div class="download-stat">
+              <strong>3T</strong><span>Prisma</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Dataset overview
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Dataset overview</span>
+        <h2>3 folders &rarr; 2 BIDS subjects.</h2>
+
+        <div class="results-grid">
+          <div class="results-card">
+            <span class="results-card-eyebrow">sub-001 / ses-pre</span>
+            <strong class="results-card-num">OL_0001</strong>
+            <span class="results-card-label">45 DICOMs &middot; 9 series</span>
+            <p class="muted">
+              First scanning session for sub-001. T1w, two fMRI
+              tasks (<code class="inline">sparse</code>,
+              <code class="inline">rest</code>) and two fieldmap
+              pairs.
+            </p>
+          </div>
+          <div class="results-card">
+            <span class="results-card-eyebrow">sub-001 / ses-post</span>
+            <strong class="results-card-num">OL_0002</strong>
+            <span class="results-card-label">62 DICOMs &middot; 10 series</span>
+            <p class="muted">
+              Same patient, post-intervention. Multiband BOLD, one
+              fieldmap pair, and a physio log. Cluster identified by
+              shared PatientID; session order from StudyDate.
+            </p>
+          </div>
+          <div class="results-card">
+            <span class="results-card-eyebrow">sub-002</span>
+            <strong class="results-card-num">OL_0003</strong>
+            <span class="results-card-label">287 DICOMs &middot; 17 series</span>
+            <p class="muted">
+              Different patient. T2w, three fMRI tasks (with multiband
+              SBRefs), DWI with a PA b0 rerouted into
+              <code class="inline">fmap/</code>, and two physio logs.
+              No session label.
+            </p>
+          </div>
+        </div>
+
+        <h3>How the subject clustering works</h3>
+        <p>
+          The <code class="inline">subject_identity.cluster_subjects</code>
+          module reads each folder's first DICOM, pulls
+          <code class="inline">PatientID</code> +
+          <code class="inline">PatientName</code>, then groups folders
+          that share both. The folders in this dataset cluster like
+          this:
+        </p>
+        <ul class="checklist">
+          <li>
+            <strong>PatientID XX00XX00</strong> &mdash;
+            <code class="inline">OL_0001</code> and
+            <code class="inline">OL_0002</code> share a PatientID, so
+            they collapse into one cluster. StudyDate orders them as
+            <em>ses-pre</em> (older) and <em>ses-post</em> (newer).
+          </li>
+          <li>
+            <strong>PatientID YY11YY11</strong> &mdash;
+            <code class="inline">OL_0003</code> is a separate cluster.
+            Single session, so no <em>ses</em> entity is written.
+          </li>
+        </ul>
+
+        <p>
+          The same logic applies modality-agnostically. EEG / MEG
+          subjects come from path heuristics instead (EDF / FIF have
+          no PatientID in their header).
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CLI numbers
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">What you'll see</span>
+        <h2>Real numbers from the MRI primary pipeline.</h2>
+        <p>
+          The four CLI commands you saw in the
+          <a href="tutorial.html#cli">CLI walkthrough</a> produce the
+          following on this dataset:
+        </p>
+
+        <div class="results-grid">
+          <div class="results-card">
+            <span class="results-card-eyebrow">Scan</span>
+            <strong class="results-card-num">33 / 12</strong>
+            <span class="results-card-label">inv rows / skipped</span>
+            <p class="muted">
+              <code class="inline">--probe-convert</code> runs in
+              ~25 s on a Mac. 21 keepers across both subjects, 12
+              auto-skipped (scouts, Phoenix reports, calibrations).
+            </p>
+          </div>
+          <div class="results-card">
+            <span class="results-card-eyebrow">Convert</span>
+            <strong class="results-card-num">21 NIfTI</strong>
+            <span class="results-card-label">files written</span>
+            <p class="muted">
+              21 NIfTI files (anat / func / dwi / fmap), one physio
+              TSV.gz (from the CMRR physio log), 28 sidecar JSONs.
+              No conversion failures on this dataset.
+            </p>
+          </div>
+          <div class="results-card">
+            <span class="results-card-eyebrow">Validate</span>
+            <strong class="results-card-num">55 / 7 / 0</strong>
+            <span class="results-card-label">ok / warn / err</span>
+            <p class="muted">
+              Zero errors. The 7 warnings are TODO placeholders the
+              enrichment cannot infer: License / Authors in
+              dataset_description.json, plus
+              <code class="inline">Instructions</code> /
+              <code class="inline">TaskDescription</code> on the BOLD
+              sidecars. Fillable in the Editor in one pass.
+            </p>
+          </div>
+        </div>
+
+        <h3>Notable classifier moves on this dataset</h3>
+        <ul class="checklist">
+          <li>
+            <strong>Subject identity clustering.</strong> Three
+            folders &rarr; two clusters &rarr; two BIDS subjects with
+            the appropriate session split (the central reason this
+            dataset is the primary tutorial sample).
+          </li>
+          <li>
+            <strong>B0-reference reroute.</strong> The PA-direction
+            single-volume DWI on sub-002 is rerouted to
+            <code class="inline">fmap/_epi</code> so it can serve as
+            the B0 reference for distortion correction of the
+            AP-direction DWIs. No heuristic file needed.
+          </li>
+          <li>
+            <strong>Phoenix and scouts auto-skipped.</strong> 12 rows
+            on this dataset (AAHead Scouts + PhoenixZIPReports) come
+            pre-marked with <code class="inline">bids_guess_skip = true</code>.
+            The user can re-include any of them, but the default is
+            "drop these".
+          </li>
+          <li>
+            <strong>CMRR physio.</strong> The CMRR physio log is
+            dispatched to the
+            <code class="inline">PhysioDcmBackend</code>, which uses
+            the vendored <code class="inline">bidsphysio</code> to
+            write the BIDS-conformant
+            <code class="inline">physio.tsv.gz</code> + sidecar pair.
+          </li>
+        </ul>
+
+        <p style="margin-top: 28px;">
+          <a class="btn btn-primary" href="tutorial.html#scenes">Walk the GUI tutorial &rarr;</a>
+          <a class="btn btn-ghost" href="tutorial.html#cli">See the CLI walkthrough</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <div data-include="footer"></div>
+  <script src="script.js" defer></script>
+</body>
+</html>

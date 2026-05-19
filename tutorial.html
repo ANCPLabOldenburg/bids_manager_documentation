@@ -1,0 +1,2531 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="The BIDS Manager tutorial. Walk the full GUI and CLI workflow on a real MRI dataset, end to end.">
+  <title>Tutorial &middot; BIDS Manager</title>
+  <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div data-include="header"></div>
+
+  <!-- Persistent left-side page TOC, same component as installation.html. -->
+  <aside class="page-toc" data-toc aria-label="Page navigation">
+    <button class="page-toc-toggle" type="button"
+            aria-expanded="false" aria-controls="page-toc-panel"
+            aria-label="Toggle page navigation">
+      <span class="toc-bars" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </span>
+    </button>
+    <nav id="page-toc-panel" class="page-toc-panel" aria-label="Sections">
+      <span class="page-toc-title">On this page</span>
+      <a class="page-toc-link" href="#intro">
+        <span class="page-toc-dot" aria-hidden="true"></span>
+        Tutorial intro
+      </a>
+      <a class="page-toc-link" href="#need">
+        <span class="page-toc-dot" aria-hidden="true"></span>
+        What you'll need
+      </a>
+      <a class="page-toc-link" href="#workflow">
+        <span class="page-toc-dot" aria-hidden="true"></span>
+        Workflow at a glance
+      </a>
+      <a class="page-toc-link" href="#datasets">
+        <span class="page-toc-dot" aria-hidden="true"></span>
+        Pick a dataset
+      </a>
+      <a class="page-toc-link" href="#gui-tour">
+        <span class="page-toc-dot" aria-hidden="true"></span>
+        Meet the GUI
+      </a>
+      <a class="page-toc-link" href="#scenes">
+        <span class="page-toc-dot" aria-hidden="true"></span>
+        GUI walkthrough
+      </a>
+      <a class="page-toc-link" href="#cli-ref">
+        <span class="page-toc-dot" aria-hidden="true"></span>
+        CLI reference
+      </a>
+      <a class="page-toc-link" href="#cli">
+        <span class="page-toc-dot" aria-hidden="true"></span>
+        CLI walkthrough
+      </a>
+    </nav>
+  </aside>
+
+  <main>
+    <!-- ============================================================
+         Section 1. Intro / hero
+         ============================================================ -->
+    <section class="section" id="intro">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Tutorial</span>
+        <h1>Walk the BIDS Manager GUI and CLI workflow on real data.</h1>
+        <p class="lead">
+          One end-to-end walkthrough. You'll watch the GUI step
+          through scanning, curating, converting, enriching and
+          validating a real MRI dataset, then see the same four
+          stages run from the command line. Step at your own pace,
+          or download one of the four sample datasets and follow
+          along on your own machine.
+        </p>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>What makes BIDS Manager different: the scan step.</strong>
+            <p>Other DICOM-to-BIDS tools require you to declare up
+              front how each series should be classified. BIDS Manager
+              <em>scans the raw data first</em> and shows you what is
+              actually inside the folders. Every series, every entity
+              guess, every confidence score. The interactive table
+              you edit is the same one the converter consumes, so
+              what you see is what gets written.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 2. What you'll need
+         ============================================================ -->
+    <section class="section" id="need">
+      <div class="container container-narrow">
+        <div class="section-header">
+          <span class="section-eyebrow">Step 0</span>
+          <h2 class="section-title">What you'll need.</h2>
+        </div>
+        <ul class="checklist">
+          <li>
+            <strong>BIDS Manager installed.</strong> The one-click
+            bootstrap installer is the quickest path; pip works too.
+            See the <a href="installation.html">installation guide</a>.
+          </li>
+          <li>
+            <strong>One raw dataset.</strong> Either one of the four
+            sample datasets below (each is a small Mega.nz download),
+            or your own folder of recordings.
+          </li>
+          <li>
+            <strong>About 20 minutes.</strong> The GUI walkthrough
+            runs six steps; the CLI section runs four commands. Both
+            use the same engine, so the order is up to you.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 3. Workflow at a glance
+         ============================================================ -->
+    <section class="section" id="workflow">
+      <div class="container container-narrow">
+        <div class="section-header">
+          <span class="section-eyebrow">Mental model</span>
+          <h2 class="section-title">The workflow at a glance.</h2>
+          <p class="section-lead">
+            BIDS Manager runs in eight stages, alternating
+            user-driven and engine-driven steps. Every step below
+            mirrors what BIDS Manager does on disk, using the same
+            engine the CLI exposes. The full interactive diagram
+            lives on the
+            <a href="intro.html#how-it-works">intro page</a>.
+          </p>
+        </div>
+        <ol class="workflow-mini">
+          <li><strong>Raw.</strong> Your input folder.</li>
+          <li><strong>Scan.</strong> Read metadata from inside every file.</li>
+          <li><strong>Curate.</strong> Review every acquisition; filter what shouldn't convert.</li>
+          <li><strong>Convert.</strong> Run the right backend per modality.</li>
+          <li><strong>Enrich.</strong> Auto-fill required sidecar fields.</li>
+          <li><strong>Fix-ups.</strong> Open the Editor and fix anything the enrichment couldn't infer.</li>
+          <li><strong>Validate.</strong> Audit against the BIDS schema.</li>
+          <li><strong>BIDS.</strong> A schema-compliant dataset, ready to share.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 4. Pick a dataset (4 cards)
+         ============================================================ -->
+    <section class="section" id="datasets">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Pick a dataset</span>
+          <h2 class="section-title">Four sample datasets, one workflow.</h2>
+          <p class="section-lead">
+            The walkthrough below uses the primary MRI dataset
+            (<em>Oldenburg neuroimaging unit</em>). Pick any of the
+            four to download and follow along. Each <em>More info</em>
+            link opens a page with the dataset tree, real CLI numbers,
+            and modality-specific quirks.
+          </p>
+        </div>
+
+        <div class="modality-grid">
+          <!-- MRI primary -->
+          <article class="modality-card mod-mri">
+            <span class="modality-badge">MRI</span>
+            <h3>Primary walkthrough.</h3>
+            <p class="modality-meta">Oldenburg neuroimaging unit &middot; 3 folders / 2 BIDS subjects &middot; 33 inventory rows.</p>
+            <p class="modality-desc">
+              Small Siemens MRI dataset with T1w, T2w, BOLD, DWI,
+              fmap, and physio. The cleanest end-to-end example,
+              and the one the GUI walkthrough below uses.
+            </p>
+            <div class="modality-actions">
+              <a class="btn btn-primary" href="https://mega.nz/file/9I5mnCyT#TqZlTaURWaNrg3YfyVoJIoN0eM2nu-XOE11OgA4YUqg" target="_blank" rel="noopener">Download ZIP</a>
+              <a class="btn btn-ghost" href="tutorial-mri.html">More info &rarr;</a>
+            </div>
+          </article>
+
+          <!-- EEG -->
+          <article class="modality-card mod-eeg">
+            <span class="modality-badge">EEG</span>
+            <h3>PhysioNet motor imagery.</h3>
+            <p class="modality-meta">2 subjects &middot; 14 EDF runs each &middot; 28 inventory rows.</p>
+            <p class="modality-desc">
+              Showcases the task-name override scene: filenames carry
+              only an opaque run token (S001R01...). The user assigns
+              the real protocol task names in the interactive table
+              before any conversion runs.
+            </p>
+            <div class="modality-actions">
+              <a class="btn btn-primary" href="https://mega.nz/file/1EZwEJrS#trD4vdyyKR8pMAAfellrdIwgkhLCJITB0oH4R9ZpIUI" target="_blank" rel="noopener">Download ZIP</a>
+              <a class="btn btn-ghost" href="tutorial-eeg.html">More info &rarr;</a>
+            </div>
+          </article>
+
+          <!-- MEG -->
+          <article class="modality-card mod-meg">
+            <span class="modality-badge">MEG</span>
+            <h3>Elekta sample data.</h3>
+            <p class="modality-meta">2 subjects &middot; 23 FIF files &middot; multi-session inference.</p>
+            <p class="modality-desc">
+              Shows automatic session inference from date-named
+              folders. Tasks parse cleanly (driving, rest,
+              empty-room). Demonstrates the MEG conversion path
+              through mne-bids.
+            </p>
+            <div class="modality-actions">
+              <a class="btn btn-primary" href="https://mega.nz/file/BdhBCDzb#PlY6AVLBXcM5MEdinbY9wN2xeRGPdIlF7kJ6Ww0NpJA" target="_blank" rel="noopener">Download ZIP</a>
+              <a class="btn btn-ghost" href="tutorial-meg.html">More info &rarr;</a>
+            </div>
+          </article>
+
+          <!-- MRI advanced -->
+          <article class="modality-card mod-mri-adv">
+            <span class="modality-badge">MRI advanced</span>
+            <h3>Richer Siemens dataset.</h3>
+            <p class="modality-meta">3 folders / 2 BIDS subjects &middot; 51 inventory rows &middot; 19 skipped.</p>
+            <p class="modality-desc">
+              The deep dive. T1w / T2w / T2starw / FLAIR anatomicals,
+              BOLD plus SBRef, DWI with FA / colFA / trace / TENSOR
+              derivatives, fmap pairs, Siemens CMRR physio.
+            </p>
+            <div class="modality-actions">
+              <a class="btn btn-primary" href="https://mega.nz/file/1AYlkTbA#2ZEU0bIo_olZdtBoXgx4nlkZCBeb0pIm99wqq9lS3B4" target="_blank" rel="noopener">Download ZIP</a>
+              <a class="btn btn-ghost" href="tutorial-mri-advanced.html">More info &rarr;</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 5. Meet the GUI (annotated screenshots of the real app)
+         ============================================================ -->
+    <div data-include="tutorial-gui-tour"></div>
+
+    <!-- ============================================================
+         Section 6. GUI walkthrough (state machine in script.js).
+         Uses the primary MRI dataset (Oldenburg neuroimaging unit).
+         ============================================================ -->
+    <section class="section" id="scenes">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">GUI walkthrough &middot; Primary MRI dataset</span>
+          <h2 class="section-title">Walk the GUI, step by step.</h2>
+          <p class="section-lead">
+            Six steps using the primary MRI dataset (Oldenburg
+            neuroimaging unit: 3 folders, 2 BIDS subjects). Use the dots or
+            the prev / next buttons to step through. For the
+            full dataset detail (tree, real CLI numbers, quirks)
+            see the <a href="tutorial-mri.html">MRI 1 info page</a>.
+          </p>
+        </div>
+
+        <!-- Modality-agnostic framing: the GUI flow is the same for
+             every supported modality; only the per-row backend dispatch
+             differs. -->
+        <div class="callout callout-info" style="margin-bottom: 28px;">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>This walkthrough is modality-agnostic.</strong>
+            <p>The example below uses the primary MRI dataset because
+              it exercises every datatype (anat, func, dwi, fmap,
+              physio) in a single small folder, but
+              <em>the six steps below are identical for EEG and MEG
+              data</em>. Only the per-row backend swaps:
+              <code class="inline">dcm2niix</code> for DICOM rows,
+              <code class="inline">mne-bids</code> for EDF / FIF / BDF
+              / BrainVision / CTF, and
+              <code class="inline">bidsphysio</code> for Siemens CMRR
+              physio. The Scan -> Inspect -> Convert -> Editor flow
+              you see here is what you do on every supported modality.
+              For modality-specific quirks (session inference from
+              date-named folders, task name overrides in EDF, DWI
+              derivative detection, etc.), see the
+              <a href="tutorial-eeg.html">EEG</a>,
+              <a href="tutorial-meg.html">MEG</a>, or
+              <a href="tutorial-mri-advanced.html">MRI advanced</a>
+              info pages.</p>
+          </div>
+        </div>
+
+        <!-- Scene state machine markup. initTutorialScenes() (script.js)
+             owns activation, animation playback, auto-advance and
+             keyboard navigation. -->
+        <div class="scene-stage" data-scenes>
+
+          <!-- Top control bar: progress dots + prev / pause / next. -->
+          <div class="scene-controls">
+            <ol class="scene-progress" role="tablist"
+                aria-label="Tutorial steps">
+              <li><button class="scene-dot is-active" type="button"
+                          data-scene-jump="1" role="tab"
+                          aria-selected="true"
+                          aria-label="Step 1: Pick folders">
+                <span class="scene-dot-num">1</span>
+                <span class="scene-dot-label">Folders</span>
+              </button></li>
+              <li><button class="scene-dot" type="button"
+                          data-scene-jump="2" role="tab"
+                          aria-selected="false"
+                          aria-label="Step 2: Run scan">
+                <span class="scene-dot-num">2</span>
+                <span class="scene-dot-label">Scan</span>
+              </button></li>
+              <li><button class="scene-dot" type="button"
+                          data-scene-jump="3" role="tab"
+                          aria-selected="false"
+                          aria-label="Step 3: Inspect table">
+                <span class="scene-dot-num">3</span>
+                <span class="scene-dot-label">Inspect</span>
+              </button></li>
+              <li><button class="scene-dot" type="button"
+                          data-scene-jump="4" role="tab"
+                          aria-selected="false"
+                          aria-label="Step 4: Run conversion">
+                <span class="scene-dot-num">4</span>
+                <span class="scene-dot-label">Convert</span>
+              </button></li>
+              <li><button class="scene-dot" type="button"
+                          data-scene-jump="5" role="tab"
+                          aria-selected="false"
+                          aria-label="Step 5: Open in Editor">
+                <span class="scene-dot-num">5</span>
+                <span class="scene-dot-label">Editor</span>
+              </button></li>
+              <li><button class="scene-dot" type="button"
+                          data-scene-jump="6" role="tab"
+                          aria-selected="false"
+                          aria-label="Step 6: Inspect NIfTI">
+                <span class="scene-dot-num">6</span>
+                <span class="scene-dot-label">NIfTI</span>
+              </button></li>            </ol>
+
+            <div class="scene-controls-row">
+              <button type="button" class="scene-btn" data-scene-prev
+                      aria-label="Previous step">&larr; Prev</button>
+              <span class="scene-counter" data-scene-counter>
+                Step <strong>1</strong> of 6
+              </span>
+              <button type="button" class="scene-btn" data-scene-next
+                      aria-label="Next step">Next &rarr;</button>
+              <button type="button" class="scene-btn scene-btn-play"
+                      data-scene-play
+                      aria-label="Pause / play auto-advance">Pause</button>
+              <button type="button" class="scene-btn scene-btn-replay"
+                      data-scene-replay
+                      aria-label="Replay current step">Replay</button>
+            </div>
+          </div>
+
+          <!-- ================================================
+               SCENE 1. Pick the raw and BIDS folders.
+               ================================================ -->
+          <article class="scene" data-scene="1" data-scene-key="folders"
+                   data-active aria-labelledby="scene-1-title">
+            <header class="scene-header">
+              <span class="scene-eyebrow">Step 1</span>
+              <h3 id="scene-1-title">Pick the raw and BIDS folders.</h3>
+              <p>
+                The Converter's first ask is two paths.
+                <strong>Raw input</strong> points to the folder that
+                holds your DICOM dump (one subfolder per scanning
+                session). <strong>BIDS output</strong> is where the
+                final dataset will land. The little glyph at the
+                left of each path bar flips from a circle to a check
+                once the folder exists.
+              </p>
+              <div class="scene-link">
+                <span class="scene-link-icon">&#8634;</span>
+                <div>
+                  <strong>Pre-conditions for everything below</strong>
+                  <p>The <em>Scan</em> button stays disabled until
+                    both paths are valid. <em>Run conversion</em>
+                    stays disabled until a scan finishes. The rest
+                    of the GUI is read-only until the user picks
+                    both folders.</p>
+                </div>
+              </div>
+            </header>
+
+            <div class="scene-body">
+              <div class="scene-mock scene-mock-converter scene-mock-gui">
+                <!-- ============ #top-header (48 px) ============
+                     converter_panel.MainWindow._TopHeader:
+                     - 14, 6 horizontal/vertical content margins
+                     - 10 px spacing
+                     - Logo (40x36) + brand name "BIDS-Manager"
+                     - View pills (Converter | Editor)
+                     - Stretch
+                     - Theme toggle (32x28, sun icon in dark theme) -->
+                <div class="gui-topheader">
+                  <span class="gui-brand">
+                    <img class="gui-logo" src="assets/brand/app-icon-128.png" alt="" aria-hidden="true">
+                    <span class="gui-brand-name">BIDS-Manager</span>
+                  </span>
+                  <button class="gui-view-pill is-checked" type="button"
+                          role="tab" aria-selected="true">Converter</button>
+                  <button class="gui-view-pill" type="button"
+                          role="tab" aria-selected="false">Editor</button>
+                  <span class="gui-grow" aria-hidden="true"></span>
+                  <button class="gui-theme-toggle" type="button"
+                          aria-label="Toggle light / dark theme">
+                    <svg viewBox="0 0 24 24" width="14" height="14"
+                         fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round"
+                         aria-hidden="true">
+                      <circle cx="12" cy="12" r="4"></circle>
+                      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- ============ #toolbar (44 px) ============
+                     converter_panel._build_toolbar (exact order):
+                     1. Scan button (icon + label, disabled until both
+                        paths valid)
+                     2. TSV: label
+                     3. TSV input (placeholder inventory.tsv)
+                     4. VSep
+                     5. valid / warn / err / skip chips
+                     6. BusySpinner (hidden when idle)
+                     7. addStretch(1)
+                     8. Settings button
+                     9. Run conversion (primary, disabled until scan)
+
+                     NOTE: Highlight aborts and Bulk edit live in the
+                     inspection pane's footer, NOT in this toolbar
+                     (converter_panel.py:373-376). -->
+                <div class="gui-toolbar">
+                  <button class="gui-tb-btn is-disabled" type="button"
+                          data-mock="scan-btn">
+                    <svg class="gui-tb-icon" viewBox="0 0 24 24"
+                         width="13" height="13" fill="currentColor"
+                         aria-hidden="true">
+                      <!-- mdi6.magnify-scan glyph -->
+                      <path d="M17 22V20H20V17H22V20.5C22 20.89 21.84 21.24 21.54 21.54C21.24 21.84 20.89 22 20.5 22H17M7 22H3.5C3.11 22 2.76 21.84 2.46 21.54C2.16 21.24 2 20.89 2 20.5V17H4V20H7V22M17 2H20.5C20.89 2 21.24 2.16 21.54 2.46C21.84 2.76 22 3.11 22 3.5V7H20V4H17V2M7 2V4H4V7H2V3.5C2 3.11 2.16 2.76 2.46 2.46C2.76 2.16 3.11 2 3.5 2H7M10.5 6C13 6 15 8 15 10.5C15 11.38 14.75 12.2 14.31 12.9L17.57 16.16L16.16 17.57L12.9 14.31C12.2 14.75 11.38 15 10.5 15C8 15 6 13 6 10.5C6 8 8 6 10.5 6M10.5 8C9.12 8 8 9.12 8 10.5C8 11.88 9.12 13 10.5 13C11.88 13 13 11.88 13 10.5C13 9.12 11.88 8 10.5 8Z"/>
+                    </svg>
+                    Scan&hellip;
+                  </button>
+                  <span class="gui-tb-mini-label">TSV:</span>
+                  <input class="gui-tb-input" type="text" value="inventory.tsv" readonly>
+                  <span class="gui-vsep" aria-hidden="true"></span>
+                  <span class="gui-chip chip-success"><span>0 valid</span></span>
+                  <span class="gui-chip chip-warn"><span>0 warnings</span></span>
+                  <span class="gui-chip chip-err"><span>0 error</span></span>
+                  <span class="gui-chip chip-default"><span>0 skipped</span></span>
+                  <span class="gui-spinner" data-mock="spinner" aria-hidden="true"></span>
+                  <span class="gui-grow" aria-hidden="true"></span>
+                  <button class="gui-tb-btn" type="button">
+                    <svg class="gui-tb-icon" viewBox="0 0 24 24"
+                         width="13" height="13" fill="currentColor"
+                         aria-hidden="true">
+                      <!-- mdi6.cog-outline glyph -->
+                      <path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"/>
+                    </svg>
+                    Settings&hellip;
+                  </button>
+                  <button class="gui-tb-btn-primary is-disabled" type="button"
+                          data-mock="run-btn">
+                    <svg class="gui-tb-icon" viewBox="0 0 24 24"
+                         width="13" height="13" fill="currentColor"
+                         aria-hidden="true">
+                      <!-- mdi6.play glyph -->
+                      <path d="M8,5.14V19.14L19,12.14L8,5.14Z"/>
+                    </svg>
+                    Run conversion
+                  </button>
+                </div>
+
+                <!-- ============ PathBars (#pathbar) ============
+                     widgets.primitives.PathBar:
+                     - 14, 9 content margins
+                     - label (#path-label, dim, min-width 80)
+                     - readonly QLineEdit (#path-field) with
+                       glyph prefix:  "○  (no folder selected)"
+                     - change button (#tb-btn-ghost)
+                     - bottom border: 1 px subtle -->
+                <div class="gui-pathbar">
+                  <span class="gui-path-label">Raw input</span>
+                  <span class="gui-path-field">
+                    <span class="gui-path-glyph" data-mock="raw-glyph">&#9675;</span>
+                    <span class="gui-path-value" data-mock="raw">(no folder selected)</span>
+                  </span>
+                  <button class="gui-tb-ghost" type="button">change&hellip;</button>
+                </div>
+                <div class="gui-pathbar">
+                  <span class="gui-path-label">BIDS output</span>
+                  <span class="gui-path-field">
+                    <span class="gui-path-glyph" data-mock="bids-glyph">&#9675;</span>
+                    <span class="gui-path-value" data-mock="bids">(not set)</span>
+                  </span>
+                  <button class="gui-tb-ghost" type="button">change&hellip;</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- ================================================
+               SCENE 2. Run a scan.
+               ================================================ -->
+          <article class="scene" data-scene="2" data-scene-key="scan"
+                   aria-labelledby="scene-2-title">
+            <header class="scene-header">
+              <span class="scene-eyebrow">Step 2</span>
+              <h3 id="scene-2-title">Run a scan.</h3>
+              <p>
+                The <em>Scan&hellip;</em> button kicks off an inventory
+                walker. The walker reads every DICOM under the raw
+                input, clusters folders into BIDS subjects by their
+                <code class="inline">PatientID</code> tag, groups
+                files into series by their
+                <code class="inline">SeriesInstanceUID</code>, and
+                stamps each series with a
+                <code class="inline">bids_guess_*</code> entity tuple
+                plus a confidence score.
+              </p>
+              <div class="scene-link">
+                <span class="scene-link-icon">i</span>
+                <div>
+                  <strong>What the live signals mean</strong>
+                  <p>The <em>spinner</em> tells you the engine is
+                    busy. The <em>status text</em> streams the active
+                    stage. The four <em>chips</em>
+                    (valid / warnings / error / skipped) tick to
+                    their final counts once the walker finishes.</p>
+                </div>
+              </div>
+
+              <div class="inspect-stepper" data-scan-stepper>
+                <button class="inspect-step is-active" type="button" data-scan-step="1">
+                  <span class="inspect-step-num">1</span>
+                  <span class="inspect-step-label">Watch a scan run</span>
+                </button>
+                <button class="inspect-step" type="button" data-scan-step="2">
+                  <span class="inspect-step-num">2</span>
+                  <span class="inspect-step-label">Click a chip</span>
+                </button>
+              </div>
+
+              <div class="inspect-captions">
+                <div class="inspect-caption is-active" data-scan-caption="1">
+                  <strong>Sub-step 1. Watch the scan walk the folder.</strong>
+                  <p>The recording below captures the live state during
+                    a scan on the primary MRI sample. The status text
+                    streams the engine's stage (walking the folder,
+                    reading DICOM headers, clustering subjects). The
+                    chips tween to their final counts once the walker
+                    finishes: <strong>17 valid / 4 warnings / 0 error
+                    / 12 skipped</strong> (21 keepers + 12 auto-skipped
+                    = 33 inventory rows).</p>
+                </div>
+                <div class="inspect-caption" data-scan-caption="2">
+                  <strong>Sub-step 2. Click a chip to inspect issues.</strong>
+                  <p>Three of the four chips are <em>clickable</em>:
+                    <em>warnings</em>, <em>error</em>, and
+                    <em>skipped</em>. Clicking one opens an
+                    <em>IssuesDialog</em> listing every row that
+                    triggered that severity, with a one-click
+                    <em>jump &rarr;</em> link back to the
+                    Inspection table. The <em>valid</em> chip is
+                    passive (no dialog) because clean rows do not
+                    have findings worth surfacing.</p>
+                </div>
+              </div>
+            </header>
+
+            <div class="scene-body" data-scan-body data-scan-step="1">
+              <!-- Sub-step 1: the screen recording. -->
+              <figure class="scene-recording" data-scan-view="recording">
+                <img src="assets/tutorials/step-2-scan.gif"
+                     alt="Screen recording of the Scan step in the BIDS Manager Converter view: pressing Scan and watching the chips tick up to 21 valid / 0 warnings / 0 error / 12 skipped on the MRI 2 sample."
+                     loading="lazy">
+              </figure>
+
+              <!-- Sub-step 2: chip + IssuesDialog explanation. -->
+              <div class="scan-chip-explainer" data-scan-view="chips" hidden>
+                <div class="scan-chip-row" role="group" aria-label="Toolbar chips after a scan">
+                  <span class="gui-chip chip-success">
+                    <span><strong>17</strong> valid</span>
+                  </span>
+                  <span class="gui-chip chip-warn is-clickable" data-chip-demo="warn">
+                    <span><strong>4</strong> warnings</span>
+                  </span>
+                  <span class="gui-chip chip-err is-clickable" data-chip-demo="err">
+                    <span><strong>0</strong> error</span>
+                  </span>
+                  <span class="gui-chip chip-default is-clickable" data-chip-demo="skip">
+                    <span><strong>12</strong> skipped</span>
+                  </span>
+                </div>
+                <ul class="scan-chip-key">
+                  <li><span class="legend-pill legend-success">valid</span>
+                    Rows the classifier marked confident; no review
+                    needed. Passive (no dialog).</li>
+                  <li><span class="legend-pill legend-warn">warnings</span>
+                    Rows that converted but flagged a non-fatal
+                    issue (low confidence, missing recommended field,
+                    suspected abort). Click to open the warning
+                    list.</li>
+                  <li><span class="legend-pill legend-err">errors</span>
+                    Rows that cannot convert as-is. Click to open
+                    the error list and jump to the offending row.</li>
+                  <li><span class="legend-pill legend-skip">skipped</span>
+                    Rows the scanner auto-excluded (scout, Phoenix
+                    report, calibration). Click to confirm what is
+                    being dropped.</li>
+                </ul>
+
+                <!-- Mock IssuesDialog (what opens on chip click).
+                     Rows mirror the real warnings the scanner emits
+                     on the primary MRI dataset: three fmap multi-
+                     output notices and one B0 reroute. -->
+                <figure class="mock-issues-dialog" aria-label="IssuesDialog opened from the warnings chip">
+                  <header class="mock-issues-dialog-header">
+                    <span class="mock-issues-dialog-title">Warnings &middot; 4 rows</span>
+                    <span class="mock-issues-dialog-subtitle">Rows with scanner-detected warnings. They may still convert; review before committing.</span>
+                    <button class="mock-issues-dialog-close" aria-label="Close">&times;</button>
+                  </header>
+                  <div class="mock-issues-dialog-body">
+                    <article class="mock-issue-card">
+                      <header>
+                        <button class="mock-issue-row" type="button"><strong>sub-001</strong> &middot; sub-001_ses-post_acq-fm2_magnitude1</button>
+                        <span class="mock-issue-jump">jump &rarr;</span>
+                      </header>
+                      <div class="mock-issue-msg sev-warn">
+                        <span class="b">!</span>
+                        <div>
+                          <div class="body">fmap multi-output: this
+                            single DICOM series produces magnitude1 +
+                            magnitude2 + phasediff after dcm2niix
+                            conversion; the proposed basename above is
+                            one of three files that will be written
+                            into <code class="inline">fmap/</code></div>
+                        </div>
+                      </div>
+                    </article>
+
+                    <article class="mock-issue-card">
+                      <header>
+                        <button class="mock-issue-row" type="button"><strong>sub-001</strong> &middot; sub-001_ses-pre_acq-fm2_run-1_magnitude1</button>
+                        <span class="mock-issue-jump">jump &rarr;</span>
+                      </header>
+                      <div class="mock-issue-msg sev-warn">
+                        <span class="b">!</span>
+                        <div>
+                          <div class="body">fmap multi-output: this
+                            single DICOM series produces magnitude1 +
+                            magnitude2 + phasediff after dcm2niix
+                            conversion; the proposed basename above is
+                            one of three files that will be written
+                            into <code class="inline">fmap/</code></div>
+                        </div>
+                      </div>
+                    </article>
+
+                    <article class="mock-issue-card">
+                      <header>
+                        <button class="mock-issue-row" type="button"><strong>sub-001</strong> &middot; sub-001_ses-pre_acq-fm2_run-2_magnitude1</button>
+                        <span class="mock-issue-jump">jump &rarr;</span>
+                      </header>
+                      <div class="mock-issue-msg sev-warn">
+                        <span class="b">!</span>
+                        <div>
+                          <div class="body">fmap multi-output: this
+                            single DICOM series produces magnitude1 +
+                            magnitude2 + phasediff after dcm2niix
+                            conversion; the proposed basename above is
+                            one of three files that will be written
+                            into <code class="inline">fmap/</code></div>
+                        </div>
+                      </div>
+                    </article>
+
+                    <article class="mock-issue-card">
+                      <header>
+                        <button class="mock-issue-row" type="button"><strong>sub-002</strong> &middot; sub-002_acq-epse2_dir-AP_epi</button>
+                        <span class="mock-issue-jump">jump &rarr;</span>
+                      </header>
+                      <div class="mock-issue-msg sev-warn">
+                        <span class="b">!</span>
+                        <div>
+                          <div class="body">rerouted to
+                            <code class="inline">fmap/epi</code>:
+                            SeriesDescription contains a B0 marker and
+                            file count is much smaller than the longest
+                            DWI peer in this session (likely a PEpolar
+                            reference for distortion correction; user
+                            may re-route to <code class="inline">dwi/_dwi</code>
+                            if it is a real b=0 DWI run)</div>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                </figure>
+              </div>
+            </div>
+          </article>
+
+          <!-- ================================================
+               SCENE 3. Inspect the inventory table.
+               ================================================ -->
+          <article class="scene" data-scene="3" data-scene-key="inspect"
+                   aria-labelledby="scene-3-title">
+            <header class="scene-header">
+              <span class="scene-eyebrow">Step 3</span>
+              <h3 id="scene-3-title">Inspect the inventory.</h3>
+              <p>
+                Once the scan finishes the Converter view fills with
+                four panes that share the same model. This step is a
+                guided tour through each pane and the relationships
+                between them. Step through the 5 sub-steps with the
+                stepper below; the mock window stays in place and
+                shifts focus to the pane being explained.
+              </p>
+              <div class="scene-link">
+                <span class="scene-link-icon">&#8644;</span>
+                <div>
+                  <strong>One model, four views.</strong>
+                  <p>The Inspection table is the centre of gravity, but
+                    every row is also reachable through the Filter
+                    pane (schema-grouped tree on the left), the Raw FS
+                    tree (file-system reality), the Output FS tree
+                    (the future BIDS layout), and the Properties
+                    panel (the entity editor on the right). Whatever
+                    you edit anywhere updates everywhere.</p>
+                </div>
+              </div>
+
+              <!-- Sub-scene stepper. Active step gets the accent
+                   highlight; the mock-wrapper below reads its
+                   data-substep attribute and lights the matching
+                   pane. -->
+              <div class="inspect-stepper" data-inspect-stepper>
+                <button class="inspect-step is-active" type="button"
+                        data-substep="1">
+                  <span class="inspect-step-num">1</span>
+                  <span class="inspect-step-label">Inspection table</span>
+                </button>
+                <button class="inspect-step" type="button" data-substep="2">
+                  <span class="inspect-step-num">2</span>
+                  <span class="inspect-step-label">Properties panel</span>
+                </button>
+                <button class="inspect-step" type="button" data-substep="3">
+                  <span class="inspect-step-num">3</span>
+                  <span class="inspect-step-label">Override a row</span>
+                </button>
+                <button class="inspect-step" type="button" data-substep="4">
+                  <span class="inspect-step-num">4</span>
+                  <span class="inspect-step-label">Bulk-edit</span>
+                </button>
+                <button class="inspect-step" type="button" data-substep="5">
+                  <span class="inspect-step-num">5</span>
+                  <span class="inspect-step-label">Filter pane</span>
+                </button>
+              </div>
+
+              <!-- The per-sub-scene caption swaps with the stepper.
+                   Hidden by default; .inspect-caption[data-active="N"]
+                   visible when stepper data-substep matches. -->
+              <div class="inspect-captions">
+                <div class="inspect-caption is-active" data-caption="1">
+                  <strong>Sub-step 1. The Inspection table.</strong>
+                  <p>The centre of gravity. One row per series the
+                    scanner found, with the schema-driven classifier's
+                    best guess for datatype, suffix, task, run, and
+                    the resulting BIDS basename. The
+                    <code class="inline">sequence / source</code>
+                    column carries the raw scanner label so you can
+                    cross-check what each row actually is.</p>
+                </div>
+                <div class="inspect-caption" data-caption="2">
+                  <strong>Sub-step 2. The Properties panel.</strong>
+                  <p>Click any row in the Inspection table. The
+                    Properties panel on the right reads that row and
+                    builds a schema-aware editor: only the entities
+                    valid for the row's (datatype, suffix) appear;
+                    required ones carry a red asterisk; the
+                    <em>Predicted path</em> at the bottom updates as
+                    you type.</p>
+                </div>
+                <div class="inspect-caption" data-caption="3">
+                  <strong>Sub-step 3. Override a row inline.</strong>
+                  <p>Click any cell in the Inspection table or the
+                    Properties panel; both write through the same
+                    model. Here we retype the
+                    <code class="inline">task</code> entity of the
+                    selected row from
+                    <code class="inline">rest</code> to
+                    <code class="inline">motor</code>. The table cell,
+                    the Properties field, and the predicted-path
+                    preview all update in step.</p>
+                </div>
+                <div class="inspect-caption" data-caption="4">
+                  <strong>Sub-step 4. Bulk-edit across rows.</strong>
+                  <p>Shift- or Cmd-click to multi-select rows in the
+                    Inspection table, then click <em>Bulk edit</em> in
+                    the table footer. A small dialog overlays the
+                    table; pick a column and type a value; Apply writes
+                    that value to every selected row in one move. Here
+                    we relabel five <code class="inline">sub-001 /
+                    ses-pre</code> rows from
+                    <code class="inline">pre</code> to
+                    <code class="inline">baseline</code> in one click.</p>
+                </div>
+                <div class="inspect-caption" data-caption="5">
+                  <strong>Sub-step 5. The Filter / structure pane.</strong>
+                  <p>The dataset shape view: every series grouped by
+                    subject / session / datatype with tri-state
+                    checkboxes. Uncheck
+                    <code class="inline">sub-001 / ses-pre / fmap</code>
+                    and the matching rows in the Inspection table
+                    immediately deselect (their row checkboxes flip
+                    off). The rows stay visible for review, but the
+                    next conversion run will skip them. The filter is
+                    the schema-grouped view; the Inspection table is
+                    the per-row view of the same model.</p>
+                </div>
+              </div>
+            </header>
+
+            <!-- Sub-scene navigation hint, only when not on the first
+                 step. -->
+            <div class="scene-body">
+              <div class="scene-mock scene-mock-gui scene-mock-inspect"
+                   data-inspect-mock data-substep="1">
+                <div class="gui-converter-body">
+
+                  <!-- COL 2: Filter / structure tree. -->
+                  <section class="gui-pane gui-filter-pane" data-pane="filter">
+                    <header class="gui-pane-header">FILTER / STRUCTURE</header>
+                    <div class="gui-filter-body">
+                      <div class="gui-filter-row is-folder is-open">
+                        <span class="ck is-checked"></span>
+                        <span class="chev">&#9662;</span>
+                        <span class="name">mri_oldenburg_2</span>
+                        <span class="count">21</span>
+                      </div>
+                      <div class="gui-filter-row is-folder is-open d1">
+                        <span class="ck is-checked"></span>
+                        <span class="chev">&#9662;</span>
+                        <span class="name">sub-001</span>
+                        <span class="count">9</span>
+                      </div>
+                      <div class="gui-filter-row is-folder is-open d2"
+                           data-filter-key="sub-001-ses-pre">
+                        <span class="ck is-checked"></span>
+                        <span class="chev">&#9662;</span>
+                        <span class="name">ses-pre</span>
+                        <span class="count">5</span>
+                      </div>
+                      <div class="gui-filter-row d3" data-filter-key="sub-001-ses-pre-anat">
+                        <span class="ck is-checked"></span>
+                        <span class="name">anat</span>
+                        <span class="count">1</span>
+                      </div>
+                      <div class="gui-filter-row d3" data-filter-key="sub-001-ses-pre-func">
+                        <span class="ck is-checked"></span>
+                        <span class="name">func</span>
+                        <span class="count">2</span>
+                      </div>
+                      <div class="gui-filter-row d3 data-row-flash"
+                           data-filter-key="sub-001-ses-pre-fmap"
+                           data-flash-target>
+                        <span class="ck is-checked"></span>
+                        <span class="name">fmap</span>
+                        <span class="count">2</span>
+                      </div>
+                      <div class="gui-filter-row is-folder is-open d2">
+                        <span class="ck is-checked"></span>
+                        <span class="chev">&#9662;</span>
+                        <span class="name">ses-post</span>
+                        <span class="count">4</span>
+                      </div>
+                      <div class="gui-filter-row d3">
+                        <span class="ck is-checked"></span>
+                        <span class="name">fmap</span>
+                        <span class="count">1</span>
+                      </div>
+                      <div class="gui-filter-row d3">
+                        <span class="ck is-checked"></span>
+                        <span class="name">func</span>
+                        <span class="count">3</span>
+                      </div>
+                      <div class="gui-filter-row is-folder is-open d1">
+                        <span class="ck is-checked"></span>
+                        <span class="chev">&#9662;</span>
+                        <span class="name">sub-002</span>
+                        <span class="count">12</span>
+                      </div>
+                      <div class="gui-filter-row d2">
+                        <span class="ck is-checked"></span>
+                        <span class="name">anat</span>
+                        <span class="count">1</span>
+                      </div>
+                      <div class="gui-filter-row d2">
+                        <span class="ck is-checked"></span>
+                        <span class="name">dwi</span>
+                        <span class="count">2</span>
+                      </div>
+                      <div class="gui-filter-row d2">
+                        <span class="ck is-checked"></span>
+                        <span class="name">fmap</span>
+                        <span class="count">1</span>
+                      </div>
+                      <div class="gui-filter-row d2">
+                        <span class="ck is-checked"></span>
+                        <span class="name">func</span>
+                        <span class="count">8</span>
+                      </div>
+                    </div>
+                  </section>
+
+                  <!-- COL 3: Inspection table with real MRI 2 data. -->
+                  <section class="gui-pane gui-table-pane" data-pane="table">
+                    <header class="gui-pane-header">
+                      <span>INSPECTION</span>
+                      <span class="gui-pane-header-meta">21 of 33 rows</span>
+                    </header>
+                    <div class="gui-table-scroll">
+                      <table class="gui-inv-table">
+                        <thead>
+                          <tr>
+                            <th class="col-cb"></th>
+                            <th class="col-status"></th>
+                            <th class="col-id">id</th>
+                            <th class="col-data">data</th>
+                            <th class="col-suffix">suffix</th>
+                            <th class="col-task">task</th>
+                            <th class="col-run">run</th>
+                            <th class="col-conf">conf</th>
+                            <th class="col-seq">sequence / source</th>
+                            <th class="col-basename">predicted basename</th>
+                          </tr>
+                        </thead>
+                        <tbody data-table-body>
+                          <tr class="gui-inv-row" data-row-key="t1w">
+                            <td><span class="gui-cb is-on">&#10003;</span></td>
+                            <td><span class="gui-row-dot dot-ok"></span></td>
+                            <td class="cell-id">sub-001</td>
+                            <td>anat</td>
+                            <td>T1w</td>
+                            <td class="cell-task">&mdash;</td>
+                            <td>&mdash;</td>
+                            <td class="cell-conf conf-high">0.85</td>
+                            <td class="cell-seq">ses-pre_T1w</td>
+                            <td class="cell-basename"><code>sub-001_ses-pre_acq-tfl3p2_T1w</code></td>
+                          </tr>
+                          <tr class="gui-inv-row is-selected" data-row-key="rest">
+                            <td><span class="gui-cb is-on">&#10003;</span></td>
+                            <td><span class="gui-row-dot dot-ok"></span></td>
+                            <td class="cell-id">sub-001</td>
+                            <td>func</td>
+                            <td>bold</td>
+                            <td class="cell-task" data-cell-task>rest</td>
+                            <td>&mdash;</td>
+                            <td class="cell-conf conf-med">0.40</td>
+                            <td class="cell-seq">ses-pre_task-rest_bold</td>
+                            <td class="cell-basename"><code data-cell-basename>sub-001_ses-pre_task-rest_bold</code></td>
+                          </tr>
+                          <tr class="gui-inv-row" data-row-key="sparse">
+                            <td><span class="gui-cb is-on">&#10003;</span></td>
+                            <td><span class="gui-row-dot dot-ok"></span></td>
+                            <td class="cell-id">sub-001</td>
+                            <td>func</td>
+                            <td>bold</td>
+                            <td>sparse</td>
+                            <td>&mdash;</td>
+                            <td class="cell-conf conf-med">0.40</td>
+                            <td class="cell-seq">ses-pre_task-sparse_bold</td>
+                            <td class="cell-basename"><code>sub-001_ses-pre_task-sparse_bold</code></td>
+                          </tr>
+                          <tr class="gui-inv-row data-row-flash"
+                              data-flash-target data-row-key="fmap-pre-1">
+                            <td><span class="gui-cb is-on">&#10003;</span></td>
+                            <td><span class="gui-row-dot dot-ok"></span></td>
+                            <td class="cell-id">sub-001</td>
+                            <td>fmap</td>
+                            <td>magnitude1</td>
+                            <td>&mdash;</td>
+                            <td>1</td>
+                            <td class="cell-conf conf-high">0.85</td>
+                            <td class="cell-seq">ses-pre_run-01_fmap</td>
+                            <td class="cell-basename"><code>sub-001_ses-pre_acq-fm2_run-1_magnitude1</code></td>
+                          </tr>
+                          <tr class="gui-inv-row data-row-flash"
+                              data-flash-target data-row-key="fmap-pre-2">
+                            <td><span class="gui-cb is-on">&#10003;</span></td>
+                            <td><span class="gui-row-dot dot-ok"></span></td>
+                            <td class="cell-id">sub-001</td>
+                            <td>fmap</td>
+                            <td>magnitude1</td>
+                            <td>&mdash;</td>
+                            <td>2</td>
+                            <td class="cell-conf conf-high">0.85</td>
+                            <td class="cell-seq">ses-pre_run-02_fmap</td>
+                            <td class="cell-basename"><code>sub-001_ses-pre_acq-fm2_run-2_magnitude1</code></td>
+                          </tr>
+                          <tr class="gui-inv-row" data-row-key="mb-bold">
+                            <td><span class="gui-cb is-on">&#10003;</span></td>
+                            <td><span class="gui-row-dot dot-ok"></span></td>
+                            <td class="cell-id">sub-001</td>
+                            <td>func</td>
+                            <td>bold</td>
+                            <td>mb</td>
+                            <td>&mdash;</td>
+                            <td class="cell-conf conf-med">0.40</td>
+                            <td class="cell-seq">ses-post_task-mb_bold</td>
+                            <td class="cell-basename"><code>sub-001_ses-post_task-mb_bold</code></td>
+                          </tr>
+                          <tr class="gui-inv-row" data-row-key="mb-physio">
+                            <td><span class="gui-cb is-on">&#10003;</span></td>
+                            <td><span class="gui-row-dot dot-ok"></span></td>
+                            <td class="cell-id">sub-001</td>
+                            <td>func</td>
+                            <td>physio</td>
+                            <td>mb</td>
+                            <td>&mdash;</td>
+                            <td class="cell-conf conf-med">0.40</td>
+                            <td class="cell-seq">ses-post_task-mb_bold_PhysioLog</td>
+                            <td class="cell-basename"><code>sub-001_ses-post_task-mb_physio</code></td>
+                          </tr>
+                          <tr class="gui-inv-row" data-row-key="t2w">
+                            <td><span class="gui-cb is-on">&#10003;</span></td>
+                            <td><span class="gui-row-dot dot-ok"></span></td>
+                            <td class="cell-id">sub-002</td>
+                            <td>anat</td>
+                            <td>T2w</td>
+                            <td>&mdash;</td>
+                            <td>&mdash;</td>
+                            <td class="cell-conf conf-med">0.40</td>
+                            <td class="cell-seq">acq-space_T2w</td>
+                            <td class="cell-basename"><code>sub-002_acq-space_T2w</code></td>
+                          </tr>
+                          <tr class="gui-inv-row" data-row-key="dwi-ap">
+                            <td><span class="gui-cb is-on">&#10003;</span></td>
+                            <td><span class="gui-row-dot dot-ok"></span></td>
+                            <td class="cell-id">sub-002</td>
+                            <td>dwi</td>
+                            <td>dwi</td>
+                            <td>&mdash;</td>
+                            <td>&mdash;</td>
+                            <td class="cell-conf conf-high">0.85</td>
+                            <td class="cell-seq">acq-15_dir-ap_dwi</td>
+                            <td class="cell-basename"><code>sub-002_acq-epse2_dir-AP_dwi</code></td>
+                          </tr>
+                          <tr class="gui-inv-row" data-row-key="dwi-pa-epi">
+                            <td><span class="gui-cb is-on">&#10003;</span></td>
+                            <td><span class="gui-row-dot dot-info"></span></td>
+                            <td class="cell-id">sub-002</td>
+                            <td class="cell-rerouted">fmap</td>
+                            <td>epi</td>
+                            <td>&mdash;</td>
+                            <td>&mdash;</td>
+                            <td class="cell-conf conf-high">0.85</td>
+                            <td class="cell-seq">acq-15b0_dir-ap_dwi</td>
+                            <td class="cell-basename"><code>sub-002_acq-epse2_dir-AP_epi</code> <small>(rerouted)</small></td>
+                          </tr>
+                          <tr class="gui-inv-row" data-row-key="dmaging-1">
+                            <td><span class="gui-cb is-on">&#10003;</span></td>
+                            <td><span class="gui-row-dot dot-ok"></span></td>
+                            <td class="cell-id">sub-002</td>
+                            <td>func</td>
+                            <td>bold</td>
+                            <td>dmaging</td>
+                            <td>1</td>
+                            <td class="cell-conf conf-med">0.40</td>
+                            <td class="cell-seq">task-dmaging_run-01_bold</td>
+                            <td class="cell-basename"><code>sub-002_task-dmaging_run-1_bold</code></td>
+                          </tr>
+                          <tr class="gui-inv-row" data-row-key="uebung">
+                            <td><span class="gui-cb is-on">&#10003;</span></td>
+                            <td><span class="gui-row-dot dot-ok"></span></td>
+                            <td class="cell-id">sub-002</td>
+                            <td>func</td>
+                            <td>bold</td>
+                            <td>uebung</td>
+                            <td>&mdash;</td>
+                            <td class="cell-conf conf-med">0.40</td>
+                            <td class="cell-seq">task-uebung_bold</td>
+                            <td class="cell-basename"><code>sub-002_task-uebung_bold</code></td>
+                          </tr>
+                          <tr class="gui-inv-row is-skip" data-row-key="scout-1">
+                            <td><span class="gui-cb">&nbsp;</span></td>
+                            <td><span class="gui-row-dot dot-skip"></span></td>
+                            <td class="cell-id">sub-001</td>
+                            <td>&mdash;</td>
+                            <td>localizer</td>
+                            <td>&mdash;</td>
+                            <td>&mdash;</td>
+                            <td class="cell-conf">&mdash;</td>
+                            <td class="cell-seq">AAHead_Scout_64ch-head-coil_MPR_cor</td>
+                            <td class="cell-basename"><em>(skipped)</em></td>
+                          </tr>
+                          <tr class="gui-inv-row is-skip" data-row-key="phoenix">
+                            <td><span class="gui-cb">&nbsp;</span></td>
+                            <td><span class="gui-row-dot dot-skip"></span></td>
+                            <td class="cell-id">sub-001</td>
+                            <td>&mdash;</td>
+                            <td>reports</td>
+                            <td>&mdash;</td>
+                            <td>&mdash;</td>
+                            <td class="cell-conf">&mdash;</td>
+                            <td class="cell-seq">PhoenixZIPReport</td>
+                            <td class="cell-basename"><em>(skipped)</em></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <footer class="gui-table-footer">
+                      <button class="gui-tb-btn-toggle" type="button"
+                              aria-pressed="false">
+                        <svg viewBox="0 0 24 24" width="12" height="12"
+                             fill="currentColor" aria-hidden="true">
+                          <path d="M14.4,6L14,4H5V21H7V14H12.6L13,16H20V6H14.4Z"/>
+                        </svg>
+                        Highlight aborts
+                      </button>
+                      <span class="gui-grow" aria-hidden="true"></span>
+                      <button class="gui-tb-btn" type="button">
+                        <svg viewBox="0 0 24 24" width="12" height="12"
+                             fill="currentColor" aria-hidden="true">
+                          <path d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z"/>
+                        </svg>
+                        Bulk edit&hellip;
+                      </button>
+                    </footer>
+                    <!-- Bulk-edit dialog overlay (Sub-step 4) -->
+                    <div class="gui-bulk-dialog" data-bulk-dialog>
+                      <div class="gui-bulk-dialog-card">
+                        <header class="gui-bulk-dialog-title">
+                          Bulk edit
+                          <span class="gui-bulk-dialog-count" data-bulk-count>5 rows selected</span>
+                        </header>
+                        <div class="gui-bulk-dialog-row">
+                          <label>Column</label>
+                          <select class="gui-bulk-dialog-select">
+                            <option>ses</option>
+                          </select>
+                        </div>
+                        <div class="gui-bulk-dialog-row">
+                          <label>New value</label>
+                          <input class="gui-bulk-dialog-input" type="text"
+                                 value="" data-bulk-input readonly>
+                        </div>
+                        <div class="gui-bulk-dialog-help"
+                             data-bulk-help>Selection: 5 rows under sub-001 / ses-pre</div>
+                        <footer class="gui-bulk-dialog-actions">
+                          <button class="gui-tb-btn" type="button">Cancel</button>
+                          <button class="gui-tb-btn-primary" type="button"
+                                  data-bulk-apply>Apply</button>
+                        </footer>
+                      </div>
+                    </div>
+                  </section>
+
+                  <!-- COL 4: Properties panel. -->
+                  <section class="gui-pane gui-props-pane" data-pane="properties">
+                    <header class="gui-pane-header">PROPERTIES</header>
+                    <div class="gui-props-body">
+                      <div class="gui-props-section">
+                        <div class="gui-props-row">
+                          <label class="gui-props-label">
+                            datatype <span class="req">*</span>
+                          </label>
+                          <span class="gui-props-value">func</span>
+                        </div>
+                        <div class="gui-props-row">
+                          <label class="gui-props-label">
+                            suffix <span class="req">*</span>
+                          </label>
+                          <span class="gui-props-value">bold</span>
+                        </div>
+                      </div>
+
+                      <div class="gui-props-title">
+                        Entities <span class="muted">schema-driven</span>
+                      </div>
+
+                      <div class="gui-props-section">
+                        <div class="gui-props-row">
+                          <label class="gui-props-label">sub <span class="req">*</span></label>
+                          <span class="gui-props-input is-readonly">001</span>
+                        </div>
+                        <div class="gui-props-row">
+                          <label class="gui-props-label">ses</label>
+                          <span class="gui-props-input is-readonly">pre</span>
+                        </div>
+                        <div class="gui-props-row">
+                          <label class="gui-props-label">task <span class="req">*</span></label>
+                          <span class="gui-props-input" data-props-task>rest</span>
+                        </div>
+                        <div class="gui-props-row">
+                          <label class="gui-props-label">acq <span class="rec">rec</span></label>
+                          <span class="gui-props-input placeholder">&mdash;</span>
+                        </div>
+                        <div class="gui-props-row">
+                          <label class="gui-props-label">run <span class="opt">opt</span></label>
+                          <span class="gui-props-input placeholder">&mdash;</span>
+                        </div>
+                        <div class="gui-props-row">
+                          <label class="gui-props-label">echo <span class="opt">opt</span></label>
+                          <span class="gui-props-input placeholder">&mdash;</span>
+                        </div>
+                        <div class="gui-props-row">
+                          <label class="gui-props-label">dir <span class="opt">opt</span></label>
+                          <span class="gui-props-input placeholder">&mdash;</span>
+                        </div>
+                      </div>
+
+                      <div class="gui-props-title">Predicted path</div>
+                      <div class="gui-props-preview">
+                        mri_oldenburg_2/<br>
+                        <span class="seg">sub-001</span>/<span class="seg">ses-pre</span>/<span class="dim">func</span>/<br>
+                        <span class="seg">sub-001</span>_<span class="seg">ses-pre</span>_<span class="ent" data-props-preview-task>task-rest</span>_<span class="suf">bold</span><span class="ext">.nii.gz</span>
+                      </div>
+
+                      <div class="gui-props-title">Why this name?</div>
+                      <div class="gui-props-provenance">
+                        <p><strong>Classifier:</strong> dcm2niix BidsGuess plus sequence-dict fallback.</p>
+                        <p><strong>Confidence:</strong> 0.40 (medium). Operator should review the task name.</p>
+                      </div>
+                    </div>
+                  </section>
+
+                </div>
+
+              </div>
+            </div>
+          </article>
+
+          <!-- ================================================
+               SCENE 4. Run the conversion.
+               Slim mock: top header + toolbar (spinner spinning) +
+               Log dock streaming the engine's output. No splitter
+               panes, no path bars, no statusbar.
+               ================================================ -->
+          <article class="scene" data-scene="4" data-scene-key="convert"
+                   aria-labelledby="scene-4-title">
+            <header class="scene-header">
+              <span class="scene-eyebrow">Step 4</span>
+              <h3 id="scene-4-title">Run the conversion.</h3>
+              <p>
+                Click <em>Run conversion</em>. The toolbar's
+                BusySpinner kicks in, the Run button flips to
+                <em>Cancel</em>, and the Log dock streams every engine
+                line. BIDS Manager stages each subject in a private
+                temp tree (<code class="inline">.tmp_bidsmgr/sub-XXX/</code>),
+                runs the right backend per row
+                (<code class="inline">dcm2niix</code> for MRI,
+                vendored <code class="inline">bidsphysio</code> for
+                Siemens physio logs), stitches the cross-file
+                fixups (fmap rename, <em>IntendedFor</em> arrays,
+                <em>scans.tsv</em>), then atomically renames each
+                staged subject into the BIDS root. Once that is
+                done the <strong>metadata enrichment</strong> engine
+                runs automatically, filling every sidecar field the
+                schema can infer from the inventory.
+              </p>
+              <div class="scene-link">
+                <span class="scene-link-icon">&#9881;</span>
+                <div>
+                  <strong>The log is the only thing that streams.</strong>
+                  <p>The mock below intentionally drops the panes and
+                    the path bars; the only live signals during a
+                    real conversion are the toolbar spinner and the
+                    Log tab. Each line is colour-coded by stage:
+                    <em>stage</em> (purple) is per-row backend output,
+                    <em>fixup</em> (teal) is cross-file metadata
+                    repair, <em>done</em> (green) marks a committed
+                    subject, and <em>enrich</em> (pink) is the
+                    post-conversion metadata pass.</p>
+                </div>
+              </div>
+              <div class="scene-link">
+                <span class="scene-link-icon">&#10024;</span>
+                <div>
+                  <strong>Enrichment is the second half of this
+                    step.</strong>
+                  <p>Watch for the <code class="inline">enrich</code>
+                    log lines after the last <em>committed sub-XXX</em>
+                    line. The metadata engine reads every sidecar the
+                    backends just wrote, fills the required fields it
+                    can infer from inventory rows or the BIDS schema
+                    (10 fields filled on this dataset), and leaves a
+                    <code class="inline">metadata_report.json</code>
+                    audit log in <code class="inline">.bidsmgr/</code>.
+                    The 7 TODOs that remain are recommended-only
+                    fields (License, TaskDescription, etc.) that
+                    need a human in the Editor.</p>
+                </div>
+              </div>
+            </header>
+
+            <div class="scene-body">
+              <div class="scene-mock scene-mock-converter scene-mock-gui">
+                <!-- ============ #top-header (48 px) ============
+                     Same as Step 1's top header: brand + view pills +
+                     theme toggle. No Settings or Run buttons here;
+                     those live in the toolbar below. -->
+                <div class="gui-topheader">
+                  <span class="gui-brand">
+                    <img class="gui-logo" src="assets/brand/app-icon-128.png" alt="" aria-hidden="true">
+                    <span class="gui-brand-name">BIDS-Manager</span>
+                  </span>
+                  <button class="gui-view-pill is-checked" type="button"
+                          role="tab" aria-selected="true">Converter</button>
+                  <button class="gui-view-pill" type="button"
+                          role="tab" aria-selected="false">Editor</button>
+                  <span class="gui-grow" aria-hidden="true"></span>
+                  <button class="gui-theme-toggle" type="button"
+                          aria-label="Toggle light / dark theme">
+                    <svg viewBox="0 0 24 24" width="14" height="14"
+                         fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round"
+                         aria-hidden="true">
+                      <circle cx="12" cy="12" r="4"></circle>
+                      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- ============ #toolbar (44 px) ============
+                     Mid-conversion state. Same widget order as Step 1
+                     but in a running state:
+                     - chips show the scan result (17 / 4 / 0 / 12)
+                     - BusySpinner is visible + spinning
+                     - Run conversion has flipped to "Cancel" with the
+                       mdi6.close icon, matching converter_panel.py's
+                       behavior during an active QThread run. -->
+                <div class="gui-toolbar">
+                  <button class="gui-tb-btn is-disabled" type="button">
+                    <svg class="gui-tb-icon" viewBox="0 0 24 24"
+                         width="13" height="13" fill="currentColor"
+                         aria-hidden="true">
+                      <path d="M17 22V20H20V17H22V20.5C22 20.89 21.84 21.24 21.54 21.54C21.24 21.84 20.89 22 20.5 22H17M7 22H3.5C3.11 22 2.76 21.84 2.46 21.54C2.16 21.24 2 20.89 2 20.5V17H4V20H7V22M17 2H20.5C20.89 2 21.24 2.16 21.54 2.46C21.84 2.76 22 3.11 22 3.5V7H20V4H17V2M7 2V4H4V7H2V3.5C2 3.11 2.16 2.76 2.46 2.46C2.76 2.16 3.11 2 3.5 2H7M10.5 6C13 6 15 8 15 10.5C15 11.38 14.75 12.2 14.31 12.9L17.57 16.16L16.16 17.57L12.9 14.31C12.2 14.75 11.38 15 10.5 15C8 15 6 13 6 10.5C6 8 8 6 10.5 6M10.5 8C9.12 8 8 9.12 8 10.5C8 11.88 9.12 13 10.5 13C11.88 13 13 11.88 13 10.5C13 9.12 11.88 8 10.5 8Z"/>
+                    </svg>
+                    Scan&hellip;
+                  </button>
+                  <span class="gui-tb-mini-label">TSV:</span>
+                  <input class="gui-tb-input" type="text" value="inventory.tsv" readonly>
+                  <span class="gui-vsep" aria-hidden="true"></span>
+                  <span class="gui-chip chip-success"><span><strong>17</strong> valid</span></span>
+                  <span class="gui-chip chip-warn"><span><strong>4</strong> warnings</span></span>
+                  <span class="gui-chip chip-err"><span><strong>0</strong> error</span></span>
+                  <span class="gui-chip chip-default"><span><strong>12</strong> skipped</span></span>
+                  <span class="gui-spinner is-spinning"
+                        data-mock="conv-spinner" aria-hidden="true"></span>
+                  <span class="gui-grow" aria-hidden="true"></span>
+                  <button class="gui-tb-btn is-disabled" type="button">
+                    <svg class="gui-tb-icon" viewBox="0 0 24 24"
+                         width="13" height="13" fill="currentColor"
+                         aria-hidden="true">
+                      <path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"/>
+                    </svg>
+                    Settings&hellip;
+                  </button>
+                  <button class="gui-tb-btn-primary" type="button">
+                    <svg class="gui-tb-icon" viewBox="0 0 24 24"
+                         width="13" height="13" fill="currentColor"
+                         aria-hidden="true">
+                      <!-- mdi6.close glyph (Cancel state) -->
+                      <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+                    </svg>
+                    Cancel
+                  </button>
+                </div>
+
+                <!-- ============ Bottom dock (Log tab active) ============
+                     Only the Log tab shows content here; the others are
+                     present so the dock still looks like the real GUI.
+                     SCENE_PLAYERS[4] streams lines into `[data-mock="log"]`. -->
+                <div class="mock-insp-dock">
+                  <button class="dock-tab" type="button">BIDS preview</button>
+                  <button class="dock-tab is-active" type="button">Log</button>
+                  <button class="dock-tab" type="button">Conflicts</button>
+                  <button class="dock-tab" type="button">Statistics</button>
+                </div>
+                <div class="mock-dock-content">
+                  <pre class="mock-log" data-mock="log"></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- ================================================
+               SCENE 7. Open the result in the Editor.
+               ================================================ -->
+          <article class="scene" data-scene="5" data-scene-key="editor"
+                   aria-labelledby="scene-5-title">
+            <header class="scene-header">
+              <span class="scene-eyebrow">Step 5</span>
+              <h3 id="scene-5-title">Editor: read, fix, validate.</h3>
+              <p>
+                Switch to the <em>Editor</em> view to read the freshly
+                converted BIDS root: navigate the dataset tree, open
+                any file in the extension-routed viewer, edit sidecars
+                in a schema-aware form, and validate at file / folder /
+                dataset scope. The 3-column layout stays in place
+                across the walkthrough; the centre pane swaps content
+                by file extension and the validation pane on the right
+                reflows when audits run.
+              </p>
+              <div class="scene-link">
+                <span class="scene-link-icon">&#8644;</span>
+                <div>
+                  <strong>Same model, three views.</strong>
+                  <p>The BIDS tree, the centre viewer, and the
+                    validation pane share the same underlying file
+                    model. Edit a sidecar in the centre pane &rarr; the
+                    BIDS tree's status dot updates &rarr; the
+                    validation pane re-reads the file. Click an issue
+                    in the validation pane &rarr; the tree expands and
+                    the centre pane jumps to the offending file.</p>
+                </div>
+              </div>
+
+              <div class="inspect-stepper" data-editor-stepper>
+                <button class="inspect-step is-active" type="button" data-editor-step="1">
+                  <span class="inspect-step-num">1</span>
+                  <span class="inspect-step-label">Editor (no audit)</span>
+                </button>
+                <button class="inspect-step" type="button" data-editor-step="2">
+                  <span class="inspect-step-num">2</span>
+                  <span class="inspect-step-label">After validation</span>
+                </button>
+                <button class="inspect-step" type="button" data-editor-step="3">
+                  <span class="inspect-step-num">3</span>
+                  <span class="inspect-step-label">Chip info dialog</span>
+                </button>
+                <button class="inspect-step" type="button" data-editor-step="4">
+                  <span class="inspect-step-num">4</span>
+                  <span class="inspect-step-label">Sidecar editing</span>
+                </button>
+                <button class="inspect-step" type="button" data-editor-step="5">
+                  <span class="inspect-step-num">5</span>
+                  <span class="inspect-step-label">TSV editing</span>
+                </button>
+              </div>
+
+              <div class="inspect-captions">
+                <div class="inspect-caption is-active" data-editor-caption="1">
+                  <strong>Sub-step 1. Editor with a BIDS root open, no audit yet.</strong>
+                  <p>Click <em>Open BIDS root</em>, pick the
+                    dataset, and the 3-column layout fills: the BIDS
+                    tree on the left, the schema-aware sidecar form
+                    in the centre, and the validation pane on the
+                    right showing a hint
+                    (<em>"Run 'Validate dataset' to populate this
+                    column."</em>). The toolbar chips read
+                    <strong>0 ok / 0 warn / 0 err</strong> until you
+                    actually run a validation.</p>
+                </div>
+                <div class="inspect-caption" data-editor-caption="2">
+                  <strong>Sub-step 2. After clicking <em>Validate dataset</em>.</strong>
+                  <p>The Editor runs the two-layer validator over the
+                    BIDS root. The chips tween to their final counts
+                    (<strong>55 ok / 7 warn / 0 err</strong> on this
+                    dataset), the right pane drops the hint and prints
+                    grouped results (dataset-level, folder-level,
+                    per-file), the BIDS tree's status dots flip, and
+                    the sidecar form picks up a red mark next to any
+                    field that fails.</p>
+                </div>
+                <div class="inspect-caption" data-editor-caption="3">
+                  <strong>Sub-step 3. Click the warnings chip.</strong>
+                  <p>The <em>warn</em> and <em>err</em> chips are
+                    clickable. Clicking the warnings chip opens a
+                    modal that lists every file with at least one
+                    warning, grouped by file path, with the rule code
+                    and message for each. The <em>jump &rarr;</em>
+                    button on each group selects that file in the
+                    BIDS tree; the <em>Set a real value</em> chip on
+                    each row marks the offending sidecar field for
+                    review.</p>
+                </div>
+                <div class="inspect-caption" data-editor-caption="4">
+                  <strong>Sub-step 4. The sidecar editor's full button bar.</strong>
+                  <p>Switch to <em>Tree view</em> to see the raw
+                    key / value tree. The button bar above the form
+                    grows: <em>+ Add field</em> creates a top-level
+                    key, <em>+ Add subfield</em> nests inside the
+                    selected array / object, <em>- Delete field</em>
+                    removes the selected entry, <em>Revert</em> drops
+                    pending edits, <em>Save</em> writes to disk. The
+                    coloured legend on the right is the same
+                    required / recommended / optional / deprecated
+                    palette the BIDS view uses.</p>
+                </div>
+                <div class="inspect-caption" data-editor-caption="5">
+                  <strong>Sub-step 5. The TSV editor's full button bar.</strong>
+                  <p>Click any TSV in the BIDS tree
+                    (<code class="inline">participants.tsv</code>,
+                    <code class="inline">scans.tsv</code>,
+                    <code class="inline">channels.tsv</code>,
+                    <code class="inline">electrodes.tsv</code>) to
+                    open it as an editable table. The button bar above
+                    the table is symmetrical to the sidecar editor's:
+                    <em>+ Add row</em>, <em>- Delete row</em>,
+                    <em>+ Add column</em>, <em>- Delete column</em>,
+                    <em>Revert</em>, <em>Save</em>. Click any cell to
+                    edit; <kbd>Enter</kbd> commits.</p>
+                </div>
+              </div>
+            </header>
+
+            <div class="scene-body">
+              <div class="scene-mock scene-mock-gui scene-mock-editor"
+                   data-editor-mock data-editor-step="1">
+                <!-- Editor top header. Editor pill is active. -->
+                <div class="gui-topheader">
+                  <span class="gui-brand">
+                    <img class="gui-logo" src="assets/brand/app-icon-128.png" alt="" aria-hidden="true">
+                    <span class="gui-brand-name">BIDS-Manager</span>
+                  </span>
+                  <button class="gui-view-pill" type="button">Converter</button>
+                  <button class="gui-view-pill is-checked" type="button">Editor</button>
+                  <span class="gui-grow" aria-hidden="true"></span>
+                  <button class="gui-theme-toggle" type="button"
+                          aria-label="Toggle theme">
+                    <svg viewBox="0 0 24 24" width="14" height="14"
+                         fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round"
+                         aria-hidden="true">
+                      <circle cx="12" cy="12" r="4"></circle>
+                      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- Editor toolbar. -->
+                <div class="gui-toolbar">
+                  <button class="gui-tb-btn" type="button"
+                          data-editor-btn="open">
+                    <svg class="gui-tb-icon" viewBox="0 0 24 24"
+                         width="13" height="13" fill="currentColor"
+                         aria-hidden="true">
+                      <path d="M19 20H4C2.89 20 2 19.1 2 18V6C2 4.89 2.89 4 4 4H10L12 6H19C20.1 6 21 6.89 21 8V18C21 19.1 20.1 20 19 20Z"/>
+                    </svg>
+                    Open BIDS root
+                  </button>
+                  <span class="gui-vsep" aria-hidden="true"></span>
+                  <button class="gui-tb-btn" type="button"
+                          data-editor-btn="vfile">
+                    <svg class="gui-tb-icon" viewBox="0 0 24 24"
+                         width="13" height="13" fill="currentColor"
+                         aria-hidden="true">
+                      <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20M10.94,18L7.4,14.46L8.81,13.05L10.94,15.18L15.19,10.93L16.6,12.34L10.94,18Z"/>
+                    </svg>
+                    Validate file
+                  </button>
+                  <button class="gui-tb-btn" type="button"
+                          data-editor-btn="vfolder">
+                    <svg class="gui-tb-icon" viewBox="0 0 24 24"
+                         width="13" height="13" fill="currentColor"
+                         aria-hidden="true">
+                      <path d="M10,4H4A2,2 0 0,0 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8A2,2 0 0,0 20,6H12L10,4M10.5,17.5L7,14L8.41,12.59L10.5,14.67L15.09,10.09L16.5,11.5L10.5,17.5Z"/>
+                    </svg>
+                    Validate folder
+                  </button>
+                  <button class="gui-tb-btn" type="button"
+                          data-editor-btn="vdataset">
+                    <svg class="gui-tb-icon" viewBox="0 0 24 24"
+                         width="13" height="13" fill="currentColor"
+                         aria-hidden="true">
+                      <path d="M12,3C7.58,3 4,4.79 4,7C4,9.21 7.58,11 12,11C16.42,11 20,9.21 20,7C20,4.79 16.42,3 12,3M4,9V12C4,14.21 7.58,16 12,16C16.42,16 20,14.21 20,12V9C20,11.21 16.42,13 12,13C7.58,13 4,11.21 4,9M4,14V17C4,19.21 7.58,21 12,21C16.42,21 20,19.21 20,17V14C20,16.21 16.42,18 12,18C7.58,18 4,16.21 4,14Z"/>
+                    </svg>
+                    Validate dataset
+                  </button>
+                  <span class="gui-vsep" aria-hidden="true"></span>
+                  <span class="gui-tb-mini-label">Strict BIDS</span>
+                  <span class="gui-toggle" data-editor-btn="strict">
+                    <span class="gui-toggle-knob"></span>
+                  </span>
+                  <span class="gui-spinner" data-editor-spinner aria-hidden="true"></span>
+                  <span class="gui-grow" aria-hidden="true"></span>
+                  <span class="gui-chip chip-success" data-editor-chip="ok"><span><strong data-editor-chip-num="ok">0</strong> ok</span></span>
+                  <span class="gui-chip chip-warn is-clickable" data-editor-chip="warn" data-editor-chip-trigger="warn"><span><strong data-editor-chip-num="warn">0</strong> warn</span></span>
+                  <span class="gui-chip chip-err is-clickable" data-editor-chip="err" data-editor-chip-trigger="err"><span><strong data-editor-chip-num="err">0</strong> err</span></span>
+                </div>
+
+                <!-- 3-column editor body. -->
+                <div class="gui-editor-body">
+
+                  <!-- COL 1: BIDS tree (always populated; sub-step 1
+                       is shown right after the user picked a folder). -->
+                  <section class="gui-pane gui-bids-tree-pane" data-pane="tree">
+                    <header class="gui-pane-header">BIDS DATASET</header>
+                    <div class="gui-bids-tree" data-bids-tree>
+                      <div class="gui-bids-tree-rows" data-bids-rows>
+                        <div class="gui-fs-item is-folder is-open">
+                          <span class="chev">&#9662;</span>
+                          <span class="name">mri_oldenburg_2</span>
+                        </div>
+                        <div class="gui-fs-item d1" data-tree-row="dd">
+                          <span class="tree-glyph json">&#123;&#125;</span>
+                          <span class="name">dataset_description.json</span>
+                          <span class="gui-row-dot dot-warn"></span>
+                        </div>
+                        <div class="gui-fs-item d1" data-tree-row="participants-tsv">
+                          <span class="tree-glyph tsv">tsv</span>
+                          <span class="name">participants.tsv</span>
+                          <span class="gui-row-dot dot-ok"></span>
+                        </div>
+                        <div class="gui-fs-item d1">
+                          <span class="tree-glyph txt">md</span>
+                          <span class="name">README</span>
+                          <span class="gui-row-dot dot-ok"></span>
+                        </div>
+                        <div class="gui-fs-item d1">
+                          <span class="tree-glyph txt">md</span>
+                          <span class="name">CHANGES</span>
+                          <span class="gui-row-dot dot-ok"></span>
+                        </div>
+                        <div class="gui-fs-item is-folder is-open d1">
+                          <span class="chev">&#9662;</span>
+                          <span class="name">sub-001</span>
+                        </div>
+                        <div class="gui-fs-item is-folder is-open d2">
+                          <span class="chev">&#9662;</span>
+                          <span class="name">ses-pre</span>
+                        </div>
+                        <div class="gui-fs-item d3">
+                          <span class="tree-glyph tsv">tsv</span>
+                          <span class="name">sub-001_ses-pre_scans.tsv</span>
+                          <span class="gui-row-dot dot-ok"></span>
+                        </div>
+                        <div class="gui-fs-item is-folder is-open d3">
+                          <span class="chev">&#9662;</span>
+                          <span class="name">anat</span>
+                        </div>
+                        <div class="gui-fs-item d4" data-tree-row="t1w-nii">
+                          <span class="tree-glyph nii">nii</span>
+                          <span class="name">sub-001_ses-pre_acq-tfl3p2_T1w.nii.gz</span>
+                          <span class="gui-row-dot dot-ok"></span>
+                        </div>
+                        <div class="gui-fs-item d4" data-tree-row="t1w-json">
+                          <span class="tree-glyph json">&#123;&#125;</span>
+                          <span class="name">sub-001_ses-pre_acq-tfl3p2_T1w.json</span>
+                          <span class="gui-row-dot dot-ok"></span>
+                        </div>
+                        <div class="gui-fs-item is-folder is-open d3">
+                          <span class="chev">&#9662;</span>
+                          <span class="name">func</span>
+                        </div>
+                        <div class="gui-fs-item d4" data-tree-row="rest-nii">
+                          <span class="tree-glyph nii">nii</span>
+                          <span class="name">sub-001_ses-pre_task-rest_bold.nii.gz</span>
+                          <span class="gui-row-dot dot-ok"></span>
+                        </div>
+                        <div class="gui-fs-item d4 is-selected" data-tree-row="rest-json">
+                          <span class="tree-glyph json">&#123;&#125;</span>
+                          <span class="name">sub-001_ses-pre_task-rest_bold.json</span>
+                          <span class="gui-row-dot dot-warn"></span>
+                        </div>
+                        <div class="gui-fs-item d4">
+                          <span class="tree-glyph nii">nii</span>
+                          <span class="name">sub-001_ses-pre_task-sparse_bold.nii.gz</span>
+                          <span class="gui-row-dot dot-ok"></span>
+                        </div>
+                        <div class="gui-fs-item d4">
+                          <span class="tree-glyph json">&#123;&#125;</span>
+                          <span class="name">sub-001_ses-pre_task-sparse_bold.json</span>
+                          <span class="gui-row-dot dot-warn"></span>
+                        </div>
+                        <div class="gui-fs-item is-folder d3">
+                          <span class="chev">&#9656;</span>
+                          <span class="name">fmap</span>
+                        </div>
+                        <div class="gui-fs-item is-folder d2">
+                          <span class="chev">&#9656;</span>
+                          <span class="name">ses-post</span>
+                        </div>
+                        <div class="gui-fs-item is-folder d1">
+                          <span class="chev">&#9656;</span>
+                          <span class="name">sub-002</span>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <!-- COL 2: Center pane (extension-routed viewer).
+                       Three views: sidecar-bids (sub-steps 1-3),
+                       sidecar-tree (sub-step 4 with the full edit
+                       button row), tsv (sub-step 5). -->
+                  <section class="gui-pane gui-editor-center" data-pane="center">
+                    <header class="gui-pane-header" data-editor-center-header>
+                      <span data-editor-center-title>sub-001_ses-pre_task-rest_bold.json</span>
+                      <span class="gui-pane-header-meta" data-editor-center-meta>SIDECAR</span>
+                    </header>
+
+                    <!-- View A: Sidecar JSON, BIDS view (sub-steps 1, 2, 3). -->
+                    <div class="gui-sidecar-viewer"
+                         data-editor-view="sidecar-bids">
+                      <div class="gui-sidecar-tabs">
+                        <button class="gui-sidecar-tab is-active" type="button">BIDS view</button>
+                        <button class="gui-sidecar-tab" type="button">Tree view</button>
+                        <span class="gui-grow"></span>
+                        <button class="gui-tb-btn" type="button">Revert</button>
+                        <button class="gui-tb-btn-primary" type="button">Save</button>
+                      </div>
+                      <div class="gui-sidecar-legend">
+                        <span class="legend-pill legend-req">required</span>
+                        <span class="legend-pill legend-rec">recommended</span>
+                        <span class="legend-pill legend-opt">optional</span>
+                        <span class="legend-pill legend-dep">deprecated</span>
+                      </div>
+                      <div class="gui-sidecar-form" data-editor-sidecar-form>
+                        <div class="sc-field kind-req"><span class="req-stripe"></span><span class="sc-key">TaskName <span class="req-mark">*</span></span><span class="sc-val str">"rest"</span></div>
+                        <div class="sc-field kind-req"><span class="req-stripe"></span><span class="sc-key">RepetitionTime <span class="req-mark">*</span></span><span class="sc-val num">2.5</span></div>
+                        <div class="sc-field kind-rec sc-todo" data-todo-field><span class="req-stripe"></span><span class="sc-key">Instructions</span><span class="sc-val placeholder">"TODO"</span><span class="sc-flag" title="TODO placeholder">!</span></div>
+                        <div class="sc-field kind-rec sc-todo" data-todo-field><span class="req-stripe"></span><span class="sc-key">TaskDescription</span><span class="sc-val placeholder">"TODO"</span><span class="sc-flag">!</span></div>
+                        <div class="sc-field kind-rec sc-todo" data-todo-field><span class="req-stripe"></span><span class="sc-key">CogAtlasID</span><span class="sc-val placeholder">"TODO"</span><span class="sc-flag">!</span></div>
+                        <div class="sc-field kind-rec sc-todo" data-todo-field><span class="req-stripe"></span><span class="sc-key">CogPOID</span><span class="sc-val placeholder">"TODO"</span><span class="sc-flag">!</span></div>
+                        <div class="sc-field kind-rec"><span class="req-stripe"></span><span class="sc-key">Manufacturer</span><span class="sc-val str">"Siemens"</span></div>
+                        <div class="sc-field kind-rec"><span class="req-stripe"></span><span class="sc-key">ManufacturersModelName</span><span class="sc-val str">"MAGNETOM Prisma"</span></div>
+                        <div class="sc-field kind-rec"><span class="req-stripe"></span><span class="sc-key">MagneticFieldStrength</span><span class="sc-val num">3</span></div>
+                        <div class="sc-field kind-rec"><span class="req-stripe"></span><span class="sc-key">EchoTime</span><span class="sc-val num">0.03</span></div>
+                        <div class="sc-field kind-rec"><span class="req-stripe"></span><span class="sc-key">FlipAngle</span><span class="sc-val num">60</span></div>
+                        <div class="sc-field kind-rec"><span class="req-stripe"></span><span class="sc-key">InstitutionName</span><span class="sc-val str">"Carl von Ossietzky Universitaet"</span></div>
+                        <div class="sc-field kind-opt"><span class="req-stripe"></span><span class="sc-key">PhaseEncodingDirection</span><span class="sc-val str">"j-"</span></div>
+                        <div class="sc-field kind-opt"><span class="req-stripe"></span><span class="sc-key">AcquisitionDateTime</span><span class="sc-val str">"2025-05-26T07:16:29"</span></div>
+                      </div>
+                    </div>
+
+                    <!-- View B: Sidecar JSON, Tree view (sub-step 4).
+                         Full editing button row: Add field / Add
+                         subfield / Delete field / Revert / Save. -->
+                    <div class="gui-sidecar-viewer"
+                         data-editor-view="sidecar-tree" hidden>
+                      <div class="gui-sidecar-tabs">
+                        <button class="gui-sidecar-tab" type="button">BIDS view</button>
+                        <button class="gui-sidecar-tab is-active" type="button">Tree view</button>
+                        <span class="gui-vsep" aria-hidden="true"></span>
+                        <button class="gui-tb-btn" type="button">+ Add field</button>
+                        <button class="gui-tb-btn" type="button">+ Add subfield</button>
+                        <button class="gui-tb-btn" type="button">- Delete field</button>
+                        <span class="gui-grow"></span>
+                        <button class="gui-tb-btn" type="button">Revert</button>
+                        <button class="gui-tb-btn-primary" type="button">Save</button>
+                      </div>
+                      <div class="gui-sidecar-legend">
+                        <span class="legend-pill legend-req">required</span>
+                        <span class="legend-pill legend-rec">recommended</span>
+                        <span class="legend-pill legend-opt">optional</span>
+                        <span class="legend-pill legend-dep">deprecated</span>
+                        <span class="gui-grow"></span>
+                        <span class="muted">schema &middot; func/bold</span>
+                      </div>
+                      <div class="gui-json-tree">
+                        <div class="json-row d0"><span class="json-key">RepetitionTime</span><span class="json-val num">0.85</span></div>
+                        <div class="json-row d0"><span class="json-key">TaskName</span><span class="json-val str">dmaging</span></div>
+                        <div class="json-row d0"><span class="json-key">Instructions</span><span class="json-val placeholder">TODO</span></div>
+                        <div class="json-row d0"><span class="json-key">TaskDescription</span><span class="json-val placeholder">TODO</span></div>
+                        <div class="json-row d0"><span class="json-key">CogAtlasID</span><span class="json-val placeholder">TODO</span></div>
+                        <div class="json-row d0"><span class="json-key">CogPOID</span><span class="json-val placeholder">TODO</span></div>
+                        <div class="json-row d0"><span class="json-key">Modality</span><span class="json-val str">MR</span></div>
+                        <div class="json-row d0"><span class="json-key">MagneticFieldStrength</span><span class="json-val num">3</span></div>
+                        <div class="json-row d0"><span class="json-key">ImagingFrequency</span><span class="json-val num">123.239172</span></div>
+                        <div class="json-row d0"><span class="json-key">Manufacturer</span><span class="json-val str">Siemens</span></div>
+                        <div class="json-row d0"><span class="json-key">ManufacturersModelName</span><span class="json-val str">MAGNETOM Prisma</span></div>
+                        <div class="json-row d0"><span class="json-key">InstitutionName</span><span class="json-val str">Carl von Ossietzky Universitaet</span></div>
+                        <div class="json-row d0"><span class="json-key">DeviceSerialNumber</span><span class="json-val str">66080</span></div>
+                        <div class="json-row d0"><span class="json-key">StationName</span><span class="json-val str">AWP66800</span></div>
+                        <div class="json-row d0"><span class="json-key">ScanningSequence</span><span class="json-val str">EP</span></div>
+                        <div class="json-row d0"><span class="json-key">SequenceVariant</span><span class="json-val str">SK\SS</span></div>
+                      </div>
+                    </div>
+
+                    <!-- View C: TSV viewer (sub-step 5). Full editing
+                         button row: Add row / Delete row / Add column
+                         / Delete column / Revert / Save. -->
+                    <div class="gui-tsv-viewer"
+                         data-editor-view="tsv" hidden>
+                      <div class="gui-sidecar-tabs">
+                        <span class="gui-tsv-name">TABLE</span>
+                        <span class="gui-vsep" aria-hidden="true"></span>
+                        <button class="gui-tb-btn" type="button">+ Add row</button>
+                        <button class="gui-tb-btn" type="button">- Delete row</button>
+                        <button class="gui-tb-btn" type="button">+ Add column</button>
+                        <button class="gui-tb-btn" type="button">- Delete column</button>
+                        <span class="gui-grow"></span>
+                        <button class="gui-tb-btn" type="button">Revert</button>
+                        <button class="gui-tb-btn-primary" type="button">Save</button>
+                      </div>
+                      <div class="gui-tsv-scroll">
+                        <table class="gui-tsv-table">
+                          <thead>
+                            <tr>
+                              <th class="gui-tsv-rownum"></th>
+                              <th>participant_id</th>
+                              <th>age</th>
+                              <th>sex</th>
+                              <th>given_name</th>
+                              <th>family_name</th>
+                              <th>patient_id</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td class="gui-tsv-rownum">1</td>
+                              <td>sub-001</td>
+                              <td>020Y</td>
+                              <td>M</td>
+                              <td>XX00XX00</td>
+                              <td>OL_0002</td>
+                              <td>OL_0002</td>
+                            </tr>
+                            <tr>
+                              <td class="gui-tsv-rownum">2</td>
+                              <td>sub-002</td>
+                              <td>020Y</td>
+                              <td>M</td>
+                              <td>XX00XX22</td>
+                              <td>OL_0003</td>
+                              <td>OL_0003</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <footer class="gui-tsv-footer">
+                        <span>participants.tsv</span>
+                        <span class="gui-grow"></span>
+                        <span class="muted">2 rows &middot; 6 columns</span>
+                      </footer>
+                    </div>
+                  </section>
+
+                  <!-- COL 3: Validation pane. -->
+                  <section class="gui-pane gui-validation-pane" data-pane="validation">
+                    <header class="gui-pane-header">VALIDATION</header>
+                    <div class="gui-validation-body" data-editor-validation>
+                      <!-- Sub-step 1: empty / hint state. -->
+                      <div class="gui-validation-empty" data-editor-validation-view="empty">
+                        <p class="muted">Run <em>Validate dataset</em>
+                          to populate this column.</p>
+                      </div>
+
+                      <!-- Sub-steps 2-5: dataset-wide audit results.
+                           Mirrors the real GUI's grouping: dataset
+                           rollup -> folder rollup -> file findings,
+                           ending with a Required / Recommended /
+                           Deprecated count footer. -->
+                      <div class="gui-validation-results"
+                           data-editor-validation-view="results" hidden>
+                        <div class="gui-validation-section">
+                          <div class="gui-validation-section-label">No dataset-level issues</div>
+                        </div>
+                        <div class="gui-validation-section">
+                          <div class="gui-validation-section-label">No folder-level issues</div>
+                        </div>
+                        <div class="gui-validation-section">
+                          <div class="gui-validation-section-label">FILE: sub-001/ses-pre/func/sub-001_ses-pre_task-rest_bold.json</div>
+                          <article class="gui-validation-card sev-warn">
+                            <header class="gui-validation-card-head">
+                              <span class="gui-validation-rule">BIDSMGR.TODO_PLACEHOLDER</span>
+                              <span class="gui-validation-card-tag">Instructions</span>
+                            </header>
+                            <p class="gui-validation-card-body">field 'Instructions' contains TODO placeholder</p>
+                            <button class="gui-validation-card-action" type="button">Set a real value</button>
+                          </article>
+                          <article class="gui-validation-card sev-warn">
+                            <header class="gui-validation-card-head">
+                              <span class="gui-validation-rule">BIDSMGR.TODO_PLACEHOLDER</span>
+                              <span class="gui-validation-card-tag">TaskDescription</span>
+                            </header>
+                            <p class="gui-validation-card-body">field 'TaskDescription' contains TODO placeholder</p>
+                            <button class="gui-validation-card-action" type="button">Set a real value</button>
+                          </article>
+                          <article class="gui-validation-card sev-warn">
+                            <header class="gui-validation-card-head">
+                              <span class="gui-validation-rule">BIDSMGR.TODO_PLACEHOLDER</span>
+                              <span class="gui-validation-card-tag">CogAtlasID</span>
+                            </header>
+                            <p class="gui-validation-card-body">field 'CogAtlasID' contains TODO placeholder</p>
+                            <button class="gui-validation-card-action" type="button">Set a real value</button>
+                          </article>
+                          <article class="gui-validation-card sev-warn">
+                            <header class="gui-validation-card-head">
+                              <span class="gui-validation-rule">BIDSMGR.TODO_PLACEHOLDER</span>
+                              <span class="gui-validation-card-tag">CogPOID</span>
+                            </header>
+                            <p class="gui-validation-card-body">field 'CogPOID' contains TODO placeholder</p>
+                            <button class="gui-validation-card-action" type="button">Set a real value</button>
+                          </article>
+                        </div>
+                        <footer class="gui-validation-footer">
+                          <div>Required: <strong>13</strong> present</div>
+                          <div>Recommended: <strong>89</strong> present</div>
+                          <div>Deprecated: <strong>0</strong> present</div>
+                        </footer>
+                      </div>
+                    </div>
+                  </section>
+
+                </div>
+
+                <!-- Warnings chip click dialog (sub-step 3 only).
+                     Modal-ish overlay listing every file with at
+                     least one warning, grouped by file path.
+                     Mirrors the real GUI's "Warnings . N files"
+                     IssuesDialog. -->
+                <div class="gui-warnings-dialog" data-editor-warnings hidden>
+                  <div class="gui-warnings-dialog-card">
+                    <header class="gui-warnings-dialog-header">
+                      <span class="gui-warnings-dialog-icon" aria-hidden="true">!</span>
+                      <div>
+                        <span class="gui-warnings-dialog-title">Warnings &middot; 7 files</span>
+                        <span class="gui-warnings-dialog-subtitle">Files with warnings. They may still be usable; review each before sharing the dataset.</span>
+                      </div>
+                      <button class="gui-warnings-dialog-close" aria-label="Close">&times;</button>
+                    </header>
+                    <div class="gui-warnings-dialog-body">
+
+                      <section class="gui-warnings-group">
+                        <header>
+                          <span class="gui-warnings-group-path">dataset_description.json</span>
+                          <span class="gui-warnings-group-jump">jump &rarr;</span>
+                        </header>
+                        <article class="gui-warnings-row sev-warn">
+                          <span class="gui-warnings-rule">BIDSMGR.TODO_PLACEHOLDER</span>
+                          <span class="gui-warnings-msg">field 'DatasetDOI' contains TODO placeholder</span>
+                          <span class="gui-warnings-actions">
+                            <span class="gui-validation-card-tag">DatasetDOI</span>
+                            <button class="gui-validation-card-action" type="button">Set a real value</button>
+                          </span>
+                        </article>
+                      </section>
+
+                      <section class="gui-warnings-group">
+                        <header>
+                          <span class="gui-warnings-group-path">sub-001/ses-post/func/sub-001_ses-post_task-mb_bold.json</span>
+                          <span class="gui-warnings-group-jump">jump &rarr;</span>
+                        </header>
+                        <article class="gui-warnings-row sev-warn">
+                          <span class="gui-warnings-rule">BIDSMGR.TODO_PLACEHOLDER</span>
+                          <span class="gui-warnings-msg">field 'Instructions' contains TODO placeholder</span>
+                          <span class="gui-warnings-actions">
+                            <span class="gui-validation-card-tag">Instructions</span>
+                            <button class="gui-validation-card-action" type="button">Set a real value</button>
+                          </span>
+                        </article>
+                        <article class="gui-warnings-row sev-warn">
+                          <span class="gui-warnings-rule">BIDSMGR.TODO_PLACEHOLDER</span>
+                          <span class="gui-warnings-msg">field 'TaskDescription' contains TODO placeholder</span>
+                          <span class="gui-warnings-actions">
+                            <span class="gui-validation-card-tag">TaskDescription</span>
+                            <button class="gui-validation-card-action" type="button">Set a real value</button>
+                          </span>
+                        </article>
+                        <article class="gui-warnings-row sev-warn">
+                          <span class="gui-warnings-rule">BIDSMGR.TODO_PLACEHOLDER</span>
+                          <span class="gui-warnings-msg">field 'CogAtlasID' contains TODO placeholder</span>
+                          <span class="gui-warnings-actions">
+                            <span class="gui-validation-card-tag">CogAtlasID</span>
+                            <button class="gui-validation-card-action" type="button">Set a real value</button>
+                          </span>
+                        </article>
+                        <article class="gui-warnings-row sev-warn">
+                          <span class="gui-warnings-rule">BIDSMGR.TODO_PLACEHOLDER</span>
+                          <span class="gui-warnings-msg">field 'CogPOID' contains TODO placeholder</span>
+                          <span class="gui-warnings-actions">
+                            <span class="gui-validation-card-tag">CogPOID</span>
+                            <button class="gui-validation-card-action" type="button">Set a real value</button>
+                          </span>
+                        </article>
+                      </section>
+
+                      <section class="gui-warnings-group">
+                        <header>
+                          <span class="gui-warnings-group-path">sub-001/ses-pre/func/sub-001_ses-pre_task-rest_bold.json</span>
+                          <span class="gui-warnings-group-jump">jump &rarr;</span>
+                        </header>
+                        <article class="gui-warnings-row sev-warn">
+                          <span class="gui-warnings-rule">BIDSMGR.TODO_PLACEHOLDER</span>
+                          <span class="gui-warnings-msg">field 'Instructions' contains TODO placeholder</span>
+                          <span class="gui-warnings-actions">
+                            <span class="gui-validation-card-tag">Instructions</span>
+                            <button class="gui-validation-card-action" type="button">Set a real value</button>
+                          </span>
+                        </article>
+                        <article class="gui-warnings-row sev-warn">
+                          <span class="gui-warnings-rule">BIDSMGR.TODO_PLACEHOLDER</span>
+                          <span class="gui-warnings-msg">field 'TaskDescription' contains TODO placeholder</span>
+                          <span class="gui-warnings-actions">
+                            <span class="gui-validation-card-tag">TaskDescription</span>
+                            <button class="gui-validation-card-action" type="button">Set a real value</button>
+                          </span>
+                        </article>
+                      </section>
+
+                    </div>
+                    <footer class="gui-warnings-dialog-actions">
+                      <span class="muted">7 files &middot; 22 warnings</span>
+                      <button class="gui-tb-btn" type="button">Close</button>
+                    </footer>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </article>
+          <article class="scene" data-scene="6" data-scene-key="nifti"
+                   aria-labelledby="scene-6-title">
+            <header class="scene-header">
+              <span class="scene-eyebrow">Step 6</span>
+              <h3 id="scene-6-title">Inspect a NIfTI tri-view.</h3>
+              <p>
+                Click a <code class="inline">.nii.gz</code> in the
+                BIDS tree and the centre pane swaps to the volume
+                viewer: sagittal, coronal, axial, sharing one
+                crosshair. The toolbar across the top lets you
+                focus on one plane or stay in tri-view; for 4-D
+                BOLDs there's also a <em>Graph</em> tab with the
+                per-voxel time series across volumes.
+              </p>
+              <div class="scene-link">
+                <span class="scene-link-icon">&#8644;</span>
+                <div>
+                  <strong>Same chrome, different center pane.</strong>
+                  <p>The BIDS tree, the validation panel, and the
+                    Editor toolbar are unchanged from Scene 7. Only
+                    the centre pane is different, because the
+                    Editor routes the open file by extension:
+                    <code class="inline">.json</code> -> sidecar
+                    form, <code class="inline">.tsv</code> ->
+                    editable table, <code class="inline">.nii.gz</code>
+                    -> tri-view. Swap files in the tree and the
+                    centre re-routes on the fly.</p>
+                </div>
+              </div>
+            </header>
+
+            <div class="scene-body">
+              <!-- Two GIFs are shipped; CSS shows the dark one under
+                   the dark theme and the light one under the light
+                   theme so the recording always matches the chrome
+                   around it. -->
+              <figure class="scene-recording scene-nifti-recording">
+                <img class="nifti-recording-dark"
+                     src="assets/tutorials/step-6-nifti-dark.gif"
+                     alt="Screen recording of the BIDS Manager Editor NIfTI tri-view in dark mode: sagittal, coronal, and axial slices sharing one crosshair, with the 4-D graph tab for BOLD time series."
+                     loading="lazy">
+                <img class="nifti-recording-light"
+                     src="assets/tutorials/step-6-nifti-light.gif"
+                     alt="Screen recording of the BIDS Manager Editor NIfTI tri-view in light mode."
+                     loading="lazy">
+              </figure>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 7. CLI reference.
+         Synopsis + positional args + options for every bidsmgr-*
+         verb plus the bidsmgr GUI entry. Sourced from the argparse
+         definitions in BIDS-Manager/bidsmgr/cli/*.py and main.py.
+         ============================================================ -->
+    <section class="section" id="cli-ref">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">CLI reference</span>
+        <h2>Every command, every flag.</h2>
+        <p class="lead">
+          BIDS Manager ships five console scripts plus the GUI entry.
+          Every verb accepts <code class="inline">-v</code> for INFO
+          logging and <code class="inline">-vv</code> for DEBUG;
+          documented inline only for the verbs where it changes
+          behavior. Synopses below mirror what <code class="inline">--help</code>
+          prints on a fresh install of <code class="inline">bids-manager</code>
+          on PyPI.
+        </p>
+
+        <!-- bidsmgr-scan -->
+        <h3 id="cli-ref-scan"><code class="inline">bidsmgr-scan</code></h3>
+        <p>
+          Walks a raw input folder, reads metadata from inside every
+          file (DICOM tags, EDF / FIF headers), classifies each
+          series with the schema-driven chain, and writes a single
+          inventory TSV with one row per series + an
+          <code class="inline">entities</code> JSON column carrying
+          the BidsGuess. Re-runnable, diff-able, openable in any
+          spreadsheet tool.
+        </p>
+<pre class="code">bidsmgr-scan &lt;dicom_root&gt; &lt;output_tsv&gt; [options]</pre>
+
+        <h4>Positional arguments</h4>
+        <dl class="cli-args">
+          <dt><code class="inline">dicom_root</code></dt>
+          <dd>Directory containing the raw recordings (any depth).
+            DICOM, EDF, BDF, BrainVision, FIF, CTF, and Siemens CMRR
+            physio are all detected automatically.</dd>
+          <dt><code class="inline">output_tsv</code></dt>
+          <dd>Destination path for the inventory TSV. Conventionally
+            placed inside the raw root so relative paths resolve
+            cleanly later.</dd>
+        </dl>
+
+        <h4>Options</h4>
+        <dl class="cli-args">
+          <dt><code class="inline">--jobs N</code>, <code class="inline">-j N</code></dt>
+          <dd>Number of parallel worker threads used to read file
+            headers. Defaults to 80&percnt; of the host CPU count.</dd>
+          <dt><code class="inline">--dataset NAME</code></dt>
+          <dd>BIDS dataset slug stamped into every row's
+            <code class="inline">dataset</code> column. The converter
+            writes each distinct value to its own
+            <code class="inline">&lt;bids_parent&gt;/&lt;dataset&gt;/</code>
+            tree. Defaults to a slugified form of the raw root's
+            folder name.</dd>
+          <dt><code class="inline">--probe-convert</code></dt>
+          <dd>After the metadata walk, run
+            <code class="inline">dcm2niix</code> as a probe on every
+            DICOM series (one invocation per
+            <code class="inline">SeriesInstanceUID</code>) into a
+            hidden <code class="inline">&lt;output_tsv_parent&gt;/.tmp/</code>
+            staging tree, harvest what was produced, then remove the
+            staging tree. Adds
+            <code class="inline">probe_n_files</code> /
+            <code class="inline">probe_n_nifti</code> /
+            <code class="inline">probe_n_volumes</code> /
+            <code class="inline">probe_extensions</code> columns to
+            the TSV and surfaces conversion anomalies (e.g. a BOLD
+            series that split into two NIfTIs because of an
+            operator-aborted volume) in
+            <code class="inline">proposed_issues</code>. Slow but
+            most accurate; recommended for first scans.</dd>
+          <dt><code class="inline">--no-bids-guess</code></dt>
+          <dd>Skip the dcm2niix BidsGuess classifier and fall back
+            to the legacy regex-only layer. For comparison / debug.</dd>
+          <dt><code class="inline">--line-freq HZ</code></dt>
+          <dd>EEG / MEG only. Power-line frequency in Hz, stamped into
+            every EEG / MEG row's <code class="inline">line_freq</code>
+            column. Goes into
+            <code class="inline">PowerLineFrequency</code> in the JSON
+            sidecar (BIDS-required). Typical values: 50 (Europe /
+            most of the world), 60 (Americas / parts of Asia). Per-row
+            TSV value wins over this.</dd>
+          <dt><code class="inline">--montage NAME</code></dt>
+          <dd>EEG / MEG only. Name of a built-in mne montage
+            (e.g. <code class="inline">standard_1005</code>,
+            <code class="inline">biosemi64</code>,
+            <code class="inline">easycap-M1</code>) stamped into
+            every EEG / MEG row's <code class="inline">montage</code>
+            column. The converter applies it before
+            <code class="inline">write_raw_bids</code>, which fills
+            <code class="inline">electrodes.tsv</code> +
+            <code class="inline">coordsystem.json</code>. Per-row TSV
+            value wins.</dd>
+        </dl>
+
+        <!-- bidsmgr-rebuild -->
+        <h3 id="cli-ref-rebuild"><code class="inline">bidsmgr-rebuild</code></h3>
+        <p>
+          Reconciles the inventory TSV's
+          <code class="inline">entities</code> JSON column with its
+          derived display cells
+          (<code class="inline">proposed_basename</code>,
+          <code class="inline">session</code>,
+          <code class="inline">task</code>,
+          <code class="inline">run</code>). The entities column is
+          the source of truth for the BIDS basename;
+          <code class="inline">bidsmgr-convert</code> runs this
+          automatically in memory before reading rows, so manual
+          calls are mostly for diff-style preview.
+        </p>
+<pre class="code">bidsmgr-rebuild &lt;tsv&gt; [options]</pre>
+
+        <h4>Positional arguments</h4>
+        <dl class="cli-args">
+          <dt><code class="inline">tsv</code></dt>
+          <dd>Path to an inventory TSV produced by
+            <code class="inline">bidsmgr-scan</code>.</dd>
+        </dl>
+
+        <h4>Options</h4>
+        <dl class="cli-args">
+          <dt><code class="inline">--from {entities,columns}</code></dt>
+          <dd>Source of truth for this rebuild. Default
+            <code class="inline">entities</code> regenerates the
+            display cells from the entities JSON. Pass
+            <code class="inline">columns</code> to do the reverse:
+            regenerate the entities JSON from individual cells (use
+            after editing task / run / session cells in a
+            spreadsheet).</dd>
+          <dt><code class="inline">--dry-run</code></dt>
+          <dd>Print the diff but don't write the TSV back.</dd>
+        </dl>
+
+        <!-- bidsmgr-convert -->
+        <h3 id="cli-ref-convert"><code class="inline">bidsmgr-convert</code></h3>
+        <p>
+          Reads the inventory and converts every keeper row to BIDS
+          using the right backend per modality
+          (<code class="inline">dcm2niix</code> for DICOM,
+          <code class="inline">mne-bids</code> for EEG / MEG / iEEG,
+          <code class="inline">bidsphysio</code> for Siemens CMRR
+          physio). Stages each subject under a private
+          <code class="inline">.tmp_bidsmgr/sub-XXX/</code> tree,
+          then atomic-renames into the BIDS root on success. Each
+          distinct <code class="inline">dataset</code> value in the
+          TSV becomes its own BIDS root under
+          <code class="inline">&lt;bids_parent&gt;/</code>.
+        </p>
+<pre class="code">bidsmgr-convert &lt;tsv&gt; &lt;bids_parent&gt; [options]</pre>
+
+        <h4>Positional arguments</h4>
+        <dl class="cli-args">
+          <dt><code class="inline">tsv</code></dt>
+          <dd>Inventory TSV produced by
+            <code class="inline">bidsmgr-scan</code>.</dd>
+          <dt><code class="inline">bids_parent</code></dt>
+          <dd>Parent directory; each distinct
+            <code class="inline">dataset</code> value in the TSV
+            becomes a sibling BIDS root underneath.</dd>
+        </dl>
+
+        <h4>Options</h4>
+        <dl class="cli-args">
+          <dt><code class="inline">--dataset NAME</code></dt>
+          <dd>Limit conversion to rows whose
+            <code class="inline">dataset</code> cell equals this
+            value. Useful for re-running a single dataset out of a
+            multi-dataset inventory.</dd>
+          <dt><code class="inline">--jobs N</code>, <code class="inline">-j N</code></dt>
+          <dd>Number of backend invocations to run in parallel.
+            Defaults to 80&percnt; of the host CPU count.</dd>
+          <dt><code class="inline">--overwrite</code></dt>
+          <dd>Replace existing
+            <code class="inline">sub-&lt;id&gt;/</code> folders. Their
+            previous contents are moved to
+            <code class="inline">&lt;bids_root&gt;/.bidsmgr/backup/</code>
+            before the new tree lands. Without this flag, an
+            existing subject folder is left alone and a warning is
+            logged.</dd>
+          <dt><code class="inline">--dry-run</code></dt>
+          <dd>Print the per-row conversion plan; write nothing.</dd>
+          <dt><code class="inline">--raw-root PATH</code></dt>
+          <dd>Folder the original scan was run against. Used as the
+            first candidate when resolving EEG / MEG rows' relative
+            <code class="inline">source_file</code> paths. If omitted,
+            the TSV's parent directory is tried (the GUI's default
+            puts the TSV inside the raw root, so this is usually
+            unnecessary).</dd>
+          <dt><code class="inline">--dcm2niix PATH</code></dt>
+          <dd>Override the default
+            <code class="inline">dcm2niix</code> binary. Defaults to
+            the one bundled with the
+            <code class="inline">bids-manager</code> wheel.</dd>
+          <dt><code class="inline">--line-freq HZ</code></dt>
+          <dd>Default power-line frequency for EEG / MEG / iEEG rows
+            that don't carry their own value. Default
+            <code class="inline">50</code>; use
+            <code class="inline">60</code> in the Americas / parts of
+            Asia. Pass <code class="inline">0</code> to leave unset
+            and let the recording's own value apply.</dd>
+          <dt><code class="inline">--montage NAME</code></dt>
+          <dd>Apply a built-in mne montage to every EEG / MEG row
+            before writing. Fills
+            <code class="inline">electrodes.tsv</code> +
+            <code class="inline">coordsystem.json</code>. Use only if
+            all rows share the same channel layout; otherwise edit the
+            inventory's per-row <code class="inline">montage</code>
+            column instead.</dd>
+        </dl>
+
+        <!-- bidsmgr-metadata -->
+        <h3 id="cli-ref-metadata"><code class="inline">bidsmgr-metadata</code></h3>
+        <p>
+          Post-conversion metadata engine. Walks a BIDS root and
+          fills every required field the schema can infer
+          (Manufacturer, MagneticFieldStrength, EchoTime,
+          RepetitionTime, etc.) from the converted files and / or the
+          inventory TSV. Writes
+          <code class="inline">dataset_description.json</code>,
+          enriches every sidecar, and leaves a
+          <code class="inline">metadata_report.json</code> audit log
+          under <code class="inline">.bidsmgr/</code>.
+        </p>
+<pre class="code">bidsmgr-metadata &lt;target&gt; [options]</pre>
+
+        <h4>Positional arguments</h4>
+        <dl class="cli-args">
+          <dt><code class="inline">target</code></dt>
+          <dd>BIDS root, or a parent containing one or more BIDS
+            roots (the parent form is what
+            <code class="inline">bidsmgr-convert</code> writes into).
+            Every BIDS root underneath is processed in turn unless
+            <code class="inline">--dataset</code> narrows it.</dd>
+        </dl>
+
+        <h4>Options</h4>
+        <dl class="cli-args">
+          <dt><code class="inline">--dataset NAME</code></dt>
+          <dd>When <code class="inline">target</code> is a parent,
+            limit the run to this single dataset name.</dd>
+          <dt><code class="inline">--inventory-tsv PATH</code></dt>
+          <dd>Inventory TSV produced by
+            <code class="inline">bidsmgr-scan</code>. Used to enrich
+            <code class="inline">participants.tsv</code> with
+            demographics (PatientAge, PatientSex). Without it those
+            columns default to <code class="inline">n/a</code>.</dd>
+          <dt><code class="inline">--fill-todos</code></dt>
+          <dd>For every sidecar with a missing required or recommended
+            field (and for missing recommended fields of
+            <code class="inline">dataset_description.json</code>),
+            write the literal string <code class="inline">"TODO"</code>
+            as the value. Existing values are never overwritten.
+            Lets you sweep through the BIDS root and fill the
+            placeholders by hand later in the Editor.</dd>
+          <dt><code class="inline">--name NAME</code></dt>
+          <dd>Dataset Name written to
+            <code class="inline">dataset_description.json</code>.
+            Defaults to the BIDS root directory name.</dd>
+          <dt><code class="inline">--bids-version VERSION</code></dt>
+          <dd>BIDS spec version written to
+            <code class="inline">dataset_description.json</code>.
+            Default <code class="inline">1.10.0</code>.</dd>
+          <dt><code class="inline">--license TEXT</code></dt>
+          <dd>License field for
+            <code class="inline">dataset_description.json</code>.</dd>
+          <dt><code class="inline">--author NAME</code></dt>
+          <dd>Author entry. Repeat the flag for each author.</dd>
+          <dt><code class="inline">--acknowledgements TEXT</code></dt>
+          <dd>Acknowledgements text for the dataset description.</dd>
+          <dt><code class="inline">--how-to-acknowledge TEXT</code></dt>
+          <dd>Required citation text for downstream users.</dd>
+          <dt><code class="inline">--funding TEXT</code></dt>
+          <dd>Funding source. Repeat for each entry.</dd>
+          <dt><code class="inline">--ethics-approvals TEXT</code></dt>
+          <dd>Ethics approval. Repeat for each entry.</dd>
+          <dt><code class="inline">--references-and-links TEXT</code></dt>
+          <dd>Reference or link. Repeat for each entry.</dd>
+          <dt><code class="inline">--dataset-doi DOI</code></dt>
+          <dd>DOI for the dataset; written to
+            <code class="inline">DatasetDOI</code>.</dd>
+          <dt><code class="inline">--no-report</code></dt>
+          <dd>Skip writing
+            <code class="inline">&lt;bids_root&gt;/.bidsmgr/metadata_report.json</code>.
+            By default the JSON report is always written so the GUI
+            and CI tooling can pick it up after the run.</dd>
+        </dl>
+
+        <!-- bidsmgr-validate -->
+        <h3 id="cli-ref-validate"><code class="inline">bidsmgr-validate</code></h3>
+        <p>
+          Two-layer validator. Layer 1 (always) is the
+          schema-driven audit: per-file sidecar checks against
+          <code class="inline">bidsschematools</code> 1.2.2 plus the
+          BIDS Manager-specific rules (TODO placeholders, IntendedFor
+          consistency, fmap pair completeness). Layer 2 (opt-in via
+          <code class="inline">--strict</code>) adds the official
+          <code class="inline">bidsschematools</code> structural pass.
+        </p>
+<pre class="code">bidsmgr-validate &lt;target&gt; [options]</pre>
+
+        <h4>Positional arguments</h4>
+        <dl class="cli-args">
+          <dt><code class="inline">target</code></dt>
+          <dd>BIDS root, or a parent containing one or more BIDS
+            roots. Mirrors
+            <code class="inline">bidsmgr-metadata</code>'s shape.</dd>
+        </dl>
+
+        <h4>Options</h4>
+        <dl class="cli-args">
+          <dt><code class="inline">--dataset NAME</code></dt>
+          <dd>When <code class="inline">target</code> is a parent,
+            limit to this single dataset name.</dd>
+          <dt><code class="inline">--strict</code></dt>
+          <dd>Also run Layer 2:
+            <code class="inline">bidsschematools</code> structural
+            validation. Adds path-shape checks against the BIDS spec
+            and is slower on large trees.</dd>
+          <dt><code class="inline">--strict-warn</code></dt>
+          <dd>Treat warnings as errors for the exit code. By default
+            the command exits with status
+            <code class="inline">1</code> only when there is at least
+            one error; with this flag, any warning also fails the
+            run.</dd>
+          <dt><code class="inline">--html</code></dt>
+          <dd>In addition to the JSON report, write a self-contained
+            HTML report at
+            <code class="inline">&lt;bids_root&gt;/.bidsmgr/validation_report.html</code>.
+            Inline CSS, no external assets, safe to share or
+            archive. Issues are colour-coded green / amber / red and
+            grouped by scope (dataset / folder / file).</dd>
+          <dt><code class="inline">--no-report</code></dt>
+          <dd>Skip writing
+            <code class="inline">&lt;bids_root&gt;/.bidsmgr/validation_report.json</code>.</dd>
+        </dl>
+
+        <!-- bidsmgr (GUI) -->
+        <h3 id="cli-ref-gui"><code class="inline">bidsmgr</code> (GUI)</h3>
+        <p>
+          Launches the desktop GUI. The Converter and Editor views
+          drive the same engine the CLI exposes, so anything you can
+          do here can be scripted.
+        </p>
+<pre class="code">bidsmgr [options]</pre>
+
+        <h4>Options</h4>
+        <dl class="cli-args">
+          <dt><code class="inline">--theme {dark,light}</code></dt>
+          <dd>Initial colour theme. If omitted, the last theme the
+            user selected in-app is restored (default
+            <code class="inline">dark</code> on first run).</dd>
+          <dt><code class="inline">--project PATH.bidsmgr</code></dt>
+          <dd>Open (or create, if absent) a
+            <code class="inline">.bidsmgr</code> project bundle.
+            Every edit the user makes in the GUI appends to its
+            event log; the bundle persists overrides + inventory +
+            decisions across sessions.</dd>
+        </dl>
+
+        <p class="muted" style="margin-top: 32px;">
+          The canonical source for every flag is
+          <code class="inline">--help</code> on each verb. If a flag
+          here ever drifts out of date, the argparse definitions in
+          the
+          <a href="https://github.com/ANCPLabOldenburg/BIDS-Manager/tree/main/bidsmgr/cli" target="_blank" rel="noopener">repository</a>
+          are authoritative.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 8. CLI walkthrough.
+         Same four commands the GUI runs behind the scenes, on the
+         same primary MRI dataset. Real outputs captured locally.
+         ============================================================ -->
+    <section class="section" id="cli">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">CLI walkthrough</span>
+        <h2>The same workflow, from the command line.</h2>
+        <p class="lead">
+          The GUI you just walked is a window onto the same engine
+          you can drive from a script. Four console scripts run the
+          same scan, convert, enrich, validate sequence. Numbers
+          below come from the primary MRI dataset (33 inventory
+          rows; 12 auto-skipped; 21 keepers).
+        </p>
+
+        <h3>1. Scan the raw folder.</h3>
+        <p>
+          Walks the input tree, reads metadata from inside every file
+          (DICOM tags, EDF headers, FIF info), runs the schema-driven
+          classifier on every row, and writes a single inventory TSV
+          you can spreadsheet-edit before any conversion runs.
+          <code class="inline">--probe-convert</code> runs one
+          <code class="inline">dcm2niix</code> probe per series so
+          the inventory carries the same BidsGuess the converter
+          will see.
+        </p>
+<pre class="code"><span class="cmt"># Walk raw_root, write inventory.tsv with one row per series.</span>
+bidsmgr-scan &lt;raw_root&gt; &lt;inventory.tsv&gt; --probe-convert -j 4
+
+<span class="cmt"># 33 rows, 12 pre-marked bids_guess_skip=true (scouts, Phoenix reports).</span>
+<span class="cmt"># Takes ~25 s on the primary MRI dataset on a Mac.</span></pre>
+
+        <h3>2. Convert each row using the right backend.</h3>
+        <p>
+          Reads the inventory, dispatches each row to the right
+          backend per modality (<code class="inline">dcm2niix</code>
+          for MRI, <code class="inline">mne-bids</code> for EEG /
+          MEG, <code class="inline">bidsphysio</code> for Siemens
+          CMRR physio), stages per subject under
+          <code class="inline">.tmp_bidsmgr/</code>, then commits
+          atomically.
+        </p>
+<pre class="code"><span class="cmt"># Convert inventory.tsv into bids_parent/. Same engine the GUI uses.</span>
+bidsmgr-convert &lt;inventory.tsv&gt; &lt;bids_parent&gt; --raw-root &lt;raw_root&gt; -j 4
+
+<span class="cmt"># Writes 21 NIfTI files + sidecar JSONs + events / channels TSVs.</span>
+<span class="cmt"># Per-subject staging, atomic os.rename on success.</span></pre>
+
+        <h3>3. Auto-fill required sidecar fields.</h3>
+        <p>
+          Runs the post-conversion metadata engine. Walks the freshly
+          written BIDS tree and fills every required field the schema
+          can infer (Manufacturer, MagneticFieldStrength, EchoTime,
+          RepetitionTime, etc.) directly from the converted files.
+          Whatever the engine cannot infer is stamped with
+          <code class="inline">"TODO"</code> for you to fill in the
+          Editor.
+        </p>
+<pre class="code"><span class="cmt"># Auto-enrich sidecars; replace fillable TODOs where possible.</span>
+bidsmgr-metadata &lt;bids_root&gt; --fill-todos
+
+<span class="cmt"># Fills dataset_description.json + every sidecar's required schema fields.</span>
+<span class="cmt"># 5 TODO placeholders remain on this dataset (License, Authors, Instructions, TaskDescription).</span></pre>
+
+        <h3>4. Validate against the BIDS schema.</h3>
+        <p>
+          Two-layer validator: structural rules (filename grammar,
+          required files) plus per-file schema checks against
+          <code class="inline">bidsschematools</code> 1.2.2. Prints
+          a severity-coloured summary; the same checks power the
+          Editor's validation pane.
+        </p>
+<pre class="code"><span class="cmt"># Validate the BIDS dataset; emit HTML report with --html.</span>
+bidsmgr-validate &lt;bids_root&gt;
+
+<span class="cmt"># Primary MRI dataset result: 55 ok / 7 warn / 0 err.</span>
+<span class="cmt"># All 7 warnings are bidsmgr.todo_placeholder (fillable in the Editor in one pass).</span></pre>
+
+        <p class="muted" style="margin-top: 20px;">
+          The GUI runs the same engine. Use whichever interface fits
+          the task: visual review for one-off datasets, scripts for
+          cohort runs. Full CLI surface (every flag, every verb) is
+          documented in the
+          <a href="https://github.com/ANCPLabOldenburg/BIDS-Manager#readme" target="_blank" rel="noopener">repository README</a>.
+        </p>
+      </div>
+    </section>
+
+    <div data-include="tutorial-after"></div>
+  </main>
+
+  <div data-include="footer"></div>
+  <script src="script.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BIDS Manager: schema-driven raw-to-BIDS curation. Documentation, installation guides, and an interactive tutorial.">
+  <title>BIDS Manager &middot; Documentation</title>
+  <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div data-include="header"></div>
+
+  <main>
+    <!-- ============================================================
+         Hero
+         ============================================================ -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-media" aria-hidden="true">
+        <!-- Six-shot collage. All visible at once at reduced opacity;
+             src=dark default, data-light=light variant. Theme toggle
+             swaps every shot at once via swapThemedImages(). -->
+        <img class="hero-shot shot-a"
+             src="assets/screenshots/full_converter_window_dark.png"
+             data-light="assets/screenshots/full_converter_window_light.png" alt="">
+        <img class="hero-shot shot-b"
+             src="assets/screenshots/full_editor_window_dark.png"
+             data-light="assets/screenshots/full_editor_window_light.png" alt="">
+        <img class="hero-shot shot-c"
+             src="assets/screenshots/nifti_viewer_dark.png"
+             data-light="assets/screenshots/nifti_viewer_light.png" alt="">
+        <img class="hero-shot shot-d"
+             src="assets/screenshots/inspection_window_dark.png"
+             data-light="assets/screenshots/inspection_window_light.png" alt="">
+        <img class="hero-shot shot-e"
+             src="assets/screenshots/sidecar_windows_dark.png"
+             data-light="assets/screenshots/sidecar_windows_light.png" alt="">
+        <img class="hero-shot shot-f"
+             src="assets/screenshots/inputs_and_output_trees_and_filter_dark.png"
+             data-light="assets/screenshots/inputs_and_output_trees_and_filter_light.png" alt="">
+      </div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+
+        <!-- ===== Workflow journey widget =====================
+             BrainHack-style hero animation, re-laid for the BIDS
+             Manager workflow: seven nodes (Raw, Scan, Curate,
+             Convert, Enrich and fix-ups, Validate, BIDS) sitting
+             ON a continuous sinusoidal path that visits each icon.
+             The muscle-brain finale image is BIDS Manager's
+             strong-brain. Driven by initHeroJourney() in
+             script.js. -->
+        <svg class="workflow-animation workflow-graph" viewBox="0 30 880 200"
+             role="button" tabindex="0"
+             aria-label="Raw data to BIDS workflow: scan, curate, convert, enrich and fix-ups, validate. Click to highlight the workflow node by node.">
+          <defs>
+            <filter id="workflow-node-glow" x="-80%" y="-80%" width="260%" height="260%" color-interpolation-filters="sRGB">
+              <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#b8f46d" flood-opacity="0.72"></feDropShadow>
+              <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#4de3ff" flood-opacity="0.42"></feDropShadow>
+            </filter>
+            <filter id="workflow-dot-glow" x="-220%" y="-220%" width="540%" height="540%" color-interpolation-filters="sRGB">
+              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ffffff" flood-opacity="0.58"></feDropShadow>
+              <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#4de3ff" flood-opacity="0.7"></feDropShadow>
+            </filter>
+            <filter id="workflow-spotlight-glow" x="-180%" y="-180%" width="460%" height="460%" color-interpolation-filters="sRGB">
+              <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#ffffff" flood-opacity="0.82"></feDropShadow>
+              <feDropShadow dx="0" dy="0" stdDeviation="14" flood-color="#4de3ff" flood-opacity="0.7"></feDropShadow>
+            </filter>
+            <filter id="workflow-flash-glow" x="-220%" y="-220%" width="540%" height="540%" color-interpolation-filters="sRGB">
+              <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#ffffff" flood-opacity="0.78"></feDropShadow>
+              <feDropShadow dx="0" dy="0" stdDeviation="14" flood-color="#ff8b6b" flood-opacity="0.72"></feDropShadow>
+            </filter>
+            <filter id="workflow-brain-glow" x="-120%" y="-120%" width="340%" height="340%" color-interpolation-filters="sRGB">
+              <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#b8f46d" flood-opacity="0.72"></feDropShadow>
+              <feDropShadow dx="0" dy="0" stdDeviation="13" flood-color="#4de3ff" flood-opacity="0.58"></feDropShadow>
+              <feDropShadow dx="0" dy="0" stdDeviation="18" flood-color="#ff8b6b" flood-opacity="0.34"></feDropShadow>
+            </filter>
+            <filter id="workflow-brain-glow-light" x="-120%" y="-120%" width="340%" height="340%" color-interpolation-filters="sRGB">
+              <!-- Light-theme variant of the colored glow. Same three
+                   colour stack as the dark filter (green / blue /
+                   coral) but with darker palette anchors so the glow
+                   reads against the bright hero collage instead of
+                   bleeding away. -->
+              <feDropShadow dx="0" dy="0" stdDeviation="5"  flood-color="#1a7f37" flood-opacity="0.72"></feDropShadow>
+              <feDropShadow dx="0" dy="0" stdDeviation="13" flood-color="#0969da" flood-opacity="0.58"></feDropShadow>
+              <feDropShadow dx="0" dy="0" stdDeviation="22" flood-color="#b94f33" flood-opacity="0.32"></feDropShadow>
+            </filter>
+            <filter id="workflow-text-glow" x="-60%" y="-120%" width="220%" height="340%" color-interpolation-filters="sRGB">
+              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ffffff" flood-opacity="0.86"></feDropShadow>
+              <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#4de3ff" flood-opacity="0.62"></feDropShadow>
+            </filter>
+
+            <!-- MDI6 workflow icons (same symbols the intro page
+                 workflow diagram uses, copied so the hero widget can
+                 reference them via <use href="#hero-wf-icon-X">). -->
+            <symbol id="hero-wf-icon-raw" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M22,4A2,2 0 0,1 24,6V16A2,2 0 0,1 22,18H6A2,2 0 0,1 4,16V4A2,2 0 0,1 6,2H12L14,4H22M2,6V20H20V22H2A2,2 0 0,1 0,20V11H0V6H2M6,6V16H22V6H6Z"/>
+            </symbol>
+            <symbol id="hero-wf-icon-scan" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M17 22V20H20V17H22V20.5C22 20.89 21.84 21.24 21.54 21.54C21.24 21.84 20.89 22 20.5 22H17M7 22H3.5C3.11 22 2.76 21.84 2.46 21.54C2.16 21.24 2 20.89 2 20.5V17H4V20H7V22M17 2H20.5C20.89 2 21.24 2.16 21.54 2.46C21.84 2.76 22 3.11 22 3.5V7H20V4H17V2M7 2V4H4V7H2V3.5C2 3.11 2.16 2.76 2.46 2.46C2.76 2.16 3.11 2 3.5 2H7M10.5 6C13 6 15 8 15 10.5C15 11.38 14.75 12.2 14.31 12.9L17.57 16.16L16.16 17.57L12.9 14.31C12.2 14.75 11.38 15 10.5 15C8 15 6 13 6 10.5C6 8 8 6 10.5 6M10.5 8C9.12 8 8 9.12 8 10.5C8 11.88 9.12 13 10.5 13C11.88 13 13 11.88 13 10.5C13 9.12 11.88 8 10.5 8Z"/>
+            </symbol>
+            <symbol id="hero-wf-icon-curate" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M21.7,13.35L20.7,14.35L18.65,12.3L19.65,11.3C19.86,11.08 20.21,11.08 20.42,11.3L21.7,12.58C21.92,12.79 21.92,13.14 21.7,13.35M12,18.94L18.07,12.88L20.12,14.93L14.06,21H12V18.94M4,2H18A2,2 0 0,1 20,4V8.17L16.17,12H12V16.17L10.17,18H4A2,2 0 0,1 2,16V4A2,2 0 0,1 4,2M4,6V10H10V6H4M12,6V10H18V6H12M4,12V16H10V12H4Z"/>
+            </symbol>
+            <symbol id="hero-wf-icon-convert" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M21,9L17,5V8H10V10H17V13M7,11L3,15L7,19V16H14V14H7V11Z"/>
+            </symbol>
+            <symbol id="hero-wf-icon-enrich" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M7.5,5.6L5,7L6.4,4.5L5,2L7.5,3.4L10,2L8.6,4.5L10,7L7.5,5.6M19.5,15.4L22,14L20.6,16.5L22,19L19.5,17.6L17,19L18.4,16.5L17,14L19.5,15.4M22,2L20.6,4.5L22,7L19.5,5.6L17,7L18.4,4.5L17,2L19.5,3.4L22,2M13.34,12.78L15.78,10.34L13.66,8.22L11.22,10.66L13.34,12.78M14.37,7.29L16.71,9.63C17.1,10 17.1,10.65 16.71,11.04L5.04,22.71C4.65,23.1 4,23.1 3.63,22.71L1.29,20.37C0.9,20 0.9,19.35 1.29,18.96L12.96,7.29C13.35,6.9 14,6.9 14.37,7.29Z"/>
+            </symbol>
+            <symbol id="hero-wf-icon-validate" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M21,11C21,16.55 17.16,21.74 12,23C6.84,21.74 3,16.55 3,11V5L12,1L21,5V11M12,21C15.75,20 19,15.54 19,11.22V6.3L12,3.18L5,6.3V11.22C5,15.54 8.25,20 12,21M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9"/>
+            </symbol>
+            <symbol id="hero-wf-icon-bids" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M12 2C11.8 2 11.6 2.1 11.4 2.2L3.5 6.6C3.2 6.8 3 7.1 3 7.5V16.5C3 16.9 3.2 17.2 3.5 17.4L11.4 21.8C11.6 21.9 11.8 22 12 22S12.4 21.9 12.6 21.8L13.5 21.3C13.2 20.7 13.1 20 13 19.3V12.6L19 9.2V13C19.7 13 20.4 13.1 21 13.3V7.5C21 7.1 20.8 6.8 20.5 6.6L12.6 2.2C12.4 2.1 12.2 2 12 2M12 4.2L18 7.5L16 8.6L10.1 5.2L12 4.2M8.1 6.3L14 9.8L12 10.9L6 7.5L8.1 6.3M5 9.2L11 12.6V19.3L5 15.9V9.2M21.3 15.8L17.7 19.4L16.1 17.8L15 19L17.8 22L22.6 17.2L21.3 15.8Z"/>
+            </symbol>
+          </defs>
+          <!-- Single sinusoidal path that visits every node center.
+               Seven anchor points: (70,125) (195,70) (320,125)
+               (445,180) (570,125) (695,70) (820,125), connected by
+               smooth-cubic segments so the curve is continuous and
+               threads through each icon disc. -->
+          <path id="workflow-main-path" class="workflow-line main-line"
+                d="M 70 125
+                   C 132.5 125, 132.5 70, 195 70
+                   S 257.5 125, 320 125
+                   S 382.5 180, 445 180
+                   S 507.5 125, 570 125
+                   S 632.5 70, 695 70
+                   S 757.5 125, 820 125"></path>
+
+          <!-- Seven workflow nodes, each transform-anchored at its
+               position on the path. Discs are r=32 and the MDI icon
+               is centered at (0,0) so the path threads through the
+               geometric centre of each glyph. -->
+          <g class="workflow-node raw-node" transform="translate(70 125)">
+            <circle class="node-disc" cx="0" cy="0" r="32"/>
+            <use class="node-icon" href="#hero-wf-icon-raw" x="-16" y="-16" width="32" height="32"/>
+            <text x="0" y="60">Raw data</text>
+          </g>
+          <g class="workflow-node scan-node" transform="translate(195 70)">
+            <circle class="node-disc" cx="0" cy="0" r="32"/>
+            <use class="node-icon" href="#hero-wf-icon-scan" x="-16" y="-16" width="32" height="32"/>
+            <text x="0" y="60">Scan</text>
+          </g>
+          <g class="workflow-node curate-node" transform="translate(320 125)">
+            <circle class="node-disc" cx="0" cy="0" r="32"/>
+            <use class="node-icon" href="#hero-wf-icon-curate" x="-16" y="-16" width="32" height="32"/>
+            <text x="0" y="60">Curate</text>
+          </g>
+          <g class="workflow-node bids-node" transform="translate(445 180)">
+            <circle class="node-disc" cx="0" cy="0" r="32"/>
+            <use class="node-icon" href="#hero-wf-icon-convert" x="-16" y="-16" width="32" height="32"/>
+            <text x="0" y="60">Convert</text>
+          </g>
+          <g class="workflow-node assess-node" transform="translate(570 125)">
+            <circle class="node-disc" cx="0" cy="0" r="32"/>
+            <use class="node-icon" href="#hero-wf-icon-enrich" x="-16" y="-16" width="32" height="32"/>
+            <text x="0" y="60"><tspan x="0">Enrich and</tspan><tspan x="0" dy="14">fix-ups</tspan></text>
+          </g>
+          <g class="workflow-node control-node" transform="translate(695 70)">
+            <circle class="node-disc" cx="0" cy="0" r="32"/>
+            <use class="node-icon" href="#hero-wf-icon-validate" x="-16" y="-16" width="32" height="32"/>
+            <text x="0" y="60">Validate</text>
+          </g>
+          <g class="workflow-node report-node" transform="translate(820 125)">
+            <circle class="node-disc" cx="0" cy="0" r="32"/>
+            <use class="node-icon" href="#hero-wf-icon-bids" x="-16" y="-16" width="32" height="32"/>
+            <text x="0" y="60">BIDS</text>
+          </g>
+
+          <circle class="travel-dot dot-main" r="5" filter="url(#workflow-dot-glow)"></circle>
+          <circle class="workflow-spotlight" r="17" filter="url(#workflow-spotlight-glow)"></circle>
+          <circle class="workflow-flash" r="10" filter="url(#workflow-flash-glow)"></circle>
+
+          <!-- Click brain. brain-start and brain-final are both black
+               line-art PNGs on transparent backgrounds; initThemeToggle
+               swaps each <image href> for the matching '-white' variant
+               under the dark theme so the brain lines stay legible.
+               strong-brain is drawn at 140x126 so it reads noticeably
+               larger than the starting brain even mid-journey, and
+               scales up further at the finale. -->
+          <g class="click-brain stage-0" filter="url(#workflow-brain-glow)">
+            <!-- Concentric multicolor ripple rings, only visible
+                 during the finale-lifted state. Each ring shares
+                 the same centre and base radius; CSS keyframes
+                 expand them outward with staggered animation-delays
+                 so the user sees them ripple out continuously. -->
+            <circle class="brain-halo-ring ring-1" r="60"></circle>
+            <circle class="brain-halo-ring ring-2" r="60"></circle>
+            <circle class="brain-halo-ring ring-3" r="60"></circle>
+            <circle class="brain-halo-ring ring-4" r="60"></circle>
+            <circle class="click-brain-halo" r="38"></circle>
+            <image class="brain-image brain-start" data-brain-base="brain-start" href="assets/brand/brain-start.png" x="-26" y="-26" width="52" height="52"></image>
+            <image class="brain-image brain-final" data-brain-base="strong-brain" href="assets/brand/strong-brain.png" x="-70" y="-63" width="140" height="126"></image>
+          </g>
+        </svg>
+        <p class="workflow-click-hint" aria-hidden="true">Click animation to play workflow</p>
+
+        <!-- Heavenly-choir audio bed played during the strong-brain
+             finale. preload=auto so the click-to-play feels instant
+             without re-fetching the file each time. -->
+        <audio class="hero-finale-audio" data-hero-finale-audio
+               src="assets/hero/finale-choir.mp3"
+               preload="auto"></audio>
+
+        <h1 id="hero-title" class="hero-title"><em>BIDS</em> Manager</h1>
+        <p class="hero-tagline">Raw-to-BIDS without custom scripts.</p>
+        <p class="hero-lead">
+          BIDS Manager brings raw-to-BIDS conversion for MRI, EEG, MEG,
+          and physiological recordings into a single integrated workflow.
+          Its intuitive graphical user interface supports interactive metadata
+          inspection, dataset curation, conversion, and validation while
+          orchestrating powerful backend data-management algorithms and
+          conversion engines.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="installation.html">Install &rarr;</a>
+          <a class="btn btn-ghost"   href="intro.html">How it works</a>
+          <a class="btn btn-ghost"   href="tutorial.html">Try the tutorial</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         What makes it different (4 flat statements)
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow">
+        <div class="section-header">
+          <h2 class="section-title">Make raw-to-BIDS less painful.</h2>
+          <p class="section-lead">
+            Less fragmented, less error-prone, more transparent. One tool
+            for the whole BIDS workflow, available as a GUI or a CLI.
+          </p>
+        </div>
+
+        <div class="points">
+          <div class="point">
+            <h3>One workflow for MRI, EEG, MEG, and physio.</h3>
+            <p>
+              BIDS Manager wires the trusted converters
+              (<a href="https://github.com/rordenlab/dcm2niix" target="_blank" rel="noopener">dcm2niix</a>,
+              <a href="https://mne.tools/mne-bids/" target="_blank" rel="noopener">mne-bids</a>,
+              <a href="https://github.com/cbinyu/bidsphysio" target="_blank" rel="noopener">bidsphysio</a>)
+              into one orchestrated pipeline. No tool-switching, no
+              per-modality commands, no separate installs.
+            </p>
+          </div>
+
+          <div class="point">
+            <h3>Scans data and metadata inside every file.</h3>
+            <p>
+              Builds a complete picture of each acquisition, study, and
+              dataset by reading DICOM headers, EEG / MEG file metadata,
+              and sidecars. Most converters only read filenames.
+              BIDS Manager looks inside.
+            </p>
+          </div>
+
+          <div class="point">
+            <h3>Curate before you convert.</h3>
+            <p>
+              Review every acquisition in an interactive table. Filter out
+              localizers, calibrations, and failed runs. Preview the exact
+              BIDS tree before anything is written to disk.
+            </p>
+          </div>
+
+          <div class="point">
+            <h3>Automatic metadata enrichment.</h3>
+            <p>
+              After conversion, an enrichment algorithm fills required
+              sidecar fields from the scanned metadata and the BIDS schema.
+              Every decision is logged, so you can review or override it.
+            </p>
+          </div>
+
+          <div class="point">
+            <h3>Built on the official BIDS schema.</h3>
+            <p>
+              Naming, structure, and validation come from the
+              <a href="https://github.com/bids-standard/bids-specification" target="_blank" rel="noopener">official BIDS schema</a>,
+              not handwritten rules. The same source of truth drives
+              classification, file naming, and the built-in validator.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Install pitch (text only; full guide on installation.html)
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow">
+        <div class="section-header">
+          <h2 class="section-title">Install in one click.</h2>
+        </div>
+        <p class="section-lead">
+          Bootstrap installers for macOS, Linux, and Windows set up a portable
+          Python environment and register a native app launcher. No setup
+          required. Python users can install from PyPI instead.
+        </p>
+        <p>
+          <a class="btn btn-primary" href="installation.html">Read the installation guide &rarr;</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Footer CTA
+         ============================================================ -->
+    <section class="section section-cta">
+      <div class="container container-narrow cta-strip">
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="installation.html">Install &rarr;</a>
+          <a class="btn btn-ghost"   href="intro.html">How it works</a>
+          <a class="btn btn-ghost"   href="tutorial.html">Try the tutorial</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-include="footer"></div>
+  <script src="script.js" defer></script>
+</body>
+</html>
