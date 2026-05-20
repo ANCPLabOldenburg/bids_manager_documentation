@@ -90,6 +90,29 @@
               <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#4de3ff" flood-opacity="0.62"></feDropShadow>
             </filter>
 
+            <!-- Radial gradients for the one-shot brain-burst glow.
+                 Dark and light theme variants; CSS picks the right
+                 one via the [data-theme] selector below. The
+                 brightness profile is intentionally hot: pure white
+                 core extends a long way (45%) before tapering,
+                 mimicking an over-exposed camera flash. -->
+            <radialGradient id="brain-burst-glow-dark" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"   stop-color="#ffffff" stop-opacity="1"></stop>
+              <stop offset="20%"  stop-color="#ffffff" stop-opacity="1"></stop>
+              <stop offset="45%"  stop-color="#b8f46d" stop-opacity="0.95"></stop>
+              <stop offset="70%"  stop-color="#4de3ff" stop-opacity="0.65"></stop>
+              <stop offset="90%"  stop-color="#bda6ff" stop-opacity="0.25"></stop>
+              <stop offset="100%" stop-color="#bda6ff" stop-opacity="0"></stop>
+            </radialGradient>
+            <radialGradient id="brain-burst-glow-light" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"   stop-color="#ffffff" stop-opacity="1"></stop>
+              <stop offset="20%"  stop-color="#ffffff" stop-opacity="1"></stop>
+              <stop offset="45%"  stop-color="#fff06a" stop-opacity="0.95"></stop>
+              <stop offset="70%"  stop-color="#1a7f37" stop-opacity="0.65"></stop>
+              <stop offset="90%"  stop-color="#0969da" stop-opacity="0.30"></stop>
+              <stop offset="100%" stop-color="#6550b8" stop-opacity="0"></stop>
+            </radialGradient>
+
             <!-- MDI6 workflow icons (same symbols the intro page
                  workflow diagram uses, copied so the hero widget can
                  reference them via <use href="#hero-wf-icon-X">). -->
@@ -181,15 +204,26 @@
                larger than the starting brain even mid-journey, and
                scales up further at the finale. -->
           <g class="click-brain stage-0" filter="url(#workflow-brain-glow)">
-            <!-- Concentric multicolor ripple rings, only visible
-                 during the finale-lifted state. Each ring shares
-                 the same centre and base radius; CSS keyframes
-                 expand them outward with staggered animation-delays
-                 so the user sees them ripple out continuously. -->
+            <!-- One-shot glow burst. A single radial-gradient-filled
+                 circle that flashes the moment the strong-brain
+                 appears: scale up, hold peak, then expand huge
+                 while fading. Plays once per finale entry. r=90
+                 gives the gradient a bigger native canvas so the
+                 white core reads thick before any scaling. -->
+            <circle class="brain-burst" r="90"></circle>
+
+            <!-- Seven concentric ripple rings on the purple / blue /
+                 green palette. Each shares the same centre and base
+                 radius; CSS keyframes expand them outward with
+                 staggered animation-delays so they ripple out
+                 continuously. -->
             <circle class="brain-halo-ring ring-1" r="60"></circle>
             <circle class="brain-halo-ring ring-2" r="60"></circle>
             <circle class="brain-halo-ring ring-3" r="60"></circle>
             <circle class="brain-halo-ring ring-4" r="60"></circle>
+            <circle class="brain-halo-ring ring-5" r="60"></circle>
+            <circle class="brain-halo-ring ring-6" r="60"></circle>
+            <circle class="brain-halo-ring ring-7" r="60"></circle>
             <circle class="click-brain-halo" r="38"></circle>
             <image class="brain-image brain-start" data-brain-base="brain-start" href="assets/brand/brain-start.png" x="-26" y="-26" width="52" height="52"></image>
             <image class="brain-image brain-final" data-brain-base="strong-brain" href="assets/brand/strong-brain.png" x="-70" y="-63" width="140" height="126"></image>

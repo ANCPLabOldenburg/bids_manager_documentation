@@ -667,12 +667,19 @@ main { display: block; }
 }
 .workflow-animation .click-brain.is-visible { opacity: 1; }
 
+/* Run the breathing-halo animation only while the brain is on
+ * screen. Leaving it on infinitely (even on an invisible element)
+ * keeps a compositing layer alive and slows the idle traveling
+ * dot post-finale until the next click. */
+.workflow-animation .click-brain.is-visible .click-brain-halo {
+  animation: brainHalo 1.2s ease-in-out infinite;
+}
+
 .workflow-animation .click-brain-halo {
   fill: rgba(7, 10, 16, 0.9);
   stroke: rgba(77, 227, 255, 0.72);
   stroke-width: 2;
   opacity: 0.94;
-  animation: brainHalo 1.2s ease-in-out infinite;
   /* Smooth the r / stroke / fill change when the finale promotes
    * the halo from the small workflow size to the big lifted size,
    * so it grows in place instead of looking like a second halo
@@ -719,6 +726,36 @@ main { display: block; }
   -webkit-filter: url(#workflow-brain-glow);
           filter: url(#workflow-brain-glow);
 }
+
+/* Performance: during the lifted finale the click-brain hosts four
+ * expanding ripple rings + a huge halo + the strong-brain image, all
+ * animating at once. The SVG drop-shadow filter on the parent group
+ * forces the browser to re-rasterise the whole composite through a
+ * large blur kernel every frame, which is the main culprit for jank.
+ * The multicolor rings + halo + title neon already carry the visual
+ * impact, so we strip the outer glow filter for the finale and let
+ * the rings shoulder the show. */
+.workflow-animation .click-brain.is-finale-lifted,
+[data-theme="light"] .workflow-animation .click-brain.is-finale-lifted {
+  /* Two selectors so we beat both the dark-theme stage-{3,4,5}
+   * filter rule (specificity 0,3,0) AND the light-theme one
+   * (specificity 0,4,0, attribute + 3 classes). Without the
+   * second selector the light-theme filter survived and applied
+   * its triple drop-shadow to every ripple ring + the huge halo
+   * + the strong brain image, which is what was making the light
+   * theme blurry and slow during the finale. */
+  -webkit-filter: none;
+          filter: none;
+}
+/* Note: a previous version added `will-change: transform, opacity`
+ * here to coax the GPU into compositing the ripple rings on their
+ * own layer. The hint stayed in effect for too long even after the
+ * finale class was removed — the browser was slow to demote the
+ * promoted layers and the idle traveling dot ran at reduced
+ * framerate until the next click. The cost of letting the GPU
+ * promote those elements lazily during the finale is small in
+ * practice; the benefit of releasing them cleanly after cleanup
+ * is large, so we leave will-change off. */
 
 .workflow-animation .click-brain.stage-5 .click-brain-halo {
   stroke: rgba(63, 185, 80, 0.85);
@@ -769,33 +806,79 @@ main { display: block; }
  * BrainHack accent palette: lime / cyan / coral / violet. */
 .workflow-animation .brain-halo-ring {
   fill: none;
-  stroke-width: 3;
+  stroke-width: 5;
   pointer-events: none;
   opacity: 0;
   transform-box: fill-box;
   transform-origin: center;
+  /* Keep the stroke a constant viewport-pixel width regardless of
+   * the ring's scale or the parent click-brain's 2.7x finale scale.
+   * Without this, the stroke grew with the transform until adjacent
+   * rings overlapped into a single thick band. */
+  vector-effect: non-scaling-stroke;
 }
 .workflow-animation .click-brain.is-finale-lifted .brain-halo-ring {
-  animation: brainRingRipple 2800ms ease-out infinite;
+  /* Longhand on purpose: the `animation` shorthand would reset
+   * `animation-delay` to its default of 0s with higher specificity
+   * than the per-ring rules below, dropping every ring into the
+   * same phase. Splitting into individual properties lets the
+   * per-ring `animation-delay` survive the cascade. */
+  animation-name: brainRingRipple;
+  animation-duration: 2800ms;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
-.workflow-animation .brain-halo-ring.ring-1 { stroke: #b8f46d; animation-delay: 0s;    }  /* lime   */
-.workflow-animation .brain-halo-ring.ring-2 { stroke: #4de3ff; animation-delay: 0.7s;  }  /* cyan   */
-.workflow-animation .brain-halo-ring.ring-3 { stroke: #ff8b6b; animation-delay: 1.4s;  }  /* coral  */
-.workflow-animation .brain-halo-ring.ring-4 { stroke: #bda6ff; animation-delay: 2.1s;  }  /* violet */
-[data-theme="light"] .workflow-animation .brain-halo-ring.ring-1 { stroke: #1a7f37; }
-[data-theme="light"] .workflow-animation .brain-halo-ring.ring-2 { stroke: #0969da; }
-[data-theme="light"] .workflow-animation .brain-halo-ring.ring-3 { stroke: #b94f33; }
-[data-theme="light"] .workflow-animation .brain-halo-ring.ring-4 { stroke: #6550b8; }
+/* Seven rings on a three-stop purple / blue / green palette,
+ * evenly spaced at ~400 ms intervals so they distribute across
+ * the full 2800 ms cycle. Base delay of 0.6 s holds them off
+ * until the brain-burst glow has read on screen. */
+.workflow-animation .brain-halo-ring.ring-1 { stroke: #bda6ff; animation-delay: 0.600s; }  /* purple */
+.workflow-animation .brain-halo-ring.ring-2 { stroke: #4de3ff; animation-delay: 1.000s; }  /* blue   */
+.workflow-animation .brain-halo-ring.ring-3 { stroke: #b8f46d; animation-delay: 1.400s; }  /* green  */
+.workflow-animation .brain-halo-ring.ring-4 { stroke: #bda6ff; animation-delay: 1.800s; }
+.workflow-animation .brain-halo-ring.ring-5 { stroke: #4de3ff; animation-delay: 2.200s; }
+.workflow-animation .brain-halo-ring.ring-6 { stroke: #b8f46d; animation-delay: 2.600s; }
+.workflow-animation .brain-halo-ring.ring-7 { stroke: #bda6ff; animation-delay: 3.000s; }
+[data-theme="light"] .workflow-animation .brain-halo-ring.ring-1,
+[data-theme="light"] .workflow-animation .brain-halo-ring.ring-4,
+[data-theme="light"] .workflow-animation .brain-halo-ring.ring-7 { stroke: #6550b8; }
+[data-theme="light"] .workflow-animation .brain-halo-ring.ring-2,
+[data-theme="light"] .workflow-animation .brain-halo-ring.ring-5 { stroke: #0969da; }
+[data-theme="light"] .workflow-animation .brain-halo-ring.ring-3,
+[data-theme="light"] .workflow-animation .brain-halo-ring.ring-6 { stroke: #1a7f37; }
 
-@keyframes brainRingRipple {
-  /* Start small + bright, swell to ~3x the base radius and fade to
-   * zero. Combined with the click-brain parent scale of 2.7, the
-   * outermost peak diameter is ~970 visible pixels — dominant
-   * but capped because the stroke goes invisible at the end. */
-  0%   { transform: scale(0.6); opacity: 0.85; stroke-width: 5; }
-  40%  { opacity: 0.7; }
-  100% { transform: scale(3.0); opacity: 0;    stroke-width: 1; }
+/* ----- One-shot glow burst when the strong-brain appears -----
+ * A single radial-gradient-filled circle that flashes the instant
+ * .is-finale-lifted lands: scale up from a tiny dot, peak opacity
+ * around 8%, then expand and fade to nothing in ~700 ms. Plays
+ * exactly once per finale entry (iteration-count: 1, fill-mode:
+ * forwards). The gradient gives the flash its shiny-neon look
+ * without needing multiple SVG elements. */
+.workflow-animation .brain-burst {
+  fill: url(#brain-burst-glow-dark);
+  stroke: none;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  pointer-events: none;
 }
+[data-theme="light"] .workflow-animation .brain-burst {
+  fill: url(#brain-burst-glow-light);
+}
+.workflow-animation .click-brain.is-finale-lifted .brain-burst {
+  animation: brainGlowBurst 900ms cubic-bezier(.16, .96, .35, 1) 1 forwards;
+}
+@keyframes brainGlowBurst {
+  /* Blinding flash: ramps fast to full opacity, holds the brightness
+   * for a sustained "over-exposed" beat, then expands to a huge
+   * radius while fading. Peak scale 8.5 means the burst briefly
+   * fills most of the hero area before vanishing. */
+  0%   { transform: scale(0.20); opacity: 0;    }
+  6%   { transform: scale(0.75); opacity: 1;    }
+  20%  { transform: scale(1.6);  opacity: 1;    }
+  100% { transform: scale(8.5);  opacity: 0;    }
+}
+
 
 /* Theme-sensitive brains. The hrefs are swapped by JS in
  * `swapHeroBrains(theme)` (called from initThemeToggle.apply), so the
@@ -803,13 +886,19 @@ main { display: block; }
  * filter trickery, which composed unpredictably with the SVG
  * drop-shadow filter on the parent group. */
 
-[data-theme="light"] .workflow-animation .click-brain,
-[data-theme="light"] .workflow-animation .click-brain.stage-3,
-[data-theme="light"] .workflow-animation .click-brain.stage-4,
-[data-theme="light"] .workflow-animation .click-brain.stage-5 {
+[data-theme="light"] .workflow-animation .click-brain:not(.is-finale-lifted),
+[data-theme="light"] .workflow-animation .click-brain.stage-3:not(.is-finale-lifted),
+[data-theme="light"] .workflow-animation .click-brain.stage-4:not(.is-finale-lifted),
+[data-theme="light"] .workflow-animation .click-brain.stage-5:not(.is-finale-lifted) {
   /* In light theme the lime / cyan / coral SVG drop-shadow stack
-   * disappears against the bright hero. Swap to a pure-white triple-
-   * shadow filter so the muscled glyph keeps its glow halo. */
+   * disappears against the bright hero. Swap to a darker triple-
+   * shadow filter so the muscled glyph keeps its glow halo.
+   *
+   * IMPORTANT: the :not(.is-finale-lifted) qualifier is mandatory.
+   * Without it, this rule (specificity 0,4,0) outranks the filter
+   * disable above and re-applies the heavy three-stage blur during
+   * the finale, blurring the strong brain + every ripple ring and
+   * tanking framerate in light mode. */
   -webkit-filter: url(#workflow-brain-glow-light);
           filter: url(#workflow-brain-glow-light);
 }
@@ -859,6 +948,17 @@ main { display: block; }
   50%      { transform: scale(1.10); opacity: 0.62; }
 }
 
+@keyframes brainRingRipple {
+  /* Linear spread from scale 0.6 to 3.0 over the cycle. Opacity
+   * snaps to full almost immediately and HOLDS at 1.0 across most
+   * of the cycle, fading only in the last 10% so the ring stays
+   * unmistakably visible through nearly its entire travel. */
+  0%   { transform: scale(0.6); opacity: 0;   }
+  3%   { transform: scale(0.65); opacity: 1;  }
+  90%  { transform: scale(2.8); opacity: 1;   }
+  100% { transform: scale(3.0); opacity: 0;   }
+}
+
 @keyframes nodeFlash {
   0%   { opacity: 0.95; stroke-width: 6; transform: scale(0.25); }
   58%  { opacity: 0.9; }
@@ -873,6 +973,19 @@ main { display: block; }
   .workflow-animation .click-brain.stage-5 .click-brain-halo {
     animation: none !important;
   }
+}
+
+/* The workflow SVG carries opacity: 0.96 which creates a new
+ * stacking context. Put the title + supporting text on a higher
+ * z-index inside hero-content so the ripple rings (which overflow
+ * the SVG's box) stay behind the letters rather than sliding over
+ * them. */
+.hero-title,
+.hero-tagline,
+.hero-lead,
+.hero-actions {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-title {
@@ -912,46 +1025,41 @@ main { display: block; }
   animation: heroEmNeon 2.4s ease-in-out infinite;
 }
 
+/* Title neon stacks. Kept tight (3-4 layers) and capped at ~60 px
+ * blur so the GPU isn't shading large halos at 60 fps. Two opaque
+ * inner whites form the bright tube core, two coloured outer
+ * layers carry the radiance. */
 @keyframes heroTitleNeon {
   0%, 100% {
     text-shadow:
       0 0  3px rgba(255, 255, 255, 1),
       0 0  8px rgba(255, 255, 255, 0.95),
-      0 0 18px rgba(184, 244, 109, 0.92),
-      0 0 32px rgba( 77, 227, 255, 0.78),
-      0 0 56px rgba(255, 139, 107, 0.55),
-      0 0 90px rgba(189, 166, 255, 0.40);
+      0 0 22px rgba(184, 244, 109, 0.88),
+      0 0 48px rgba( 77, 227, 255, 0.55);
   }
   50% {
     text-shadow:
       0 0  4px rgba(255, 255, 255, 1),
       0 0 10px rgba(255, 255, 255, 1),
-      0 0 22px rgba( 77, 227, 255, 0.95),
-      0 0 40px rgba(255, 139, 107, 0.80),
-      0 0 70px rgba(189, 166, 255, 0.60),
-      0 0 110px rgba(184, 244, 109, 0.45);
+      0 0 26px rgba( 77, 227, 255, 0.92),
+      0 0 56px rgba(255, 139, 107, 0.55);
   }
 }
 
-/* The em gets its own keyframe so the "BIDS" word can shift hue at
- * a different phase than the rest of the title; the result reads
- * like two neon tubes wired in series. */
 @keyframes heroEmNeon {
   0%, 100% {
     text-shadow:
       0 0  3px rgba(255, 255, 255, 1),
       0 0  9px rgba(255, 255, 255, 0.95),
-      0 0 20px rgba( 77, 227, 255, 0.95),
-      0 0 36px rgba(189, 166, 255, 0.75),
-      0 0 64px rgba(184, 244, 109, 0.50);
+      0 0 22px rgba( 77, 227, 255, 0.92),
+      0 0 48px rgba(189, 166, 255, 0.55);
   }
   50% {
     text-shadow:
       0 0  4px rgba(255, 255, 255, 1),
       0 0 12px rgba(255, 255, 255, 1),
-      0 0 26px rgba(255, 139, 107, 0.95),
-      0 0 46px rgba(184, 244, 109, 0.80),
-      0 0 80px rgba( 77, 227, 255, 0.55);
+      0 0 26px rgba(255, 139, 107, 0.92),
+      0 0 56px rgba(184, 244, 109, 0.55);
   }
 }
 
@@ -973,34 +1081,28 @@ main { display: block; }
   0%, 100% {
     text-shadow:
       0 0  4px rgba(255, 255, 255, 0.95),
-      0 0 12px rgba( 26, 127,  55, 0.80),
-      0 0 24px rgba(  9, 105, 218, 0.68),
-      0 0 44px rgba(185,  79,  51, 0.48),
-      0 0 72px rgba(101,  80, 184, 0.35);
+      0 0 14px rgba( 26, 127,  55, 0.85),
+      0 0 32px rgba(  9, 105, 218, 0.55);
   }
   50% {
     text-shadow:
       0 0  6px rgba(255, 255, 255, 1),
-      0 0 16px rgba(  9, 105, 218, 0.88),
-      0 0 32px rgba(185,  79,  51, 0.72),
-      0 0 56px rgba(101,  80, 184, 0.55),
-      0 0 90px rgba( 26, 127,  55, 0.40);
+      0 0 18px rgba(  9, 105, 218, 0.88),
+      0 0 44px rgba(185,  79,  51, 0.55);
   }
 }
 @keyframes heroEmNeonLight {
   0%, 100% {
     text-shadow:
       0 0  4px rgba(255, 255, 255, 1),
-      0 0 14px rgba(  9, 105, 218, 0.90),
-      0 0 28px rgba(101,  80, 184, 0.72),
-      0 0 50px rgba( 26, 127,  55, 0.48);
+      0 0 14px rgba(  9, 105, 218, 0.9),
+      0 0 36px rgba(101,  80, 184, 0.55);
   }
   50% {
     text-shadow:
       0 0  6px rgba(255, 255, 255, 1),
-      0 0 18px rgba(185,  79,  51, 0.90),
-      0 0 36px rgba( 26, 127,  55, 0.78),
-      0 0 64px rgba(  9, 105, 218, 0.55);
+      0 0 18px rgba(185,  79,  51, 0.9),
+      0 0 44px rgba( 26, 127,  55, 0.55);
   }
 }
 
