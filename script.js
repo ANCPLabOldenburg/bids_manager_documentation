@@ -52,6 +52,9 @@
   initEditorSubSteps();
   initScanSubSteps();
   initHeroJourney();
+  initFeatureVideos();
+  initMediaTrueSize();
+  initLightbox();
 })();
 
 
@@ -267,7 +270,7 @@ function initTutorialScenes() {
       const status = el.querySelector('[data-mock="conv-status"]');
       if (status) status.textContent = "Converting...";
       const stage = el.querySelector('[data-mock="conv-stage"]');
-      if (stage) stage.textContent = "BIDS 1.10.0 . converting series 0 / 21";
+      if (stage) stage.textContent = "BIDS 1.11.1 . converting series 0 / 21";
       el.querySelector('[data-mock="conv-spinner"]')?.classList.add("is-spinning");
       const log = el.querySelector('[data-mock="log"]');
       if (log) log.innerHTML = "";
@@ -476,7 +479,7 @@ function initTutorialScenes() {
       if (reducedMotion) {
         if (status)  status.textContent  = "Done.";
         if (counter) counter.textContent = "21";
-        if (stage)   stage.textContent   = "BIDS 1.10.0 . enriched 21 / 21 series";
+        if (stage)   stage.textContent   = "BIDS 1.11.1 . enriched 21 / 21 series";
         spinner?.classList.remove("is-spinning");
         LOG.forEach(([t, m]) => appendLine(t, m));
         return;
@@ -493,11 +496,11 @@ function initTutorialScenes() {
         if (tag === "enrich") enrichSeen = true;
         if (stage) {
           if (enrichSeen) {
-            stage.textContent = "BIDS 1.10.0 . enriching sidecars (21 / 21 series staged)";
+            stage.textContent = "BIDS 1.11.1 . enriching sidecars (21 / 21 series staged)";
           } else if (done < 21) {
-            stage.textContent = `BIDS 1.10.0 . converting series ${done} / 21`;
+            stage.textContent = `BIDS 1.11.1 . converting series ${done} / 21`;
           } else {
-            stage.textContent = "BIDS 1.10.0 . converted 21 / 21 series";
+            stage.textContent = "BIDS 1.11.1 . converted 21 / 21 series";
           }
         }
         if (status) {
@@ -1449,6 +1452,7 @@ function initThemeToggle() {
     }
     swapThemedImages(theme);
     swapHeroBrains(theme);
+    swapFeatureVideos(theme);
   }
   apply(initial);
 
@@ -1471,6 +1475,225 @@ function swapThemedImages(theme) {
     if (!img.dataset.dark) img.dataset.dark = img.getAttribute("src");
     const target = theme === "light" ? img.dataset.light : img.dataset.dark;
     if (img.getAttribute("src") !== target) img.setAttribute("src", target);
+  });
+}
+
+
+/* ====================================================================
+ * Feature videos (GUI tour page + tutorial step recordings)
+ *
+ * Each <video class="feature-video" data-dark="..." data-light="..."> is a
+ * silent, looping screen recording shipped as a dark + light pair. The page
+ * keeps them cheap:
+ *   - truly lazy: src is set from the active theme, preload stays "none", so
+ *     nothing is fetched until the clip is about to enter the viewport;
+ *   - autoplay only in view: an IntersectionObserver plays a clip when it
+ *     scrolls in and pauses it when it leaves (no off-screen decoding);
+ *   - prefers-reduced-motion: no autoplay at all; native controls appear and
+ *     preload="metadata" paints a first frame so the still is meaningful.
+ * Theme swaps re-point each clip at its matching variant (swapFeatureVideos),
+ * preserving the play position so a dark/light flip is seamless.
+ * ------------------------------------------------------------------ */
+
+function featureVideoSrc(video, theme) {
+  return theme === "light" ? video.dataset.light : video.dataset.dark;
+}
+
+function swapFeatureVideos(theme) {
+  document.querySelectorAll("video.feature-video").forEach((video) => {
+    const next = featureVideoSrc(video, theme);
+    if (!next || video.getAttribute("src") === next) return;
+    const wasPlaying = !video.paused && !video.ended;
+    const at = video.currentTime || 0;
+    video.setAttribute("src", next);
+    video.load();
+    if (wasPlaying) {
+      const resume = () => {
+        try { video.currentTime = at; } catch { /* ignore */ }
+        video.play?.().catch(() => {});
+        video.removeEventListener("loadedmetadata", resume);
+      };
+      video.addEventListener("loadedmetadata", resume);
+    }
+  });
+}
+
+function initFeatureVideos() {
+  const videos = Array.from(document.querySelectorAll("video.feature-video"));
+  if (!videos.length) return;
+
+  const theme = document.documentElement.dataset.theme === "light" ? "light" : "dark";
+  const reduceMotion =
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+  videos.forEach((video) => {
+    video.muted = true;
+    video.loop = true;
+    video.playsInline = true;
+    video.setAttribute("playsinline", "");
+    if (!video.getAttribute("src")) {
+      video.setAttribute("src", featureVideoSrc(video, theme));
+    }
+  });
+
+  if (reduceMotion) {
+    // Accessibility: never autoplay. Show a controllable first frame.
+    videos.forEach((video) => {
+      video.controls = true;
+      video.preload = "metadata";
+    });
+    return;
+  }
+
+  if (!("IntersectionObserver" in window)) {
+    videos.forEach((video) => video.play?.().catch(() => {}));
+    return;
+  }
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target;
+        if (entry.isIntersecting) {
+          video.play?.().catch(() => {});
+        } else {
+          video.pause?.();
+        }
+      });
+    },
+    { threshold: 0.25, rootMargin: "200px 0px" }
+  );
+  videos.forEach((video) => io.observe(video));
+}
+
+
+/* ====================================================================
+ * True-size media
+ *
+ * The screen recordings / screenshots vary wildly in native resolution
+ * (a portrait Properties panel is ~1184x1928; a full window is
+ * ~3456x1988). Forcing every one to width:100% over-magnifies the small
+ * ones, which looks crude. Instead we cap each media at its own LOGICAL
+ * width: the captures are retina (2x), so logical px = encoded px / 2.
+ * Each element still scales DOWN to fit narrow columns / grid cells
+ * (width:100% in CSS), but never UP past its true size. Re-applied on
+ * load and whenever a theme swap re-points the source.
+ * ------------------------------------------------------------------ */
+
+function initMediaTrueSize() {
+  const DPR = 2; // captures are retina; true on-screen size = encoded / 2
+  // Cap the element AND its figure at the media's logical width, so the
+  // caption tracks the media width and the whole block centers. In a grid
+  // cell (narrower than the cap) the cell still wins, keeping galleries tidy.
+  const cap = (el, encodedWidth) => {
+    if (!encodedWidth) return;
+    const w = Math.round(encodedWidth / DPR);
+    el.style.maxWidth = w + "px";
+    const fig = el.closest(".media-figure");
+    if (fig) {
+      fig.style.maxWidth = w + "px";
+      fig.style.marginLeft = "auto";
+      fig.style.marginRight = "auto";
+    }
+  };
+  document.querySelectorAll("video.feature-video").forEach((v) => {
+    const apply = () => cap(v, v.videoWidth);
+    if (v.readyState >= 1) apply();
+    v.addEventListener("loadedmetadata", apply);
+  });
+  document.querySelectorAll("img.feature-shot").forEach((img) => {
+    const apply = () => cap(img, img.naturalWidth);
+    if (img.complete && img.naturalWidth) apply();
+    img.addEventListener("load", apply);
+  });
+}
+
+
+/* ====================================================================
+ * Lightbox
+ *
+ * Click any `.media-figure` image or video to enlarge it (with its
+ * caption) over a dark backdrop. Videos open with controls + autoplay;
+ * images open at their natural size capped to the viewport. Close on the
+ * X, a click on the backdrop, or Escape. Built once and reused.
+ * ------------------------------------------------------------------ */
+
+function initLightbox() {
+  const figures = Array.from(document.querySelectorAll(".media-figure"));
+  const triggers = figures
+    .map((fig) => ({
+      media: fig.querySelector(".feature-video, .feature-shot"),
+      cap: fig.querySelector("figcaption"),
+    }))
+    .filter((t) => t.media);
+  if (!triggers.length) return;
+
+  const overlay = document.createElement("div");
+  overlay.className = "lightbox";
+  overlay.hidden = true;
+  overlay.innerHTML =
+    '<button class="lightbox-close" type="button" aria-label="Close">&times;</button>' +
+    '<figure class="lightbox-figure">' +
+    '<div class="lightbox-media"></div>' +
+    '<figcaption class="lightbox-cap"></figcaption>' +
+    "</figure>";
+  document.body.appendChild(overlay);
+
+  const mediaBox = overlay.querySelector(".lightbox-media");
+  const capBox = overlay.querySelector(".lightbox-cap");
+  const closeBtn = overlay.querySelector(".lightbox-close");
+
+  function close() {
+    overlay.classList.remove("is-open");
+    document.body.classList.remove("lightbox-open");
+    // Let the fade-out finish before tearing down the media.
+    window.setTimeout(() => {
+      overlay.hidden = true;
+      mediaBox.innerHTML = "";
+    }, 180);
+  }
+
+  function open(media, captionHtml) {
+    mediaBox.innerHTML = "";
+    let node;
+    if (media.tagName === "VIDEO") {
+      node = document.createElement("video");
+      node.src = media.getAttribute("src") || media.currentSrc || "";
+      node.muted = true;
+      node.loop = true;
+      node.controls = true;
+      node.autoplay = true;
+      node.setAttribute("playsinline", "");
+      node.play?.().catch(() => {});
+    } else {
+      node = document.createElement("img");
+      node.src = media.getAttribute("src");
+      node.alt = media.getAttribute("alt") || "";
+    }
+    node.className = "lightbox-node";
+    mediaBox.appendChild(node);
+    capBox.innerHTML = captionHtml || "";
+    capBox.hidden = !captionHtml;
+
+    overlay.hidden = false;
+    document.body.classList.add("lightbox-open");
+    requestAnimationFrame(() => overlay.classList.add("is-open"));
+    closeBtn.focus();
+  }
+
+  triggers.forEach(({ media, cap }) => {
+    media.addEventListener("click", (e) => {
+      e.preventDefault();
+      open(media, cap ? cap.innerHTML : "");
+    });
+  });
+
+  closeBtn.addEventListener("click", close);
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) close();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !overlay.hidden) close();
   });
 }
 
@@ -1530,7 +1753,19 @@ function initScrollReveal() {
     }),
     { threshold: 0.12 }
   );
-  targets.forEach((el) => io.observe(el));
+  const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+  targets.forEach((el) => {
+    // An element taller than the viewport can never reach a 0.12 visibility
+    // RATIO (it fills the viewport, so visible / total stays small), so the
+    // observer would never fire and the `.reveal` element would stay at
+    // opacity 0 forever (this hid the long CLI-reference section). Reveal
+    // those immediately instead of observing them.
+    if (el.getBoundingClientRect().height > vh * 0.8) {
+      el.classList.add("is-visible");
+    } else {
+      io.observe(el);
+    }
+  });
 }
 
 

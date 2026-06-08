@@ -27,17 +27,17 @@
              src="assets/screenshots/full_editor_window_dark.png"
              data-light="assets/screenshots/full_editor_window_light.png" alt="">
         <img class="hero-shot shot-c"
-             src="assets/screenshots/nifti_viewer_dark.png"
-             data-light="assets/screenshots/nifti_viewer_light.png" alt="">
+             src="assets/gui/home_tab_dark.png"
+             data-light="assets/gui/home_tab_light.png" alt="">
         <img class="hero-shot shot-d"
-             src="assets/screenshots/inspection_window_dark.png"
-             data-light="assets/screenshots/inspection_window_light.png" alt="">
+             src="assets/gui/converter_tab_dark.png"
+             data-light="assets/gui/converter_tab_light.png" alt="">
         <img class="hero-shot shot-e"
-             src="assets/screenshots/sidecar_windows_dark.png"
-             data-light="assets/screenshots/sidecar_windows_light.png" alt="">
+             src="assets/gui/editor_tab_dark.png"
+             data-light="assets/gui/editor_tab_light.png" alt="">
         <img class="hero-shot shot-f"
-             src="assets/screenshots/inputs_and_output_trees_and_filter_dark.png"
-             data-light="assets/screenshots/inputs_and_output_trees_and_filter_light.png" alt="">
+             src="assets/gui/home_tab_dark.png"
+             data-light="assets/gui/home_tab_light.png" alt="">
       </div>
       <div class="hero-overlay"></div>
       <div class="hero-content">
@@ -250,6 +250,7 @@
         </p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="installation.html">Install &rarr;</a>
+          <a class="btn btn-ghost"   href="gui-tour.html">GUI tour</a>
           <a class="btn btn-ghost"   href="intro.html">How it works</a>
           <a class="btn btn-ghost"   href="tutorial.html">Try the tutorial</a>
         </div>
@@ -296,8 +297,19 @@
             <h3>Curate before you convert.</h3>
             <p>
               Review every acquisition in an interactive table. Filter out
-              localizers, calibrations, and failed runs. Preview the exact
-              BIDS tree before anything is written to disk.
+              localizers, calibrations, and failed runs. Bulk-edit entities,
+              set per-row properties, and preview the exact BIDS tree before
+              anything is written to disk.
+            </p>
+          </div>
+
+          <div class="point">
+            <h3>Project-first and resumable.</h3>
+            <p>
+              Work is saved into a dataset project. Close the app and pick up
+              where you left off; re-scan without losing edits; re-run a
+              conversion and have new sessions merge in safely. Every scan is
+              versioned, every edit is undoable.
             </p>
           </div>
 
@@ -306,7 +318,19 @@
             <p>
               After conversion, an enrichment algorithm fills required
               sidecar fields from the scanned metadata and the BIDS schema.
-              Every decision is logged, so you can review or override it.
+              For EEG and MEG it also fills reference, ground, filters, device,
+              and event labels, with per-recording overrides. Every decision is
+              logged, so you can review or override it.
+            </p>
+          </div>
+
+          <div class="point">
+            <h3>Inspect everything in-app.</h3>
+            <p>
+              The Editor opens the converted dataset for review: schema-aware
+              sidecar forms, editable TSV tables, a NIfTI tri-view, and an
+              interactive MEG / EEG / iEEG signal viewer with an in-app PSD and
+              a BIDS-native events overlay. No external tools.
             </p>
           </div>
 
@@ -349,6 +373,7 @@
       <div class="container container-narrow cta-strip">
         <div class="hero-actions">
           <a class="btn btn-primary" href="installation.html">Install &rarr;</a>
+          <a class="btn btn-ghost"   href="gui-tour.html">GUI tour</a>
           <a class="btn btn-ghost"   href="intro.html">How it works</a>
           <a class="btn btn-ghost"   href="tutorial.html">Try the tutorial</a>
         </div>

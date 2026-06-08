@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="GUI tour of BIDS Manager: a quick, general look at the Welcome, Converter, and Editor views and every feature in action - project setup, scanning, curation, conversion, enrichment, the in-app viewers, and validation.">
+  <title>GUI tour &middot; BIDS Manager</title>
+  <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div data-include="header"></div>
+
+  <main>
+    <!-- ============================================================
+         Opening
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow">
+        <span class="section-eyebrow">GUI tour</span>
+        <h1>A quick tour of the GUI.</h1>
+        <p class="lead">
+          A fast walk through BIDS Manager's windows and what each one
+          does, so you can see at a glance how the app fits together.
+        </p>
+        <div class="callout callout-info">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Want to follow along on real data?</strong>
+            <p>The <a href="tutorial.html">tutorial</a> takes you through
+              the same workflow step by step, from creating a project to a
+              validated dataset.</p>
+          </div>
+        </div>
+        <p class="muted" style="margin-top: 18px;">
+          BIDS Manager opens on a <strong>Welcome</strong> screen where you
+          create or open a dataset project, then gives you two working
+          views: the <strong>Converter</strong> (raw &rarr; BIDS) and the
+          <strong>Editor</strong> (read, fix, validate). Click anything on
+          this page to take a closer look, and switch the theme in the
+          header to see it in light or dark.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         The three views
+         ============================================================ -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">The three views</span>
+          <h2 class="section-title">Welcome, Converter, Editor.</h2>
+        </div>
+
+        <div class="mtg-views">
+
+          <!-- Welcome -->
+          <div class="mtg-view">
+            <figure class="media-figure">
+              <img class="feature-shot"
+                   src="assets/gui/home_tab_dark.png"
+                   data-light="assets/gui/home_tab_light.png"
+                   alt="BIDS Manager Welcome tab: create a dataset, open an existing one, recent projects"
+                   loading="lazy">
+            </figure>
+            <div class="mtg-view-text">
+              <h3>Welcome: start or resume a project</h3>
+              <p>
+                BIDS Manager is project-first. Before you scan anything you
+                point it at a dataset folder, and from then on every scan,
+                every edit, and every decision is written into that
+                project. You can quit the app mid-curation and pick up
+                exactly where you left off, and re-running a conversion
+                merges new data in instead of overwriting.
+              </p>
+              <ul>
+                <li><strong>Create a new dataset</strong> scaffolds a fresh
+                  BIDS folder (<code class="inline">dataset_description.json</code>,
+                  a README, and a <code class="inline">.bidsignore</code>)
+                  ready to scan raw data into. The folder name becomes the
+                  dataset slug.</li>
+                <li><strong>Open an existing dataset</strong> continues a
+                  BIDS Manager project, or <em>adopts</em> a dataset created
+                  elsewhere. Adopted datasets are opened read-only so you
+                  can browse and validate them without risk.</li>
+                <li><strong>Recent projects</strong> reopen with a
+                  double-click (right-click to remove or delete);
+                  <strong>Getting started</strong> links the docs, this
+                  tutorial, and four downloadable sample datasets.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Converter -->
+          <div class="mtg-view">
+            <figure class="media-figure">
+              <img class="feature-shot"
+                   src="assets/gui/converter_tab_dark.png"
+                   data-light="assets/gui/converter_tab_light.png"
+                   alt="BIDS Manager Converter view: raw and output trees, filter, inspection table, properties"
+                   loading="lazy">
+            </figure>
+            <div class="mtg-view-text">
+              <h3>Converter: raw &rarr; BIDS</h3>
+              <p>
+                The Converter is where curation happens: you review every
+                acquisition the scanner found and decide what becomes BIDS,
+                before a single file is written. The top header carries the
+                <em>Scan</em> button, the active-project switcher, Undo /
+                Redo, the live status chips, and <em>Run conversion</em>;
+                two PathBars below show the raw input folder and the
+                project's locked BIDS output.
+              </p>
+              <ul>
+                <li><strong>Raw &amp; output trees</strong> (left): browse
+                  the input folder as it really is on disk, and preview the
+                  exact BIDS layout the conversion will produce.</li>
+                <li><strong>Filter / structure</strong>: every series grouped
+                  by schema entity (subject / session / datatype), so you
+                  can filter the table or exclude whole groups at once.</li>
+                <li><strong>Inspection table</strong>: the centre of gravity,
+                  one editable row per series, colour-coded by status, with
+                  <em>Dataset metadata</em>, <em>Manage columns</em>, and
+                  <em>Bulk edit</em> beneath it.</li>
+                <li><strong>Properties</strong>: a schema-aware editor for
+                  the selected row that shows only valid entities and a live
+                  predicted path.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Editor -->
+          <div class="mtg-view">
+            <figure class="media-figure">
+              <img class="feature-shot"
+                   src="assets/gui/editor_tab_dark.png"
+                   data-light="assets/gui/editor_tab_light.png"
+                   alt="BIDS Manager Editor view: BIDS tree, sidecar form viewer, validation pane"
+                   loading="lazy">
+            </figure>
+            <div class="mtg-view-text">
+              <h3>Editor: read, fix, validate</h3>
+              <p>
+                The Editor opens the converted dataset for review and repair.
+                Its toolbar runs validation at three scopes (single file,
+                folder, or whole dataset), with a <em>Strict BIDS</em>
+                toggle that adds the official structural pass and severity
+                chips that summarise the current issues.
+              </p>
+              <ul>
+                <li><strong>BIDS tree</strong>: the converted layout with a
+                  status dot per file, green for clean, amber for warnings,
+                  red for errors.</li>
+                <li><strong>Centre viewer</strong>: routes by file type, a
+                  schema-aware form for JSON sidecars, an editable table for
+                  TSVs, the tri-view for NIfTI, and an interactive signal
+                  viewer for MEG / EEG / iEEG recordings.</li>
+                <li><strong>Validation pane</strong>: the issue list by
+                  severity; click an item to jump straight to the file that
+                  triggered it.</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Feature gallery
+         ============================================================ -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Features in action</span>
+          <h2 class="section-title">From raw files to a validated dataset.</h2>
+          <p class="section-lead">
+            Each part of the workflow, in the order you would reach for it.
+            Click any one to take a closer look.
+          </p>
+        </div>
+
+        <!-- 1. Start a project -->
+        <div class="media-group">
+          <div class="media-group-head">
+            <h3>1. Start a project</h3>
+            <p>Create a new BIDS dataset or open an existing one, then move
+              between open projects from the header.</p>
+          </div>
+          <div class="media-grid cols-2">
+            <div class="media-block">
+              <h4>Create or open a dataset</h4>
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="Creating and opening a dataset project on the Welcome tab"
+                       data-dark="assets/features/create_or_open_a_new_dataset_project_dark.mp4"
+                       data-light="assets/features/create_or_open_a_new_dataset_project_light.mp4"></video>
+                <figcaption>
+                  <strong>Create</strong> scaffolds a fresh BIDS dataset and
+                  starts the project bundle; <strong>Open</strong> continues
+                  a project or adopts an existing dataset. From this point on
+                  the BIDS output is locked to the chosen project, so there
+                  is no second path to mis-wire.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Switch projects from the header</h4>
+              <figure class="media-figure">
+                <img class="feature-shot"
+                     src="assets/features/project_switcher_dark.png"
+                     data-light="assets/features/project_switcher_light.png"
+                     alt="Project switcher dropdown in the header"
+                     loading="lazy">
+                <figcaption>
+                  The active project is shown in the header. The dropdown
+                  lists your open and recent projects so you can jump
+                  between datasets, or return to the Welcome screen to open
+                  or create another, without losing any work.
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Scan the raw data -->
+        <div class="media-group">
+          <div class="media-group-head">
+            <h3>2. Scan the raw data</h3>
+            <p>Point at the raw input folder and let the scanner read the
+              metadata inside every file. Teach it your own rules when the
+              defaults miss something.</p>
+          </div>
+          <div class="media-grid cols-3">
+            <div class="media-block">
+              <h4>Point at your raw data</h4>
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="Choosing the raw data input folder"
+                       data-dark="assets/features/choose_a_raw_data_input_folder_dark.mp4"
+                       data-light="assets/features/choose_a_raw_data_input_folder_light.mp4"></video>
+                <figcaption>
+                  Choose the folder that holds your recordings (DICOM
+                  directories, EDF / FIF / BrainVision files, CTF
+                  <code class="inline">.ds</code> folders, physio logs). The
+                  output is already locked to the project, so this one path
+                  is all you set.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Scan</h4>
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="Scanning the raw data"
+                       data-dark="assets/features/scan_raw_data_dark.mp4"
+                       data-light="assets/features/scan_raw_data_light.mp4"></video>
+                <figcaption>
+                  The scanner walks the folder and reads metadata from inside
+                  every file (DICOM tags, EDF / FIF headers), clusters
+                  subjects, groups series, and classifies each one. The
+                  status chips (valid / warnings / error / skipped) tick up
+                  live, and non-image or unsupported series are flagged and
+                  excluded automatically.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Teach the scanner your rules</h4>
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="Adding scan rules in Settings"
+                       data-dark="assets/features/settings_scan_rules_dark.mp4"
+                       data-light="assets/features/settings_scan_rules_light.mp4"></video>
+                <figcaption>
+                  When the classifier misses a local naming convention, the
+                  <em>Scan rules</em> settings tab lets you add classifier
+                  hints (force a series to a datatype / suffix / task) and
+                  series exclusions (drop anything matching a name or path).
+                  Rules are schema-constrained, persisted, and the CLI reads
+                  the same file via <code class="inline">--rules-file</code>.
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Curate and inspect -->
+        <div class="media-group">
+          <div class="media-group-head">
+            <h3>3. Curate and inspect</h3>
+            <p>Review every conversion decision before anything is written.
+              Filter, bulk-edit, set per-row properties, enrich EEG / MEG
+              metadata, and preview the exact BIDS tree.</p>
+          </div>
+          <div class="media-grid cols-3">
+            <div class="media-block">
+              <h4>Colour-coded inspection</h4>
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="Colour-coded inspection table"
+                       data-dark="assets/features/inspection_table_color_coding_seqs_dark.mp4"
+                       data-light="assets/features/inspection_table_color_coding_seqs_light.mp4"></video>
+                <figcaption>
+                  One editable row per series, showing the predicted BIDS
+                  basename, datatype, task, run, and the classifier's
+                  confidence. Rows are tinted by status, kept, skipped,
+                  non-image, or warning, so anything that needs attention
+                  stands out immediately.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Filter and structure</h4>
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="Filter and structure view"
+                       data-dark="assets/features/filter_tab_feature_dark.mp4"
+                       data-light="assets/features/filter_tab_feature_light.mp4"></video>
+                <figcaption>
+                  A schema-grouped tree of every series, by subject, session,
+                  and datatype, with tri-state checkboxes. Filter by entity
+                  to focus the table on exactly what you want to review, or
+                  untick a whole group to drop it from the conversion.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Bulk edit</h4>
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="Bulk editing multiple rows"
+                       data-dark="assets/features/bulk_edit_feature_dark.mp4"
+                       data-light="assets/features/bulk_edit_feature_light.mp4"></video>
+                <figcaption>
+                  Multi-select rows, then set a datatype, task, run, or any
+                  other entity on all of them in one action, instead of
+                  editing each row by hand. Ideal for relabelling a whole
+                  session or task at once.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Manage columns</h4>
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="Managing inventory table columns"
+                       data-dark="assets/features/manage_columns_feature_dark.mp4"
+                       data-light="assets/features/manage_columns_feature_light.mp4"></video>
+                <figcaption>
+                  Show, hide, reorder, and resize the inventory columns to
+                  suit the dataset you are curating. Each column carries a
+                  description, and your layout is remembered between
+                  sessions.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Per-row properties</h4>
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="Per-row properties panel"
+                       data-dark="assets/features/properties_panel_dark.mp4"
+                       data-light="assets/features/properties_panel_light.mp4"></video>
+                <figcaption>
+                  Select a row and the Properties panel builds a schema-aware
+                  editor for it: only the entities valid for that
+                  datatype + suffix appear, required fields are marked, and
+                  the predicted path updates as you type. EEG / MEG rows also
+                  carry minimal recording metadata and per-row device
+                  overrides.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Dataset metadata (EEG / MEG enrichment)</h4>
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="Dataset metadata enrichment dialog"
+                       data-dark="assets/features/dataset_metadata_feature_dark.mp4"
+                       data-light="assets/features/dataset_metadata_feature_light.mp4"></video>
+                <figcaption>
+                  Fill dataset-wide fields once and the converter writes them
+                  into every sidecar: reference, ground, hardware filters,
+                  device and cap, institution, power-line frequency, and
+                  event labels. Modality-agnostic and modality-specific
+                  fields are colour-separated, each with its BIDS-schema
+                  tooltip.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Preview the BIDS tree</h4>
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="BIDS preview of the future filesystem layout"
+                       data-dark="assets/features/bids_preview_dark.mp4"
+                       data-light="assets/features/bids_preview_light.mp4"></video>
+                <figcaption>
+                  The bottom dock previews the exact filesystem layout the
+                  conversion will produce, file names, folders, and sidecars,
+                  so you can confirm everything looks right before a single
+                  byte is written.
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Convert -->
+        <div class="media-group">
+          <div class="media-group-head">
+            <h3>4. Convert</h3>
+            <p>Run the right backend per modality, with conversion and the
+              post-conversion chain configurable in Settings.</p>
+          </div>
+          <div class="media-grid cols-2">
+            <div class="media-block">
+              <h4>Run the conversion</h4>
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="Running the conversion"
+                       data-dark="assets/features/run_convertion_dark.mp4"
+                       data-light="assets/features/run_convertion_light.mp4"></video>
+                <figcaption>
+                  Each row is dispatched to the right backend
+                  (<code class="inline">dcm2niix</code> for DICOM,
+                  <code class="inline">mne-bids</code> for EEG / MEG / iEEG,
+                  <code class="inline">bidsphysio</code> for Siemens physio).
+                  Subjects stage in a private temp tree and commit
+                  atomically; the Log dock streams every line, and re-runs
+                  merge new data in safely.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Convert &amp; post-convert settings</h4>
+              <figure class="media-figure">
+                <img class="feature-shot"
+                     src="assets/features/settings_convert_and_post_convert_dark.png"
+                     data-light="assets/features/settings_convert_and_post_convert_light.png"
+                     alt="Convert and post-convert settings"
+                     loading="lazy">
+                <figcaption>
+                  Configure the number of parallel workers, residual
+                  handling, Force-EDF re-encoding, and the post-conversion
+                  chain, metadata enrichment, fix-ups, and validation,
+                  laid out as an indented hierarchy you can toggle.
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Inspect the converted data -->
+        <div class="media-group">
+          <div class="media-group-head">
+            <h3>5. Inspect the converted data</h3>
+            <p>Open the result in the Editor and look at volumes, time
+              series, and MEG / EEG / iEEG recordings, all rendered in-app.</p>
+          </div>
+          <div class="media-grid cols-3">
+            <div class="media-block">
+              <h4>NIfTI viewer</h4>
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="NIfTI tri-view viewer"
+                       data-dark="assets/features/nifti_viewer_dark.mp4"
+                       data-light="assets/features/nifti_viewer_light.mp4"></video>
+                <figcaption>
+                  A tri-view (sagittal / coronal / axial) sharing one
+                  crosshair, plus a single-pane 2-D view. Click and drag to
+                  move the crosshair and scrub through slices.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>4-D time series</h4>
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="NIfTI 4-D time-series graph"
+                       data-dark="assets/features/nifti_viewer_timeseries_dark.mp4"
+                       data-light="assets/features/nifti_viewer_timeseries_light.mp4"></video>
+                <figcaption>
+                  For BOLD and other 4-D volumes, a graph of the signal at
+                  the crosshair voxel across all volumes, alongside the
+                  slices, for a quick sanity check of the time course.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>MEG / EEG / iEEG signal viewer</h4>
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="MEG and EEG signal viewer"
+                       data-dark="assets/features/meeg_signal_viewer_dark.mp4"
+                       data-light="assets/features/meeg_signal_viewer_light.mp4"></video>
+                <figcaption>
+                  A metadata card first, then load the signal into an
+                  interactive viewer: pick channels, scroll and zoom, apply
+                  high-pass / low-pass / notch filters, resample, open an
+                  in-app PSD, and overlay BIDS-native events. No external
+                  tools needed.
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Edit and validate -->
+        <div class="media-group">
+          <div class="media-group-head">
+            <h3>6. Edit and validate</h3>
+            <p>Fix sidecars and tables in place, then audit the dataset
+              against the BIDS schema and jump straight to any issue.</p>
+          </div>
+          <div class="media-grid cols-2">
+            <div class="media-block">
+              <h4>Edit JSON sidecars</h4>
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="Editing a JSON sidecar in the schema-aware form"
+                       data-dark="assets/features/json_side_car_viewer_dark.mp4"
+                       data-light="assets/features/json_side_car_viewer_light.mp4"></video>
+                <figcaption>
+                  Clicking a <code class="inline">.json</code> sidecar opens
+                  a schema-aware form: fields are colour-coded by level
+                  (required / recommended / optional / deprecated), and you
+                  can add or delete fields, edit values, and revert or save.
+                  A Tree view shows the raw key / value structure when you
+                  need it.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Edit TSV tables</h4>
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="Editing a TSV table"
+                       data-dark="assets/features/tsv_side_car_viewer_dark.mp4"
+                       data-light="assets/features/tsv_side_car_viewer_light.mp4"></video>
+                <figcaption>
+                  TSV files (<code class="inline">participants.tsv</code>,
+                  <code class="inline">channels.tsv</code>,
+                  <code class="inline">events.tsv</code>,
+                  <code class="inline">*_scans.tsv</code>) open in an
+                  editable table that loads on a background thread, so even
+                  very large or wide files appear instantly and never freeze
+                  the window.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Validate the dataset</h4>
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="Validating the dataset"
+                       data-dark="assets/features/validate_dataset_dark.mp4"
+                       data-light="assets/features/validate_dataset_light.mp4"></video>
+                <figcaption>
+                  Run validation at file, folder, or whole-dataset scope.
+                  Layer 1 is the schema-driven audit; the <em>Strict BIDS</em>
+                  toggle adds the official structural pass. Findings are
+                  listed by severity and the tree's per-file status dots
+                  update to match.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Jump to issues from the chips</h4>
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="Opening validation warnings from the severity chips"
+                       data-dark="assets/features/validation_warning_from_chips_editor_dark.mp4"
+                       data-light="assets/features/validation_warning_from_chips_editor_light.mp4"></video>
+                <figcaption>
+                  The severity chips in the toolbar are clickable: open the
+                  warnings (or errors) list, then click an entry to jump
+                  straight to the offending file in the viewer, fix it, and
+                  re-validate.
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. Settings -->
+        <div class="media-group">
+          <div class="media-group-head">
+            <h3>7. Settings</h3>
+            <p>Sensible defaults out of the box; the gear in the header
+              opens five tabs, each configurable and capped to your
+              hardware.</p>
+          </div>
+          <div class="media-grid cols-3">
+            <div class="media-block">
+              <h4>Display</h4>
+              <figure class="media-figure">
+                <img class="feature-shot"
+                     src="assets/features/settings_display_dark.png"
+                     data-light="assets/features/settings_display_light.png"
+                     alt="Display settings tab" loading="lazy">
+                <figcaption>Theme, font scale, and the header logo, with the
+                  theme also toggleable live from the header.</figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>System</h4>
+              <figure class="media-figure">
+                <img class="feature-shot"
+                     src="assets/features/settings_system_dark.png"
+                     data-light="assets/features/settings_system_light.png"
+                     alt="System info settings tab" loading="lazy">
+                <figcaption>Detected CPU threads and total RAM, used to cap
+                  the parallel-worker spinboxes so a run never oversubscribes
+                  the machine.</figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Scan</h4>
+              <figure class="media-figure">
+                <img class="feature-shot"
+                     src="assets/features/settings_scan_dark.png"
+                     data-light="assets/features/settings_scan_light.png"
+                     alt="Scan settings tab" loading="lazy">
+                <figcaption>Scan defaults: parallel workers, the probe-convert
+                  pass, and the dcm2niix BidsGuess classifier.</figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Scan rules</h4>
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="Scan rules settings tab"
+                       data-dark="assets/features/settings_scan_rules_dark.mp4"
+                       data-light="assets/features/settings_scan_rules_light.mp4"></video>
+                <figcaption>User classifier hints and series exclusions,
+                  schema-constrained and persisted. The same rules the CLI
+                  reads via <code class="inline">--rules-file</code>.</figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Convert + post-convert</h4>
+              <figure class="media-figure">
+                <img class="feature-shot"
+                     src="assets/features/settings_convert_and_post_convert_dark.png"
+                     data-light="assets/features/settings_convert_and_post_convert_light.png"
+                     alt="Convert and post-convert settings tab" loading="lazy">
+                <figcaption>Workers, residual handling, Force-EDF, and the
+                  post-conversion chain (enrichment, fix-ups, validation) as
+                  an indented hierarchy.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Next steps
+         ============================================================ -->
+    <section class="section section-cta">
+      <div class="container container-narrow cta-strip">
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="tutorial.html">Walk the tutorial &rarr;</a>
+          <a class="btn btn-ghost"   href="installation.html">Install</a>
+          <a class="btn btn-ghost"   href="intro.html">How it works</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-include="footer"></div>
+  <script src="script.js" defer></script>
+</body>
+</html>

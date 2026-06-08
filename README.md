@@ -28,19 +28,31 @@ python3 -m http.server 8000
 ├── .gitignore                      .DS_Store, ._*, editor folders, *.heic
 ├── .github/workflows/pages.yml     Deploys on every push to main
 ├── README.md                       (this file)
-├── index.html                      Landing: six-shot hero collage + features
+├── index.html                      Landing: hero collage + workflow animation + features
 ├── intro.html                      What / why / how, interactive flowchart
-├── installation.html               Stub, content TBD
-├── tutorial.html                   Stub, Technique-B scenes TBD
+├── meet-the-gui.html               Three views + feature-video gallery (recorded GUI)
+├── installation.html               Per-OS bootstrap installer walkthrough
+├── tutorial.html                   GUI walkthrough (6 steps) + CLI reference + CLI walkthrough
+├── tutorial-mri.html               Per-dataset info pages (tree + real CLI numbers)
+├── tutorial-mri-advanced.html
+├── tutorial-meg.html
+├── tutorial-eeg.html
 ├── partials/
 │   ├── header.html                 Brand + nav + theme toggle
-│   └── footer.html                 ANCP Lab + repo / PyPI / Issues links
-├── styles.css                      Design system + collage keyframes
-├── script.js                       Partial includes, theme toggle, image swap,
-│                                   workflow flowchart, scroll-reveal
+│   ├── footer.html                 ANCP Lab + repo / PyPI / Issues links
+│   ├── tutorial-gui-tour.html      Annotated converter / editor screenshots (marker popovers)
+│   └── tutorial-after.html         "What you just did" + next steps
+├── styles.css                      Design system + collage keyframes + feature-media
+├── script.js                       Partial includes, theme toggle, themed image / video
+│                                   swap, workflow flowchart, scene state machine,
+│                                   feature-video lazy autoplay
 └── assets/
-    ├── brand/                      logo.png, wordmark.png, app-icon-128 / 256
-    ├── screenshots/                16 PNGs: 8 scenes x dark / light variants
+    ├── brand/                      logo.png, wordmark.png, app-icon-128 / 256, hero brains
+    ├── hero/                       finale-choir.mp3
+    ├── screenshots/                full converter / editor windows (dark / light)
+    ├── gui/                        Welcome / Converter / Editor full-window captures (dark / light)
+    ├── features/                   recorded feature clips (.mp4) + settings PNGs (dark / light)
+    ├── icons/workflow/             MDI6 glyphs for the intro workflow diagram
     └── workflow/                   workflow.svg
 ```
 
@@ -135,20 +147,30 @@ goes live at `https://<owner>.github.io/<repo>/` within ~60 seconds.
 `.nojekyll` is included so GitHub Pages serves files / folders whose
 names start with `_` correctly (Jekyll would skip them otherwise).
 
+## Feature videos
+
+`meet-the-gui.html` and Step 1 of the tutorial embed recorded GUI
+clips as dark / light pairs:
+
+```html
+<video class="feature-video" muted loop playsinline preload="none"
+       data-dark="assets/features/<clip>_dark.mp4"
+       data-light="assets/features/<clip>_light.mp4"></video>
+```
+
+`initFeatureVideos()` in `script.js` keeps them cheap: the source is
+set from the active theme, nothing is fetched until the clip nears the
+viewport, and an `IntersectionObserver` autoplays a clip in view and
+pauses it off-screen. Under `prefers-reduced-motion` it shows native
+controls and never autoplays. `swapFeatureVideos()` re-points each clip
+on a theme toggle (alongside `swapThemedImages()` for PNG pairs).
+
 ## What is next
 
-See `../DOCUMENTATION_PLAN.md` Section 3 for the full punch list. In
-short:
-
-- **`installation.html`** — port the per-OS bootstrap walkthrough
-  from `../bids_manager_documentation_v0_backup/book/installation.md`,
-  refresh for v1.1.
-- **`tutorial.html`** — author the nine Technique-B scenes (scan,
-  inspect, override, bulk-edit, convert, open in editor, NIfTI
-  inspect, validate). Each scene is a self-contained HTML / CSS / JS
-  re-implementation of the active GUI widget.
-- Optional follow-ups: per-page right-rail TOC, FAQ, changelog,
-  search.
+The site is aligned with `bidsmgr` v1.2.2 (project-first model,
+EEG / MEG enrichment, the Editor signal viewer, the full seven-verb CLI).
+Optional follow-ups: per-page right-rail TOC, FAQ, changelog, search;
+re-encode the larger `.mp4` clips to smaller web-friendly files.
 
 ## Legacy
 
