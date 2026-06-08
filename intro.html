@@ -65,7 +65,9 @@
           <li>
             A <strong>metadata enrichment algorithm</strong> that fills
             required sidecar fields after conversion, with an audit log
-            of every decision.
+            of every decision. For EEG and MEG it also fills reference,
+            ground, filters, device, and event labels, with per-recording
+            overrides.
           </li>
           <li>
             A <strong>schema-driven validator</strong> that audits the
@@ -77,13 +79,16 @@
           BIDS Manager exposes this orchestration through two surfaces.
           The <strong>graphical user interface</strong> automates and
           semi-automates the decisions visually, with an interactive
-          table, an inspection view, and a built-in NIfTI viewer. The
-          <strong>command-line interface</strong> offers five verbs
-          (<code class="inline">bidsmgr-scan</code>,
+          table, an inspection view, and built-in NIfTI and MEG / EEG
+          viewers. The <strong>command-line interface</strong> offers
+          seven console scripts
+          (<code class="inline">bidsmgr-create</code>,
+          <code class="inline">bidsmgr-scan</code>,
           <code class="inline">bidsmgr-rebuild</code>,
           <code class="inline">bidsmgr-convert</code>,
           <code class="inline">bidsmgr-metadata</code>,
-          <code class="inline">bidsmgr-validate</code>) for scripted,
+          <code class="inline">bidsmgr-validate</code>,
+          <code class="inline">bidsmgr-project</code>) for scripted,
           headless, or pipeline use.
         </p>
 
@@ -91,6 +96,16 @@
           Both surfaces drive the same engine. A scan run from the CLI
           produces the same inventory the GUI populates; an edit made
           in the GUI is replayable from the CLI.
+        </p>
+
+        <p>
+          BIDS Manager is also <strong>project-first</strong>. You begin
+          by creating or opening a dataset project, and from then on every
+          scan, edit, and decision is saved into it. Each scan is kept as a
+          versioned snapshot, curation is resumable across sessions, edits
+          are undoable, and re-running a conversion merges new subjects and
+          sessions in safely rather than overwriting. The same project drives
+          the GUI and the CLI's <code class="inline">--project</code> flag.
         </p>
 
         <h2>Why it exists</h2>
@@ -352,6 +367,8 @@
       <div class="container container-narrow">
         <h2>Next steps</h2>
         <ul>
+          <li><a href="gui-tour.html">GUI tour</a>: a quick look at the
+            Welcome, Converter, and Editor views and what each one does.</li>
           <li><a href="installation.html">Install BIDS Manager</a> on macOS,
             Linux, or Windows.</li>
           <li><a href="tutorial.html">Walk the interactive tutorial</a>:

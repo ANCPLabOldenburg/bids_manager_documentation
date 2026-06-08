@@ -7661,3 +7661,191 @@ ol.checklist li {
   .cli-args dt { padding-top: 14px; border-top: 1px solid var(--border-glass); }
   .cli-args dt:first-of-type { border-top: none; padding-top: 0; }
 }
+
+/* ====================================================================
+ * Feature media (GUI tour page + tutorial step recordings)
+ *
+ * A reusable themed media block: a screenshot (<img data-light>) or a
+ * looping screen recording (<video class="feature-video">) framed like
+ * a Qt window, with an optional caption. Videos lazy-load and autoplay
+ * only when scrolled into view (initFeatureVideos in script.js); under
+ * prefers-reduced-motion they show native controls and never autoplay.
+ * The frame + shadow mirror .scene-recording so recordings sit on the
+ * page exactly like the existing scan / NIfTI GIFs.
+ * ------------------------------------------------------------------ */
+
+.media-figure {
+  margin: 0;
+  width: 100%;
+}
+.media-figure > .feature-video,
+.media-figure > .feature-shot {
+  display: block;
+  /* Scale DOWN to fit the column / grid cell, but never UP past the
+   * element's own logical size (capped per-element via max-width in
+   * initMediaTrueSize). Centered when narrower than the container. */
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+.media-figure figcaption {
+  margin-top: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+.media-figure figcaption strong { color: var(--text); }
+
+/* A lazy <video> whose metadata has not loaded yet has no intrinsic
+ * height; reserve a little space so scrolling it into view does not jump
+ * the layout. Its real aspect ratio takes over the moment metadata loads. */
+.media-figure > .feature-video { min-height: 120px; }
+
+/* --------------------------------------------------------------------
+ * GUI tour: the three views (Welcome / Converter / Editor)
+ * ------------------------------------------------------------------ */
+
+.mtg-views {
+  display: grid;
+  gap: 56px;
+  margin-top: 12px;
+}
+.mtg-view {
+  display: grid;
+  gap: 22px;
+  align-items: start;
+}
+.mtg-view .media-figure { order: 1; }
+.mtg-view .mtg-view-text { order: 2; }
+.mtg-view-text h3 {
+  margin: 0 0 8px;
+  font-size: 1.25rem;
+  color: var(--text);
+}
+.mtg-view-text p { margin: 0 0 12px; color: var(--muted); line-height: 1.65; }
+.mtg-view-text ul { margin: 0; padding-left: 18px; }
+.mtg-view-text li { color: var(--muted); line-height: 1.6; margin-bottom: 6px; }
+.mtg-view-text li strong { color: var(--text); }
+
+@media (min-width: 880px) {
+  /* Alternate the screenshot left / right on wide screens. */
+  .mtg-view { grid-template-columns: 1.35fr 1fr; }
+  .mtg-view:nth-child(even) .media-figure { order: 2; }
+  .mtg-view:nth-child(even) .mtg-view-text { order: 1; }
+}
+
+/* --------------------------------------------------------------------
+ * GUI tour: feature gallery (grouped recordings + screenshots)
+ * ------------------------------------------------------------------ */
+
+.media-group { margin-top: 8px; }
+.media-group + .media-group { margin-top: 64px; }
+.media-group-head { margin-bottom: 22px; }
+.media-group-head h3 {
+  margin: 0 0 6px;
+  font-size: 1.35rem;
+  color: var(--text);
+}
+.media-group-head p { margin: 0; color: var(--muted); line-height: 1.6; }
+
+.media-grid {
+  display: grid;
+  gap: 34px 28px;
+}
+@media (min-width: 760px) {
+  .media-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 980px) {
+  .media-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+.media-block h4 {
+  margin: 0 0 4px;
+  font-size: 1.02rem;
+  color: var(--text);
+}
+.media-block .media-figure { margin-top: 10px; }
+.media-block .media-figure figcaption { margin-top: 10px; font-size: 0.9rem; }
+
+/* ====================================================================
+ * Lightbox: click any .media-figure image / video to enlarge it with
+ * its caption. The backdrop is always dark, so caption text is light
+ * regardless of theme. Built + wired by initLightbox() in script.js.
+ * ------------------------------------------------------------------ */
+
+.media-figure > .feature-video,
+.media-figure > .feature-shot { cursor: zoom-in; }
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5vh 5vw;
+  background: rgba(0, 0, 0, 0.84);
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+.lightbox.is-open { opacity: 1; }
+.lightbox[hidden] { display: none; }
+
+.lightbox-figure {
+  margin: 0;
+  max-width: 94vw;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.lightbox-media { display: flex; }
+.lightbox-node {
+  display: block;
+  max-width: 92vw;
+  max-height: 80vh;
+  width: auto;
+  height: auto;
+  background: #0a0e13;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 10px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+}
+.lightbox-cap {
+  margin: 0;
+  max-width: 920px;
+  text-align: center;
+  color: #e6edf3;
+  line-height: 1.6;
+  font-size: 0.98rem;
+}
+.lightbox-cap strong { color: #ffffff; }
+.lightbox-cap code {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+.lightbox-close {
+  position: fixed;
+  top: 18px;
+  right: 22px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(0, 0, 0, 0.45);
+  color: #ffffff;
+  font-size: 1.7rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 140ms ease;
+}
+.lightbox-close:hover { background: rgba(255, 255, 255, 0.18); }
+
+body.lightbox-open { overflow: hidden; }
