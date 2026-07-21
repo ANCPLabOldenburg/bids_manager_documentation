@@ -7849,3 +7849,69 @@ ol.checklist li {
 .lightbox-close:hover { background: rgba(255, 255, 255, 0.18); }
 
 body.lightbox-open { overflow: hidden; }
+
+/* ==================================================================
+ * Updates page: release cards + colour-coded change labels
+ * ================================================================== */
+.page-updates .release {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+  padding: 22px 24px;
+  margin: 0 0 22px;
+  scroll-margin-top: 90px;
+}
+.page-updates .release.is-latest {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+  box-shadow: 0 0 0 1px var(--glow-accent);
+}
+.page-updates .release-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+.page-updates .release-head h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+.page-updates .release-date {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.page-updates .release-badge {
+  margin-left: auto;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--accent);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+.page-updates .rel-kind {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 6px;
+  padding: 2px 8px;
+  margin: 14px 0 6px;
+}
+.page-updates .rel-kind.k-new  { color: var(--success); background: color-mix(in srgb, var(--success) 15%, transparent); }
+.page-updates .rel-kind.k-fix  { color: var(--accent);  background: color-mix(in srgb, var(--accent) 15%, transparent); }
+.page-updates .rel-kind.k-note { color: var(--warning); background: color-mix(in srgb, var(--warning) 18%, transparent); }
+.page-updates .release ul {
+  margin: 4px 0 0;
+  padding-left: 20px;
+}
+.page-updates .release li { margin-bottom: 8px; }
+.page-updates .release li:last-child { margin-bottom: 0; }
+.page-updates .muted-note {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-top: 26px;
+}
