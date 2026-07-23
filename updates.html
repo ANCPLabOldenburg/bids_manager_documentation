@@ -25,6 +25,8 @@
       </button>
       <nav id="page-toc-panel" class="page-toc-panel" aria-label="Versions">
         <span class="page-toc-title">Jump to a version</span>
+        <a class="page-toc-link" href="#v1242">
+          <span class="page-toc-dot" aria-hidden="true"></span>1.2.4.2</a>
         <a class="page-toc-link" href="#v1241">
           <span class="page-toc-dot" aria-hidden="true"></span>1.2.4.1</a>
         <a class="page-toc-link" href="#v124">
@@ -70,12 +72,78 @@
           </p>
         </div>
 
+        <!-- ============ 1.2.4.2 ============ -->
+        <div class="release reveal is-latest" id="v1242">
+          <div class="release-head">
+            <h2>1.2.4.2</h2>
+            <span class="release-date">23 July 2026</span>
+            <span class="release-badge">Latest</span>
+          </div>
+          <p class="rel-kind k-new">New</p>
+          <ul>
+            <li>
+              <strong>A much-improved NIfTI image viewer.</strong> Inspecting a
+              <code>.nii</code> / <code>.nii.gz</code> volume in the Editor is
+              now far more comfortable, and images load in canonical RAS
+              orientation so anatomy is shown the right way round:
+              <ul>
+                <li>
+                  <strong>Scroll through the volume</strong> with the mouse wheel
+                  or a trackpad, in both the single-slice view and the
+                  <strong>Multi view</strong> (the former Tri-view). It steps
+                  smoothly in either direction. Horizontal scroll, or holding
+                  <code>H</code> while scrolling, moves through time in 4-D
+                  images.
+                </li>
+                <li>
+                  <strong>Anatomical orientation labels</strong> (L/R, A/P, S/I)
+                  are drawn around each slice, so you always know which way you
+                  are looking. Toggle them with the "Orientation labels" button
+                  or the <code>O</code> key.
+                </li>
+                <li>
+                  <strong>Keyboard shortcuts</strong> for everything, active when
+                  the viewer has focus: <code>A</code> / <code>S</code> /
+                  <code>C</code> switch the axial, sagittal and coronal views,
+                  <code>M</code> opens Multi view, <code>G</code> opens the
+                  time-series graph, and <code>O</code> toggles the labels. A
+                  "Shortcuts" button lists every gesture and key.
+                </li>
+                <li>
+                  The time-series graph now opens compact and stays resizable, so
+                  it no longer crowds the image.
+                </li>
+              </ul>
+            </li>
+            <li>
+              <strong>Update notes on the Welcome screen.</strong> The home
+              screen gained a small "Update notes" shortcut that opens this
+              release-notes page, so you can always find what changed.
+            </li>
+          </ul>
+          <p class="rel-kind k-note">Changed</p>
+          <ul>
+            <li>
+              <strong>Rounded hover tooltips.</strong> The small pop-up hints
+              that appear when you hover over a control now have rounded corners,
+              matching the rest of the interface.
+            </li>
+          </ul>
+          <p class="rel-kind k-fix">Fixed</p>
+          <ul>
+            <li>
+              <strong>No more crash on exit.</strong> A Qt shutdown issue that
+              could crash the app when closing the NIfTI viewer or quitting was
+              fixed.
+            </li>
+          </ul>
+        </div>
+
         <!-- ============ 1.2.4.1 ============ -->
-        <div class="release reveal is-latest" id="v1241">
+        <div class="release reveal" id="v1241">
           <div class="release-head">
             <h2>1.2.4.1</h2>
             <span class="release-date">21 July 2026</span>
-            <span class="release-badge">Latest</span>
           </div>
           <p class="rel-kind k-fix">Fixed</p>
           <ul>
