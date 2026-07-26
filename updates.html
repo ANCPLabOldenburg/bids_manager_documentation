@@ -25,6 +25,8 @@
       </button>
       <nav id="page-toc-panel" class="page-toc-panel" aria-label="Versions">
         <span class="page-toc-title">Jump to a version</span>
+        <a class="page-toc-link" href="#v125">
+          <span class="page-toc-dot" aria-hidden="true"></span>1.2.5</a>
         <a class="page-toc-link" href="#v1242">
           <span class="page-toc-dot" aria-hidden="true"></span>1.2.4.2</a>
         <a class="page-toc-link" href="#v1241">
@@ -72,12 +74,92 @@
           </p>
         </div>
 
+        <!-- ============ 1.2.5 ============ -->
+        <div class="release reveal is-latest" id="v125">
+          <div class="release-head">
+            <h2>1.2.5</h2>
+            <span class="release-date">26 July 2026</span>
+            <span class="release-badge">Latest</span>
+          </div>
+          <p class="rel-kind k-new">New</p>
+          <ul>
+            <li>
+              <strong>A GPU 3-D volume renderer for NIfTI images.</strong> The
+              Editor's image viewer can now render a volume in interactive 3-D,
+              in the spirit of MRIcroGL, straight on your graphics card. Load an
+              image, switch to the <strong>3D</strong> or
+              <strong>Multi-Planar 3D</strong> view, and orbit, zoom and pan a
+              fully shaded volume in real time.
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="Interactive 3-D volume rendering of a NIfTI image in the BIDS Manager Editor"
+                       data-dark="assets/features/3d_renderer.mp4"
+                       data-light="assets/features/3d_renderer.mp4"></video>
+                <figcaption>
+                  The new GPU 3-D renderer: rotate, cut and re-light a volume in
+                  real time, with a live orientation cube.
+                </figcaption>
+              </figure>
+              It brings a lot to the viewer:
+              <ul>
+                <li>
+                  <strong>A dozen looks.</strong> Pick a rendering effect and
+                  material: Standard and Matte surfaces, Juicy shiny, Glass,
+                  X-ray, Jelly, Skull, maximum-intensity projection, Edges,
+                  opacity peeling, Shell and Topography, each with its own
+                  adjustable parameters.
+                </li>
+                <li>
+                  <strong>Lighting you control</strong>, with matcap materials
+                  (Shiny White, Clay, Bone, Titanium, Gold, Blue) and ambient,
+                  diffuse, specular and shininess sliders.
+                </li>
+                <li>
+                  <strong>Cut into the volume.</strong> An oblique clip plane and
+                  a slicer cut at any angle, with keyboard shortcuts, and a
+                  cut-face overlay shows a clean windowed cross-section at the cut
+                  while the shaded volume fills the space behind it, so a
+                  ventricle reads as real depth rather than a flat dark hole.
+                </li>
+                <li>
+                  <strong>Always know your orientation.</strong> An orientation
+                  cube and shared RAS / radiological toggles keep the 2-D slices
+                  and the 3-D render in agreement.
+                </li>
+                <li>
+                  <strong>Colour-FA diffusion maps</strong> (RGB NIfTIs) load and
+                  render in 3-D as well.
+                </li>
+              </ul>
+              The 3-D views appear automatically when your machine has a GPU with
+              OpenGL 3.3; on machines without one the viewer stays a fast 2-D
+              tool.
+            </li>
+          </ul>
+          <p class="rel-kind k-fix">Fixed</p>
+          <ul>
+            <li>
+              <strong>Colour-FA (RGB) NIfTIs now open.</strong> Diffusion
+              colour-FA maps that previously failed to load now open correctly.
+            </li>
+            <li>
+              <strong>Smoother scrolling on Linux.</strong> Mouse-wheel zoom and
+              Shift-plus-wheel slice navigation in the 3-D view were fixed on
+              Linux.
+            </li>
+            <li>
+              <strong>A scan crash on Windows with Python 3.14.</strong> A
+              parallel worker-pool crash during scanning was worked around, so
+              scans complete reliably there.
+            </li>
+          </ul>
+        </div>
+
         <!-- ============ 1.2.4.2 ============ -->
-        <div class="release reveal is-latest" id="v1242">
+        <div class="release reveal" id="v1242">
           <div class="release-head">
             <h2>1.2.4.2</h2>
             <span class="release-date">23 July 2026</span>
-            <span class="release-badge">Latest</span>
           </div>
           <p class="rel-kind k-new">New</p>
           <ul>
