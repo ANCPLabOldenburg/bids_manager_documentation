@@ -25,6 +25,8 @@
       </button>
       <nav id="page-toc-panel" class="page-toc-panel" aria-label="Versions">
         <span class="page-toc-title">Jump to a version</span>
+        <a class="page-toc-link" href="#v126">
+          <span class="page-toc-dot" aria-hidden="true"></span>1.2.6</a>
         <a class="page-toc-link" href="#v125">
           <span class="page-toc-dot" aria-hidden="true"></span>1.2.5</a>
         <a class="page-toc-link" href="#v1242">
@@ -75,11 +77,106 @@
         </div>
 
         <!-- ============ 1.2.5 ============ -->
-        <div class="release reveal is-latest" id="v125">
+        <div class="release reveal is-latest" id="v126">
+          <div class="release-head">
+            <h2>1.2.6</h2>
+            <span class="release-date">31 July 2026</span>
+            <span class="release-badge">Latest</span>
+          </div>
+          <p class="rel-kind k-new">New</p>
+          <ul>
+            <li>
+              <strong>PET support.</strong> Positron emission tomography is now
+              a first-class modality. PET studies scan, convert and validate
+              alongside everything else, from either of the two formats
+              scanners produce: DICOM, and the ECAT files that Siemens HRRT and
+              older CTI systems write.
+              <ul>
+                <li>
+                  <strong>Hybrid studies convert in one pass.</strong> On a
+                  PET/MR study the MR half is ordinary anatomical and functional
+                  data, and BIDS Manager converts it in the same run. On a
+                  PET/CT study the CT half is set aside with a note explaining
+                  why: BIDS has no place for CT in a raw dataset yet.
+                </li>
+                <li>
+                  <strong>The metadata a scanner cannot know.</strong> A PET
+                  sidecar needs around forty fields, and the scanner header
+                  holds about half of them. It records how the image was
+                  reconstructed, but not how much tracer was injected, in what
+                  form, or when. Those now have a home: a Tracer,
+                  Radiochemistry, Acquisition and Reconstruction block in
+                  Dataset metadata, with per-scan overrides in the properties
+                  panel, and the same inherit-from-the-dataset behaviour the
+                  EEG and MEG fields already have.
+                </li>
+                <li>
+                  <strong>The scan reads what it can and proposes it.</strong>
+                  Tracer, radionuclide, injected dose and reconstruction
+                  settings are read out of the source and offered as
+                  suggestions beside the fields they inform. They are never
+                  filled in silently, because a vendor writes these as free
+                  text and a wrong tracer is worse than a blank one.
+                </li>
+                <li>
+                  <strong>Bring your dose table.</strong> If the radiochemistry
+                  already exists as a spreadsheet, point
+                  <code>bidsmgr-convert --pet-spreadsheet</code> at it. Column
+                  names are matched loosely, so
+                  <code>Injected Dose</code> and
+                  <code>injected_radioactivity</code> both work.
+                </li>
+              </ul>
+            </li>
+            <li>
+              <strong>Time-activity curves in the viewer.</strong> Open a
+              dynamic PET image and the time-series graph now plots against
+              real seconds rather than frame number. PET frames get longer as
+              the tracer decays, so a ten-second frame and a five-minute frame
+              sit side by side in one scan; plotting them as equal steps
+              flattens the early part of the curve, which is exactly where the
+              interesting kinetics are.
+            </li>
+            <li>
+              <strong>PET sanity checks.</strong> The Editor now warns when the
+              numbers in a PET sidecar disagree with each other: a dose that
+              looks like it was entered in the wrong unit, a specific activity
+              that does not follow from the dose and mass, frames that run
+              backwards, a timing offset with no reference time to measure it
+              from. These are warnings, never errors.
+            </li>
+          </ul>
+          <p class="rel-kind k-fix">Fixed</p>
+          <ul>
+            <li>
+              <strong>Scans no longer skip DICOM files with dots in their
+              names.</strong> Philips exports name each file after its internal
+              identifier, and GE Signa uses a <code>.img</code> ending. Both are
+              ordinary DICOM, and both were being passed over, whatever the
+              modality. If a past scan of a Philips or GE dataset came back
+              emptier than expected, it is worth rescanning.
+            </li>
+            <li>
+              <strong>Patient details are stripped from PET sidecars.</strong>
+              Name, identifier, birth date and referring physician are removed
+              on conversion. The study and series identifiers stay, so an image
+              can still be traced back to the series it came from.
+            </li>
+          </ul>
+          <p class="rel-kind k-note">Changed</p>
+          <ul>
+            <li>
+              The inventory table has five new read-only columns carrying the
+              PET details read from the source. Existing columns are unchanged
+              and in the same order.
+            </li>
+          </ul>
+        </div>
+
+        <div class="release reveal" id="v125">
           <div class="release-head">
             <h2>1.2.5</h2>
             <span class="release-date">26 July 2026</span>
-            <span class="release-badge">Latest</span>
           </div>
           <p class="rel-kind k-new">New</p>
           <ul>
