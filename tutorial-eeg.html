@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="EEG walkthrough for BIDS Manager: PhysioNet motor-imagery dataset, scan to validate, step by step.">
+  <meta name="description" content="Full EEG tutorial for BIDS Manager: a 28-run PhysioNet motor-imagery dataset from raw EDF to a validated BIDS dataset, with the metadata only a human can supply.">
   <title>EEG tutorial &middot; BIDS Manager</title>
   <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
   <link rel="stylesheet" href="styles.css">
@@ -17,32 +17,70 @@
   <div data-include="tutorial-back-to-landing"></div>
 
   <main>
+    <aside class="page-toc" data-toc aria-label="Page navigation">
+      <button class="page-toc-toggle" type="button"
+              aria-expanded="false" aria-controls="page-toc-panel"
+              aria-label="Toggle page navigation">
+        <span class="toc-bars" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+      <nav id="page-toc-panel" class="page-toc-panel" aria-label="Sections">
+        <span class="page-toc-title">On this page</span>
+        <a class="page-toc-link" href="#data">
+          <span class="page-toc-dot" aria-hidden="true"></span>The data</a>
+        <a class="page-toc-link" href="#protocol">
+          <span class="page-toc-dot" aria-hidden="true"></span>Before you start</a>
+        <a class="page-toc-link" href="#scan">
+          <span class="page-toc-dot" aria-hidden="true"></span>1. Scan</a>
+        <a class="page-toc-link" href="#inventory">
+          <span class="page-toc-dot" aria-hidden="true"></span>2. Read the inventory</a>
+        <a class="page-toc-link" href="#tasks">
+          <span class="page-toc-dot" aria-hidden="true"></span>3. Name the tasks</a>
+        <a class="page-toc-link" href="#metadata">
+          <span class="page-toc-dot" aria-hidden="true"></span>4. The metadata</a>
+        <a class="page-toc-link" href="#events">
+          <span class="page-toc-dot" aria-hidden="true"></span>5. Events</a>
+        <a class="page-toc-link" href="#convert">
+          <span class="page-toc-dot" aria-hidden="true"></span>6. Convert</a>
+        <a class="page-toc-link" href="#inspect">
+          <span class="page-toc-dot" aria-hidden="true"></span>7. Inspect the signal</a>
+        <a class="page-toc-link" href="#validate">
+          <span class="page-toc-dot" aria-hidden="true"></span>8. Validate</a>
+        <a class="page-toc-link" href="#numbers">
+          <span class="page-toc-dot" aria-hidden="true"></span>Real numbers</a>
+        <a class="page-toc-link" href="#cli">
+          <span class="page-toc-dot" aria-hidden="true"></span>From the command line</a>
+        <a class="page-toc-link" href="#trouble">
+          <span class="page-toc-dot" aria-hidden="true"></span>Troubleshooting</a>
+      </nav>
+    </aside>
+
     <!-- ============================================================
          Hero
          ============================================================ -->
     <section class="section">
       <div class="container container-narrow prose">
         <span class="section-eyebrow">EEG tutorial</span>
-        <h1>EEG: convert a 28-run motor-imagery dataset.</h1>
+        <h1>EEG, start to finish.</h1>
         <p class="lead">
-          PhysioNet's motor-imagery sample data. Two subjects, fourteen
-          EDF runs each, packaged with binary <code class="inline">.edf.event</code>
-          annotation files. The whole pipeline (scan, convert,
-          enrich, validate) runs in under a minute on this dataset.
+          Twenty-eight EDF recordings from PhysioNet's motor-imagery set, taken
+          from a raw folder to a validated BIDS dataset. The conversion itself
+          takes seconds. This page is about the part that does not: deciding
+          what each run actually was, and supplying the recording metadata that
+          exists nowhere in an EDF file.
         </p>
 
-        <div class="callout callout-tip">
+        <div class="callout callout-info">
           <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
           <div>
-            <strong>The EEG curation story is simpler than MRI's.</strong>
-            <p>No DICOM clustering, no fmaps, no IntendedFor.
-              But EEG datasets carry one quirk that needs human
-              attention before conversion: the scanner-derived
-              <em>task</em> entity defaults to the EDF filename
-              token (<code class="inline">S001R01</code>,
-              <code class="inline">S001R02</code>, &hellip;). Users
-              have to relabel each run with the real protocol task
-              name. We walk that step below.</p>
+            <strong>This page builds on the general walkthrough.</strong>
+            <p>
+              The <a href="tutorial.html#gui-walkthrough">GUI walkthrough</a>
+              explains each control once, for every modality. This page does not
+              repeat it: it covers what is specific to EEG, in the order you
+              meet it.
+            </p>
           </div>
         </div>
 
@@ -51,16 +89,17 @@
             <span class="section-eyebrow" style="margin-bottom:8px;">Example data</span>
             <h2 style="margin-top:0;">PhysioNet motor imagery (2 subjects)</h2>
             <p>
-              Mirror of the standard PhysioNet motor-imagery format.
-              Two subject folders (<code class="inline">S001</code>,
-              <code class="inline">S002</code>); each has 14
-              <code class="inline">.edf</code> recordings plus their
-              binary <code class="inline">.edf.event</code>
-              annotation siblings.
+              A mirror of the standard PhysioNet motor-imagery layout. Two
+              subject folders (<code class="inline">S001</code>,
+              <code class="inline">S002</code>), each with 14
+              <code class="inline">.edf</code> recordings and their binary
+              <code class="inline">.edf.event</code> annotation siblings.
             </p>
             <p>
               <a class="btn btn-primary"
-                 href="https://cloud.uol.de/s/T66zc5mN4eeZPGK/download" data-goatcounter-click="download-dataset-eeg" data-goatcounter-title="EEG sample dataset"
+                 href="https://cloud.uol.de/s/T66zc5mN4eeZPGK/download"
+                 data-goatcounter-click="download-dataset-eeg"
+                 data-goatcounter-title="EEG sample dataset"
                  target="_blank" rel="noopener">
                 Download EEG sample dataset &rarr;
               </a>
@@ -71,19 +110,18 @@
     </section>
 
     <!-- ============================================================
-         Dataset overview
+         The data
          ============================================================ -->
-    <section class="section">
+    <section class="section" id="data">
       <div class="container container-narrow prose">
-        <span class="section-eyebrow">Dataset overview</span>
-        <h2>2 subjects, 28 EDF files.</h2>
+        <span class="section-eyebrow">The data</span>
+        <h2>Two subjects, twenty-eight recordings.</h2>
         <p>
-          Standard PhysioNet motor-imagery layout. Each subject has
-          14 runs (<code class="inline">R01</code> &hellip;
-          <code class="inline">R14</code>). Each
+          Each subject has fourteen runs, <code class="inline">R01</code>
+          through <code class="inline">R14</code>. Every
           <code class="inline">.edf</code> is paired with a binary
-          <code class="inline">.edf.event</code> annotation file the
-          mne-bids backend reads alongside.
+          <code class="inline">.edf.event</code> annotation file that the
+          conversion reads alongside it.
         </p>
 
         <div class="dataset-tree">
@@ -110,20 +148,56 @@
           <div class="dataset-tree-row d1 muted">64_channel_sharbrough.png, .pdf, RECORDS, SHA256SUMS, wfdbcal</div>
         </div>
 
-        <h3>The PhysioNet motor-imagery protocol</h3>
+        <h3>What makes an EEG folder different from an MRI one</h3>
         <p>
-          R01-R14 follow a fixed protocol; the recording filenames
-          give no hint of the underlying task. Re-labelling them in
-          the Inspection table before conversion gives every BIDS
-          file a meaningful task entity. Common mapping:
+          A DICOM file carries the patient identifiers, the study, the series and
+          the acquisition parameters, so almost everything can be worked out by
+          reading it. An EDF header carries the channels, the sampling rate, the
+          duration and a start time, and very little else. Three consequences run
+          through this whole page.
+        </p>
+        <ul>
+          <li>
+            <strong>Subjects come from the path.</strong> There is no patient
+            identifier to group on, so the folder name is the evidence:
+            <code class="inline">S001</code> becomes
+            <code class="inline">sub-001</code>. A flat folder of recordings
+            collapses to one subject, and you reconcile it by editing the
+            subject cell.
+          </li>
+          <li>
+            <strong>Sessions are inferred from the recording date</strong> when
+            the path carries no session token, the same rule the MRI side applies
+            to study dates.
+          </li>
+          <li>
+            <strong>The important metadata is not in the file.</strong> Which
+            electrode was the reference, which was the ground, what the mains
+            frequency was where you recorded, what cap was on the head. BIDS
+            requires several of these and the format has nowhere to put them.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Before you start
+         ============================================================ -->
+    <section class="section" id="protocol">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Before you start</span>
+        <h2>Know what the runs were.</h2>
+        <p>
+          <code class="inline">R01</code> through
+          <code class="inline">R14</code> follow a fixed protocol, and the
+          filenames say nothing about it. This is information you bring to the
+          conversion; no tool can recover it from the data. Have the mapping to
+          hand before you open the application.
         </p>
 
         <table class="dataset-protocol">
           <thead>
-            <tr>
-              <th>EDF token</th>
-              <th>Real task</th>
-            </tr>
+            <tr><th>EDF token</th><th>What the run was</th></tr>
           </thead>
           <tbody>
             <tr><td><code class="inline">R01</code></td><td>baseline_eyes_open</td></tr>
@@ -132,24 +206,598 @@
             <tr><td><code class="inline">R04</code></td><td>open_fist_imagined</td></tr>
             <tr><td><code class="inline">R05</code></td><td>both_fists_real</td></tr>
             <tr><td><code class="inline">R06</code></td><td>both_fists_imagined</td></tr>
-            <tr><td><code class="inline">R07-R10</code></td><td>(repeats R03-R06)</td></tr>
-            <tr><td><code class="inline">R11-R14</code></td><td>(repeats R03-R06 again)</td></tr>
+            <tr><td><code class="inline">R07-R10</code></td><td>repeats R03-R06</td></tr>
+            <tr><td><code class="inline">R11-R14</code></td><td>repeats R03-R06 again</td></tr>
           </tbody>
         </table>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Also worth collecting first.</strong>
+            <p>
+              The reference and ground electrodes, the mains frequency at the
+              recording site (50 Hz in most of the world, 60 Hz in the Americas
+              and parts of Asia), the amplifier make and model, and the cap. Five
+              answers, given once, that reach all 28 sidecars.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- ============================================================
-         The CLI numbers
+         1. Scan
          ============================================================ -->
-    <section class="section">
+    <section class="section" id="scan">
       <div class="container container-narrow prose">
-        <span class="section-eyebrow">What you'll see</span>
-        <h2>Real numbers from the EEG pipeline.</h2>
+        <span class="section-eyebrow">Step 1</span>
+        <h2>Scan the folder.</h2>
         <p>
-          The same four commands you saw in the MRI tutorial work
-          unchanged on the EEG dataset. Real outputs captured on
-          the local copy of this sample:
+          Create a project, point Raw input at the top of the tree, and press
+          <strong>Scan</strong>. Every recording is opened and asked the same
+          questions the conversion will ask: how many channels of which types,
+          the sampling frequency, the duration, the recording type, and the start
+          date used to infer a session.
+        </p>
+
+        <p>
+          You get 28 rows, one per <code class="inline">.edf</code>, and no
+          skips. There are no localisers or scanner reports in an EEG folder for
+          the scanner to exclude, so the counts are simply 28 found and 28 kept.
+        </p>
+
+        <h3>What the scan decides, and what it only suggests</h3>
+        <p>
+          Datatype and suffix are decided: <code class="inline">eeg</code> and
+          <code class="inline">eeg</code>, at full confidence, because the format
+          is unambiguous. Two other things are worked out and offered rather than
+          applied:
+        </p>
+        <ul>
+          <li>
+            <strong>A montage</strong>, the closest match between your channel
+            names and the standard montages MNE ships. On this dataset the
+            channel names match the 10-05 system.
+          </li>
+          <li>
+            <strong>A manufacturer</strong>, read from the EDF header where the
+            amplifier wrote one.
+          </li>
+        </ul>
+        <p>
+          Neither appears as a column in the table. They surface inside the
+          fields they inform, in the properties panel and the dataset metadata
+          dialog, where the value read from your own recordings is offered at the
+          top of the list. They are suggestions because a header field can be
+          wrong or absent, and a wrong answer in a sidecar is worse than a blank
+          one.
+        </p>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>A format that cannot be read still appears.</strong>
+            <p>
+              If a recording needs a reader that is not installed, an ANT
+              <code class="inline">.cnt</code> without the optional
+              <code class="inline">antio</code> package for example, it arrives
+              as an excluded row carrying the reason, rather than being passed
+              over in silence. A recording missing from the inventory would
+              become a recording missing from your dataset.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         2. Inventory
+         ============================================================ -->
+    <section class="section" id="inventory">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 2</span>
+        <h2>Read the inventory.</h2>
+        <p>
+          The columns that carry the most for EEG are not the ones that matter
+          for MRI. These are the ones to read first.
+        </p>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Column</th><th>On this dataset</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code class="inline">id</code></td><td><code class="inline">001</code> and <code class="inline">002</code>, taken from the folder names. Check this first: it is a path heuristic, not a header fact.</td></tr>
+              <tr><td><code class="inline">task</code></td><td>The filename token, <code class="inline">S001R01</code>. A placeholder, and Step 3 is about replacing it.</td></tr>
+              <tr><td><code class="inline">format</code></td><td><code class="inline">EDF</code> for all 28.</td></tr>
+              <tr><td><code class="inline">n_chan</code>, <code class="inline">sfreq</code>, <code class="inline">duration</code></td><td>Read from the header. Hidden by default; add them from <em>Manage columns</em>. A run with an unexpected channel count or duration is worth opening before you convert it.</td></tr>
+              <tr><td><code class="inline">predicted basename</code></td><td>The filename this row will produce. Red means another row wants the same one.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The inventory table for this dataset"
+               src="assets/features/eeg_inventory_dark.png"
+               data-light="assets/features/eeg_inventory_light.png">
+          <figcaption>
+            <strong>Twenty-eight rows, one per recording.</strong> Every task cell holds
+            the filename token rather than a task name, which is what Step 3 is
+            about. Confidence is 1.00 throughout, because an EEG format is not
+            something the classifier has to guess at.
+          </figcaption>
+        </figure>
+
+        <p>
+          <strong>Add the channel and duration columns.</strong> They are among
+          the roughly forty the inventory carries, and hidden by default.
+          <em>Manage columns</em> below the table shows, hides and reorders them,
+          and the layout is remembered. On a large EEG study, sorting by duration
+          is the quickest way to find the run that stopped early.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         3. Tasks
+         ============================================================ -->
+    <section class="section" id="tasks">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 3</span>
+        <h2>Name the tasks. This is the real work.</h2>
+        <p>
+          Every row arrives with <code class="inline">task-S001R01</code> or
+          similar. That is the filename, not the task, and it will be baked into
+          28 BIDS filenames if you leave it. Worse, it is the kind of thing that
+          looks deliberate to whoever reads the dataset later.
+        </p>
+
+        <p>
+          Do it with <strong>bulk edit</strong> rather than row by row. Sort or
+          filter the table so the runs that share a task are together, select
+          them across both subjects, press <em>Bulk edit</em>, choose the
+          <code class="inline">task</code> column, and type the name once.
+        </p>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="Selecting several rows and setting one task name across all of them"
+                 data-dark="assets/features/bulk_edit_feature_dark.mp4"
+                 data-light="assets/features/bulk_edit_feature_light.mp4"></video>
+          <figcaption>
+            <strong>Bulk edit.</strong> Select the rows, choose the column, type
+            the value once. On this dataset it is the difference between
+            twenty-eight edits and six, and between a consistent set of task
+            names and a set with one typo in it.
+          </figcaption>
+        </figure>
+
+        <h3>Watch what happens to the run numbers</h3>
+        <p>
+          The protocol repeats: <code class="inline">R03</code> to
+          <code class="inline">R06</code> run three times each. Once all three
+          repeats carry the same task name, three rows per subject resolve to the
+          same BIDS filename. That is a genuine repeat of the same thing, which
+          is what the standard's <code class="inline">run</code> entity is for,
+          so they are numbered <code class="inline">run-1</code>,
+          <code class="inline">run-2</code> and
+          <code class="inline">run-3</code> for you, in acquisition order.
+        </p>
+        <p>
+          Nothing turns red here, because BIDS has an answer. Red is reserved for
+          the case where it does not, and both outcomes are visible in one frame:
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="Rows separated automatically by run number, above rows shown in red because no entity distinguishes them"
+               src="assets/features/name_collision_red_dark.png"
+               data-light="assets/features/name_collision_red_light.png">
+          <figcaption>
+            <strong>Two outcomes.</strong> The lower rows were duplicates that
+            the <code class="inline">run</code> entity resolves, so they were
+            numbered automatically. The upper rows have nothing to tell them
+            apart, so they stay red and the conversion refuses to start until you
+            decide what distinguishes them.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         4. Metadata
+         ============================================================ -->
+    <section class="section" id="metadata">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 4</span>
+        <h2>The metadata an EDF file cannot hold.</h2>
+        <p>
+          Open <strong>Dataset metadata</strong>. The EEG section covers every
+          <code class="inline">*_eeg.json</code> in the dataset at once, so each
+          question is answered once and written into all 28 files.
+        </p>
+
+        <p>
+          Some of it the conversion already knows and will fill by itself:
+          sampling frequency, channel counts by type, recording duration and
+          type. Those are folded into the green
+          <em>Already answered by the conversion</em> block, shown so you can
+          check them rather than type them again. What remains is what was never
+          in the file:
+        </p>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Field</th><th>Why it is asked</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code class="inline">EEGReference</code></td><td>Required. Which electrode the signal is referenced to. A converter cannot know, so most write <code class="inline">"n/a"</code>, which satisfies a validator while telling the reader something false.</td></tr>
+              <tr><td><code class="inline">EEGGround</code></td><td>Required, and equally invisible in the file.</td></tr>
+              <tr><td><code class="inline">PowerLineFrequency</code></td><td>Required. 50 or 60: a property of the building rather than the recording. You do not have to guess, see below.</td></tr>
+              <tr><td><code class="inline">Manufacturer</code>, <code class="inline">ManufacturersModelName</code></td><td>Recommended. The suggestion read from the header is offered first in the list.</td></tr>
+              <tr><td><code class="inline">CapManufacturer</code>, <code class="inline">CapManufacturersModelName</code></td><td>Recommended. Never in the data.</td></tr>
+              <tr><td><code class="inline">SoftwareFilters</code>, hardware filter settings</td><td>What was applied during acquisition, which changes how the signal should be interpreted.</td></tr>
+              <tr><td><code class="inline">InstitutionName</code>, department</td><td>Shared with every other modality, so it is asked once in the modality-agnostic section rather than per modality.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The EEG section of the metadata template, showing the required reference, ground, mains frequency and filter fields"
+               src="assets/features/template_eeg_dark.png"
+               data-light="assets/features/template_eeg_light.png">
+          <figcaption>
+            <strong>The EEG questions, in full.</strong> Every field in the table
+            above, in the form. The red asterisk marks what BIDS requires,
+            <code class="inline">EEGReference</code>,
+            <code class="inline">PowerLineFrequency</code> and
+            <code class="inline">SoftwareFilters</code> among them; the amber dot
+            marks what it recommends. Each description is the standard's own
+            wording rather than a paraphrase, and the questions every modality shares are
+            asked once further up.
+          </figcaption>
+        </figure>
+
+        <h3>Read the mains frequency out of your own data</h3>
+        <p>
+          <code class="inline">PowerLineFrequency</code> is required, and a wrong
+          value is written into every sidecar in the study. You do not have to
+          take it on trust: the data will tell you. Select any recording, open it
+          in the <strong>Editor</strong>, press <strong>Load signal</strong>, then
+          <strong>PSD</strong>. In the Converter there is a
+          <strong>Compute PSD</strong> button in the properties panel, directly
+          under the <code class="inline">line_freq</code> field, which does the
+          same thing before you have converted anything.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="Power spectrum of an EEG recording, with a sharp peak at 50 Hz and its harmonic at 100 Hz"
+               src="assets/features/psd_line_frequency_dark.png"
+               data-light="assets/features/psd_line_frequency_light.png">
+          <figcaption>
+            <strong>The answer is the tall spike.</strong> This recording has a
+            sharp peak at exactly 50 Hz, and a smaller one at its 100 Hz harmonic,
+            so <code class="inline">PowerLineFrequency</code> is 50. On a
+            recording made in the Americas the same peak sits at 60 Hz. The broad
+            bump around 10 Hz is the alpha rhythm and is signal, not interference.
+          </figcaption>
+        </figure>
+
+        <h4>How to read this plot</h4>
+        <ul>
+          <li>
+            <strong>Two tabs.</strong> <em>Per channel</em> overlays every channel
+            of the selected type, which is where a bad electrode shows up as a
+            trace sitting well away from the rest. <em>Average (per type)</em>
+            gives the mean per channel type with a standard deviation band, which
+            is the cleaner view for reading the mains peak.
+          </li>
+          <li>
+            <strong>Type and Highlight.</strong> The <em>Type</em> dropdown picks
+            the channel type, and <em>Highlight</em> isolates one channel from the
+            crowd so you can identify which trace is the outlier.
+          </li>
+          <li>
+            <strong>dB.</strong> The decibel toggle compresses the vertical range.
+            Leave it on for reading peaks; turn it off to compare absolute power.
+          </li>
+          <li>
+            <strong>It is interactive.</strong> Drag to pan, wheel or right-drag
+            to zoom, and the crosshair reads out the exact frequency and power
+            under the pointer. Zoom into 40 to 70 Hz if the peak is not obvious at
+            full scale.
+          </li>
+        </ul>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>If there is no peak at all.</strong>
+            <p>
+              A notch filter was applied during acquisition. Record what the
+              filter was in <code class="inline">SoftwareFilters</code>, and take
+              the mains frequency from the recording site rather than the data.
+            </p>
+          </div>
+        </div>
+
+        <h3>When one recording differs</h3>
+        <p>
+          A dataset answer is a statement about every file of that kind. If one
+          session used a different reference, or one subject was recorded on the
+          other amplifier, select that row and answer in the properties panel
+          instead. A per-recording answer wins for that recording alone,
+          inherited values are shown greyed with a tooltip naming where they came
+          from, and editing an inherited field back to the dataset value clears
+          the override rather than storing a duplicate.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The properties panel for one EEG recording, showing the per-recording metadata fields"
+               src="assets/features/eeg_properties_dark.png"
+               data-light="assets/features/eeg_properties_light.png">
+          <figcaption>
+            <strong>One recording's answers.</strong> The same questions as the
+            dataset template, scoped to the selected row. Blank means inherited;
+            filled means this recording overrides the study.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         5. Events
+         ============================================================ -->
+    <section class="section" id="events">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 5</span>
+        <h2>Events, and what the codes mean.</h2>
+        <p>
+          The <code class="inline">.edf.event</code> siblings hold annotations,
+          and the conversion turns them into an
+          <code class="inline">events.tsv</code> beside each recording. What it
+          cannot do is say what the codes mean. On this dataset the annotations
+          are <code class="inline">T0</code>, <code class="inline">T1</code> and
+          <code class="inline">T2</code>: rest, the onset of motion in one set of
+          limbs, and the onset in the other, with which is which depending on the
+          run.
+        </p>
+        <p>
+          The scan seeds an event map from the codes it actually found, and you
+          supply the labels once. They are written into
+          <code class="inline">events.tsv</code> as a
+          <code class="inline">trial_type</code> column and described in the
+          accompanying <code class="inline">events.json</code>, which is what
+          makes the dataset readable by somebody who was not in the room.
+        </p>
+
+        <h3>Files that came from your stimulus software</h3>
+        <p>
+          Behavioural logs, stimulus files and separately produced event tables
+          are attached per recording, in the properties panel, under companion
+          files. They are copied into the BIDS tree beside the recording they
+          belong to, with the suffix you choose.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         6. Convert
+         ============================================================ -->
+    <section class="section" id="convert">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 6</span>
+        <h2>Convert.</h2>
+        <p>
+          Check the BIDS preview in the bottom panel first: it shows the exact
+          filenames the current table will produce. Then press
+          <strong>Run conversion</strong>. Each row goes to
+          <code class="inline">mne-bids</code>, which writes the recording, a
+          <code class="inline">channels.tsv</code> naming every channel and its
+          type, an <code class="inline">events.tsv</code>, and the JSON sidecar
+          carrying your template answers.
+        </p>
+
+        <p>
+          Twenty-seven of the twenty-eight runs convert.
+          <code class="inline">S001R03</code> fails, because its events table is
+          empty and mne-bids will not encode an empty one. That failure is
+          contained: the row is reported in the log with its reason and the other
+          twenty-seven are written normally. Finding out now, from a legible
+          message, is the difference between losing one run and not knowing you
+          lost it.
+        </p>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Force-EDF, if your recordings are in something else.</strong>
+            <p>
+              BIDS lists a set of EEG formats it accepts. If yours is not among
+              them, <code class="inline">bidsmgr-convert --force-edf</code>, or
+              the equivalent setting, re-encodes the recording to EDF on the way
+              in rather than leaving you to convert it separately first.
+            </p>
+          </div>
+        </div>
+
+        <h3>Aux channels get their real types</h3>
+        <p>
+          An EOG or ECG channel recorded through an EEG amplifier arrives typed
+          as EEG, because that is what the amplifier wrote. Left alone, every
+          later analysis treats a heartbeat as brain activity. The enrichment
+          retypes the channels you name in
+          <code class="inline">channels.tsv</code>, which is the file every
+          downstream tool reads to decide what a channel is.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         7. Inspect
+         ============================================================ -->
+    <section class="section" id="inspect">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 7</span>
+        <h2>Look at the signal before you trust it.</h2>
+        <p>
+          Open the dataset in the <strong>Editor</strong> and click a converted
+          recording. A metadata card appears first, read without loading the
+          data: what the file is, how many channels of which types, the sampling
+          frequency, the duration. For checking that a conversion produced what
+          you expected, that card is often enough.
+        </p>
+
+        <p>
+          Press <strong>Load signal</strong> for the interactive viewer. From
+          there you can filter by channel type, pick individual channels, set how
+          many are visible at once, change the amplitude scaling and the time
+          window, and move through the recording with the scrollbar, the wheel or
+          the keyboard. Hovering a trace names the channel.
+        </p>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="The EEG signal viewer with channel selection, filtering and the power spectrum"
+                 data-dark="assets/features/meeg_signal_viewer_dark.mp4"
+                 data-light="assets/features/meeg_signal_viewer_light.mp4"></video>
+          <figcaption>
+            <strong>The signal viewer.</strong> High-pass, low-pass and notch
+            filters apply to the segment you are looking at, the recording can be
+            resampled for a quicker overview, and events from the BIDS
+            <code class="inline">events.tsv</code> are drawn over the traces.
+            Turning events on jumps the view to the first one, because triggers
+            often begin well into a recording.
+          </figcaption>
+        </figure>
+
+        <h3>The power spectrum is the fastest check you can run</h3>
+        <p>
+          Open the <strong>PSD</strong> view, the same one described in
+          <a href="#metadata">Step 4</a>. Two things are worth confirming on every
+          dataset. The mains peak should be at the frequency you declared, and if
+          you wrote 50 while the peak sits at 60 then the value in 28 sidecars is
+          wrong. And a channel whose spectrum sits far from its neighbours is
+          usually a bad electrode, which is far easier to see here than in the
+          traces.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         8. Validate
+         ============================================================ -->
+    <section class="section" id="validate">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 8</span>
+        <h2>Validate.</h2>
+        <p>
+          Press <strong>Validate dataset</strong>. On this dataset you get 113
+          clean files, 29 warnings and no errors. Every warning is the same
+          thing: a recommended field still holding the literal
+          <code class="inline">TODO</code> the enrichment writes when it has
+          nothing to fill a field with.
+        </p>
+
+        <p>
+          They fall into two groups. The dataset-level fields, License, Authors,
+          Acknowledgements, which are about your study rather than your
+          recordings. And the EEG recommended fields the header did not supply,
+          <code class="inline">ManufacturersModelName</code> and
+          <code class="inline">SoftwareVersions</code> among them. Both are
+          answered in one pass: the first in the dataset template, the second in
+          the EEG section beside it.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="Warnings on a file, each with the schema rule it came from and a fix button"
+               src="assets/features/validation_warnings_dark.png"
+               data-light="assets/features/validation_warnings_light.png">
+          <figcaption>
+            <strong>What a warning looks like.</strong> The rule it comes from is
+            printed underneath, the chip names the field, and <strong>Fix</strong>
+            takes you to that field in the editor. The count beside the file name
+            is how many findings it carries.
+          </figcaption>
+        </figure>
+
+        <p>
+          Warnings are worth reading rather than clearing blindly. A recommended
+          field that genuinely does not apply to your study is a legitimate
+          warning to leave in place. The point of reading them is that you have
+          decided, rather than not looked.
+        </p>
+
+        <h3>What an error looks like</h3>
+        <p>
+          Warnings are the common case after a first conversion. Errors happen
+          when a value is the wrong kind of thing, which is easy to introduce by
+          hand and impossible to see by reading the file.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="Two type errors on an EEG sidecar, each naming the field and the type the standard expects"
+               src="assets/features/validation_sidecar_error_dark.png"
+               data-light="assets/features/validation_sidecar_error_light.png">
+          <figcaption>
+            <strong>Two errors on one EEG sidecar.</strong>
+            <code class="inline">HeadCircumference</code> must be a number, and
+            <code class="inline">HardwareFilters</code> must be an object or a
+            string. Each finding gives the standard's description of the field and
+            an example of a value of the right type, so the fix needs no lookup.
+            The amber finding below is a different thing: a field still holding
+            <code class="inline">TODO</code>.
+          </figcaption>
+        </figure>
+
+        <h3>The structural error, and how to see it</h3>
+        <p>
+          The other kind worth knowing about is a datatype folder that is
+          misnamed. It happens when somebody tidies a tree by hand. Rename an
+          <code class="inline">eeg</code> folder to
+          <code class="inline">eeeg</code> on a copy, or an
+          <code class="inline">anat</code> to
+          <code class="inline">anatt</code>, and validate again:
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="A structural error: a correctly named file inside a folder called anatt instead of anat"
+               src="assets/features/invalid_location_dark.png"
+               data-light="assets/features/invalid_location_light.png">
+          <figcaption>
+            <strong>Valid name, unreachable file.</strong> The example shown is an
+            <code class="inline">anat</code> folder typed as
+            <code class="inline">anatt</code>; a misnamed
+            <code class="inline">eeg</code> folder reports identically. Every
+            filename inside is still correct, which is why one-file-at-a-time
+            checking says nothing. BIDS tools read inside datatype folders, so
+            nothing will ever load these recordings, and the message lists the
+            folder names that would be valid.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Real numbers
+         ============================================================ -->
+    <section class="section" id="numbers">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">What you should see</span>
+        <h2>Real numbers from this dataset.</h2>
+        <p>
+          Captured from a full run on the sample data, so you can check your own
+          run against them.
         </p>
 
         <div class="results-grid">
@@ -157,94 +805,148 @@
             <span class="results-card-eyebrow">Scan</span>
             <strong class="results-card-num">28</strong>
             <span class="results-card-label">inventory rows</span>
-            <p class="muted">One row per <code class="inline">.edf</code>.
-              No skips (no scouts or scanner reports to flag).
-              Subject identity comes from path prefix (<code class="inline">S001</code>
-              &rarr; <code class="inline">sub-001</code>).</p>
+            <p class="muted">One row per <code class="inline">.edf</code>, no
+              skips. Subjects come from the folder names,
+              <code class="inline">S001</code> to
+              <code class="inline">sub-001</code>.</p>
           </div>
           <div class="results-card">
             <span class="results-card-eyebrow">Convert</span>
             <strong class="results-card-num">27 / 28</strong>
             <span class="results-card-label">runs written</span>
-            <p class="muted">mne-bids writes each EDF as a BIDS-named
-              <code class="inline">.edf</code> with a matching channel
-              TSV, events TSV, and JSON sidecar. One row fails on
-              this dataset: <code class="inline">sub-001_task-S001R03_run-3</code>
-              has an empty events table that mne-bids cannot encode.
-              The Log dock prints the failure cleanly; the rest
-              completes.</p>
+            <p class="muted">Each run written with its channels table, events
+              table and sidecar. <code class="inline">S001R03</code> fails on an
+              empty events table; the failure is reported and the rest
+              complete.</p>
           </div>
           <div class="results-card">
             <span class="results-card-eyebrow">Validate</span>
             <strong class="results-card-num">113 / 29 / 0</strong>
             <span class="results-card-label">ok / warn / err</span>
-            <p class="muted">Zero errors. The 29 warnings are all
-              <code class="inline">bidsmgr.todo_placeholder</code>:
-              the dataset-level fields (License, Authors, etc.) and
-              the EEG-specific recommended fields
-              (<code class="inline">ManufacturersModelName</code>,
-              <code class="inline">SoftwareVersions</code>) that the
-              enrichment cannot infer without help.</p>
+            <p class="muted">No errors. All 29 warnings are
+              <code class="inline">TODO</code> placeholders in recommended
+              fields, fillable in one pass.</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ============================================================
-         What's different from the MRI walkthrough
+         CLI
          ============================================================ -->
-    <section class="section">
+    <section class="section" id="cli">
       <div class="container container-narrow prose">
-        <span class="section-eyebrow">What's different vs MRI</span>
-        <h2>One workflow, modality-specific quirks.</h2>
-        <ul class="checklist">
-          <li>
-            <strong>No DICOM clustering.</strong> EEG subjects come
-            from the folder name (<code class="inline">S001</code> &rarr;
-            <code class="inline">sub-001</code>). PatientID is not in
-            the EDF header.
-          </li>
-          <li>
-            <strong>Task names need user override.</strong> The
-            classifier writes the EDF filename token
-            (<code class="inline">S001R01</code>) into the
-            <code class="inline">task</code> column. The user types
-            the real protocol task in the Inspection table before
-            conversion; the BIDS basename updates live (see Step 3,
-            sub-step 3 in the MRI walkthrough).
-          </li>
-          <li>
-            <strong>One bulk edit relabels every run.</strong>
-            Cmd-/shift-click selects every row ending in
-            <code class="inline">R01</code> across both subjects,
-            then Bulk edit applies the real task name to all of
-            them in one move.
-          </li>
-          <li>
-            <strong>Different backend.</strong> The Convert step
-            calls <code class="inline">mne-bids</code>
-            (<code class="inline">write_raw_bids</code>) instead of
-            <code class="inline">dcm2niix</code>. Same orchestration
-            layer.
-          </li>
-          <li>
-            <strong>No fmap fixups.</strong> EEG sidecars do not
-            carry <code class="inline">IntendedFor</code>. The Convert
-            step's "fmap fixups" lines that appear on MRI do not
-            stream here.
-          </li>
-        </ul>
+        <span class="section-eyebrow">The same thing, scripted</span>
+        <h2>From the command line.</h2>
+        <p>
+          The command line drives the same engine. A scan run here produces the
+          inventory the interface populates, and edits made in the interface are
+          replayed by a later conversion.
+        </p>
+
+<pre class="code"><span class="cmt"># 1. Create the dataset and its project.</span>
+bidsmgr-create ~/bids/motor_imagery --name "Motor imagery"
+
+<span class="cmt"># 2. Scan the raw folder into the project. 28 rows.</span>
+bidsmgr-scan ~/raw/EEG_motor_imagery_sample_data \
+    --project ~/bids/motor_imagery --line-freq 50
+
+<span class="cmt"># 3. Edit the inventory TSV: replace the task placeholders.</span>
+<span class="cmt">#    It is a plain tab-separated file, so a spreadsheet works.</span>
+
+<span class="cmt"># 4. Convert. 27 of 28 written; the empty-events run is reported.</span>
+bidsmgr-convert --project ~/bids/motor_imagery
+
+<span class="cmt"># 5. Fill what can be filled, and mark what cannot.</span>
+bidsmgr-metadata --project ~/bids/motor_imagery --fill-todos
+
+<span class="cmt"># 6. Validate. 113 ok / 29 warn / 0 err.</span>
+bidsmgr-validate ~/bids/motor_imagery</pre>
+
+        <p>
+          The recording metadata, reference, ground, device and event labels,
+          lives in a JSON file beside the inventory and is picked up
+          automatically. Point at it explicitly with
+          <code class="inline">--recording-meta PATH</code> if you keep it
+          elsewhere. Every flag is documented in the
+          <a href="tutorial.html#cli-ref">CLI reference</a>.
+        </p>
       </div>
     </section>
 
     <!-- ============================================================
-         Walk the GUI / CLI walkthrough on the main tutorial page
+         Troubleshooting
+         ============================================================ -->
+    <section class="section" id="trouble">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Troubleshooting</span>
+        <h2>What usually goes wrong with EEG.</h2>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>What you see</th><th>What it means</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Every recording collapsed into one subject</td>
+                <td>The folder gave no subject evidence, which happens with a
+                  flat directory of recordings. Edit the subject cell, or use
+                  bulk edit on the rows that belong together.</td>
+              </tr>
+              <tr>
+                <td>Task names like <code class="inline">task-S001R01</code> in the output</td>
+                <td>The placeholder was converted. Fix the
+                  <code class="inline">task</code> column and
+                  convert again with
+                  <code class="inline">--on-existing replace</code>.</td>
+              </tr>
+              <tr>
+                <td>A row that will not convert, with an mne-bids message</td>
+                <td>Usually the recording itself: an empty events table, a
+                  channel type mne-bids will not accept, or a truncated file. The
+                  log names the file and the reason.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">.eeg</code> or <code class="inline">.vmrk</code> will not open in the Editor</td>
+                <td>Those are BrainVision sidecars, not recordings. Open the
+                  <code class="inline">.vhdr</code>, which is the file that
+                  points at both.</td>
+              </tr>
+              <tr>
+                <td>An ANT <code class="inline">.cnt</code> row excluded, needing <code class="inline">antio</code></td>
+                <td>That reader is an optional package. Install it and scan
+                  again. The row is visible rather than missing precisely so you
+                  find out now.</td>
+              </tr>
+              <tr>
+                <td>A mains peak at 60 Hz when you declared 50</td>
+                <td>The declared value is wrong in every sidecar. Change the
+                  dataset default and re-run the metadata step; no reconversion
+                  is needed.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Next
          ============================================================ -->
     <section class="section">
       <div class="container container-narrow prose">
+        <h2>Next</h2>
+        <p>
+          <a href="tutorial-meg.html">The MEG tutorial</a> covers the same ground
+          for magnetoencephalography, where more of the metadata is in the file
+          and the questions that remain are different.
+          <a href="tutorial-multimodal.html">The multimodal tutorial</a> shows
+          EEG converting in the same pass as MRI and PET.
+        </p>
         <p style="margin-top: 8px;">
-          <a class="btn btn-primary" href="tutorial.html#scenes">Walk the GUI tutorial &rarr;</a>
-          <a class="btn btn-ghost" href="tutorial.html#cli">See the CLI walkthrough</a>
+          <a class="btn btn-primary" href="tutorial.html#gui-walkthrough">The full GUI walkthrough &rarr;</a>
+          <a class="btn btn-ghost" href="tutorial.html#cli-ref">CLI reference</a>
         </p>
       </div>
     </section>

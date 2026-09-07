@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="MRI primary dataset for the BIDS Manager tutorial: a 3-folder Oldenburg Siemens dataset that clusters to 2 BIDS subjects.">
-  <title>MRI primary dataset &middot; BIDS Manager</title>
+  <meta name="description" content="Full MRI tutorial for BIDS Manager: three Siemens DICOM folders that cluster into two BIDS subjects, from scan to a validated dataset, including fieldmaps and embedded physiological recordings.">
+  <title>MRI tutorial &middot; BIDS Manager</title>
   <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
   <link rel="stylesheet" href="styles.css">
   <!-- Privacy-friendly analytics (GoatCounter, no cookies) -->
@@ -17,238 +17,854 @@
   <div data-include="tutorial-back-to-landing"></div>
 
   <main>
+    <aside class="page-toc" data-toc aria-label="Page navigation">
+      <button class="page-toc-toggle" type="button"
+              aria-expanded="false" aria-controls="page-toc-panel"
+              aria-label="Toggle page navigation">
+        <span class="toc-bars" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+      <nav id="page-toc-panel" class="page-toc-panel" aria-label="Sections">
+        <span class="page-toc-title">On this page</span>
+        <a class="page-toc-link" href="#data">
+          <span class="page-toc-dot" aria-hidden="true"></span>The data</a>
+        <a class="page-toc-link" href="#subjects">
+          <span class="page-toc-dot" aria-hidden="true"></span>Subjects and sessions</a>
+        <a class="page-toc-link" href="#scan">
+          <span class="page-toc-dot" aria-hidden="true"></span>1. Scan</a>
+        <a class="page-toc-link" href="#inventory">
+          <span class="page-toc-dot" aria-hidden="true"></span>2. Read the inventory</a>
+        <a class="page-toc-link" href="#curate">
+          <span class="page-toc-dot" aria-hidden="true"></span>3. Curate</a>
+        <a class="page-toc-link" href="#metadata">
+          <span class="page-toc-dot" aria-hidden="true"></span>4. The metadata</a>
+        <a class="page-toc-link" href="#convert">
+          <span class="page-toc-dot" aria-hidden="true"></span>5. Convert</a>
+        <a class="page-toc-link" href="#fixups">
+          <span class="page-toc-dot" aria-hidden="true"></span>6. Fieldmaps and physio</a>
+        <a class="page-toc-link" href="#inspect">
+          <span class="page-toc-dot" aria-hidden="true"></span>7. Inspect the images</a>
+        <a class="page-toc-link" href="#validate">
+          <span class="page-toc-dot" aria-hidden="true"></span>8. Validate</a>
+        <a class="page-toc-link" href="#numbers">
+          <span class="page-toc-dot" aria-hidden="true"></span>Real numbers</a>
+        <a class="page-toc-link" href="#cli">
+          <span class="page-toc-dot" aria-hidden="true"></span>From the command line</a>
+        <a class="page-toc-link" href="#trouble">
+          <span class="page-toc-dot" aria-hidden="true"></span>Troubleshooting</a>
+      </nav>
+    </aside>
+
     <!-- ============================================================
          Hero
          ============================================================ -->
     <section class="section">
       <div class="container container-narrow prose">
-        <span class="section-eyebrow">MRI primary dataset</span>
-        <h1>The dataset the tutorial walks through.</h1>
+        <span class="section-eyebrow">MRI tutorial</span>
+        <h1>MRI, start to finish.</h1>
         <p class="lead">
-          A 3-folder Oldenburg Siemens dataset that clusters to two
-          BIDS subjects. T1w + T2w anatomicals, BOLD with a multiband
-          variant, DWI with fmap pair, and Siemens CMRR physio. The
-          cleanest end-to-end example, picked as the GUI walkthrough's
-          backing data because every datatype in the workflow appears
-          at least once.
+          Three Siemens DICOM folders that are not three subjects. This is the
+          dataset the general walkthrough uses, chosen because every datatype in
+          the workflow appears in it at least once: anatomical, functional,
+          diffusion, fieldmaps, and the physiological signals the scanner stored
+          inside the DICOM files.
         </p>
 
-        <div class="callout callout-tip">
+        <div class="callout callout-info">
           <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
           <div>
-            <strong>The point of this dataset: subject clustering.</strong>
-            <p>DICOM folder names rarely match BIDS subject identities.
-              Here, <strong>sub-001</strong> was scanned twice
-              (<em>pre</em> and <em>post</em>) and the scanner exported
-              each session under its own folder. BIDS Manager clusters
-              folders into subjects by their DICOM
-              <code class="inline">PatientID</code> tag, so
-              <code class="inline">OL_0001</code> and
-              <code class="inline">OL_0002</code> become two sessions
-              of one subject, while <code class="inline">OL_0003</code>
-              is a different patient with no session label.</p>
+            <strong>This page builds on the general walkthrough.</strong>
+            <p>
+              The <a href="tutorial.html#gui-walkthrough">GUI walkthrough</a>
+              explains each control once, for every modality. This page covers
+              what is specific to MRI, and what this dataset in particular is
+              there to teach.
+            </p>
           </div>
         </div>
 
         <div class="download-card">
           <div class="download-card-body">
             <span class="section-eyebrow" style="margin-bottom:8px;">Example data</span>
-            <h2 style="margin-top:0;">Oldenburg neuroimaging unit (3 folders / 2 BIDS subjects)</h2>
+            <h2 style="margin-top:0;">Oldenburg neuroimaging unit (3 folders, 2 subjects)</h2>
             <p>
-              Three source folders. The first two
-              (<code class="inline">OL_0001</code>,
-              <code class="inline">OL_0002</code>) share a PatientID
-              and collapse into <code class="inline">sub-001</code>
-              with <em>ses-pre</em> / <em>ses-post</em>. The third
-              (<code class="inline">OL_0003</code>) stands alone as
-              <code class="inline">sub-002</code> with no session
-              entity.
+              Three source folders. The first two,
+              <code class="inline">OL_0001</code> and
+              <code class="inline">OL_0002</code>, share a patient identifier and
+              collapse into <code class="inline">sub-001</code> with
+              <code class="inline">ses-pre</code> and
+              <code class="inline">ses-post</code>. The third,
+              <code class="inline">OL_0003</code>, is a different person and
+              stands alone as <code class="inline">sub-002</code> with no
+              session. 394 DICOM files, 3T Prisma.
             </p>
             <p>
               <a class="btn btn-primary"
-                 href="https://cloud.uol.de/s/g9gMPpwL7Xg49y9/download" data-goatcounter-click="download-dataset-mri" data-goatcounter-title="MRI sample dataset"
+                 href="https://cloud.uol.de/s/g9gMPpwL7Xg49y9/download"
+                 data-goatcounter-click="download-dataset-mri"
+                 data-goatcounter-title="MRI sample dataset"
                  target="_blank" rel="noopener">
-                Download MRI primary dataset &rarr;
+                Download MRI sample dataset &rarr;
               </a>
             </p>
-          </div>
-          <div class="download-stats" aria-hidden="true">
-            <div class="download-stat">
-              <strong>2</strong><span>subjects</span>
-            </div>
-            <div class="download-stat">
-              <strong>3</strong><span>folders</span>
-            </div>
-            <div class="download-stat">
-              <strong>394</strong><span>DICOMs</span>
-            </div>
-            <div class="download-stat">
-              <strong>3T</strong><span>Prisma</span>
-            </div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ============================================================
-         Dataset overview
+         The data
          ============================================================ -->
-    <section class="section">
+    <section class="section" id="data">
       <div class="container container-narrow prose">
-        <span class="section-eyebrow">Dataset overview</span>
-        <h2>3 folders &rarr; 2 BIDS subjects.</h2>
+        <span class="section-eyebrow">The data</span>
+        <h2>Three folders, two subjects.</h2>
 
-        <div class="results-grid">
-          <div class="results-card">
-            <span class="results-card-eyebrow">sub-001 / ses-pre</span>
-            <strong class="results-card-num">OL_0001</strong>
-            <span class="results-card-label">45 DICOMs &middot; 9 series</span>
-            <p class="muted">
-              First scanning session for sub-001. T1w, two fMRI
-              tasks (<code class="inline">sparse</code>,
-              <code class="inline">rest</code>) and two fieldmap
-              pairs.
-            </p>
+        <div class="dataset-tree">
+          <div class="dataset-tree-row is-folder is-open">
+            <span class="chev">&#9662;</span>
+            <span class="name">neuroimaging_unit/</span>
+            <span class="meta">394 DICOMs</span>
           </div>
-          <div class="results-card">
-            <span class="results-card-eyebrow">sub-001 / ses-post</span>
-            <strong class="results-card-num">OL_0002</strong>
-            <span class="results-card-label">62 DICOMs &middot; 10 series</span>
-            <p class="muted">
-              Same patient, post-intervention. Multiband BOLD, one
-              fieldmap pair, and a physio log. Cluster identified by
-              shared PatientID; session order from StudyDate.
-            </p>
+          <div class="dataset-tree-row d1 is-folder is-open">
+            <span class="chev">&#9662;</span>
+            <span class="name">OL_0001/</span>
+            <span class="meta">sub-001 / ses-pre &middot; 45 DICOMs, 9 series</span>
           </div>
-          <div class="results-card">
-            <span class="results-card-eyebrow">sub-002</span>
-            <strong class="results-card-num">OL_0003</strong>
-            <span class="results-card-label">287 DICOMs &middot; 17 series</span>
-            <p class="muted">
-              Different patient. T2w, three fMRI tasks (with multiband
-              SBRefs), DWI with a PA b0 rerouted into
-              <code class="inline">fmap/</code>, and two physio logs.
-              No session label.
-            </p>
+          <div class="dataset-tree-row d2 muted">T1w, two functional tasks (sparse, rest), two fieldmap pairs</div>
+          <div class="dataset-tree-row d1 is-folder is-open">
+            <span class="chev">&#9662;</span>
+            <span class="name">OL_0002/</span>
+            <span class="meta">sub-001 / ses-post &middot; 62 DICOMs, 10 series</span>
           </div>
+          <div class="dataset-tree-row d2 muted">Multiband BOLD, one fieldmap pair, one physiological log</div>
+          <div class="dataset-tree-row d1 is-folder is-open">
+            <span class="chev">&#9662;</span>
+            <span class="name">OL_0003/</span>
+            <span class="meta">sub-002 &middot; 287 DICOMs, 17 series</span>
+          </div>
+          <div class="dataset-tree-row d2 muted">T2w, three functional tasks with reference volumes, diffusion with a reversed-direction b0, two physiological logs</div>
         </div>
 
-        <h3>How the subject clustering works</h3>
+        <h3>What this dataset is here to teach</h3>
         <p>
-          The <code class="inline">subject_identity.cluster_subjects</code>
-          module reads each folder's first DICOM, pulls
-          <code class="inline">PatientID</code> +
-          <code class="inline">PatientName</code>, then groups folders
-          that share both. The folders in this dataset cluster like
-          this:
+          Folder names are not subject identities. Somebody named these folders
+          in the order the scans happened, and a tool that trusts folder names
+          would produce three subjects from two people. That is not a
+          hypothetical: it is the single most common way an MRI dataset comes out
+          wrong, and it is silent, because three subjects is a perfectly valid
+          BIDS dataset.
         </p>
-        <ul class="checklist">
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Subjects
+         ============================================================ -->
+    <section class="section" id="subjects">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">How the grouping works</span>
+        <h2>Subjects come from the DICOM header, not the folder.</h2>
+        <p>
+          The scan reads each folder's DICOM files and groups them by the patient
+          identifier and patient name the scanner wrote, which is a fact about
+          the person rather than a fact about how the export was organised.
+        </p>
+        <ul>
           <li>
-            <strong>PatientID XX00XX00</strong> &mdash;
             <code class="inline">OL_0001</code> and
-            <code class="inline">OL_0002</code> share a PatientID, so
-            they collapse into one cluster. StudyDate orders them as
-            <em>ses-pre</em> (older) and <em>ses-post</em> (newer).
+            <code class="inline">OL_0002</code> share a patient identifier, so
+            they are one subject. The study dates order them, and the earlier
+            becomes <code class="inline">ses-pre</code>, the later
+            <code class="inline">ses-post</code>.
           </li>
           <li>
-            <strong>PatientID YY11YY11</strong> &mdash;
-            <code class="inline">OL_0003</code> is a separate cluster.
-            Single session, so no <em>ses</em> entity is written.
+            <code class="inline">OL_0003</code> is a different identifier, so it
+            is a second subject. It has one visit, so no session entity is
+            written: a session number that only ever takes one value adds nothing
+            and clutters every filename.
           </li>
         </ul>
 
         <p>
-          The same logic applies modality-agnostically. EEG / MEG
-          subjects come from path heuristics instead (EDF / FIF have
-          no PatientID in their header).
+          Sessions come from the study identifier and date in the same way. This
+          is the MRI counterpart of the path heuristics EEG and MEG have to fall
+          back on, and it is more reliable, because it is reading what the
+          scanner recorded rather than what somebody typed.
+        </p>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Check the <code class="inline">id</code> column anyway.</strong>
+            <p>
+              Grouping is only as good as the identifiers. A site that reuses a
+              patient identifier between people, or anonymises everyone to the
+              same value, will produce one subject where there should be many.
+              The column is editable for exactly this reason.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         1. Scan
+         ============================================================ -->
+    <section class="section" id="scan">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 1</span>
+        <h2>Scan the folder.</h2>
+        <p>
+          Create a project, point Raw input at the top of the tree, and press
+          <strong>Scan</strong>. Every DICOM file is opened and its header read:
+          the acquisition parameters, the study and series identifiers, the
+          patient identifiers used to group subjects, the timestamps, and whether
+          there is image data inside at all.
+        </p>
+
+        <p>
+          You get 33 rows. Twenty-one are keepers and twelve are skipped
+          automatically: the localisers the scanner takes before the real
+          acquisitions, and the report objects it writes alongside them. Both are
+          recognised and set aside rather than deleted, and any of them can be
+          re-included with a click.
+        </p>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="Scanning the MRI sample dataset"
+                 data-dark="assets/features/scan_raw_data_dark.mp4"
+                 data-light="assets/features/scan_raw_data_light.mp4"></video>
+          <figcaption>
+            <strong>The scan on this dataset.</strong> The status line names the
+            stage it is in, and the chips settle on 21 keepers and 12 skipped,
+            33 rows in total.
+          </figcaption>
+        </figure>
+
+        <h3>Leave probe convert on</h3>
+        <p>
+          With probe convert enabled, the scan additionally runs the converter
+          once per series and reads the sidecar it produced. That is how the tool
+          knows, before you have typed anything, which metadata fields the
+          conversion will answer by itself. Those fields are then shown to you as
+          already answered rather than asked for. On this dataset it adds around
+          twenty-five seconds and saves a great deal of typing.
         </p>
       </div>
     </section>
 
     <!-- ============================================================
-         CLI numbers
+         2. Inventory
          ============================================================ -->
-    <section class="section">
+    <section class="section" id="inventory">
       <div class="container container-narrow prose">
-        <span class="section-eyebrow">What you'll see</span>
-        <h2>Real numbers from the MRI primary pipeline.</h2>
+        <span class="section-eyebrow">Step 2</span>
+        <h2>Read the inventory.</h2>
         <p>
-          The four CLI commands you saw in the
-          <a href="tutorial.html#cli">CLI walkthrough</a> produce the
-          following on this dataset:
+          One row per series. Before changing anything, read what the scan
+          decided, and pay attention to three things in particular.
         </p>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="The colour-coded inspection table"
+                 data-dark="assets/features/inspection_table_color_coding_seqs_dark.mp4"
+                 data-light="assets/features/inspection_table_color_coding_seqs_light.mp4"></video>
+          <figcaption>
+            <strong>The inventory.</strong> Rows are tinted by status, and the
+            sequence column keeps the original scanner label beside the predicted
+            BIDS name, which is how you check a classification without opening
+            anything.
+          </figcaption>
+        </figure>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="Inventory rows the scan set aside, each carrying its reason"
+               src="assets/features/inventory_skipped_dark.png"
+               data-light="assets/features/inventory_skipped_light.png">
+          <figcaption>
+            <strong>The twelve skipped rows account for themselves.</strong> The
+            teal row is a scanner report with no image data inside it, the dimmed
+            ones are localisers, and the reason for each is in the issues column.
+            None of them are deleted: untick to exclude, tick to bring back.
+          </figcaption>
+        </figure>
+
+        <h3>The <code class="inline">conf</code> column</h3>
+        <p>
+          Each classification carries a confidence score. A high value means the converter's
+          own guess and the schema agreed. A lower one means the decision came
+          from a sequence-name rule, which is a good guess about a naming
+          convention rather than a fact. Sort by confidence and read the bottom
+          of the list: that is where a misclassification will be if there is one.
+        </p>
+
+        <h3>The <code class="inline">sequence</code> column, beside the predicted name</h3>
+        <p>
+          The original scanner label sits beside the BIDS name the row will
+          produce. Reading the pair is the check.
+          <code class="inline">ses-pre_task-rest_bold</code> next to a sequence
+          called <code class="inline">rest</code> is right;
+          <code class="inline">task-rest</code> next to a sequence called
+          <code class="inline">localizer</code> is not.
+        </p>
+
+        <h3>Rows the scan set aside</h3>
+        <p>
+          A dimmed row is excluded. A teal row with a crossed-circle badge is
+          something with no image data inside it at all, a Siemens
+          <code class="inline">TENSOR</code> map or a
+          <code class="inline">PhoenixZIPReport</code>, which cannot be converted
+          by anything and is excluded with the reason shown. That distinction
+          matters: without it, an unconvertible object looks exactly like a
+          failed conversion of something that mattered.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         3. Curate
+         ============================================================ -->
+    <section class="section" id="curate">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 3</span>
+        <h2>Curate.</h2>
+        <p>
+          The decisions on an MRI dataset are mostly about what to leave out and
+          what to call things.
+        </p>
+
+        <h3>Exclude what should not be in the dataset</h3>
+        <p>
+          The scan already excluded what it could recognise. What it cannot know
+          is that the second T1w was the one worth keeping because the subject
+          moved during the first, or that a run was aborted and repeated. Untick
+          the include box on those.
+        </p>
+
+        <h3>Give the tasks real names</h3>
+        <p>
+          Task labels come from the sequence names, which means they inherit
+          whatever the protocol was called on the console. Check them for
+          consistency above all: <code class="inline">task-Rest</code> in one row
+          and <code class="inline">task-rest</code> in another produces two tasks
+          in a dataset that has one, and no validator will object.
+        </p>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="Editing several rows at once"
+                 data-dark="assets/features/bulk_edit_feature_dark.mp4"
+                 data-light="assets/features/bulk_edit_feature_light.mp4"></video>
+          <figcaption>
+            <strong>Bulk edit.</strong> Select the rows, choose the column, type
+            the value once. The fastest way to fix a naming inconsistency that
+            runs across a whole session.
+          </figcaption>
+        </figure>
+
+        <h3>Teach the scanner your site's conventions</h3>
+        <p>
+          If your protocol names something in a way the classifier does not
+          recognise, and it will happen on your own data even though it does not
+          happen here, add a rule in Settings rather than editing rows every time
+          you scan. A hint forces any series matching a pattern to a datatype,
+          suffix and task you choose. An exclusion drops anything matching a name
+          or path. Both are constrained by the schema, saved with the project, and
+          read by the command line through the same file.
+        </p>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="Adding a classifier hint and an exclusion in the scan rules settings"
+                 data-dark="assets/features/settings_scan_rules_dark.mp4"
+                 data-light="assets/features/settings_scan_rules_light.mp4"></video>
+          <figcaption>
+            <strong>Scan rules.</strong> A hint routes anything matching a
+            pattern to the datatype and suffix you pick; an exclusion drops it.
+            Written once, applied to every scan of that protocol thereafter.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         4. Metadata
+         ============================================================ -->
+    <section class="section" id="metadata">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 4</span>
+        <h2>The metadata, and how little of it MRI needs.</h2>
+        <p>
+          MRI is the modality where the file answers the most. Echo time,
+          repetition time, flip angle, field strength, coil, phase encoding
+          direction, slice timing: all of it is in the DICOM header, and the
+          conversion reads it. This is why there is no MRI-specific metadata
+          block to fill in, and why the template's MRI sections are mostly the
+          green already-answered kind.
+        </p>
+
+        <p>
+          What remains is about the study rather than the acquisition:
+        </p>
+        <ul>
+          <li>
+            <strong>The dataset fields.</strong> Name, authors, licence,
+            acknowledgements, funding. Nothing in a DICOM file knows any of these,
+            and a dataset without authors is the most common thing wrong with
+            published BIDS data.
+          </li>
+          <li>
+            <strong>Task descriptions.</strong> What the participant was asked to
+            do, and the instructions they were given. Recommended by the standard
+            and impossible to derive.
+          </li>
+          <li>
+            <strong>Participant information.</strong> Sex, age and handedness
+            reach <code class="inline">participants.tsv</code>. Age and sex are
+            read from the DICOM header where present; handedness never is, and
+            is never guessed.
+          </li>
+        </ul>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The metadata template on an MRI dataset, where most acquisition fields are already answered by the conversion"
+               src="assets/features/template_mri_dark.png"
+               data-light="assets/features/template_mri_light.png">
+          <figcaption>
+            <strong>Mostly already answered.</strong> For MRI the work is at the
+            top of this dialog, in the questions every modality shares, and in the
+            task descriptions. The acquisition parameters sit folded away in the
+            green <em>Already answered by the conversion</em> blocks, shown so you
+            can check them rather than type them again.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         5. Convert
+         ============================================================ -->
+    <section class="section" id="convert">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 5</span>
+        <h2>Convert.</h2>
+        <p>
+          Open the BIDS preview in the bottom panel and read the tree it will
+          produce. Then press <strong>Run conversion</strong>. Image series go to
+          <code class="inline">dcm2niix</code>; the physiological logs go to
+          <code class="inline">bidsphysio</code>. You do not choose: the row's
+          content does.
+        </p>
+
+        <p>
+          On this dataset: 21 NIfTI files across anatomical, functional,
+          diffusion and fieldmap, one physiological table, and 28 sidecars. No
+          failures.
+        </p>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="Running the conversion"
+                 data-dark="assets/features/run_convertion_dark.mp4"
+                 data-light="assets/features/run_convertion_light.mp4"></video>
+          <figcaption>
+            <strong>The conversion running.</strong> Each subject is built in a
+            private staging folder and moved into the dataset only once it has
+            succeeded, so an interrupted run leaves nothing half-written.
+          </figcaption>
+        </figure>
+
+        <h3>Residual outputs, dropped by default</h3>
+        <p>
+          dcm2niix sometimes splits one series into the real image plus derived
+          single-volume copies. They have names like
+          <code class="inline">..._bolda</code> or
+          <code class="inline">..._Eq_</code>, and they are almost never wanted:
+          left in place they double the apparent number of runs. They are dropped
+          by default, and a setting keeps them if your workflow needs them.
+          Fieldmap, complex-valued and multi-output diffusion series are not
+          affected.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         6. Fixups
+         ============================================================ -->
+    <section class="section" id="fixups">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 6</span>
+        <h2>What happens after the files are written.</h2>
+        <p>
+          Two MRI-specific repairs run automatically once the conversion is done,
+          and both fix things that are valid BIDS and useless.
+        </p>
+
+        <h3>Fieldmaps that point at something</h3>
+        <p>
+          A fieldmap without <code class="inline">IntendedFor</code> is
+          structurally valid and no pipeline can use it, because nothing says
+          which images it is meant to correct. The enrichment fills it in from
+          what the scan measured: which functional and diffusion runs sit in the
+          same session with matching acquisition parameters.
+        </p>
+
+        <h3>The reversed-direction volume becomes a fieldmap</h3>
+        <p>
+          On <code class="inline">sub-002</code> there is a single-volume
+          diffusion acquisition with reversed phase encoding. It is not diffusion
+          data in any useful sense: it exists to serve as the reference for
+          distortion correction. The classifier recognises it and routes it to
+          the fieldmap folder with the right suffix, so the pipeline that needs it
+          can find it. No configuration file, and nothing for you to do.
+        </p>
+
+        <h3>The physiological recordings inside the DICOM files</h3>
+        <p>
+          Siemens scanners record respiration, cardiac and pulse-oximetry signals
+          alongside the images and store them inside the DICOM data. Those become
+          BIDS physiological files, compressed tables with their own sidecars,
+          beside the functional run they were recorded with. They are easy to
+          miss entirely, because nothing in the folder looks like a physiological
+          recording.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         7. Inspect
+         ============================================================ -->
+    <section class="section" id="inspect">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 7</span>
+        <h2>Look at the images.</h2>
+        <p>
+          Open the dataset in the <strong>Editor</strong> and click a converted
+          image. It opens in the viewer: one plane at a time, or
+          <strong>Multi-Planar</strong> for sagittal, coronal and axial sharing a
+          single crosshair, where clicking or dragging in any plane moves the
+          other two.
+        </p>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="The NIfTI image viewer in single-plane and Multi-Planar views"
+                 data-dark="assets/features/nifti_viewer_dark.mp4"
+                 data-light="assets/features/nifti_viewer_light.mp4"></video>
+          <figcaption>
+            <strong>The image viewer.</strong> Scroll to move through slices, set
+            brightness and contrast for a volume that looks flat, and set the
+            crosshair colour and thickness to something you can see against your
+            data.
+          </figcaption>
+        </figure>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="A JSON sidecar as a schema-aware form with values read from the DICOM header"
+               src="assets/features/sidecar_form_dark.png"
+               data-light="assets/features/sidecar_form_light.png">
+          <figcaption>
+            <strong>What the DICOM header already answered.</strong> Repetition
+            and echo time, flip angle, field strength, coil combination,
+            institution: all read out of the source and written for you. The
+            handful of <code class="inline">TODO</code> values are the fields no
+            file could supply, and they are left visible on purpose.
+          </figcaption>
+        </figure>
+
+        <h3>Check a functional run's time course</h3>
+        <p>
+          A 4-D file gains a <strong>Graph</strong> tab: click a voxel and see its
+          value across every volume. Drift, spikes and motion are visible here in
+          seconds, and it is worth doing on at least one run per session before
+          you consider the conversion finished.
+        </p>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="The 4-D time series graph beside the slices"
+                 data-dark="assets/features/nifti_viewer_timeseries_dark.mp4"
+                 data-light="assets/features/nifti_viewer_timeseries_light.mp4"></video>
+          <figcaption>
+            <strong>The 4-D graph.</strong> The signal at the crosshair voxel
+            across every volume, beside the slices, without leaving the
+            application.
+          </figcaption>
+        </figure>
+
+        <h3>And in three dimensions</h3>
+        <p>
+          The <strong>3D</strong> tab renders the volume on the graphics card:
+          rotate it, zoom, and cut through it with an oblique clipping plane whose
+          cut face shows the slice underneath. It is the quickest way to spot a
+          coverage problem or a wrap that is hard to see slice by slice. On a
+          machine without suitable graphics support the tab is simply absent and
+          the rest of the viewer works normally.
+        </p>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="Interactive 3-D volume rendering of a NIfTI image"
+                 data-dark="assets/features/3d_renderer.mp4"
+                 data-light="assets/features/3d_renderer.mp4"></video>
+          <figcaption>
+            <strong>The 3-D renderer.</strong> Materials and lighting presets, an
+            orientation cube, an oblique clip plane, and a switch between
+            radiological and neurological convention that applies to the 2-D views
+            as well.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         8. Validate
+         ============================================================ -->
+    <section class="section" id="validate">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 8</span>
+        <h2>Validate.</h2>
+        <p>
+          Press <strong>Validate dataset</strong>. On this dataset: 55 clean
+          files, 7 warnings, no errors. The warnings are the two kinds you should
+          expect from MRI. The dataset-level fields, licence and authors, which
+          are about your study. And the task descriptions and instructions on the
+          functional sidecars, which are about your experiment. Both are things
+          only you can supply, and both are answered in one pass.
+        </p>
+
+        <p>
+          Each finding names the schema rule it came from, so a requirement can be
+          checked against the standard rather than taken on trust, and the fix
+          button takes you to the field that needs the answer.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The validation pane showing the dataset, folder and file scopes each with a count"
+               src="assets/features/validation_dataset_scope_dark.png"
+               data-light="assets/features/validation_dataset_scope_light.png">
+          <figcaption>
+            <strong>Three scopes, one pane.</strong> What is wrong with the
+            dataset, with this folder, and with this file, each with its own count.
+            The tree on the left carries the same information as a coloured dot per
+            file, so the problem files are findable without opening every one.
+          </figcaption>
+        </figure>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="A validation error on a scans table, with the schema rule printed underneath"
+               src="assets/features/validation_provenance_dark.png"
+               data-light="assets/features/validation_provenance_light.png">
+          <figcaption>
+            <strong>An error inside a file.</strong> A timestamp in a scans table
+            that is not a valid datetime. No filename check could see this, and no
+            eye would catch it across seventy files. The rule path underneath,
+            <code class="inline">rules.tabular_data.modality_agnostic.Scans</code>,
+            is where the requirement comes from, and <strong>Highlight in
+            editor</strong> tints the offending cell in the table.
+          </figcaption>
+        </figure>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="Warnings on dataset_description.json, each with its schema rule and a fix button"
+               src="assets/features/validation_warnings_dark.png"
+               data-light="assets/features/validation_warnings_light.png">
+          <figcaption>
+            <strong>The seven warnings on this dataset.</strong> Recommended
+            fields nobody has answered yet, each with the standard's description of
+            what it is for and an example of the value expected.
+            <strong>Fix</strong> opens the field.
+          </figcaption>
+        </figure>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="A warning that a task run has no events table beside it"
+               src="assets/features/validation_missing_events_dark.png"
+               data-light="assets/features/validation_missing_events_light.png">
+          <figcaption>
+            <strong>A file that should be there and is not.</strong> The
+            recording converted correctly and nothing about it is malformed.
+            What is missing is the table describing what happened during it,
+            which is the file most analyses will want. A warning rather than an
+            error, because the standard recommends it rather than requires it,
+            and the message says how to settle it either way: supply the table,
+            or say in the task name that the run was rest.
+          </figcaption>
+        </figure>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Turn on Deep checks at least once.</strong>
+            <p>
+              The fast pass reads names and metadata. Deep checks additionally
+              opens the NIfTI image headers, which is what catches a truncated or
+              corrupt image. A structurally perfect dataset containing one
+              unreadable volume passes every other kind of check.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Real numbers
+         ============================================================ -->
+    <section class="section" id="numbers">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">What you should see</span>
+        <h2>Real numbers from this dataset.</h2>
 
         <div class="results-grid">
           <div class="results-card">
             <span class="results-card-eyebrow">Scan</span>
             <strong class="results-card-num">33 / 12</strong>
-            <span class="results-card-label">inv rows / skipped</span>
-            <p class="muted">
-              <code class="inline">--probe-convert</code> runs in
-              ~25 s on a Mac. 21 keepers across both subjects, 12
-              auto-skipped (scouts, Phoenix reports, calibrations).
-            </p>
+            <span class="results-card-label">rows / skipped</span>
+            <p class="muted">21 keepers across both subjects, 12 skipped
+              automatically: localisers, report objects and calibrations. With
+              probe convert on, about 25 seconds.</p>
           </div>
           <div class="results-card">
             <span class="results-card-eyebrow">Convert</span>
-            <strong class="results-card-num">21 NIfTI</strong>
-            <span class="results-card-label">files written</span>
-            <p class="muted">
-              21 NIfTI files (anat / func / dwi / fmap), one physio
-              TSV.gz (from the CMRR physio log), 28 sidecar JSONs.
-              No conversion failures on this dataset.
-            </p>
+            <strong class="results-card-num">21</strong>
+            <span class="results-card-label">images written</span>
+            <p class="muted">21 NIfTI files across anat, func, dwi and fmap, one
+              physiological table from the embedded log, and 28 sidecars. No
+              failures.</p>
           </div>
           <div class="results-card">
             <span class="results-card-eyebrow">Validate</span>
             <strong class="results-card-num">55 / 7 / 0</strong>
             <span class="results-card-label">ok / warn / err</span>
-            <p class="muted">
-              Zero errors. The 7 warnings are TODO placeholders the
-              enrichment cannot infer: License / Authors in
-              dataset_description.json, plus
-              <code class="inline">Instructions</code> /
-              <code class="inline">TaskDescription</code> on the BOLD
-              sidecars. Fillable in the Editor in one pass.
-            </p>
+            <p class="muted">No errors. The 7 warnings are placeholders in
+              licence and authors, plus task descriptions and instructions on the
+              functional sidecars.</p>
           </div>
         </div>
+      </div>
+    </section>
 
-        <h3>Notable classifier moves on this dataset</h3>
-        <ul class="checklist">
-          <li>
-            <strong>Subject identity clustering.</strong> Three
-            folders &rarr; two clusters &rarr; two BIDS subjects with
-            the appropriate session split (the central reason this
-            dataset is the primary tutorial sample).
-          </li>
-          <li>
-            <strong>B0-reference reroute.</strong> The PA-direction
-            single-volume DWI on sub-002 is rerouted to
-            <code class="inline">fmap/_epi</code> so it can serve as
-            the B0 reference for distortion correction of the
-            AP-direction DWIs. No heuristic file needed.
-          </li>
-          <li>
-            <strong>Phoenix and scouts auto-skipped.</strong> 12 rows
-            on this dataset (AAHead Scouts + PhoenixZIPReports) come
-            pre-marked with <code class="inline">bids_guess_skip = true</code>.
-            The user can re-include any of them, but the default is
-            "drop these".
-          </li>
-          <li>
-            <strong>CMRR physio.</strong> The CMRR physio log is
-            dispatched to the
-            <code class="inline">PhysioDcmBackend</code>, which uses
-            the vendored <code class="inline">bidsphysio</code> to
-            write the BIDS-conformant
-            <code class="inline">physio.tsv.gz</code> + sidecar pair.
-          </li>
-        </ul>
+    <!-- ============================================================
+         CLI
+         ============================================================ -->
+    <section class="section" id="cli">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">The same thing, scripted</span>
+        <h2>From the command line.</h2>
 
-        <p style="margin-top: 28px;">
-          <a class="btn btn-primary" href="tutorial.html#scenes">Walk the GUI tutorial &rarr;</a>
-          <a class="btn btn-ghost" href="tutorial.html#cli">See the CLI walkthrough</a>
+<pre class="code"><span class="cmt"># 1. Create the dataset and its project.</span>
+bidsmgr-create ~/bids/neuroimaging_unit --name "Neuroimaging unit"
+
+<span class="cmt"># 2. Scan. 33 rows, 12 skipped. --probe-convert costs ~25 s and</span>
+<span class="cmt">#    saves a great deal of metadata typing later.</span>
+bidsmgr-scan ~/raw/neuroimaging_unit \
+    --project ~/bids/neuroimaging_unit --probe-convert
+
+<span class="cmt"># 3. Convert. 21 images plus one physiological table.</span>
+bidsmgr-convert --project ~/bids/neuroimaging_unit
+
+<span class="cmt"># 4. Enrich: fieldmap IntendedFor, scans tables, participants.</span>
+bidsmgr-metadata --project ~/bids/neuroimaging_unit --fill-todos
+
+<span class="cmt"># 5. Validate. 55 ok / 7 warn / 0 err.</span>
+bidsmgr-validate ~/bids/neuroimaging_unit</pre>
+
+        <p>
+          Site-specific classifier rules written in the interface are read here
+          too, with <code class="inline">--rules-file</code>. Every flag is
+          documented in the <a href="tutorial.html#cli-ref">CLI reference</a>.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Troubleshooting
+         ============================================================ -->
+    <section class="section" id="trouble">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Troubleshooting</span>
+        <h2>What usually goes wrong with MRI.</h2>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>What you see</th><th>What it means</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Three subjects where you expected two</td>
+                <td>The patient identifiers did not match, usually because the
+                  site anonymises per export. Edit the
+                  <code class="inline">id</code> cells; the grouping is a
+                  starting point, not a verdict.</td>
+              </tr>
+              <tr>
+                <td>One subject where you expected many</td>
+                <td>The opposite: a reused or blank identifier. The same fix.</td>
+              </tr>
+              <tr>
+                <td>A series classified as something it is not</td>
+                <td>Read the <code class="inline">conf</code> column. A low value means a name-based
+                  guess. Correct the row, and if it will recur, add a scan rule so
+                  the next scan gets it right.</td>
+              </tr>
+              <tr>
+                <td>A teal row with a crossed circle</td>
+                <td>An object with no image data inside:
+                  <code class="inline">TENSOR</code>, a report, a spectroscopy
+                  frame. Nothing can convert it. It is excluded on purpose, with
+                  the reason shown.</td>
+              </tr>
+              <tr>
+                <td>Far more runs than you acquired</td>
+                <td>Residual single-volume copies from dcm2niix were kept. They
+                  are dropped by default; check the setting.</td>
+              </tr>
+              <tr>
+                <td>A fieldmap with no <code class="inline">IntendedFor</code></td>
+                <td>Nothing matched it: usually the parameters differ from every
+                  candidate run, or the fieldmap sits in a different session. Set
+                  it by hand in the Editor.</td>
+              </tr>
+              <tr>
+                <td>Two task names that differ only in case</td>
+                <td>Two tasks, as far as BIDS and every downstream pipeline are
+                  concerned. Fix it before converting; bulk edit does it in one
+                  move.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Next
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow prose">
+        <h2>Next</h2>
+        <p>
+          <a href="tutorial-mri-advanced.html">The advanced MRI tutorial</a>
+          takes a richer protocol: several anatomical contrasts, scanner-derived
+          diffusion maps, and a physiological log that fails at source.
+          <a href="tutorial-multimodal.html">The multimodal tutorial</a> shows
+          MRI converting alongside PET, EEG and MEG in one pass.
+        </p>
+        <p style="margin-top: 8px;">
+          <a class="btn btn-primary" href="tutorial.html#gui-walkthrough">The full GUI walkthrough &rarr;</a>
+          <a class="btn btn-ghost" href="tutorial.html#cli-ref">CLI reference</a>
         </p>
       </div>
     </section>

@@ -37,8 +37,10 @@
   );
 
   // After partials are in the DOM, wire all features below.
+  trackHeaderHeight();
   initThemeToggle();
   highlightActiveNavLink();
+  initNavDropdowns();
   initScrollReveal();
   initWorkflowFlowchart();
   initTabs();
@@ -124,7 +126,7 @@ function initGuiTour() {
 
 
 /* ====================================================================
- * Tutorial scenes (tutorial.html, #scenes)
+ * Tutorial scenes (tutorial.html, #gui-walkthrough)
  *
  * State machine + per-scene animation players. Markup contract:
  *
@@ -1139,6 +1141,37 @@ function initCodeCopy() {
  * via plain anchor scrolling.
  * ================================================================== */
 
+/* ====================================================================
+ * Header height, published to CSS
+ *
+ * Anything that has to sit clear of the sticky header used to hardcode how
+ * tall it is. That held until the header started wrapping onto two rows on a
+ * phone, at which point the page index's toggle button ended up behind it and
+ * could not be tapped at all. Measuring it once and publishing the number
+ * means the two can no longer disagree, whatever the header grows into.
+ * ================================================================== */
+
+function trackHeaderHeight() {
+  const header = document.querySelector(".site-header");
+  if (!header) return;
+
+  const publish = () => {
+    const h = Math.round(header.getBoundingClientRect().height);
+    if (h > 0) document.documentElement.style.setProperty("--header-h", h + "px");
+  };
+
+  publish();
+  /* The header changes height when the nav wraps, which happens on resize and
+   * also once the web font lands and the links change width. */
+  if ("ResizeObserver" in window) {
+    new ResizeObserver(publish).observe(header);
+  } else {
+    window.addEventListener("resize", publish, { passive: true });
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(publish);
+}
+
+
 function initPageToc() {
   const toc = document.querySelector(".page-toc");
   if (!toc) return;
@@ -1188,8 +1221,49 @@ function initPageToc() {
   });
   if (!sections.length) return;
 
+  /* ---------- collapsible groups ----------
+   * A section with subsections (the tutorial's seventeen walkthrough steps)
+   * collapses behind a caret, so the panel is a short list of sections by
+   * default and the steps are there when you want them. The group opens
+   * automatically when scrolling reaches one of its steps, which means the
+   * reader never has to hunt for where they are.
+   */
+  toc.querySelectorAll("[data-toc-group]").forEach((group) => {
+    const caret = group.querySelector(".page-toc-caret");
+    const list  = group.querySelector(".page-toc-sublist");
+    if (!caret || !list) return;
+
+    function setGroupOpen(open) {
+      group.classList.toggle("is-open", open);
+      caret.setAttribute("aria-expanded", String(open));
+      list.hidden = !open;
+    }
+
+    caret.addEventListener("click", (e) => {
+      e.preventDefault();
+      setGroupOpen(list.hidden);
+    });
+
+    /* Following a link to a step should reveal the list it lives in. */
+    list.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", () => setGroupOpen(true));
+    });
+
+    group.__setOpen = setGroupOpen;
+  });
+
   function setActive(id) {
     links.forEach((l) => l.classList.toggle("is-active", linkById.get(id) === l));
+
+    /* Open the group that owns the active link, so scrolling into the
+     * walkthrough expands the steps rather than leaving the reader with a
+     * highlighted parent and no visible position. */
+    const active = linkById.get(id);
+    if (!active) return;
+    const owner = active.closest("[data-toc-group]");
+    toc.querySelectorAll("[data-toc-group]").forEach((g) => {
+      if (g.__setOpen && g === owner) g.__setOpen(true);
+    });
   }
 
   if (!("IntersectionObserver" in window)) {
@@ -1256,7 +1330,7 @@ function initInstallPipeline() {
     },
     {
       title: "pip install bids-manager",
-      body:  "<code class=\"inline\">pip install bids-manager</code> runs inside the venv. PyQt6, mne-bids, dcm2niix, pydicom, bidsschematools, and the rest of the dependency tree are pulled in here."
+      body:  "<code class=\"inline\">pip install bids-manager</code> runs inside the venv. PyQt6, mne-bids, dcm2niix, pydicom, pet2bids, bidsschematools, bidsval and the rest of the dependency tree are pulled in here."
     },
     {
       title: "Register a native launcher",
@@ -1588,8 +1662,11 @@ function initMediaTrueSize() {
   const cap = (el, encodedWidth) => {
     if (!encodedWidth) return;
     const w = Math.round(encodedWidth / DPR);
-    el.style.maxWidth = w + "px";
     const fig = el.closest(".media-figure");
+    // A figure marked wide sizes itself in CSS, breaking out of the reading
+    // column; capping it here would put it straight back in.
+    if (fig && fig.classList.contains("media-figure-wide")) return;
+    el.style.maxWidth = w + "px";
     if (fig) {
       fig.style.maxWidth = w + "px";
       fig.style.marginLeft = "auto";
@@ -1726,6 +1803,60 @@ function highlightActiveNavLink() {
     if (href === here || (here === "" && href === "index.html")) {
       a.classList.add("is-active");
     }
+  });
+
+  // A tutorial page marks the Tutorials button rather than a top-level link,
+  // since the link that matches is inside the dropdown.
+  document.querySelectorAll("[data-nav-drop]").forEach((drop) => {
+    if (drop.querySelector(".nav-drop-menu a.is-active")) {
+      drop.classList.add("is-current");
+      drop.querySelector(".nav-drop-btn")?.classList.add("is-active");
+    }
+  });
+}
+
+
+/* ====================================================================
+ * Nav dropdown
+ *
+ * Click to open, click away or Escape to close. The menu carries the
+ * `hidden` attribute rather than a class so it stays closed for anyone
+ * without JavaScript, and the CSS spells out `[hidden] { display: none }`
+ * because the author `display: flex` would otherwise win the cascade.
+ * ================================================================== */
+
+function initNavDropdowns() {
+  const drops = document.querySelectorAll("[data-nav-drop]");
+  if (!drops.length) return;
+
+  const closeAll = (except) => {
+    drops.forEach((drop) => {
+      if (drop === except) return;
+      drop.querySelector(".nav-drop-menu")?.setAttribute("hidden", "");
+      drop.querySelector(".nav-drop-btn")?.setAttribute("aria-expanded", "false");
+    });
+  };
+
+  drops.forEach((drop) => {
+    const btn = drop.querySelector(".nav-drop-btn");
+    const menu = drop.querySelector(".nav-drop-menu");
+    if (!btn || !menu) return;
+
+    btn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const open = btn.getAttribute("aria-expanded") === "true";
+      closeAll(drop);
+      btn.setAttribute("aria-expanded", open ? "false" : "true");
+      if (open) menu.setAttribute("hidden", "");
+      else menu.removeAttribute("hidden");
+    });
+
+    menu.addEventListener("click", (event) => event.stopPropagation());
+  });
+
+  document.addEventListener("click", () => closeAll(null));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeAll(null);
   });
 }
 
@@ -2536,34 +2667,34 @@ function initWorkflowFlowchart() {
    * data-node attribute on the SVG group nodes. */
   const STORIES = {
     engine: {
-      raw:      ["Raw data",       "A folder of DICOM, EDF, BDF, BrainVision, FIF, CTF, or Siemens CMRR physio recordings. No preprocessing required; the scanner handles whatever is on disk."],
-      scan:     ["Schema scan",    "Walks the folder recursively. Reads DICOM headers, <code>mne.info</code> from EEG / MEG files, and sidecar JSONs. Each row is stamped with a schema-derived BIDS guess from a chain of classifiers (BidsGuess, sequence dictionary, B0-reference reroute, DWI derivative detection)."],
-      curate:   ["Curate",         "User overrides land in the inventory TSV. Any cell is editable; the schema engine validates the entity set before conversion. Bulk-edit applies one value across a multi-row selection."],
-      convert:  ["Convert",        "Per-task dispatch: <code>dcm2niix</code> for DICOM, <code>mne-bids</code> for EEG / MEG / iEEG / NIRS, <code>bidsphysio</code> for Siemens CMRR physio. Each row runs into a per-subject staging directory; on success the staging is atomically renamed into the BIDS root."],
-      enrich:   ["Enrich",         "Schema-driven enrichment runs automatically after conversion. The metadata engine walks the BIDS tree, looks up each <code>(datatype, suffix)</code> sidecar's required fields, and fills them from the captured metadata. Modality-agnostic. Every decision is logged in <code>metadata_report.json</code>."],
-      fixups:   ["Manual fix-ups", "Whatever the enrichment could not infer. The Editor exposes every sidecar through a schema-aware form, every TSV through an editable table, and every NIfTI through a tri-view plus 4-D time-series viewer. Edits go straight to disk."],
-      validate: ["Validate",       "Two-layer validator. Layer 1 audits filenames and folder structure; layer 2 audits sidecar fields against the schema. Severities tagged. Optionally chains the official <code>bidsschematools</code> strict-mode pass."],
+      raw:      ["Raw data",       "A folder of DICOM (MRI or PET), ECAT, EDF, BDF, BrainVision, EEGLAB, FIF, CTF, KIT or Siemens physio recordings, in whatever arrangement it is already in. Nothing has to be sorted or renamed first, and the modalities can be mixed."],
+      scan:     ["Schema scan",    "Walks the folder recursively and reads the metadata inside every file: DICOM headers, <code>mne.info</code> from EEG and MEG recordings, ECAT headers, existing sidecars. Formats are identified by content, not extension. Each row is stamped with a schema-derived BIDS guess from a chain of classifiers (dcm2niix BidsGuess, a sequence dictionary, user rules, B0-reference reroute, DWI derivative detection), and objects with no image data are flagged and excluded with a reason."],
+      curate:   ["Curate",         "User decisions land in the inventory. Any cell is editable and the schema engine validates the entity set as you type. Bulk edit applies one value across a selection. Before conversion every destination filename is resolved: genuine repeats get a <code>run</code> entity where the standard allows one, and anything still colliding is marked and blocks the run."],
+      convert:  ["Convert",        "Per-row dispatch to the engine that reads the format: <code>dcm2niix</code> for DICOM, <code>mne-bids</code> for EEG, MEG and iEEG, <code>pet2bids</code> for ECAT and PMOD blood curves, <code>bidsphysio</code> for Siemens physio. Each subject is built in a private staging directory and renamed into the BIDS root only on success, so a failure leaves nothing half-written."],
+      enrich:   ["Enrich",         "Runs automatically after conversion. The metadata engine walks the BIDS tree, looks up the fields the schema declares for each <code>(datatype, suffix)</code>, and fills them from the captured metadata and your template answers. Cross-file fix-ups run here too: fieldmap <code>IntendedFor</code>, <code>scans.tsv</code>, EEG and MEG sidecar enrichment, PET sidecar repair. Every decision is logged in <code>metadata_report.json</code>."],
+      fixups:   ["Manual fix-ups", "Whatever no algorithm could infer. The Editor exposes every sidecar through a schema-aware form, every TSV through an editable table, every NIfTI through 2-D, Multi-Planar, 3-D and 4-D time-series views, and every EEG or MEG recording through an interactive signal viewer. Edits are written straight to disk, and undo covers them."],
+      validate: ["Validate",       "Delegated to <code>bidsval</code>, a schema-driven validator that reads the same schema as the rest of the application, plus the BIDS Manager conventions it does not carry. The fast pass checks names, entities, sidecar fields, table columns and the links between files; deep checks additionally open NIfTI headers. Every finding names the schema rule behind it."],
       bids:     ["BIDS",           "A schema-compliant BIDS dataset, with provenance preserved in the <code>.bidsmgr/</code> event log: every user decision, every override, every conversion run, every validation result."],
     },
     data: {
-      raw:      ["Raw folder",         "What you point the tool at. A messy folder with mixed subjects, partial runs, calibration scans, and whatever naming the operator chose during acquisition."],
-      scan:     ["Inventory TSV",      "51 columns, one row per series or source file. Re-runnable, diff-able, openable in any spreadsheet tool."],
-      curate:   ["Overrides + bulk edit", "Per-row overrides plus the bulk-edit selection. A preview column shows the resulting BIDS basename as you type."],
-      convert:  ["BIDS layout",        "Per-modality BIDS files written under <code>bids_root/sub-XXX/ses-YY/</code>: NIfTI for MRI; native EEG / MEG / iEEG data files with channel and electrode TSVs; TSV.gz for physio. Each output paired with its JSON sidecar. Atomic per-subject staging means an interrupted run never leaves a half-built subject behind."],
-      enrich:   ["Populated sidecars", "Sidecar JSONs get TaskName, EchoTime, RepetitionTime, IntendedFor, EffectiveSamplingFrequency, channel types, and the rest of the required fields. <code>metadata_report.json</code> captures every decision."],
-      fixups:   ["Manual edits",       "Targeted edits to sidecar JSONs, TSVs, and filenames. Independently version-controllable: every change shows up in <code>git diff</code>."],
-      validate: ["Validation report",  "Severity-tagged file list, folder rollups, and dataset-level rules. HTML report optional."],
-      bids:     ["BIDS dataset",       "Ready to share, archive, or feed into MNE / FSL / SPM / Nipype. <code>dataset_description.json</code>, <code>participants.tsv</code>, README, and CHANGES all populated."],
+      raw:      ["Raw folder",         "What you point the tool at. A folder with mixed subjects, partial runs, calibration scans, repeated takes and whatever naming the operator chose on the day."],
+      scan:     ["Inventory TSV",      "62 columns, one row per series or source file, saved into the project as a versioned snapshot. Re-runnable, diff-able, and openable in any spreadsheet."],
+      curate:   ["Overrides + bulk edit", "Per-row overrides, the bulk-edit selection, and the resolved destination name for every row. The predicted basename updates as you type, and turns red if another row wants the same one."],
+      convert:  ["BIDS layout",        "Per-modality files under <code>bids_root/sub-XXX/ses-YY/</code>: NIfTI for MRI and PET; native EEG, MEG and iEEG data with channel and electrode tables; <code>tsv.gz</code> for physio; <code>_blood.tsv</code> for PET blood curves. Each paired with its JSON sidecar. Atomic per-subject staging means an interrupted run never leaves a half-built subject."],
+      enrich:   ["Populated sidecars", "Sidecars gain the fields the schema requires and the answers your template supplied: task names, echo and repetition times, <code>IntendedFor</code>, sampling frequencies, channel types, tracer and dose. <code>metadata_report.json</code> records every decision."],
+      fixups:   ["Manual edits",       "Targeted edits to sidecars, tables and filenames. Independently version-controllable: every change shows up in <code>git diff</code>."],
+      validate: ["Validation report",  "Findings tagged by severity and scope, each carrying the schema rule it came from and a suggested fix. JSON always; a self-contained HTML report on request."],
+      bids:     ["BIDS dataset",       "Ready to share, archive, or feed into MNE, FSL, SPM or Nipype. <code>dataset_description.json</code>, <code>participants.tsv</code>, README and CHANGES all populated."],
     },
     gui: {
-      raw:      ["Raw FS pane",                  "Left column of the Converter view. Browse the input folder to see what is actually there before scanning."],
-      scan:     ["Scan button + inspection table", "The Scan toolbar button kicks the scanner worker; results populate the inspection table in the middle column."],
-      curate:   ["Inspection table + filters",   "Edit cells inline, multi-select for bulk edit, filter by modality, subject, or status. The Properties pane shows the resulting BIDS basename for the highlighted row."],
-      convert:  ["Run conversion button",       "Right side of the toolbar. The converter worker runs in the background; status chips and the log dock update live."],
-      enrich:   ["Post-convert chain",          "Settings &rarr; Convert &rarr; Post-convert chain. Toggle the metadata step on or off; it runs as part of the conversion pipeline with no separate user action."],
-      fixups:   ["Editor view",                 "Open the BIDS root in the Editor. Click any file in the BIDS tree to open it in the appropriate viewer: NIfTI tri-view, schema-aware sidecar form, or editable TSV table."],
-      validate: ["Validation pane",             "Validate file, validate folder, or validate dataset buttons in the Editor toolbar. Severity chips at the top of the pane. Click any issue to jump to the offending file."],
-      bids:     ["BIDS tree pane",              "In the Editor: browse the converted dataset with per-file status badges. Right-click a node to see its provenance."],
+      raw:      ["Home tab, then the raw pane", "You start on the Home tab by creating or opening a dataset project, which fixes the output for everything that follows. The Converter's left column then browses the input folder as it really is on disk."],
+      scan:     ["Scan button + inspection table", "Scan runs the scanner on a worker thread; the status chips count up live and the results fill the inspection table in the middle column."],
+      curate:   ["Inspection table + filters",   "Edit cells inline, multi-select for bulk edit, filter by subject, datatype, modality or status. The properties panel shows the schema-valid entities for the selected row and its predicted path."],
+      convert:  ["Run conversion button",       "Right side of the header. The conversion runs in the background; status chips and the log dock update live, and the run is refused outright if two rows still want one filename."],
+      enrich:   ["Post-convert chain",          "Settings, then Convert. The post-conversion chain is an indented list of steps you can switch on or off; they run as part of the conversion with no separate action."],
+      fixups:   ["Editor view",                 "Open the dataset in the Editor and click any file in the BIDS tree to open it in the right viewer for its type: a schema-aware sidecar form, an editable table, the image viewer, or the signal viewer."],
+      validate: ["Validation pane",             "Validate file, folder or dataset from the Editor toolbar, with a Deep checks toggle. Severity chips summarise the dataset; click a finding to jump to the file, and to the field or column it concerns."],
+      bids:     ["BIDS tree pane",              "In the Editor: browse the converted dataset with a status dot on every file. Green is clean, amber a warning, red an error."],
     },
   };
 

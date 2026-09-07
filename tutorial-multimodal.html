@@ -1,0 +1,981 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Multimodal tutorial for BIDS Manager: one participant with MRI, PET, EEG and MEG, taken from a raw folder to a validated BIDS dataset in one scan and one conversion, with every step and every number measured.">
+  <title>Multimodal tutorial &middot; BIDS Manager</title>
+  <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Privacy-friendly analytics (GoatCounter, no cookies) -->
+  <script data-goatcounter="https://bids-manager.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+  <div data-include="header"></div>
+
+  <div data-include="tutorial-back-to-landing"></div>
+
+  <main>
+    <aside class="page-toc" data-toc aria-label="Page navigation">
+      <button class="page-toc-toggle" type="button"
+              aria-expanded="false" aria-controls="page-toc-panel"
+              aria-label="Toggle page navigation">
+        <span class="toc-bars" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+      <nav id="page-toc-panel" class="page-toc-panel" aria-label="Sections">
+        <span class="page-toc-title">On this page</span>
+        <a class="page-toc-link" href="#download">
+          <span class="page-toc-dot" aria-hidden="true"></span>The download</a>
+        <a class="page-toc-link" href="#files">
+          <span class="page-toc-dot" aria-hidden="true"></span>Every file explained</a>
+        <a class="page-toc-link" href="#scan">
+          <span class="page-toc-dot" aria-hidden="true"></span>1. Create and scan</a>
+        <a class="page-toc-link" href="#table">
+          <span class="page-toc-dot" aria-hidden="true"></span>2. Read the table</a>
+        <a class="page-toc-link" href="#reconcile">
+          <span class="page-toc-dot" aria-hidden="true"></span>3. One participant, one visit</a>
+        <a class="page-toc-link" href="#metadata">
+          <span class="page-toc-dot" aria-hidden="true"></span>4. One form, four modalities</a>
+        <a class="page-toc-link" href="#convert">
+          <span class="page-toc-dot" aria-hidden="true"></span>5. Convert</a>
+        <a class="page-toc-link" href="#validate">
+          <span class="page-toc-dot" aria-hidden="true"></span>6. Validate</a>
+        <a class="page-toc-link" href="#review">
+          <span class="page-toc-dot" aria-hidden="true"></span>7. Look at the result</a>
+        <a class="page-toc-link" href="#cli">
+          <span class="page-toc-dot" aria-hidden="true"></span>From the command line</a>
+        <a class="page-toc-link" href="#trouble">
+          <span class="page-toc-dot" aria-hidden="true"></span>Troubleshooting</a>
+        <a class="page-toc-link" href="#detail">
+          <span class="page-toc-dot" aria-hidden="true"></span>Per-modality detail</a>
+      </nav>
+    </aside>
+
+    <!-- ============================================================
+         Hero
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Multimodal tutorial</span>
+        <h1>One visit, four modalities, one dataset.</h1>
+        <p class="lead">
+          A participant who had an MRI, a PET scan, an EEG session and an MEG
+          session. Four file formats, three conversion engines, and four
+          different opinions about who was scanned. This walkthrough takes the
+          whole thing to a validated BIDS dataset in one pass, and the work that
+          matters is not the conversion.
+        </p>
+
+        <div class="callout callout-info">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>This page builds on the general walkthrough.</strong>
+            <p>
+              The <a href="tutorial.html#gui-walkthrough">GUI walkthrough</a>
+              explains each control once. This page covers what changes when
+              several modalities are present at the same time, in the order you
+              meet it.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         The download
+         ============================================================ -->
+    <section class="section" id="download">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Get the data</span>
+        <h2>The sample dataset.</h2>
+
+        <div class="download-card">
+          <div class="download-card-body">
+            <span class="section-eyebrow" style="margin-bottom:8px;">Example data</span>
+            <h2 style="margin-top:0;">One participant, four modalities</h2>
+            <p>
+              MRI as Siemens DICOM, PET as GE DICOM, EEG as two EDF recordings,
+              MEG as one Elekta FIF file, plus a dose sheet and a participants
+              sheet. 57 MB to download, about 110 MB unpacked.
+            </p>
+            <p>
+              <a class="btn btn-primary" href="https://cloud.uol.de/s/o6XCk6zH9DYpoes/download"
+                 data-goatcounter-click="download-dataset-multimodal"
+                 data-goatcounter-title="Multimodal sample dataset"
+                 target="_blank" rel="noopener">
+                Download the multimodal sample data &rarr;
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <p>
+          <strong>Unzip it anywhere you like</strong>. You never point BIDS
+          Manager at the zip itself; you point it at the
+          <code class="inline">raw/</code> folder inside, once, and it finds
+          everything below.
+        </p>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>This is a composite, and it says so.</strong>
+            <p>
+              The four recordings come from four different real acquisitions,
+              put into one participant folder so that a single scan produces a
+              genuinely multimodal inventory. Nobody was scanned four ways for
+              this. It behaves exactly like a real multimodal study at every
+              step, including the part most people find hardest, which is that
+              the four modalities disagree about who was scanned and when.
+              Provenance and licences for each are in the download's own README.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Every file explained
+         ============================================================ -->
+    <section class="section" id="files">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">What you downloaded</span>
+        <h2>Every file, and what to do with it.</h2>
+
+        <p>
+          One participant folder holding one folder per modality, which is how a
+          great many labs actually store a visit.
+        </p>
+
+        <div class="dataset-tree">
+          <div class="dataset-tree-row is-folder is-open">
+            <span class="chev">&#9662;</span>
+            <span class="name">BIDS_Manager_multimodal_sample/</span>
+            <span class="meta">110 MB unpacked</span>
+          </div>
+          <div class="dataset-tree-row d1"><span class="name">README.md</span> <span class="muted">provenance and licences, per modality</span></div>
+          <div class="dataset-tree-row d1"><span class="name">dose_sheet.csv</span> <span class="muted">the nine PET values you will type in</span></div>
+          <div class="dataset-tree-row d1"><span class="name">participants.csv</span> <span class="muted">who the participant was</span></div>
+          <div class="dataset-tree-row d1 is-folder is-open">
+            <span class="chev">&#9662;</span>
+            <span class="name">raw/</span>
+            <span class="meta">point BIDS Manager here</span>
+          </div>
+          <div class="dataset-tree-row d2 is-folder is-open">
+            <span class="chev">&#9662;</span>
+            <span class="name">sub-001/</span>
+          </div>
+          <div class="dataset-tree-row d3 is-folder is-open">
+            <span class="chev">&#9662;</span>
+            <span class="name">mri/</span>
+            <span class="meta">35 Siemens DICOM files</span>
+          </div>
+          <div class="dataset-tree-row d3 is-folder is-open">
+            <span class="chev">&#9662;</span>
+            <span class="name">pet/</span>
+            <span class="meta">35 GE DICOM files</span>
+          </div>
+          <div class="dataset-tree-row d3 is-folder is-open">
+            <span class="chev">&#9662;</span>
+            <span class="name">eeg/</span>
+            <span class="meta">2 EDF recordings</span>
+          </div>
+          <div class="dataset-tree-row d4"><span class="name">task-rest_eeg.edf</span></div>
+          <div class="dataset-tree-row d4"><span class="name">task-motorimagery_eeg.edf</span></div>
+          <div class="dataset-tree-row d3 is-folder is-open">
+            <span class="chev">&#9662;</span>
+            <span class="name">meg/</span>
+            <span class="meta">1 Elekta FIF recording</span>
+          </div>
+          <div class="dataset-tree-row d4"><span class="name">task-rest_meg.fif</span></div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Folder</th><th>What is inside it</th><th>What it becomes</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code class="inline">mri/</code></td>
+                <td>One Siemens session: a T1w, one resting-state BOLD run, two
+                  fieldmap series, a localizer and a
+                  <code class="inline">PhoenixZIPReport</code>.</td>
+                <td>Six rows. Four convert; the localizer and the report do not,
+                  and the scan works that out for itself.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">pet/</code></td>
+                <td>One FDG acquisition on a GE Advance, stored one slice per
+                  file. The same scan the
+                  <a href="tutorial-pet.html">PET tutorial</a> uses.</td>
+                <td>One row.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">eeg/</code></td>
+                <td>Two EDF recordings, 64 channels at 160 Hz, about a minute
+                  each. The task is in the filename because EDF has nowhere else
+                  to put it.</td>
+                <td>Two rows, with the task already read off the names.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">meg/</code></td>
+                <td>One Elekta Neuromag recording, 325 channels at 1000 Hz,
+                  30 seconds.</td>
+                <td>One row.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">dose_sheet.csv</code></td>
+                <td>Nine PET field names with their values and units.</td>
+                <td>Nothing on its own. You read it while filling the form in
+                  Step 4.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">participants.csv</code></td>
+                <td>One row: sex, age, handedness and group.</td>
+                <td><code class="inline">participants.tsv</code>, written by the
+                  metadata step.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         1. Create and scan
+         ============================================================ -->
+    <section class="section" id="scan">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 1</span>
+        <h2>Create a project, then scan once.</h2>
+
+        <p>
+          On the <strong>Home</strong> tab choose <strong>Create</strong> and
+          give the dataset a folder and a name, for example
+          <code class="inline">multimodal_tutorial</code>. In the
+          <strong>Converter</strong>, press <strong>Scan</strong> and choose
+          <code class="inline">raw/</code>.
+        </p>
+
+        <p>
+          <strong>Once.</strong> Not once per modality. There is no modality
+          setting to pick, no format to declare and no separate importer to run,
+          because the scanner decides what each file is by opening it. That is
+          the single most important thing this page has to show, and it is over
+          in one click.
+        </p>
+
+        <h3>What the scan is doing while it walks the tree</h3>
+        <ul>
+          <li>
+            <strong>DICOM</strong> is recognised by the
+            <code class="inline">DICM</code> marker inside each file, then
+            grouped into series by the identifiers in the headers. Both the MRI
+            and the PET arrive this way, and nothing tells them apart in
+            advance: the classifier reads them and works out that one is
+            anatomical and functional MRI and the other is PET.
+          </li>
+          <li>
+            <strong>EDF and FIF</strong> are recognised by their own signatures
+            and read through MNE, which is where the channel counts, the
+            sampling rates and the measurement dates come from.
+          </li>
+          <li>
+            <strong>Nothing is recognised by its extension</strong>, so a
+            renamed file still converts and an
+            <code class="inline">.img</code> that is really DICOM is not
+            skipped.
+          </li>
+        </ul>
+
+        <p>
+          <strong>What you should see now:</strong> ten rows. Eight to convert,
+          two the scan excluded on its own.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         2. Read the table
+         ============================================================ -->
+    <section class="section" id="table">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 2</span>
+        <h2>Read the table. Everything is in it.</h2>
+
+        <p>
+          Ten rows, four modalities, three file formats, six BIDS datatypes.
+          This one table is the whole study, and every decision from here is an
+          edit to a cell in it.
+        </p>
+
+        <figure class="media-figure media-figure-wide">
+          <img class="feature-shot" loading="lazy"
+               alt="The multimodal inventory as it comes off the scan: MRI, PET, EEG and MEG rows with different subject and session values"
+               src="assets/features/mm_inventory_raw_dark.png"
+               data-light="assets/features/mm_inventory_raw_light.png">
+          <figcaption>
+            <strong>One scan, ten rows.</strong> Read down the
+            <code class="inline">format</code> column: DICOM, DICOM, EDF, FIF.
+            Then read down <code class="inline">id</code> and
+            <code class="inline">ses</code>, which is where the work is. The
+            teal row is the scanner report, excluded because it has no image
+            data at all; the dimmed row below it is the localizer, set aside
+            automatically.
+          </figcaption>
+        </figure>
+
+        <h3>What each column is telling you</h3>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Column</th><th>What it says here</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code class="inline">status</code></td>
+                <td>Green on the EEG and MEG rows, amber on the DICOM ones. The
+                  amber is not a problem with your data: it is the mixed-study
+                  notice, which says this scan contains more than one study.
+                  It does, and deliberately so.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">conf</code></td>
+                <td><code class="inline">1.00</code> for EEG and MEG, because
+                  MNE reports the channel types and nothing has to be guessed.
+                  <code class="inline">.85</code> for most DICOM, from
+                  dcm2niix's own classification.
+                  <code class="inline">.40</code> on the BOLD run, where the
+                  fallback classifier matched the protocol name rather than a
+                  header field. Low confidence is an invitation to check the
+                  <code class="inline">sequence</code> column, not a failure.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">origin</code></td>
+                <td><code class="inline">sub-001/mri</code>,
+                  <code class="inline">sub-001/pet</code>,
+                  <code class="inline">sub-001/eeg</code>,
+                  <code class="inline">sub-001/meg</code>. On a real study with
+                  several participants this is the column that tells you at a
+                  glance where a surprising row came from.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">data</code></td>
+                <td>Six different datatypes from one scan:
+                  <code class="inline">anat</code>,
+                  <code class="inline">func</code>,
+                  <code class="inline">fmap</code>,
+                  <code class="inline">pet</code>,
+                  <code class="inline">eeg</code>,
+                  <code class="inline">meg</code>. Each will be routed to the
+                  engine that can convert it.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">id</code> and <code class="inline">ses</code></td>
+                <td>They disagree. This is Step 3.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>The two rows the scan set aside</h3>
+        <p>
+          Neither is an error, and neither is hidden. The
+          <code class="inline">PhoenixZIPReport</code> is a Siemens scanner
+          report with no image pixels in it at all, so no converter can turn it
+          into a NIfTI; the row is marked, excluded, and carries the reason. The
+          localizer is a scout image, useful to the radiographer and not part of
+          the dataset. Both can be put back with a click if you disagree.
+        </p>
+        <p>
+          This matters more than it sounds on a multimodal run. A tool that
+          silently skipped them would leave you unable to tell an excluded file
+          from a file that failed to convert, at exactly the moment when several
+          engines are running and any one of them could have gone wrong.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         3. Reconcile
+         ============================================================ -->
+    <section class="section" id="reconcile">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 3</span>
+        <h2>One participant, one visit, four opinions.</h2>
+
+        <p>
+          Look at the <code class="inline">id</code> and
+          <code class="inline">ses</code> columns in the figure above. One
+          person went through four machines on one day, and the scan came back
+          with this:
+        </p>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Modality</th><th>Subject</th><th>Session</th><th>Because</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>MRI</td>
+                <td><code class="inline">001</code></td>
+                <td><code class="inline">pre</code></td>
+                <td>The patient identifier in the DICOM headers, and a session
+                  token the protocol names carried.</td>
+              </tr>
+              <tr>
+                <td>PET</td>
+                <td><code class="inline">002</code></td>
+                <td>none</td>
+                <td>A <em>different</em> patient identifier in its DICOM
+                  headers, so a different subject. Correct behaviour on the
+                  evidence available.</td>
+              </tr>
+              <tr>
+                <td>EEG</td>
+                <td><code class="inline">001</code></td>
+                <td><code class="inline">1</code></td>
+                <td>EDF carries no participant field, so the subject comes from
+                  the folder and the session from the recording date.</td>
+              </tr>
+              <tr>
+                <td>MEG</td>
+                <td><code class="inline">001</code></td>
+                <td><code class="inline">2</code></td>
+                <td>The same, and a different date, so a different session
+                  number.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          Every one of those answers is defensible from the file it came from.
+          Together they are wrong, and they are wrong in the way that costs the
+          most: convert now and you get two subjects and three sessions, all
+          valid BIDS, all passing a validator, and none of it matching your
+          participant list.
+        </p>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>This is the reason the table exists.</strong>
+            <p>
+              No amount of reading files harder will fix this. The information
+              that these four recordings belong to one person is not in any of
+              them: it is in your head, or in a spreadsheet. A workflow that
+              converts straight from disk has nowhere to put it, and one that
+              converts each modality with a separate tool cannot even show you
+              the disagreement.
+            </p>
+          </div>
+        </div>
+
+        <h3>Fixing it, which is two edits</h3>
+        <ol>
+          <li>
+            Select every row. Press <strong>Bulk edit</strong>, set
+            <code class="inline">id</code> to
+            <code class="inline">sub-001</code>, and apply.
+          </li>
+          <li>
+            With the rows still selected, set
+            <code class="inline">ses</code> to <code class="inline">01</code>.
+          </li>
+        </ol>
+
+        <p>
+          The predicted basenames rebuild as you type. Watch that column while
+          you do it: it is the conversion telling you, before anything is
+          written, exactly what it is about to write.
+        </p>
+
+        <figure class="media-figure media-figure-wide">
+          <img class="feature-shot" loading="lazy"
+               alt="The same inventory after setting one subject and one session on every row"
+               src="assets/features/mm_inventory_fixed_dark.png"
+               data-light="assets/features/mm_inventory_fixed_light.png">
+          <figcaption>
+            <strong>After two edits.</strong> Every row now reads
+            <code class="inline">001</code> and <code class="inline">01</code>,
+            and every predicted basename starts
+            <code class="inline">sub-001_ses-01_</code>. The entities that make
+            each file unique, <code class="inline">acq</code>,
+            <code class="inline">run</code>,
+            <code class="inline">task</code>, survived the edit: setting a
+            subject does not throw away everything else the scan worked out.
+          </figcaption>
+        </figure>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Nothing has been written yet.</strong>
+            <p>
+              These edits are recorded into the project, not applied to disk.
+              You can undo them, close the application and come back, or run the
+              conversion a week later and get the same result. The scan is a
+              version in the project's history; your edits are events on top of
+              it.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         4. Metadata
+         ============================================================ -->
+    <section class="section" id="metadata">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 4</span>
+        <h2>One form, four modalities.</h2>
+
+        <p>
+          Press <strong>Dataset metadata</strong>. On a single-modality study
+          this form is short. Here it has a section for every kind of file the
+          scan found, and it is worth understanding how it is organised before
+          you start filling it in, because the organisation is the answer to a
+          real problem.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The dataset metadata template with a shared region and one section per datatype"
+               src="assets/features/template_walkthrough_dark.png"
+               data-light="assets/features/template_walkthrough_light.png">
+          <figcaption>
+            <strong>Asked once, written everywhere it belongs.</strong> The
+            fields at the top are shared: they are facts about the study, not
+            about a machine. Below them each kind of file has its own section,
+            named for a real file it will write into.
+          </figcaption>
+        </figure>
+
+        <h3>The shared region</h3>
+        <p>
+          The institution, the department, the authors, the participants
+          spreadsheet. You answer these once. They reach every sidecar whose
+          datatype declares them, which is decided by the standard rather than
+          by a list somebody typed out. Point the participants field at
+          <code class="inline">participants.csv</code> from the download.
+        </p>
+
+        <h3>The per-datatype sections</h3>
+        <p>
+          Below the shared region there is one section per kind of file, and
+          each asks only what that kind of file needs:
+        </p>
+        <ul>
+          <li><strong>PET</strong> asks for the radiochemistry, because BIDS
+            requires it and no scanner records it. Fill this from
+            <code class="inline">dose_sheet.csv</code>. The
+            <a href="tutorial-pet.html#template">PET tutorial</a> goes through
+            those nine fields one at a time.</li>
+          <li><strong>EEG</strong> asks for the reference and the ground, which
+            an EDF file has nowhere to store.</li>
+          <li><strong>MEG</strong> asks for the dewar position and the
+            associated empty-room recording, and nothing that mne-bids can read
+            out of the file itself.</li>
+          <li><strong>MRI</strong> asks for almost nothing, because dcm2niix
+            already read almost everything from the DICOM headers.</li>
+        </ul>
+
+        <p>
+          That asymmetry is the honest picture of the four modalities, and it is
+          why one form with sections beats four separate configuration files:
+          you can see at a glance which modality is going to need work.
+        </p>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>A section speaks for every file of its kind.</strong>
+            <p>
+              An answer in the EEG section reaches both EEG recordings. If one
+              of them genuinely differs, a different reference on a repeat
+              session, say, set it on that row in the properties panel instead.
+              A per-row answer wins for that recording alone, and an inherited
+              value is shown greyed with a tooltip naming where it came from.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         5. Convert
+         ============================================================ -->
+    <section class="section" id="convert">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 5</span>
+        <h2>One conversion, three engines.</h2>
+
+        <p>
+          Open the <strong>BIDS preview</strong> in the bottom panel and check
+          the tree you are about to write. Then press
+          <strong>Run conversion</strong>.
+        </p>
+
+        <p>
+          Behind that one button, three different programs run:
+        </p>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Rows</th><th>Engine</th><th>Doing what</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>MRI and PET DICOM</td>
+                <td><code class="inline">dcm2niix</code></td>
+                <td>DICOM series to NIfTI, with the sidecar it can derive from
+                  the headers.</td>
+              </tr>
+              <tr>
+                <td>EEG and MEG</td>
+                <td><code class="inline">mne-bids</code></td>
+                <td>Recordings placed and named, with
+                  <code class="inline">channels.tsv</code>,
+                  <code class="inline">events.tsv</code> and a coordinate system
+                  where the format has one.</td>
+              </tr>
+              <tr>
+                <td>PET, after the image</td>
+                <td><code class="inline">pet2bids</code></td>
+                <td>The PET fields dcm2niix does not write, read from the same
+                  DICOM.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          You do not choose any of that, and there is no setting for it. Each
+          row is routed by what it is.
+        </p>
+
+        <h3>Why one pass and not four</h3>
+        <ul>
+          <li>
+            <strong>Failure is contained.</strong> Conversion runs per subject
+            into a staging folder and is committed only when the subject
+            finishes. A backend that fails takes its own row down and leaves the
+            rest of the dataset alone. On a four-modality run that matters:
+            three engines are more ways for something to go wrong.
+          </li>
+          <li>
+            <strong>The cross-modality work happens once, at the end.</strong>
+            Fieldmaps get their <code class="inline">IntendedFor</code>,
+            <code class="inline">scans.tsv</code> is written per subject across
+            every datatype, and the shared metadata reaches all of them.
+            Converting each modality separately means doing this by hand
+            afterwards, on files four different tools have already written.
+          </li>
+          <li>
+            <strong>Names are checked across the whole dataset,</strong> not
+            within a modality. Two recordings that would land on the same
+            filename are caught before anything is written, whichever engines
+            would have produced them.
+          </li>
+        </ul>
+
+        <p>
+          Then run the metadata step. On this dataset it writes
+          <code class="inline">participants.tsv</code> from your spreadsheet,
+          <code class="inline">scans.tsv</code> for the session, and the answers
+          you gave in Step 4 into every sidecar that takes them.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         6. Validate
+         ============================================================ -->
+    <section class="section" id="validate">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 6</span>
+        <h2>Validate the whole thing at once.</h2>
+
+        <p>
+          Switch to the <strong>Editor</strong>, open the dataset and press
+          <strong>Validate dataset</strong>. On this sample, with the PET dose
+          sheet filled in:
+        </p>
+
+        <div class="results-grid">
+          <div class="results-card">
+            <span class="results-card-eyebrow">Errors</span>
+            <strong class="results-card-num">0</strong>
+            <span class="results-card-label">across four modalities</span>
+            <p class="muted">Nothing is malformed, misnamed, mistyped or in the
+              wrong place, in any of the six datatypes.</p>
+          </div>
+          <div class="results-card">
+            <span class="results-card-eyebrow">Warnings</span>
+            <strong class="results-card-num">149</strong>
+            <span class="results-card-label">recommended, not required</span>
+            <p class="muted">Fields the standard recommends that this composite
+              never recorded. Most are marked
+              <code class="inline">TODO</code> so you can find them again.</p>
+          </div>
+        </div>
+
+        <p>
+          A hundred and forty-nine warnings sounds like a lot until you notice
+          what it is counting: every recommended field, on every one of six
+          datatypes, on a dataset assembled from four unrelated acquisitions
+          with no shared study documentation. A real study answers most of them
+          once in the shared region of the metadata form.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The Editor validation pane on the MEG recording of the converted multimodal dataset: no errors, one recommended field"
+               src="assets/features/mm_validation_dark.png"
+               data-light="assets/features/mm_validation_light.png">
+          <figcaption>
+            <strong>The MEG recording of this dataset, in the Editor.</strong>
+            No dataset-level issues, no folder-level issues, and on the file
+            itself only amber: a recommended field the standard would like and
+            this recording has no answer for. The grey line under the message,
+            <code class="inline">rules.sidecars.meg.MEGRecommended</code>, is
+            the part of the schema it comes from. Every one of the six
+            datatypes reads like this.
+          </figcaption>
+        </figure>
+
+        <p>
+          The validator is the same one for every modality, and it reads the
+          same schema the metadata form was built from. That is why one number
+          covers the whole dataset rather than four reports you have to compare
+          by hand. Details of how it reports, and what the severity filter and
+          deep checks do, are in the
+          <a href="tutorial.html#step-validate">GUI walkthrough</a>.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         7. Review
+         ============================================================ -->
+    <section class="section" id="review">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 7</span>
+        <h2>Look at what you made.</h2>
+
+        <p>
+          One subject, one session, six datatype folders. The Editor's tree is
+          the quickest way to see that the four modalities really did land as
+          one dataset rather than four that happen to share a folder.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The converted multimodal dataset in the Editor tree: anat, eeg, fmap, func, meg and pet under one subject and session"
+               src="assets/features/mm_editor_tree_dark.png"
+               data-light="assets/features/mm_editor_tree_light.png">
+          <figcaption>
+            <strong>Thirty-nine files, one participant.</strong>
+            <code class="inline">anat</code>,
+            <code class="inline">eeg</code>,
+            <code class="inline">fmap</code>,
+            <code class="inline">func</code>,
+            <code class="inline">meg</code> and
+            <code class="inline">pet</code> under a single
+            <code class="inline">ses-01</code>. Every dot is amber or green:
+            amber is a recommended field nobody stated, green is a file with
+            nothing to report. No red anywhere.
+          </figcaption>
+        </figure>
+
+        <h3>Every file opens in the same window</h3>
+        <p>
+          Click through them. The Editor routes by what the file is, so you do
+          not change tools to change modality:
+        </p>
+        <ul>
+          <li>
+            <strong>The T1w, the BOLD and the PET</strong> open in the image
+            viewer: one plane, three planes sharing a crosshair, or the GPU
+            renderer. The BOLD gains a time-series graph because it is 4-D.
+          </li>
+          <li>
+            <strong>The EEG and the MEG</strong> open as a metadata card first,
+            then as an interactive time-series viewer when you press
+            <strong>Load signal</strong>, with filtering, an in-application power
+            spectrum and the events overlaid from the
+            <code class="inline">events.tsv</code> beside them.
+          </li>
+          <li>
+            <strong>Every sidecar</strong> opens as a schema-aware form, with
+            each field marked required, recommended or optional, and the
+            standard's own description on hover.
+          </li>
+          <li>
+            <strong>Every table</strong>, <code class="inline">channels.tsv</code>,
+            <code class="inline">events.tsv</code>,
+            <code class="inline">participants.tsv</code>,
+            <code class="inline">scans.tsv</code>, opens as an editable
+            spreadsheet.
+          </li>
+        </ul>
+
+        <p>
+          Worth opening in this dataset:
+          <code class="inline">sub-001_ses-01_scans.tsv</code>, which lists every
+          image in the session with its acquisition time regardless of which
+          engine wrote it, and the MEG
+          <code class="inline">channels.tsv</code>, which is where you would
+          retype an auxiliary channel that the amplifier recorded as if it were
+          brain data.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CLI
+         ============================================================ -->
+    <section class="section" id="cli">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">The same thing, scripted</span>
+        <h2>From the command line.</h2>
+
+        <p>
+          The same engine, and notably the same single scan and single
+          conversion. There is no per-modality command here either.
+        </p>
+
+<pre class="code"><span class="cmt"># 1. Create the dataset and its project.</span>
+bidsmgr-create ~/bids/multimodal_tutorial --name "Multimodal tutorial"
+
+<span class="cmt"># 2. One scan for all four modalities. Ten rows.</span>
+bidsmgr-scan ~/BIDS_Manager_multimodal_sample/raw \
+    --project ~/bids/multimodal_tutorial --probe-convert
+
+<span class="cmt"># 3. Reconcile subject and session in the inventory, then convert.
+#    Three engines run; you do not name any of them.</span>
+bidsmgr-convert --project ~/bids/multimodal_tutorial \
+    --raw-root ~/BIDS_Manager_multimodal_sample/raw
+
+<span class="cmt"># 4. Metadata: participants.tsv, scans.tsv, and your answers.</span>
+bidsmgr-metadata --project ~/bids/multimodal_tutorial --fill-todos \
+    --participants ~/BIDS_Manager_multimodal_sample/participants.csv
+
+<span class="cmt"># 5. Validate everything at once.</span>
+bidsmgr-validate ~/bids/multimodal_tutorial</pre>
+
+        <p>
+          Step 3's reconciliation is an edit to the inventory TSV between the
+          scan and the conversion: set <code class="inline">BIDS_name</code> and
+          <code class="inline">session</code> on every row and the names rebuild
+          from the entities. The PET answers live under
+          <code class="inline">sequence_templates["pet/pet"]</code> in the
+          <code class="inline">.recording_meta.json</code> beside the inventory,
+          keyed by their BIDS names. Every flag is documented in the
+          <a href="tutorial.html#cli-ref">CLI reference</a>.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Troubleshooting
+         ============================================================ -->
+    <section class="section" id="trouble">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Troubleshooting</span>
+        <h2>What usually goes wrong in a multimodal run.</h2>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>What you see</th><th>What it means</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>More subjects than people</td>
+                <td>Expected before Step 3. Each modality answered from what it
+                  could see. Set the <code class="inline">id</code> column and
+                  they merge.</td>
+              </tr>
+              <tr>
+                <td>Sessions that do not line up</td>
+                <td>Same cause. MRI takes a session from the protocol or the
+                  study date, EEG and MEG from the measurement date. One visit
+                  should be one session; set it.</td>
+              </tr>
+              <tr>
+                <td>A red predicted basename</td>
+                <td>Two rows want the same filename. Give one of them a
+                  <code class="inline">run</code>, an
+                  <code class="inline">acq</code> or a distinct
+                  <code class="inline">task</code>. Conversion refuses until it
+                  is resolved, which is the point.</td>
+              </tr>
+              <tr>
+                <td>An amber status on every DICOM row</td>
+                <td>The mixed-study notice, not a defect. This tree really does
+                  contain two studies. It is telling you so in case you did not
+                  intend it.</td>
+              </tr>
+              <tr>
+                <td>One modality missing entirely after the scan</td>
+                <td>Check <code class="inline">origin</code>: you probably
+                  pointed at a folder one level too deep. Point at
+                  <code class="inline">raw/</code>.</td>
+              </tr>
+              <tr>
+                <td>A modality converted and the others did not</td>
+                <td>Conversion is per subject into staging and committed on
+                  success, so read the log for the engine that failed. The rest
+                  of the dataset is intact.</td>
+              </tr>
+              <tr>
+                <td>PET errors after everything else is clean</td>
+                <td>The dose sheet is not filled in. PET requires fields no
+                  scanner records; see the
+                  <a href="tutorial-pet.html">PET tutorial</a>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Per-modality detail
+         ============================================================ -->
+    <section class="section" id="detail">
+      <div class="container container-narrow prose">
+        <h2>Per-modality detail</h2>
+        <p>
+          Each modality has its own full tutorial, with its own sample dataset,
+          the specific quirks, real numbers from a complete run, and what
+          typically needs attention:
+          <a href="tutorial-mri.html">MRI</a>,
+          <a href="tutorial-mri-advanced.html">MRI advanced</a>,
+          <a href="tutorial-pet.html">PET</a>,
+          <a href="tutorial-eeg.html">EEG</a>,
+          <a href="tutorial-meg.html">MEG</a>.
+        </p>
+
+        <p style="margin-top: 8px;">
+          <a class="btn btn-primary" href="tutorial.html#gui-walkthrough">The full GUI walkthrough &rarr;</a>
+          <a class="btn btn-ghost" href="tutorial.html#cli-ref">CLI reference</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <div data-include="footer"></div>
+  <script src="script.js" defer></script>
+</body>
+</html>

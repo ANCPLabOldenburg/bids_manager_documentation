@@ -1,0 +1,1505 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="PET tutorial for BIDS Manager: a downloadable FDG scan with its dose record and blood curves, taken from raw DICOM to a validated BIDS dataset, with every file explained and every metadata field walked through.">
+  <title>PET tutorial &middot; BIDS Manager</title>
+  <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Privacy-friendly analytics (GoatCounter, no cookies) -->
+  <script data-goatcounter="https://bids-manager.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+  <div data-include="header"></div>
+
+  <div data-include="tutorial-back-to-landing"></div>
+
+  <main>
+
+    <aside class="page-toc" data-toc aria-label="Page navigation">
+      <button class="page-toc-toggle" type="button"
+              aria-expanded="false" aria-controls="page-toc-panel"
+              aria-label="Toggle page navigation">
+        <span class="toc-bars" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+      <nav id="page-toc-panel" class="page-toc-panel" aria-label="Sections">
+        <span class="page-toc-title">On this page</span>
+        <a class="page-toc-link" href="#download">
+          <span class="page-toc-dot" aria-hidden="true"></span>The download</a>
+        <a class="page-toc-link" href="#files">
+          <span class="page-toc-dot" aria-hidden="true"></span>Every file explained</a>
+        <a class="page-toc-link" href="#formats">
+          <span class="page-toc-dot" aria-hidden="true"></span>The two formats</a>
+        <a class="page-toc-link" href="#scan">
+          <span class="page-toc-dot" aria-hidden="true"></span>1. Create and scan</a>
+        <a class="page-toc-link" href="#table">
+          <span class="page-toc-dot" aria-hidden="true"></span>2. Read the tables</a>
+        <a class="page-toc-link" href="#answered">
+          <span class="page-toc-dot" aria-hidden="true"></span>3. What conversion answers</a>
+        <a class="page-toc-link" href="#template">
+          <span class="page-toc-dot" aria-hidden="true"></span>4. Fill the template</a>
+        <a class="page-toc-link" href="#blood">
+          <span class="page-toc-dot" aria-hidden="true"></span>5. Attach the blood</a>
+        <a class="page-toc-link" href="#convert">
+          <span class="page-toc-dot" aria-hidden="true"></span>6. Convert</a>
+        <a class="page-toc-link" href="#validate">
+          <span class="page-toc-dot" aria-hidden="true"></span>7. Validate</a>
+        <a class="page-toc-link" href="#look">
+          <span class="page-toc-dot" aria-hidden="true"></span>8. Look at the result</a>
+        <a class="page-toc-link" href="#other">
+          <span class="page-toc-dot" aria-hidden="true"></span>Two more situations</a>
+        <a class="page-toc-link" href="#cli">
+          <span class="page-toc-dot" aria-hidden="true"></span>From the command line</a>
+        <a class="page-toc-link" href="#trouble">
+          <span class="page-toc-dot" aria-hidden="true"></span>Troubleshooting</a>
+      </nav>
+    </aside>
+
+    <!-- ============================================================
+         Hero
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">PET tutorial</span>
+        <h1>PET, start to finish.</h1>
+        <p class="lead">
+          Two PET scans in the two formats PET actually comes in, taken from a
+          raw folder to a validated BIDS dataset. Both convert in seconds. What
+          takes longer, and what this page is really about, is the metadata:
+          PET asks for a great deal that no scanner writes down, and the two
+          formats leave out different parts of it.
+        </p>
+
+        <div class="callout callout-info">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>This page builds on the general walkthrough.</strong>
+            <p>
+              The <a href="tutorial.html#gui-walkthrough">GUI walkthrough</a>
+              explains each control once, for every modality. This page covers
+              what is specific to PET, in the order you meet it, and it runs
+              both formats side by side from the first step rather than leaving
+              one to the end.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         The download
+         ============================================================ -->
+    <section class="section" id="download">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Get the data</span>
+        <h2>The sample dataset.</h2>
+
+        <div class="download-card">
+          <div class="download-card-body">
+            <span class="section-eyebrow" style="margin-bottom:8px;">Example data</span>
+            <h2 style="margin-top:0;">Two scans, two formats, two dose sheets</h2>
+            <p>
+              A GE Advance FDG acquisition as 35 DICOM files, with the two blood
+              curves drawn during it; and a Siemens HRRT acquisition as a single
+              ECAT7 file. Each comes with the dose record its own format leaves
+              out. 8.8 MB.
+            </p>
+            <p>
+              <a class="btn btn-primary"
+                 href="https://cloud.uol.de/s/CGcjfTpxzFWnrdz/download"
+                 data-goatcounter-click="download-dataset-pet"
+                 data-goatcounter-title="PET sample dataset"
+                 target="_blank" rel="noopener">
+                Download the PET sample data &rarr;
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <p>
+          <strong>Unzip it anywhere you like</strong>, for example your desktop
+          or a scratch folder. You do not need to put it in any particular
+          place, and you never point BIDS Manager at the zip itself. Inside are
+          two folders, <code class="inline">raw/</code> and
+          <code class="inline">extra_ecat/</code>, and each becomes a project of
+          its own. Both are phantoms of the same tracer, so the two runs are
+          genuinely comparable.
+        </p>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Both scans are phantoms, not people.</strong>
+            <p>
+              A phantom is a physical test object filled with a known solution,
+              of the kind a PET centre scans to check its scanner. It converts
+              exactly like a subject scan, which is what makes it a good thing
+              to practise on, and it contains no personal data at all.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Every file explained
+         ============================================================ -->
+    <section class="section" id="files">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">What you downloaded</span>
+        <h2>Every file, and what to do with it.</h2>
+
+        <p>
+          Eight things are in the zip. Two you point the application at, two
+          you read while filling a form, two are licences, and two belong to the
+          optional ECAT exercise at the end.
+        </p>
+
+        <div class="dataset-tree">
+          <div class="dataset-tree-row is-folder is-open">
+            <span class="chev">&#9662;</span>
+            <span class="name">BIDS_Manager_PET_sample/</span>
+            <span class="meta">8.8 MB</span>
+          </div>
+          <div class="dataset-tree-row d1"><span class="name">README.md</span> <span class="muted">what this is, and where it came from</span></div>
+          <div class="dataset-tree-row d1"><span class="name">dose_sheet.csv</span> <span class="muted">the nine values you will type in</span></div>
+          <div class="dataset-tree-row d1"><span class="name">LICENCE-images-CC-BY-4.0.txt</span> <span class="muted">licence for the scan</span></div>
+          <div class="dataset-tree-row d1"><span class="name">LICENCE-blood-MIT.txt</span> <span class="muted">licence for the blood curves</span></div>
+          <div class="dataset-tree-row d1 is-folder is-open">
+            <span class="chev">&#9662;</span>
+            <span class="name">raw/</span>
+            <span class="meta">point BIDS Manager here</span>
+          </div>
+          <div class="dataset-tree-row d2 is-folder is-open">
+            <span class="chev">&#9662;</span>
+            <span class="name">FDG_phantom_01/</span>
+          </div>
+          <div class="dataset-tree-row d3 is-folder is-open">
+            <span class="chev">&#9662;</span>
+            <span class="name">PET/</span>
+            <span class="meta">35 DICOM files, one scan</span>
+          </div>
+          <div class="dataset-tree-row d3 is-folder is-open">
+            <span class="chev">&#9662;</span>
+            <span class="name">blood/</span>
+            <span class="meta">2 PMOD curve files</span>
+          </div>
+          <div class="dataset-tree-row d4"><span class="name">whole_blood.bld</span></div>
+          <div class="dataset-tree-row d4"><span class="name">plasma_parent.bld</span></div>
+          <div class="dataset-tree-row d1 is-folder is-open">
+            <span class="chev">&#9662;</span>
+            <span class="name">extra_ecat/</span>
+            <span class="meta">the optional second exercise</span>
+          </div>
+          <div class="dataset-tree-row d2"><span class="name">dose_sheet_ecat.csv</span> <span class="muted">the fifteen values that scan needs</span></div>
+          <div class="dataset-tree-row d2 is-folder is-open">
+            <span class="chev">&#9662;</span>
+            <span class="name">HRRT_phantom_01/</span>
+          </div>
+          <div class="dataset-tree-row d3"><span class="name">XCal-Hrrt-2022.04.21.15.43.05_EM_3D.v</span> <span class="muted">one ECAT7 scan, 26 MB</span></div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>File</th><th>What is inside it</th><th>What you do with it</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code class="inline">raw/FDG_phantom_01/PET/</code><br>35 <code class="inline">.dcm</code> files</td>
+                <td>One PET acquisition, stored one slice per file, as PET scanners write it. Each file carries both a slice of the image and a copy of the acquisition metadata in its header.</td>
+                <td><strong>Point the scan at <code class="inline">raw/</code></strong>, the folder above it. You never select the DICOM files yourself; the scan finds and groups them.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">blood/whole_blood.bld</code></td>
+                <td>A PMOD text export. Two columns: time in minutes, and whole blood activity in kBq/cc. Thirty-odd samples drawn by hand over the scan.</td>
+                <td><strong>Attach it to the PET row</strong> in the properties panel, as the <em>whole blood</em> curve, method <em>manual</em>. Step 5.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">blood/plasma_parent.bld</code></td>
+                <td>The same format. Its column header reads <code class="inline">Parent [kBq/cc]</code>, an activity in kBq/cc.</td>
+                <td><strong>Attach it as the <em>plasma</em> curve</strong>, method <em>manual</em>. Despite the filename, see the warning below.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">dose_sheet.csv</code></td>
+                <td>Nine field names with their values and units. It stands in for the sheet of paper or spreadsheet a PET centre keeps beside the scanner.</td>
+                <td><strong>Open it in a spreadsheet or a text editor and keep it visible</strong> while you fill the metadata form in Step 4. You do not import it in the GUI.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">README.md</code></td>
+                <td>Provenance, licences, and a summary of the workflow.</td>
+                <td>Read it if you plan to reuse the data. It carries the citation you owe.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">extra_ecat/HRRT_phantom_01/</code><br>one <code class="inline">.v</code> file</td>
+                <td>A whole PET acquisition in one 26 MB file, written by a Siemens HRRT in the ECAT7 format. No folder of slices, no per-file headers.</td>
+                <td><strong>Nothing, until the ECAT section at the end.</strong> There you scan <code class="inline">extra_ecat/</code> as a project of its own.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">extra_ecat/dose_sheet_ecat.csv</code></td>
+                <td>Fifteen field names with their values and units. A different set from the one above, because an ECAT header carries less than a DICOM one.</td>
+                <td><strong>The same as the other dose sheet</strong>, but for the ECAT scan: keep it open while you fill that project's form.</td>
+              </tr>
+              <tr>
+                <td>The two <code class="inline">LICENCE</code> files</td>
+                <td>The full licence texts.</td>
+                <td>Nothing, unless you redistribute the data.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Read the column header, not the filename.</strong>
+            <p>
+              <code class="inline">plasma_parent.bld</code> has "parent" in its
+              name, but its column reads <code class="inline">Parent [kBq/cc]</code>,
+              which is an activity. A parent <em>fraction</em> is a ratio and has
+              no units at all. So this file is the <strong>plasma</strong> curve,
+              and that is how you should attach it. Attach it as a parent
+              fraction and you get a file whose numbers mean something other
+              than what its own column says. This is not a quirk of the sample:
+              blood files arrive named by whoever exported them.
+            </p>
+          </div>
+        </div>
+
+        <h3>Where the data came from</h3>
+        <p>
+          The scan is one subject from the OpenNeuro PET brain phantoms
+          (PublicnEUro <code class="inline">PN000001</code>,
+          <a href="https://doi.org/10.70883/RGN3768" target="_blank" rel="noopener">DOI 10.70883/RGN3768</a>),
+          a GE Advance FDG acquisition from the NIH Clinical Center, shared
+          under CC BY 4.0. The blood curves come from the
+          <a href="https://github.com/openneuropet/PET2BIDS" target="_blank" rel="noopener">PET2BIDS</a>
+          project's own test data, under MIT. If you reuse either, the README in
+          the download carries the credit you owe.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         The two formats
+         ============================================================ -->
+    <section class="section" id="formats">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Before you start</span>
+        <h2>PET arrives in two formats, and they are not equivalent.</h2>
+
+        <p>
+          Almost every other modality in this documentation has one shape. PET
+          has two, and which one you are handed decides how much work the
+          metadata step is going to be. That is why this page runs both from
+          here on.
+        </p>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th></th><th>DICOM</th><th>ECAT7</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Looks like</strong></td>
+                <td>A folder of files, one slice each.</td>
+                <td>One large file holding the whole acquisition.</td>
+              </tr>
+              <tr>
+                <td><strong>In this download</strong></td>
+                <td><code class="inline">raw/</code>, 35 files, GE Advance.</td>
+                <td><code class="inline">extra_ecat/</code>, one 26 MB file, Siemens HRRT.</td>
+              </tr>
+              <tr>
+                <td><strong>Written by</strong></td>
+                <td>Most clinical PET and PET/CT systems.</td>
+                <td>Siemens HRRT and older CTI systems.</td>
+              </tr>
+              <tr>
+                <td><strong>Read through</strong></td>
+                <td>dcm2niix, then pet2bids for the fields dcm2niix omits.</td>
+                <td>pet2bids.</td>
+              </tr>
+              <tr>
+                <td><strong>Recognised by</strong></td>
+                <td>The <code class="inline">DICM</code> marker inside the file.</td>
+                <td>The <code class="inline">MATRIX7x</code> signature inside the file.</td>
+              </tr>
+              <tr>
+                <td><strong>Records the dose</strong></td>
+                <td>Yes, and the reconstruction filter.</td>
+                <td>No, and no filter either.</td>
+              </tr>
+              <tr>
+                <td><strong>Records how the tracer went in</strong></td>
+                <td colspan="2">Neither. That is what the dose sheets are for.</td>
+              </tr>
+              <tr>
+                <td><strong>Required fields it leaves out</strong></td>
+                <td>Nine.</td>
+                <td>Fourteen, six of them the same nine.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Neither format is recognised by its filename.</strong>
+            <p>
+              BIDS Manager looks inside every file. An ECAT renamed by your site
+              or by a transfer tool is still an ECAT, and a DICOM whose name is
+              a bare identifier with no extension, which is what Philips writes,
+              is still a DICOM. Nothing here depends on a
+              <code class="inline">.dcm</code> or a
+              <code class="inline">.v</code> at the end of a name.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         1. Create and scan
+         ============================================================ -->
+    <section class="section" id="scan">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 1</span>
+        <h2>Create two projects, then scan each one.</h2>
+
+        <p>
+          On the <strong>Home</strong> tab choose <strong>Create</strong>, give
+          the dataset a folder and a name, for example
+          <code class="inline">pet_dicom</code>. That folder becomes the BIDS
+          dataset, and everything you do from now on is recorded into it. Then
+          create a second one, <code class="inline">pet_ecat</code>.
+        </p>
+
+        <p>
+          In the <strong>Converter</strong>, press <strong>Scan</strong> and
+          point the first project at the download's
+          <code class="inline">raw/</code> folder and the second at
+          <code class="inline">extra_ecat/</code>. Point at the folder itself,
+          not at <code class="inline">PET/</code> and not at a single file. The
+          scan walks down through everything below it.
+        </p>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Why two projects and not one.</strong>
+            <p>
+              Both scans are phantoms, both become
+              <code class="inline">sub-001</code>, and a single project would be
+              asking for a name collision on purpose. BIDS Manager would catch
+              it and refuse to convert, which is the right behaviour and not
+              what you came here to see. Keeping them apart also lets you
+              compare two finished datasets at the end.
+            </p>
+          </div>
+        </div>
+
+        <h3>What the scan does with PET</h3>
+        <ul>
+          <li>
+            <strong>The 35 DICOM files become one row.</strong> They are slices
+            of a single acquisition, grouped by the series identifiers in their
+            headers. The ECAT file becomes one row too, because it was one file
+            to begin with.
+          </li>
+          <li>
+            <strong>The blood files are not recordings</strong>, so they do not
+            appear as rows. You attach them to the PET row in Step 5. Only the
+            DICOM scan has them.
+          </li>
+          <li>
+            <strong>Neither dose sheet is read here.</strong> A
+            <code class="inline">.csv</code> is not a recording either. You
+            read it yourself in Step 4.
+          </li>
+        </ul>
+
+        <p><strong>What you should see now:</strong> one row in each project, no
+          skips, a green status. The chips read one valid.</p>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Leave probe convert on.</strong>
+            <p>
+              It runs the converter once, quietly, and reads what came out, so
+              the metadata form in Step 4 can show you which fields the
+              conversion is going to fill by itself instead of asking you for
+              them. On scans this size it costs a second or two, and it is what
+              makes the difference between the two formats visible before you
+              have converted anything.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         2. Read the table
+         ============================================================ -->
+    <section class="section" id="table">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 2</span>
+        <h2>Read both tables before you change anything.</h2>
+
+        <p>
+          One row each, and for these two datasets nothing in either needs
+          correcting. Read them anyway: on your own data this is the step where
+          mistakes are cheap to fix.
+        </p>
+
+        <figure class="media-figure media-figure-wide">
+          <img class="feature-shot" loading="lazy"
+               alt="The two PET rows side by side, one DICOM and one ECAT, with the format and file-count columns"
+               src="assets/features/ecat_scan_dark.png"
+               data-light="assets/features/ecat_scan_light.png">
+          <figcaption>
+            <strong>The two scans, put side by side.</strong> They are two
+            separate projects; this is one table only so the columns can be
+            compared. Thirty-five files against one, and the
+            <code class="inline">format</code> column naming each.
+          </figcaption>
+        </figure>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Column</th><th>DICOM project</th><th>ECAT project</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code class="inline">id</code></td>
+                <td colspan="2"><code class="inline">001</code> in both. A DICOM subject comes from the patient identifiers in the headers, an ECAT subject from the folder. Neither comes from the filename.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">data</code>, <code class="inline">suffix</code></td>
+                <td colspan="2"><code class="inline">pet</code> and <code class="inline">pet</code>.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">conf</code></td>
+                <td><code class="inline">.85</code>, the score dcm2niix's own guess carries.</td>
+                <td><code class="inline">.90</code>, higher. An ECAT file is unambiguously a PET acquisition; a DICOM has to be read and classified.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">format</code></td>
+                <td><code class="inline">DICOM</code></td>
+                <td><code class="inline">ECAT</code></td>
+              </tr>
+              <tr>
+                <td><code class="inline">origin</code></td>
+                <td><code class="inline">FDG_phantom_01/PET</code></td>
+                <td><code class="inline">HRRT_phantom_01</code></td>
+              </tr>
+              <tr>
+                <td><code class="inline">n_files</code></td>
+                <td><code class="inline">35</code>, the slices grouped into one acquisition.</td>
+                <td><code class="inline">1</code>. The whole scan is the file.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">sequence</code></td>
+                <td><code class="inline">2d_unif_lt_ramp</code>, the protocol name the scanner recorded.</td>
+                <td>The filename. ECAT has no protocol tag to read, so there is nothing better to show.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">predicted basename</code></td>
+                <td colspan="2"><code class="inline">sub-001_pet</code> in both, which is exactly why they are two projects.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>What the scan worked out but did not fill in</h3>
+        <p>
+          Vendors write the interesting PET fields as free text, in whatever
+          spelling the console used. The scan reads them and derives what it
+          can. This is the first place the two formats visibly differ.
+        </p>
+        <p>
+          From the <strong>DICOM</strong> it gets five values, all correct:
+        </p>
+        <ul>
+          <li>tracer <code class="inline">FDG</code>, read out of
+            <code class="inline">FDG -- fluorodeoxyglucose</code></li>
+          <li>radionuclide <code class="inline">F18</code>, read out of
+            <code class="inline">18F</code>. Other scanners write it as
+            <code class="inline">^18^Fluorine</code>, and that is understood
+            too</li>
+          <li>reconstruction method
+            <code class="inline">2D Filtered Backprojection</code></li>
+          <li>reconstruction filter
+            <code class="inline">rectangle 4.0 mm</code>, from three separate
+            values the header splits it across</li>
+          <li>injected radioactivity <code class="inline">75.85 MBq</code>,
+            converted from the <code class="inline">75850000</code> becquerels
+            the header stores</li>
+        </ul>
+        <p>
+          From the <strong>ECAT</strong> it gets one:
+          <code class="inline">F18</code>. There is no tracer name, no
+          reconstruction method and no usable dose in that header. Nothing has
+          gone wrong; the format simply carries less.
+        </p>
+        <p>
+          None of these appear as columns. They are offered inside the fields
+          they belong to, in the properties panel and the metadata form, with
+          the value read from your own files at the top of the list. Nothing is
+          filled in silently, because a vendor writes these as free text and a
+          wrong tracer is worse than a blank one.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The PET properties panel for one recording, showing the predicted path and the per-row metadata"
+               src="assets/features/pet_properties_dark.png"
+               data-light="assets/features/pet_properties_light.png">
+          <figcaption>
+            <strong>The properties panel for the DICOM row.</strong> The
+            predicted path at the top updates as you edit, and the metadata
+            below it is scoped to this recording alone: whatever you set here
+            overrides the study-wide answer for this file only. The ECAT row
+            shows the same panel without the blood section, since that project
+            has no curves to attach.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         3. What conversion already answers
+         ============================================================ -->
+    <section class="section" id="answered">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 3</span>
+        <h2>What each conversion answers by itself.</h2>
+
+        <p>
+          Before you type anything, it is worth knowing how much you will not
+          have to, and it is not the same for the two formats. Converting the
+          DICOM scan writes <strong>33 fields</strong> into the sidecar,
+          straight from the headers. Converting the ECAT writes
+          <strong>50</strong>, because pet2bids reads that format's header
+          differently and fills more of the frame of the sidecar. Neither
+          number is the interesting one; what matters is <em>which</em> fields.
+        </p>
+
+        <p>Nine representative fields from the DICOM conversion:</p>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Field</th><th>Value on this scan</th><th>Where it came from</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code class="inline">TracerName</code></td><td><code class="inline">FDG</code></td><td>the vendor's radiopharmaceutical string</td></tr>
+              <tr><td><code class="inline">TracerRadionuclide</code></td><td><code class="inline">F18</code></td><td>the same, parsed</td></tr>
+              <tr><td><code class="inline">Units</code></td><td><code class="inline">Bq/mL</code></td><td>the image units the scanner recorded</td></tr>
+              <tr><td><code class="inline">FrameTimesStart</code>, <code class="inline">FrameDuration</code></td><td><code class="inline">[0]</code>, <code class="inline">[14400]</code></td><td>the acquisition timing</td></tr>
+              <tr><td><code class="inline">TimeZero</code></td><td><code class="inline">09:28:23</code></td><td>the scan start recorded by the scanner</td></tr>
+              <tr><td><code class="inline">InjectedRadioactivity</code></td><td><code class="inline">75.85</code></td><td>the dose, which this scanner did record</td></tr>
+              <tr><td><code class="inline">ReconMethodName</code></td><td><code class="inline">Filtered Back Projection</code></td><td>the reconstruction description</td></tr>
+              <tr><td><code class="inline">Manufacturer</code>, <code class="inline">InstitutionName</code></td><td><code class="inline">GE</code>, <code class="inline">National Institutes of Health</code></td><td>the equipment tags</td></tr>
+              <tr><td><code class="inline">ImageDecayCorrected</code></td><td><code class="inline">true</code></td><td>the correction flags</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          Two of those are worth pausing on, because they are often assumed to
+          be your job. <code class="inline">TimeZero</code> is the instant every
+          frame time and every blood sample is measured against, and
+          <code class="inline">InjectedRadioactivity</code> is the dose. This
+          scanner wrote both, so you do not have to. Many do not, and the ECAT
+          in this download is one of them.
+        </p>
+
+        <h3>Where the two formats part company</h3>
+        <p>
+          Convert both, validate both without letting the metadata step write
+          placeholders, and each reports required fields missing. The DICOM
+          reports <strong>nine</strong>, the ECAT <strong>fourteen</strong>, and
+          only six of them overlap:
+        </p>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Missing from both (6)</th><th>DICOM only (3)</th><th>ECAT only (8)</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <code class="inline">InjectedMass</code><br>
+                  <code class="inline">InjectedMassUnits</code><br>
+                  <code class="inline">SpecificRadioactivity</code><br>
+                  <code class="inline">SpecificRadioactivityUnits</code><br>
+                  <code class="inline">ModeOfAdministration</code><br>
+                  <code class="inline">AcquisitionMode</code>
+                </td>
+                <td>
+                  <code class="inline">ReconMethodParameterLabels</code><br>
+                  <code class="inline">ReconMethodParameterUnits</code><br>
+                  <code class="inline">ReconMethodParameterValues</code>
+                </td>
+                <td>
+                  <code class="inline">TracerName</code><br>
+                  <code class="inline">InjectedRadioactivity</code><br>
+                  <code class="inline">InjectedRadioactivityUnits</code><br>
+                  <code class="inline">ImageDecayCorrected</code><br>
+                  <code class="inline">ImageDecayCorrectionTime</code><br>
+                  <code class="inline">AttenuationCorrection</code><br>
+                  <code class="inline">ReconFilterType</code><br>
+                  <code class="inline">ReconFilterSize</code>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          Read the middle column and the right one together and you have the
+          difference between the two formats in one line. The GE DICOM recorded
+          what it injected, what it corrected for and what filter it
+          reconstructed with, and left the reconstruction parameters unstated.
+          The HRRT's ECAT header recorded none of the first group, down to which
+          tracer it was. Six fields are missing from both, because they come
+          from the radiochemistry lab and no scanner of either kind has ever
+          seen them.
+        </p>
+
+        <p>
+          Neither format is worse. They were designed by different people for
+          different purposes, decades apart, and BIDS asks for the union of what
+          both leave out. That is the argument for a metadata step that reads
+          the standard rather than one converter.
+        </p>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>When the clock says 1936.</strong>
+            <p>
+              <code class="inline">TimeZero</code> is only usable if the
+              scanner's clock was sane. One of the published phantom files
+              records a start before the epoch, which renders as a
+              plausible-looking time of day in 1936. Deriving
+              <code class="inline">TimeZero</code> from it would make every time
+              in the dataset wrong while looking perfectly normal. BIDS Manager
+              refuses to derive it from an impossible value and asks you for it
+              instead. This scan is not affected.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          Those 33 land in <code class="inline">sub-001_pet.json</code> when you
+          convert, in Step 6. You can see them before that, without converting
+          anything: the metadata form in Step 4 folds them away under
+          <strong>Already answered by the conversion</strong>, so the questions
+          it puts to you are only the ones nothing could answer for you.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         4. Fill the template
+         ============================================================ -->
+    <section class="section" id="template">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 4</span>
+        <h2>Fill each template from its own dose sheet.</h2>
+
+        <p>
+          Each project has a dose sheet, and they are different files because
+          the two formats leave out different things. Open the one that belongs
+          to the project you are working on, in a spreadsheet or a text editor,
+          and put it beside the application. This is the piece of paper a PET
+          centre keeps by the scanner.
+        </p>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Project</th><th>Dose sheet</th><th>Holds</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code class="inline">pet_dicom</code></td>
+                <td><code class="inline">dose_sheet.csv</code></td>
+                <td><strong>Nine</strong> fields: exactly what the validator still
+                  reports as missing after converting the DICOM scan.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">pet_ecat</code></td>
+                <td><code class="inline">extra_ecat/dose_sheet_ecat.csv</code></td>
+                <td><strong>Fifteen</strong> fields: the nine that are errors, plus
+                  six that are only recommended but are known for that acquisition
+                  and worth stating.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          Neither list is an arbitrary selection. We converted each scan, asked
+          the validator what was still missing, and wrote that down. The values
+          are the ones published with the phantom datasets, not invented.
+        </p>
+
+        <h3>Open the form</h3>
+        <p>
+          Below the inventory table, press <strong>Dataset metadata</strong>.
+          Scroll to the PET sections. A section covers every file of its kind at
+          once, so an answer typed here is written into every PET scan in the
+          study, not just this one. With a single scan the distinction does not
+          bite, but it is the reason the form is organised this way.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The PET fields of the dataset metadata template, with required fields marked"
+               src="assets/features/pet_template_groups_dark.png"
+               data-light="assets/features/pet_template_groups_light.png">
+          <figcaption>
+            <strong>The PET fields.</strong> A red asterisk marks what BIDS
+            requires; an amber dot marks what it recommends. Every description
+            in the form is the standard's own wording, so you are reading the
+            specification while you fill it, not a paraphrase.
+          </figcaption>
+        </figure>
+
+        <h3>The nine fields, one at a time</h3>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Field</th><th>Type this</th><th>What it means, and why no scanner knows it</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code class="inline">InjectedMass</code></td>
+                <td><code class="inline">181149988.37</code></td>
+                <td>The mass of the radiolabelled compound injected. The scanner measures activity, not mass; the mass comes from the radiochemistry lab.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">InjectedMassUnits</code></td>
+                <td><code class="inline">ug</code></td>
+                <td>Micrograms. BIDS makes you state the unit rather than assume one, because labs record this in µg, mg, nmol and µmol.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">SpecificRadioactivity</code></td>
+                <td><code class="inline">418713.8</code></td>
+                <td>Activity per unit mass of tracer. It follows from the dose and the mass, and the lab measures it at a stated time.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">SpecificRadioactivityUnits</code></td>
+                <td><code class="inline">Bq/g</code></td>
+                <td>The unit for the value above.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">ModeOfAdministration</code></td>
+                <td><code class="inline">infusion</code></td>
+                <td>How the tracer entered the body: a bolus, an infusion, or both. It changes how the time-activity curve should be modelled, and only the person who gave it knows.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">AcquisitionMode</code></td>
+                <td><code class="inline">list mode</code></td>
+                <td>How the scanner collected counts. Not the same thing as the reconstruction, and not in the header.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">ReconMethodParameterLabels</code></td>
+                <td><code class="inline">none</code></td>
+                <td>The names of the reconstruction's parameters. Filtered back projection here has none, so the honest answer is "none" rather than a blank.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">ReconMethodParameterUnits</code></td>
+                <td><code class="inline">none</code></td>
+                <td>Their units. Same reasoning.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">ReconMethodParameterValues</code></td>
+                <td><code class="inline">0</code></td>
+                <td>Their values. An iterative reconstruction would carry the iterations and subsets here instead.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Types are handled for you.</strong>
+            <p>
+              Three of those nine are lists in the standard, not single values,
+              and one is a number rather than text. You type what you have and
+              the value is converted into the shape the standard declares before
+              it is written, so <code class="inline">0</code> reaches the file as
+              the number 0 in a list, not as the string "0". This is a common
+              way for a hand-edited PET sidecar to fail validation.
+            </p>
+          </div>
+        </div>
+
+        <h3>The same form, a different set of questions</h3>
+        <p>
+          Open the ECAT project's form and the layout is identical, because the
+          form is built from the standard rather than from the file. What
+          changes is which boxes are already filled. Under
+          <strong>Already answered by the conversion</strong> you will find the
+          ECAT's <code class="inline">Units</code>,
+          <code class="inline">TimeZero</code> and frame timing; in the fields
+          it is asking you for, you will find the dose and the reconstruction
+          filter, which on the DICOM scan were answered for you.
+        </p>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Check the ECAT's
+              <code class="inline">TimeZero</code> against your own records.</strong>
+            <p>
+              The value derived from the file is
+              <code class="inline">15:43:05</code>, the scan start, which is
+              also what its filename says. The published reference for this
+              acquisition gives <code class="inline">15:04:05</code>, the
+              <em>injection</em>, thirty-nine minutes earlier. BIDS defines
+              <code class="inline">TimeZero</code> as the instant every frame
+              time and every blood sample is measured against, and for a
+              quantitative analysis that is the injection. A converter can only
+              offer the clock it was given; if you know the injection time, set
+              it.
+            </p>
+          </div>
+        </div>
+
+        <h3>Fields you can leave alone</h3>
+        <p>
+          The PET sections list far more than nine fields, and most of the rest
+          are recommended rather than required: infusion speed, molar activity,
+          the pharmaceutical dose regimen, the tracer's molecular weight. If your
+          study did not record them, leave them empty. A blank recommended field
+          is a warning you have read and decided about; a made-up value is worse
+          than nothing.
+        </p>
+        <p>
+          Two are worth filling on real data even though they are only
+          recommended: <code class="inline">BodyPart</code> and
+          <code class="inline">InstitutionalDepartmentName</code>. Both are
+          trivial to answer and both are the sort of thing a reader of your
+          dataset will want.
+        </p>
+
+        <h3>When one scan differs from the rest</h3>
+        <p>
+          Everything above is a statement about every PET file in the study. If
+          one session used a different tracer batch, or one run had its own
+          injected dose, select that row and answer in the properties panel
+          instead. A per-recording answer wins for that recording alone, and an
+          inherited value is shown greyed with a tooltip naming where it came
+          from, so you can always tell what you set from what you are inheriting.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         5. Attach the blood
+         ============================================================ -->
+    <section class="section" id="blood">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 5</span>
+        <h2>Attach the blood curves. DICOM project only.</h2>
+
+        <p class="muted">
+          Only the DICOM scan in this download has blood. Nothing about blood
+          depends on the image format, though: the curves are separate files and
+          would attach to an ECAT row in exactly the same way. Skip to Step 6 for
+          the ECAT project.
+        </p>
+
+        <p>
+          Quantitative PET rests on knowing what the tracer was doing in the
+          blood while the scanner counted it in tissue. BIDS has a place for
+          that, and your lab probably has it as a PMOD export. In this download
+          it is the two <code class="inline">.bld</code> files.
+        </p>
+
+        <p>
+          Select the PET row, then find <strong>BLOOD SAMPLING</strong> in the
+          properties panel on the right. Three curves can be attached
+          separately, and this dataset has two of them.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The blood sampling section of the properties panel, with three curves each set to manual or autosampler"
+               src="assets/features/pet_blood_linking_dark.png"
+               data-light="assets/features/pet_blood_linking_light.png">
+          <figcaption>
+            <strong>Three curves, linked one at a time.</strong> Whole blood,
+            plasma and parent fraction each get their own file and their own
+            sampling method. Leave a curve you do not have unlinked.
+          </figcaption>
+        </figure>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Curve</th><th>File to link</th><th>Method</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Whole blood</td><td><code class="inline">blood/whole_blood.bld</code></td><td>manual</td></tr>
+              <tr><td>Plasma</td><td><code class="inline">blood/plasma_parent.bld</code></td><td>manual</td></tr>
+              <tr><td>Parent fraction</td><td>leave empty</td><td>&mdash;</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Why the method matters</h3>
+        <p>
+          Marking a curve <strong>manual</strong> or <strong>automatic</strong>
+          is not a description you can skip. Hand-drawn samples and an
+          autosampler have different time resolution, so the standard keeps them
+          in separate files, distinguished by an entity in the filename. Set
+          these two to manual and the conversion writes
+          <code class="inline">sub-001_recording-manual_blood.tsv</code>. Had
+          they come from an autosampler it would be
+          <code class="inline">recording-autosampler</code> instead. The answer
+          changes the output, not just the description inside it.
+        </p>
+
+        <h3>What comes out</h3>
+        <p>
+          The two curves are merged into one table, with the times converted
+          from minutes to seconds, because that is what BIDS asks for:
+        </p>
+
+<pre class="code">time    plasma_radioactivity    whole_blood_radioactivity
+25.2    0.000874                0.000885
+43.2    0.00603                 0.0192
+51.0    1.38                    0.92</pre>
+
+        <p>
+          Nineteen samples, one row each. The times were minutes in the
+          <code class="inline">.bld</code> files and are seconds here, which is
+          what BIDS asks for. They are written at full precision, so the second
+          sample is really
+          <code class="inline">43.199999999999996</code>: that is the unit
+          conversion showing its arithmetic, not anything being wrong.
+        </p>
+
+        <p>
+          Alongside it, <code class="inline">sub-001_recording-manual_blood.json</code>
+          describes
+          those columns and records which curves are present, through the
+          <code class="inline">WholeBloodAvail</code>,
+          <code class="inline">PlasmaAvail</code> and
+          <code class="inline">MetaboliteAvail</code> flags. Those flags are set
+          from the columns that actually exist, so they cannot claim a curve you
+          did not supply.
+        </p>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>The log will warn about a unitless column. Read it
+              carefully.</strong>
+            <p>
+              Because the column inside
+              <code class="inline">plasma_parent.bld</code> is headed
+              <code class="inline">Parent</code>, the converter warns that a
+              parent fraction has to be unitless. It says this whichever slot
+              you attach the file to, so the warning alone does not tell you
+              whether you got it right. What tells you is the output. Attached
+              as plasma, you get a
+              <code class="inline">plasma_radioactivity</code> column and
+              <code class="inline">PlasmaAvail: true</code>, which is correct.
+              Attached as the parent fraction, you get a
+              <code class="inline">metabolite_parent_fraction</code> column and
+              <code class="inline">MetaboliteAvail: true</code>, and the same
+              activities in kBq/cc are now presented as a ratio. Nothing fails.
+              The file just says something untrue about itself.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         6. Convert
+         ============================================================ -->
+    <section class="section" id="convert">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 6</span>
+        <h2>Convert both.</h2>
+
+        <p>
+          Open the <strong>BIDS preview</strong> in the bottom panel first. It
+          shows the exact tree the conversion will write. You should see the
+          image, its sidecar, and the two blood files:
+        </p>
+
+<pre class="code">pet_tutorial/
+├── dataset_description.json
+├── README
+└── sub-001/
+    └── pet/
+        ├── sub-001_pet.nii.gz
+        ├── sub-001_pet.json
+        ├── sub-001_recording-manual_blood.tsv
+        └── sub-001_recording-manual_blood.json</pre>
+
+        <p>
+          Then press <strong>Run conversion</strong>. The DICOM goes to
+          <code class="inline">dcm2niix</code>; the blood curves go to
+          <code class="inline">pet2bids</code>; and in the other project the
+          ECAT goes to <code class="inline">pet2bids</code> as well. You never
+          choose a backend: the content of each row decides, which is the same
+          reason a renamed file still converts.
+        </p>
+
+        <h3>What happens after the files are written</h3>
+        <p>
+          Three things run automatically, in the staging folder, before anything
+          is committed to your dataset.
+        </p>
+        <ul>
+          <li>
+            <strong>The DICOM keys are renamed</strong> to their BIDS names.
+            dcm2niix writes some fields under the spelling the DICOM standard
+            uses, which is not always the spelling BIDS uses.
+          </li>
+          <li>
+            <strong>Types are repaired against the standard.</strong> Several
+            PET fields are per-frame arrays even when there is one frame. A
+            scalar where the schema declares a list is corrected.
+          </li>
+          <li>
+            <strong>Patient identifiers are pruned.</strong> Name, identifier,
+            birth date and referring physician are removed from the sidecar. The
+            study and series identifiers stay, so an image can still be traced
+            back to the series it came from.
+          </li>
+        </ul>
+
+        <p>
+          Then the metadata step writes in the nine answers you gave, and marks
+          anything still missing with a literal
+          <code class="inline">TODO</code> so it cannot be quietly forgotten.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         7. Validate
+         ============================================================ -->
+    <section class="section" id="validate">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 7</span>
+        <h2>Validate, and see the point of the exercise.</h2>
+
+        <p>
+          Switch to the <strong>Editor</strong>, open a dataset, and press
+          <strong>Validate dataset</strong>. Here is the DICOM dataset validated
+          twice, once with the dose sheet skipped and once with it filled in:
+        </p>
+
+        <div class="results-grid">
+          <div class="results-card">
+            <span class="results-card-eyebrow">Dose sheet skipped</span>
+            <strong class="results-card-num">6 / 61</strong>
+            <span class="results-card-label">errors / warnings</span>
+            <p class="muted">Five of the nine required fields have no value and
+              no sensible placeholder, so they are errors. The other four are
+              marked <code class="inline">TODO</code>, which is a warning rather
+              than an error but is not an answer either. The sixth error belongs
+              to the blood file, and is dealt with just below.</p>
+          </div>
+          <div class="results-card">
+            <span class="results-card-eyebrow">Dose sheet filled in</span>
+            <strong class="results-card-num">0 / 58</strong>
+            <span class="results-card-label">errors / warnings</span>
+            <p class="muted">Filling exactly those nine, plus the one blood
+              question, clears every error. What is left is recommended, not
+              required: fields this study never recorded, most of them marked
+              <code class="inline">TODO</code> so you can find them again.</p>
+          </div>
+        </div>
+
+        <p>
+          That gap is the argument for the whole metadata step. The conversion
+          was never wrong: it wrote 33 fields correctly and could not have
+          produced the other nine from anything in the files. Without somebody
+          answering them, the dataset is incomplete in a way that only shows up
+          when a validator, or a colleague, goes looking.
+        </p>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Where the count of nine comes from.</strong>
+            <p>
+              The numbers above are what you get with the post-conversion chain
+              at its defaults, one of which is
+              <strong>Insert 'TODO' placeholders for missing recommended
+              fields</strong>. Clear that checkbox in
+              <strong>Settings &rarr; Convert</strong> and validate again: with
+              nothing standing in for the missing answers, every unanswered
+              required field is reported on its own, and the totals read
+              <strong>10 errors and 45 warnings</strong> before the dose sheet
+              and <strong>0 and 43</strong> after it. Ten, because the nine from
+              the dose sheet are joined by the one from the blood file. Same
+              dataset, a different question asked of it.
+            </p>
+          </div>
+        </div>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="A validation error with the schema rule it came from printed underneath"
+               src="assets/features/validation_provenance_dark.png"
+               data-light="assets/features/validation_provenance_light.png">
+          <figcaption>
+            <strong>Every finding names its rule.</strong> The grey line under
+            the message is the part of the BIDS schema the requirement is drawn
+            from, which matters more on PET than anywhere else: the sidecar has
+            around forty fields and the rules for units and timing are easy to
+            misread. The fix button opens the field that needs the answer.
+          </figcaption>
+        </figure>
+
+        <h3>The ECAT project, for comparison</h3>
+        <p>
+          Validate the other one and the arc is the same shape with different
+          numbers: <strong>9 errors and 45 warnings</strong> before its dose
+          sheet, <strong>0 and 38</strong> after, on a sidecar that grows from
+          50 fields to 59. Nine rather than five, because that header left more
+          out. Both datasets end at zero, which is the point: the format decided
+          how much you had to type, not whether you could finish.
+        </p>
+
+        <h3>The one question the blood file asks back</h3>
+        <p>
+          One error is not about the scan at all. It sits on
+          <code class="inline">sub-001_recording-manual_blood.tsv</code> and
+          reads <em>missing required field
+          <code class="inline">DispersionCorrected</code></em>. BIDS requires
+          every blood table to state whether the curve has been corrected for
+          dispersion, the smearing a sample picks up on its way through the
+          tubing. It is a yes or no, nobody but the person who drew the samples
+          can answer it, and no converter should guess.
+        </p>
+        <p>
+          Press <strong>Fix</strong> on the finding. The Editor opens
+          <code class="inline">sub-001_recording-manual_blood.json</code> and
+          puts the cursor in that field. For hand-drawn samples like these the
+          answer is <code class="inline">false</code>. Save, re-validate, and the
+          dataset is clean.
+        </p>
+
+        <h3>Checks that only apply to PET</h3>
+        <p>
+          Beyond the standard's own rules, a few cross-field checks catch
+          numbers that disagree with each other. They are warnings, never
+          errors, because they are judgements rather than violations: a dose
+          that looks like it was entered in the wrong unit, a specific activity
+          that does not follow from the dose and the mass, frames that run
+          backwards, a timing offset with no reference time to measure from.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="A PET frame-consistency error: the frame count in the sidecar does not match the image"
+               src="assets/features/validation_pet_checks_dark.png"
+               data-light="assets/features/validation_pet_checks_light.png">
+          <figcaption>
+            <strong>A check that only applies to PET.</strong> Here the number
+            of frames implied by the timing fields does not match the image they
+            describe. Every field is the right type and nothing is malformed;
+            the numbers simply disagree, which is the kind of thing that only
+            surfaces when something reads them together.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         8. Look at the result
+         ============================================================ -->
+    <section class="section" id="look">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 8</span>
+        <h2>Look at what you made.</h2>
+
+        <p>
+          Click the image in the Editor's tree. It opens in the viewer: one
+          plane at a time, or <strong>Multi-Planar</strong> for sagittal,
+          coronal and axial sharing one crosshair. A phantom looks like what it
+          is, a uniform cylinder, which makes it a good sanity check: the
+          activity should be even, and anything obviously lopsided means
+          something went wrong upstream.
+        </p>
+
+        <p>
+          Click the sidecar and you get the schema-aware form, where the nine
+          fields you typed now appear alongside the 33 the conversion read. This
+          is also where you would fix anything the validator flagged, with the
+          finding's own fix button taking you straight to the field.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The finished PET sidecar as a schema-aware form: every required field answered, some by the conversion and some from the dose sheet"
+               src="assets/features/pet_sidecar_form_dark.png"
+               data-light="assets/features/pet_sidecar_form_light.png">
+          <figcaption>
+            <strong>The finished sidecar, with both sources side by side.</strong>
+            <code class="inline">75.85</code> MBq, GE Advance #1, filtered back
+            projection, <code class="inline">09:28:23</code> and FDG came out of
+            the DICOM.
+            <code class="inline">181149988.37</code> ug,
+            <code class="inline">infusion</code> and
+            <code class="inline">418713.8</code> Bq/g came off the dose sheet.
+            Nothing distinguishes them now, which is the point: the file is
+            simply complete. The red bar on each field is its level in the
+            standard, and the footer counts what is present and what is missing.
+          </figcaption>
+        </figure>
+
+        <h3>Dynamic scans, and why the axis is in seconds</h3>
+        <p>
+          This sample is a single frame, so it has no time course. On a dynamic
+          run the viewer's <strong>Graph</strong> button becomes available, and
+          its x axis is real seconds taken from
+          <code class="inline">FrameTimesStart</code>, not a frame index.
+        </p>
+        <p>
+          That matters more than it sounds. PET frames are not evenly spaced:
+          ten seconds early in a scan while the tracer arrives, five minutes late
+          on. Plotted against a frame index, the early kinetics, which is the
+          part worth looking at, are compressed into the left edge and the long
+          late frames are stretched out. On a real seconds axis the curve has the
+          shape it actually has.
+        </p>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Other PET situations
+         ============================================================ -->
+    <section class="section" id="other">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Beyond the walkthrough</span>
+        <h2>Two more PET situations.</h2>
+
+        <p>
+          You have now converted both PET formats. Two other things you will
+          meet on real PET data are worth knowing about, and neither is in the
+          download.
+        </p>
+
+        <h3>Hybrid PET/CT and PET/MR studies</h3>
+        <p>
+          A PET/CT study converts its PET half and sets the CT aside with the
+          reason shown: BIDS has no place for CT in a raw dataset. A PET/MR
+          study converts both halves in one pass, the MR arriving as ordinary
+          anatomical and functional data. You do not run anything twice, and you
+          do not separate the study by hand first.
+        </p>
+
+        <h3>A dose spreadsheet instead of typing</h3>
+        <p>
+          Both dose sheets in this download are meant to be read and typed in,
+          because that is how you learn what the fields are. On real data, if
+          your radiochemistry already exists as a spreadsheet, point
+          <code class="inline">bidsmgr-convert --pet-spreadsheet</code> at it
+          instead. Column names are matched loosely, so
+          <code class="inline">Injected Dose</code> and
+          <code class="inline">injected_radioactivity</code> both work; the
+          values are read strictly.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CLI
+         ============================================================ -->
+    <section class="section" id="cli">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">The same thing, scripted</span>
+        <h2>From the command line.</h2>
+
+        <p>
+          The command line drives the same engine, and both scans work through
+          it. Note that the two sequences below are identical apart from the
+          folder: nothing in the commands says which format is which, because
+          nothing needs to. The answers you gave in the GUI live in files rather
+          than in the interface, so they are equally available to a script:
+        </p>
+        <ul>
+          <li>the nine template fields go under
+            <code class="inline">sequence_templates["pet/pet"]</code> in
+            <code class="inline">&lt;inventory&gt;.recording_meta.json</code>,
+            which the scan writes beside the inventory and the conversion picks
+            up on its own. They are keyed by their BIDS names, so the file reads
+            the way the standard does. The ECAT project has its own copy of the
+            same file, holding its own fifteen</li>
+          <li>the blood links go in the inventory's
+            <code class="inline">companion_files</code> column, as a JSON list
+            of <code class="inline">{"suffix": "blood:plasma:manual", "path":
+            "..."}</code> entries</li>
+        </ul>
+
+<pre class="code">"sequence_templates": {
+  "pet/pet": {
+    "InjectedMass": 181149988.37,
+    "InjectedMassUnits": "ug",
+    "SpecificRadioactivity": 418713.8,
+    "SpecificRadioactivityUnits": "Bq/g",
+    "ModeOfAdministration": "infusion",
+    "AcquisitionMode": "list mode",
+    "ReconMethodParameterLabels": ["none"],
+    "ReconMethodParameterUnits": ["none"],
+    "ReconMethodParameterValues": [0]
+  }
+}</pre>
+
+        <p>
+          Note the shapes. Three of the nine are lists and one of those is a
+          list of numbers, which is why
+          <code class="inline">ReconMethodParameterValues</code> reads
+          <code class="inline">[0]</code> and not
+          <code class="inline">["0"]</code>. The form handles that for you; a
+          hand-edited file has to get it right itself.
+        </p>
+
+<pre class="code"><span class="cmt"># --- the DICOM scan -------------------------------------------------</span>
+bidsmgr-create ~/bids/pet_dicom --name "PET tutorial, DICOM"
+
+bidsmgr-scan ~/BIDS_Manager_PET_sample/raw \
+    --project ~/bids/pet_dicom --probe-convert
+
+bidsmgr-convert --project ~/bids/pet_dicom \
+    --raw-root ~/BIDS_Manager_PET_sample/raw
+
+bidsmgr-metadata --project ~/bids/pet_dicom --fill-todos
+bidsmgr-validate ~/bids/pet_dicom
+
+<span class="cmt"># --- the ECAT scan, identical commands, different folder ------------</span>
+bidsmgr-create ~/bids/pet_ecat --name "PET tutorial, ECAT"
+
+bidsmgr-scan ~/BIDS_Manager_PET_sample/extra_ecat \
+    --project ~/bids/pet_ecat --probe-convert
+
+bidsmgr-convert --project ~/bids/pet_ecat \
+    --raw-root ~/BIDS_Manager_PET_sample/extra_ecat
+
+bidsmgr-metadata --project ~/bids/pet_ecat --fill-todos
+bidsmgr-validate ~/bids/pet_ecat</pre>
+
+        <p>
+          Every flag is documented in the
+          <a href="tutorial.html#cli-ref">CLI reference</a>.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Troubleshooting
+         ============================================================ -->
+    <section class="section" id="trouble">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Troubleshooting</span>
+        <h2>What usually goes wrong with PET.</h2>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>What you see</th><th>What it means</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>No rows after scanning</td>
+                <td>You pointed at the wrong level. Choose
+                  <code class="inline">raw/</code>, not
+                  <code class="inline">PET/</code> and not a single file.</td>
+              </tr>
+              <tr>
+                <td>The blood files appear as rows</td>
+                <td>They should not. They are not recordings, so they are
+                  attached to a PET row in the properties panel rather than
+                  converted on their own.</td>
+              </tr>
+              <tr>
+                <td>A log warning about a column that must be unitless</td>
+                <td>Expected on this sample, and not by itself a sign of a
+                  mistake. Check the output instead: a
+                  <code class="inline">plasma_radioactivity</code> column means
+                  you attached it correctly, a
+                  <code class="inline">metabolite_parent_fraction</code> column
+                  means an activity curve is being passed off as a ratio.</td>
+              </tr>
+              <tr>
+                <td>Six errors after converting</td>
+                <td>Expected, until the dose sheet is filled in. Five are the
+                  required PET fields no scanner records; the sixth is
+                  <code class="inline">DispersionCorrected</code> on the blood
+                  table.</td>
+              </tr>
+              <tr>
+                <td>A tracer or reconstruction method that looks wrong</td>
+                <td>Those are read from the vendor's free text and offered as
+                  suggestions, never applied silently. Correct the field; the
+                  suggestion is only a starting point.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">TimeZero</code> asking to be filled</td>
+                <td>The scanner's clock recorded something impossible, so it was
+                  not derived. Enter the real injection time.</td>
+              </tr>
+              <tr>
+                <td>Frame timing that differs between files in a batch</td>
+                <td>A known defect in the upstream ECAT reader, which shares one
+                  metadata template between files. BIDS Manager gives every file
+                  its own, so the tenth is as correct as the first.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Next
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow prose">
+        <h2>Next</h2>
+        <p>
+          <a href="tutorial-multimodal.html">The multimodal tutorial</a> shows
+          PET converting in the same pass as MRI, EEG and MEG.
+          <a href="tutorial-mri.html">The MRI tutorial</a> covers the modality
+          where the header answers the most.
+        </p>
+        <p style="margin-top: 8px;">
+          <a class="btn btn-primary" href="tutorial.html#gui-walkthrough">The full GUI walkthrough &rarr;</a>
+          <a class="btn btn-ghost" href="tutorial.html#cli-ref">CLI reference</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <div data-include="footer"></div>
+  <script src="script.js" defer></script>
+</body>
+</html>

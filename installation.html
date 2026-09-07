@@ -69,6 +69,32 @@
           BIDS Manager. Pick the one that fits your workflow.
         </p>
 
+        <p>
+          Whichever you pick, there is nothing else to install afterwards.
+          Every conversion engine BIDS Manager uses is installed with it.
+        </p>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>For</th><th>Engine</th><th>You install it</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>MRI DICOM to NIfTI</td><td>dcm2niix</td><td>Included, program and all</td></tr>
+              <tr><td>EEG, MEG, iEEG</td><td>mne-bids</td><td>Included</td></tr>
+              <tr><td>PET DICOM, ECAT and blood</td><td>pet2bids</td><td>Included</td></tr>
+              <tr><td>MRI physiological recordings</td><td>bidsphysio</td><td>Built in</td></tr>
+              <tr><td>Naming and validation</td><td>The BIDS schema and validator</td><td>Built in</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          You do not need Python installed beforehand if you use the one-click
+          installer: it brings its own. Nothing is installed system-wide, and
+          removing BIDS Manager means deleting a single folder.
+        </p>
+
         <div class="method-cards">
           <a class="method-card" href="#bootstrap">
             <span class="method-badge is-rec">Recommended</span>
@@ -575,6 +601,19 @@ bidsmgr
         <span class="section-eyebrow">After install</span>
         <h2 style="margin-top:0;">Launch, uninstall, where things land</h2>
 
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The BIDS Manager Home tab after a fresh install"
+               src="assets/gui/home_tab_dark.png"
+               data-light="assets/gui/home_tab_light.png">
+          <figcaption>
+            <strong>What a working install looks like.</strong> BIDS Manager opens
+            on the Home tab, where you create a dataset project or open one you
+            already have. If you see this, every conversion engine came with it and
+            there is nothing else to install.
+          </figcaption>
+        </figure>
+
         <table>
           <thead>
             <tr><th>OS</th><th>Launch</th><th>Uninstall</th></tr>
@@ -812,23 +851,26 @@ source ~/bidsmgr-env/bin/activate
 <pre class="code">bidsmgr
 </pre>
 
-        <p>Or use the CLI directly. Six commands are installed:</p>
+        <p>Or use the CLI directly. Eight commands are installed:</p>
         <ul>
-          <li><code class="inline">bidsmgr</code>. GUI (Converter and Editor in
-            one window).</li>
+          <li><code class="inline">bidsmgr</code>. The graphical interface,
+            with the Converter and the Editor in one window.</li>
+          <li><code class="inline">bidsmgr-create</code>. Scaffold a new BIDS
+            dataset and start a project in it.</li>
+          <li><code class="inline">bidsmgr-project</code>. List the scan
+            versions saved in a project.</li>
           <li><code class="inline">bidsmgr-scan</code>. Walk a raw folder and
-            produce a 51-column inventory TSV.</li>
+            produce a 62-column inventory TSV.</li>
           <li><code class="inline">bidsmgr-rebuild</code>. Re-derive BIDS names
             from the TSV after manual edits.</li>
-          <li><code class="inline">bidsmgr-convert</code>. Run the conversion
-            to BIDS for the rows in the TSV.</li>
+          <li><code class="inline">bidsmgr-convert</code>. Convert the rows in
+            the TSV into the BIDS dataset.</li>
           <li><code class="inline">bidsmgr-metadata</code>. Post-conversion
-            metadata fix-ups (field-maps,
-            <code class="inline">IntendedFor</code>,
-            <code class="inline">scans.tsv</code>).</li>
-          <li><code class="inline">bidsmgr-validate</code>. Two-layer
-            validation: BIDS Manager's schema audit plus
-            <code class="inline">bidsschematools</code>.</li>
+            metadata: the template answers, field-maps,
+            <code class="inline">IntendedFor</code> and
+            <code class="inline">scans.tsv</code>.</li>
+          <li><code class="inline">bidsmgr-validate</code>. Schema-driven
+            validation, with the rule behind every finding.</li>
         </ul>
 
         <div class="callout callout-tip">
@@ -1062,7 +1104,7 @@ source ~/bidsmgr-env/bin/activate
           <li><a href="tutorial.html">Walk the interactive tutorial</a>. Scan,
             inspect, convert, edit, validate, all simulated in the
             browser.</li>
-          <li><a href="intro.html#how-it-works">See the workflow</a>: eight
+          <li><a href="about.html#how-it-works">See the workflow</a>: eight
             stages, three lenses, one schema-driven engine.</li>
           <li>Read the
             <a href="https://github.com/ANCPLabOldenburg/BIDS-Manager/blob/main/docs/architecture.md"

@@ -5,11 +5,29 @@
   </a>
   <nav class="nav-links" aria-label="Sections">
     <a href="index.html">Home</a>
-    <a href="intro.html">Intro</a>
+    <a href="about.html">About</a>
     <a href="gui-tour.html">GUI tour</a>
     <a href="installation.html">Installation</a>
-    <a href="tutorial.html">Tutorial</a>
+    <div class="nav-drop" data-nav-drop>
+      <button class="nav-drop-btn" type="button"
+              aria-expanded="false" aria-controls="nav-drop-tutorials">
+        Tutorials<span class="nav-drop-caret" aria-hidden="true"></span>
+      </button>
+      <div class="nav-drop-menu" id="nav-drop-tutorials" hidden>
+        <span class="nav-drop-sep">Start here</span>
+        <a href="tutorial.html">GUI and CLI overview</a>
+        <span class="nav-drop-note">Every step, for any modality</span>
+        <span class="nav-drop-sep">Full tutorials by modality</span>
+        <a href="tutorial-mri.html">MRI</a>
+        <a href="tutorial-mri-advanced.html">MRI, advanced</a>
+        <a href="tutorial-pet.html">PET</a>
+        <a href="tutorial-eeg.html">EEG</a>
+        <a href="tutorial-meg.html">MEG</a>
+        <a href="tutorial-multimodal.html">Multimodal</a>
+      </div>
+    </div>
     <a href="updates.html">Updates</a>
+    <a href="about.html#issues">Help</a>
     <a href="https://github.com/ANCPLabOldenburg/BIDS-Manager"
        target="_blank" rel="noopener">GitHub</a>
   </nav>

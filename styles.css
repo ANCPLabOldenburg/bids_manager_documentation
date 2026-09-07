@@ -294,6 +294,7 @@ p.lead { font-size: 1.15rem; color: var(--muted); max-width: 60ch; }
   color: inherit;
   text-decoration: none;
   font-weight: 600;
+  white-space: nowrap;
   padding: 4px 0;
   border-bottom: 2px solid transparent;
   transition: color 120ms ease, border-color 120ms ease;
@@ -304,6 +305,93 @@ p.lead { font-size: 1.15rem; color: var(--muted); max-width: 60ch; }
 .nav-links a.is-active {
   color: var(--text);
   border-bottom-color: var(--accent);
+}
+
+/* --------------------------------------------------------------------
+ * Nav dropdown.
+ *
+ * The per-modality tutorials used to be reachable only from a button
+ * part way down one page, which made six pages effectively invisible.
+ * They live here now, under Tutorials.
+ * ------------------------------------------------------------------ */
+
+.nav-drop { position: relative; display: inline-flex; }
+
+.nav-drop-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 120ms ease, border-color 120ms ease;
+}
+.nav-drop-btn:hover { color: var(--text); }
+.nav-drop-btn.is-active {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+}
+
+.nav-drop-caret {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid currentColor;
+  transition: transform 140ms ease;
+}
+.nav-drop-btn[aria-expanded="true"] .nav-drop-caret { transform: rotate(180deg); }
+
+.nav-drop-menu {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  min-width: 210px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+.nav-drop-menu[hidden] { display: none; }
+
+.nav-drop-menu a {
+  padding: 7px 10px;
+  border-radius: 8px;
+  border-bottom: 0;
+  white-space: nowrap;
+}
+.nav-drop-menu a:hover { background: var(--bg-soft); color: var(--text); }
+.nav-drop-menu a.is-active {
+  color: var(--text);
+  background: var(--bg-soft);
+  border-bottom: 0;
+}
+
+.nav-drop-menu > .nav-drop-sep:first-child { margin-top: 2px; }
+
+.nav-drop-note {
+  margin: -2px 10px 4px;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.nav-drop-sep {
+  margin: 10px 10px 4px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 
 .theme-toggle {
@@ -1594,6 +1682,20 @@ code.inline {
 .site-footer a { color: var(--muted); }
 .site-footer a:hover { color: var(--accent); }
 
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.footer-links-title {
+  margin-bottom: 3px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
 /* --------------------------------------------------------------------
  * Page-content prose container
  * (used by installation / tutorial / future pages)
@@ -1865,9 +1967,16 @@ details.disclosure p:last-child { margin-bottom: 0; }
  * ------------------------------------------------------------------ */
 
 .page-toc {
+  /* One source of truth for how far down the panel sits: the panel's
+     max-height is derived from it, so the two can never disagree.
+     --header-h is measured and published by script.js, because the header
+     wraps to two rows on a phone and a hardcoded number put this button
+     underneath it, where it could not be tapped. The fallback matches the
+     one-row desktop header for the moment before the script runs. */
+  --toc-top: calc(var(--header-h, 68px) + 24px);
   position: fixed;
   left: clamp(12px, 2vw, 24px);
-  top: 92px;
+  top: var(--toc-top);
   z-index: 25;
   display: flex;
   align-items: flex-start;
@@ -1937,6 +2046,35 @@ details.disclosure p:last-child { margin-bottom: 0; }
   opacity: 0;
   pointer-events: none;
   transition: transform 280ms ease, opacity 220ms ease;
+
+  /* The tutorial lists 17 walkthrough steps under their parent, which is
+     taller than a laptop viewport. The panel is fixed at 92px from the top,
+     so cap it against the remaining height and scroll inside it rather than
+     running off the bottom of the screen. */
+  max-height: calc(100vh - var(--toc-top) - 20px);
+  overflow-y: auto;
+  overscroll-behavior: contain;   /* scrolling the list does not scroll the page */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+/* A slim scrollbar that belongs to the panel rather than to the operating
+   system. WebKit only; Firefox uses scrollbar-width above. */
+.page-toc-panel::-webkit-scrollbar {
+  width: 8px;
+}
+.page-toc-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+.page-toc-panel::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+.page-toc-panel::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+  background-clip: content-box;
 }
 .page-toc.is-open .page-toc-panel {
   transform: translateX(0);
@@ -2007,7 +2145,7 @@ details.disclosure p:last-child { margin-bottom: 0; }
   .page-toc-panel { box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45); }
 }
 @media (max-width: 640px) {
-  .page-toc { top: 76px; left: 10px; }
+  .page-toc { --toc-top: calc(var(--header-h, 68px) + 12px); left: 10px; }
   .page-toc-panel { width: min(78vw, 280px); }
 }
 
@@ -6136,6 +6274,7 @@ details.disclosure p:last-child { margin-bottom: 0; }
 .dataset-tree-row.d1 { padding-left: 22px; }
 .dataset-tree-row.d2 { padding-left: 44px; }
 .dataset-tree-row.d3 { padding-left: 66px; }
+.dataset-tree-row.d4 { padding-left: 88px; }
 .dataset-tree-row .chev {
   display: inline-block;
   width: 14px;
@@ -7562,6 +7701,12 @@ ol.checklist li {
 .modality-card.mod-meg::before     { background: var(--teal); }
 .modality-card.mod-meg .modality-badge { background: rgba(57, 197, 207, 0.16); color: var(--teal); }
 
+.modality-card.mod-pet::before     { background: var(--coral); }
+.modality-card.mod-pet .modality-badge { background: rgba(255, 139, 107, 0.16); color: var(--coral); }
+
+.modality-card.mod-multimodal::before { background: var(--lime); }
+.modality-card.mod-multimodal .modality-badge { background: rgba(184, 244, 109, 0.16); color: var(--lime); }
+
 .modality-card.mod-mri-adv::before { background: var(--purple); }
 .modality-card.mod-mri-adv .modality-badge { background: rgba(210, 168, 255, 0.16); color: var(--purple); }
 
@@ -7610,9 +7755,47 @@ ol.checklist li {
  * Responsive nips
  * ------------------------------------------------------------------ */
 
-@media (max-width: 720px) {
-  .nav-links a:not(.is-active) { display: none; }
+/* Narrow screens keep the whole navigation.
+ *
+ * This used to hide every link except the one you were already on, which left
+ * a phone with a single word where the site's sections should be and no way to
+ * reach any of them. The header now becomes two rows: brand and theme toggle
+ * on the first, the full set of links wrapped onto the second. Wrapping rather
+ * than scrolling on purpose, because the Tutorials menu is absolutely
+ * positioned and a scrolling container would clip it. */
+@media (max-width: 980px) {
+  .site-header {
+    flex-wrap: wrap;
+    row-gap: 10px;
+    padding: 12px clamp(14px, 4vw, 28px);
+  }
+  .nav-links {
+    order: 3;
+    flex-basis: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 16px;
+    font-size: 0.86rem;
+    padding-top: 4px;
+    border-top: 1px solid var(--border);
+  }
+  .nav-links a { padding: 3px 0; }
+  /* Centre the menu under its button rather than pinning it to an edge it may
+   * no longer be near, and stop it running off either side of a small screen. */
+  .nav-drop-menu {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    max-width: min(92vw, 340px);
+  }
+}
+
+@media (max-width: 460px) {
+  .site-header { gap: 10px; }
   .brand img { width: 26px; height: 26px; }
+  .brand-name { font-size: 0.98rem; }
+  .nav-links { gap: 7px 13px; font-size: 0.82rem; }
+  .theme-toggle { padding: 6px 12px; font-size: 0.8rem; }
 }
 
 /* ====================================================================
@@ -7704,6 +7887,46 @@ ol.checklist li {
  * height; reserve a little space so scrolling it into view does not jump
  * the layout. Its real aspect ratio takes over the moment metadata loads. */
 .media-figure > .feature-video { min-height: 120px; }
+
+/* --------------------------------------------------------------------
+ * Media still to be recorded.
+ *
+ * Sits in the figure slot at roughly the size the real clip will occupy,
+ * so the page reads the way it will read once the asset lands, and the
+ * caption below it is the final caption rather than a note to ourselves.
+ * Replacing one is a single-element swap: delete .media-todo, drop the
+ * <video> or <img> in its place, leave the figcaption alone.
+ * ------------------------------------------------------------------ */
+
+.media-todo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 180px;
+  padding: 28px 20px;
+  text-align: center;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  background: var(--bg-soft);
+}
+.media-todo-num {
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.media-todo-id {
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 1rem;
+  color: var(--text);
+}
+.media-todo-kind {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
 
 /* --------------------------------------------------------------------
  * GUI tour: the three views (Welcome / Converter / Editor)
@@ -7914,4 +8137,796 @@ body.lightbox-open { overflow: hidden; }
   color: var(--muted);
   font-size: 0.92rem;
   margin-top: 26px;
+}
+
+
+/* ============================================================
+   Comparison tables (intro: what a converter alone does not do;
+   installation: what gets installed). Uses the same glass panel
+   and border tokens as .callout so it belongs to the same system.
+   ============================================================ */
+.table-wrap {
+  margin: 22px 0;
+  overflow-x: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-glass);
+  background: var(--panel-glass);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.data-table th,
+.data-table td {
+  padding: 12px 16px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--border);
+}
+
+.data-table thead th {
+  font-weight: 600;
+  color: var(--muted);
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* The first column names the thing being compared, so it reads as a
+   row heading rather than as data. */
+.data-table tbody td:first-child {
+  font-weight: 600;
+}
+
+/* The last column is what BIDS Manager does; give it the accent so a
+   reader scanning the table sees the answer without reading across. */
+.data-table tbody td:last-child {
+  color: var(--text);
+}
+
+.data-table tbody tr:last-child th,
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+@media (max-width: 640px) {
+  .data-table th,
+  .data-table td { padding: 10px 12px; }
+  .data-table { font-size: 0.88rem; }
+}
+
+
+/* Nested entries in the page navigation: the 17 steps of the GUI
+   walkthrough sit under their parent, indented and slightly quieter so the
+   top-level sections stay scannable. */
+/* A section that has subsections: the link and its caret share a row, and
+   the sublist collapses behind the caret. */
+.page-toc-group-head {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.page-toc-group-head .page-toc-link {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.page-toc-caret {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  margin-right: 4px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.95rem;
+  line-height: 1;
+  transition: transform 180ms ease, color 160ms ease, background 160ms ease;
+}
+
+.page-toc-caret:hover {
+  color: var(--text);
+  background: var(--panel-glass);
+}
+
+/* The chevron points right when closed and down when open. */
+.page-toc-group.is-open .page-toc-caret {
+  transform: rotate(90deg);
+  color: var(--text);
+}
+
+.page-toc-sublist {
+  display: flex;
+  flex-direction: column;
+}
+
+/* An author `display` rule beats the browser's `[hidden] { display: none }`,
+   so the attribute has to be honoured explicitly or the list never hides. */
+.page-toc-sublist[hidden] {
+  display: none;
+}
+
+/* The caret still turns, it just does not animate getting there. */
+@media (prefers-reduced-motion: reduce) {
+  .page-toc-caret { transition: none; }
+}
+
+.page-toc-link.page-toc-sub {
+  padding-left: 26px;
+  font-size: 0.86rem;
+  opacity: 0.82;
+}
+
+.page-toc-link.page-toc-sub .page-toc-dot {
+  transform: scale(0.72);
+}
+
+.page-toc-link.page-toc-sub:hover,
+.page-toc-link.page-toc-sub.is-active {
+  opacity: 1;
+}
+
+/* ====================================================================
+ * About page
+ *
+ * Two components. `.about-cards` is the "what it adds" grid, one card
+ * per area of work, each keyed to a colour so the five are separable at
+ * a glance rather than reading as one wall of text. `.risk-list` is the
+ * silent-failure list, colour-coded by modality using the same palette
+ * the dataset cards use, so PET is coral on both pages.
+ * ================================================================== */
+
+.about-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin: 24px 0 8px;
+}
+
+.about-card {
+  position: relative;
+  padding: 18px 20px 18px 22px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--panel);
+  overflow: hidden;
+}
+.about-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: var(--accent);
+}
+.about-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.02rem;
+}
+.about-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.62;
+}
+
+.about-card-accent::before  { background: var(--accent); }
+.about-card-teal::before    { background: var(--teal); }
+.about-card-purple::before  { background: var(--purple); }
+.about-card-coral::before   { background: var(--coral); }
+.about-card-success::before { background: var(--success); }
+.about-card-amber::before   { background: var(--warning); }
+
+.about-card-accent h3  { color: var(--accent); }
+.about-card-teal h3    { color: var(--teal); }
+.about-card-purple h3  { color: var(--purple); }
+.about-card-coral h3   { color: var(--coral); }
+.about-card-success h3 { color: var(--success); }
+.about-card-amber h3   { color: var(--warning); }
+
+/* The step number, so the six read as an ordered process rather than a
+ * feature list. */
+.about-card-step {
+  display: inline-block;
+  margin-bottom: 2px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* --------------------------------------------------------------------
+ * The six steps.
+ *
+ * Same shape as the risk cards further down this page: 3px colour rule,
+ * an uppercase pill, a coloured heading. What sets these apart is not a
+ * different layout but a warm gold glint that crosses each in turn.
+ * ------------------------------------------------------------------ */
+
+.about-card {
+  isolation: isolate;
+  padding: 18px 20px 18px 22px;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+.about-card h3 { margin: 8px 0 8px; }
+
+/* The pill, matching .risk-tag / .path-card-tag exactly. */
+.about-card-step {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--bg-soft);
+  color: var(--muted);
+}
+.about-card-accent  .about-card-step { background: rgba(88,166,255,.14);  color: var(--accent); }
+.about-card-teal    .about-card-step { background: rgba(57,197,207,.16);  color: var(--teal); }
+.about-card-coral   .about-card-step { background: rgba(255,139,107,.16); color: var(--coral); }
+.about-card-success .about-card-step { background: rgba(63,185,80,.16);   color: var(--success); }
+.about-card-purple  .about-card-step { background: rgba(210,168,255,.16); color: var(--purple); }
+.about-card-amber   .about-card-step { background: rgba(210,153,34,.14);  color: var(--warning); }
+
+/* --------------------------------------------------------------------
+ * The gold glint.
+ *
+ * Warm metal rather than glass: a narrow amber-to-pale-gold band that
+ * travels across the card, with the rim catching the light as it passes.
+ * The cycle is long and mostly still, so it reads as an occasional catch
+ * of light rather than a loop competing with the text, and the six are
+ * staggered so the light runs along the row.
+ * ------------------------------------------------------------------ */
+
+.about-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0;
+  background: linear-gradient(
+    108deg,
+    transparent 34%,
+    rgba(214, 158, 46, 0.20) 43%,
+    rgba(247, 214, 122, 0.48) 48%,
+    rgba(255, 243, 205, 0.68) 50%,
+    rgba(247, 214, 122, 0.48) 52%,
+    rgba(214, 158, 46, 0.20) 57%,
+    transparent 66%);
+  background-size: 260% 100%;
+  background-position: 170% 0;
+}
+[data-theme="light"] .about-card::after {
+  background: linear-gradient(
+    108deg,
+    transparent 34%,
+    rgba(198, 141, 26, 0.14) 43%,
+    rgba(238, 199, 92, 0.36) 48%,
+    rgba(255, 240, 196, 0.62) 50%,
+    rgba(238, 199, 92, 0.36) 52%,
+    rgba(198, 141, 26, 0.14) 57%,
+    transparent 66%);
+  background-size: 260% 100%;
+  background-position: 170% 0;
+}
+
+@keyframes about-card-glint {
+  0%   { background-position: 170% 0; opacity: 0; }
+  2%   { opacity: 1; }
+  11%  { opacity: 1; }
+  13%  { background-position: -70% 0; opacity: 0; }
+  100% { background-position: -70% 0; opacity: 0; }
+}
+@keyframes about-card-rim {
+  0%, 1%    { box-shadow: none; }
+  6%        { box-shadow: 0 0 0 1px rgba(224, 176, 74, 0.45),
+                          0 0 18px rgba(214, 158, 46, 0.16); }
+  13%, 100% { box-shadow: none; }
+}
+
+.reveal.is-visible .about-card::after { animation: about-card-glint 14s ease-out infinite; }
+.reveal.is-visible .about-card        { animation: about-card-rim   14s ease-out infinite; }
+.about-cards .about-card:nth-child(1)::after,
+.about-cards .about-card:nth-child(1) { animation-delay: 0.4s; }
+.about-cards .about-card:nth-child(2)::after,
+.about-cards .about-card:nth-child(2) { animation-delay: 0.9s; }
+.about-cards .about-card:nth-child(3)::after,
+.about-cards .about-card:nth-child(3) { animation-delay: 1.4s; }
+.about-cards .about-card:nth-child(4)::after,
+.about-cards .about-card:nth-child(4) { animation-delay: 1.9s; }
+.about-cards .about-card:nth-child(5)::after,
+.about-cards .about-card:nth-child(5) { animation-delay: 2.4s; }
+.about-cards .about-card:nth-child(6)::after,
+.about-cards .about-card:nth-child(6) { animation-delay: 2.9s; }
+
+.about-card:hover { transform: translateY(-2px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal.is-visible .about-card,
+  .reveal.is-visible .about-card::after { animation: none !important; }
+  .about-card { transition: none; }
+  .about-card:hover { transform: none; }
+  .about-card::after {
+    opacity: 1;
+    background: radial-gradient(120% 90% at 6% 0%,
+                                rgba(224, 176, 74, 0.14), transparent 62%);
+  }
+  [data-theme="light"] .about-card::after {
+    background: radial-gradient(120% 90% at 6% 0%,
+                                rgba(198, 141, 26, 0.12), transparent 62%);
+  }
+}
+
+/* -------------------------------------------------------------------- */
+
+.risk-list {
+  display: grid;
+  gap: 14px;
+  margin: 24px 0 8px;
+}
+
+.risk-card {
+  position: relative;
+  padding: 18px 20px 18px 22px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--panel);
+  overflow: hidden;
+}
+.risk-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: var(--muted);
+}
+.risk-card h3 {
+  margin: 6px 0 8px;
+  font-size: 1.05rem;
+}
+.risk-card p {
+  margin: 0 0 10px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+.risk-card p:last-child { margin-bottom: 0; }
+
+.risk-tag {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--bg-soft);
+  color: var(--muted);
+}
+
+/* The answer, set apart from the description of the problem so the two
+ * are not read as one paragraph. */
+.risk-answer {
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  color: var(--text) !important;
+}
+
+.risk-card.mod-all::before   { background: var(--warning); }
+.risk-card.mod-all .risk-tag { background: rgba(210, 153, 34, 0.14); color: var(--warning); }
+
+.risk-card.mod-mri::before   { background: var(--accent); }
+.risk-card.mod-mri .risk-tag { background: rgba(88, 166, 255, 0.14); color: var(--accent); }
+
+.risk-card.mod-eeg::before   { background: var(--success); }
+.risk-card.mod-eeg .risk-tag { background: rgba(63, 185, 80, 0.16); color: var(--success); }
+
+.risk-card.mod-meg::before   { background: var(--teal); }
+.risk-card.mod-meg .risk-tag { background: rgba(57, 197, 207, 0.16); color: var(--teal); }
+
+.risk-card.mod-pet::before   { background: var(--coral); }
+.risk-card.mod-pet .risk-tag { background: rgba(255, 139, 107, 0.16); color: var(--coral); }
+
+/* One heading per modality, so the same tag is not repeated on every card in
+ * a run of them. The rule takes the group's colour, which is what makes the
+ * grouping readable before a word is read. */
+.risk-group {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 34px 0 4px;
+}
+.risk-group:first-child { margin-top: 12px; }
+.risk-group h3 {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.risk-group::after {
+  content: "";
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--border);
+}
+.risk-group.mod-all h3   { color: var(--warning); }
+.risk-group.mod-all::after   { background: var(--warning); opacity: 0.45; }
+.risk-group.mod-mri h3   { color: var(--accent); }
+.risk-group.mod-mri::after   { background: var(--accent); opacity: 0.45; }
+.risk-group.mod-eeg h3   { color: var(--success); }
+.risk-group.mod-eeg::after   { background: var(--success); opacity: 0.45; }
+.risk-group.mod-pet h3   { color: var(--coral); }
+.risk-group.mod-pet::after   { background: var(--coral); opacity: 0.45; }
+
+/* Inside a group the tag is the failure's own short name, not the modality,
+ * which the heading has already said. */
+.risk-card .risk-tag { font-weight: 600; letter-spacing: 0.05em; }
+
+/* --------------------------------------------------------------------
+ * "A video would be better here."
+ *
+ * These figures carry a generated still where a short screen recording
+ * would show the thing properly: a hover, a drag, a value changing. The
+ * still is accurate and enough to follow, but the motion is the point.
+ * Deliberately loud, so it is impossible to leave one behind by accident.
+ * ------------------------------------------------------------------ */
+
+.media-note-video {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 8px 12px;
+  border: 1px solid var(--error);
+  border-left-width: 3px;
+  border-radius: 8px;
+  background: rgba(248, 81, 73, 0.08);
+  color: var(--error);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+.media-note-video strong {
+  color: var(--error);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.76rem;
+  white-space: nowrap;
+  padding-top: 1px;
+}
+
+/* --------------------------------------------------------------------
+ * Tutorial: how the two kinds of tutorial fit together.
+ *
+ * The general page and the per-modality pages cover the same workflow at
+ * different depths, which reads as duplication unless the difference is
+ * stated. These two cards state it, with the current page marked.
+ * ------------------------------------------------------------------ */
+
+.path-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin: 20px 0 8px;
+}
+
+.path-card {
+  position: relative;
+  padding: 20px 22px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--panel);
+}
+.path-card h3 { margin: 10px 0 8px; font-size: 1.06rem; }
+.path-card p {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.62;
+}
+.path-card p:last-child { margin-bottom: 0; }
+.path-card-for strong { color: var(--text); }
+
+.path-card-tag {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--bg-soft);
+  color: var(--muted);
+}
+
+.path-card-here {
+  border-color: var(--accent);
+  background: linear-gradient(
+    180deg, rgba(88, 166, 255, 0.07), rgba(88, 166, 255, 0.02));
+}
+.path-card-here .path-card-tag {
+  background: rgba(88, 166, 255, 0.16);
+  color: var(--accent);
+}
+.path-card-here h3 { color: var(--accent); }
+
+/* --------------------------------------------------------------------
+ * A figure too wide for the prose column.
+ *
+ * A full-window screenshot squeezed into 860px of reading measure is
+ * unreadable. These break out of the column up to the width the capture
+ * was taken at, and fall back to the column on a narrow screen. The
+ * lightbox still opens them at full size on click.
+ * ------------------------------------------------------------------ */
+
+.media-figure-wide {
+  width: min(1360px, calc(100vw - 48px));
+  max-width: none !important;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+.media-figure-wide > .feature-shot,
+.media-figure-wide > .feature-video { max-width: none !important; }
+.media-figure-wide figcaption {
+  max-width: var(--max-narrow);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 1000px) {
+  .media-figure-wide {
+    width: 100%;
+    margin-left: 0;
+    transform: none;
+  }
+}
+
+/* --------------------------------------------------------------------
+ * Phones: nothing may make the page wider than the screen.
+ *
+ * A single long token, a filename in a tree or an inline code span, pushes
+ * the whole document sideways and every section then scrolls independently
+ * of the header. Code blocks and tables already scroll inside their own box;
+ * these are the things that did not.
+ * ------------------------------------------------------------------ */
+@media (max-width: 640px) {
+  /* A deep tree row plus a vendor filename is easily wider than a phone.
+   * Let the box scroll rather than the page. */
+  .dataset-tree { overflow-x: auto; }
+
+  /* An inline code span with no spaces in it, a long BIDS basename, breaks
+   * rather than pushing the column out. */
+  code.inline { overflow-wrap: anywhere; }
+
+  /* Figures that break out of the reading column on a desktop must not break
+   * out of the screen. */
+  .media-figure-wide { max-width: 100%; }
+
+  /* The interactive tour's popover is placed against a point on the
+   * screenshot, so on a phone it lands wherever that point is and runs off
+   * the side. Pin it to the bottom of the screen instead, which is where a
+   * phone expects a detail sheet and cannot overflow anything. */
+  .gui-tour-pop {
+    position: fixed;
+    top: auto;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+    max-width: none;
+    z-index: 80;
+  }
+
+  /* Room back from the copy button, which is doing nothing useful at this
+   * width and was eating a third of a short line. */
+  pre.code { padding-right: 20px; font-size: 0.84rem; }
+  .code-copy { display: none; }
+}
+
+/* ==================================================================
+ * The landmark release.
+ *
+ * One card on the Updates page carries a version that changed what the
+ * software is rather than how it behaves, and it should read that way before
+ * a word of it is read: god rays behind the card and a neon version number.
+ *
+ * Both are decoration and both are switched off under prefers-reduced-motion,
+ * which a meaningful share of this audience has on. The card is still legible,
+ * still bordered and still badged without either.
+ * ================================================================== */
+
+.page-updates .release.is-landmark {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  /* The site header is sticky and carries a backdrop-filter. Without paint
+   * containment, Safari treats anything animating under it as a reason to
+   * recompute that backdrop on every frame, for the whole width of the page.
+   * The card already clips its own overflow, so containment costs nothing. */
+  contain: paint;
+  border-color: color-mix(in srgb, var(--accent) 62%, var(--border));
+  box-shadow: 0 0 0 1px var(--glow-accent),
+              0 18px 60px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+/* The waves.
+ *
+ * Two masked layers of a smooth cubic wave, at different scales and drifting
+ * at different speeds in opposite directions, which is what makes the motion
+ * read as flow rather than as a sliding texture. The colour is a CSS gradient
+ * and the SVG is only the MASK, so both themes tint it from --accent without
+ * a second copy of the artwork.
+ */
+.page-updates .release.is-landmark::before,
+.page-updates .release.is-landmark::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  /* The mask never moves. See the note on the keyframes below. */
+  -webkit-mask-position: 0 0;
+  mask-position: 0 0;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+/* The near layer: two waves, the lower one faint, drifting right.
+ *
+ * The downward fade is drawn INTO the mask as stroke-opacity, and the tile
+ * does not repeat vertically, so the band ends by running out of ink rather
+ * than at a line. Doing it this way needs no mask-composite, which is the one
+ * part of CSS masking whose support is still worth not relying on.
+ */
+.page-updates .release.is-landmark::before {
+  background: linear-gradient(103deg,
+      transparent 0%,
+      color-mix(in srgb, var(--accent) 62%, transparent) 22%,
+      color-mix(in srgb, var(--purple, #a371f7) 52%, transparent) 55%,
+      color-mix(in srgb, var(--accent) 58%, transparent) 82%,
+      transparent 100%);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='560' viewBox='0 0 900 560'%3E%3Cg fill='none' stroke='%23000' stroke-linecap='round'%3E%3Cpath stroke-width='18' stroke-opacity='1' d='M-450 130 C -338 70 -112 190 0 130 S 338 70 450 130 S 788 190 900 130 S 1238 70 1350 130'/%3E%3Cpath stroke-width='15' stroke-opacity='0.42' d='M-450 312 C -338 372 -112 252 0 312 S 338 372 450 312 S 788 252 900 312 S 1238 372 1350 312'/%3E%3C/g%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='560' viewBox='0 0 900 560'%3E%3Cg fill='none' stroke='%23000' stroke-linecap='round'%3E%3Cpath stroke-width='18' stroke-opacity='1' d='M-450 130 C -338 70 -112 190 0 130 S 338 70 450 130 S 788 190 900 130 S 1238 70 1350 130'/%3E%3Cpath stroke-width='15' stroke-opacity='0.42' d='M-450 312 C -338 372 -112 252 0 312 S 338 372 450 312 S 788 252 900 312 S 1238 372 1350 312'/%3E%3C/g%3E%3C/svg%3E");
+  -webkit-mask-size: 900px 560px;
+  mask-size: 900px 560px;
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  /* Extended one whole tile to the LEFT, because this layer travels right and
+   * that is the edge which would otherwise be uncovered at the end of a cycle.
+   * Bounded in height for the same reason it is extended only on one side: a
+   * blurred layer the full height of a three-thousand-pixel card is a very
+   * large surface to hand a compositor, and Safari is the one that minds. */
+  top: -40px;
+  height: 560px;
+  left: -940px;
+  right: -40px;
+  /* Softened and faint. These are light moving behind the card, not artwork
+   * drawn on it, and the release notes have to stay comfortable to read. */
+  filter: blur(4px);
+  opacity: 0.17;
+  animation: wave-drift-a 46s linear infinite;
+}
+
+/* The far layer: broader waves on a larger tile, drifting the other way and
+ * slower, so the two never line up and the pattern never visibly repeats. */
+.page-updates .release.is-landmark::after {
+  background: linear-gradient(77deg,
+      transparent 0%,
+      color-mix(in srgb, var(--purple, #a371f7) 46%, transparent) 30%,
+      color-mix(in srgb, var(--accent) 50%, transparent) 70%,
+      transparent 100%);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='760' viewBox='0 0 1200 760'%3E%3Cg fill='none' stroke='%23000' stroke-linecap='round'%3E%3Cpath stroke-width='12' stroke-opacity='1' d='M-600 235 C -450 145 -150 325 0 235 S 450 145 600 235 S 1050 325 1200 235 S 1650 145 1800 235'/%3E%3Cpath stroke-width='10' stroke-opacity='0.3' d='M-600 470 C -450 560 -150 380 0 470 S 450 560 600 470 S 1050 380 1200 470 S 1650 560 1800 470'/%3E%3C/g%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='760' viewBox='0 0 1200 760'%3E%3Cg fill='none' stroke='%23000' stroke-linecap='round'%3E%3Cpath stroke-width='12' stroke-opacity='1' d='M-600 235 C -450 145 -150 325 0 235 S 450 145 600 235 S 1050 325 1200 235 S 1650 145 1800 235'/%3E%3Cpath stroke-width='10' stroke-opacity='0.3' d='M-600 470 C -450 560 -150 380 0 470 S 450 560 600 470 S 1050 380 1200 470 S 1650 560 1800 470'/%3E%3C/g%3E%3C/svg%3E");
+  -webkit-mask-size: 1200px 760px;
+  mask-size: 1200px 760px;
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  /* Travels left, so the spare tile goes on the right. */
+  top: -40px;
+  height: 760px;
+  left: -40px;
+  right: -1240px;
+  filter: blur(3px);
+  opacity: 0.1;
+  animation: wave-drift-b 71s linear infinite;
+}
+
+/* One full tile per cycle, so the loop has no seam.
+ *
+ * These translate the LAYER rather than the mask inside it. The result is
+ * identical, because the mask repeats and a shift of exactly one tile lands on
+ * the same picture, but the cost is not: mask-position is a paint property, so
+ * animating it made Safari re-run the blur over the whole layer on every
+ * frame, which is why this was smooth in Chrome and crawled in Safari.
+ * transform is handled by the compositor, so the layer is rasterized once. */
+@keyframes wave-drift-a {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(900px, 0, 0); }
+}
+@keyframes wave-drift-b {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-1200px, 0, 0); }
+}
+
+/* The version number itself. */
+.page-updates .release.is-landmark .release-head h2 {
+  color: color-mix(in srgb, var(--accent) 22%, #fff);
+  letter-spacing: 0.01em;
+  text-shadow:
+    0 0 4px color-mix(in srgb, var(--accent) 85%, transparent),
+    0 0 14px color-mix(in srgb, var(--accent) 60%, transparent),
+    0 0 34px color-mix(in srgb, var(--accent) 40%, transparent);
+  animation: neon-version 4.2s ease-in-out infinite;
+}
+
+@keyframes neon-version {
+  0%, 100% {
+    text-shadow:
+      0 0 4px color-mix(in srgb, var(--accent) 85%, transparent),
+      0 0 14px color-mix(in srgb, var(--accent) 60%, transparent),
+      0 0 34px color-mix(in srgb, var(--accent) 40%, transparent);
+  }
+  50% {
+    text-shadow:
+      0 0 6px color-mix(in srgb, var(--accent) 95%, transparent),
+      0 0 20px color-mix(in srgb, var(--accent) 78%, transparent),
+      0 0 52px color-mix(in srgb, var(--accent) 55%, transparent);
+  }
+}
+
+/* Light theme: the same idea, dialled back. White paper does not need as much
+ * glow to read as lit, and too much of it turns the heading to mush. */
+:root[data-theme="light"] .page-updates .release.is-landmark::before { opacity: 0.13; }
+:root[data-theme="light"] .page-updates .release.is-landmark::after  { opacity: 0.08; }
+:root[data-theme="light"] .page-updates .release.is-landmark .release-head h2 {
+  color: color-mix(in srgb, var(--accent) 78%, #000);
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--accent) 42%, transparent),
+    0 0 26px color-mix(in srgb, var(--accent) 24%, transparent);
+}
+
+/* The landmark badge, set apart from the plain "Latest" pill. */
+.page-updates .release-badge.is-landmark-badge {
+  background: linear-gradient(100deg,
+      var(--accent), color-mix(in srgb, var(--accent) 45%, var(--purple, #a371f7)));
+  box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-updates .release.is-landmark::before,
+  .page-updates .release.is-landmark::after {
+    animation: none;
+    will-change: auto;
+  }
+  .page-updates .release.is-landmark::before { opacity: 0.15; }
+  .page-updates .release.is-landmark::after  { opacity: 0.09; }
+  .page-updates .release.is-landmark .release-head h2 { animation: none; }
+}
+
+/* A one-paragraph lede on a landmark release, set apart from the change lists
+ * below it so the card opens with what the version IS before it lists parts. */
+.page-updates .rel-lede {
+  margin: 6px 0 2px;
+  font-size: 1.02rem;
+  line-height: 1.62;
+  color: var(--text);
+  max-width: 62ch;
 }

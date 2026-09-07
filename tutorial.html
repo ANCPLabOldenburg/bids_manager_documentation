@@ -29,6 +29,10 @@
         <span class="page-toc-dot" aria-hidden="true"></span>
         Tutorial intro
       </a>
+      <a class="page-toc-link" href="#paths">
+        <span class="page-toc-dot" aria-hidden="true"></span>
+        How the tutorials fit
+      </a>
       <a class="page-toc-link" href="#need">
         <span class="page-toc-dot" aria-hidden="true"></span>
         What you'll need
@@ -41,14 +45,97 @@
         <span class="page-toc-dot" aria-hidden="true"></span>
         Pick a dataset
       </a>
+      <a class="page-toc-link" href="#settings-first">
+        <span class="page-toc-dot" aria-hidden="true"></span>
+        Settings worth a look
+      </a>
       <a class="page-toc-link" href="#gui-tour">
         <span class="page-toc-dot" aria-hidden="true"></span>
         GUI tour
       </a>
-      <a class="page-toc-link" href="#scenes">
-        <span class="page-toc-dot" aria-hidden="true"></span>
-        GUI walkthrough
-      </a>
+      <div class="page-toc-group" data-toc-group>
+        <div class="page-toc-group-head">
+        <a class="page-toc-link" href="#gui-walkthrough">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          GUI walkthrough
+        </a>
+        <button class="page-toc-caret" type="button"
+                aria-expanded="false" aria-controls="toc-steps"
+                aria-label="Show the seventeen steps">
+          <span aria-hidden="true">&#x203a;</span>
+        </button>
+        </div>
+        <div class="page-toc-sublist" id="toc-steps" hidden>
+        <a class="page-toc-link page-toc-sub" href="#step-create">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          1. Create a project
+        </a>
+        <a class="page-toc-link page-toc-sub" href="#step-raw">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          2. Point at raw data
+        </a>
+        <a class="page-toc-link page-toc-sub" href="#step-scan">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          3. Run a scan
+        </a>
+        <a class="page-toc-link page-toc-sub" href="#step-inventory">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          4. Read the inventory
+        </a>
+        <a class="page-toc-link page-toc-sub" href="#step-curate">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          5. Curate the rows
+        </a>
+        <a class="page-toc-link page-toc-sub" href="#step-collisions">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          6. Resolve duplicate names
+        </a>
+        <a class="page-toc-link page-toc-sub" href="#step-template">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          7. Fill the template
+        </a>
+        <a class="page-toc-link page-toc-sub" href="#step-overrides">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          8. Per-recording overrides
+        </a>
+        <a class="page-toc-link page-toc-sub" href="#step-companions">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          9. Companions and blood
+        </a>
+        <a class="page-toc-link page-toc-sub" href="#step-preview">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          10. Preview the BIDS tree
+        </a>
+        <a class="page-toc-link page-toc-sub" href="#step-convert">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          11. Run the conversion
+        </a>
+        <a class="page-toc-link page-toc-sub" href="#step-report">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          12. Read the report
+        </a>
+        <a class="page-toc-link page-toc-sub" href="#step-editor">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          13. Open the Editor
+        </a>
+        <a class="page-toc-link page-toc-sub" href="#step-edit-files">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          14. Edit sidecars and tables
+        </a>
+        <a class="page-toc-link page-toc-sub" href="#step-viewers">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          15. Images and signals
+        </a>
+        <a class="page-toc-link page-toc-sub" href="#step-validate">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          16. Validate
+        </a>
+        <a class="page-toc-link page-toc-sub" href="#step-finish">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          17. Fix and finish
+        </a>
+        </div>
+      </div>
       <a class="page-toc-link" href="#cli-ref">
         <span class="page-toc-dot" aria-hidden="true"></span>
         CLI reference
@@ -69,25 +156,93 @@
         <span class="section-eyebrow">Tutorial</span>
         <h1>Walk the BIDS Manager GUI and CLI workflow on real data.</h1>
         <p class="lead">
-          One end-to-end walkthrough. You'll watch the GUI step
-          through scanning, curating, converting, enriching and
-          validating a real MRI dataset, then see the same four
-          stages run from the command line. Step at your own pace,
-          or download one of the four sample datasets and follow
-          along on your own machine.
+          One walkthrough from end to end. Seventeen steps take the GUI from
+          an empty folder to a validated dataset, scanning, curating,
+          converting, annotating and checking a real MRI dataset, and the
+          section after them runs the same workflow from the command line.
+          Read at your own pace, or download one of the six sample datasets
+          and follow along on your own machine.
         </p>
 
         <div class="callout callout-tip">
           <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
           <div>
-            <strong>What makes BIDS Manager different: the scan step.</strong>
-            <p>Other DICOM-to-BIDS tools require you to declare up
-              front how each series should be classified. BIDS Manager
-              <em>scans the raw data first</em> and shows you what is
-              actually inside the folders. Every series, every entity
-              guess, every confidence score. The interactive table
-              you edit is the same one the converter consumes, so
-              what you see is what gets written.</p>
+            <strong>What makes BIDS Manager different.</strong>
+            <p><strong>It looks before it converts.</strong> Other tools ask
+              you to declare up front what each series is, in a heuristic file
+              or a configuration. BIDS Manager <em>scans the raw data first</em>
+              and shows you what is actually there: every series, every entity
+              guess, every confidence score. The table you edit is the same one
+              the converter consumes, so what you see is what is written into
+              your BIDS dataset.</p>
+            <p><strong>It is a curation and annotation tool, not only a
+              converter.</strong> Getting the files into the right folders is
+              the easy half. The hard half is describing them: which run is
+              which, what the task was, what the reference and the ground were,
+              how much tracer was injected and when. You get a table to curate,
+              templates that ask each question once for a whole study,
+              per-recording overrides for the exceptions, and a record of where
+              every answer came from.</p>
+            <p><strong>It refuses to lose your data.</strong> If two recordings
+              would be written to the same BIDS filename, the conversion stops
+              and tells you which two files, instead of writing one over the
+              other.</p>
+            <p><strong>It tells you what is wrong, and where the rule comes
+              from.</strong> The validator is part of the same application,
+              reads the same BIDS schema, and cites the schema rule behind
+              every finding.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 1b. How the tutorials fit together
+         ============================================================ -->
+    <section class="section" id="paths">
+      <div class="container container-narrow prose">
+        <div class="section-header">
+          <span class="section-eyebrow">How the tutorials fit together</span>
+          <h2 class="section-title">Two ways in, and they do not repeat each other.</h2>
+        </div>
+
+        <div class="path-cards">
+          <div class="path-card path-card-here">
+            <span class="path-card-tag">You are here</span>
+            <h3>GUI and CLI overview</h3>
+            <p>
+              The complete workflow, explained once, for any modality. Every
+              step of the interface in order, then the same work from the
+              command line, then a reference for every command and flag. Where
+              a step genuinely differs between modalities it carries a tab.
+            </p>
+            <p class="path-card-for">
+              <strong>Read this</strong> to learn the tool, or to look up what a
+              control does.
+            </p>
+          </div>
+
+          <div class="path-card">
+            <span class="path-card-tag">Six of them</span>
+            <h3>Full tutorials by modality</h3>
+            <p>
+              One dataset, start to finish, with the detail that only applies to
+              that kind of data: how subjects are worked out, which metadata the
+              conversion can and cannot answer, what the real numbers are, and
+              what typically needs fixing afterwards.
+            </p>
+            <p class="path-card-for">
+              <strong>Read one</strong> to convert data of your own, alongside a
+              dataset you can download and follow exactly.
+            </p>
+            <p>
+              <a href="tutorial-mri.html">MRI</a> &middot;
+              <a href="tutorial-mri-advanced.html">MRI, advanced</a> &middot;
+              <a href="tutorial-pet.html">PET</a> &middot;
+              <a href="tutorial-eeg.html">EEG</a> &middot;
+              <a href="tutorial-meg.html">MEG</a> &middot;
+              <a href="tutorial-multimodal.html">Multimodal</a>
+            </p>
           </div>
         </div>
       </div>
@@ -104,19 +259,22 @@
         </div>
         <ul class="checklist">
           <li>
-            <strong>BIDS Manager installed.</strong> The one-click
-            bootstrap installer is the quickest path; pip works too.
+            <strong>BIDS Manager installed, and nothing else.</strong> The
+            one-click bootstrap installer is the quickest path, and
+            <code class="inline">pip install bids-manager</code> works too.
+            Either way every conversion engine is installed with it, so there
+            is no second tool to fetch before you start.
             See the <a href="installation.html">installation guide</a>.
           </li>
           <li>
-            <strong>One raw dataset.</strong> Either one of the four
-            sample datasets below (each is a small University of Oldenburg cloud download),
-            or your own folder of recordings.
+            <strong>One raw dataset.</strong> Either one of the six sample
+            datasets below, each a small download from the University of
+            Oldenburg cloud, or your own folder of recordings.
           </li>
           <li>
-            <strong>About 20 minutes.</strong> The GUI walkthrough
-            runs six steps; the CLI section runs five commands. Both
-            use the same engine, so the order is up to you.
+            <strong>About 30 minutes.</strong> The GUI walkthrough runs
+            seventeen steps and the command-line section runs five commands.
+            Both drive the same engine, so the order is up to you.
           </li>
         </ul>
       </div>
@@ -136,8 +294,8 @@
             runs in eight stages, alternating user-driven and
             engine-driven steps. Every step below mirrors what BIDS
             Manager does on disk, using the same engine the CLI exposes.
-            The full interactive diagram lives on the
-            <a href="intro.html#how-it-works">intro page</a>.
+            The full interactive diagram is on the
+            <a href="about.html#how-it-works">About page</a>.
           </p>
         </div>
         <ol class="workflow-mini">
@@ -160,13 +318,15 @@
       <div class="container">
         <div class="section-header">
           <span class="section-eyebrow">Pick a dataset</span>
-          <h2 class="section-title">Four sample datasets, one workflow.</h2>
+          <h2 class="section-title">Six sample datasets, one workflow.</h2>
           <p class="section-lead">
             The walkthrough below uses the primary MRI dataset
-            (<em>Oldenburg neuroimaging unit</em>). Pick any of the
-            four to download and follow along. Each <em>More info</em>
-            link opens a page with the dataset tree, real CLI numbers,
-            and modality-specific quirks.
+            (<em>Oldenburg neuroimaging unit</em>), but any of the six will
+            follow the same seventeen steps. Each <em>More info</em> link opens
+            that dataset's own page, with its folder tree, the real numbers
+            from a full run, and the quirks specific to that modality. Those
+            pages are also listed under <em>Tutorials</em> in the site
+            navigation.
           </p>
         </div>
 
@@ -193,7 +353,7 @@
             <h3>PhysioNet motor imagery.</h3>
             <p class="modality-meta">2 subjects &middot; 14 EDF runs each &middot; 28 inventory rows.</p>
             <p class="modality-desc">
-              Showcases the task-name override scene: filenames carry
+              Shows the task-name override case: filenames carry
               only an opaque run token (S001R01...). The user assigns
               the real protocol task names in the interactive table
               before any conversion runs.
@@ -201,6 +361,46 @@
             <div class="modality-actions">
               <a class="btn btn-primary" href="https://cloud.uol.de/s/T66zc5mN4eeZPGK/download" data-goatcounter-click="download-dataset-eeg" data-goatcounter-title="EEG sample dataset" target="_blank" rel="noopener">Download ZIP</a>
               <a class="btn btn-ghost" href="tutorial-eeg.html">More info &rarr;</a>
+            </div>
+          </article>
+
+          <!-- PET -->
+          <article class="modality-card mod-pet">
+            <span class="modality-badge">PET</span>
+            <h3>One FDG scan, with its paperwork.</h3>
+            <p class="modality-meta">35 DICOM files &middot; PMOD blood curves &middot; 959 KB</p>
+            <p class="modality-desc">
+              A GE Advance phantom acquisition, the two blood curves drawn
+              during it, and the operator's dose record. Covers the PET metadata
+              template, attaching arterial blood to the run it belongs to, and
+              the nine required fields no scanner writes down.
+            </p>
+            <div class="modality-actions">
+              <a class="btn btn-primary" href="https://cloud.uol.de/s/CGcjfTpxzFWnrdz/download"
+                 data-goatcounter-click="download-dataset-pet"
+                 data-goatcounter-title="PET sample dataset"
+                 target="_blank" rel="noopener">Download</a>
+              <a class="btn btn-ghost" href="tutorial-pet.html">More info &rarr;</a>
+            </div>
+          </article>
+
+          <!-- Multimodal -->
+          <article class="modality-card mod-multimodal">
+            <span class="modality-badge">Multimodal</span>
+            <h3>One participant, four modalities.</h3>
+            <p class="modality-meta">MRI, PET, EEG and MEG &middot; 10 inventory rows &middot; 57 MB</p>
+            <p class="modality-desc">
+              One visit through four machines, in four file formats. Produces a
+              single inventory, three conversion engines in one pass, and the
+              problem that makes multimodal hard: four modalities that disagree
+              about who was scanned.
+            </p>
+            <div class="modality-actions">
+              <a class="btn btn-primary" href="https://cloud.uol.de/s/o6XCk6zH9DYpoes/download"
+                 data-goatcounter-click="download-dataset-multimodal"
+                 data-goatcounter-title="Multimodal sample dataset"
+                 target="_blank" rel="noopener">Download</a>
+              <a class="btn btn-ghost" href="tutorial-multimodal.html">More info &rarr;</a>
             </div>
           </article>
 
@@ -246,609 +446,1736 @@
     <div data-include="tutorial-gui-tour"></div>
 
     <!-- ============================================================
-         Section 6. GUI walkthrough (state machine in script.js).
-         Uses the primary MRI dataset (Oldenburg neuroimaging unit).
+         Section 6. Convert a dataset with the GUI, step by step
          ============================================================ -->
-    <section class="section" id="scenes">
-      <div class="container">
+    <section class="section" id="gui-walkthrough">
+      <div class="container container-narrow prose">
         <div class="section-header">
-          <span class="section-eyebrow">GUI walkthrough &middot; Primary MRI dataset</span>
-          <h2 class="section-title">Walk the GUI, step by step.</h2>
+          <span class="section-eyebrow">GUI walkthrough</span>
+          <h2 class="section-title">The GUI walkthrough, step by step.</h2>
           <p class="section-lead">
-            Six steps using the primary MRI dataset (Oldenburg
-            neuroimaging unit: 3 folders, 2 BIDS subjects). Use the dots or
-            the prev / next buttons to step through. For the
-            full dataset detail (tree, real CLI numbers, quirks)
-            see the <a href="tutorial-mri.html">MRI 1 info page</a>.
+            Seventeen steps, from an empty window to a validated dataset. The
+            steps are the same for every modality; where a modality genuinely
+            differs, the step carries a tab for it. Each step is listed
+            separately in the page navigation, so you can come back to one of
+            them without scrolling through the rest.
           </p>
         </div>
 
-        <!-- Modality-agnostic framing: the GUI flow is the same for
-             every supported modality; only the per-row backend dispatch
-             differs. -->
-        <div class="callout callout-info" style="margin-bottom: 28px;">
+        <div class="callout callout-info">
           <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
           <div>
-            <strong>This walkthrough is modality-agnostic.</strong>
-            <p>The example below uses the primary MRI dataset because
-              it exercises every datatype (anat, func, dwi, fmap,
-              physio) in a single small folder, but
-              <em>the six steps below are identical for EEG and MEG
-              data</em>. Only the per-row backend swaps:
-              <code class="inline">dcm2niix</code> for DICOM rows,
-              <code class="inline">mne-bids</code> for EDF / FIF / BDF
-              / BrainVision / CTF, and
-              <code class="inline">bidsphysio</code> for Siemens CMRR
-              physio. The Scan -> Inspect -> Convert -> Editor flow
-              you see here is what you do on every supported modality.
-              For modality-specific quirks (session inference from
-              date-named folders, task name overrides in EDF, DWI
-              derivative detection, etc.), see the
+            <strong>One workflow, whatever you are converting.</strong>
+            <p>
+              The examples use the primary MRI dataset, because it exercises
+              anatomical, functional, diffusion, fieldmap and physiological data
+              in one small folder. Only the engine behind each row changes:
+              <code class="inline">dcm2niix</code> for DICOM,
+              <code class="inline">mne-bids</code> for EEG, MEG and iEEG
+              recordings, <code class="inline">pet2bids</code> for PET ECAT and
+              blood curves, and <code class="inline">bidsphysio</code> for the
+              physiological signals stored inside Siemens MRI DICOM files. For
+              per-modality detail see the
+              <a href="tutorial-mri.html">MRI</a>,
+              <a href="tutorial-pet.html">PET</a>,
               <a href="tutorial-eeg.html">EEG</a>,
-              <a href="tutorial-meg.html">MEG</a>, or
-              <a href="tutorial-mri-advanced.html">MRI advanced</a>
-              info pages.</p>
+              <a href="tutorial-meg.html">MEG</a> and
+              <a href="tutorial-multimodal.html">multimodal</a> pages.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Step 1. Create a project
+         ============================================================ -->
+    <section class="section" id="step-create">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 1</span>
+        <h2>Create a project</h2>
+        <p>
+          Everything you do lives inside a <strong>project</strong>. A project
+          is your dataset folder plus a hidden record of every scan you have
+          run and every edit you have made, so you can close the application
+          and pick the work up exactly where you left it.
+        </p>
+
+        <p>
+          On the <strong>Home</strong> tab choose <strong>Create</strong>, give
+          the dataset a folder and a name, and BIDS Manager scaffolds
+          <code class="inline">dataset_description.json</code>, a README and a
+          <code class="inline">.bidsignore</code> for you. If you have worked
+          on this dataset before, choose <strong>Open</strong>, or pick it from
+          the recent list.
+        </p>
+
+        <p>
+          The name you type here is written into
+          <code class="inline">dataset_description.json</code> as the dataset
+          title. If you later change that name, BIDS Manager asks whether you
+          meant to rename the project folder as well, or to keep the folder
+          name and use the new one as the dataset title. It does not guess.
+        </p>
+
+        <p><strong>What you should see now:</strong> the Converter tab, with an
+          empty inventory table and the project name in the header.</p>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="Creating or opening a dataset project on the Home tab"
+                 data-dark="assets/features/create_or_open_a_new_dataset_project_dark.mp4"
+                 data-light="assets/features/create_or_open_a_new_dataset_project_light.mp4"></video>
+          <figcaption>
+            <strong>Create</strong> scaffolds a new BIDS dataset, with
+            <code class="inline">dataset_description.json</code>, a README and a
+            <code class="inline">.bidsignore</code>, and starts the project that
+            records everything you do next. <strong>Open</strong> continues a
+            project you already started, or adopts a dataset created elsewhere.
+            From this point the BIDS output is fixed to the project you chose,
+            so there is no second output path to set and no way to convert into
+            the wrong folder by mistake.
+          </figcaption>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Step 1b. Settings worth knowing about
+         ============================================================ -->
+    <section class="section" id="settings-first">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Before you scan</span>
+        <h2>Two settings worth a look first.</h2>
+        <p>
+          The defaults are chosen so you can convert a dataset without opening
+          Settings at all, and most of what is in there can wait. Two things are
+          worth knowing before you start, because they are easier to set now than
+          to change later. The gear is in the header.
+        </p>
+
+        <h3>Which version of BIDS you are working to</h3>
+        <p>
+          The first tab decides which version of the standard this session works
+          to, and it reaches everything downstream: the fields the metadata forms
+          ask for, the entities a filename may carry, the
+          <code class="inline">BIDSVersion</code> written into
+          <code class="inline">dataset_description.json</code>, and the rules
+          validation judges the result by.
+        </p>
+        <p>
+          Leave it on the newest for a new dataset. Change it when you are adding
+          to a dataset that was built against an older version, so the forms ask
+          for that version's fields and validation does not report changes the
+          standard made after your data was collected.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The BIDS version tab of the Settings dialog, with a summary of the selected version"
+               src="assets/features/settings_bids_version_dark.png"
+               data-light="assets/features/settings_bids_version_light.png">
+          <figcaption>
+            <strong>One choice, applied everywhere.</strong> The summary line
+            under the dropdown says what the selected version actually contains,
+            here 16 datatypes, 35 entities and 449 metadata fields, so the choice
+            is not an abstract number. The command line takes the same choice per
+            run as <code class="inline">--schema</code>.
+          </figcaption>
+        </figure>
+
+        <h3>What happens automatically after a conversion</h3>
+        <p>
+          The <strong>Convert and post-convert</strong> tab holds the chain that
+          runs after every conversion: generate the metadata, mark what could not
+          be filled, validate, and write a report. It is all on by default, which
+          is why the walkthrough below can go straight from converting to reading
+          findings without a separate step.
+        </p>
+        <p>
+          The setting in the same tab that matters most is <strong>Existing
+          subjects</strong>. The default, Skip, keeps what is already in the
+          dataset and adds only what is new, so re-running a conversion is safe.
+          The others exist for when you deliberately want to replace something.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The Convert and post-convert tab, showing the conversion defaults and the post-conversion chain"
+               src="assets/features/settings_convert_tab_dark.png"
+               data-light="assets/features/settings_convert_tab_light.png">
+          <figcaption>
+            <strong>The chain, as a hierarchy.</strong> Each step is a checkbox,
+            and the indented ones belong to the step above them, so turning off
+            validation turns off the deep checks and the report with it.
+          </figcaption>
+        </figure>
+
+        <div class="callout callout-info">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>The rest can wait.</strong>
+            <p>
+              Scan rules, the validation filters, worker counts and the display
+              options are all covered in the
+              <a href="gui-tour.html">GUI tour</a>, tab by tab. Nothing in them
+              needs setting before a first conversion.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Step 2. Point at your raw data
+         ============================================================ -->
+    <section class="section" id="step-raw">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 2</span>
+        <h2>Point at your raw data</h2>
+        <p>
+          Press <strong>Scan</strong> and choose the folder holding your raw
+          recordings. Point at the <em>top</em> of the tree, not at one
+          subject. The scanner walks down through everything below it and works
+          out subjects, sessions and series for itself.
+        </p>
+
+        <p>
+          You do not have to tell it what is in there, and you do not have to
+          separate the modalities first. A folder holding MRI DICOM, EEG
+          recordings and PET data all at once produces a single inventory with
+          every recording in it.
+        </p>
+
+        <div class="callout callout-info">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Nothing is written yet.</strong>
+            <p>Scanning only reads. No file is converted, moved, renamed or
+              written to disk until you press Run conversion in Step 11.</p>
           </div>
         </div>
 
-        <!-- Scene state machine markup. initTutorialScenes() (script.js)
-             owns activation, animation playback, auto-advance and
-             keyboard navigation. -->
-        <div class="scene-stage" data-scenes>
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="Choosing the raw data input folder"
+                 data-dark="assets/features/choose_a_raw_data_input_folder_dark.mp4"
+                 data-light="assets/features/choose_a_raw_data_input_folder_light.mp4"></video>
+          <figcaption>
+            Choosing the raw input folder. It can hold DICOM directories, EDF,
+            FIF or BrainVision files, CTF <code class="inline">.ds</code>
+            folders, ECAT files and physiological logs, in any arrangement. The
+            <strong>Scan</strong> button enables once the path is valid, and
+            this is the only path you set: the output was fixed when you opened
+            the project.
+          </figcaption>
+        </figure>
 
-          <!-- Top control bar: progress dots + prev / pause / next. -->
-          <div class="scene-controls">
-            <ol class="scene-progress" role="tablist"
-                aria-label="Tutorial steps">
-              <li><button class="scene-dot is-active" type="button"
-                          data-scene-jump="1" role="tab"
-                          aria-selected="true"
-                          aria-label="Step 1: Start a project">
-                <span class="scene-dot-num">1</span>
-                <span class="scene-dot-label">Project</span>
-              </button></li>
-              <li><button class="scene-dot" type="button"
-                          data-scene-jump="2" role="tab"
-                          aria-selected="false"
-                          aria-label="Step 2: Run scan">
-                <span class="scene-dot-num">2</span>
-                <span class="scene-dot-label">Scan</span>
-              </button></li>
-              <li><button class="scene-dot" type="button"
-                          data-scene-jump="3" role="tab"
-                          aria-selected="false"
-                          aria-label="Step 3: Inspect table">
-                <span class="scene-dot-num">3</span>
-                <span class="scene-dot-label">Inspect</span>
-              </button></li>
-              <li><button class="scene-dot" type="button"
-                          data-scene-jump="4" role="tab"
-                          aria-selected="false"
-                          aria-label="Step 4: Run conversion">
-                <span class="scene-dot-num">4</span>
-                <span class="scene-dot-label">Convert</span>
-              </button></li>
-              <li><button class="scene-dot" type="button"
-                          data-scene-jump="5" role="tab"
-                          aria-selected="false"
-                          aria-label="Step 5: Open in Editor">
-                <span class="scene-dot-num">5</span>
-                <span class="scene-dot-label">Editor</span>
-              </button></li>
-              <li><button class="scene-dot" type="button"
-                          data-scene-jump="6" role="tab"
-                          aria-selected="false"
-                          aria-label="Step 6: Inspect the data">
-                <span class="scene-dot-num">6</span>
-                <span class="scene-dot-label">Viewers</span>
-              </button></li>            </ol>
+      </div>
+    </section>
 
-            <div class="scene-controls-row">
-              <button type="button" class="scene-btn" data-scene-prev
-                      aria-label="Previous step">&larr; Prev</button>
-              <span class="scene-counter" data-scene-counter>
-                Step <strong>1</strong> of 6
-              </span>
-              <button type="button" class="scene-btn" data-scene-next
-                      aria-label="Next step">Next &rarr;</button>
-              <button type="button" class="scene-btn scene-btn-play"
-                      data-scene-play
-                      aria-label="Pause / play auto-advance">Pause</button>
-              <button type="button" class="scene-btn scene-btn-replay"
-                      data-scene-replay
-                      aria-label="Replay current step">Replay</button>
-            </div>
+    <!-- ============================================================
+         Step 3. Run a scan
+         ============================================================ -->
+    <section class="section" id="step-scan">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 3</span>
+        <h2>Run a scan</h2>
+        <p>
+          The scan opens every file it finds and reads the metadata inside it.
+          Not the filenames: the headers. For DICOM that means the acquisition
+          parameters, the study and series identifiers, the patient identifiers
+          used to group subjects, and the timestamps. For EEG and MEG it means
+          channel counts by type, sampling frequency, duration, and the
+          recording date used to infer sessions.
+        </p>
+
+        <p>
+          It then classifies each recording, proposing a datatype and a suffix
+          with a confidence score, and builds one row per recording.
+        </p>
+
+        <h3>Probe convert, and why to leave it on</h3>
+        <p>
+          With <strong>probe convert</strong> enabled, the scan additionally
+          runs the converter once per series and reads the sidecar it produced.
+          That is how BIDS Manager knows, before you have typed anything, which
+          metadata fields the conversion is going to answer by itself. Those
+          fields are then shown to you as already answered rather than asked
+          for. It costs some scanning time and saves a great deal of typing.
+        </p>
+
+        <p><strong>What you should see now:</strong> the inventory table filled
+          with rows, and the chips in the toolbar showing how many are valid,
+          how many carry warnings, and how many were auto-skipped.</p>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="Scanning the raw data folder"
+                 data-dark="assets/features/scan_raw_data_dark.mp4"
+                 data-light="assets/features/scan_raw_data_light.mp4"></video>
+          <figcaption>
+            A scan of the MRI sample dataset. The status line names the stage it
+            is in, walking the folder, reading headers, grouping subjects, and
+            the chips settle on their final counts: 21 recordings to keep and 12
+            localisers and scanner reports skipped automatically, 33 rows in
+            total. Because the scanner reads inside the files rather than
+            trusting their names, mixed subjects, repeated takes and residual
+            volumes all arrive as separate rows you can see.
+          </figcaption>
+        </figure>
+
+        <div class="tabs" data-tabs>
+          <div class="tab-buttons" role="tablist" aria-label="Scan behaviour by modality">
+            <button class="tab-btn is-active" data-tab="mri"
+                    role="tab" aria-selected="true">MRI</button>
+            <button class="tab-btn" data-tab="pet"
+                    role="tab" aria-selected="false">PET</button>
+            <button class="tab-btn" data-tab="eegmeg"
+                    role="tab" aria-selected="false">EEG and MEG</button>
           </div>
 
-          <!-- ================================================
-               SCENE 1. Pick the raw and BIDS folders.
-               ================================================ -->
-          <article class="scene" data-scene="1" data-scene-key="folders"
-                   data-active aria-labelledby="scene-1-title">
-            <header class="scene-header">
-              <span class="scene-eyebrow">Step 1</span>
-              <h3 id="scene-1-title">Create a project, then point at your raw data.</h3>
-              <p>
-                BIDS Manager is project-first. On the
-                <strong>Welcome</strong> tab you create a new BIDS dataset
-                or open an existing one; the BIDS output is then locked to
-                that project. In the Converter you set just one path:
-                <strong>Raw input</strong>, the folder that holds your
-                recordings (one subfolder per scanning session). Everything
-                you do is saved into the project, so you can close the app
-                and resume later.
-              </p>
-              <div class="scene-link">
-                <span class="scene-link-icon">&#8634;</span>
-                <div>
-                  <strong>Pre-conditions for everything below</strong>
-                  <p>The <em>Scan</em> button stays disabled until a
-                    project is open and the raw input path is valid.
-                    <em>Run conversion</em> stays disabled until a scan
-                    finishes.</p>
-                </div>
-              </div>
-            </header>
-
-            <div class="scene-body">
-              <figure class="media-figure">
-                <video class="feature-video" muted loop playsinline preload="metadata"
-                       aria-label="Creating or opening a dataset project on the Welcome tab"
-                       data-dark="assets/features/create_or_open_a_new_dataset_project_dark.mp4"
-                       data-light="assets/features/create_or_open_a_new_dataset_project_light.mp4"></video>
-                <figcaption>
-                  On the <strong>Welcome</strong> tab, create a fresh BIDS
-                  dataset (it scaffolds dataset_description.json, README, and
-                  .bidsignore) or open an existing one. From here on the BIDS
-                  output is locked to that project.
-                </figcaption>
-              </figure>
-              <figure class="media-figure" style="margin-top: 24px;">
-                <video class="feature-video" muted loop playsinline preload="metadata"
-                       aria-label="Choosing the raw data input folder in the Converter"
-                       data-dark="assets/features/choose_a_raw_data_input_folder_dark.mp4"
-                       data-light="assets/features/choose_a_raw_data_input_folder_light.mp4"></video>
-                <figcaption>
-                  Then, in the Converter, point <strong>Raw input</strong> at
-                  the folder that holds your recordings. The <em>Scan</em>
-                  button enables once the path is valid.
-                </figcaption>
-              </figure>
-            </div>
-          </article>
-
-          <!-- ================================================
-               SCENE 2. Run a scan.
-               ================================================ -->
-          <article class="scene" data-scene="2" data-scene-key="scan"
-                   aria-labelledby="scene-2-title">
-            <header class="scene-header">
-              <span class="scene-eyebrow">Step 2</span>
-              <h3 id="scene-2-title">Run a scan.</h3>
-              <p>
-                The <em>Scan&hellip;</em> button kicks off an inventory
-                walker. It reads metadata from inside every file (DICOM
-                tags, EDF / FIF headers), clusters folders into BIDS
-                subjects by <code class="inline">PatientID</code>, groups
-                files into series by
-                <code class="inline">SeriesInstanceUID</code>, and stamps
-                each series with a <code class="inline">bids_guess_*</code>
-                entity tuple plus a confidence score. The status chips
-                (valid / warnings / error / skipped) tick to their final
-                counts as it runs.
-              </p>
-              <div class="scene-link">
-                <span class="scene-link-icon">i</span>
-                <div>
-                  <strong>Teach the scanner your own rules.</strong>
-                  <p>Settings &rarr; <em>Scan rules</em> lets you add
-                    classifier hints and series exclusions (by sequence
-                    name or path) when the defaults miss something. They
-                    are schema-constrained and persisted, and the CLI reads
-                    the same rules via
-                    <code class="inline">--rules-file</code>.</p>
-                </div>
-              </div>
-            </header>
-
-            <div class="scene-body">
-              <figure class="media-figure">
-                <video class="feature-video" muted loop playsinline preload="metadata"
-                       aria-label="Scanning the raw data; status chips tick up live"
-                       data-dark="assets/features/scan_raw_data_dark.mp4"
-                       data-light="assets/features/scan_raw_data_light.mp4"></video>
-                <figcaption>
-                  A scan on the primary MRI sample. The scanner reads metadata
-                  from inside every file rather than trusting filenames, so
-                  mixed subjects, residual volumes, and repeated takes all
-                  surface as separate rows you can see. The status text streams
-                  the current stage (walking the folder, reading headers,
-                  clustering subjects) and the chips settle on their final
-                  counts: 21 keepers, 12 auto-skipped scouts and reports, for
-                  33 inventory rows in total.
-                </figcaption>
-              </figure>
-              <figure class="media-figure" style="margin-top: 24px;">
-                <video class="feature-video" muted loop playsinline preload="metadata"
-                       aria-label="Adding scan rules in Settings"
-                       data-dark="assets/features/settings_scan_rules_dark.mp4"
-                       data-light="assets/features/settings_scan_rules_light.mp4"></video>
-                <figcaption>
-                  Settings &rarr; Scan rules. A <em>hint</em> forces any series
-                  whose name matches a pattern to a datatype / suffix / task you
-                  choose (for example, route anything containing "rest" to
-                  func / bold, task rest); an <em>exclusion</em> drops anything
-                  matching a sequence name or path. Both are schema-constrained,
-                  saved with the project, and read by the CLI via
-                  <code class="inline">--rules-file</code>.
-                </figcaption>
-              </figure>
-            </div>
-          </article>
-
-          <!-- ================================================
-               SCENE 3. Inspect the inventory table.
-               ================================================ -->
-          <article class="scene" data-scene="3" data-scene-key="inspect"
-                   aria-labelledby="scene-3-title">
-            <header class="scene-header">
-              <span class="scene-eyebrow">Step 3</span>
-              <h3 id="scene-3-title">Inspect and curate the inventory.</h3>
-              <p>
-                Once the scan finishes, the Converter fills with panes that
-                share one model: the Inspection table (one row per series),
-                the Filter / structure tree, the Properties panel, and the
-                bottom BIDS preview. Whatever you edit anywhere updates
-                everywhere. Review every conversion decision here before a
-                single byte is written.
-              </p>
-              <div class="scene-link">
-                <span class="scene-link-icon">&#8644;</span>
-                <div>
-                  <strong>One model, many views.</strong>
-                  <p>The clips below walk the table colour-coding, the
-                    structure filter, bulk editing, column management,
-                    per-row properties, dataset-wide metadata
-                    (EEG / MEG enrichment), and the BIDS preview.</p>
-                </div>
-              </div>
-            </header>
-
-            <div class="scene-body">
-              <figure class="media-figure">
-                <video class="feature-video" muted loop playsinline preload="metadata"
-                       aria-label="Colour-coded inspection table"
-                       data-dark="assets/features/inspection_table_color_coding_seqs_dark.mp4"
-                       data-light="assets/features/inspection_table_color_coding_seqs_light.mp4"></video>
-                <figcaption>
-                  <strong>Colour-coded inspection table.</strong> One editable
-                  row per series, with the predicted BIDS basename, datatype,
-                  task, run, and the classifier's confidence. The
-                  <code class="inline">sequence / source</code> column keeps the
-                  raw scanner label so you can cross-check what each row really
-                  is, and rows are tinted by status (keep / skip / non-image /
-                  warning) so anything that needs attention stands out. Click
-                  any cell to edit it.
-                </figcaption>
-              </figure>
-              <figure class="media-figure" style="margin-top: 24px;">
-                <video class="feature-video" muted loop playsinline preload="metadata"
-                       aria-label="Filter and structure view"
-                       data-dark="assets/features/filter_tab_feature_dark.mp4"
-                       data-light="assets/features/filter_tab_feature_light.mp4"></video>
-                <figcaption>
-                  <strong>Filter / structure.</strong> A schema-grouped tree of
-                  every series, by subject / session / datatype, with tri-state
-                  checkboxes. Filter by entity to focus the table on a subset,
-                  or untick a whole group to drop those rows from the next
-                  conversion. It is the same underlying model as the table, just
-                  shown as a tree.
-                </figcaption>
-              </figure>
-              <figure class="media-figure" style="margin-top: 24px;">
-                <video class="feature-video" muted loop playsinline preload="metadata"
-                       aria-label="Bulk editing multiple rows"
-                       data-dark="assets/features/bulk_edit_feature_dark.mp4"
-                       data-light="assets/features/bulk_edit_feature_light.mp4"></video>
-                <figcaption>
-                  <strong>Bulk edit.</strong> Shift- or Cmd-click to select
-                  several rows, then click <em>Bulk edit</em> in the table
-                  footer, pick a column, and type one value to write it to every
-                  selected row at once, instead of editing them one by one.
-                  Ideal for relabelling a whole session or task in a single
-                  step.
-                </figcaption>
-              </figure>
-              <figure class="media-figure" style="margin-top: 24px;">
-                <video class="feature-video" muted loop playsinline preload="metadata"
-                       aria-label="Managing inventory table columns"
-                       data-dark="assets/features/manage_columns_feature_dark.mp4"
-                       data-light="assets/features/manage_columns_feature_light.mp4"></video>
-                <figcaption>
-                  <strong>Manage columns.</strong> Show, hide, reorder, and
-                  resize the inventory columns to match the dataset you are
-                  curating. Each column carries a description so you know what it
-                  holds, and your chosen layout is remembered between
-                  sessions.
-                </figcaption>
-              </figure>
-              <figure class="media-figure" style="margin-top: 24px;">
-                <video class="feature-video" muted loop playsinline preload="metadata"
-                       aria-label="Per-row properties panel"
-                       data-dark="assets/features/properties_panel_dark.mp4"
-                       data-light="assets/features/properties_panel_light.mp4"></video>
-                <figcaption>
-                  <strong>Per-row properties.</strong> A schema-aware editor
-                  showing only the entities valid for the row's
-                  datatype + suffix, required fields marked, with a live
-                  predicted path. EEG / MEG rows also carry minimal metadata
-                  and per-row device overrides.
-                </figcaption>
-              </figure>
-              <figure class="media-figure" style="margin-top: 24px;">
-                <video class="feature-video" muted loop playsinline preload="metadata"
-                       aria-label="Dataset metadata enrichment dialog"
-                       data-dark="assets/features/dataset_metadata_feature_dark.mp4"
-                       data-light="assets/features/dataset_metadata_feature_light.mp4"></video>
-                <figcaption>
-                  <strong>Dataset metadata (EEG / MEG enrichment).</strong>
-                  Fill dataset-wide fields once and the converter writes them
-                  into every sidecar: reference, ground, hardware filters,
-                  device and cap, institution, power-line frequency, and event
-                  labels. Modality-agnostic fields (shared by every recording)
-                  and modality-specific ones are colour-separated, and each
-                  carries its BIDS-schema definition as a tooltip.
-                </figcaption>
-              </figure>
-              <figure class="media-figure" style="margin-top: 24px;">
-                <video class="feature-video" muted loop playsinline preload="metadata"
-                       aria-label="BIDS preview of the future filesystem layout"
-                       data-dark="assets/features/bids_preview_dark.mp4"
-                       data-light="assets/features/bids_preview_light.mp4"></video>
-                <figcaption>
-                  <strong>BIDS preview.</strong> The bottom dock previews the
-                  exact filesystem layout, every folder, file name, and sidecar,
-                  that the conversion will write. Confirm it looks right here
-                  before committing a single file to disk.
-                </figcaption>
-              </figure>
-            </div>
-          </article>
-
-          <!-- ================================================
-               SCENE 4. Run the conversion.
-               Slim mock: top header + toolbar (spinner spinning) +
-               Log dock streaming the engine's output. No splitter
-               panes, no path bars, no statusbar.
-               ================================================ -->
-          <article class="scene" data-scene="4" data-scene-key="convert"
-                   aria-labelledby="scene-4-title">
-            <header class="scene-header">
-              <span class="scene-eyebrow">Step 4</span>
-              <h3 id="scene-4-title">Run the conversion.</h3>
-              <p>
-                Click <em>Run conversion</em>. Each row goes to the right
-                backend (<code class="inline">dcm2niix</code> for DICOM,
-                <code class="inline">mne-bids</code> for EEG / MEG / iEEG,
-                vendored <code class="inline">bidsphysio</code> for Siemens
-                physio). BIDS Manager stages each subject in a private temp
-                tree, stitches the cross-file fixups (fmap rename,
-                <em>IntendedFor</em>, <em>scans.tsv</em>), then atomically
-                commits each subject. The Log dock streams every line, and
-                the metadata enrichment engine runs automatically at the end.
-              </p>
-              <div class="scene-link">
-                <span class="scene-link-icon">&#9881;</span>
-                <div>
-                  <strong>Incremental and collision-safe.</strong>
-                  <p>Re-running a conversion merges new subjects and sessions
-                    in rather than overwriting. The
-                    <code class="inline">--on-existing</code> policy
-                    (skip / update / replace / error) governs what happens
-                    when a file would collide.</p>
-                </div>
-              </div>
-            </header>
-
-            <div class="scene-body">
-              <figure class="media-figure">
-                <video class="feature-video" muted loop playsinline preload="metadata"
-                       aria-label="Running the conversion"
-                       data-dark="assets/features/run_convertion_dark.mp4"
-                       data-light="assets/features/run_convertion_light.mp4"></video>
-                <figcaption>
-                  <strong>Run conversion.</strong> The spinner spins, the Run
-                  button flips to Cancel, and the Log streams per-row backend
-                  output, the cross-file fixups, and the enrichment pass. Each
-                  subject is built in a private temporary tree and only moved
-                  into the dataset once it succeeds, so an interrupted run never
-                  leaves a half-written subject behind. Log lines are
-                  colour-coded by stage.
-                </figcaption>
-              </figure>
-              <figure class="media-figure" style="margin-top: 24px;">
-                <img class="feature-shot"
-                     src="assets/features/settings_convert_and_post_convert_dark.png"
-                     data-light="assets/features/settings_convert_and_post_convert_light.png"
-                     alt="Convert and post-convert settings" loading="lazy">
-                <figcaption>
-                  <strong>Convert &amp; post-convert settings.</strong> Parallel
-                  workers, residual handling, and Force-EDF re-encoding, plus
-                  the post-conversion chain shown as an indented hierarchy you
-                  can switch on or off step by step, so metadata enrichment, the
-                  fix-ups, and validation run automatically right after each
-                  conversion.
-                </figcaption>
-              </figure>
-            </div>
-          </article>
-
-          <!-- ================================================
-               SCENE 7. Open the result in the Editor.
-               ================================================ -->
-          <article class="scene" data-scene="5" data-scene-key="editor"
-                   aria-labelledby="scene-5-title">
-            <header class="scene-header">
-              <span class="scene-eyebrow">Step 5</span>
-              <h3 id="scene-5-title">Edit, fix, and validate.</h3>
-              <p>
-                Switch to the <strong>Editor</strong> and open the dataset you
-                just converted (the active project opens automatically). The
-                centre pane routes by file type, so one window edits JSON
-                sidecars, edits TSV tables, views volumes and recordings, and
-                runs validation. This is the "fix-ups" stage: you resolve
-                anything the automatic enrichment could not infer, then
-                confirm the dataset is BIDS-valid. The clips below show the
-                four things you do most.
-              </p>
-              <div class="scene-link">
-                <span class="scene-link-icon">&#8644;</span>
-                <div>
-                  <strong>Everything is checked against the schema.</strong>
-                  <p>Sidecar forms only offer the fields the BIDS schema
-                    allows for that exact file, so you cannot introduce an
-                    invalid key. Validation re-reads the tree on demand: fix
-                    an issue in the viewer, press re-validate, and both the
-                    issue list and the tree's per-file status dots refresh.</p>
-                </div>
-              </div>
-            </header>
-
-            <div class="scene-body">
-              <figure class="media-figure">
-                <video class="feature-video" muted loop playsinline preload="metadata"
-                       aria-label="Editing a JSON sidecar in the schema-aware form"
-                       data-dark="assets/features/json_side_car_viewer_dark.mp4"
-                       data-light="assets/features/json_side_car_viewer_light.mp4"></video>
-                <figcaption>
-                  <strong>Edit JSON sidecars.</strong> Clicking a
-                  <code class="inline">.json</code> opens a schema-aware form
-                  where fields are colour-coded by level (required /
-                  recommended / optional / deprecated). Add or delete fields,
-                  edit values, and revert or save; a Tree view shows the raw
-                  key / value structure when you need it. Required fields the
-                  enrichment left as <code class="inline">TODO</code> are
-                  filled here.
-                </figcaption>
-              </figure>
-              <figure class="media-figure" style="margin-top: 24px;">
-                <video class="feature-video" muted loop playsinline preload="metadata"
-                       aria-label="Editing a TSV table"
-                       data-dark="assets/features/tsv_side_car_viewer_dark.mp4"
-                       data-light="assets/features/tsv_side_car_viewer_light.mp4"></video>
-                <figcaption>
-                  <strong>Edit TSV tables.</strong> The tabular sidecars,
-                  <code class="inline">participants.tsv</code>,
-                  <code class="inline">channels.tsv</code>,
-                  <code class="inline">events.tsv</code>,
-                  <code class="inline">*_scans.tsv</code>, open in an editable
-                  table that loads on a background thread, so even a very large
-                  or very wide file appears instantly and never freezes the
-                  window while you scroll or type.
-                </figcaption>
-              </figure>
-              <figure class="media-figure" style="margin-top: 24px;">
-                <video class="feature-video" muted loop playsinline preload="metadata"
-                       aria-label="Validating the dataset"
-                       data-dark="assets/features/validate_dataset_dark.mp4"
-                       data-light="assets/features/validate_dataset_light.mp4"></video>
-                <figcaption>
-                  <strong>Validate the dataset.</strong> Run validation at
-                  file, folder, or whole-dataset scope. Layer 1 is the
-                  schema-driven audit (per-file sidecar checks plus BIDS
-                  Manager rules like TODO placeholders and IntendedFor
-                  consistency); the <em>Strict BIDS</em> toggle adds the
-                  official structural pass. Findings are grouped by severity,
-                  and the tree's per-file status dots update to match.
-                </figcaption>
-              </figure>
-              <figure class="media-figure" style="margin-top: 24px;">
-                <video class="feature-video" muted loop playsinline preload="metadata"
-                       aria-label="Opening validation warnings from the severity chips"
-                       data-dark="assets/features/validation_warning_from_chips_editor_dark.mp4"
-                       data-light="assets/features/validation_warning_from_chips_editor_light.mp4"></video>
-                <figcaption>
-                  <strong>Jump to issues from the chips.</strong> The severity
-                  chips in the toolbar are clickable: open the warnings (or
-                  errors) list, then click an entry to jump straight to the
-                  offending file in the viewer. Fix it, re-validate, and watch
-                  the count drop.
-                </figcaption>
-              </figure>
-            </div>
-          </article>
-          <article class="scene" data-scene="6" data-scene-key="nifti"
-                   aria-labelledby="scene-6-title">
-            <header class="scene-header">
-              <span class="scene-eyebrow">Step 6</span>
-              <h3 id="scene-6-title">Inspect the converted data.</h3>
-              <p>
-                The Editor routes the open file by extension:
-                <code class="inline">.json</code> sidecars open a
-                schema-aware form, <code class="inline">.tsv</code> files an
-                editable table, <code class="inline">.nii / .nii.gz</code>
-                the NIfTI viewer, and MEG / EEG / iEEG recordings the signal
-                viewer. Click a file in the BIDS tree and the centre pane
-                re-routes on the fly. Everything renders in-app, with no
-                external tools.
-              </p>
-              <div class="scene-link">
-                <span class="scene-link-icon">&#8644;</span>
-                <div>
-                  <strong>Same chrome, different centre pane.</strong>
-                  <p>The BIDS tree, the validation panel, and the Editor
-                    toolbar stay put; only the centre pane changes as the
-                    Editor routes each file by type.</p>
-                </div>
-              </div>
-            </header>
-
-            <div class="scene-body">
-              <figure class="media-figure">
-                <video class="feature-video" muted loop playsinline preload="metadata"
-                       aria-label="NIfTI tri-view viewer"
-                       data-dark="assets/features/nifti_viewer_dark.mp4"
-                       data-light="assets/features/nifti_viewer_light.mp4"></video>
-                <figcaption>
-                  <strong>NIfTI viewer.</strong> Sagittal, coronal, and axial
-                  slices sharing one crosshair, plus a single-pane 2-D view.
-                  The toolbar lets you focus on one plane or stay in tri-view,
-                  and click-and-drag moves the shared crosshair so all three
-                  planes scrub together.
-                </figcaption>
-              </figure>
-              <figure class="media-figure" style="margin-top: 24px;">
-                <video class="feature-video" muted loop playsinline preload="metadata"
-                       aria-label="NIfTI 4-D time-series graph"
-                       data-dark="assets/features/nifti_viewer_timeseries_dark.mp4"
-                       data-light="assets/features/nifti_viewer_timeseries_light.mp4"></video>
-                <figcaption>
-                  <strong>4-D time series.</strong> For BOLD and other 4-D
-                  volumes a Graph tab plots the signal at the crosshair voxel
-                  across every volume, alongside the slices, so you can
-                  sanity-check the time course (drift, spikes, motion) without
-                  leaving the Editor.
-                </figcaption>
-              </figure>
-              <figure class="media-figure" style="margin-top: 24px;">
-                <video class="feature-video" muted loop playsinline preload="metadata"
-                       aria-label="MEG and EEG signal viewer"
-                       data-dark="assets/features/meeg_signal_viewer_dark.mp4"
-                       data-light="assets/features/meeg_signal_viewer_light.mp4"></video>
-                <figcaption>
-                  <strong>MEG / EEG / iEEG signal viewer.</strong> Clicking a
-                  recording shows a metadata card first; a <em>Load signal</em>
-                  button then opens an interactive viewer where you pick
-                  channels, scroll and zoom, apply high-pass / low-pass / notch
-                  filters, resample, open an in-app PSD, and overlay
-                  BIDS-native events (the view jumps to the first event, since
-                  triggers often start well into a recording). No external
-                  tools.
-                </figcaption>
-              </figure>
-            </div>
-          </article>
+          <div class="tab-panel is-active" data-panel="mri" role="tabpanel">
+            <p>
+              DICOM is grouped into series by their identifiers, and subjects
+              are grouped by the patient identifiers rather than by folder, so
+              two subjects mixed in one folder appear as two rows. Sessions come
+              from the study identifiers and dates. Probe convert runs dcm2niix
+              once per series.
+            </p>
+          </div>
+          <div class="tab-panel" data-panel="pet" role="tabpanel">
+            <p>
+              Formats are detected by reading the file rather than its
+              extension, so an ECAT file renamed by your site is still
+              recognised by its <code class="inline">MATRIX7x</code> signature.
+              A PET/CT study converts its PET half and excludes the CT with the
+              reason shown, because BIDS has no CT datatype. A PET/MR study
+              converts both halves in one pass.
+            </p>
+          </div>
+          <div class="tab-panel" data-panel="eegmeg" role="tabpanel">
+            <p>
+              Every recording is opened and asked the same questions mne-bids
+              will ask: channel counts by type, sampling frequency, duration and
+              recording type. Subjects come from path heuristics, and sessions
+              are inferred from the recording date when the path carries no
+              session token. A format that cannot be read, such as an ANT
+              <code class="inline">.cnt</code> without its optional reader,
+              appears as an excluded row with the reason, rather than
+              disappearing silently.
+            </p>
+          </div>
         </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Step 4. Read the inventory
+         ============================================================ -->
+    <section class="section" id="step-inventory">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 4</span>
+        <h2>Read the inventory</h2>
+        <p>
+          One row per recording. Before changing anything, read what the scan
+          found. These are the columns that carry the most information.
+        </p>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Column</th><th>What it tells you</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>the tick box</td><td>Whether this row will be converted. Untick to leave it out.</td></tr>
+              <tr><td>the status dot</td><td>Valid, warning, error, skipped, or an object with no image data.</td></tr>
+              <tr><td><code class="inline">id</code></td><td>The subject label this recording was grouped under.</td></tr>
+              <tr><td><code class="inline">ses</code></td><td>The session, where there is one.</td></tr>
+              <tr><td><code class="inline">data</code>, <code class="inline">suffix</code></td><td>The datatype and suffix the classifier decided on.</td></tr>
+              <tr><td><code class="inline">conf</code></td><td>How sure the classifier is. Low values are worth reading.</td></tr>
+              <tr><td><code class="inline">origin</code></td><td>The source folder the recording came from.</td></tr>
+              <tr><td><code class="inline">format</code></td><td>DICOM, ECAT, EDF, FIF and so on, so you can see what came from where.</td></tr>
+              <tr><td><code class="inline">sequence</code></td><td>The original scanner or file label, kept beside the BIDS name so you can check a classification.</td></tr>
+              <tr><td><code class="inline">predicted basename</code></td><td>The exact BIDS filename this row will produce.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          Those are the columns shown by default. There are around forty in all,
+          and <em>Manage columns</em> below the table shows, hides and reorders
+          them; the layout is remembered. Channel counts, sampling rate,
+          duration, patient details and the proposed-issues text are all there,
+          hidden until you want them. Each carries a description of what it
+          holds, so an unfamiliar one can be identified without leaving the
+          dialog.
+        </p>
+
+        <div class="callout callout-info">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>The headings are short on purpose.</strong>
+            <p>
+              The table uses abbreviated headings so more columns fit on screen,
+              and the inventory TSV uses longer names for the same data. The
+              <code class="inline">id</code> column is
+              <code class="inline">BIDS_name</code> in the file,
+              <code class="inline">data</code> is
+              <code class="inline">proposed_datatype</code>,
+              <code class="inline">conf</code> is
+              <code class="inline">bids_guess_confidence</code>, and
+              <code class="inline">origin</code> is
+              <code class="inline">source_folder</code>. It matters when you open
+              the TSV in a spreadsheet, or read the
+              <a href="#cli-ref">CLI reference</a>, which names the file's
+              columns rather than the table's headings.
+            </p>
+          </div>
+        </div>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="Inventory rows the scan set aside, each carrying the reason in the issues column"
+               src="assets/features/inventory_skipped_dark.png"
+               data-light="assets/features/inventory_skipped_light.png">
+          <figcaption>
+            <strong>What the scan set aside, and why.</strong> The teal row with
+            the crossed circle is an object carrying no image data at all. The
+            dimmed rows are localisers, excluded automatically. The blue-ticked
+            rows below are keepers. Every row's reason is in the
+            <code class="inline">issues</code> column, hidden by default and shown
+            here; hovering a row gives the same text as a tooltip.
+          </figcaption>
+        </figure>
+
+        <h3>What the row colours mean</h3>
+        <p>
+          Rows are tinted so that problems are visible without opening
+          anything. A <strong>red</strong> row has an error that will stop it
+          converting or that needs your decision. An <strong>amber</strong> row
+          carries a warning worth reading. A <strong>dimmed</strong> row is
+          excluded. A <strong>teal</strong> row with a crossed-circle badge is
+          an object with no image data inside it, such as a Siemens
+          <code class="inline">TENSOR</code> map or a scanner report, which
+          cannot be converted at all and has been excluded with the reason
+          shown. Hover any row to see why it is marked.
+        </p>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="Row colour coding in the inspection table"
+                 data-dark="assets/features/inspection_table_color_coding_seqs_dark.mp4"
+                 data-light="assets/features/inspection_table_color_coding_seqs_light.mp4"></video>
+          <figcaption>
+            The inventory, one editable row per recording, tinted by status so
+            that anything needing attention is visible without opening a file.
+            The sequence column keeps the original scanner label beside the
+            predicted BIDS name, which is how you check that a classification is
+            right. Any cell can be edited by clicking it.
+          </figcaption>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Step 5. Curate: include, exclude, rename
+         ============================================================ -->
+    <section class="section" id="step-curate">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 5</span>
+        <h2>Curate: include, exclude, rename</h2>
+        <p>
+          This is the step the rest of the workflow depends on. Everything you
+          decide here is what gets converted, and nothing is written to disk
+          until you are finished.
+        </p>
+
+        <h3>Excluding what you do not want</h3>
+        <p>
+          Untick the include box on anything that should not be in the dataset:
+          localisers, calibration scans, a run that was aborted and repeated.
+          The scan already excluded what it could recognise as unconvertible,
+          but only you know that the second T1w was the one worth keeping.
+        </p>
+
+        <h3>Editing many rows at once</h3>
+        <p>
+          Select several rows and use <strong>Bulk edit</strong> to set the
+          same value on all of them: a task label across fourteen runs, a
+          session across a whole subject. This is the fastest way to fix a
+          systematic naming problem.
+        </p>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="Editing many rows at once"
+                 data-dark="assets/features/bulk_edit_feature_dark.mp4"
+                 data-light="assets/features/bulk_edit_feature_light.mp4"></video>
+          <figcaption>
+            <strong>Bulk edit.</strong> Select the rows, choose the column, type
+            the value once, and it is written to all of them. The alternative,
+            editing a task label on fourteen rows by hand, is where transcription
+            mistakes come from.
+          </figcaption>
+        </figure>
+
+        <h3>Finding the rows you need</h3>
+        <p>
+          The <strong>Filter</strong> pane narrows the table by subject,
+          datatype, modality or status, which matters once an inventory runs to
+          hundreds of rows. <strong>Manage columns</strong> lets you show,
+          hide, reorder and resize columns, and every column carries a
+          description of what it holds.
+        </p>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="Filtering the inventory"
+                 data-dark="assets/features/filter_tab_feature_dark.mp4"
+                 data-light="assets/features/filter_tab_feature_light.mp4"></video>
+          <figcaption>
+            <strong>Filter and structure.</strong> The same recordings shown as a
+            tree grouped by subject, session and datatype, with tri-state
+            checkboxes. Filter to bring a subset into the table, or untick a
+            whole group to leave it out of the conversion. It is one model shown
+            two ways, so a change in either is a change in both.
+          </figcaption>
+        </figure>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="Showing, hiding and reordering columns"
+                 data-dark="assets/features/manage_columns_feature_dark.mp4"
+                 data-light="assets/features/manage_columns_feature_light.mp4"></video>
+          <figcaption>
+            <strong>Manage columns.</strong> The inventory carries more columns
+            than any one dataset needs, so show, hide, reorder and resize them to
+            suit what you are curating. Each column comes with a description of
+            what it holds, and your layout is remembered.
+          </figcaption>
+        </figure>
+
+        <h3>One row at a time</h3>
+        <p>
+          Select a row and the <strong>properties panel</strong> on the right
+          shows its entities as editable fields, at the level BIDS sets: a red
+          asterisk for required, an amber dot for recommended. Below them is
+          the predicted path, so you can see the consequence of an edit
+          immediately, and any validation messages for that row.
+        </p>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="The per-row properties panel"
+                 data-dark="assets/features/properties_panel_dark.mp4"
+                 data-light="assets/features/properties_panel_light.mp4"></video>
+          <figcaption>
+            <strong>Per-row properties.</strong> The panel is built from the
+            schema for the row you selected, so only the entities BIDS allows for
+            that datatype and suffix appear, and the predicted path updates as
+            you type. EEG, MEG and PET rows also carry their recording metadata
+            here, where an answer can be set for one recording without changing
+            the rest of the study.
+          </figcaption>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Step 6. Resolve duplicate names
+         ============================================================ -->
+    <section class="section" id="step-collisions">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 6</span>
+        <h2>Resolve duplicate names</h2>
+        <p>
+          Two recordings must never end up with the same BIDS filename. If they
+          do, the second is written over the first, and a scan disappears from
+          your dataset without anything being reported.
+        </p>
+
+        <p>
+          BIDS Manager works out the destination of every included row before
+          converting anything, and handles the two cases differently.
+        </p>
+
+        <h3>When BIDS has an answer, it is applied</h3>
+        <p>
+          If several recordings genuinely are repeats of the same thing, and
+          the standard allows a <code class="inline">run</code> entity for that
+          datatype, they are numbered <code class="inline">run-1</code>,
+          <code class="inline">run-2</code> and so on. The order is by
+          acquisition time where the files record one, and by source path
+          otherwise, so re-scanning the same folder gives the same numbers
+          rather than shuffling filenames underneath you. The scan tells you it
+          did this.
+        </p>
+
+        <h3>When it does not, the name turns red</h3>
+        <p>
+          A run number is the right answer for two repeats of one acquisition
+          and the wrong answer for two different tasks, and nothing in the file
+          can tell those apart. So where a run cannot be assigned, because the
+          datatype does not allow one or because a run is already set and the
+          names still clash, the predicted basename is shown in
+          <strong>red</strong> and left alone.
+        </p>
+
+        <p>
+          Hover the row to see why. Then change whichever entity actually
+          differs: a <strong>task</strong> label if they are different tasks, a
+          <strong>session</strong> if they were acquired on different days, a
+          <strong>run</strong> if they really are repeats. The red clears as
+          soon as the clash is resolved, on both rows at once, because it is
+          recomputed from the table as it stands rather than remembered from
+          the scan.
+        </p>
+
+        <div class="callout callout-info">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Conversion refuses while any name is duplicated.</strong>
+            <p>
+              It stops before writing anything and lists the clashing name
+              along with every source file competing for it. Excluding one of
+              the rows also resolves it, since an excluded row is never
+              written.
+            </p>
+          </div>
+        </div>
+
+        <p><strong>A worked example.</strong> A workshop EEG tree gives each
+          subject a <code class="inline">rest</code> folder and a
+          <code class="inline">video</code> folder, both containing a recording
+          named after the participant code. Both resolve to the same BIDS name.
+          The right fix is not a run number: it is a task label, because they
+          are different tasks. That distinction is exactly what BIDS Manager
+          declines to guess.</p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="Three inventory rows resolving to the same BIDS name, shown in red, above two rows given run numbers automatically"
+               src="assets/features/name_collision_red_dark.png"
+               data-light="assets/features/name_collision_red_light.png">
+          <figcaption>
+            <strong>Both halves of the answer in one table.</strong> The top
+            three rows are three different recordings that all resolve to
+            <code class="inline">sub-014_pet</code>. No entity distinguishes
+            them, so all three names are red and the conversion will refuse to
+            start. The two rows below them were also duplicates, of the same
+            subject and the same scan, and a <code class="inline">run</code>
+            number is what the standard allows there, so they were separated
+            automatically into <code class="inline">run-1</code> and
+            <code class="inline">run-2</code>. Fixing a red row clears the red
+            on every row it was clashing with, because the state is worked out
+            from the table as it stands rather than recorded when the scan ran.
+          </figcaption>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Step 7. Fill the metadata template
+         ============================================================ -->
+    <section class="section" id="step-template">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 7</span>
+        <h2>Fill the metadata template</h2>
+        <p>
+          Getting the files into the right folders is the quick part.
+          Describing them correctly is the part that takes the time, and this
+          step is where most of that work happens. Open
+          <strong>Dataset metadata</strong>.
+        </p>
+
+        <h3>A section speaks for every file of its kind</h3>
+        <p>
+          This is the thing to understand before anything else. A section
+          headed
+        </p>
+
+        <blockquote>
+          every <code class="inline">*_bold.json</code> &middot; in
+          <code class="inline">func/</code> &middot; 61 files &middot; for
+          example <code class="inline">sub-003_task-rest_bold.json</code>
+        </blockquote>
+
+        <p>
+          is not a form about <code class="inline">sub-003</code>. It is the
+          statement you are making about all 61 functional runs in the dataset.
+          Answer it once and it is written into every one of them. The real
+          filename is shown only as an example of what the section covers.
+        </p>
+
+        <h3>What it does not ask you</h3>
+        <p>
+          The template does not ask for anything your data has already
+          answered. Fields the conversion will fill by itself appear in a
+          folded green block at the top of each section, headed
+          <strong>Already answered by the conversion</strong>, showing the
+          value that will be written.
+        </p>
+
+        <p>
+          That block is editable, and deliberately so. The converter reads
+          those values out of your data, and when the data is wrong, or a
+          legacy file carries nothing, this is the only place to correct it.
+          Typing nothing there changes nothing.
+        </p>
+
+        <h3>Reading the form</h3>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Mark</th><th>Meaning</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Red asterisk</td><td>The standard requires this field for this kind of file</td></tr>
+              <tr><td>Amber dot</td><td>The standard recommends it</td></tr>
+              <tr><td>Unmarked</td><td>Optional</td></tr>
+              <tr><td>Greyed value</td><td>Inherited from a broader level; the tooltip says which</td></tr>
+              <tr><td><em>differs per recording</em></td><td>The scan found your files disagree, so the answer belongs on the row, not here</td></tr>
+              <tr><td><em>N to answer, M required by BIDS</em></td><td>The section heading, telling you what is still missing</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          Every field carries the standard's own description as a tooltip, on
+          the label and on the box, so you do not need to keep the BIDS
+          specification open beside you. Fields with a fixed vocabulary offer
+          it as a dropdown you can still type into.
+        </p>
+
+        <h3>Values are typed, not just text</h3>
+        <p>
+          Whatever you type is converted into the shape the schema declares
+          before it is written. A mains frequency reaches the sidecar as the
+          number 50, not as the string "50", which BIDS would reject.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The dataset metadata dialog with the modality-agnostic and modality-specific sections open"
+               src="assets/features/template_walkthrough_dark.png"
+               data-light="assets/features/template_walkthrough_light.png">
+          <figcaption>
+            <strong>The metadata template.</strong> Each section covers every file of
+            one kind at once, so a question is answered once and written into all of
+            them. Required fields carry a red asterisk. The green <em>Already answered
+            by the conversion</em> block holds the fields the conversion fills by
+            itself, shown so you can check them rather than type them again. Every
+            description in the form is the BIDS standard's own wording, so what you
+            read while answering is what the specification says.
+          </figcaption>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Step 8. Override an answer for one recording
+         ============================================================ -->
+    <section class="section" id="step-overrides">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 8</span>
+        <h2>Override an answer for one recording</h2>
+        <p>
+          The dataset template states what is true of every file of a kind. Two
+          things are usually not true of every file: something that genuinely
+          varies, and something that was wrong for one session only.
+        </p>
+
+        <p>
+          Select the row and answer in the <strong>properties panel</strong>
+          instead. A per-recording answer always beats the dataset answer, for
+          that recording alone. An inherited value is shown greyed, with a
+          tooltip naming where it came from, so you can always tell what you
+          set from what you are inheriting.
+        </p>
+
+        <p>
+          Editing an inherited field back to the dataset value clears the
+          override rather than storing a duplicate, and changing the dataset
+          answer re-flows into every row still inheriting it.
+        </p>
+
+        <p>
+          <strong>Where the answers are kept.</strong> Nothing is written into
+          your BIDS dataset at this stage. Answers live beside the inventory
+          until the metadata step applies them, which means you can change your
+          mind freely, and re-run a conversion without losing them.
+        </p>
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The properties panel for one recording, with its own metadata fields"
+               src="assets/features/eeg_properties_dark.png"
+               data-light="assets/features/eeg_properties_light.png">
+          <figcaption>
+            <strong>The same questions, scoped to one row.</strong> The panel is
+            built from the schema for the selected recording, so it asks exactly
+            what the dataset template asks, for this file alone. A blank field
+            inherits the study answer; a filled one overrides it. The greyed
+            values are the inherited ones, and their tooltip names where they came
+            from.
+          </figcaption>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Step 9. Attach companion and blood files
+         ============================================================ -->
+    <section class="section" id="step-companions">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 9</span>
+        <h2>Attach companion and blood files</h2>
+        <p>
+          Some of what belongs in a BIDS dataset is not produced by the
+          scanner. Events written by your stimulus software, behavioural logs,
+          stimulus files, and for PET the arterial blood curves. These are
+          attached to the recording they belong to, one row at a time, in the
+          properties panel.
+        </p>
+        <div class="tabs" data-tabs>
+          <div class="tab-buttons" role="tablist" aria-label="Companion files by modality">
+            <button class="tab-btn is-active" data-tab="pet"
+                    role="tab" aria-selected="true">PET blood</button>
+            <button class="tab-btn" data-tab="eegmeg"
+                    role="tab" aria-selected="false">EEG and MEG</button>
+          </div>
+
+          <div class="tab-panel is-active" data-panel="pet" role="tabpanel">
+            <p>
+              Select the PET run, then find <strong>BLOOD SAMPLING</strong> in
+              the properties panel. Three curves are linked separately: whole
+              blood, plasma, and parent fraction, read from PMOD
+              <code class="inline">.bld</code> exports.
+            </p>
+            <p>
+              For each, say whether the samples were drawn <strong>manually</strong>
+              or by an <strong>autosampler</strong>. This is not a formality:
+              hand-drawn and autosampled series have different time resolution,
+              so BIDS writes them into separate files, and your choice decides
+              which file each curve lands in.
+            </p>
+            <p>
+              After conversion you get
+              <code class="inline">sub-001_trc-FDG_run-1_recording-manual_blood.tsv</code>
+              and its sidecar, carrying the run's own entities so a subject with
+              two tracers gets two distinct sets rather than two files competing
+              for one name. The data dictionary is generated from the table that
+              was actually written, and the availability flags follow from what
+              you linked, so you are never asked to state them.
+            </p>
+            <p>
+              Linking blood also adds an <em>every
+              <code class="inline">*_blood.json</code></em> section to the
+              dataset template, asking for what the curves cannot tell you:
+              whether the plasma was dispersion corrected, which BIDS requires,
+              the withdrawal rate, the tubing, the haematocrit. If you linked a
+              parent fraction curve it also asks how metabolites were measured,
+              because that requirement applies only when metabolite data exists.
+            </p>
+          </div>
+          <div class="tab-panel" data-panel="eegmeg" role="tabpanel">
+            <p>
+              Events, behavioural logs and stimulus files are linked as
+              companions and copied into the dataset beside the recording, named
+              correctly for it. Pick the role, choose the file, and it is placed
+              when the conversion runs.
+            </p>
+            <p>
+              Event codes are a common case worth handling here. A recording
+              often carries numeric trigger codes rather than labels, and only
+              you know that code 3 was the target condition. The recording
+              metadata dialog takes those labels once for the dataset, and the
+              conversion writes them into <code class="inline">events.tsv</code>
+              and its sidecar.
+            </p>
+          </div>
+        </div>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The blood sampling section of the properties panel, with whole blood, plasma and parent fraction each set to manual or autosampler"
+               src="assets/features/pet_blood_linking_dark.png"
+               data-light="assets/features/pet_blood_linking_light.png">
+          <figcaption>
+            <strong>Attaching blood data to a PET run.</strong> The three curves the
+            standard recognises, whole blood, plasma and parent fraction, are linked
+            separately, and each is marked as manually drawn or taken by an
+            autosampler. That answer is not cosmetic: it decides an entity in the
+            filename, so the preview changes to <code
+            class="inline">recording-manual</code> or <code
+            class="inline">recording-autosampler</code> as you set it.
+          </figcaption>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Step 10. Preview the BIDS tree
+         ============================================================ -->
+    <section class="section" id="step-preview">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 10</span>
+        <h2>Preview the BIDS tree</h2>
+        <p>
+          Before converting, open the <strong>BIDS preview</strong> in the
+          bottom panel. It shows the exact folder structure and the exact
+          filenames your current table will produce, built from the same
+          schema the converter uses.
+        </p>
+
+        <p>
+          This is the last cheap moment to notice that a subject label is
+          wrong, that a session is missing, or that a task name reads
+          <code class="inline">task-Rest</code> in one row and
+          <code class="inline">task-rest</code> in another. Reading the tree
+          takes a minute; fixing it afterwards means converting again.
+        </p>
+
+        <p><strong>What you should see now:</strong> a tree of
+          <code class="inline">sub-*/</code> folders with datatype folders
+          inside them, and no name appearing twice.</p>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="Previewing the BIDS tree before conversion"
+                 data-dark="assets/features/bids_preview_dark.mp4"
+                 data-light="assets/features/bids_preview_light.mp4"></video>
+          <figcaption>
+            <strong>The BIDS preview.</strong> The exact layout the conversion will
+            produce, every folder, filename and sidecar, before anything is written. If
+            a name here is not the name you want, the moment to fix it is now, while it
+            costs one edit rather than a re-run.
+          </figcaption>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Step 11. Run the conversion
+         ============================================================ -->
+    <section class="section" id="step-convert">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 11</span>
+        <h2>Run the conversion</h2>
+        <p>
+          Press <strong>Run conversion</strong>. Each row is sent to the engine
+          that reads its format: dcm2niix for DICOM, mne-bids for EEG, MEG and
+          iEEG recordings, pet2bids for ECAT and blood, bidsphysio for the
+          physiological signals inside Siemens MRI DICOM files. You do not pick
+          the engine; the row's format does.
+        </p>
+
+        <h3>What happens while it runs</h3>
+        <p>
+          Files are written into a private staging folder per subject first,
+          and moved into place only when that subject converted successfully.
+          A failure therefore leaves no half-written subject behind. If one
+          file defeats its engine, that failure is contained: the row is
+          reported and every other row still converts.
+        </p>
+
+        <p>
+          Conversion also repairs what the engines get wrong on the way out:
+          fieldmaps are renamed to their BIDS suffixes and given an
+          <code class="inline">IntendedFor</code> list,
+          <code class="inline">scans.tsv</code> is written, key casing and
+          scalar-where-array mistakes in sidecars are corrected against the
+          schema.
+        </p>
+
+        <p>
+          You can stop a running conversion. It finishes the file it is on and
+          stops cleanly rather than leaving a partial dataset.
+        </p>
+
+        <div class="callout callout-info">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Convert and metadata are two different steps.</strong>
+            <p>
+              Conversion produces a faithful conversion and repairs only what
+              the engines got wrong. It does not apply your template answers.
+              The metadata step does that, and the GUI runs it immediately
+              afterwards, which is why from the Run button it looks like one
+              action. Running the conversion alone, from the CLI, gives you a
+              conversion with no opinions in it.
+            </p>
+          </div>
+        </div>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="Running the conversion"
+                 data-dark="assets/features/run_convertion_dark.mp4"
+                 data-light="assets/features/run_convertion_light.mp4"></video>
+          <figcaption>
+            <strong>The conversion running.</strong> Each row goes to the engine that
+            reads its format, and the log streams what every one of them did. Subjects
+            are built in a private temporary folder and moved into the dataset only once
+            they have succeeded, so an interrupted run leaves no half-written subject
+            behind.
+          </figcaption>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Step 12. Read what the conversion reported
+         ============================================================ -->
+    <section class="section" id="step-report">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 12</span>
+        <h2>Read what the conversion reported</h2>
+        <p>
+          Open the <strong>Log</strong> in the bottom panel when it finishes.
+          Read it even when everything succeeded, because it tells you what was
+          done on your behalf.
+        </p>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>You may see</th><th>What it means</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>A row reported as skipped</td><td>It was excluded, or it had no image data to convert. The reason is given.</td></tr>
+              <tr><td>Residual outputs dropped</td><td>dcm2niix split one series into the real image plus derived single-volume copies. The copies are dropped by default; a setting keeps them.</td></tr>
+              <tr><td>An engine error on one file</td><td>Contained. The rest converted. The detail is written to a log file inside the project.</td></tr>
+              <tr><td>Fields filled after conversion</td><td>The metadata step applying your template and the enrichment.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p><strong>What you should see now:</strong> a populated BIDS dataset
+          on disk, and the Editor tab ready to open it.</p>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Step 13. Open the dataset in the Editor
+         ============================================================ -->
+    <section class="section" id="step-editor">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 13</span>
+        <h2>Open the dataset in the Editor</h2>
+        <p>
+          Switch to the <strong>Editor</strong> and open your converted
+          dataset. This is where you review and repair what the conversion
+          produced, without needing any other software.
+        </p>
+
+        <p>
+          The window has three parts. On the left, the <strong>BIDS tree</strong>
+          of your dataset, with a coloured dot on every file showing its worst
+          finding: green for clean, amber for a warning, red for an error. In
+          the centre, whatever you have selected, opened in the right viewer
+          for its type. On the right, the <strong>validation pane</strong>
+          listing findings for the dataset, the folder and the selected file.
+        </p>
+
+        <p>
+          The chips in the toolbar summarise the whole dataset at a glance, and
+          clicking one opens the list of files carrying that severity, so you
+          can work through the problems rather than hunting for them.
+        </p>
+
+        <figure class="media-figure media-figure-wide">
+          <img class="feature-shot" loading="lazy"
+               alt="The whole Editor window: BIDS tree, sidecar viewer and validation pane, with the severity chips in the toolbar"
+               src="assets/features/editor_window_dark.png"
+               data-light="assets/features/editor_window_light.png">
+          <figcaption>
+            <strong>The Editor, in one frame.</strong> The toolbar validates at
+            three scopes and carries the <strong>Deep checks</strong> toggle and
+            the severity chips, here reading 8 valid, 149 warnings and
+            <strong>0 errors</strong> on a finished four-modality dataset. Below
+            it, the three panes: the BIDS tree with a status dot per file, the
+            viewer showing whatever you selected, and the validation pane listing
+            findings for the dataset, the folder and the file. Clicking a chip
+            opens the list of files carrying that severity.
+          </figcaption>
+        </figure>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The Editor's BIDS tree with a coloured status dot on every file and folder"
+               src="assets/features/editor_tree_dark.png"
+               data-light="assets/features/editor_tree_light.png">
+          <figcaption>
+            <strong>The tree tells you where to look.</strong> Every file carries
+            a dot, and a folder carries the worst dot beneath it, so a problem
+            anywhere in a dataset can be followed down from the top without
+            opening anything. Here there is nothing red to follow: amber is a
+            recommended field nobody stated, green is a file with nothing to
+            report at all.
+          </figcaption>
+        </figure>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="Opening findings from the severity chips in the Editor"
+                 data-dark="assets/features/validation_warning_from_chips_editor_dark.mp4"
+                 data-light="assets/features/validation_warning_from_chips_editor_light.mp4"></video>
+          <figcaption>
+            <strong>The Editor, opened on the converted dataset.</strong> The severity
+            chips in the toolbar are clickable: open the errors or warnings, click a
+            finding, and the file that caused it opens in the viewer. Fix it,
+            re-validate, and watch the count fall.
+          </figcaption>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Step 14. Edit sidecars and tables
+         ============================================================ -->
+    <section class="section" id="step-edit-files">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 14</span>
+        <h2>Edit sidecars and tables</h2>
+        <p>
+          Selecting a file opens it in an editor built for its type. Both are
+          editing surfaces, not just viewers: what you change is written back
+          to the file.
+        </p>
+
+        <h3>JSON sidecars</h3>
+        <p>
+          A <code class="inline">.json</code> sidecar opens as a
+          <strong>schema-aware form</strong>, not as raw text. Every field the
+          standard declares for that datatype and suffix is listed, in
+          requirement order, whether or not the file contains it: required
+          fields first with a red asterisk, then recommended, then optional.
+          Fields the file carries but the standard does not define are shown
+          too, so nothing is hidden from you.
+        </p>
+
+        <p>
+          Each row carries the standard's own description, so you can see what
+          a field means while you fill it. This is the view that makes a
+          sidecar reviewable by someone who does not have the specification
+          memorised.
+        </p>
+
+        <p>
+          The <strong>Tree view</strong> tab shows the same file as a plain
+          two-column key and value tree, which is the faster way to read a file
+          you already understand, or to inspect keys that fall outside the
+          schema.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="A JSON sidecar shown as a schema-aware form, with fields colour-coded by requirement level"
+               src="assets/features/sidecar_form_dark.png"
+               data-light="assets/features/sidecar_form_light.png">
+          <figcaption>
+            <strong>The sidecar form.</strong> The coloured bar on each field is
+            its level in the standard: red required, amber recommended, grey
+            optional. Values read out of the DICOM header are already filled in,
+            <code class="inline">RepetitionTime</code>,
+            <code class="inline">EchoTime</code>,
+            <code class="inline">FlipAngle</code>, and the fields nothing could
+            fill hold the literal <code class="inline">TODO</code> that makes them
+            findable. The footer counts what the file has, what is missing, and how
+            many findings it carries.
+          </figcaption>
+        </figure>
+
+        <h3>TSV tables</h3>
+        <p>
+          A <code class="inline">.tsv</code> file, such as
+          <code class="inline">participants.tsv</code>,
+          <code class="inline">events.tsv</code> or
+          <code class="inline">channels.tsv</code>, opens as an editable table.
+          Click a cell, type, and the file is updated.
+        </p>
+
+        <p>
+          Large tables stay usable: the file is read on a background thread so
+          the window never freezes, and only the visible cells are drawn, so a
+          table with two million rows opens as quickly as a small one.
+        </p>
+
+        <h3>Undo</h3>
+        <p>
+          Editing is undoable. The toolbar carries undo and redo covering both
+          sidecar edits and table edits, so you can try a change and step back
+          from it.
+        </p>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="The schema-aware JSON sidecar form"
+                 data-dark="assets/features/json_side_car_viewer_dark.mp4"
+                 data-light="assets/features/json_side_car_viewer_light.mp4"></video>
+          <figcaption>
+            <strong>The sidecar form.</strong> A JSON sidecar shown as the fields the
+            standard declares for that datatype and suffix, in requirement order and
+            colour-coded by level, each with the standard's own description beside it.
+            Fields the file carries that the schema does not define are shown too, so
+            nothing in the file is hidden from you. The Tree view tab shows the same
+            file as raw keys and values.
+          </figcaption>
+        </figure>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="The editable TSV table viewer"
+                 data-dark="assets/features/tsv_side_car_viewer_dark.mp4"
+                 data-light="assets/features/tsv_side_car_viewer_light.mp4"></video>
+          <figcaption>
+            <strong>The table editor.</strong> <code
+            class="inline">participants.tsv</code>, <code
+            class="inline">channels.tsv</code>, <code class="inline">events.tsv</code>
+            and the scans tables open as editable tables. The file is read on a
+            background thread and only visible cells are drawn, so a table with two
+            million rows opens as quickly as a small one and the window never freezes
+            while you scroll.
+          </figcaption>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Step 15. Look at the images and signals
+         ============================================================ -->
+    <section class="section" id="step-viewers">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 15</span>
+        <h2>Look at the images and signals</h2>
+        <p>
+          The Editor opens your converted data directly. You do not need a
+          separate image viewer or a separate signal browser to check that a
+          conversion produced what you expected.
+        </p>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="The NIfTI image viewer, single plane and Multi-Planar"
+                 data-dark="assets/features/nifti_viewer_dark.mp4"
+                 data-light="assets/features/nifti_viewer_light.mp4"></video>
+          <figcaption>
+            <strong>The image viewer.</strong> One plane at a time, or
+            <strong>Multi-Planar</strong> for sagittal, coronal and axial sharing a
+            single crosshair: click or drag in any of them and the other two follow. The
+            crosshair colour and thickness are yours to set and are remembered.
+          </figcaption>
+        </figure>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="The 4-D time-series graph"
+                 data-dark="assets/features/nifti_viewer_timeseries_dark.mp4"
+                 data-light="assets/features/nifti_viewer_timeseries_light.mp4"></video>
+          <figcaption>
+            <strong>The 4-D graph.</strong> Click a voxel and see its value across every
+            volume, beside the slices. It is the quickest way to catch drift, spikes or
+            motion in a BOLD run without leaving the application. On a dynamic PET run
+            the axis is real seconds rather than a frame index.
+          </figcaption>
+        </figure>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="The MEG and EEG signal viewer with its power spectrum"
+                 data-dark="assets/features/meeg_signal_viewer_dark.mp4"
+                 data-light="assets/features/meeg_signal_viewer_light.mp4"></video>
+          <figcaption>
+            <strong>The signal viewer.</strong> A metadata card first, read without
+            loading the data, then <strong>Load signal</strong> for the interactive
+            view: choose channels, scroll and zoom, apply high-pass, low-pass and notch
+            filters, resample, open the power spectrum, and overlay the events from the
+            BIDS <code class="inline">events.tsv</code> beside the recording.
+          </figcaption>
+        </figure>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The power spectrum of an EEG recording, with a sharp peak at the mains frequency"
+               src="assets/features/psd_line_frequency_dark.png"
+               data-light="assets/features/psd_line_frequency_light.png">
+          <figcaption>
+            <strong>The power spectrum.</strong> Two tabs, every channel overlaid
+            and an average per channel type with a standard deviation band. The
+            tall spike is the mains frequency, which is how you confirm that the
+            <code class="inline">PowerLineFrequency</code> you wrote into every
+            sidecar is the one actually in the data. A channel sitting well away
+            from the rest is usually a bad electrode.
+          </figcaption>
+        </figure>
+
+        <div class="tabs" data-tabs>
+          <div class="tab-buttons" role="tablist" aria-label="Viewers by data type">
+            <button class="tab-btn is-active" data-tab="mri"
+                    role="tab" aria-selected="true">MRI and PET images</button>
+            <button class="tab-btn" data-tab="eegmeg"
+                    role="tab" aria-selected="false">EEG, MEG and iEEG</button>
+            <button class="tab-btn" data-tab="tables"
+                    role="tab" aria-selected="false">Sidecars and tables</button>
+          </div>
+
+          <div class="tab-panel is-active" data-panel="mri" role="tabpanel">
+            <p>
+              A <code class="inline">.nii</code> or
+              <code class="inline">.nii.gz</code> file opens in the image
+              viewer. Start in the single-plane view, or press
+              <strong>Multi-Planar</strong> for sagittal, coronal and axial side
+              by side, sharing one crosshair: click or drag in any plane and the
+              other two follow.
+            </p>
+            <p>
+              Scroll with the wheel to move through slices, and use the
+              brightness and contrast controls for a volume that looks flat.
+              The crosshair colour and thickness are yours to set, and are
+              remembered.
+            </p>
+            <p>
+              A 4-D file gains a <strong>Graph</strong> tab: click a voxel and
+              see its time course. For a dynamic PET run the x axis is real
+              seconds, taken from
+              <code class="inline">FrameTimesStart</code>, not a frame index.
+              That matters, because PET frames are ten seconds early in a scan
+              and three hundred seconds late, and an index axis flattens exactly
+              the early kinetics you want to see.
+            </p>
+            <p>
+              The <strong>3D</strong> tab renders the volume itself on the
+              graphics card: rotate it, zoom, and cut through it with an oblique
+              clipping plane whose cut face shows the underlying slice. There
+              are materials and lighting presets, an orientation cube, and a
+              switch between radiological and neurological convention that
+              applies to the 2-D views as well. If your machine has no suitable
+              graphics support the 3D tab is absent and the rest of the viewer
+              works as usual.
+            </p>
+          </div>
+          <div class="tab-panel" data-panel="eegmeg" role="tabpanel">
+            <p>
+              Selecting a recording first shows a metadata card: what the file
+              is, how many channels of which types, the sampling frequency and
+              the duration, read without loading the signal. Press
+              <strong>Load signal</strong> to open the interactive viewer.
+            </p>
+            <p>
+              From there you can filter by channel type, including CTF axial
+              gradiometers and magnetometer plus gradiometer combinations, pick
+              individual channels, set how many are visible at once, change the
+              amplitude scaling and the time window, and move through the
+              recording with the scrollbar, the wheel or the keyboard. Hovering
+              a trace names the channel.
+            </p>
+            <p>
+              High-pass, low-pass and notch filters can be applied to the
+              segment you are looking at, and the recording can be resampled for
+              a quicker overview. The <strong>PSD</strong> view opens the power
+              spectrum in two tabs, per channel and averaged per channel type
+              with a standard deviation band, with a crosshair readout and a
+              decibel toggle. It is the fastest way to confirm that a recording
+              has the line frequency you expect at the amplitude you expect.
+            </p>
+            <p>
+              Events are drawn over the signal, read from the BIDS
+              <code class="inline">events.tsv</code> beside the recording or
+              from the stimulus channel. Turning them on jumps the view to the
+              first event, because triggers often begin well into a recording.
+            </p>
+          </div>
+          <div class="tab-panel" data-panel="tables" role="tabpanel">
+            <p>
+              JSON sidecars and TSV tables open in their own editors, described
+              in Step 14. They are editing surfaces rather than previews: what
+              you change is written back to the file, and undo covers both.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Step 16. Validate, and read a finding
+         ============================================================ -->
+    <section class="section" id="step-validate">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 16</span>
+        <h2>Validate, and read a finding</h2>
+        <p>
+          Press <strong>Validate dataset</strong>. The validator is part of the
+          same application and reads the same BIDS schema as everything else,
+          so what it checks and what the metadata forms ask for can never
+          disagree.
+        </p>
+
+        <h3>Three scopes</h3>
+        <p>
+          <strong>Validate file</strong> checks the selected file,
+          <strong>Validate folder</strong> everything under the selected
+          folder, and <strong>Validate dataset</strong> the whole tree
+          including the dataset-level files and the relationships between
+          files. Validation also re-runs as you edit, so a fix turns a finding
+          green without leaving the window.
+        </p>
+
+        <h3>Deep checks</h3>
+        <p>
+          The <strong>Deep checks</strong> toggle additionally opens NIfTI image
+          headers, which catches a truncated or corrupt image that every
+          name-based check would pass. It is slower, so the usual pattern is to
+          leave it off while editing and switch it on once before a final
+          review. It has no effect on a dataset of EEG or MEG recordings, which
+          are validated from their sidecars and channel tables.
+        </p>
+
+        <h3>How to read a finding</h3>
+        <p>
+          Every finding tells you three things:
+        </p>
+
+        <ul>
+          <li><strong>What is wrong</strong>, in the standard's own terms.</li>
+          <li><strong>How to fix it</strong>, including an example of the value
+            that is expected.</li>
+          <li><strong>Which rule of the BIDS schema it came from</strong>, shown
+            beneath the message, so the requirement can be checked against the
+            standard rather than accepted on the tool's authority.</li>
+        </ul>
+
+        <p>
+          Findings point at the field or the table column they refer to. The
+          fix button takes you straight to that row of the sidecar form or that
+          column of the table, and <strong>Highlight in editor</strong> tints
+          every field or cell a finding refers to, so you can see all of them
+          at once.
+        </p>
+
+        <h3>Things it catches that name-based checks do not</h3>
+        <p>
+          A correctly named file inside a folder that is not a BIDS datatype,
+          such as <code class="inline">sub-01/ses-pre/anatomy/</code>, is
+          reported as an error. Every filename in there can be perfect, and no
+          BIDS tool will ever read them.
+        </p>
+
+        <p>
+          A literal <code class="inline">TODO</code> left in a sidecar is
+          flagged as well. The metadata step writes those into recommended
+          fields it could not fill, precisely so that they are visible here
+          rather than forgotten.
+        </p>
+
+        <h3>Reports you can send</h3>
+        <p>
+          The severity filter in Settings controls what is shown, so you can
+          work errors first and warnings later. A validation report can be
+          written out as HTML, which is the artefact to attach when someone
+          else needs to see the state of a dataset.
+        </p>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="Validating the whole dataset"
+                 data-dark="assets/features/validate_dataset_dark.mp4"
+                 data-light="assets/features/validate_dataset_light.mp4"></video>
+          <figcaption>
+            <strong>Running it.</strong> The three buttons in the toolbar validate
+            the selected file, the selected folder, or the whole dataset. The
+            severity chips beside them summarise the result, and clicking a chip
+            opens the list of files carrying that severity.
+          </figcaption>
+        </figure>
+
+        <h3>The whole dataset at a glance</h3>
+        <p>
+          The pane always shows three scopes at once, from the outside in. The
+          <strong>dataset</strong> section holds findings about the dataset as a
+          whole, the things no single file is responsible for. The
+          <strong>folder</strong> section holds findings about the folder you are
+          in. The <strong>file</strong> section holds findings about the file you
+          have selected. Each carries a count, so a section with a zero beside it
+          needs no attention.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The validation pane showing the dataset, folder and file scopes each with a count"
+               src="assets/features/validation_dataset_scope_dark.png"
+               data-light="assets/features/validation_dataset_scope_light.png">
+          <figcaption>
+            <strong>Three scopes, one pane.</strong> Reading from the top: what is
+            wrong with the dataset, what is wrong with this folder, what is wrong
+            with this file. The tree on the left carries the same information as a
+            coloured dot per file, so you can find the problem files without
+            clicking through every one.
+          </figcaption>
+        </figure>
+
+        <h3>An error inside a file</h3>
+        <p>
+          Not every problem is a naming problem. This one is a value: a timestamp
+          in a scans table that is not a valid datetime, which no filename check
+          could ever see. The message names the column and the offending value,
+          the chip beside it names the field, and the grey line underneath is the
+          rule in the BIDS schema that the requirement comes from.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="A validation error on a scans table, with the schema rule printed underneath the message"
+               src="assets/features/validation_provenance_dark.png"
+               data-light="assets/features/validation_provenance_light.png">
+          <figcaption>
+            <strong>A finding with its source.</strong> The rule path,
+            <code class="inline">rules.tabular_data.modality_agnostic.Scans</code>,
+            is the part of the standard this requirement is drawn from. You can go
+            and read it, which is what makes a finding checkable rather than
+            something to take on trust. <strong>Highlight in editor</strong> tints
+            the offending cell in the table itself.
+          </figcaption>
+        </figure>
+
+        <h3>Warnings, and how to clear them</h3>
+        <p>
+          Warnings are recommendations rather than violations. Most of what you
+          see after a first conversion are recommended fields nobody has answered
+          yet, and each carries a <strong>Fix</strong> button that takes you
+          straight to the field in question.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="Warnings on dataset_description.json, each with the schema rule and a fix button"
+               src="assets/features/validation_warnings_dark.png"
+               data-light="assets/features/validation_warnings_light.png">
+          <figcaption>
+            <strong>Seven warnings on one file.</strong> Missing recommended
+            fields, each with the standard's own description of what it is for and
+            an example of the value expected, plus a hint that the author list
+            looks like one name rather than several. None of these stop the
+            dataset being valid; all of them make it less useful to whoever reads
+            it next.
+          </figcaption>
+        </figure>
+
+        <h3>An error inside a sidecar</h3>
+        <p>
+          The other kind of internal error is a field holding the wrong kind of
+          value. A number written as text, a string where the standard wants an
+          object. The file parses, the name is fine, and the value is unusable by
+          anything that reads it expecting a number.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="Two errors on an EEG sidecar, each naming the field and the type the standard expects"
+               src="assets/features/validation_sidecar_error_dark.png"
+               data-light="assets/features/validation_sidecar_error_light.png">
+          <figcaption>
+            <strong>Two type errors on one sidecar.</strong>
+            <code class="inline">HeadCircumference</code> must be a number and
+            <code class="inline">HardwareFilters</code> must be an object or a
+            string. Each finding carries the standard's description of the field
+            and an example of a correct value, so the fix does not require looking
+            anything up. The amber finding below them is a different thing
+            entirely: a field still holding <code class="inline">TODO</code>.
+          </figcaption>
+        </figure>
+
+        <h3>Something that should be there and is not</h3>
+        <p>
+          Some findings are about a file that is missing rather than a file that
+          is wrong. These are warnings, because the standard recommends rather
+          than requires them, and they are easy to miss precisely because nothing
+          is visibly broken.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="A warning that a task run has no events table beside it"
+               src="assets/features/validation_missing_events_dark.png"
+               data-light="assets/features/validation_missing_events_light.png">
+          <figcaption>
+            <strong>A file that should be there and is not.</strong> The
+            recording converted correctly and nothing about it is malformed.
+            What is missing is the table describing what happened during it,
+            which is the file most analyses will want. A warning rather than an
+            error, because the standard recommends it rather than requires it,
+            and the message says how to settle it either way: supply the table,
+            or say in the task name that the run was rest.
+          </figcaption>
+        </figure>
+
+        <h3>Structural errors, which are the ones most tools miss</h3>
+        <p>
+          A structural error is not about the contents of a file. The file can be
+          perfectly named and perfectly formed and still be somewhere, or called
+          something, that no BIDS tool will ever look at. Checked one filename at
+          a time there is nothing wrong, which is exactly why these survive into
+          published datasets.
+        </p>
+        <p>
+          The three below are all real findings on one dataset. It is the
+          converted multimodal sample with three things broken by hand
+          afterwards, which is how these happen: somebody tidies a folder,
+          renames a file, or copies a naming pattern from another modality.
+        </p>
+
+        <h4>A datatype folder with a typo in it</h4>
+        <p>
+          Someone renamed <code class="inline">anat</code> to
+          <code class="inline">anatt</code>. The T1w inside still has a flawless
+          BIDS name. Every BIDS tool reads inside the datatype folders, so from
+          now on that scan does not exist as far as any pipeline is concerned,
+          and no per-file check will say a word about it.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="A structural error: a correctly named T1w inside a folder called anatt instead of anat"
+               src="assets/features/invalid_location_dark.png"
+               data-light="assets/features/invalid_location_light.png">
+          <figcaption>
+            <strong>One finding, and it names the fix.</strong> The folder line
+            reads <code class="inline">ANATT</code>; the message says the file
+            has a valid name but is not in a datatype directory, and lists what
+            it should be. The same finding appears on
+            <code class="inline">funce</code> elsewhere in this dataset, on the
+            BOLD run.
+          </figcaption>
+        </figure>
+
+        <h4>An entity that does not belong on this kind of file</h4>
+        <p>
+          BIDS defines which entities each kind of file may carry, and they are
+          not interchangeable between modalities.
+          <code class="inline">echo</code> is meaningful on an MRI acquisition
+          and meaningless on an EEG recording, so a name copied from one to the
+          other produces a file the standard cannot account for.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="A validation error: the echo entity is not allowed on an EEG recording"
+               src="assets/features/validation_bad_entity_dark.png"
+               data-light="assets/features/validation_bad_entity_light.png">
+          <figcaption>
+            <strong>The rule it broke, named.</strong> The chip on the right is
+            the offending entity, and the grey line under the message,
+            <code class="inline">rules.files.raw.eeg.eeg</code>, is the part of
+            the schema the requirement comes from, so you can check the claim
+            rather than take it on trust. The suggestion offers both readings:
+            remove the entity, or you meant a different suffix.
+          </figcaption>
+        </figure>
+
+        <h4>What breaks next, which nobody expects</h4>
+        <p>
+          Moving those two folders also broke something else.
+          <code class="inline">scans.tsv</code> lists every image in the session
+          by its path, and two of those paths no longer point at anything. The
+          manifest and the tree now disagree.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="A validation error: the paths listed in scans.tsv no longer match the files in the dataset"
+               src="assets/features/validation_broken_manifest_dark.png"
+               data-light="assets/features/validation_broken_manifest_light.png">
+          <figcaption>
+            <strong>A consequence, not a separate mistake.</strong> This is the
+            argument for validating the dataset rather than the file you just
+            edited: renaming two folders produced an error in a third file that
+            nobody touched.
+          </figcaption>
+        </figure>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>You will not hit these if you let the conversion name
+              things.</strong>
+            <p>
+              Every one of the three was introduced by hand after a clean
+              conversion. Names built from the schema land in the right folder
+              with the right entities, and
+              <code class="inline">scans.tsv</code> is rewritten to match. These
+              findings exist for datasets that have been edited since, which in
+              practice is most datasets.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Step 17. Fix, re-validate, and finish
+         ============================================================ -->
+    <section class="section" id="step-finish">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 17</span>
+        <h2>Fix, re-validate, and finish</h2>
+        <p>
+          Work down the findings, fixing each where the fix button takes you,
+          then press <strong>Re-validate</strong>. The tree dots and the chips
+          update, and you are finished when the errors are gone.
+        </p>
+
+        <h3>What "done" looks like</h3>
+        <p>
+          Zero errors. Warnings are worth reading rather than clearing blindly:
+          many are recommended fields that genuinely do not apply to your
+          study, and a warning you have read and decided about is a different
+          thing from one you have not seen.
+        </p>
+
+        <h3>Adding more data later</h3>
+        <p>
+          You do not start again. Scan the new folder into the same project and
+          convert with <code class="inline">--on-existing skip</code>, or its
+          equivalent in the Settings. New subjects and sessions merge in and
+          the files already converted are left alone. Every scan is versioned
+          inside the project, so you can always see what you converted and when.
+        </p>
+
+        <p>
+          Your curation is saved too. Reopening the project restores the
+          inventory, the edits and the template answers, so a dataset you
+          return to in six months does not need to be understood again from
+          scratch.
+        </p>
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The Editor's BIDS tree with a green status dot on the files that are clean"
+               src="assets/features/editor_tree_dark.png"
+               data-light="assets/features/editor_tree_light.png">
+          <figcaption>
+            <strong>Work down the tree.</strong> Re-validating after a fix
+            updates the dots and the chips together, so a file that turns green
+            is a file you can stop thinking about. You are finished when the red
+            ones are gone; the amber ones are for reading, not for clearing
+            blindly.
+          </figcaption>
+        </figure>
+
       </div>
     </section>
 
@@ -1178,12 +2505,13 @@
         <!-- bidsmgr-validate -->
         <h3 id="cli-ref-validate"><code class="inline">bidsmgr-validate</code></h3>
         <p>
-          Two-layer validator. Layer 1 (always) is the schema-driven audit:
-          per-file sidecar checks plus the BIDS Manager-specific rules (TODO
-          placeholders, IntendedFor consistency, fmap pair completeness).
-          Layer 2 (opt-in via <code class="inline">--strict</code>) adds the
-          official <code class="inline">bidsschematools</code> structural
-          pass.
+          Schema-driven validation, delegated to the
+          <a href="https://pypi.org/project/bidsval/" target="_blank" rel="noopener">bidsval</a>
+          engine and supplemented with the BIDS Manager conventions that
+          bidsval does not carry, such as flagging literal
+          <code class="inline">TODO</code> placeholders. Runs the fast
+          structural pass by default; <code class="inline">--strict</code> adds
+          the deep checks. Every finding carries the schema rule it came from.
         </p>
 <pre class="code">bidsmgr-validate &lt;target&gt; [options]</pre>
         <h4>Positional arguments</h4>
@@ -1197,9 +2525,21 @@
           <dd>When <code class="inline">target</code> is a parent, limit to
             this single dataset name.</dd>
           <dt><code class="inline">--strict</code></dt>
-          <dd>Also run Layer 2:
-            <code class="inline">bidsschematools</code> structural validation.
-            Adds path-shape checks and is slower on large trees.</dd>
+          <dd>Deep checks: read NIfTI headers and file contents as well as the
+            structural and metadata checks. Catches unreadable or malformed
+            files, and is slower on large trees.</dd>
+          <dt><code class="inline">--schema VERSION</code></dt>
+          <dd>The BIDS schema version to validate against, for example
+            <code class="inline">1.11.1</code>. bidsval ships several, so an
+            older dataset can be checked against the standard it was built to.
+            Defaults to the bundled schema.</dd>
+          <dt><code class="inline">--max-rows N</code></dt>
+          <dd>How many rows of each TSV to scan during column and value
+            checks. Default 1000; raise it to scan more of a long table.</dd>
+          <dt><code class="inline">--no-todo-warnings</code></dt>
+          <dd>Do not flag literal <code class="inline">TODO</code> values as
+            warnings. That flagging is a BIDS Manager convention, on by
+            default; turning it off gives counts identical to bidsval alone.</dd>
           <dt><code class="inline">--strict-warn</code></dt>
           <dd>Treat warnings as errors for the exit code. By default the
             command exits non-zero only when there is at least one error.</dd>
@@ -1252,7 +2592,7 @@
           <dt><code class="inline">--project PATH</code></dt>
           <dd>Open (or create / adopt) a BIDS dataset project at this
             directory and land in the Converter bound to it (same as the
-            Welcome tab's Open / Create). The output is locked to the
+            Home tab's Open / Create). The output is locked to the
             dataset. <strong>Note:</strong> this is a dataset directory, not
             a bundle file.</dd>
         </dl>
@@ -1332,16 +2672,88 @@ bidsmgr-metadata --project &lt;dataset_dir&gt; --fill-todos</pre>
 
         <h3>5. Validate against the BIDS schema.</h3>
         <p>
-          Two-layer validator: schema-driven per-file checks plus the
-          structural pass under <code class="inline">--strict</code>. Prints
-          a severity-coloured summary; the same checks power the Editor's
-          validation pane.
+          The same engine the Editor's validation pane uses, so a dataset that
+          passes here passes there. Prints a severity-coloured summary, and
+          each finding names the schema rule behind it.
         </p>
-<pre class="code"><span class="cmt"># Validate the dataset; add --strict for the structural pass, --html for a report.</span>
+<pre class="code"><span class="cmt"># Validate the dataset; add --strict for deep checks, --html for a report.</span>
 bidsmgr-validate &lt;dataset_dir&gt;
 
 <span class="cmt"># Primary MRI dataset result: 55 ok / 7 warn / 0 err.</span>
 <span class="cmt"># The 7 warnings are TODO placeholders, fillable in the Editor in one pass.</span></pre>
+
+        <h3>Recipes for the things you will actually need</h3>
+        <p>
+          The five commands above are the whole flow. These are the variations
+          that come up in practice, each with the reason you would reach for it.
+        </p>
+
+        <p><strong>Add new subjects to a dataset you already converted.</strong>
+          New sessions merge in and existing files are left alone.</p>
+<pre class="code">bidsmgr-scan /data/raw_july --project /data/bids/my_study --probe-convert
+bidsmgr-convert --project /data/bids/my_study --on-existing skip</pre>
+
+        <p><strong>See what would happen, without writing any file.</strong></p>
+<pre class="code">bidsmgr-convert inv.tsv /data/bids --dry-run</pre>
+
+        <p><strong>Convert PET using your lab's dose spreadsheet.</strong>
+          Loose about how your columns are named, strict about the values it
+          reads.</p>
+<pre class="code">bidsmgr-convert inv.tsv /data/bids --pet-spreadsheet doses.xlsx</pre>
+
+        <p><strong>Convert ECAT when the inventory is not beside the raw
+          data.</strong> ECAT rows store a path relative to the folder that was
+          scanned, so without this the file cannot be found. The message tells
+          you as much.</p>
+<pre class="code">bidsmgr-convert inv.tsv /data/bids --raw-root /data/raw</pre>
+
+        <p><strong>Work against a specific BIDS version.</strong> Every verb
+          takes <code class="inline">--schema</code>, so the metadata forms,
+          the filenames, the enrichment and the validator all agree on which
+          version of the standard you are targeting.</p>
+<pre class="code">bidsmgr-scan /data/raw inv.tsv --schema 1.8.0
+bidsmgr-validate /data/bids --schema 1.8.0</pre>
+
+        <p><strong>Re-encode EEG and iEEG recordings to EDF on the way
+          in.</strong></p>
+<pre class="code">bidsmgr-convert inv.tsv /data/bids --force-edf</pre>
+
+        <p><strong>Teach the scanner about your site's sequence names.</strong>
+          The same JSON the GUI writes from Settings, Scan rules, so a rule you
+          set up once in the window works headless too.</p>
+<pre class="code">bidsmgr-scan /data/raw inv.tsv --rules-file site_rules.json</pre>
+
+        <p><strong>Bring in participant demographics and
+          questionnaires.</strong> Columns become
+          <code class="inline">participants.tsv</code>; each phenotype table
+          becomes a file under <code class="inline">phenotype/</code> with its
+          own data dictionary.</p>
+<pre class="code">bidsmgr-metadata /data/bids --participants demographics.xlsx \
+                            --phenotype hads.tsv --phenotype moca.tsv</pre>
+
+        <p><strong>Produce a validation report you can send to
+          someone.</strong> <code class="inline">--strict</code> additionally
+          opens NIfTI image headers, which catches a truncated or corrupt image
+          that every name-based check would pass.</p>
+<pre class="code">bidsmgr-validate /data/bids --strict --html</pre>
+
+        <p><strong>Edit the inventory in a spreadsheet, then rebuild the
+          names.</strong> Change the entities, and the predicted BIDS names are
+          recomputed from them.</p>
+<pre class="code">bidsmgr-rebuild inv.tsv --from entities</pre>
+
+        <p><strong>List the scan versions saved inside a project.</strong>
+          Every scan is versioned, so you can see what you have and convert an
+          earlier one.</p>
+<pre class="code">bidsmgr-project /data/bids/my_study --list</pre>
+
+        <div class="callout callout-info">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Media placeholder 15: cli_asciinema</strong>
+            <p>A terminal running the five-command sequence on the PET sample dataset, from bidsmgr-create through bidsmgr-validate, ending on the validator summary line.</p>
+          </div>
+        </div>
 
         <p class="muted" style="margin-top: 20px;">
           Prefer the classic form? Every verb still takes positionals:
