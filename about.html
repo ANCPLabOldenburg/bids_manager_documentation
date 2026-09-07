@@ -1,0 +1,1222 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="What BIDS Manager is, why it exists, and how the schema-driven engine works: the conversion engines it builds on, the silent failures it catches in MRI, PET, EEG and MEG data, validation, and privacy.">
+  <title>About &middot; BIDS Manager</title>
+  <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Privacy-friendly analytics (GoatCounter, no cookies) -->
+  <script data-goatcounter="https://bids-manager.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+  <div data-include="header"></div>
+
+  <main>
+    <aside class="page-toc" data-toc aria-label="Page navigation">
+      <button class="page-toc-toggle" type="button"
+              aria-expanded="false" aria-controls="page-toc-panel"
+              aria-label="Toggle page navigation">
+        <span class="toc-bars" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+      <nav id="page-toc-panel" class="page-toc-panel" aria-label="Sections">
+        <span class="page-toc-title">On this page</span>
+        <a class="page-toc-link" href="#what">
+          <span class="page-toc-dot" aria-hidden="true"></span>What it is</a>
+        <a class="page-toc-link" href="#engines">
+          <span class="page-toc-dot" aria-hidden="true"></span>The conversion engines</a>
+        <a class="page-toc-link" href="#adds">
+          <span class="page-toc-dot" aria-hidden="true"></span>What it adds</a>
+        <a class="page-toc-link" href="#why">
+          <span class="page-toc-dot" aria-hidden="true"></span>Why it exists</a>
+        <a class="page-toc-link" href="#silent">
+          <span class="page-toc-dot" aria-hidden="true"></span>Failures you do not notice</a>
+        <a class="page-toc-link" href="#comparison">
+          <span class="page-toc-dot" aria-hidden="true"></span>Side by side</a>
+        <a class="page-toc-link" href="#validation">
+          <span class="page-toc-dot" aria-hidden="true"></span>Validation</a>
+        <a class="page-toc-link" href="#surfaces">
+          <span class="page-toc-dot" aria-hidden="true"></span>Two ways to drive it</a>
+        <a class="page-toc-link" href="#privacy">
+          <span class="page-toc-dot" aria-hidden="true"></span>Privacy</a>
+        <a class="page-toc-link" href="#how-it-works">
+          <span class="page-toc-dot" aria-hidden="true"></span>How it works</a>
+        <a class="page-toc-link" href="#who">
+          <span class="page-toc-dot" aria-hidden="true"></span>Who it is for</a>
+        <a class="page-toc-link" href="#issues">
+          <span class="page-toc-dot" aria-hidden="true"></span>Help and feedback</a>
+      </nav>
+    </aside>
+
+    <!-- ============================================================
+         What it is
+         ============================================================ -->
+    <section class="section" id="what">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">About</span>
+        <h1>What is BIDS Manager?</h1>
+        <p class="lead">
+          BIDS Manager is a multimodal raw-to-BIDS conversion and curation
+          tool. It covers the full workflow for MRI, PET, EEG, MEG, iEEG and
+          the physiological recordings stored inside MRI DICOM files, in a
+          single application, with the official BIDS schema as the source of
+          truth for naming, structure and validation.
+        </p>
+
+        <p>
+          It does the conversion, and it puts you in control of how the
+          conversion happens. The established engines write the files; BIDS
+          Manager decides what each one is asked to do, one recording at a
+          time, from a table you can read and change. Used on their own, those
+          engines take their instructions from command-line flags and
+          configuration files written before you know what is in the folder.
+          Here you make the same decisions after looking at it, and you can see
+          the result of each one before anything is written.
+        </p>
+
+        <p>
+          Around the conversion it does the rest of the job. Working out what a
+          raw folder actually contains. Deciding what belongs in the dataset and
+          what each file should be called. Collecting metadata that is scattered
+          between file headers, a dose sheet on a desk, and the memory of
+          whoever ran the session. Then checking that what came out is what you
+          intended.
+        </p>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Everything arrives in one installation.</strong>
+            <p>
+              The conversion engines, the validator and the viewers are
+              installed with the application, on macOS, Linux and Windows.
+              There is no separate toolchain to assemble and no compiler to
+              set up. See <a href="installation.html">Installation</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         The conversion engines
+         ============================================================ -->
+    <section class="section" id="engines">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Foundations</span>
+        <h2>The conversion engines</h2>
+
+        <p>
+          File conversion is a solved problem, and BIDS Manager does not solve
+          it again. It uses the established engine for each modality and
+          extends each one with additional functionality.
+        </p>
+
+        <ul>
+          <li>
+            <a href="https://github.com/rordenlab/dcm2niix" target="_blank" rel="noopener"><strong>dcm2niix</strong></a>
+            converts MRI and PET DICOM series into NIfTI images.
+          </li>
+          <li>
+            <a href="https://mne.tools/mne-bids/" target="_blank" rel="noopener"><strong>mne-bids</strong></a>
+            writes EEG, MEG and iEEG recordings into the BIDS layout, and
+            fNIRS recordings where the channels identify them as such.
+          </li>
+          <li>
+            <a href="https://github.com/openneuropet/PET2BIDS" target="_blank" rel="noopener"><strong>pet2bids</strong></a>
+            reads ECAT7 scanner headers and PMOD blood curves. It is the
+            reference implementation for the PET part of the standard.
+          </li>
+          <li>
+            <a href="https://github.com/cbinyu/bidsphysio" target="_blank" rel="noopener"><strong>bidsphysio</strong></a>
+            decodes the physiological signals that Siemens MRI scanners record
+            alongside an image and store inside the DICOM files: respiration,
+            ECG and pulse oximetry.
+          </li>
+        </ul>
+
+        <p>
+          All four are installed with BIDS Manager. The dcm2niix binary is
+          included, MNE and pet2bids arrive as dependencies, and bidsphysio is
+          built in. There is no separate installation step for any of them, on
+          any platform.
+        </p>
+
+        <h3>You decide what each engine does, after you have seen the data</h3>
+        <p>
+          Each engine is normally given its instructions up front, through
+          command-line flags or a configuration file, and you find out what it
+          decided afterwards. BIDS Manager turns that around. It shows you every
+          recording it found, you say what each one is and what it should be
+          called, and only then are the engines run, on exactly what you chose.
+        </p>
+        <p>
+          The settings that usually live in flags are here too, as things you
+          can see and change: whether a recording is converted at all, how many
+          run in parallel, what happens when a subject already exists, whether
+          the extra single-volume copies dcm2niix produces are kept, whether
+          recordings are re-encoded to a format BIDS accepts. Rules you write
+          once, for the way your own site names its sequences, are applied to
+          every scan from then on.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         What it adds
+         ============================================================ -->
+    <section class="section" id="adds">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">The rest of the job</span>
+        <h2>What BIDS Manager adds around them</h2>
+
+        <p>
+          Each engine does one job well and stops there, by design. Six named
+          steps make up the rest, and they are what this application is for.
+          They run in order, and each one leaves
+          something you can read.
+        </p>
+
+        <div class="about-cards">
+          <div class="about-card about-card-accent">
+            <span class="about-card-step">Step 1</span>
+            <h3>Inventory</h3>
+            <p>
+              Every file in the raw folder is opened and its header read, then
+              listed as one row per recording: which subject, which session,
+              which sequence, how many files, and the name it will carry in
+              BIDS. Nothing has to be sorted or renamed first, and a folder of
+              mixed modalities produces one list.
+            </p>
+          </div>
+
+          <div class="about-card about-card-teal">
+            <span class="about-card-step">Step 2</span>
+            <h3>Curation</h3>
+            <p>
+              You read that list and change it: leave out the localisers and
+              the run that was aborted, correct a task name, separate two subjects
+              that were wrongly merged. Nothing is
+              converted, moved or written to disk until you press Run.
+            </p>
+          </div>
+
+          <div class="about-card about-card-coral">
+            <span class="about-card-step">Step 3</span>
+            <h3>Overwrite protection</h3>
+            <p>
+              Every destination filename is worked out before conversion
+              starts. Genuine repeats are numbered; anything still sharing a
+              name is shown in red and the conversion refuses to run. Without
+              this, one recording silently replaces another and both the
+              conversion and the validator report success.
+            </p>
+          </div>
+
+          <div class="about-card about-card-success">
+            <span class="about-card-step">Step 4</span>
+            <h3>Enrichment</h3>
+            <p>
+              What is already inside your files is written into the metadata for
+              you: acquisition parameters, channel counts, sampling rates,
+              frame timing and units. So are the facts that span files, such as
+              which images a fieldmap corrects and which channel is really an
+              EOG rather than an EEG.
+            </p>
+          </div>
+
+          <div class="about-card about-card-purple">
+            <span class="about-card-step">Step 5</span>
+            <h3>Metadata templates</h3>
+            <p>
+              Some of what BIDS requires is in no file anywhere. The injected
+              dose for a PET scan is on a dose sheet; the reference electrode
+              for an EEG recording was chosen by whoever set up the cap. A
+              template asks each question once for every file of its kind, and
+              any answer can be overridden for a single recording that differs.
+            </p>
+          </div>
+
+          <div class="about-card about-card-amber">
+            <span class="about-card-step">Step 6</span>
+            <h3>Validation</h3>
+            <p>
+              The dataset is checked against the standard without installing
+              anything else, and every finding names the rule it came from.
+              Images, recordings, sidecars and tables all open in the
+              application, so a problem can be fixed where it was found.
+              <a href="#validation">More on validation below</a>.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          BIDS Manager is also <strong>project-first</strong>. You begin by
+          creating or opening a dataset project, and from then on every scan,
+          edit and decision is saved into it. Each scan is kept as a versioned
+          snapshot, and every edit is undoable. Curation carries across sessions,
+          so you can stop half way and come back to it. Re-running a conversion
+          safely merges in new subjects and sessions rather than overwriting
+          what is already there.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Why it exists
+         ============================================================ -->
+    <section class="section" id="why">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Motivation</span>
+        <h2>Why it exists</h2>
+
+        <p>
+          Raw datasets are rarely as clean as a conversion assumes. Real
+          sessions accumulate complications:
+        </p>
+
+        <ul>
+          <li>DICOM files from one subject land in another subject's folder.</li>
+          <li>An interrupted run leaves residual volumes behind.</li>
+          <li>A bad scan is repeated on the spot, and both attempts stay in the same folder.</li>
+          <li>Calibration scans, localisers and scanner reports sit among the acquisitions of interest.</li>
+          <li>Naming drifts because the protocol changed mid-study.</li>
+          <li>A session is missing a run, or carries one extra.</li>
+        </ul>
+
+        <p>
+          Most conversion tools ask you to declare what is in the folder before
+          they start, through a heuristic file or a configuration that encodes
+          the expected structure: this acquisition is the T1w, this one is the
+          resting-state BOLD, ignore the localisers. That design assumes you
+          know exactly what happened in every session and every run.
+        </p>
+
+        <p>
+          The assumption is fragile. People routinely work with data they did
+          not acquire: a colleague's project, a multi-site dataset, an archive
+          from someone who has left. Even when you were the operator, months
+          later the memory of restarting run 02 because the subject moved is
+          gone. When the data does not match the configuration, the conversion
+          mislabels rows, skips legitimate acquisitions, or produces an output
+          that is structurally valid and wrong about what each file contains.
+        </p>
+
+        <p>
+          BIDS Manager starts from the other end. Before converting anything it
+          reads the raw folder and presents every acquisition as it actually
+          exists on disk: subject, session, run, modality, file count, scanner
+          timestamps, image type, sequence parameters. Mixed subjects appear as
+          separate rows. Residual volumes show their reduced file counts.
+          Repeated sequences are listed side by side with the timestamps that
+          let you pick the right take. Calibration and localiser series are
+          marked for skipping, and you confirm every decision before anything
+          is written.
+        </p>
+
+        <p>
+          What is converted is then what you saw and chose, rather than what a
+          configuration file assumed.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="Inventory rows the scan set aside, each carrying the reason it was excluded"
+               src="assets/features/inventory_skipped_dark.png"
+               data-light="assets/features/inventory_skipped_light.png">
+          <figcaption>
+            <strong>Nothing disappears quietly.</strong> The teal row is an object
+            with no image data inside it at all, a scanner report, which no
+            converter can turn into anything. The dimmed rows are localisers set
+            aside automatically. Every one carries its reason in the issues column,
+            and any of them can be put back with a click. A tool that simply
+            skipped them would leave you unable to tell an excluded file from a
+            missing one.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         The failures you do not notice
+         ============================================================ -->
+    <section class="section" id="silent">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">The hard part</span>
+        <h2>The failures you do not notice</h2>
+
+        <p>
+          A conversion that crashes is an inconvenience, and you fix it. The
+          costly ones are the conversions that succeed, produce a dataset that
+          looks correct, and are wrong. Every failure below is real, every one
+          is silent by default, and each is grouped under the modality it
+          happens to. The first group happens to all of them.
+        </p>
+
+        <div class="risk-list">
+
+          <div class="risk-group mod-all"><h3>Whatever you are converting</h3></div>
+
+          <article class="risk-card mod-all">
+            <span class="risk-tag">Overwritten</span>
+            <h3>Two recordings, one filename</h3>
+            <p>
+              Two recordings resolve to the same BIDS filename, and the second
+              is written over the first. Nothing reports it: the conversion
+              succeeds, the validator passes, and one scan is simply missing.
+              You find out when the analysis has one subject fewer than your
+              spreadsheet.
+            </p>
+            <p class="risk-answer">
+              BIDS Manager works out the destination filename of every row
+              before converting anything, gives genuine repeats a
+              <code class="inline">run</code> number where the standard allows
+              one, shows the rest in red, and refuses to convert until they are
+              resolved.
+            </p>
+          </article>
+
+          <figure class="media-figure">
+            <img class="feature-shot" loading="lazy"
+                 alt="Three rows resolving to the same BIDS name shown in red, above two rows separated automatically by run number"
+                 src="assets/features/name_collision_red_dark.png"
+                 data-light="assets/features/name_collision_red_light.png">
+            <figcaption>
+              <strong>Caught before anything is written.</strong> The three red rows
+              resolve to one filename with nothing to tell them apart, so the
+              conversion refuses to start. The two below them were duplicates that a
+              <code class="inline">run</code> number resolves, so they were separated
+              automatically.
+            </figcaption>
+          </figure>
+
+          <article class="risk-card mod-all">
+            <span class="risk-tag">Invisible</span>
+            <h3>A folder BIDS never reads</h3>
+            <p>
+              A datatype folder is mistyped, <code class="inline">anatt</code>
+              instead of <code class="inline">anat</code>, or a well-meant
+              <code class="inline">raw</code> folder is created inside a
+              subject. The files inside can have perfect BIDS names. No BIDS
+              tool will ever read them, because tools look inside the datatype
+              folders. Most validators say nothing, because each filename is
+              valid when examined on its own.
+            </p>
+            <p class="risk-answer">
+              BIDS Manager reports it as an error and names the folder.
+            </p>
+          </article>
+
+          <figure class="media-figure">
+            <img class="feature-shot" loading="lazy"
+                 alt="A structural error: a correctly named T1w inside a folder called anatt instead of anat"
+                 src="assets/features/invalid_location_dark.png"
+                 data-light="assets/features/invalid_location_light.png">
+            <figcaption>
+              <strong>What it looks like when reported.</strong> The folder line
+              reads <code class="inline">ANATT</code>, and the message says the file
+              has a valid name but is not in a datatype directory, then lists what it
+              should be. Every filename inside that folder is still correct, which is
+              exactly why checking one name at a time says nothing.
+            </figcaption>
+          </figure>
+
+          <article class="risk-card mod-all">
+            <span class="risk-tag">Split apart</span>
+            <h3>One participant, three identities</h3>
+            <p>
+              Every modality states who was scanned in its own way. MRI and PET
+              carry a patient identifier in the DICOM header; EEG and MEG carry
+              nothing, so the answer has to come from the folder. Scan a visit
+              where somebody had all four and you get several subjects where
+              there was one person, each holding part of the session.
+            </p>
+            <p class="risk-answer">
+              BIDS Manager puts every recording in one table with the subject it
+              worked out, so a disagreement is visible before conversion and is
+              fixed by editing a column.
+            </p>
+          </article>
+
+          <div class="risk-group mod-mri"><h3>MRI</h3></div>
+
+          <article class="risk-card mod-mri">
+            <span class="risk-tag">Unusable</span>
+            <h3>Fieldmaps that point at nothing</h3>
+            <p>
+              A fieldmap without <code class="inline">IntendedFor</code> is
+              valid BIDS and useless: no pipeline can tell which images it is
+              meant to correct.
+            </p>
+            <p class="risk-answer">
+              BIDS Manager fills it in from what the scan measured.
+            </p>
+          </article>
+
+          <article class="risk-card mod-mri">
+            <span class="risk-tag">False alarm</span>
+            <h3>Objects that cannot be converted at all</h3>
+            <p>
+              A Siemens <code class="inline">TENSOR</code> map or a
+              <code class="inline">PhoenixZIPReport</code> contains no image
+              pixels. dcm2niix cannot convert it and returns an error, which
+              looks exactly like a failed conversion of something that mattered.
+            </p>
+            <p class="risk-answer">
+              BIDS Manager detects that there is no image inside, marks the row
+              and excludes it with the reason shown, so a real failure is never
+              lost among expected ones.
+            </p>
+          </article>
+
+          <article class="risk-card mod-mri">
+            <span class="risk-tag">Phantom runs</span>
+            <h3>Derived copies that look like extra data</h3>
+            <p>
+              dcm2niix can split one series into the real image plus several
+              single-volume derivatives, named
+              <code class="inline">_bolda</code>,
+              <code class="inline">_Eq_</code>,
+              <code class="inline">_ROI</code> or
+              <code class="inline">_i&lt;instance&gt;</code>. They are valid
+              NIfTI files with valid names. Left in place they inflate the run
+              count and can be picked up by a pipeline as if they were
+              acquisitions.
+            </p>
+            <p class="risk-answer">
+              BIDS Manager drops them by default and tells you how many, with a
+              setting to keep them. Genuine multi-output series, fieldmap
+              pairs, complex data and DWI derivatives, are untouched.
+            </p>
+          </article>
+
+          <div class="risk-group mod-eeg"><h3>EEG, MEG and iEEG</h3></div>
+
+          <article class="risk-card mod-eeg">
+            <span class="risk-tag">Answered falsely</span>
+            <h3>Metadata that looks answered and is not</h3>
+            <p>
+              BIDS requires <code class="inline">EEGReference</code> and
+              <code class="inline">EEGGround</code> in every EEG sidecar. A
+              converter cannot know them, so it writes
+              <code class="inline">"n/a"</code>. The field is present, the
+              validator is satisfied, and the file now states something false
+              about your recording.
+            </p>
+            <p class="risk-answer">
+              BIDS Manager treats <code class="inline">n/a</code> as a question
+              nobody has answered yet, and asks you once for the whole study.
+            </p>
+          </article>
+
+          <article class="risk-card mod-eeg">
+            <span class="risk-tag">Mistyped</span>
+            <h3>An ECG trace filed as a brain channel</h3>
+            <p>
+              An amplifier records the heart, the eyes and the stimulus trigger
+              on the same connector as the scalp, and the file format has no way
+              to say which is which. Everything therefore arrives typed as EEG.
+              An analysis that averages across channel type is then averaging a
+              heartbeat into the data.
+            </p>
+            <p class="risk-answer">
+              BIDS Manager lets you say once which channels are which, and
+              rewrites their type in <code class="inline">channels.tsv</code>
+              for every recording in the study. The types it accepts come from
+              the schema, not from a list somebody typed out.
+            </p>
+          </article>
+
+          <article class="risk-card mod-eeg">
+            <span class="risk-tag">Overwritten</span>
+            <h3>A device the converter already identified</h3>
+            <p>
+              A study-wide answer applied without checking will overwrite the
+              manufacturer that mne-bids read out of a MEG file, replacing a
+              fact from the recording with a guess from a form.
+            </p>
+            <p class="risk-answer">
+              BIDS Manager offers what it detected as a suggestion and writes it
+              only where you accepted it, so a value the file already knew is
+              never quietly replaced.
+            </p>
+          </article>
+
+          <div class="risk-group mod-pet"><h3>PET</h3></div>
+
+          <article class="risk-card mod-pet">
+            <span class="risk-tag">Wrong by decades</span>
+            <h3>A scanner clock that says 1936</h3>
+            <p>
+              <code class="inline">TimeZero</code> is the instant every frame
+              time and every blood sample is measured against. One of the
+              published OpenNeuroPET phantom files records a scan start before
+              the epoch, which renders as a plausible-looking time of day in
+              1936. Deriving <code class="inline">TimeZero</code> from it
+              produces a dataset in which every time is wrong.
+            </p>
+            <p class="risk-answer">
+              BIDS Manager refuses to derive it from an impossible value and
+              asks you for it instead.
+            </p>
+          </article>
+
+          <article class="risk-card mod-pet">
+            <span class="risk-tag">Drifting</span>
+            <h3>Frame timing that drifts through a batch</h3>
+            <p>
+              Converting a folder of ECAT files can leave the second file with
+              two frame times and the third with three, when one metadata
+              template is reused between files. The images are right, the
+              timing is wrong, and no validator checks for it.
+            </p>
+            <p class="risk-answer">
+              BIDS Manager gives every file its own metadata, so the tenth file
+              is as correct as the first.
+            </p>
+          </article>
+
+          <article class="risk-card mod-pet">
+            <span class="risk-tag">Not in the file</span>
+            <h3>Required numbers no scanner records</h3>
+            <p>
+              Injected dose, injected mass, specific activity, mode of
+              administration. BIDS requires them. They are on the dose sheet,
+              not in the file. A tool that reads only files cannot help, so it
+              leaves them blank or writes a placeholder.
+            </p>
+            <p class="risk-answer">
+              BIDS Manager asks for them once per study, with the standard's
+              own description beside each box, and can read them from your
+              lab's own dose spreadsheet.
+            </p>
+          </article>
+
+          <article class="risk-card mod-pet">
+            <span class="risk-tag">Orphaned</span>
+            <h3>A blood table its own sidecar cannot describe</h3>
+            <p>
+              BIDS separates hand-drawn and autosampled blood with a
+              <code class="inline">recording</code> entity in the filename, and
+              requires it on the sidecar as well as the table. A converter that
+              puts it on one and not the other produces a pair no tool can
+              match up, and the table is read without the units and flags that
+              describe it.
+            </p>
+            <p class="risk-answer">
+              BIDS Manager names the sidecar for the sampling it belongs to, so
+              each table has a sidecar that can be found from its own name.
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Side by side
+         ============================================================ -->
+    <section class="section" id="comparison">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Side by side</span>
+        <h2>What a converter alone leaves undone</h2>
+
+        <p>
+          Most raw-to-BIDS tools are converters: give them a folder and a
+          configuration, and they write BIDS. BIDS Manager uses the best of
+          those converters rather than writing another one, and covers what
+          lies on either side of them.
+        </p>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th></th><th>A converter alone</th><th>BIDS Manager</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Knowing what is in the folder</td><td>You declare it up front</td><td>It reads inside every file and shows you</td></tr>
+              <tr><td>Two files with one name</td><td>The last one wins, silently</td><td>Conversion refuses and names both files</td></tr>
+              <tr><td>A folder that is not a datatype</td><td>Usually unreported</td><td>Reported as an error, with the folder named</td></tr>
+              <tr><td>Metadata no file contains</td><td>Blank, or a placeholder</td><td>Asked once per study, in the standard's own words</td></tr>
+              <tr><td>Metadata that differs per run</td><td>One value for everything</td><td>A dataset default, with per-recording overrides</td></tr>
+              <tr><td>Validation</td><td>A separate tool, separately installed</td><td>Included, on the same schema, citing the rule</td></tr>
+              <tr><td>Reviewing the result</td><td>Open other software</td><td>Sidecar forms, TSV tables, NIfTI in 2-D, 3-D and time series, and a MEG / EEG signal viewer</td></tr>
+              <tr><td>Picking the work up again</td><td>Start over</td><td>Versioned scans, saved edits, undo</td></tr>
+              <tr><td>An engine that fails on one file</td><td>The run fails</td><td>The failure is contained, the rest still converts</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          The last row matters more than it appears to. Real archives contain
+          files that break tools. A conversion that stops at the first
+          difficult file turns a morning's work into a week's.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Validation
+         ============================================================ -->
+    <section class="section" id="validation">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Validation</span>
+        <h2>Validation is part of the application</h2>
+
+        <p>
+          Validation is not a separate tool to install and run afterwards. It
+          reads the same BIDS schema the rest of the application reads, so what
+          it checks and what the metadata forms ask for cannot disagree. It
+          runs on a whole dataset, a folder or a single file, and it runs while
+          you edit, so a correction turns a finding green without leaving the
+          window.
+        </p>
+
+        <p>
+          Every finding states three things: what is wrong, how to fix it, and
+          which rule of the BIDS schema it comes from. The last of those is
+          what makes a finding checkable. A rule path such as
+          <code class="inline">rules.sidecars.mri.MRIHardware</code> points at
+          the part of the standard the requirement is drawn from, so you can
+          read it and judge the finding yourself.
+        </p>
+
+        <p>
+          Findings point at the field or the table column they concern, and a
+          button takes you to it. Deep checks additionally open the NIfTI image
+          headers, which catches a truncated or corrupt image that is otherwise
+          indistinguishable from a healthy one.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="A validation finding with the schema rule it came from printed underneath the message"
+               src="assets/features/validation_provenance_dark.png"
+               data-light="assets/features/validation_provenance_light.png">
+          <figcaption>
+            <strong>A finding, in full.</strong> What is wrong, how to fix it, the
+            field it concerns, and the rule in the BIDS schema the requirement is
+            drawn from. This one is not a naming problem: it is a value inside a
+            table that is the wrong type, which no check on filenames could ever
+            see.
+          </figcaption>
+        </figure>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="A dataset-level finding: no subject directories under the dataset root"
+               src="assets/features/validation_dataset_scope_dark.png"
+               data-light="assets/features/validation_dataset_scope_light.png">
+          <figcaption>
+            <strong>Three scopes, always visible.</strong> Findings about the
+            dataset as a whole, about the folder you are in, and about the file
+            you have selected, each with its own count. Some problems belong to no
+            single file, and this is where they surface.
+          </figcaption>
+        </figure>
+
+        <div class="callout callout-info">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>The validator is also available on its own.</strong>
+            <p>
+              The checks are implemented in
+              <a href="https://pypi.org/project/bidsval/" target="_blank" rel="noopener">bidsval</a>,
+              a separate open-source package, so the same validation can be
+              used in a pipeline that has nothing to do with this application.
+              BIDS Manager depends on it in the ordinary way.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Two ways to drive it
+         ============================================================ -->
+    <section class="section" id="surfaces">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Interfaces</span>
+        <h2>Two ways to drive it</h2>
+
+        <p>
+          The <strong>graphical interface</strong> presents the decisions
+          visually, with an editable inventory table, an inspection view, and
+          viewers for NIfTI images, MEG and EEG signals, JSON sidecars and TSV
+          tables.
+        </p>
+
+        <p>
+          The <strong>command line</strong> offers seven console scripts
+          (<code class="inline">bidsmgr-create</code>,
+          <code class="inline">bidsmgr-scan</code>,
+          <code class="inline">bidsmgr-rebuild</code>,
+          <code class="inline">bidsmgr-convert</code>,
+          <code class="inline">bidsmgr-metadata</code>,
+          <code class="inline">bidsmgr-validate</code>,
+          <code class="inline">bidsmgr-project</code>) for scripted, headless
+          or pipeline use.
+        </p>
+
+        <p>
+          Both drive the same engine. A scan run from the command line produces
+          the inventory the graphical interface populates, and an edit made in
+          the interface can be replayed from the command line.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Privacy
+         ============================================================ -->
+    <section class="section" id="privacy">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Privacy</span>
+        <h2>Your data stays on your machine</h2>
+
+        <p>
+          BIDS Manager runs entirely on your computer. Your images, your
+          recordings and your participant information are read from your disk
+          and written back to your disk. Nothing is uploaded, there is no
+          account, there is no cloud service, and the application works with
+          the network switched off.
+        </p>
+
+        <p>
+          The application contains no analytics and no telemetry. It does not
+          report what you convert, how often you use it, or that you use it at
+          all.
+        </p>
+
+        <div class="callout callout-success">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Telemetry in dependencies is switched off as well.</strong>
+            <p>
+              pet2bids reports usage by default. BIDS Manager disables that
+              before loading it, because you chose this application and cannot
+              reasonably consent on behalf of a dependency you did not know you
+              were installing.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          One feature uses the network, and only one: on request, BIDS Manager
+          asks pypi.org for the latest published version number so it can tell
+          you an update exists. That request carries nothing about you or your
+          data, and it is the same request <code class="inline">pip</code>
+          makes.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Interactive workflow flowchart
+         ============================================================ -->
+    <section class="section" id="how-it-works">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">How it works</span>
+          <h2 class="section-title">Eight stages, three views.</h2>
+        </div>
+
+        <div class="workflow-intro">
+          <p>
+            The workflow runs in eight stages that alternate between
+            user-driven and engine-driven steps:
+          </p>
+          <p>
+            <strong>Raw</strong> is the input folder, untouched.
+            <strong>Scan</strong> walks it and reads the metadata inside every
+            file. <strong>Curate</strong> is where you review the inventory and
+            decide what converts, under which name.
+            <strong>Convert</strong> sends each row to the engine that reads its
+            format and writes the BIDS files with their sidecars.
+            <strong>Enrich</strong> fills the sidecar fields that can be filled,
+            from the captured metadata, your template answers and the schema,
+            and repairs what the engines leave incomplete.
+            <strong>Fix-ups</strong> is the manual stage: you open the Editor
+            and settle what no algorithm could infer.
+            <strong>Validate</strong> audits the result against the schema.
+            <strong>BIDS</strong> is the finished dataset.
+          </p>
+          <p>
+            Before any of it, you create or open a dataset project. Everything
+            after that is recorded into it, so the work is resumable and a
+            second conversion merges rather than overwrites.
+          </p>
+          <p>
+            Click any stage in the diagram below to read it as engine
+            internals, data artefacts, or GUI panels.
+          </p>
+        </div>
+
+        <div class="workflow">
+          <div class="workflow-stage">
+            <div class="workflow-modes" role="tablist" aria-label="Flow view">
+              <button class="workflow-mode is-active" data-mode="engine" role="tab" aria-selected="true">Engine view</button>
+              <button class="workflow-mode" data-mode="data"   role="tab" aria-selected="false">Data view</button>
+              <button class="workflow-mode" data-mode="gui"    role="tab" aria-selected="false">GUI view</button>
+            </div>
+
+            <svg class="workflow-graph" viewBox="0 0 880 232"
+                 role="img" aria-label="BIDS Manager workflow">
+              <defs>
+                <filter id="wf-node-glow" x="-60%" y="-60%" width="220%" height="220%">
+                  <feDropShadow dx="0" dy="0" stdDeviation="3"
+                                flood-color="#58a6ff" flood-opacity="0.75"/>
+                  <feDropShadow dx="0" dy="0" stdDeviation="8"
+                                flood-color="#d2a8ff" flood-opacity="0.45"/>
+                </filter>
+                <filter id="wf-dot-glow" x="-200%" y="-200%" width="500%" height="500%">
+                  <feDropShadow dx="0" dy="0" stdDeviation="3"
+                                flood-color="#58a6ff" flood-opacity="0.85"/>
+                  <feDropShadow dx="0" dy="0" stdDeviation="8"
+                                flood-color="#ffffff" flood-opacity="0.45"/>
+                </filter>
+
+                <!-- MDI6 icons, downloaded from @mdi/svg. Each path uses
+                     currentColor so the workflow-icon CSS class can tint
+                     them per palette / state. -->
+                <symbol id="wf-icon-raw" viewBox="0 0 24 24">
+                  <path fill="currentColor" pointer-events="none" d="M22,4A2,2 0 0,1 24,6V16A2,2 0 0,1 22,18H6A2,2 0 0,1 4,16V4A2,2 0 0,1 6,2H12L14,4H22M2,6V20H20V22H2A2,2 0 0,1 0,20V11H0V6H2M6,6V16H22V6H6Z"/>
+                </symbol>
+                <symbol id="wf-icon-scan" viewBox="0 0 24 24">
+                  <path fill="currentColor" pointer-events="none" d="M17 22V20H20V17H22V20.5C22 20.89 21.84 21.24 21.54 21.54C21.24 21.84 20.89 22 20.5 22H17M7 22H3.5C3.11 22 2.76 21.84 2.46 21.54C2.16 21.24 2 20.89 2 20.5V17H4V20H7V22M17 2H20.5C20.89 2 21.24 2.16 21.54 2.46C21.84 2.76 22 3.11 22 3.5V7H20V4H17V2M7 2V4H4V7H2V3.5C2 3.11 2.16 2.76 2.46 2.46C2.76 2.16 3.11 2 3.5 2H7M10.5 6C13 6 15 8 15 10.5C15 11.38 14.75 12.2 14.31 12.9L17.57 16.16L16.16 17.57L12.9 14.31C12.2 14.75 11.38 15 10.5 15C8 15 6 13 6 10.5C6 8 8 6 10.5 6M10.5 8C9.12 8 8 9.12 8 10.5C8 11.88 9.12 13 10.5 13C11.88 13 13 11.88 13 10.5C13 9.12 11.88 8 10.5 8Z"/>
+                </symbol>
+                <symbol id="wf-icon-curate" viewBox="0 0 24 24">
+                  <path fill="currentColor" pointer-events="none" d="M21.7,13.35L20.7,14.35L18.65,12.3L19.65,11.3C19.86,11.08 20.21,11.08 20.42,11.3L21.7,12.58C21.92,12.79 21.92,13.14 21.7,13.35M12,18.94L18.07,12.88L20.12,14.93L14.06,21H12V18.94M4,2H18A2,2 0 0,1 20,4V8.17L16.17,12H12V16.17L10.17,18H4A2,2 0 0,1 2,16V4A2,2 0 0,1 4,2M4,6V10H10V6H4M12,6V10H18V6H12M4,12V16H10V12H4Z"/>
+                </symbol>
+                <symbol id="wf-icon-convert" viewBox="0 0 24 24">
+                  <path fill="currentColor" pointer-events="none" d="M21,9L17,5V8H10V10H17V13M7,11L3,15L7,19V16H14V14H7V11Z"/>
+                </symbol>
+                <symbol id="wf-icon-enrich" viewBox="0 0 24 24">
+                  <path fill="currentColor" pointer-events="none" d="M7.5,5.6L5,7L6.4,4.5L5,2L7.5,3.4L10,2L8.6,4.5L10,7L7.5,5.6M19.5,15.4L22,14L20.6,16.5L22,19L19.5,17.6L17,19L18.4,16.5L17,14L19.5,15.4M22,2L20.6,4.5L22,7L19.5,5.6L17,7L18.4,4.5L17,2L19.5,3.4L22,2M13.34,12.78L15.78,10.34L13.66,8.22L11.22,10.66L13.34,12.78M14.37,7.29L16.71,9.63C17.1,10 17.1,10.65 16.71,11.04L5.04,22.71C4.65,23.1 4,23.1 3.63,22.71L1.29,20.37C0.9,20 0.9,19.35 1.29,18.96L12.96,7.29C13.35,6.9 14,6.9 14.37,7.29Z"/>
+                </symbol>
+                <symbol id="wf-icon-fixups" viewBox="0 0 24 24">
+                  <path fill="currentColor" pointer-events="none" d="M22.61,19L13.53,9.91C14.46,7.57 14,4.81 12.09,2.91C9.79,0.61 6.21,0.4 3.66,2.26L7.5,6.11L6.08,7.5L2.25,3.69C0.39,6.23 0.6,9.82 2.9,12.11C4.76,13.97 7.47,14.46 9.79,13.59L18.9,22.7C19.29,23.09 19.92,23.09 20.31,22.7L22.61,20.4C23,20 23,19.39 22.61,19M19.61,20.59L10.15,11.13C9.54,11.58 8.86,11.85 8.15,11.95C6.79,12.15 5.36,11.74 4.32,10.7C3.37,9.76 2.93,8.5 3,7.26L6.09,10.35L10.33,6.11L7.24,3C8.5,2.95 9.73,3.39 10.68,4.33C11.76,5.41 12.17,6.9 11.92,8.29C11.8,9 11.5,9.66 11.04,10.25L20.5,19.7L19.61,20.59Z"/>
+                </symbol>
+                <symbol id="wf-icon-validate" viewBox="0 0 24 24">
+                  <path fill="currentColor" pointer-events="none" d="M21,11C21,16.55 17.16,21.74 12,23C6.84,21.74 3,16.55 3,11V5L12,1L21,5V11M12,21C15.75,20 19,15.54 19,11.22V6.3L12,3.18L5,6.3V11.22C5,15.54 8.25,20 12,21M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9"/>
+                </symbol>
+                <symbol id="wf-icon-bids" viewBox="0 0 24 24">
+                  <path fill="currentColor" pointer-events="none" d="M12 2C11.8 2 11.6 2.1 11.4 2.2L3.5 6.6C3.2 6.8 3 7.1 3 7.5V16.5C3 16.9 3.2 17.2 3.5 17.4L11.4 21.8C11.6 21.9 11.8 22 12 22S12.4 21.9 12.6 21.8L13.5 21.3C13.2 20.7 13.1 20 13 19.3V12.6L19 9.2V13C19.7 13 20.4 13.1 21 13.3V7.5C21 7.1 20.8 6.8 20.5 6.6L12.6 2.2C12.4 2.1 12.2 2 12 2M12 4.2L18 7.5L16 8.6L10.1 5.2L12 4.2M8.1 6.3L14 9.8L12 10.9L6 7.5L8.1 6.3M5 9.2L11 12.6V19.3L5 15.9V9.2M21.3 15.8L17.7 19.4L16.1 17.8L15 19L17.8 22L22.6 17.2L21.3 15.8Z"/>
+                </symbol>
+              </defs>
+
+              <!-- Two paths overlaid: a dim main line (always visible) and
+                   a bright trail that the JS reveals progressively behind
+                   the dot via stroke-dashoffset. -->
+              <path id="wf-main-path" class="workflow-line main-line"
+                    d="M70 110
+                       C 140 60, 200 60, 230 110
+                       C 260 160, 320 160, 350 110
+                       C 380 60, 440 60, 470 110
+                       C 500 160, 560 160, 590 110
+                       C 620 60, 680 60, 710 110
+                       C 740 160, 800 160, 830 110" />
+              <path id="wf-trail-path" class="workflow-line trail-line"
+                    d="M70 110
+                       C 140 60, 200 60, 230 110
+                       C 260 160, 320 160, 350 110
+                       C 380 60, 440 60, 470 110
+                       C 500 160, 560 160, 590 110
+                       C 620 60, 680 60, 710 110
+                       C 740 160, 800 160, 830 110" />
+
+              <circle class="wf-dot workflow-dot" r="5" cx="70" cy="110" />
+
+              <!-- Nodes. Each node has a circle, a centered icon via <use>,
+                   and a label. data-node keys drive the JS narrative. -->
+              <g class="workflow-node" data-node="raw" tabindex="0" role="button" aria-label="Raw data stage">
+                <circle cx="70"  cy="110" r="24"></circle>
+                <use class="workflow-icon" href="#wf-icon-raw"      x="59"  y="99"  width="22" height="22"/>
+                <text x="70"  y="168">Raw</text>
+              </g>
+              <g class="workflow-node" data-node="scan" tabindex="0" role="button" aria-label="Scan stage">
+                <circle cx="180" cy="80"  r="24"></circle>
+                <use class="workflow-icon" href="#wf-icon-scan"     x="169" y="69"  width="22" height="22"/>
+                <text x="180" y="44">Scan</text>
+              </g>
+              <g class="workflow-node" data-node="curate" tabindex="0" role="button" aria-label="Curate stage">
+                <circle cx="290" cy="140" r="24"></circle>
+                <use class="workflow-icon" href="#wf-icon-curate"   x="279" y="129" width="22" height="22"/>
+                <text x="290" y="194">Curate</text>
+              </g>
+              <g class="workflow-node" data-node="convert" tabindex="0" role="button" aria-label="Convert stage">
+                <circle cx="400" cy="80"  r="24"></circle>
+                <use class="workflow-icon" href="#wf-icon-convert"  x="389" y="69"  width="22" height="22"/>
+                <text x="400" y="44">Convert</text>
+              </g>
+              <g class="workflow-node" data-node="enrich" tabindex="0" role="button" aria-label="Enrich stage">
+                <circle cx="510" cy="140" r="24"></circle>
+                <use class="workflow-icon" href="#wf-icon-enrich"   x="499" y="129" width="22" height="22"/>
+                <text x="510" y="194">Enrich</text>
+              </g>
+              <g class="workflow-node" data-node="fixups" tabindex="0" role="button" aria-label="Fix-ups stage">
+                <circle cx="620" cy="80"  r="24"></circle>
+                <use class="workflow-icon" href="#wf-icon-fixups"   x="609" y="69"  width="22" height="22"/>
+                <text x="620" y="44">Fix-ups</text>
+              </g>
+              <g class="workflow-node" data-node="validate" tabindex="0" role="button" aria-label="Validate stage">
+                <circle cx="730" cy="140" r="24"></circle>
+                <use class="workflow-icon" href="#wf-icon-validate" x="719" y="129" width="22" height="22"/>
+                <text x="730" y="194">Validate</text>
+              </g>
+              <g class="workflow-node" data-node="bids" tabindex="0" role="button" aria-label="BIDS dataset stage">
+                <circle cx="830" cy="110" r="26"></circle>
+                <use class="workflow-icon" href="#wf-icon-bids"     x="818" y="98"  width="24" height="24"/>
+                <text x="830" y="170">BIDS</text>
+              </g>
+            </svg>
+
+            <div class="workflow-side">
+              <div class="workflow-detail" data-workflow-detail aria-live="polite">
+                <h3><span class="badge">raw</span>Raw data</h3>
+                <p>Click a stage in the diagram above to read about it.</p>
+              </div>
+              <div>
+                <h3 style="margin-top:0;">Why eight stages?</h3>
+                <p class="muted">
+                  Most BIDS converters collapse the middle stages into one
+                  opaque run. Splitting them is what lets the user review
+                  the inventory before any conversion runs, and review the
+                  converted result before any validation.
+                </p>
+                <p class="muted">
+                  <strong>Enrich</strong> and <strong>Fix-ups</strong> have
+                  different drivers. Enrich is automatic: a schema-driven
+                  algorithm fills what it can. Fix-ups is interactive: the
+                  user resolves what the algorithm could not.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Who it is for
+         ============================================================ -->
+    <section class="section" id="who">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Audience</span>
+        <h2>Who it is for</h2>
+        <ul>
+          <li><strong>Researchers</strong> who want a scan, review, convert and
+            validate loop without writing scripts.</li>
+          <li><strong>Lab managers</strong> who need reproducible BIDS exports
+            across many subjects and modalities.</li>
+          <li><strong>Power users</strong> who want to build their own pipelines
+            on the same engine, through the command line.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Questions, ideas, problems
+         ============================================================ -->
+    <section class="section" id="issues">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Getting help</span>
+        <h2>Questions, ideas, and problems</h2>
+
+        <p>
+          BIDS Manager is developed in the open by a small group, and there is
+          one place for all of it: the issue tracker. It is not only for things
+          that are broken. A question, a suggestion, or a sentence saying that
+          something in these pages did not make sense are all as useful as a bug
+          report, and often more so.
+        </p>
+
+        <p>
+          <a class="btn btn-primary"
+             href="https://github.com/ANCPLabOldenburg/BIDS-Manager/issues/new"
+             target="_blank" rel="noopener">Open an issue &rarr;</a>
+          <a class="btn btn-ghost"
+             href="https://github.com/ANCPLabOldenburg/BIDS-Manager/issues"
+             target="_blank" rel="noopener">Browse existing issues</a>
+        </p>
+
+        <div class="callout callout-info">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>You need a free GitHub account, and nothing else.</strong>
+            <p>
+              No mailing list to join, no form to fill in, no institutional
+              affiliation required. If you would rather not post publicly, say
+              so in an issue with as little detail as you like and we will find
+              another way.
+            </p>
+          </div>
+        </div>
+
+        <h3>What to send, whichever kind it is</h3>
+
+        <div class="risk-list">
+
+          <div class="risk-group mod-all"><h3>Something is broken</h3></div>
+
+          <article class="risk-card mod-all">
+            <span class="risk-tag">Bug</span>
+            <h3>The software did something wrong</h3>
+            <p>
+              It crashed, it refused to do something it should do, a conversion
+              produced the wrong thing, or something looked right and was not.
+              The last of those is the most valuable report we get, and the
+              hardest to notice.
+            </p>
+            <p class="risk-answer">
+              Tell us what you expected and what happened instead; the version
+              from the About dialog and your operating system; the modality and
+              the source format, for example PET ECAT or EEG BrainVision; and
+              the message copied as text rather than photographed. Attach the
+              log if you can: the application writes one, and it usually
+              contains the answer.
+            </p>
+          </article>
+
+          <article class="risk-card mod-all">
+            <span class="risk-tag">Docs bug</span>
+            <h3>The documentation is wrong or unclear</h3>
+            <p>
+              A step that does not match what you see, a number that no longer
+              holds, a screenshot of a window that has changed, or an
+              explanation that assumes something you were never told. These
+              pages are generated against the running application and still go
+              out of date.
+            </p>
+            <p class="risk-answer">
+              Name the page and the section heading, and say what you expected
+              to read there. "I could not tell whether this applied to ECAT" is
+              a complete and useful report.
+            </p>
+          </article>
+
+          <div class="risk-group mod-eeg"><h3>Something is missing</h3></div>
+
+          <article class="risk-card mod-eeg">
+            <span class="risk-tag">Feature</span>
+            <h3>You want the software to do something it does not</h3>
+            <p>
+              A file format it does not read, a modality it does not handle, a
+              step in your lab's workflow that still has to be done by hand, or
+              a control that is in the wrong place for the way you work. Support
+              for new formats and new modalities usually starts as somebody
+              saying they had one.
+            </p>
+            <p class="risk-answer">
+              Describe the workflow rather than the feature where you can. What
+              you are trying to end up with tells us more than a proposed
+              solution, and quite often there is already a way.
+            </p>
+          </article>
+
+          <article class="risk-card mod-eeg">
+            <span class="risk-tag">Docs idea</span>
+            <h3>You want the documentation to cover something</h3>
+            <p>
+              A tutorial for a modality or a workflow that is not here, a
+              worked example closer to your own data, a sample dataset you could
+              practise on, or a diagram of something these pages only describe
+              in words.
+            </p>
+            <p class="risk-answer">
+              Say what you were trying to do when you went looking for it. That
+              is what tells us where the page belongs.
+            </p>
+          </article>
+
+          <div class="risk-group mod-mri"><h3>Something is unclear</h3></div>
+
+          <article class="risk-card mod-mri">
+            <span class="risk-tag">Question</span>
+            <h3>You are not sure, and the answer is not here</h3>
+            <p>
+              Whether the tool can do what you need, whether your data is in a
+              shape it can read, what a finding means, or whether something you
+              are seeing is expected. There is no wrong question, and a question
+              asked is usually a page that needs writing.
+            </p>
+            <p class="risk-answer">
+              Ask it. If the answer turns out to be in these pages, the fact
+              that you could not find it is itself worth knowing, and we will
+              move it somewhere you would have looked.
+            </p>
+          </article>
+
+        </div>
+
+        <h3>Before you write, one look at the tracker</h3>
+        <p>
+          <a href="https://github.com/ANCPLabOldenburg/BIDS-Manager/issues" target="_blank" rel="noopener">Search
+          the existing issues</a> first. One line saying "this happens to me
+          too", with your own version and modality, is more useful than a
+          duplicate: it tells us how widespread something is, which is how we
+          decide what to do first.
+        </p>
+
+        <p>
+          Give the issue a title that says what happened rather than what you
+          were doing. "Conversion refuses with a duplicate name on a
+          two-session dataset" is better than "problem with conversion", and
+          "PET tutorial does not say which dose sheet to use" is better than
+          "documentation".
+        </p>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Please do not attach participant data.</strong>
+            <p>
+              A filename, an excerpt of a header, or an anonymised sidecar is
+              almost always enough. If a file is genuinely needed to reproduce
+              the problem, say so in the issue and we will find a way that does
+              not involve posting it publicly. The
+              <a href="#privacy">privacy section above</a> covers what BIDS
+              Manager itself does with identifying data.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          You do not need to know the codebase, and you do not need to propose a
+          fix. A clear description of what went wrong, or of what you wish
+          existed, is the useful part.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="next">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Next</span>
+        <h2>Next steps</h2>
+        <ul>
+          <li><a href="gui-tour.html">GUI tour</a>: a quick look at the Home,
+            Converter and Editor views and what each one does.</li>
+          <li><a href="installation.html">Install BIDS Manager</a> on macOS,
+            Linux or Windows.</li>
+          <li><a href="tutorial.html">Walk the tutorial</a>: seventeen steps
+            from an empty folder to a validated dataset, then the same
+            workflow from the command line.</li>
+          <li>Follow a <a href="tutorial-mri.html">modality walkthrough</a> on
+            sample data: MRI, PET, EEG, MEG, or all of them at once.</li>
+          <li>Read the
+            <a href="https://github.com/ANCPLabOldenburg/BIDS-Manager/blob/main/docs/architecture.md"
+               target="_blank" rel="noopener">architecture write-up</a>
+            for the engine internals.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <div data-include="footer"></div>
+  <script src="script.js" defer></script>
+</body>
+</html>

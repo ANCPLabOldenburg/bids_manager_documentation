@@ -4,7 +4,7 @@
       <span class="section-eyebrow">GUI tour</span>
       <h2 class="section-title">The window you'll be working in.</h2>
       <p class="section-lead">
-        BIDS Manager opens on a <strong>Welcome</strong> screen where you
+        BIDS Manager opens on the <strong>Home</strong> tab, where you
         create or open a dataset project, then gives you two working views:
         the <strong>Converter</strong> (raw &rarr; BIDS) and the
         <strong>Editor</strong> (read, fix, validate). Pick a tab below,
@@ -17,14 +17,14 @@
     <div class="tabs" data-tabs>
       <div class="tab-buttons" role="tablist" aria-label="GUI view">
         <button class="tab-btn is-active" data-tab="welcome"
-                role="tab" aria-selected="true">Welcome view</button>
+                role="tab" aria-selected="true">Home view</button>
         <button class="tab-btn" data-tab="converter"
                 role="tab" aria-selected="false">Converter view</button>
         <button class="tab-btn" data-tab="editor"
                 role="tab" aria-selected="false">Editor view</button>
       </div>
 
-      <!-- ============== Welcome / project tour ============== -->
+      <!-- ============== Home / project tour ============== -->
       <div class="tab-panel is-active" data-panel="welcome"
            role="tabpanel">
         <p class="muted gui-tour-hint">
@@ -37,7 +37,7 @@
           <img class="gui-tour-img"
                src="assets/gui/home_tab_dark.png"
                data-light="assets/gui/home_tab_light.png"
-               alt="BIDS Manager Welcome tab with numbered markers"
+               alt="BIDS Manager Home tab with numbered markers"
                loading="lazy">
 
           <span class="gui-tour-anchor" style="left: 24%; top: 5%;">
@@ -46,7 +46,7 @@
             <div class="gui-tour-pop" data-pos="bottom" role="tooltip">
               <strong>View switcher</strong>
               <p>The three top-level tabs that run the whole app:
-                <em>Home</em> (this Welcome / project screen),
+                <em>Home</em> (this project screen),
                 <em>Converter</em> (raw &rarr; BIDS), and <em>Editor</em>
                 (read, fix, validate). The Converter and Editor stay
                 disabled until a project is open, which is why the workflow
@@ -100,11 +100,11 @@
                     type="button" aria-label="Getting started">5</button>
             <div class="gui-tour-pop" data-pos="right" role="tooltip">
               <strong>Getting started</strong>
-              <p>Shortcuts to the documentation, this tutorial, and the
-                source code, plus four downloadable sample datasets (MRI,
-                EEG, MEG, and an advanced MRI set) so you can run the full
-                scan &rarr; convert &rarr; validate loop on real data without
-                hunting for files first.</p>
+              <p>Shortcuts to the documentation, this tutorial, and the source
+                code, plus the sample datasets that ship as links: MRI, EEG, MEG
+                and an advanced MRI set. The documentation site carries two more,
+                PET and a multimodal set, on its
+                <em>Tutorials</em> pages.</p>
             </div>
           </span>
 
@@ -113,10 +113,12 @@
                     type="button" aria-label="Settings and theme">6</button>
             <div class="gui-tour-pop" data-pos="left" role="tooltip">
               <strong>Settings + theme</strong>
-              <p>The gear opens Settings (Display, System, Scan, Scan rules,
-                and Convert + post-convert). The sun / moon button beside it
-                toggles the light / dark theme live. Both sit at the far
-                right of the header on every screen.</p>
+              <p>The gear opens Settings, seven tabs: BIDS version, Display,
+                System, Scan, Scan rules, Convert + post-convert, and
+                Validation. The first decides which version of the standard
+                this session works to, and reaches everything downstream. The
+                sun / moon button beside it toggles the theme live. Both sit at
+                the far right of the header on every screen.</p>
             </div>
           </span>
         </div>
@@ -205,10 +207,12 @@
                     type="button" aria-label="Settings and theme">6</button>
             <div class="gui-tour-pop" data-pos="left" role="tooltip">
               <strong>Settings + theme</strong>
-              <p>The gear opens Settings (Display, System, Scan, Scan rules,
-                Convert + post-convert), where you tune workers, the
-                classifier, scan rules, and the post-conversion chain. The
-                sun / moon button toggles the theme live.</p>
+              <p>The gear opens Settings, seven tabs: BIDS version, Display,
+                System, Scan, Scan rules, Convert + post-convert, and
+                Validation. That is where you set which version of the standard
+                to work to, the worker counts, your own scan rules, and the
+                chain that runs after every conversion. The sun / moon button
+                toggles the theme live.</p>
             </div>
           </span>
 
@@ -255,11 +259,12 @@
                     type="button" aria-label="Inspection table">10</button>
             <div class="gui-tour-pop" data-pos="top" role="tooltip">
               <strong>Inspection table</strong>
-              <p>The centre of gravity: one editable row per series, with the
-                predicted basename, datatype, task, run, dataset, and
-                confidence. Rows are colour-coded by status (keep / skip /
-                non-image / warning). The classifier's guesses are only
-                defaults, every cell can be edited.</p>
+              <p>The centre of gravity: one editable row per recording, with
+                the predicted basename, datatype, task, run and the classifier's
+                confidence. Rows are tinted by status (keep, skip, non-image,
+                warning), and a predicted basename turns <em>red</em> when
+                another row wants the same filename, which blocks the conversion
+                until you resolve it. Any cell can be edited by clicking it.</p>
             </div>
           </span>
 
@@ -314,103 +319,119 @@
 
         <div class="gui-tour" data-tour="editor">
           <img class="gui-tour-img"
-               src="assets/screenshots/full_editor_window_dark.png"
-               data-light="assets/screenshots/full_editor_window_light.png"
-               alt="Full BIDS Manager Editor window with numbered markers"
+               src="assets/features/window_editor_dark.png"
+               data-light="assets/features/window_editor_light.png"
+               alt="The BIDS Manager Editor window with numbered markers"
                loading="lazy">
 
-          <span class="gui-tour-anchor" style="left: 26%; top: 5%;">
+          <span class="gui-tour-anchor" style="left: 32.9%; top: 2.6%;">
             <button class="gui-tour-marker" data-marker="1"
                     type="button" aria-label="View switcher">1</button>
             <div class="gui-tour-pop" data-pos="bottom" role="tooltip">
               <strong>View switcher</strong>
-              <p>You're in the <em>Editor</em>: read the converted BIDS
-                dataset, edit sidecars and TSV tables, inspect volumes and
-                recordings, and run validation.</p>
+              <p>You are in the <em>Editor</em>: read the converted dataset, edit sidecars and tables, look at images and recordings, and run validation. The other two tabs are the Home screen and the Converter.</p>
             </div>
           </span>
 
-          <span class="gui-tour-anchor" style="left: 12%; top: 10%;">
+          <span class="gui-tour-anchor" style="left: 49.1%; top: 7.6%;">
             <button class="gui-tour-marker" data-marker="2"
-                    type="button" aria-label="Open BIDS root and undo">2</button>
+                    type="button" aria-label="Validate at three scopes">2</button>
             <div class="gui-tour-pop" data-pos="bottom" role="tooltip">
-              <strong>Open BIDS root + Undo / Redo</strong>
-              <p><em>Open BIDS root</em> picks the dataset to edit (the active
-                project opens here automatically). <em>Undo</em> and
-                <em>Redo</em> step through sidecar and table edits.</p>
+              <strong>Validate at three scopes</strong>
+              <p><em>Validate file</em>, <em>folder</em> and <em>dataset</em> run the same checks over different amounts of the tree. Dataset also checks the things no single file is responsible for, such as whether the files listed in a scans table are the ones actually present.</p>
             </div>
           </span>
 
-          <span class="gui-tour-anchor" style="left: 43%; top: 10%;">
+          <span class="gui-tour-anchor" style="left: 58.8%; top: 7.6%;">
             <button class="gui-tour-marker" data-marker="3"
-                    type="button" aria-label="Validation toolbar">3</button>
+                    type="button" aria-label="Deep checks">3</button>
             <div class="gui-tour-pop" data-pos="bottom" role="tooltip">
-              <strong>Validation toolbar</strong>
-              <p><em>Validate file / folder / dataset</em> run audits at three
-                scopes. The <em>Strict BIDS</em> toggle adds the official
-                <code class="inline">bidsschematools</code> structural pass on
-                top of the schema-driven checks.</p>
+              <strong>Deep checks</strong>
+              <p>Off by default. When on, validation additionally opens NIfTI image headers and reads file contents, which catches a truncated or corrupt image that every name-based check would pass. Slower on large trees, so it is a per-run choice rather than a setting.</p>
             </div>
           </span>
 
-          <span class="gui-tour-anchor" style="left: 37%; top: 5%;">
+          <span class="gui-tour-anchor" style="left: 75.0%; top: 7.6%;">
             <button class="gui-tour-marker" data-marker="4"
-                    type="button" aria-label="Project switcher">4</button>
+                    type="button" aria-label="Severity chips">4</button>
             <div class="gui-tour-pop" data-pos="bottom" role="tooltip">
-              <strong>Project switcher + severity chips</strong>
-              <p>The same project dropdown as the Converter. Once you run a
-                validation, severity chips appear here too, summarising the
-                dataset's current issue counts, and are clickable to open the
-                issue list.</p>
+              <strong>Severity chips</strong>
+              <p>A live count of the whole dataset: valid files, warnings, errors. Click one to open the list of files carrying that severity and jump straight to any of them.</p>
             </div>
           </span>
 
-          <span class="gui-tour-anchor" style="left: 95%; top: 5%;">
+          <span class="gui-tour-anchor" style="left: 18.4%; top: 7.6%;">
             <button class="gui-tour-marker" data-marker="5"
-                    type="button" aria-label="Settings and theme">5</button>
-            <div class="gui-tour-pop" data-pos="left" role="tooltip">
-              <strong>Settings + theme</strong>
-              <p>The gear opens the same Settings dialog as the Converter, and
-                the sun / moon button toggles the light / dark theme live.</p>
+                    type="button" aria-label="Undo and redo">5</button>
+            <div class="gui-tour-pop" data-pos="bottom" role="tooltip">
+              <strong>Undo and redo</strong>
+              <p>Editing is undoable, and it covers both sidecar fields and table cells, so you can try a change and step back from it.</p>
             </div>
           </span>
 
-          <span class="gui-tour-anchor" style="left: 13%; top: 50%;">
+          <span class="gui-tour-anchor" style="left: 96.6%; top: 12.8%;">
             <button class="gui-tour-marker" data-marker="6"
-                    type="button" aria-label="BIDS dataset tree">6</button>
-            <div class="gui-tour-pop" data-pos="right" role="tooltip">
-              <strong>BIDS dataset tree</strong>
-              <p>The converted layout with a status dot per file: green for
-                clean, amber for warnings, red for errors. Click a file to
-                open it in the centre pane; the dots refresh after you
-                re-validate.</p>
+                    type="button" aria-label="The dataset path">6</button>
+            <div class="gui-tour-pop" data-pos="left" role="tooltip">
+              <strong>The dataset path</strong>
+              <p>Which dataset is open. <em>change…</em> opens another. The Editor can open any BIDS dataset, including one produced by something else.</p>
             </div>
           </span>
 
-          <span class="gui-tour-anchor" style="left: 50%; top: 45%;">
+          <span class="gui-tour-anchor" style="left: 11.6%; top: 45.0%;">
             <button class="gui-tour-marker" data-marker="7"
-                    type="button" aria-label="File viewer">7</button>
-            <div class="gui-tour-pop" data-pos="top" role="tooltip">
-              <strong>File viewer (extension-routed)</strong>
-              <p>The centre pane routes by file type: JSON sidecars open a
-                schema-aware form (with a Tree view, Add / Delete field, and
-                Revert / Save); TSVs open an editable table; NIfTI opens the
-                tri-view + 4-D graph; and MEG / EEG / iEEG recordings open the
-                interactive signal viewer with an in-app PSD and an events
-                overlay.</p>
+                    type="button" aria-label="BIDS tree">7</button>
+            <div class="gui-tour-pop" data-pos="right" role="tooltip">
+              <strong>BIDS tree</strong>
+              <p>The converted layout, with a coloured dot on every file: green clean, amber a warning, red an error. A folder carries the worst dot beneath it, so a red dot at the top can be followed down to the file responsible without opening anything.</p>
             </div>
           </span>
 
-          <span class="gui-tour-anchor" style="left: 88%; top: 28%;">
+          <span class="gui-tour-anchor" style="left: 45.0%; top: 23.8%;">
             <button class="gui-tour-marker" data-marker="8"
-                    type="button" aria-label="Validation pane">8</button>
+                    type="button" aria-label="Viewer, routed by file type">8</button>
+            <div class="gui-tour-pop" data-pos="bottom" role="tooltip">
+              <strong>Viewer, routed by file type</strong>
+              <p>Whatever you select opens in the editor built for it: this schema-aware form for JSON sidecars, an editable table for TSVs, the image viewer for NIfTI, and the signal viewer for EEG, MEG and iEEG recordings. <em>BIDS view</em> lists the fields the standard declares; <em>Tree view</em> shows the raw keys and values.</p>
+            </div>
+          </span>
+
+          <span class="gui-tour-anchor" style="left: 69.4%; top: 23.8%;">
+            <button class="gui-tour-marker" data-marker="9"
+                    type="button" aria-label="Revert and Save">9</button>
+            <div class="gui-tour-pop" data-pos="bottom" role="tooltip">
+              <strong>Revert and Save</strong>
+              <p>Edits are written back to the file on Save. Revert drops them and reloads from disk.</p>
+            </div>
+          </span>
+
+          <span class="gui-tour-anchor" style="left: 88.6%; top: 30.0%;">
+            <button class="gui-tour-marker" data-marker="10"
+                    type="button" aria-label="Validation pane">10</button>
             <div class="gui-tour-pop" data-pos="left" role="tooltip">
               <strong>Validation pane</strong>
-              <p>The severity-coloured issue list. Click an item to jump to
-                the offending file; fix it in the viewer and re-run validation
-                to refresh the list and the tree's status dots.</p>
+              <p>Three scopes at once: findings about the dataset, about the folder you are in, and about the selected file, each with its own count. Every finding carries the rule in the BIDS schema it came from.</p>
             </div>
           </span>
+
+          <span class="gui-tour-anchor" style="left: 94.7%; top: 42.1%;">
+            <button class="gui-tour-marker" data-marker="11"
+                    type="button" aria-label="Highlight in editor">11</button>
+            <div class="gui-tour-pop" data-pos="left" role="tooltip">
+              <strong>Highlight in editor</strong>
+              <p>Tints every field or column on this file that a finding refers to, so you can see them all at once rather than one at a time.</p>
+            </div>
+          </span>
+
+          <span class="gui-tour-anchor" style="left: 97.4%; top: 63.1%;">
+            <button class="gui-tour-marker" data-marker="12"
+                    type="button" aria-label="Fix">12</button>
+            <div class="gui-tour-pop" data-pos="left" role="tooltip">
+              <strong>Fix</strong>
+              <p>Takes you to the exact field or table column the finding is about. On a TODO placeholder the button reads <em>Set a real value</em> instead.</p>
+            </div>
+          </span>
+
         </div>
       </div>
     </div>

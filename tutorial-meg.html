@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="MEG walkthrough for BIDS Manager: Elekta sample data, scan to validate, step by step.">
+  <meta name="description" content="Full MEG tutorial for BIDS Manager: an Elekta two-subject, three-session dataset from raw FIF to a validated BIDS dataset, including empty-room recordings and automatic session inference.">
   <title>MEG tutorial &middot; BIDS Manager</title>
   <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
   <link rel="stylesheet" href="styles.css">
@@ -17,32 +17,68 @@
   <div data-include="tutorial-back-to-landing"></div>
 
   <main>
+    <aside class="page-toc" data-toc aria-label="Page navigation">
+      <button class="page-toc-toggle" type="button"
+              aria-expanded="false" aria-controls="page-toc-panel"
+              aria-label="Toggle page navigation">
+        <span class="toc-bars" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+      <nav id="page-toc-panel" class="page-toc-panel" aria-label="Sections">
+        <span class="page-toc-title">On this page</span>
+        <a class="page-toc-link" href="#data">
+          <span class="page-toc-dot" aria-hidden="true"></span>The data</a>
+        <a class="page-toc-link" href="#sessions">
+          <span class="page-toc-dot" aria-hidden="true"></span>Sessions from the path</a>
+        <a class="page-toc-link" href="#scan">
+          <span class="page-toc-dot" aria-hidden="true"></span>1. Scan</a>
+        <a class="page-toc-link" href="#inventory">
+          <span class="page-toc-dot" aria-hidden="true"></span>2. Read the inventory</a>
+        <a class="page-toc-link" href="#emptyroom">
+          <span class="page-toc-dot" aria-hidden="true"></span>3. Empty-room recordings</a>
+        <a class="page-toc-link" href="#metadata">
+          <span class="page-toc-dot" aria-hidden="true"></span>4. The metadata</a>
+        <a class="page-toc-link" href="#convert">
+          <span class="page-toc-dot" aria-hidden="true"></span>5. Convert</a>
+        <a class="page-toc-link" href="#inspect">
+          <span class="page-toc-dot" aria-hidden="true"></span>6. Inspect the signal</a>
+        <a class="page-toc-link" href="#validate">
+          <span class="page-toc-dot" aria-hidden="true"></span>7. Validate</a>
+        <a class="page-toc-link" href="#numbers">
+          <span class="page-toc-dot" aria-hidden="true"></span>Real numbers</a>
+        <a class="page-toc-link" href="#cli">
+          <span class="page-toc-dot" aria-hidden="true"></span>From the command line</a>
+        <a class="page-toc-link" href="#trouble">
+          <span class="page-toc-dot" aria-hidden="true"></span>Troubleshooting</a>
+      </nav>
+    </aside>
+
     <!-- ============================================================
          Hero
          ============================================================ -->
     <section class="section">
       <div class="container container-narrow prose">
         <span class="section-eyebrow">MEG tutorial</span>
-        <h1>MEG: convert an Elekta 3-session dataset.</h1>
+        <h1>MEG, start to finish.</h1>
         <p class="lead">
-          Two-subject Elekta MEG sample with multiple sessions per
-          subject. The scanner reads the FIF metadata, the path
-          structure flags two date-named subfolders as separate
-          sessions, and the pipeline runs unchanged from MRI.
+          Twenty-three FIF recordings from an Elekta system, two subjects, three
+          sessions, including the empty-room recordings taken before and after
+          each visit. MEG is the modality where the most metadata is already in
+          the file, so this page is largely about what BIDS Manager should be
+          left alone to do, and about the handful of things it genuinely cannot
+          know.
         </p>
 
-        <div class="callout callout-tip">
+        <div class="callout callout-info">
           <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
           <div>
-            <strong>The MEG story showcases automatic session inference.</strong>
-            <p>One subject in this dataset has two date-named
-              recording folders (<code class="inline">220209</code> and
-              <code class="inline">220215</code>). BIDS Manager
-              notices the multi-date layout and assigns them to
-              <code class="inline">ses-1</code> and
-              <code class="inline">ses-2</code> automatically. The
-              other subject has only one date folder, so no session
-              entity is written. No user override needed.</p>
+            <strong>This page builds on the general walkthrough.</strong>
+            <p>
+              The <a href="tutorial.html#gui-walkthrough">GUI walkthrough</a>
+              explains each control once, for every modality. This page covers
+              what is specific to MEG.
+            </p>
           </div>
         </div>
 
@@ -51,18 +87,19 @@
             <span class="section-eyebrow" style="margin-bottom:8px;">Example data</span>
             <h2 style="margin-top:0;">Elekta sample (2 subjects, 3 sessions)</h2>
             <p>
-              Two subject folders. <code class="inline">sub_us04rt22/</code>
-              holds two date-named sessions
-              (<code class="inline">220209</code> and
+              Two subject folders.
+              <code class="inline">sub_us04rt22/</code> holds two date-named
+              sessions (<code class="inline">220209</code> and
               <code class="inline">220215</code>);
               <code class="inline">sub_ye07us06/</code> holds one
-              (<code class="inline">220221</code>). 23 FIF files
-              total across the standard MEG tasks: driving (with
-              runs), rest, empty-room pre and post.
+              (<code class="inline">220221</code>). Twenty-three FIF files in
+              total across driving runs, rest, and empty-room before and after.
             </p>
             <p>
               <a class="btn btn-primary"
-                 href="https://cloud.uol.de/s/btGeke5NNkDcs6G/download" data-goatcounter-click="download-dataset-meg" data-goatcounter-title="MEG sample dataset"
+                 href="https://cloud.uol.de/s/btGeke5NNkDcs6G/download"
+                 data-goatcounter-click="download-dataset-meg"
+                 data-goatcounter-title="MEG sample dataset"
                  target="_blank" rel="noopener">
                 Download MEG sample dataset &rarr;
               </a>
@@ -73,18 +110,15 @@
     </section>
 
     <!-- ============================================================
-         Dataset overview
+         The data
          ============================================================ -->
-    <section class="section">
+    <section class="section" id="data">
       <div class="container container-narrow prose">
-        <span class="section-eyebrow">Dataset overview</span>
-        <h2>2 subjects, 3 sessions, 23 FIF files.</h2>
+        <span class="section-eyebrow">The data</span>
+        <h2>Two subjects, three sessions, twenty-three files.</h2>
         <p>
-          The MEG sample uses Elekta's standard date-named-folder
-          convention. The scanner's <code class="inline">subject_identity</code>
-          module reads each FIF's <code class="inline">mne.info</code>
-          (channels, sample rate, duration) and uses path structure
-          to cluster sessions.
+          The folder uses Elekta's usual convention: a subject folder, then a
+          date-named folder per visit, then the recordings.
         </p>
 
         <div class="dataset-tree">
@@ -96,154 +130,565 @@
           <div class="dataset-tree-row d1 is-folder is-open">
             <span class="chev">&#9662;</span>
             <span class="name">sub_us04rt22/</span>
-            <span class="tag tag-info">sub-001</span>
+            <span class="meta">sub-001</span>
           </div>
           <div class="dataset-tree-row d2 is-folder is-open">
             <span class="chev">&#9662;</span>
             <span class="name">220209/</span>
-            <span class="tag tag-accent">ses-1</span>
-            <span class="meta">5 files</span>
+            <span class="meta">ses-1 &middot; 5 files</span>
           </div>
-          <div class="dataset-tree-row d3"><span class="name">task_driving_run_01.fif</span></div>
-          <div class="dataset-tree-row d3"><span class="name">task_driving_run_02.fif</span></div>
-          <div class="dataset-tree-row d3"><span class="name">task_emptypre.fif</span></div>
-          <div class="dataset-tree-row d3"><span class="name">task_emptypost.fif</span></div>
-          <div class="dataset-tree-row d3"><span class="name">task_rest.fif</span></div>
+          <div class="dataset-tree-row d3 muted">task_driving_run_01.fif, task_driving_run_02.fif</div>
+          <div class="dataset-tree-row d3 muted">task_rest.fif, task_emptypre.fif, task_emptypost.fif</div>
           <div class="dataset-tree-row d2 is-folder is-open">
             <span class="chev">&#9662;</span>
             <span class="name">220215/</span>
-            <span class="tag tag-accent">ses-2</span>
-            <span class="meta">9 files</span>
+            <span class="meta">ses-2 &middot; 9 files</span>
           </div>
           <div class="dataset-tree-row d3 muted">task_driving_run_01_00.fif &hellip; task_driving_run_06_00.fif</div>
-          <div class="dataset-tree-row d3 muted">task_emptypre_00.fif, task_emptypost_00.fif, task_rest_00.fif</div>
+          <div class="dataset-tree-row d3 muted">task_rest_00.fif, task_emptypre_00.fif, task_emptypost_00.fif</div>
           <div class="dataset-tree-row d1 is-folder is-open">
             <span class="chev">&#9662;</span>
             <span class="name">sub_ye07us06/</span>
-            <span class="tag tag-info">sub-002</span>
+            <span class="meta">sub-002</span>
           </div>
           <div class="dataset-tree-row d2 is-folder is-open">
             <span class="chev">&#9662;</span>
             <span class="name">220221/</span>
-            <span class="tag tag-muted">no session</span>
-            <span class="meta">9 files</span>
+            <span class="meta">one visit, so no session entity &middot; 9 files</span>
           </div>
           <div class="dataset-tree-row d3 muted">task_driving_run_01.fif &hellip; task_driving_run_06.fif</div>
           <div class="dataset-tree-row d3 muted">task_rest.fif, task_emptypre.fif, task_emptypost.fif</div>
         </div>
 
-        <h3>How the session inference works</h3>
+        <h3>MEG is the easy modality, and it is worth knowing why</h3>
         <p>
-          When the path between the subject folder and the recording
-          contains a date-shaped token (<code class="inline">YYMMDD</code>
-          or <code class="inline">YYYY-MM-DD</code>), the scanner
-          treats each date as a separate session. Multiple dates per
-          subject &rarr; one session per date, ordered by date. One
-          date per subject &rarr; no session entity. The recording
-          basenames carry the auto-inferred entity.
+          A FIF file is rich. It carries the channel list with types, the
+          sampling rate, the acquisition filters, the head position, the
+          digitised points, the coil frequencies and the measurement date.
+          mne-bids reads all of that and writes it into the sidecar, the channels
+          table and the coordinate system files without being asked.
+        </p>
+        <p>
+          The practical consequence is that BIDS Manager deliberately does
+          <em>less</em> here. It does not overwrite the manufacturer mne-bids
+          derives from the format, and it does not duplicate the head-localisation
+          fields the channels already answer. What it asks for is the short list
+          that genuinely is not in the file, and nothing more.
         </p>
       </div>
     </section>
 
     <!-- ============================================================
-         CLI numbers
+         Sessions
          ============================================================ -->
-    <section class="section">
+    <section class="section" id="sessions">
       <div class="container container-narrow prose">
-        <span class="section-eyebrow">What you'll see</span>
-        <h2>Real numbers from the MEG pipeline.</h2>
+        <span class="section-eyebrow">How the layout is read</span>
+        <h2>Sessions come out of the path.</h2>
         <p>
-          The same four commands. Real outputs captured on the
-          local copy of the Elekta sample:
+          When the path between the subject folder and the recording contains a
+          date-shaped token, <code class="inline">YYMMDD</code> or
+          <code class="inline">YYYY-MM-DD</code>, each date is treated as a
+          separate session, ordered by date.
         </p>
+        <ul>
+          <li>
+            <strong>Several dates for one subject</strong> becomes one session
+            per date. <code class="inline">sub_us04rt22</code> has two, so its
+            recordings carry <code class="inline">ses-1</code> and
+            <code class="inline">ses-2</code>.
+          </li>
+          <li>
+            <strong>A single date</strong> is not a session in any meaningful
+            sense, so no session entity is written.
+            <code class="inline">sub_ye07us06</code> is the example.
+          </li>
+        </ul>
+        <p>
+          Where the path has no date at all, the recording date inside the file
+          is used instead, which is the same rule the MRI side applies to study
+          dates. Either way, look at the <code class="inline">ses</code> column
+          before converting. It is
+          inferred, and inference is exactly the kind of thing worth a glance.
+        </p>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Session labels are yours to change.</strong>
+            <p>
+              <code class="inline">ses-1</code> and
+              <code class="inline">ses-2</code> are safe defaults, not good
+              names. If the visits mean something, <code class="inline">pre</code>
+              and <code class="inline">post</code>, or the date itself, select the
+              rows and bulk-edit the <code class="inline">ses</code> column before
+              you convert.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         1. Scan
+         ============================================================ -->
+    <section class="section" id="scan">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 1</span>
+        <h2>Scan the folder.</h2>
+        <p>
+          Create a project, point Raw input at the top of the tree, and press
+          <strong>Scan</strong>. Twenty-three rows, one per
+          <code class="inline">.fif</code>, no skips.
+        </p>
+
+        <p>
+          The task and run entities come out of the filenames cleanly on this
+          dataset: <code class="inline">task_driving_run_01.fif</code>
+          decomposes into <code class="inline">task-driving</code> and
+          <code class="inline">run-1</code> with no help from you. That is worth
+          checking rather than assuming, because it is a filename convention
+          rather than a standard, and the next lab's convention will differ.
+        </p>
+
+        <p>
+          The manufacturer is inferred from the format rather than a header:
+          <code class="inline">.fif</code> means MEGIN or Elekta,
+          <code class="inline">.ds</code> means CTF,
+          <code class="inline">.con</code> and <code class="inline">.sqd</code>
+          mean KIT, <code class="inline">.kdf</code> means KRISS. It is shown as
+          a read-only suggestion and is not written into the sidecar, because
+          mne-bids writes the manufacturer itself and overwriting a value derived
+          from the file with one guessed from an extension would be a step
+          backwards.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         2. Inventory
+         ============================================================ -->
+    <section class="section" id="inventory">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 2</span>
+        <h2>Read the inventory.</h2>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Column</th><th>On this dataset</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code class="inline">id</code></td><td><code class="inline">001</code> and <code class="inline">002</code>, from the folder names.</td></tr>
+              <tr><td><code class="inline">ses</code></td><td>Inferred. Two sessions for the first subject, none for the second. The column to read first.</td></tr>
+              <tr><td><code class="inline">task</code>, <code class="inline">run</code></td><td>Parsed from the filenames. <code class="inline">driving</code> with runs 1 to 6, plus <code class="inline">rest</code>.</td></tr>
+              <tr><td><code class="inline">format</code></td><td><code class="inline">FIF</code> throughout.</td></tr>
+              <tr><td><code class="inline">n_chan</code>, <code class="inline">sfreq</code>, <code class="inline">duration</code></td><td>Read from <code class="inline">mne.info</code>. Hidden by default; add them from <em>Manage columns</em>. An empty-room recording is much shorter than a task run, which is a quick way to confirm the two are not mixed up.</td></tr>
+              <tr><td><code class="inline">predicted basename</code></td><td>The filename this row produces. Red means a clash.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The inventory table for this dataset"
+               src="assets/features/meg_inventory_dark.png"
+               data-light="assets/features/meg_inventory_light.png">
+          <figcaption>
+            <strong>Sessions, task and run, all worked out.</strong> The
+            <code class="inline">ses</code> column is the inferred one and the
+            column to read first. Task and run came out of the filenames cleanly on
+            this dataset, which is a convention rather than a rule, so it is worth
+            confirming rather than assuming.
+          </figcaption>
+        </figure>
+
+        <p>
+          On a CTF or 4D system the recording is a <em>folder</em>, not a file:
+          <code class="inline">.ds</code> for CTF, and a set of numbered files for
+          4D and BTi. The scanner treats the folder as one recording, which is
+          what you want, and the Editor's tree gives it a folder icon so it is
+          obvious at a glance.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         3. Empty room
+         ============================================================ -->
+    <section class="section" id="emptyroom">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 3</span>
+        <h2>Empty-room recordings.</h2>
+        <p>
+          Empty-room data is not a task recording, and the standard has a
+          specific place for it: the task label
+          <code class="inline">noise</code>, with the timing carried by an
+          <code class="inline">acq</code> entity. On this dataset
+          <code class="inline">task_emptypre</code> and
+          <code class="inline">task_emptypost</code> become
+          <code class="inline">task-noise</code> with
+          <code class="inline">acq-pre</code> and
+          <code class="inline">acq-post</code>.
+        </p>
+
+        <p>
+          Getting this right matters more than it looks. An empty-room recording
+          named as if it were a task will be analysed as one by any pipeline that
+          selects on task, and a noise recording averaged into a condition is a
+          hard error to find later.
+        </p>
+
+        <h3>Associating the noise recording with the session</h3>
+        <p>
+          The MEG section of the dataset metadata carries an
+          <em>associated empty-room</em> field, which is one of the small number
+          of things mne-bids cannot derive: it records which noise recording
+          belongs to which session. Fill it if your analysis will use it. It sits
+          alongside the other two fields in the same category, the dewar position
+          and any subject-artefact description, which are equally facts about the
+          session rather than the file.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         4. Metadata
+         ============================================================ -->
+    <section class="section" id="metadata">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 4</span>
+        <h2>The short list MEG actually needs.</h2>
+        <p>
+          Open <strong>Dataset metadata</strong>. The MEG section is deliberately
+          small, because most of what BIDS wants is already in the FIF file.
+          These are the fields that are not:
+        </p>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Field</th><th>Why it is asked</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code class="inline">PowerLineFrequency</code></td><td>Required. A property of the building.</td></tr>
+              <tr><td><code class="inline">DewarPosition</code></td><td>Upright or supine. Not in the file, and it changes how the data should be interpreted.</td></tr>
+              <tr><td><code class="inline">AssociatedEmptyRoom</code></td><td>Which noise recording goes with this session.</td></tr>
+              <tr><td>Subject artefact description</td><td>Dental work, an implant, anything that shows in the data and has an explanation.</td></tr>
+              <tr><td><code class="inline">InstitutionName</code>, department</td><td>Asked once in the modality-agnostic section, since every modality shares it.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>What is deliberately not asked.</strong>
+            <p>
+              Continuous head localisation, the digitised head points, the head
+              coil frequencies. mne-bids derives all of these from the channels
+              and writes them correctly. Asking you to retype them would create
+              two sources of truth for the same fact, and one of them would
+              eventually be wrong.
+            </p>
+          </div>
+        </div>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The MEG section of the metadata template, showing the short list of fields the file cannot supply"
+               src="assets/features/template_meg_dark.png"
+               data-light="assets/features/template_meg_light.png">
+          <figcaption>
+            <strong>The MEG questions, in full.</strong> Short, because the FIF
+            file answered the rest. The red asterisk marks what BIDS requires, the
+            amber dot what it recommends, and every description in the form is the
+            standard's own wording. The fields every modality shares, institution
+            and department among them, are asked once further up.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         5. Convert
+         ============================================================ -->
+    <section class="section" id="convert">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 5</span>
+        <h2>Convert.</h2>
+        <p>
+          Press <strong>Run conversion</strong>. All twenty-three recordings
+          convert. Each row goes to <code class="inline">mne-bids</code>, which
+          writes the FIF in its native format, without transcoding, alongside a
+          channels table, the coordinate system files describing where the
+          sensors and the head were, and the JSON sidecar.
+        </p>
+
+        <p>
+          Two MEG-specific behaviours are worth knowing. The standard-montage
+          step that EEG runs is skipped, because MEG sensor positions come from
+          the device geometry rather than from a named cap layout. And the
+          conversions are run one at a time rather than in parallel, because the
+          underlying writer is not safe to run concurrently on the same tree;
+          DICOM and physio conversion stays parallel.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         6. Inspect
+         ============================================================ -->
+    <section class="section" id="inspect">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 6</span>
+        <h2>Look at the signal.</h2>
+        <p>
+          Open the dataset in the <strong>Editor</strong> and click a converted
+          recording. The metadata card comes first, then <strong>Load
+          signal</strong> opens the interactive viewer.
+        </p>
+
+        <p>
+          MEG needs channel-type handling that EEG does not, and the viewer has
+          it. Magnetometers and gradiometers can be shown separately or together,
+          and CTF axial gradiometers are handled as their own type rather than
+          being lumped in. Without that, a magnetometer trace and a gradiometer
+          trace share an axis whose scale suits neither.
+        </p>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="The MEG signal viewer with channel type selection, filtering and the power spectrum"
+                 data-dark="assets/features/meeg_signal_viewer_dark.mp4"
+                 data-light="assets/features/meeg_signal_viewer_light.mp4"></video>
+          <figcaption>
+            <strong>The signal viewer.</strong> Filter by channel type, pick
+            individual channels, apply high-pass, low-pass and notch filters to
+            the visible segment, resample for a quicker overview, and overlay the
+            events from the BIDS <code class="inline">events.tsv</code>.
+          </figcaption>
+        </figure>
+
+        <h3>Check the empty-room recording too</h3>
+        <p>
+          The power spectrum of a noise recording is the most useful single view
+          in an MEG dataset. It tells you the noise floor of the room on that day,
+          it shows the mains peak and its harmonics, and a sensor that has drifted
+          or is failing stands out from its neighbours immediately. Comparing the
+          before and after recordings from one session takes about a minute and
+          occasionally saves a study.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="A power spectrum with a sharp peak at 50 Hz and a harmonic at 100 Hz"
+               src="assets/features/psd_line_frequency_dark.png"
+               data-light="assets/features/psd_line_frequency_light.png">
+          <figcaption>
+            <strong>The power spectrum.</strong> The tall spike is the mains
+            frequency, here 50 Hz, with its harmonic at 100. That is also how you
+            confirm the <code class="inline">PowerLineFrequency</code> you put in
+            the template is the one actually present in the data. Switch to
+            <em>Average (per type)</em> to read magnetometers and gradiometers
+            separately, since they sit on very different scales. Drag to pan,
+            wheel to zoom, and the crosshair reads out frequency and power.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         7. Validate
+         ============================================================ -->
+    <section class="section" id="validate">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 7</span>
+        <h2>Validate.</h2>
+        <p>
+          Press <strong>Validate dataset</strong>. On this dataset: 50 clean
+          files, 24 warnings, no errors. As with EEG, the warnings are
+          <code class="inline">TODO</code> placeholders in recommended fields:
+          the dataset-level ones about your study, plus the MEG recommended
+          fields that neither the file nor the template supplied,
+          <code class="inline">ManufacturersModelName</code> and
+          <code class="inline">SoftwareVersions</code> among them.
+        </p>
+        <p>
+          If you want the deeper pass, turn on <strong>Deep checks</strong>. It
+          reads file contents rather than only names and metadata, which catches a
+          truncated recording that is otherwise indistinguishable from a healthy
+          one.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The validation pane showing the dataset, folder and file scopes each with a count"
+               src="assets/features/validation_dataset_scope_dark.png"
+               data-light="assets/features/validation_dataset_scope_light.png">
+          <figcaption>
+            <strong>Three scopes at once.</strong> Findings about the dataset,
+            about the folder you are in, and about the file you have selected, each
+            with its own count. A zero beside a section means there is nothing to
+            read there.
+          </figcaption>
+        </figure>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="Warnings on a file, each with its schema rule and a fix button"
+               src="assets/features/validation_warnings_dark.png"
+               data-light="assets/features/validation_warnings_light.png">
+          <figcaption>
+            <strong>A warning, in full.</strong> The rule it came from is printed
+            underneath, the chip names the field, and <strong>Fix</strong> opens
+            that field for editing. This is what the 24 warnings on this dataset
+            look like.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Real numbers
+         ============================================================ -->
+    <section class="section" id="numbers">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">What you should see</span>
+        <h2>Real numbers from this dataset.</h2>
 
         <div class="results-grid">
           <div class="results-card">
             <span class="results-card-eyebrow">Scan</span>
             <strong class="results-card-num">23</strong>
             <span class="results-card-label">inventory rows</span>
-            <p class="muted">One row per <code class="inline">.fif</code>.
-              Zero skips. Subject identity from folder name; session
-              from the date-shaped subfolder between subject and
-              recording.</p>
+            <p class="muted">One row per <code class="inline">.fif</code>, no
+              skips. Subjects from the folder names, sessions from the
+              date-shaped subfolders.</p>
           </div>
           <div class="results-card">
             <span class="results-card-eyebrow">Convert</span>
             <strong class="results-card-num">23 / 23</strong>
             <span class="results-card-label">runs written</span>
-            <p class="muted">All conversions succeed. mne-bids writes
-              each FIF as a BIDS-named
-              <code class="inline">.fif</code> plus a channel TSV,
-              coordinate TSV, and JSON sidecar. The empty-room
-              recordings get <code class="inline">acq-emptypre</code>
-              and <code class="inline">acq-emptypost</code> tags.</p>
+            <p class="muted">All succeed. Each FIF written natively with its
+              channels table, coordinate files and sidecar. Empty-room recordings
+              become <code class="inline">task-noise</code> with
+              <code class="inline">acq-pre</code> and
+              <code class="inline">acq-post</code>.</p>
           </div>
           <div class="results-card">
             <span class="results-card-eyebrow">Validate</span>
             <strong class="results-card-num">50 / 24 / 0</strong>
             <span class="results-card-label">ok / warn / err</span>
-            <p class="muted">Zero errors. All 24 warnings are
-              <code class="inline">bidsmgr.todo_placeholder</code>:
-              the dataset-level fields plus the MEG-specific
-              recommended fields (<code class="inline">ManufacturersModelName</code>,
-              <code class="inline">SoftwareVersions</code>,
-              <code class="inline">RecordingDuration</code> in some
-              cases).</p>
+            <p class="muted">No errors. The 24 warnings are
+              <code class="inline">TODO</code> placeholders in recommended
+              fields.</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ============================================================
-         What's different from the MRI walkthrough
+         CLI
          ============================================================ -->
-    <section class="section">
+    <section class="section" id="cli">
       <div class="container container-narrow prose">
-        <span class="section-eyebrow">What's different vs MRI</span>
-        <h2>One workflow, modality-specific quirks.</h2>
-        <ul class="checklist">
-          <li>
-            <strong>Automatic session inference.</strong> Multiple
-            date-named subfolders &rarr; multiple sessions, ordered
-            by date. The MRI sample dataset uses
-            <code class="inline">SeriesDescription</code> tokens like
-            <code class="inline">ses-pre</code> /
-            <code class="inline">ses-post</code> instead; MEG's
-            file-system convention is honoured here.
-          </li>
-          <li>
-            <strong>Tasks parse cleanly.</strong> The filename
-            <code class="inline">task_driving_run_01.fif</code>
-            decomposes into <code class="inline">task=driving</code>,
-            <code class="inline">run=1</code>. No user override
-            needed.
-          </li>
-          <li>
-            <strong>Empty-room recordings stay BIDS-valid.</strong>
-            <code class="inline">task_emptypre</code> and
-            <code class="inline">task_emptypost</code> become
-            <code class="inline">task-noise</code> with
-            <code class="inline">acq-pre</code> /
-            <code class="inline">acq-post</code>, the canonical BIDS
-            naming for empty-room recordings.
-          </li>
-          <li>
-            <strong>FIF native format kept.</strong> mne-bids writes
-            FIFs as FIFs (no transcoding). The MEG datatype skips
-            the standard montage step that EEG runs.
-          </li>
-        </ul>
+        <span class="section-eyebrow">The same thing, scripted</span>
+        <h2>From the command line.</h2>
+
+<pre class="code"><span class="cmt"># 1. Create the dataset and its project.</span>
+bidsmgr-create ~/bids/elekta --name "Elekta MEG sample"
+
+<span class="cmt"># 2. Scan. 23 rows; sessions inferred from the date folders.</span>
+bidsmgr-scan ~/raw/MEG_Elekta_sample_data \
+    --project ~/bids/elekta --line-freq 50
+
+<span class="cmt"># 3. Convert. 23 of 23.</span>
+bidsmgr-convert --project ~/bids/elekta
+
+<span class="cmt"># 4. Fill what can be filled, mark what cannot.</span>
+bidsmgr-metadata --project ~/bids/elekta --fill-todos
+
+<span class="cmt"># 5. Validate. 50 ok / 24 warn / 0 err.</span>
+bidsmgr-validate ~/bids/elekta</pre>
+
+        <p>
+          Every flag is documented in the
+          <a href="tutorial.html#cli-ref">CLI reference</a>.
+        </p>
       </div>
     </section>
 
     <!-- ============================================================
-         Walk the GUI / CLI walkthrough on the main tutorial page
+         Troubleshooting
+         ============================================================ -->
+    <section class="section" id="trouble">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Troubleshooting</span>
+        <h2>What usually goes wrong with MEG.</h2>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>What you see</th><th>What it means</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Sessions where you expected none, or the reverse</td>
+                <td>Session inference read the path differently than you did.
+                  Edit the <code class="inline">ses</code> column, or clear it, before
+                  converting. It is
+                  a guess, and it is presented as one.</td>
+              </tr>
+              <tr>
+                <td>An empty-room recording named as a task</td>
+                <td>The filename convention did not match. Set the task to
+                  <code class="inline">noise</code> and use an
+                  <code class="inline">acq</code> entity for the timing.</td>
+              </tr>
+              <tr>
+                <td>A CTF <code class="inline">.ds</code> folder appearing as many rows</td>
+                <td>It should appear as one. If it did not, the folder is
+                  probably incomplete or renamed. Check that it still holds the
+                  files CTF writes.</td>
+              </tr>
+              <tr>
+                <td>The manufacturer in the sidecar is not what you set</td>
+                <td>That is deliberate for MEG. mne-bids writes the manufacturer
+                  it derives from the file, and BIDS Manager does not overwrite
+                  it with a value guessed from the extension.</td>
+              </tr>
+              <tr>
+                <td>Magnetometer and gradiometer traces look wrong together</td>
+                <td>They are on very different scales. Use the channel-type
+                  filter to view one kind at a time.</td>
+              </tr>
+              <tr>
+                <td>Conversion feels slower than an equivalent MRI run</td>
+                <td>MEG conversions are run one at a time on purpose: the writer
+                  is not safe to run concurrently on the same tree.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Next
          ============================================================ -->
     <section class="section">
       <div class="container container-narrow prose">
+        <h2>Next</h2>
+        <p>
+          <a href="tutorial-eeg.html">The EEG tutorial</a> covers the modality
+          where the file holds the least, which is the mirror image of this one.
+          <a href="tutorial-multimodal.html">The multimodal tutorial</a> shows
+          MEG converting in the same pass as MRI, PET and EEG.
+        </p>
         <p style="margin-top: 8px;">
-          <a class="btn btn-primary" href="tutorial.html#scenes">Walk the GUI tutorial &rarr;</a>
-          <a class="btn btn-ghost" href="tutorial.html#cli">See the CLI walkthrough</a>
+          <a class="btn btn-primary" href="tutorial.html#gui-walkthrough">The full GUI walkthrough &rarr;</a>
+          <a class="btn btn-ghost" href="tutorial.html#cli-ref">CLI reference</a>
         </p>
       </div>
     </section>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="MRI advanced walkthrough for BIDS Manager: a richer Siemens dataset with DWI derivatives, physio, multiple anatomical contrasts.">
+  <meta name="description" content="Advanced MRI tutorial for BIDS Manager: a rich Siemens protocol with several anatomical contrasts, scanner-derived diffusion maps, a rerouted b0 reference and physiological logs that fail at source.">
   <title>MRI advanced tutorial &middot; BIDS Manager</title>
   <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
   <link rel="stylesheet" href="styles.css">
@@ -17,60 +17,91 @@
   <div data-include="tutorial-back-to-landing"></div>
 
   <main>
+    <aside class="page-toc" data-toc aria-label="Page navigation">
+      <button class="page-toc-toggle" type="button"
+              aria-expanded="false" aria-controls="page-toc-panel"
+              aria-label="Toggle page navigation">
+        <span class="toc-bars" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+      <nav id="page-toc-panel" class="page-toc-panel" aria-label="Sections">
+        <span class="page-toc-title">On this page</span>
+        <a class="page-toc-link" href="#data">
+          <span class="page-toc-dot" aria-hidden="true"></span>The data</a>
+        <a class="page-toc-link" href="#contrasts">
+          <span class="page-toc-dot" aria-hidden="true"></span>1. Several contrasts</a>
+        <a class="page-toc-link" href="#derivatives">
+          <span class="page-toc-dot" aria-hidden="true"></span>2. Diffusion derivatives</a>
+        <a class="page-toc-link" href="#reroute">
+          <span class="page-toc-dot" aria-hidden="true"></span>3. The rerouted b0</a>
+        <a class="page-toc-link" href="#nonimage">
+          <span class="page-toc-dot" aria-hidden="true"></span>4. Objects with no image</a>
+        <a class="page-toc-link" href="#physio">
+          <span class="page-toc-dot" aria-hidden="true"></span>5. Physio that fails</a>
+        <a class="page-toc-link" href="#rules">
+          <span class="page-toc-dot" aria-hidden="true"></span>6. Teach the classifier</a>
+        <a class="page-toc-link" href="#validate">
+          <span class="page-toc-dot" aria-hidden="true"></span>7. Validate</a>
+        <a class="page-toc-link" href="#numbers">
+          <span class="page-toc-dot" aria-hidden="true"></span>Real numbers</a>
+        <a class="page-toc-link" href="#trouble">
+          <span class="page-toc-dot" aria-hidden="true"></span>Troubleshooting</a>
+        <a class="page-toc-link" href="#cli">
+          <span class="page-toc-dot" aria-hidden="true"></span>From the command line</a>
+      </nav>
+    </aside>
+
     <!-- ============================================================
          Hero
          ============================================================ -->
     <section class="section">
       <div class="container container-narrow prose">
         <span class="section-eyebrow">MRI advanced tutorial</span>
-        <h1>MRI: the rich-protocol deep dive.</h1>
+        <h1>MRI: a protocol with everything in it.</h1>
         <p class="lead">
-          A second Oldenburg MRI sample, picked to push the engine
-          harder than the primary tutorial dataset. Three source
-          folders that cluster to two BIDS subjects, six anatomical
-          contrasts (T1w / T2w / T2starw / FLAIR), BOLD with SBRefs,
-          DWI with scanner-derived FA / colFA / trace / TENSOR maps,
-          fmap pairs, and Siemens CMRR physio. Walk this after the
-          primary MRI tutorial; the GUI flow is identical.
+          A second Oldenburg dataset, chosen because it breaks things. Six
+          anatomical contrasts, functional runs with reference volumes,
+          diffusion with the scanner-derived maps that look like derivatives and
+          are not, a reversed-direction volume that belongs in a different
+          folder, objects with no image data at all, and a physiological log that
+          is corrupt at source.
         </p>
 
-        <div class="callout callout-tip">
+        <div class="callout callout-info">
           <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
           <div>
-            <strong>This dataset exercises the classifier's quirks.</strong>
-            <p>The primary MRI tutorial uses a clean dataset with
-              one anatomy, one BOLD, one DWI, one fmap pair. This
-              one piles on: multiple anatomy contrasts, DWI
-              derivatives (FA / colFA / trace / TENSOR) that the
-              BIDS schema 1.11+ treats as first-class suffixes, a
-              PA-direction DWI that gets rerouted to
-              <code class="inline">fmap/_epi</code> as the B0
-              reference for distortion correction, and CMRR physio
-              that converts via the vendored
-              <code class="inline">bidsphysio</code> backend.</p>
+            <strong>Walk the primary MRI tutorial first.</strong>
+            <p>
+              <a href="tutorial-mri.html">The MRI tutorial</a> covers the
+              workflow on a clean dataset. This page assumes it, and spends its
+              time on the six situations that make a real archive harder than a
+              sample one.
+            </p>
           </div>
         </div>
 
         <div class="download-card">
           <div class="download-card-body">
             <span class="section-eyebrow" style="margin-bottom:8px;">Example data</span>
-            <h2 style="margin-top:0;">Oldenburg neuroimaging unit (3 folders / 2 BIDS subjects)</h2>
+            <h2 style="margin-top:0;">Oldenburg neuroimaging unit, rich protocol</h2>
             <p>
               Three source folders (<code class="inline">OL_3844</code>,
               <code class="inline">OL_3845</code>,
-              <code class="inline">OL_3846</code>) clustered by
-              PatientID. The first two share
-              <code class="inline">XX00XX00</code> and collapse into
-              <code class="inline">sub-001</code> with ses-pre /
-              ses-post. The third is a different PatientID
-              (<code class="inline">YY11YY11</code>) and stands
-              alone as <code class="inline">sub-002</code>.
+              <code class="inline">OL_3846</code>) grouped by patient identifier.
+              The first two share one and collapse into
+              <code class="inline">sub-001</code> with
+              <code class="inline">ses-pre</code> and
+              <code class="inline">ses-post</code>; the third stands alone as
+              <code class="inline">sub-002</code>.
             </p>
             <p>
               <a class="btn btn-primary"
-                 href="https://cloud.uol.de/s/ZxaZCtHJPLjtDbR/download" data-goatcounter-click="download-dataset-mri-advanced" data-goatcounter-title="MRI advanced sample dataset"
+                 href="https://cloud.uol.de/s/ZxaZCtHJPLjtDbR/download"
+                 data-goatcounter-click="download-dataset-mri-advanced"
+                 data-goatcounter-title="MRI advanced sample dataset"
                  target="_blank" rel="noopener">
-                Download MRI advanced dataset &rarr;
+                Download the advanced MRI dataset &rarr;
               </a>
             </p>
           </div>
@@ -79,208 +110,428 @@
     </section>
 
     <!-- ============================================================
-         Dataset overview
+         The data
          ============================================================ -->
-    <section class="section">
+    <section class="section" id="data">
       <div class="container container-narrow prose">
-        <span class="section-eyebrow">Dataset overview</span>
-        <h2>3 folders &rarr; 2 BIDS subjects.</h2>
+        <span class="section-eyebrow">The data</span>
+        <h2>Ten kinds of thing in one protocol.</h2>
+        <p>
+          The subject grouping works exactly as it does on the primary dataset:
+          patient identifiers group the folders, study dates order the sessions.
+          What is different is the breadth of what is inside.
+        </p>
 
-        <div class="results-grid">
-          <div class="results-card">
-            <span class="results-card-eyebrow">sub-001</span>
-            <strong class="results-card-num">2 folders</strong>
-            <span class="results-card-label">PatientID XX00XX00</span>
-            <p class="muted">
-              <code class="inline">OL_3844</code> &rarr; ses-pre.
-              <code class="inline">OL_3845</code> &rarr; ses-post.
-              StudyDate ordering drives which folder gets which
-              session label.
-            </p>
-          </div>
-          <div class="results-card">
-            <span class="results-card-eyebrow">sub-002</span>
-            <strong class="results-card-num">1 folder</strong>
-            <span class="results-card-label">PatientID YY11YY11</span>
-            <p class="muted">
-              <code class="inline">OL_3846</code> stands alone. No
-              second session, so no ses entity is written.
-            </p>
-          </div>
-          <div class="results-card">
-            <span class="results-card-eyebrow">Modality mix</span>
-            <strong class="results-card-num">10</strong>
-            <span class="results-card-label">distinct datatypes</span>
-            <p class="muted">
-              T1w, T2w, T2starw, FLAIR, BOLD, SBRef, DWI, DWI
-              derivatives (FA / colFA / trace / TENSOR), fmap
-              (magnitude1 / phasediff / epi), physio,
-              scout / Phoenix report (skipped).
-            </p>
-          </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>What is in the folder</th><th>Where it ends up</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>T1w, T2w, T2starw, FLAIR</td><td><code class="inline">anat/</code>, four different suffixes</td></tr>
+              <tr><td>Functional runs and their single-volume reference images</td><td><code class="inline">func/</code>, as <code class="inline">bold</code> and <code class="inline">sbref</code></td></tr>
+              <tr><td>Diffusion, plus FA, colFA, trace maps</td><td><code class="inline">dwi/</code>, each with its own suffix</td></tr>
+              <tr><td>A reversed-direction single-volume diffusion acquisition</td><td><code class="inline">fmap/</code>, rerouted</td></tr>
+              <tr><td>Fieldmap magnitude and phase-difference pairs</td><td><code class="inline">fmap/</code></td></tr>
+              <tr><td>Physiological logs inside the DICOM data</td><td>Beside the run they were recorded with</td></tr>
+              <tr><td>Localisers, calibrations, report objects, a TENSOR map</td><td>Excluded, with reasons</td></tr>
+            </tbody>
+          </table>
         </div>
 
-        <h3>Notable classifier moves on this dataset</h3>
-        <ul class="checklist">
-          <li>
-            <strong>Subject identity clustering.</strong> The
-            <code class="inline">subject_identity.cluster_subjects</code>
-            module reads the DICOM PatientID + PatientName, then
-            groups folders. Three folders &rarr; two clusters &rarr;
-            two BIDS subjects with the appropriate session split.
-          </li>
-          <li>
-            <strong>DWI derivative detection.</strong> The classifier
-            recognises FA / colFA / trace / TENSOR series as
-            scanner-derived derivatives and writes them with the BIDS
-            1.11+ suffixes
-            (<code class="inline">_FA</code>,
-            <code class="inline">_colFA</code>,
-            <code class="inline">_trace</code>,
-            <code class="inline">_TENSOR</code>) in
-            <code class="inline">dwi/</code> rather than dropping
-            them.
-          </li>
-          <li>
-            <strong>B0-reference reroute.</strong> The PA-direction
-            DWI series (a single-volume acquisition with reversed
-            phase encoding) is automatically rerouted to
-            <code class="inline">fmap/_epi</code> so it can serve as
-            the B0 reference for distortion correction of the
-            AP-direction DWIs.
-          </li>
-          <li>
-            <strong>Phoenix and scouts auto-skipped.</strong> 19 rows
-            on this dataset (3 folders &times; 4 AAHead Scout
-            variants + 1 PhoenixZIPReport, plus a few extra
-            calibration variants) come pre-marked with
-            <code class="inline">bids_guess_skip = true</code>. The
-            user can re-include any of them, but the default is
-            "drop these".
-          </li>
-          <li>
-            <strong>CMRR physio.</strong> Three physio logs
-            (PhysioLog Siemens CMRR format) are dispatched to the
-            <code class="inline">PhysioDcmBackend</code> which uses
-            the vendored <code class="inline">bidsphysio</code>. Two
-            of three succeed on this dataset; one is corrupted at
-            source and fails cleanly with
-            <code class="inline">bidsphysio produced no output
-            files</code>. The Convert log surfaces the failure
-            without aborting the rest.
-          </li>
-        </ul>
+        <p>
+          The scan produces 51 rows: 32 keepers and 19 skipped.
+        </p>
       </div>
     </section>
 
     <!-- ============================================================
-         CLI numbers
+         1. Contrasts
          ============================================================ -->
-    <section class="section">
+    <section class="section" id="contrasts">
       <div class="container container-narrow prose">
-        <span class="section-eyebrow">What you'll see</span>
-        <h2>Real numbers from the advanced MRI pipeline.</h2>
+        <span class="section-eyebrow">Situation 1</span>
+        <h2>Several anatomical contrasts.</h2>
         <p>
-          Same four commands as the primary MRI tutorial. The
-          difference is in the breadth of modalities and the
-          classifier's reroute / derivative-detection logic.
+          The primary dataset has one anatomical image per session, so its
+          filename needs nothing to distinguish it. Here there are four contrasts,
+          and each has its own BIDS suffix:
+          <code class="inline">T1w</code>, <code class="inline">T2w</code>,
+          <code class="inline">T2starw</code> and
+          <code class="inline">FLAIR</code>. The suffix is what tells them apart,
+          not an <code class="inline">acq</code> label.
         </p>
+        <p>
+          This is worth checking rather than assuming, because it is where a
+          classifier gets things subtly wrong: a T2starw labelled as T2w is valid
+          BIDS, converts without complaint, and is the wrong image for whatever
+          reads it. Sort by the <code class="inline">conf</code> column and read
+          the anatomical rows
+          against their sequence names.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         2. Derivatives
+         ============================================================ -->
+    <section class="section" id="derivatives">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Situation 2</span>
+        <h2>Maps the scanner computed for you.</h2>
+        <p>
+          Modern scanners compute diffusion maps on the console and export them
+          alongside the raw data: fractional anisotropy, colour-coded FA, trace,
+          and others. They look like derivatives, and the instinct is to move them
+          into a derivatives folder or drop them.
+        </p>
+        <p>
+          Both instincts are wrong here. Since BIDS 1.11 these are first-class
+          suffixes in the diffusion folder, so
+          <code class="inline">_FA</code>, <code class="inline">_colFA</code> and
+          <code class="inline">_trace</code> belong in
+          <code class="inline">dwi/</code> beside the acquisition they came from.
+          They are recognised and written there, rather than discarded as
+          unrecognised or relocated somewhere no pipeline will look.
+        </p>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>The exception is TENSOR.</strong>
+            <p>
+              A Siemens <code class="inline">TENSOR</code> map contains no image
+              pixels at all, so no converter can produce a NIfTI from it. It is
+              detected, excluded, and marked with the reason, which is covered in
+              situation 4.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         3. Reroute
+         ============================================================ -->
+    <section class="section" id="reroute">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Situation 3</span>
+        <h2>A diffusion series that is really a fieldmap.</h2>
+        <p>
+          Among the diffusion acquisitions there is a single-volume series with
+          reversed phase encoding. It is acquired on the diffusion sequence and
+          the scanner labels it as such, but it is not diffusion data: it exists
+          so that distortion correction has a reference with the opposite
+          distortion.
+        </p>
+        <p>
+          Written as diffusion, it is one more volume nobody uses, and the
+          correction step has nothing to work with. It is recognised and routed
+          into the fieldmap folder with the appropriate suffix, so the pipeline
+          that needs it can find it where the standard says it will be. There is
+          no heuristic file to write, and nothing for you to configure.
+        </p>
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="The BIDS preview showing the folder layout the conversion will write"
+                 data-dark="assets/features/bids_preview_dark.mp4"
+                 data-light="assets/features/bids_preview_light.mp4"></video>
+          <figcaption>
+            <strong>Check the reroute in the preview.</strong> The preview shows
+            the exact tree the conversion will write, so the reversed-direction
+            volume can be seen sitting in <code class="inline">fmap/</code> rather
+            than <code class="inline">dwi/</code> before anything is created.
+          </figcaption>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         4. Non-image objects
+         ============================================================ -->
+    <section class="section" id="nonimage">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Situation 4</span>
+        <h2>Objects that are not images.</h2>
+        <p>
+          A DICOM file does not have to contain a picture. Report objects,
+          spectroscopy frames and derived maps like
+          <code class="inline">TENSOR</code> are DICOM in every respect except
+          the one that matters: they carry no image pixel data. A converter asked
+          to convert one fails, and the failure looks exactly like a failed
+          conversion of something you wanted.
+        </p>
+        <p>
+          The scan checks each file for image data and marks a series that has
+          none. Those rows are excluded with the reason shown, tinted teal, and
+          badged. Hovering one explains why. The value of this is not the
+          exclusion, it is that the conversion log afterwards contains only real
+          failures, so a real failure is worth reading.
+        </p>
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="A teal row with a crossed circle for an object with no image data, above dimmed excluded localisers"
+               src="assets/features/inventory_skipped_dark.png"
+               data-light="assets/features/inventory_skipped_light.png">
+          <figcaption>
+            <strong>The teal row is the one this section is about.</strong> A
+            scanner report, carrying no image pixels, marked with a crossed circle
+            and excluded with the reason spelled out: <em>the DICOM headers carry
+            no pixel data</em>. The dimmed rows above and below are ordinary
+            exclusions, localisers the scan recognised. Every reason is in the
+            issues column.
+          </figcaption>
+        </figure>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="The inspection table with rows tinted by status"
+                 data-dark="assets/features/inspection_table_color_coding_seqs_dark.mp4"
+                 data-light="assets/features/inspection_table_color_coding_seqs_light.mp4"></video>
+          <figcaption>
+            <strong>Status is visible without opening anything.</strong> Rows are
+            tinted by what the scan decided: kept, excluded, warning, or an object
+            with no image data inside it. Hovering one gives the reason. On this
+            dataset that is how the nineteen skipped rows account for themselves.
+          </figcaption>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         5. Physio
+         ============================================================ -->
+    <section class="section" id="physio">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Situation 5</span>
+        <h2>A physiological log that fails at source.</h2>
+        <p>
+          This dataset carries several Siemens physiological logs, and not all of
+          them convert. One is corrupt in the source data, and no amount of
+          careful handling will produce a valid table from it.
+        </p>
+        <p>
+          What matters is what happens next. The row is reported with a legible
+          reason, and every other row still converts. Nine physiological tables
+          are written; three rows fail. A pipeline that aborted on the first
+          failure would leave you with a partial dataset and a decision about
+          whether to start again.
+        </p>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Physiological data is easy to miss entirely.</strong>
+            <p>
+              Nothing in the raw folder looks like a respiration trace: the
+              signals are inside the DICOM data, recorded alongside the images.
+              If you have converted Siemens functional data before and never seen
+              a physiological file in the output, this is why.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         6. Rules
+         ============================================================ -->
+    <section class="section" id="rules">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Situation 6</span>
+        <h2>When the classifier does not know your protocol.</h2>
+        <p>
+          A rich protocol is also where a site's own naming shows up. If a series
+          is named in a way the classifier does not recognise, correcting the row
+          works once; a rule works every time.
+        </p>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="Adding a classifier hint and an exclusion in the scan rules settings"
+                 data-dark="assets/features/settings_scan_rules_dark.mp4"
+                 data-light="assets/features/settings_scan_rules_light.mp4"></video>
+          <figcaption>
+            <strong>Scan rules.</strong> A hint forces any series whose name
+            matches a pattern to the datatype, suffix and task you choose; an
+            exclusion drops anything matching a name or path. Both are constrained
+            by the schema, so a rule cannot produce an invalid combination, and
+            the command line reads the same file through
+            <code class="inline">--rules-file</code>.
+          </figcaption>
+        </figure>
+
+        <p>
+          Hints come in two strengths. An ordinary hint is applied to rows the
+          classifier has not already claimed, so it fills gaps. A forced hint
+          overrides the converter's own guess, which is what you want when the
+          guess is confidently wrong about your protocol.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         7. Validate
+         ============================================================ -->
+    <section class="section" id="validate">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 7</span>
+        <h2>Validate.</h2>
+        <p>
+          Despite everything in it, this dataset validates with 75 clean files, 5
+          warnings and no errors. The warnings are the familiar ones: licence and
+          authors at dataset level, and task descriptions on the functional
+          sidecars.
+        </p>
+        <p>
+          That is the point of the exercise. A protocol this varied is where
+          conversions usually produce something that mostly works, with a few
+          files quietly in the wrong place. Everything unusual here was either
+          converted into the right folder or excluded with a reason you can read.
+        </p>
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="A validation error on a scans table, with the schema rule printed underneath"
+               src="assets/features/validation_provenance_dark.png"
+               data-light="assets/features/validation_provenance_light.png">
+          <figcaption>
+            <strong>The kind of error worth having a validator for.</strong> A
+            value inside a table that is the wrong type. On a protocol this varied
+            there are hundreds of such values, and this is not a thing anybody
+            finds by looking.
+          </figcaption>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Real numbers
+         ============================================================ -->
+    <section class="section" id="numbers">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">What you should see</span>
+        <h2>Real numbers from this dataset.</h2>
 
         <div class="results-grid">
           <div class="results-card">
             <span class="results-card-eyebrow">Scan</span>
             <strong class="results-card-num">51 / 19</strong>
-            <span class="results-card-label">inv rows / skipped</span>
-            <p class="muted">
-              <code class="inline">--probe-convert</code> on this
-              dataset takes ~30 s on a Mac (one dcm2niix probe per
-              series). 32 keepers across both subjects, 19 auto-
-              skipped (scouts, Phoenix reports, calibrations).
-            </p>
+            <span class="results-card-label">rows / skipped</span>
+            <p class="muted">32 keepers across both subjects. The 19 skipped are
+              localiser variants, report objects and calibrations. With probe
+              convert on, about 30 seconds.</p>
           </div>
           <div class="results-card">
             <span class="results-card-eyebrow">Convert</span>
-            <strong class="results-card-num">32 NIfTI + 9 physio</strong>
-            <span class="results-card-label">files written</span>
-            <p class="muted">
-              32 NIfTI files (anat / func / dwi / fmap), 9 physio
-              TSV.gz (the successful PhysioLog rows), 44 sidecar
-              JSONs. 3 physio rows fail cleanly with the
-              "bidsphysio produced no output files" warning.
-            </p>
+            <strong class="results-card-num">32 + 9</strong>
+            <span class="results-card-label">images + physio tables</span>
+            <p class="muted">32 NIfTI files across anat, func, dwi and fmap, 9
+              physiological tables, 44 sidecars. Three physiological rows fail
+              cleanly and are reported.</p>
           </div>
           <div class="results-card">
             <span class="results-card-eyebrow">Validate</span>
             <strong class="results-card-num">75 / 5 / 0</strong>
             <span class="results-card-label">ok / warn / err</span>
-            <p class="muted">
-              Zero errors. The 5 warnings are TODO placeholders the
-              enrichment cannot infer: License / Authors in
-              dataset_description.json, plus
-              <code class="inline">Instructions</code> /
-              <code class="inline">TaskDescription</code> on the BOLD
-              sidecars. Fillable in the Editor in one pass.
-            </p>
+            <p class="muted">No errors. The 5 warnings are licence and authors,
+              plus task descriptions and instructions on the functional
+              sidecars.</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ============================================================
-         What's different from the primary MRI walkthrough
+         Troubleshooting
          ============================================================ -->
-    <section class="section">
+    <section class="section" id="trouble">
       <div class="container container-narrow prose">
-        <span class="section-eyebrow">What's different vs the primary MRI tutorial</span>
-        <h2>Same engine, more data variety.</h2>
-        <ul class="checklist">
-          <li>
-            <strong>More than one anatomical contrast.</strong> The
-            primary dataset has T1w + T2w. This one has T1w + T2w +
-            T2starw + FLAIR. All four route to
-            <code class="inline">anat/</code> with the correct
-            suffix; no per-row override needed.
-          </li>
-          <li>
-            <strong>DWI scanner-derivative detection in action.</strong>
-            BIDS 1.11+ promoted FA, colFA, trace, and TENSOR to
-            first-class suffixes; older pipelines either dropped
-            them or hand-coded a derivative layout. The classifier
-            recognises them natively.
-          </li>
-          <li>
-            <strong>The B0 reroute.</strong> Watch the Convert log
-            for <code class="inline">classifier: acq-15_dir-PA b0
-            rerouted to fmap/_epi</code>. The PA-direction
-            single-volume DWI becomes the BIDS-required reference
-            for distortion correction without a heuristic file.
-          </li>
-          <li>
-            <strong>Partial physio failures.</strong> Three of the
-            CMRR physio rows fail cleanly. The dataset is still
-            BIDS-valid because the failed rows do not write incomplete
-            output (the per-subject staging is atomic). The Convert
-            scene in the GUI surfaces the failures in the Log dock.
-          </li>
-          <li>
-            <strong>Highlight aborts becomes useful.</strong> The
-            inspection-pane footer's <em>Highlight aborts</em> toggle
-            tints suspected-abort rows purple. On the primary dataset
-            it does nothing (no aborts). Here it lights up the
-            scout-with-MPR pairs the classifier already auto-deselected.
-          </li>
-        </ul>
+        <span class="section-eyebrow">Troubleshooting</span>
+        <h2>What a rich protocol throws at you.</h2>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>What you see</th><th>What it means</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>An anatomical image with the wrong suffix</td>
+                <td>A T2starw classified as T2w, or similar. Valid BIDS, wrong
+                  image. Sort by <code class="inline">conf</code> and read the
+                  anatomical rows against their sequence names.</td>
+              </tr>
+              <tr>
+                <td>Scanner-derived maps missing from the output</td>
+                <td>FA, colFA and trace belong in
+                  <code class="inline">dwi/</code> with their own suffixes since
+                  BIDS 1.11. If they are absent, check they were not unticked
+                  during curation.</td>
+              </tr>
+              <tr>
+                <td>A <code class="inline">TENSOR</code> row that will not convert</td>
+                <td>It never will: it carries no image pixels. It is excluded
+                  with that reason, and the teal tint says so.</td>
+              </tr>
+              <tr>
+                <td>The reversed-direction volume still in <code class="inline">dwi/</code></td>
+                <td>The reroute did not fire, usually because the acquisition
+                  does not look single-volume to the scan. Move it by editing the
+                  datatype and suffix on that row.</td>
+              </tr>
+              <tr>
+                <td>Fewer physiological tables than logs</td>
+                <td>Expected on this dataset: one log is corrupt at source. The
+                  log names the file and the reason, and the rest still
+                  convert.</td>
+              </tr>
+              <tr>
+                <td>A series your site names in its own way, misclassified</td>
+                <td>Correct the row once, then write a scan rule so the next
+                  scan of that protocol gets it right. A forced hint overrides
+                  the converter's own guess.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
 
     <!-- ============================================================
-         Walk the GUI / CLI walkthrough on the main tutorial page
+         CLI
          ============================================================ -->
-    <section class="section">
+    <section class="section" id="cli">
       <div class="container container-narrow prose">
+        <span class="section-eyebrow">The same thing, scripted</span>
+        <h2>From the command line.</h2>
+
+<pre class="code"><span class="cmt"># 1. Create the dataset and its project.</span>
+bidsmgr-create ~/bids/rich_protocol --name "Rich protocol"
+
+<span class="cmt"># 2. Scan, with any site rules you have written.</span>
+bidsmgr-scan ~/raw/OL_rich --project ~/bids/rich_protocol \
+    --probe-convert --rules-file ~/rules/oldenburg.json
+
+<span class="cmt"># 3. Convert. 32 images, 9 physiological tables, 3 physio rows fail.</span>
+bidsmgr-convert --project ~/bids/rich_protocol
+
+<span class="cmt"># 4. Enrich: fieldmap IntendedFor, scans tables, participants.</span>
+bidsmgr-metadata --project ~/bids/rich_protocol --fill-todos
+
+<span class="cmt"># 5. Validate, with the deeper pass. 75 ok / 5 warn / 0 err.</span>
+bidsmgr-validate ~/bids/rich_protocol --strict --html</pre>
+
+        <p>
+          Every flag is documented in the
+          <a href="tutorial.html#cli-ref">CLI reference</a>.
+        </p>
+
         <p style="margin-top: 8px;">
-          <a class="btn btn-primary" href="tutorial.html#scenes">Walk the GUI tutorial &rarr;</a>
-          <a class="btn btn-ghost" href="tutorial.html#cli">See the CLI walkthrough</a>
+          <a class="btn btn-primary" href="tutorial.html#gui-walkthrough">The full GUI walkthrough &rarr;</a>
+          <a class="btn btn-ghost" href="tutorial-mri.html">Back to the MRI tutorial</a>
         </p>
       </div>
     </section>

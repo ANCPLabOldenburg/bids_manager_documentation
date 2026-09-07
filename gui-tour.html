@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="GUI tour of BIDS Manager: a quick, general look at the Welcome, Converter, and Editor views and every feature in action - project setup, scanning, curation, conversion, enrichment, the in-app viewers, and validation.">
+  <meta name="description" content="GUI tour of BIDS Manager: a quick, general look at the Home, Converter, and Editor views and every feature in action - project setup, scanning, curation, conversion, enrichment, the in-app viewers, and validation.">
   <title>GUI tour &middot; BIDS Manager</title>
   <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
   <link rel="stylesheet" href="styles.css">
@@ -36,12 +36,12 @@
           </div>
         </div>
         <p class="muted" style="margin-top: 18px;">
-          BIDS Manager opens on a <strong>Welcome</strong> screen where you
-          create or open a dataset project, then gives you two working
-          views: the <strong>Converter</strong> (raw &rarr; BIDS) and the
-          <strong>Editor</strong> (read, fix, validate). Click anything on
-          this page to take a closer look, and switch the theme in the
-          header to see it in light or dark.
+          BIDS Manager opens on the <strong>Home</strong> tab, where you
+          create or open a dataset project, and then gives you two working
+          views: the <strong>Converter</strong> (raw to BIDS) and the
+          <strong>Editor</strong> (read, fix, validate). Click anything on this
+          page to take a closer look, and switch the theme in the header to see
+          it in light or dark.
         </p>
       </div>
     </section>
@@ -53,22 +53,22 @@
       <div class="container">
         <div class="section-header">
           <span class="section-eyebrow">The three views</span>
-          <h2 class="section-title">Welcome, Converter, Editor.</h2>
+          <h2 class="section-title">Home, Converter, Editor.</h2>
         </div>
 
         <div class="mtg-views">
 
-          <!-- Welcome -->
+          <!-- Home -->
           <div class="mtg-view">
             <figure class="media-figure">
               <img class="feature-shot"
                    src="assets/gui/home_tab_dark.png"
                    data-light="assets/gui/home_tab_light.png"
-                   alt="BIDS Manager Welcome tab: create a dataset, open an existing one, recent projects"
+                   alt="BIDS Manager Home tab: create a dataset, open an existing one, recent projects"
                    loading="lazy">
             </figure>
             <div class="mtg-view-text">
-              <h3>Welcome: start or resume a project</h3>
+              <h3>Home: start or resume a project</h3>
               <p>
                 BIDS Manager is project-first. Before you scan anything you
                 point it at a dataset folder, and from then on every scan,
@@ -90,7 +90,7 @@
                 <li><strong>Recent projects</strong> reopen with a
                   double-click (right-click to remove or delete);
                   <strong>Getting started</strong> links the docs, this
-                  tutorial, and four downloadable sample datasets.</li>
+                  tutorial, and the downloadable sample datasets.</li>
               </ul>
             </div>
           </div>
@@ -108,8 +108,9 @@
               <h3>Converter: raw &rarr; BIDS</h3>
               <p>
                 The Converter is where curation happens: you review every
-                acquisition the scanner found and decide what becomes BIDS,
-                before a single file is written. The top header carries the
+                recording the scan found, MRI, PET, EEG, MEG, iEEG and the
+                physiological signals stored inside MRI DICOM files, and decide
+                what becomes BIDS before a single file is written. The top header carries the
                 <em>Scan</em> button, the active-project switcher, Undo /
                 Redo, the live status chips, and <em>Run conversion</em>;
                 two PathBars below show the raw input folder and the
@@ -137,8 +138,8 @@
           <div class="mtg-view">
             <figure class="media-figure">
               <img class="feature-shot"
-                   src="assets/gui/editor_tab_dark.png"
-                   data-light="assets/gui/editor_tab_light.png"
+                   src="assets/features/editor_window_dark.png"
+                   data-light="assets/features/editor_window_light.png"
                    alt="BIDS Manager Editor view: BIDS tree, sidecar form viewer, validation pane"
                    loading="lazy">
             </figure>
@@ -147,9 +148,10 @@
               <p>
                 The Editor opens the converted dataset for review and repair.
                 Its toolbar runs validation at three scopes (single file,
-                folder, or whole dataset), with a <em>Strict BIDS</em>
-                toggle that adds the official structural pass and severity
-                chips that summarise the current issues.
+                folder, or whole dataset), with a <em>Deep checks</em>
+                toggle that also opens NIfTI image headers to catch truncated
+                or corrupt files, and severity chips that summarise the current
+                issues.
               </p>
               <ul>
                 <li><strong>BIDS tree</strong>: the converted layout with a
@@ -157,7 +159,7 @@
                   red for errors.</li>
                 <li><strong>Centre viewer</strong>: routes by file type, a
                   schema-aware form for JSON sidecars, an editable table for
-                  TSVs, the tri-view for NIfTI, and an interactive signal
+                  TSVs, the Multi-Planar view for NIfTI, and an interactive signal
                   viewer for MEG / EEG / iEEG recordings.</li>
                 <li><strong>Validation pane</strong>: the issue list by
                   severity; click an item to jump straight to the file that
@@ -196,7 +198,7 @@
               <h4>Create or open a dataset</h4>
               <figure class="media-figure">
                 <video class="feature-video" muted loop playsinline preload="metadata"
-                       aria-label="Creating and opening a dataset project on the Welcome tab"
+                       aria-label="Creating and opening a dataset project on the Home tab"
                        data-dark="assets/features/create_or_open_a_new_dataset_project_dark.mp4"
                        data-light="assets/features/create_or_open_a_new_dataset_project_light.mp4"></video>
                 <figcaption>
@@ -219,7 +221,7 @@
                 <figcaption>
                   The active project is shown in the header. The dropdown
                   lists your open and recent projects so you can jump
-                  between datasets, or return to the Welcome screen to open
+                  between datasets, or return to the Home tab to open
                   or create another, without losing any work.
                 </figcaption>
               </figure>
@@ -377,19 +379,41 @@
               </figure>
             </div>
             <div class="media-block">
-              <h4>Dataset metadata (EEG / MEG enrichment)</h4>
+              <h4>Dataset metadata</h4>
               <figure class="media-figure">
-                <video class="feature-video" muted loop playsinline preload="metadata"
-                       aria-label="Dataset metadata enrichment dialog"
-                       data-dark="assets/features/dataset_metadata_feature_dark.mp4"
-                       data-light="assets/features/dataset_metadata_feature_light.mp4"></video>
+                <img class="feature-shot" loading="lazy"
+                     alt="The dataset metadata dialog, with the modality-agnostic questions above the modality-specific ones"
+                     src="assets/features/template_walkthrough_dark.png"
+                     data-light="assets/features/template_walkthrough_light.png">
                 <figcaption>
-                  Fill dataset-wide fields once and the converter writes them
-                  into every sidecar: reference, ground, hardware filters,
-                  device and cap, institution, power-line frequency, and
-                  event labels. Modality-agnostic and modality-specific
-                  fields are colour-separated, each with its BIDS-schema
-                  tooltip.
+                  Answer a dataset-wide question once and the converter writes
+                  it into every sidecar it belongs in: reference, ground,
+                  hardware filters, device and cap for EEG and MEG; tracer,
+                  injected dose, radionuclide and reconstruction for PET;
+                  institution and power-line frequency for everything. Fields
+                  shared across modalities are separated from the
+                  modality-specific ones, and each carries the BIDS schema's
+                  own description as a tooltip. Anything answered here can
+                  still be overridden for one recording in the properties
+                  panel.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Names that would collide</h4>
+              <figure class="media-figure">
+                <img class="feature-shot" loading="lazy"
+                     alt="Three inventory rows resolving to one BIDS name shown in red, above two rows separated automatically by run number"
+                     src="assets/features/name_collision_red_dark.png"
+                     data-light="assets/features/name_collision_red_light.png">
+                <figcaption>
+                  Every row's destination filename is worked out before anything
+                  is converted. Genuine repeats are given a
+                  <code class="inline">run</code> number where the standard
+                  allows one; where it does not, both basenames turn red and the
+                  conversion refuses to start rather than write one recording
+                  over the other. Fixing either row clears the red on both, since
+                  the state is recomputed from the table as it stands.
                 </figcaption>
               </figure>
             </div>
@@ -468,13 +492,32 @@
               <h4>NIfTI viewer</h4>
               <figure class="media-figure">
                 <video class="feature-video" muted loop playsinline preload="metadata"
-                       aria-label="NIfTI tri-view viewer"
+                       aria-label="NIfTI Multi-Planar viewer"
                        data-dark="assets/features/nifti_viewer_dark.mp4"
                        data-light="assets/features/nifti_viewer_light.mp4"></video>
                 <figcaption>
-                  A tri-view (sagittal / coronal / axial) sharing one
+                  A Multi-Planar view (sagittal, coronal and axial) sharing one
                   crosshair, plus a single-pane 2-D view. Click and drag to
                   move the crosshair and scrub through slices.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>3-D volume rendering</h4>
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="Interactive 3-D volume rendering of a NIfTI image"
+                       data-dark="assets/features/3d_renderer.mp4"
+                       data-light="assets/features/3d_renderer.mp4"></video>
+                <figcaption>
+                  The <strong>3D</strong> tab renders the volume on the graphics
+                  card: rotate it, zoom, and cut through it with an oblique
+                  clipping plane whose cut face shows the slice underneath.
+                  There are materials and lighting presets, an orientation cube,
+                  and a switch between radiological and neurological convention
+                  that applies to the 2-D views as well. On a machine without
+                  suitable graphics support the tab is absent and the rest of
+                  the viewer works as usual.
                 </figcaption>
               </figure>
             </div>
@@ -563,10 +606,29 @@
                        data-light="assets/features/validate_dataset_light.mp4"></video>
                 <figcaption>
                   Run validation at file, folder, or whole-dataset scope.
-                  Layer 1 is the schema-driven audit; the <em>Strict BIDS</em>
-                  toggle adds the official structural pass. Findings are
+                  The fast pass checks naming, entities, sidecar fields, TSV
+                  columns and associations. <em>Deep checks</em> additionally
+                  opens NIfTI image headers to catch truncated or corrupt
+                  files. Findings are
                   listed by severity and the tree's per-file status dots
                   update to match.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Where a finding comes from</h4>
+              <figure class="media-figure">
+                <img class="feature-shot" loading="lazy"
+                     alt="A validation finding with the schema rule it came from printed underneath the message"
+                     src="assets/features/validation_provenance_dark.png"
+                     data-light="assets/features/validation_provenance_light.png">
+                <figcaption>
+                  Each finding carries the schema rule it came from, printed
+                  beneath the message. A rule path such as
+                  <code class="inline">rules.tabular_data.modality_agnostic.Scans</code>
+                  points at the part of the standard the requirement is drawn
+                  from, so it can be checked rather than taken on trust. The same
+                  provenance appears in the HTML report.
                 </figcaption>
               </figure>
             </div>
@@ -589,70 +651,140 @@
         </div>
 
         <!-- 7. Settings -->
-        <div class="media-group">
+                <div class="media-group">
           <div class="media-group-head">
             <h3>7. Settings</h3>
-            <p>Sensible defaults out of the box; the gear in the header
-              opens five tabs, each configurable and capped to your
-              hardware.</p>
+            <p>Sensible defaults out of the box, so you can convert a dataset
+              without opening this at all. The gear in the header opens seven
+              tabs; everything in them is remembered between sessions, and
+              <em>Restore defaults</em> puts any of it back.</p>
           </div>
-          <div class="media-grid cols-3">
+          <div class="media-grid cols-2">
+            <div class="media-block">
+              <h4>BIDS version</h4>
+              <figure class="media-figure">
+                <img class="feature-shot" loading="lazy"
+                     alt="The BIDS version tab of the Settings dialog"
+                     src="assets/features/settings_bids_version_dark.png"
+                     data-light="assets/features/settings_bids_version_light.png">
+                <figcaption>
+                  The version of the standard this session works to. It is the first tab
+                  because it changes everything downstream: which fields the metadata
+                  forms ask for, which entities a filename may carry, the
+                  <code class="inline">BIDSVersion</code> written into
+                  <code class="inline">dataset_description.json</code>, and what
+                  validation judges the result by. Several versions ship with the
+                  application, so a dataset built against an older one can be worked
+                  on in its own terms. The command line takes the same choice per run
+                  as <code class="inline">--schema</code>.
+                </figcaption>
+              </figure>
+            </div>
             <div class="media-block">
               <h4>Display</h4>
               <figure class="media-figure">
-                <img class="feature-shot"
+                <img class="feature-shot" loading="lazy"
+                     alt="The Display tab of the Settings dialog"
                      src="assets/features/settings_display_dark.png"
-                     data-light="assets/features/settings_display_light.png"
-                     alt="Display settings tab" loading="lazy">
-                <figcaption>Theme, font scale, and the header logo, with the
-                  theme also toggleable live from the header.</figcaption>
+                     data-light="assets/features/settings_display_light.png">
+                <figcaption>
+                  Theme, font scale and the header logo. The theme can also be toggled live
+                  from the header; font scale and logo apply when you save.
+                </figcaption>
               </figure>
             </div>
             <div class="media-block">
               <h4>System</h4>
               <figure class="media-figure">
-                <img class="feature-shot"
-                     src="assets/features/settings_system_dark.png"
-                     data-light="assets/features/settings_system_light.png"
-                     alt="System info settings tab" loading="lazy">
-                <figcaption>Detected CPU threads and total RAM, used to cap
-                  the parallel-worker spinboxes so a run never oversubscribes
-                  the machine.</figcaption>
+                <img class="feature-shot" loading="lazy"
+                     alt="The System tab of the Settings dialog"
+                     src="assets/features/settings_system_info_dark.png"
+                     data-light="assets/features/settings_system_info_light.png">
+                <figcaption>
+                  What the application detected about your machine: logical threads,
+                  physical cores and total memory. It is read-only, and it is here
+                  because it sets the ceiling on the parallel-worker spinboxes in the
+                  Scan and Convert tabs. Asking for more workers than the machine has
+                  threads only adds scheduling overhead, so those controls will not go
+                  higher.
+                </figcaption>
               </figure>
             </div>
             <div class="media-block">
               <h4>Scan</h4>
               <figure class="media-figure">
-                <img class="feature-shot"
-                     src="assets/features/settings_scan_dark.png"
-                     data-light="assets/features/settings_scan_light.png"
-                     alt="Scan settings tab" loading="lazy">
-                <figcaption>Scan defaults: parallel workers, the probe-convert
-                  pass, and the dcm2niix BidsGuess classifier.</figcaption>
+                <img class="feature-shot" loading="lazy"
+                     alt="The Scan tab of the Settings dialog"
+                     src="assets/features/settings_scan_defaults_dark.png"
+                     data-light="assets/features/settings_scan_defaults_light.png">
+                <figcaption>
+                  How much of the work the scan does up front. <em>Probe convert</em> runs
+                  the converter once per series so the naming reflects the files that
+                  will actually be produced. <em>Record what the conversion fills in by
+                  itself</em> notes, per kind of file, the values the engines produce,
+                  so the metadata form can show them rather than ask you for something
+                  nobody has to answer. Both are on by default.
+                </figcaption>
               </figure>
             </div>
             <div class="media-block">
               <h4>Scan rules</h4>
               <figure class="media-figure">
-                <video class="feature-video" muted loop playsinline preload="metadata"
-                       aria-label="Scan rules settings tab"
-                       data-dark="assets/features/settings_scan_rules_dark.mp4"
-                       data-light="assets/features/settings_scan_rules_light.mp4"></video>
-                <figcaption>User classifier hints and series exclusions,
-                  schema-constrained and persisted. The same rules the CLI
-                  reads via <code class="inline">--rules-file</code>.</figcaption>
+                <img class="feature-shot" loading="lazy"
+                     alt="The Scan rules tab of the Settings dialog"
+                     src="assets/features/settings_scan_rules_tab_dark.png"
+                     data-light="assets/features/settings_scan_rules_tab_light.png">
+                <figcaption>
+                  Your site's own conventions, taught once. A hint forces any series whose
+                  name matches a pattern to a datatype, suffix and task you choose; an
+                  exclusion drops anything matching a name or path. Datatype and suffix
+                  come from the BIDS schema rather than free text, so a rule cannot
+                  produce an invalid combination. Hints apply to MRI and PET, which are
+                  classified from their sequence description; EEG and MEG are classified
+                  from their channel types instead, though a path-based exclusion still
+                  skips any modality. The command line reads the same rules through
+                  <code class="inline">--rules-file</code>.
+                </figcaption>
               </figure>
             </div>
             <div class="media-block">
-              <h4>Convert + post-convert</h4>
+              <h4>Convert and post-convert</h4>
               <figure class="media-figure">
-                <img class="feature-shot"
-                     src="assets/features/settings_convert_and_post_convert_dark.png"
-                     data-light="assets/features/settings_convert_and_post_convert_light.png"
-                     alt="Convert and post-convert settings tab" loading="lazy">
-                <figcaption>Workers, residual handling, Force-EDF, and the
-                  post-conversion chain (enrichment, fix-ups, validation) as
-                  an indented hierarchy.</figcaption>
+                <img class="feature-shot" loading="lazy"
+                     alt="The Convert and post-convert tab of the Settings dialog"
+                     src="assets/features/settings_convert_tab_dark.png"
+                     data-light="assets/features/settings_convert_tab_light.png">
+                <figcaption>
+                  Two groups. Above, how the conversion runs: parallel workers, what to do
+                  when a subject already exists (Skip is the safe default and never
+                  loses data), whether to keep the residual single-volume duplicates
+                  dcm2niix splits off, and whether to re-encode EEG to EDF. Below, the
+                  chain that runs after every conversion, shown as an indented
+                  hierarchy: generate metadata, insert TODO placeholders, validate, deep
+                  checks, write an HTML report. All on by default, and each can be
+                  switched off.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Validation</h4>
+              <figure class="media-figure">
+                <img class="feature-shot" loading="lazy"
+                     alt="The Validation tab of the Settings dialog"
+                     src="assets/features/settings_validation_dark.png"
+                     data-light="assets/features/settings_validation_light.png">
+                <figcaption>
+                  How much validation does and how much of it you see. <em>Max TSV rows
+                  scanned</em> bounds how far into a long table the column and value
+                  checks read, which keeps validation fast on large datasets.
+                  <em>Show findings</em> filters the Validation pane to errors, warnings
+                  or both, so you can work errors first; the tree dots and the counters
+                  always show the full picture regardless. <em>Flag TODO placeholder
+                  values</em> is a BIDS Manager convention rather than part of the
+                  standard, on by default; turning it off gives counts identical to the
+                  standalone bidsval engine. The <em>Deep checks</em> toggle is not here:
+                  it is a per-run choice and lives in the Editor toolbar.
+                </figcaption>
               </figure>
             </div>
           </div>
@@ -669,7 +801,7 @@
         <div class="hero-actions">
           <a class="btn btn-primary" href="tutorial.html">Walk the tutorial &rarr;</a>
           <a class="btn btn-ghost"   href="installation.html">Install</a>
-          <a class="btn btn-ghost"   href="intro.html">How it works</a>
+          <a class="btn btn-ghost"   href="about.html">How it works</a>
         </div>
       </div>
     </section>

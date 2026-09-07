@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="BIDS Manager: schema-driven raw-to-BIDS curation. Documentation, installation guides, and an interactive tutorial.">
+  <meta name="description" content="BIDS Manager: schema-driven raw-to-BIDS curation for MRI, PET, EEG, MEG and iEEG. Documentation, installation guides, and an interactive tutorial.">
   <title>BIDS Manager &middot; Documentation</title>
   <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
   <link rel="stylesheet" href="styles.css">
@@ -244,17 +244,16 @@
         <h1 id="hero-title" class="hero-title"><em>BIDS</em> Manager</h1>
         <p class="hero-tagline">Raw-to-BIDS without custom scripts.</p>
         <p class="hero-lead">
-          BIDS Manager brings raw-to-BIDS conversion for MRI, EEG, MEG,
-          and physiological recordings into a single integrated workflow.
-          Its intuitive graphical user interface supports interactive metadata
-          inspection, dataset curation, conversion, and validation while
-          orchestrating powerful backend data-management algorithms and
-          conversion engines.
+          BIDS Manager turns raw MRI, PET, EEG, MEG, iEEG and the
+          physiological recordings embedded in MRI DICOM files into a validated
+          BIDS dataset. Its intuitive graphical user interface supports
+          interactive metadata inspection, curation, conversion, and validation
+          in one application.
         </p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="installation.html">Install &rarr;</a>
           <a class="btn btn-ghost"   href="gui-tour.html">GUI tour</a>
-          <a class="btn btn-ghost"   href="intro.html">How it works</a>
+          <a class="btn btn-ghost"   href="about.html">How it works</a>
           <a class="btn btn-ghost"   href="tutorial.html">Try the tutorial</a>
         </div>
       </div>
@@ -268,31 +267,44 @@
         <div class="section-header">
           <h2 class="section-title">Make raw-to-BIDS less painful.</h2>
           <p class="section-lead">
-            Less fragmented, less error-prone, more transparent. One tool
-            for the whole BIDS workflow, available as a GUI or a CLI.
+            Less fragmented, less error-prone, more transparent. One tool for
+            the whole BIDS workflow, available as a GUI or a CLI. It uses the
+            trusted converters to write the files, and does the rest of the job
+            they leave undone.
           </p>
         </div>
 
         <div class="points">
           <div class="point">
-            <h3>One workflow for MRI, EEG, MEG, and physio.</h3>
+            <h3>One workflow for MRI, PET, EEG, MEG, iEEG and physio.</h3>
             <p>
-              BIDS Manager wires the trusted converters
-              (<a href="https://github.com/rordenlab/dcm2niix" target="_blank" rel="noopener">dcm2niix</a>,
+              BIDS Manager wires the trusted converters,
+              <a href="https://github.com/rordenlab/dcm2niix" target="_blank" rel="noopener">dcm2niix</a>,
               <a href="https://mne.tools/mne-bids/" target="_blank" rel="noopener">mne-bids</a>,
-              <a href="https://github.com/cbinyu/bidsphysio" target="_blank" rel="noopener">bidsphysio</a>)
-              into one orchestrated pipeline. No tool-switching, no
-              per-modality commands, no separate installs.
+              <a href="https://github.com/openneuropet/PET2BIDS" target="_blank" rel="noopener">pet2bids</a>
+              and
+              <a href="https://github.com/cbinyu/bidsphysio" target="_blank" rel="noopener">bidsphysio</a>,
+              into one pipeline, and extends each of them with the work they
+              were never designed to cover. No tool-switching, no per-modality
+              commands, no separate installs.
+            </p>
+            <p>
+              It is more than a wrapper around them. Converting the files is
+              only part of the job. On its own, dcm2niix cannot know which
+              images a fieldmap was meant to correct, and mne-bids cannot know
+              which electrode was used as the reference. BIDS Manager works the
+              first out from what it read during the scan, asks you once for the
+              second, writes both into the files, and then checks the result.
             </p>
           </div>
 
           <div class="point">
             <h3>Scans data and metadata inside every file.</h3>
             <p>
-              Builds a complete picture of each acquisition, study, and
-              dataset by reading DICOM headers, EEG / MEG file metadata,
-              and sidecars. Most converters only read filenames.
-              BIDS Manager looks inside.
+              Builds a complete picture of each acquisition, study, and dataset
+              by reading DICOM headers, ECAT headers, EEG / MEG file metadata,
+              and sidecars. Most converters only read filenames. BIDS Manager
+              looks inside.
             </p>
           </div>
 
@@ -300,9 +312,19 @@
             <h3>Curate before you convert.</h3>
             <p>
               Review every acquisition in an interactive table. Filter out
-              localizers, calibrations, and failed runs. Bulk-edit entities,
-              set per-row properties, and preview the exact BIDS tree before
+              localizers, calibrations, and failed runs. Bulk-edit entities, set
+              per-row properties, and preview the exact BIDS tree before
               anything is written to disk.
+            </p>
+          </div>
+
+          <div class="point">
+            <h3>No file is ever overwritten by another.</h3>
+            <p>
+              When two recordings would be given the same BIDS filename, one
+              would replace the other and nothing would report it. BIDS Manager
+              works out every filename first, numbers genuine repeats, and stops
+              the conversion if any name is still duplicated.
             </p>
           </div>
 
@@ -319,31 +341,73 @@
           <div class="point">
             <h3>Automatic metadata enrichment.</h3>
             <p>
-              After conversion, an enrichment algorithm fills required
-              sidecar fields from the scanned metadata and the BIDS schema.
-              For EEG and MEG it also fills reference, ground, filters, device,
-              and event labels, with per-recording overrides. Every decision is
-              logged, so you can review or override it.
+              After conversion, BIDS Manager fills in the metadata fields BIDS
+              requires, using what it read during the scan and the standard's
+              own list of what each kind of file needs. For EEG and
+              MEG it also fills reference, ground, filters, device, and event
+              labels; for PET the tracer, dose and reconstruction details, with
+              per-recording overrides. Every decision is logged, so you can
+              review or override it.
+            </p>
+          </div>
+
+          <div class="point">
+            <h3>Asks once for what no file contains.</h3>
+            <p>
+              Some things BIDS requires are in no file anywhere: the reference
+              electrode of an EEG recording, the dose injected for a PET scan,
+              the authors of the dataset. A form asks each question once for a
+              whole study, with the standard's own wording beside it, and any
+              answer can be changed for a single recording.
+            </p>
+          </div>
+
+          <div class="point">
+            <h3>PET, including the parts usually left out.</h3>
+            <p>
+              Both formats PET scanners produce: DICOM, and the ECAT files that
+              Siemens HRRT and older CTI systems write. Blood curves attach to
+              the scan they belong to and become proper
+              <code>_blood.tsv</code> files. A PET/CT study converts its PET
+              half and tells you why the CT was left out; a PET/MR study
+              converts both halves at once.
             </p>
           </div>
 
           <div class="point">
             <h3>Inspect everything in-app.</h3>
             <p>
-              The Editor opens the converted dataset for review: schema-aware
-              sidecar forms, editable TSV tables, a NIfTI tri-view, and an
-              interactive MEG / EEG / iEEG signal viewer with an in-app PSD and
-              a BIDS-native events overlay. No external tools.
+              The Editor opens the converted dataset for review: metadata forms
+              listing every field the standard defines for that kind of file,
+              editable TSV tables, a NIfTI Multi-Planar view and
+              GPU 3-D renderer, and an interactive MEG / EEG / iEEG signal
+              viewer with an in-app PSD and a BIDS-native events overlay. No
+              external tools.
             </p>
           </div>
 
           <div class="point">
-            <h3>Built on the official BIDS schema.</h3>
+            <h3>Validation is built in, and shows its reasoning.</h3>
             <p>
-              Naming, structure, and validation come from the
-              <a href="https://github.com/bids-standard/bids-specification" target="_blank" rel="noopener">official BIDS schema</a>,
-              not handwritten rules. The same source of truth drives
-              classification, file naming, and the built-in validator.
+              Check the dataset without installing anything else. Every finding
+              says what is wrong, how to fix it, and which rule of the standard
+              it comes from, so you can look that rule up rather than take the
+              tool's word for it. A button takes you to the field that needs the
+              answer.
+            </p>
+          </div>
+
+          <div class="point">
+            <h3>It follows the standard itself, not a copy of it.</h3>
+            <p>
+              BIDS publishes its rules in a machine-readable form, the
+              <a href="https://github.com/bids-standard/bids-specification" target="_blank" rel="noopener">BIDS schema</a>:
+              which folders and filenames are allowed, and which metadata fields
+              belong to each kind of recording. BIDS Manager reads that
+              directly rather than keeping its own copy of the rules, so the
+              names it produces, the questions it asks you, and the checks it
+              runs always agree with each other and stay current with the
+              standard.
             </p>
           </div>
         </div>
@@ -356,12 +420,21 @@
     <section class="section">
       <div class="container container-narrow">
         <div class="section-header">
-          <h2 class="section-title">Install in one click.</h2>
+          <h2 class="section-title">Install once. Everything is included.</h2>
         </div>
         <p class="section-lead">
-          Bootstrap installers for macOS, Linux, and Windows set up a portable
-          Python environment and register a native app launcher. No setup
-          required. Python users can install from PyPI instead.
+          Bootstrap installers for macOS, Linux and Windows set up a
+          self-contained Python environment and register a normal application
+          launcher, so BIDS Manager opens from your applications folder like
+          any other program.
+        </p>
+        <p>
+          There is nothing else to install. Every conversion engine comes with
+          it: dcm2niix for MRI, mne-bids for EEG, MEG and iEEG, pet2bids for
+          PET, and bidsphysio for MRI physiological recordings. You do not need
+          to compile dcm2niix, install MNE, or set up a Python environment
+          yourself. If you already work in Python,
+          <code>pip install bids-manager</code> gives you the same thing.
         </p>
         <p>
           <a class="btn btn-primary" href="installation.html">Read the installation guide &rarr;</a>
@@ -377,7 +450,7 @@
         <div class="hero-actions">
           <a class="btn btn-primary" href="installation.html">Install &rarr;</a>
           <a class="btn btn-ghost"   href="gui-tour.html">GUI tour</a>
-          <a class="btn btn-ghost"   href="intro.html">How it works</a>
+          <a class="btn btn-ghost"   href="about.html">How it works</a>
           <a class="btn btn-ghost"   href="tutorial.html">Try the tutorial</a>
         </div>
       </div>
