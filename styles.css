@@ -1968,8 +1968,12 @@ details.disclosure p:last-child { margin-bottom: 0; }
 
 .page-toc {
   /* One source of truth for how far down the panel sits: the panel's
-     max-height is derived from it, so the two can never disagree. */
-  --toc-top: 92px;
+     max-height is derived from it, so the two can never disagree.
+     --header-h is measured and published by script.js, because the header
+     wraps to two rows on a phone and a hardcoded number put this button
+     underneath it, where it could not be tapped. The fallback matches the
+     one-row desktop header for the moment before the script runs. */
+  --toc-top: calc(var(--header-h, 68px) + 24px);
   position: fixed;
   left: clamp(12px, 2vw, 24px);
   top: var(--toc-top);
@@ -2141,7 +2145,7 @@ details.disclosure p:last-child { margin-bottom: 0; }
   .page-toc-panel { box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45); }
 }
 @media (max-width: 640px) {
-  .page-toc { --toc-top: 76px; left: 10px; }
+  .page-toc { --toc-top: calc(var(--header-h, 68px) + 12px); left: 10px; }
   .page-toc-panel { width: min(78vw, 280px); }
 }
 
@@ -8750,6 +8754,11 @@ body.lightbox-open { overflow: hidden; }
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  /* The site header is sticky and carries a backdrop-filter. Without paint
+   * containment, Safari treats anything animating under it as a reason to
+   * recompute that backdrop on every frame, for the whole width of the page.
+   * The card already clips its own overflow, so containment costs nothing. */
+  contain: paint;
   border-color: color-mix(in srgb, var(--accent) 62%, var(--border));
   box-shadow: 0 0 0 1px var(--glow-accent),
               0 18px 60px color-mix(in srgb, var(--accent) 14%, transparent);
@@ -8767,16 +8776,26 @@ body.lightbox-open { overflow: hidden; }
 .page-updates .release.is-landmark::after {
   content: "";
   position: absolute;
-  inset: -20% -20%;
   z-index: -1;
   pointer-events: none;
   -webkit-mask-repeat: repeat;
   mask-repeat: repeat;
+  /* The mask never moves. See the note on the keyframes below. */
   -webkit-mask-position: 0 0;
   mask-position: 0 0;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
 }
 
-/* The near layer: two waves per tile, drifting right. */
+/* The near layer: two waves, the lower one faint, drifting right.
+ *
+ * The downward fade is drawn INTO the mask as stroke-opacity, and the tile
+ * does not repeat vertically, so the band ends by running out of ink rather
+ * than at a line. Doing it this way needs no mask-composite, which is the one
+ * part of CSS masking whose support is still worth not relying on.
+ */
 .page-updates .release.is-landmark::before {
   background: linear-gradient(103deg,
       transparent 0%,
@@ -8784,10 +8803,21 @@ body.lightbox-open { overflow: hidden; }
       color-mix(in srgb, var(--purple, #a371f7) 52%, transparent) 55%,
       color-mix(in srgb, var(--accent) 58%, transparent) 82%,
       transparent 100%);
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='300' viewBox='0 0 900 300'%3E%3Cg fill='none' stroke='%23000' stroke-width='18' stroke-linecap='round'%3E%3Cpath d='M-450 90 C -338 30 -112 150 0 90 S 338 30 450 90 S 788 150 900 90 S 1238 30 1350 90'/%3E%3Cpath d='M-450 214 C -338 274 -112 154 0 214 S 338 274 450 214 S 788 154 900 214 S 1238 274 1350 214'/%3E%3C/g%3E%3C/svg%3E");
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='300' viewBox='0 0 900 300'%3E%3Cg fill='none' stroke='%23000' stroke-width='18' stroke-linecap='round'%3E%3Cpath d='M-450 90 C -338 30 -112 150 0 90 S 338 30 450 90 S 788 150 900 90 S 1238 30 1350 90'/%3E%3Cpath d='M-450 214 C -338 274 -112 154 0 214 S 338 274 450 214 S 788 154 900 214 S 1238 274 1350 214'/%3E%3C/g%3E%3C/svg%3E");
-  -webkit-mask-size: 900px 300px;
-  mask-size: 900px 300px;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='560' viewBox='0 0 900 560'%3E%3Cg fill='none' stroke='%23000' stroke-linecap='round'%3E%3Cpath stroke-width='18' stroke-opacity='1' d='M-450 130 C -338 70 -112 190 0 130 S 338 70 450 130 S 788 190 900 130 S 1238 70 1350 130'/%3E%3Cpath stroke-width='15' stroke-opacity='0.42' d='M-450 312 C -338 372 -112 252 0 312 S 338 372 450 312 S 788 252 900 312 S 1238 372 1350 312'/%3E%3C/g%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='560' viewBox='0 0 900 560'%3E%3Cg fill='none' stroke='%23000' stroke-linecap='round'%3E%3Cpath stroke-width='18' stroke-opacity='1' d='M-450 130 C -338 70 -112 190 0 130 S 338 70 450 130 S 788 190 900 130 S 1238 70 1350 130'/%3E%3Cpath stroke-width='15' stroke-opacity='0.42' d='M-450 312 C -338 372 -112 252 0 312 S 338 372 450 312 S 788 252 900 312 S 1238 372 1350 312'/%3E%3C/g%3E%3C/svg%3E");
+  -webkit-mask-size: 900px 560px;
+  mask-size: 900px 560px;
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  /* Extended one whole tile to the LEFT, because this layer travels right and
+   * that is the edge which would otherwise be uncovered at the end of a cycle.
+   * Bounded in height for the same reason it is extended only on one side: a
+   * blurred layer the full height of a three-thousand-pixel card is a very
+   * large surface to hand a compositor, and Safari is the one that minds. */
+  top: -40px;
+  height: 560px;
+  left: -940px;
+  right: -40px;
   /* Softened and faint. These are light moving behind the card, not artwork
    * drawn on it, and the release notes have to stay comfortable to read. */
   filter: blur(4px);
@@ -8795,7 +8825,7 @@ body.lightbox-open { overflow: hidden; }
   animation: wave-drift-a 46s linear infinite;
 }
 
-/* The far layer: a single wave on a larger tile, drifting the other way and
+/* The far layer: broader waves on a larger tile, drifting the other way and
  * slower, so the two never line up and the pattern never visibly repeats. */
 .page-updates .release.is-landmark::after {
   background: linear-gradient(77deg,
@@ -8803,23 +8833,37 @@ body.lightbox-open { overflow: hidden; }
       color-mix(in srgb, var(--purple, #a371f7) 46%, transparent) 30%,
       color-mix(in srgb, var(--accent) 50%, transparent) 70%,
       transparent 100%);
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='420' viewBox='0 0 1200 420'%3E%3Cg fill='none' stroke='%23000' stroke-width='11' stroke-linecap='round'%3E%3Cpath d='M-600 210 C -450 120 -150 300 0 210 S 450 120 600 210 S 1050 300 1200 210 S 1650 120 1800 210'/%3E%3C/g%3E%3C/svg%3E");
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='420' viewBox='0 0 1200 420'%3E%3Cg fill='none' stroke='%23000' stroke-width='11' stroke-linecap='round'%3E%3Cpath d='M-600 210 C -450 120 -150 300 0 210 S 450 120 600 210 S 1050 300 1200 210 S 1650 120 1800 210'/%3E%3C/g%3E%3C/svg%3E");
-  -webkit-mask-size: 1200px 420px;
-  mask-size: 1200px 420px;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='760' viewBox='0 0 1200 760'%3E%3Cg fill='none' stroke='%23000' stroke-linecap='round'%3E%3Cpath stroke-width='12' stroke-opacity='1' d='M-600 235 C -450 145 -150 325 0 235 S 450 145 600 235 S 1050 325 1200 235 S 1650 145 1800 235'/%3E%3Cpath stroke-width='10' stroke-opacity='0.3' d='M-600 470 C -450 560 -150 380 0 470 S 450 560 600 470 S 1050 380 1200 470 S 1650 560 1800 470'/%3E%3C/g%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='760' viewBox='0 0 1200 760'%3E%3Cg fill='none' stroke='%23000' stroke-linecap='round'%3E%3Cpath stroke-width='12' stroke-opacity='1' d='M-600 235 C -450 145 -150 325 0 235 S 450 145 600 235 S 1050 325 1200 235 S 1650 145 1800 235'/%3E%3Cpath stroke-width='10' stroke-opacity='0.3' d='M-600 470 C -450 560 -150 380 0 470 S 450 560 600 470 S 1050 380 1200 470 S 1650 560 1800 470'/%3E%3C/g%3E%3C/svg%3E");
+  -webkit-mask-size: 1200px 760px;
+  mask-size: 1200px 760px;
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  /* Travels left, so the spare tile goes on the right. */
+  top: -40px;
+  height: 760px;
+  left: -40px;
+  right: -1240px;
   filter: blur(3px);
   opacity: 0.1;
   animation: wave-drift-b 71s linear infinite;
 }
 
-/* One full tile per cycle, so the loop has no seam. */
+/* One full tile per cycle, so the loop has no seam.
+ *
+ * These translate the LAYER rather than the mask inside it. The result is
+ * identical, because the mask repeats and a shift of exactly one tile lands on
+ * the same picture, but the cost is not: mask-position is a paint property, so
+ * animating it made Safari re-run the blur over the whole layer on every
+ * frame, which is why this was smooth in Chrome and crawled in Safari.
+ * transform is handled by the compositor, so the layer is rasterized once. */
 @keyframes wave-drift-a {
-  from { -webkit-mask-position: 0 0;          mask-position: 0 0; }
-  to   { -webkit-mask-position: 900px -300px;  mask-position: 900px -300px; }
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(900px, 0, 0); }
 }
 @keyframes wave-drift-b {
-  from { -webkit-mask-position: 0 0;           mask-position: 0 0; }
-  to   { -webkit-mask-position: -1200px -420px; mask-position: -1200px -420px; }
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-1200px, 0, 0); }
 }
 
 /* The version number itself. */
@@ -8867,8 +8911,13 @@ body.lightbox-open { overflow: hidden; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .page-updates .release.is-landmark::before { animation: none; opacity: 0.15; }
-  .page-updates .release.is-landmark::after  { animation: none; opacity: 0.09; }
+  .page-updates .release.is-landmark::before,
+  .page-updates .release.is-landmark::after {
+    animation: none;
+    will-change: auto;
+  }
+  .page-updates .release.is-landmark::before { opacity: 0.15; }
+  .page-updates .release.is-landmark::after  { opacity: 0.09; }
   .page-updates .release.is-landmark .release-head h2 { animation: none; }
 }
 

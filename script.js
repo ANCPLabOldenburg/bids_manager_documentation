@@ -37,6 +37,7 @@
   );
 
   // After partials are in the DOM, wire all features below.
+  trackHeaderHeight();
   initThemeToggle();
   highlightActiveNavLink();
   initNavDropdowns();
@@ -1139,6 +1140,37 @@ function initCodeCopy() {
  * the closest-to-top visible one as .is-active. Click already works
  * via plain anchor scrolling.
  * ================================================================== */
+
+/* ====================================================================
+ * Header height, published to CSS
+ *
+ * Anything that has to sit clear of the sticky header used to hardcode how
+ * tall it is. That held until the header started wrapping onto two rows on a
+ * phone, at which point the page index's toggle button ended up behind it and
+ * could not be tapped at all. Measuring it once and publishing the number
+ * means the two can no longer disagree, whatever the header grows into.
+ * ================================================================== */
+
+function trackHeaderHeight() {
+  const header = document.querySelector(".site-header");
+  if (!header) return;
+
+  const publish = () => {
+    const h = Math.round(header.getBoundingClientRect().height);
+    if (h > 0) document.documentElement.style.setProperty("--header-h", h + "px");
+  };
+
+  publish();
+  /* The header changes height when the nav wraps, which happens on resize and
+   * also once the web font lands and the links change width. */
+  if ("ResizeObserver" in window) {
+    new ResizeObserver(publish).observe(header);
+  } else {
+    window.addEventListener("resize", publish, { passive: true });
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(publish);
+}
+
 
 function initPageToc() {
   const toc = document.querySelector(".page-toc");
