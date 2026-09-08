@@ -26,7 +26,7 @@
       <nav id="page-toc-panel" class="page-toc-panel" aria-label="Versions">
         <span class="page-toc-title">Jump to a version</span>
         <a class="page-toc-link" href="#v126">
-          <span class="page-toc-dot" aria-hidden="true"></span>1.2.6</a>
+          <span class="page-toc-dot" aria-hidden="true"></span>1.2.6 - 1.2.6.1</a>
         <a class="page-toc-link" href="#v125">
           <span class="page-toc-dot" aria-hidden="true"></span>1.2.5</a>
         <a class="page-toc-link" href="#v1242">
@@ -78,8 +78,12 @@
 
         <!-- ============ 1.2.6 ============ -->
         <div class="release reveal is-latest is-landmark" id="v126">
+          <!-- The card covers both versions, so it answers to both anchors:
+               the in-app "What changed" link builds one from the version that
+               is installed. -->
+          <span class="release-alias" id="v1261" aria-hidden="true"></span>
           <div class="release-head">
-            <h2>1.2.6</h2>
+            <h2>1.2.6 - 1.2.6.1</h2>
             <span class="release-date">September 2026</span>
             <span class="release-badge is-landmark-badge">Major release</span>
           </div>
@@ -272,6 +276,48 @@
             <li>
               <strong>One project's metadata stays inside that project.</strong>
               Answers given for one dataset no longer follow you into the next.
+            </li>
+            <li>
+              <strong>Windows: the settled metadata block is filled in
+              again.</strong> On Windows, "Already answered by the conversion"
+              came up empty for every MRI kind, while the same dataset filled it
+              on macOS and Linux. The values were never missing from the data.
+              The pass that measures them works inside a folder whose path could
+              run past the length Windows allows, and the converter does not
+              fail gracefully there: it stops without a message, and a
+              measurement nobody could take looked the same as a measurement
+              there was nothing to take. Those paths are now short and of fixed
+              length. If that block came up empty for you, rescanning fills it.
+            </li>
+            <li>
+              <strong>Windows: the converter is found however you started the
+              application.</strong> The dcm2niix that ships with the Python
+              package carries a different name on Windows, and BIDS Manager
+              looked only for the other one. Started from an activated
+              environment a fallback found it anyway; started from a desktop
+              shortcut or a bundled interpreter it did not, and both the
+              classifier that proposes BIDS names and the pass that measures
+              metadata were skipped without saying so.
+            </li>
+            <li>
+              <strong>A series whose output does not name itself is no longer
+              dropped.</strong> On some acquisitions, a Siemens XA30 localiser
+              among them, the converter writes an identifier into the sidecar
+              that does not match the one the series carries. Those outputs
+              belonged to no row and their measurements were lost. Each is now
+              attributed to the series it was actually converted from.
+            </li>
+            <li>
+              <strong>A dropdown inside a folded section is wide enough to
+              read.</strong> A menu field sized itself while it was still
+              hidden, so a value the conversion had answered could appear as a
+              stub too narrow to show its own text.
+            </li>
+            <li>
+              <strong>A path too long for Windows now says so.</strong> The one
+              failure that produced no message at all now reports the limit and
+              the length of the path that exceeded it, so the next time it
+              happens it is a message rather than a silence.
             </li>
           </ul>
           <p class="rel-kind k-note">Changed</p>

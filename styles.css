@@ -8084,6 +8084,13 @@ body.lightbox-open { overflow: hidden; }
   margin: 0 0 22px;
   scroll-margin-top: 90px;
 }
+/* A card that covers more than one version answers to an anchor per version,
+   so the in-app link lands on the card whichever one is installed. Needs the
+   same offset as the card, or the sticky header covers the heading. */
+.page-updates .release-alias {
+  display: block;
+  scroll-margin-top: 90px;
+}
 .page-updates .release.is-latest {
   border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
   box-shadow: 0 0 0 1px var(--glow-accent);
