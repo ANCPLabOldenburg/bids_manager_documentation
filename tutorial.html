@@ -1382,20 +1382,95 @@
           until the metadata step applies them, which means you can change your
           mind freely, and re-run a conversion without losing them.
         </p>
-        <figure class="media-figure">
-          <img class="feature-shot" loading="lazy"
-               alt="The properties panel for one recording, with its own metadata fields"
-               src="assets/features/eeg_properties_dark.png"
-               data-light="assets/features/eeg_properties_light.png">
-          <figcaption>
-            <strong>The same questions, scoped to one row.</strong> The panel is
-            built from the schema for the selected recording, so it asks exactly
-            what the dataset template asks, for this file alone. A blank field
-            inherits the study answer; a filled one overrides it. The greyed
-            values are the inherited ones, and their tooltip names where they came
-            from.
-          </figcaption>
-        </figure>
+        <h3>The same panel, on four kinds of recording</h3>
+        <p>
+          The panel is built from the schema for whatever row you selected, so
+          it asks a different set of questions on each one. What stays the same
+          is the shape: the entities that make the name, the path they produce,
+          then the metadata, with the questions every modality shares kept
+          separate from the ones only this modality has.
+        </p>
+
+        <div class="tabs" data-tabs>
+          <div class="tab-buttons" role="tablist" aria-label="The per-recording panel by modality">
+            <button class="tab-btn is-active" data-tab="p-mri"
+                    role="tab" aria-selected="true">MRI</button>
+            <button class="tab-btn" data-tab="p-eeg"
+                    role="tab" aria-selected="false">EEG</button>
+            <button class="tab-btn" data-tab="p-meg"
+                    role="tab" aria-selected="false">MEG</button>
+            <button class="tab-btn" data-tab="p-pet"
+                    role="tab" aria-selected="false">PET</button>
+          </div>
+
+          <div class="tab-panel is-active" data-panel="p-mri" role="tabpanel">
+            <figure class="media-figure">
+              <img class="feature-shot" loading="lazy"
+                   alt="The properties panel on an anatomical run: entity fields, the predicted path, and a scanner warning"
+                   src="assets/features/mri_properties_dark.png"
+                   data-light="assets/features/mri_properties_light.png">
+              <figcaption>
+                <strong>On MRI the work is the naming.</strong> Datatype and
+                suffix at the top, then every entity the standard allows for
+                this kind of file, with a red asterisk on the ones it requires.
+                Underneath, the path this row will produce, which updates as you
+                type, and any message the scan raised about it. Here the scan is
+                telling you that this folder held more than one study, which is
+                worth knowing before you convert it as though it were one.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="tab-panel" data-panel="p-eeg" role="tabpanel">
+            <figure class="media-figure">
+              <img class="feature-shot" loading="lazy"
+                   alt="The properties panel on an EEG recording, showing the reference and montage section"
+                   src="assets/features/eeg_properties_dark.png"
+                   data-light="assets/features/eeg_properties_light.png">
+              <figcaption>
+                <strong>On EEG the work is the metadata.</strong> Below the
+                entities, the same reference, ground, mains frequency and
+                montage the dataset template asks for, scoped to this recording
+                alone. A blank field inherits the study answer and is shown
+                greyed with a tooltip naming where it came from; typing in it
+                overrides the study answer for this file only.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="tab-panel" data-panel="p-meg" role="tabpanel">
+            <figure class="media-figure">
+              <img class="feature-shot" loading="lazy"
+                   alt="The properties panel on a MEG recording, with the predicted path, a valid entity set and the shared metadata region"
+                   src="assets/features/meg_properties_dark.png"
+                   data-light="assets/features/meg_properties_light.png">
+              <figcaption>
+                <strong>The schema checks as you go.</strong> The green line
+                confirms that the entity set is one the standard permits for a
+                MEG recording, and it turns red the moment it is not, before
+                anything has been written. Below it the panel separates the
+                questions every modality shares, the participant and the
+                companion files, from the ones only MEG has.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="tab-panel" data-panel="p-pet" role="tabpanel">
+            <figure class="media-figure">
+              <img class="feature-shot" loading="lazy"
+                   alt="The properties panel on a PET run, with the tracer, radionuclide and dosage fields for this scan"
+                   src="assets/features/pet_properties_dark.png"
+                   data-light="assets/features/pet_properties_light.png">
+              <figcaption>
+                <strong>Where one scan differs from the rest.</strong> PET is
+                the modality where per-recording overrides earn their keep: a
+                study can share a tracer and a reconstruction and still have one
+                subject injected with a different dose. Answer the dose once for
+                the study and correct it here for the one scan it is wrong for.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
 
       </div>
     </section>

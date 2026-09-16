@@ -429,6 +429,33 @@ def properties_eeg(app, theme: str) -> None:
           expand=True, scroll_to="REFERENCE")
 
 
+def properties_mri(app, theme: str) -> None:
+    """The per-row panel on an MRI run: entities first, then the sidecar.
+
+    The per-file level of the template, on the modality where most of it is
+    already answered. What the panel asks for here is the naming, not the
+    metadata, which is the opposite of the EEG case beside it.
+    """
+    df = _read("multimodal")
+    row = df[df["proposed_datatype"] == "anat"].head(1)
+    if row.empty:
+        print("  (no anat row; skipping)")
+        return
+    _grab(app, _panel(row), OUT / f"mri_properties_{theme}.png", 470, 780,
+          expand=True)
+
+
+def properties_meg(app, theme: str) -> None:
+    """The per-row panel on a MEG recording."""
+    df = _read("multimodal")
+    row = df[df["proposed_datatype"] == "meg"].head(1)
+    if row.empty:
+        print("  (no meg row; skipping)")
+        return
+    _grab(app, _panel(row), OUT / f"meg_properties_{theme}.png", 470, 800,
+          expand=True, scroll_to="ACQUISITION")
+
+
 def properties_companions(app, theme: str) -> None:
     """The companion-file section, which is on EVERY row, not just EEG or PET.
 
@@ -1563,6 +1590,8 @@ ASSETS = {
     "properties-pet": properties_pet,
     "properties-blood": properties_blood,
     "properties-eeg": properties_eeg,
+    "properties-mri": properties_mri,
+    "properties-meg": properties_meg,
     "properties-companions": properties_companions,
     "inventory-eeg": inventory_eeg,
     "inventory-meg": inventory_meg,
