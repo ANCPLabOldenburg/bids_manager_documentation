@@ -437,7 +437,7 @@
             <tbody>
               <tr><td><code class="inline">EEGReference</code></td><td>Required. Which electrode the signal is referenced to. A converter cannot know, so most write <code class="inline">"n/a"</code>, which satisfies a validator while telling the reader something false.</td></tr>
               <tr><td><code class="inline">EEGGround</code></td><td>Required, and equally invisible in the file.</td></tr>
-              <tr><td><code class="inline">PowerLineFrequency</code></td><td>Required. 50 or 60: a property of the building rather than the recording. You do not have to guess, see below.</td></tr>
+              <tr><td><code class="inline">PowerLineFrequency</code></td><td>Required. 50 or 60: a property of the building rather than the recording, so nothing in the file states it. Answer it here or it is written as <code class="inline">n/a</code>. You do not have to guess, see below.</td></tr>
               <tr><td><code class="inline">Manufacturer</code>, <code class="inline">ManufacturersModelName</code></td><td>Recommended. The suggestion read from the header is offered first in the list.</td></tr>
               <tr><td><code class="inline">CapManufacturer</code>, <code class="inline">CapManufacturersModelName</code></td><td>Recommended. Never in the data.</td></tr>
               <tr><td><code class="inline">SoftwareFilters</code>, hardware filter settings</td><td>What was applied during acquisition, which changes how the signal should be interpreted.</td></tr>
@@ -462,6 +462,25 @@
             asked once further up.
           </figcaption>
         </figure>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Nobody guesses this for you, and that is deliberate.</strong>
+            <p>
+              If no one states the mains frequency, the sidecar is written with
+              <code class="inline">PowerLineFrequency</code> set to
+              <code class="inline">n/a</code>, and validation reports it as
+              missing until you answer. Earlier versions filled in 50, which is
+              right in Europe and wrong everywhere the mains runs at 60, and a
+              confidently wrong number is worse than a visible blank: a blank
+              gets noticed and corrected, whereas 50 in a sidecar reads as a
+              measurement somebody made. Set it once in
+              <strong>Dataset metadata</strong> and every recording in the
+              study inherits it.
+            </p>
+          </div>
+        </div>
 
         <h3>Read the mains frequency out of your own data</h3>
         <p>

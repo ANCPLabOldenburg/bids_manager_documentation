@@ -130,9 +130,13 @@
           <span class="page-toc-dot" aria-hidden="true"></span>
           16. Validate
         </a>
+        <a class="page-toc-link page-toc-sub" href="#step-restructure">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          17. Correct the shape
+        </a>
         <a class="page-toc-link page-toc-sub" href="#step-finish">
           <span class="page-toc-dot" aria-hidden="true"></span>
-          17. Fix and finish
+          18. Fix and finish
         </a>
         </div>
       </div>
@@ -454,7 +458,7 @@
           <span class="section-eyebrow">GUI walkthrough</span>
           <h2 class="section-title">The GUI walkthrough, step by step.</h2>
           <p class="section-lead">
-            Seventeen steps, from an empty window to a validated dataset. The
+            Eighteen steps, from an empty window to a validated dataset. The
             steps are the same for every modality; where a modality genuinely
             differs, the step carries a tab for it. Each step is listed
             separately in the page navigation, so you can come back to one of
@@ -1482,11 +1486,12 @@
 
         <p>
           The window has three parts. On the left, the <strong>BIDS tree</strong>
-          of your dataset, with a coloured dot on every file showing its worst
-          finding: green for clean, amber for a warning, red for an error. In
-          the centre, whatever you have selected, opened in the right viewer
-          for its type. On the right, the <strong>validation pane</strong>
-          listing findings for the dataset, the folder and the selected file.
+          of your dataset, with every row carrying how many findings are inside
+          it: warnings in amber, errors in red, a green tick where there is
+          nothing to report. In the centre, whatever you have selected, opened
+          in the right viewer for its type. On the right, the
+          <strong>validation pane</strong> listing findings for the dataset, the
+          folder and the selected file.
         </p>
 
         <p>
@@ -1503,27 +1508,28 @@
           <figcaption>
             <strong>The Editor, in one frame.</strong> The toolbar validates at
             three scopes and carries the <strong>Deep checks</strong> toggle and
-            the severity chips, here reading 8 valid, 149 warnings and
-            <strong>0 errors</strong> on a finished four-modality dataset. Below
-            it, the three panes: the BIDS tree with a status dot per file, the
-            viewer showing whatever you selected, and the validation pane listing
-            findings for the dataset, the folder and the file. Clicking a chip
+            the severity chips, which summarise the whole dataset in three
+            numbers. Below it, the three panes: the BIDS tree with the findings
+            counted on every row, the viewer showing whatever you selected, and
+            the validation pane listing findings for the dataset, the folder and
+            the file, each with the schema rule it came from. Clicking a chip
             opens the list of files carrying that severity.
           </figcaption>
         </figure>
 
         <figure class="media-figure">
           <img class="feature-shot" loading="lazy"
-               alt="The Editor's BIDS tree with a coloured status dot on every file and folder"
+               alt="The Editor's BIDS tree with the number of errors and warnings on every file and folder"
                src="assets/features/editor_tree_dark.png"
                data-light="assets/features/editor_tree_light.png">
           <figcaption>
-            <strong>The tree tells you where to look.</strong> Every file carries
-            a dot, and a folder carries the worst dot beneath it, so a problem
-            anywhere in a dataset can be followed down from the top without
-            opening anything. Here there is nothing red to follow: amber is a
-            recommended field nobody stated, green is a file with nothing to
-            report at all.
+            <strong>The tree tells you where to look, and how much.</strong>
+            Every file carries how many findings are inside it, amber for
+            warnings and red for errors, with a green tick where there is
+            nothing to report. A folder adds up what it contains rather than
+            showing the worst of it, and says what it holds, so a subject can be
+            read without expanding it. The number is the useful part: one
+            missing recommended field looks nothing like ninety.
           </figcaption>
         </figure>
 
@@ -1923,8 +1929,8 @@
             <strong>Three scopes, one pane.</strong> Reading from the top: what is
             wrong with the dataset, what is wrong with this folder, what is wrong
             with this file. The tree on the left carries the same information as a
-            coloured dot per file, so you can find the problem files without
-            clicking through every one.
+            count per file, so you can find the problem files, and the worst of
+            them, without clicking through every one.
           </figcaption>
         </figure>
 
@@ -2127,16 +2133,157 @@
     </section>
 
     <!-- ============================================================
-         Step 17. Fix, re-validate, and finish
+         Step 17. Correct the shape, if it is wrong
+         ============================================================ -->
+    <section class="section" id="step-restructure">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Step 17</span>
+        <h2>Correct the shape, if it is wrong</h2>
+        <p>
+          Some problems are not a value in a file. A task label is wrong on
+          forty recordings, one participant's scans were never put into a
+          session although everybody else's were, a pilot run should not have
+          been converted at all. These are changes to the shape of the dataset,
+          and they live under <strong>Tools</strong> in the Editor toolbar, or
+          on a right-click in the tree.
+        </p>
+
+        <p>
+          <strong>Moving the files is the easy half.</strong> What breaks a
+          dataset is everything left pointing at what moved: the
+          <code class="inline">*_scans.tsv</code> row naming a path that is
+          gone, the <code class="inline">IntendedFor</code> entry on a fieldmap
+          still pointing at the old image, the
+          <code class="inline">participants.tsv</code> row for a subject who is
+          no longer there. A validator reports none of those as a broken link,
+          because every filename still in the dataset is perfectly valid. Each
+          action below repairs all of it in the same step, and each is one step
+          in the Editor's history, so a single <strong>Undo</strong> takes the
+          whole thing back.
+        </p>
+
+        <h3>Try it on this dataset</h3>
+        <p>
+          In the sample MRI dataset, <code class="inline">sub-001</code> has two
+          sessions and <code class="inline">sub-002</code> has none, because
+          only one of the two people was scanned twice. That is legal BIDS, but
+          it is awkward to analyse, and most studies would rather every subject
+          had the same shape. So put the second subject into a session:
+        </p>
+        <ol>
+          <li>Click <code class="inline">sub-002</code> in the BIDS tree.</li>
+          <li><strong>Tools</strong>, then <strong>Sessions...</strong>.</li>
+          <li>Type a session label. <code class="inline">pre</code>, to match
+            the other subject.</li>
+          <li>Press <strong>Plan</strong> and read the preview before anything
+            happens.</li>
+        </ol>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The Sessions dialog with a plan made, showing each file's whole destination path and the repairs that follow"
+               src="assets/features/editor_sessions_dark.png"
+               data-light="assets/features/editor_sessions_light.png">
+          <figcaption>
+            <strong>Read the second column.</strong> It shows the whole
+            destination path, not just the new filename, because these files
+            change folder as well as name. Underneath,
+            <em>Follows automatically</em> lists what moves with them: the
+            scans table goes to the level BIDS defines for a dataset that has
+            sessions, and every row inside it is rewritten to the new paths.
+          </figcaption>
+        </figure>
+
+        <p>
+          The preview nests subject, then session, then datatype, then file,
+          the way the dataset is actually shaped, and every file has its own
+          tick box. Acting on part of a selection is a legitimate answer, and
+          the repairs are recomputed for whatever you leave ticked. The
+          repairs themselves cannot be unticked: switching one off would
+          reintroduce exactly the damage the action exists to prevent.
+        </p>
+
+        <h3>The other two</h3>
+        <dl class="def-list">
+          <dt>Add or remove an entity</dt>
+          <dd>
+            The key-value pairs in a BIDS filename are called entities
+            (<code class="inline">task-rest</code>,
+            <code class="inline">acq-highres</code>,
+            <code class="inline">run-2</code>). This adds one a file is
+            permitted to have or removes an optional one it has. The list on
+            offer holds only what the standard allows for that kind of file, so
+            a required entity cannot be taken away and an entity that does not
+            belong cannot be added. The new pair is placed in the standard's
+            own order rather than where you typed it.
+          </dd>
+          <dt>Delete</dt>
+          <dd>
+            Remove a recording, a datatype, a session or a whole subject,
+            together with the scans rows, the
+            <code class="inline">IntendedFor</code> entries, the participants
+            row of a subject with nothing left, and the folders the deletion
+            empties. A scans table is deleted only when nothing it describes
+            survives; otherwise its rows are edited. The dataset root,
+            <code class="inline">dataset_description.json</code> and the change
+            history itself are refused.
+          </dd>
+          <dt>Rename entity</dt>
+          <dd>
+            Change a value everywhere it appears:
+            <code class="inline">task-rest</code> to
+            <code class="inline">task-restingstate</code> across the study, or
+            one subject's label. The sidecar's
+            <code class="inline">TaskName</code> follows the label, but only
+            when the value there really does derive from the old one, so
+            something you wrote by hand is left alone rather than overwritten
+            with a guess.
+          </dd>
+        </dl>
+
+        <div class="callout callout-info">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>On a dataset BIDS Manager did not convert.</strong>
+            <p>
+              The Editor opens any BIDS dataset, but a dataset it has never
+              seen has no record of what it looked like before you arrived, so
+              nothing you do can be taken back. <strong>Tools</strong>, then
+              <strong>Track changes</strong>, reads every file once and writes
+              that starting point. Nothing else in the dataset is touched, and
+              every BIDS tool ignores dot-folders, so validation is unaffected.
+            </p>
+          </div>
+        </div>
+
+        <p><strong>What you should see now:</strong> the tree in its new shape,
+          with the counts on each row updated, because validation re-runs
+          itself after a change of this kind.</p>
+
+        <p class="muted">
+          These four actions are in the application only. There is no command
+          line equivalent, because each one is a decision about a particular
+          dataset that you want to see previewed before it happens, and a flag
+          cannot show you a preview.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Step 18. Fix, re-validate, and finish
          ============================================================ -->
     <section class="section" id="step-finish">
       <div class="container container-narrow prose">
-        <span class="section-eyebrow">Step 17</span>
+        <span class="section-eyebrow">Step 18</span>
         <h2>Fix, re-validate, and finish</h2>
         <p>
           Work down the findings, fixing each where the fix button takes you,
-          then press <strong>Re-validate</strong>. The tree dots and the chips
-          update, and you are finished when the errors are gone.
+          then press <strong>Re-validate</strong>. The counts on the tree and
+          the chips in the toolbar update, and you are finished when the errors
+          are gone. A finding that landed on several files at once has a
+          <strong>Fix in all files</strong> button on its group: it lists every
+          file it fired on with the value each one holds now, so you answer
+          once rather than twelve times.
         </p>
 
         <h3>What "done" looks like</h3>
@@ -2164,12 +2311,12 @@
         </p>
         <figure class="media-figure">
           <img class="feature-shot" loading="lazy"
-               alt="The Editor's BIDS tree with a green status dot on the files that are clean"
+               alt="The Editor's BIDS tree with a green tick on the files that are clean"
                src="assets/features/editor_tree_dark.png"
                data-light="assets/features/editor_tree_light.png">
           <figcaption>
             <strong>Work down the tree.</strong> Re-validating after a fix
-            updates the dots and the chips together, so a file that turns green
+            updates the counts and the chips together, so a file that turns green
             is a file you can stop thinking about. You are finished when the red
             ones are gone; the amber ones are for reading, not for clearing
             blindly.
@@ -2403,7 +2550,9 @@
             and its richer fields fill the sidecar reference / ground /
             filters / device / institution, retype auxiliary channels, and
             map event codes to labels. Optional; omitting it leaves
-            <code class="inline">PowerLineFrequency=50</code> by default.</dd>
+            <code class="inline">PowerLineFrequency</code> as
+            <code class="inline">n/a</code>, since the mains frequency is a
+            property of the building and nothing in the recording states it.</dd>
           <dt><code class="inline">--force-edf</code></dt>
           <dd>Re-encode EEG / iEEG recordings to EDF on write instead of
             keeping the source format. Harmonises a study to one BIDS-native

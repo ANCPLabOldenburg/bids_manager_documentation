@@ -39,7 +39,7 @@
           BIDS Manager opens on the <strong>Home</strong> tab, where you
           create or open a dataset project, and then gives you two working
           views: the <strong>Converter</strong> (raw to BIDS) and the
-          <strong>Editor</strong> (read, fix, validate). Click anything on this
+          <strong>Editor</strong> (read, fix, restructure, validate). Click anything on this
           page to take a closer look, and switch the theme in the header to see
           it in light or dark.
         </p>
@@ -62,8 +62,8 @@
           <div class="mtg-view">
             <figure class="media-figure">
               <img class="feature-shot"
-                   src="assets/gui/home_tab_dark.png"
-                   data-light="assets/gui/home_tab_light.png"
+                   src="assets/features/window_home_dark.png"
+                   data-light="assets/features/window_home_light.png"
                    alt="BIDS Manager Home tab: create a dataset, open an existing one, recent projects"
                    loading="lazy">
             </figure>
@@ -99,8 +99,8 @@
           <div class="mtg-view">
             <figure class="media-figure">
               <img class="feature-shot"
-                   src="assets/gui/converter_tab_dark.png"
-                   data-light="assets/gui/converter_tab_light.png"
+                   src="assets/features/window_converter_dark.png"
+                   data-light="assets/features/window_converter_light.png"
                    alt="BIDS Manager Converter view: raw and output trees, filter, inspection table, properties"
                    loading="lazy">
             </figure>
@@ -144,26 +144,33 @@
                    loading="lazy">
             </figure>
             <div class="mtg-view-text">
-              <h3>Editor: read, fix, validate</h3>
+              <h3>Editor: read, fix, restructure, validate</h3>
               <p>
-                The Editor opens the converted dataset for review and repair.
-                Its toolbar runs validation at three scopes (single file,
-                folder, or whole dataset), with a <em>Deep checks</em>
-                toggle that also opens NIfTI image headers to catch truncated
-                or corrupt files, and severity chips that summarise the current
-                issues.
+                The Editor opens a dataset for review, repair and
+                restructuring, whether BIDS Manager converted it or not. Its
+                toolbar runs validation at three scopes (single file, folder,
+                or whole dataset), with a <em>Deep checks</em> toggle that also
+                opens NIfTI image headers to catch truncated or corrupt files,
+                and severity chips that summarise the current issues. Every
+                change it makes is undoable.
               </p>
               <ul>
-                <li><strong>BIDS tree</strong>: the converted layout with a
-                  status dot per file, green for clean, amber for warnings,
-                  red for errors.</li>
+                <li><strong>BIDS tree</strong>: the layout on disk, with a
+                  count of warnings and errors on every row and a green tick
+                  where a file is clean. Folders add up what they contain.</li>
                 <li><strong>Centre viewer</strong>: routes by file type, a
                   schema-aware form for JSON sidecars, an editable table for
                   TSVs, the Multi-Planar view for NIfTI, and an interactive signal
                   viewer for MEG / EEG / iEEG recordings.</li>
                 <li><strong>Validation pane</strong>: the issue list by
-                  severity; click an item to jump straight to the file that
-                  triggered it.</li>
+                  severity, with the schema rule each one came from; click an
+                  item to jump straight to the file that triggered it, or fix
+                  one finding across every file it fired on.</li>
+                <li><strong>Tools</strong>: a dashboard of what the dataset
+                  contains, dataset-wide repairs, and the actions that change
+                  its shape, adding or removing an entity, creating or
+                  dissolving a session, and deleting with every reference
+                  repaired.</li>
               </ul>
             </div>
           </div>
@@ -462,18 +469,20 @@
               </figure>
             </div>
             <div class="media-block">
-              <h4>Convert &amp; post-convert settings</h4>
+              <h4>What happens after the conversion</h4>
               <figure class="media-figure">
                 <img class="feature-shot"
-                     src="assets/features/settings_convert_and_post_convert_dark.png"
-                     data-light="assets/features/settings_convert_and_post_convert_light.png"
-                     alt="Convert and post-convert settings"
+                     src="assets/features/settings_convert_tab_dark.png"
+                     data-light="assets/features/settings_convert_tab_light.png"
+                     alt="The Convert and post-convert tab of the Settings dialog, with the post-conversion chain as an indented list"
                      loading="lazy">
                 <figcaption>
-                  Configure the number of parallel workers, residual
-                  handling, Force-EDF re-encoding, and the post-conversion
-                  chain, metadata enrichment, fix-ups, and validation,
-                  laid out as an indented hierarchy you can toggle.
+                  Conversion does not stop at writing the files. The chain
+                  underneath it fills the metadata, validates the result and
+                  writes a report, and it is all on by default, so pressing Run
+                  once gives you a converted and checked dataset. Every step
+                  can be switched off, and the rest of this dialog is covered
+                  in <a href="#settings">Settings</a> below.
                 </figcaption>
               </figure>
             </div>
@@ -609,9 +618,8 @@
                   The fast pass checks naming, entities, sidecar fields, TSV
                   columns and associations. <em>Deep checks</em> additionally
                   opens NIfTI image headers to catch truncated or corrupt
-                  files. Findings are
-                  listed by severity and the tree's per-file status dots
-                  update to match.
+                  files. Findings are listed by severity, and the counts on
+                  the tree update to match.
                 </figcaption>
               </figure>
             </div>
@@ -647,13 +655,257 @@
                 </figcaption>
               </figure>
             </div>
+            <div class="media-block">
+              <h4>Reading the tree at a glance</h4>
+              <figure class="media-figure">
+                <img class="feature-shot" loading="lazy"
+                     alt="The BIDS tree with a count of errors and warnings on every row"
+                     src="assets/features/editor_tree_dark.png"
+                     data-light="assets/features/editor_tree_light.png">
+                <figcaption>
+                  Every row carries how many findings are inside it: warnings
+                  in amber, errors in red, and a green tick where a file was
+                  checked and is clean. Folders add up what they contain rather
+                  than showing the worst of it, and say what they hold
+                  (<code class="inline">3 ses, 33 files</code>), so a subject
+                  can be read without expanding it. The number is the useful
+                  part. A mark that only says "something is wrong in here" is
+                  where a search begins, whereas a subject with one missing
+                  recommended field is visibly different from one with ninety.
+                </figcaption>
+              </figure>
+            </div>
           </div>
         </div>
 
-        <!-- 7. Settings -->
-                <div class="media-group">
+        <!-- 7. Understand a dataset before you change it -->
+        <div class="media-group">
           <div class="media-group-head">
-            <h3>7. Settings</h3>
+            <h3>7. Understand a dataset before you change it</h3>
+            <p>Two questions come before any edit: what is actually in here,
+              and can I take back what I do next. Both live under
+              <strong>Tools</strong> in the Editor toolbar.</p>
+          </div>
+          <div class="media-grid cols-2">
+            <div class="media-block">
+              <h4>The Dashboard</h4>
+              <figure class="media-figure">
+                <img class="feature-shot" loading="lazy"
+                     alt="The Dashboard: what the dataset contains, counted per subject and per datatype"
+                     src="assets/features/editor_dashboard_dark.png"
+                     data-light="assets/features/editor_dashboard_light.png">
+                <figcaption>
+                  What this dataset contains, how evenly it is filled, and
+                  where the work is. It answers the question you have on
+                  opening a dataset somebody else made, or returning to your
+                  own after a month, which the file tree cannot answer because
+                  the answer is a shape across hundreds of files: how much of
+                  the metadata each modality has answered, which subject is
+                  the odd one out, which rule accounts for most of the
+                  findings, and whether the files a reader opens first are
+                  there at all. It reports <strong>counts, not scores</strong>.
+                  "29 of 76 declared fields are answered" can be checked
+                  against the files; a completeness percentage can only be
+                  believed.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Track changes on a dataset you did not make</h4>
+              <figure class="media-figure">
+                <img class="feature-shot" loading="lazy"
+                     alt="The Tools menu in the Editor, listing Dashboard, Fix ups, the restructuring actions and Track changes"
+                     src="assets/features/editor_tools_menu_dark.png"
+                     data-light="assets/features/editor_tools_menu_light.png">
+                <figcaption>
+                  Everything on this page lives in one menu. The last entry
+                  matters if the dataset came from somewhere else: there is no
+                  record of what it looked like before you arrived, so nothing
+                  you do can be taken back. <strong>Track changes</strong>
+                  reads every file once and writes that starting point into a
+                  <code class="inline">.bidsmgr</code> folder. Nothing else in
+                  the dataset is touched, and every BIDS tool ignores
+                  dot-folders, so validation is unaffected. The entry
+                  disappears once a dataset is tracked.
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8. Fix many files at once -->
+        <div class="media-group">
+          <div class="media-group-head">
+            <h3>8. Fix many files at once</h3>
+            <p>A problem is rarely in one file. Fixing it once and being asked
+              which of the other eleven should get the same answer is the
+              difference between a tool and a text editor.</p>
+          </div>
+          <div class="media-grid cols-2">
+            <div class="media-block">
+              <h4>Fix in all files</h4>
+              <figure class="media-figure">
+                <img class="feature-shot" loading="lazy"
+                     alt="One finding and the twelve files it fired on, each showing its current value and what it would become"
+                     src="assets/features/editor_fix_all_dark.png"
+                     data-light="assets/features/editor_fix_all_light.png">
+                <figcaption>
+                  Findings in the validation pane are grouped by what is wrong
+                  rather than by file, and a group that names a field carries a
+                  <em>Fix in all files</em> button. A count on its own would not
+                  be enough to act on: "12 files" says how many, not which, and
+                  not what each one says now. So every candidate is listed with
+                  its current value and what it would become, ticked only where
+                  the value would actually change, and nothing is written until
+                  you press Apply. The whole batch is a single step in the
+                  Editor's history, so one Undo takes all twelve back.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Fix ups</h4>
+              <figure class="media-figure">
+                <img class="feature-shot" loading="lazy"
+                     alt="The Fix ups dialog: readiness checks, missing companion files, a citation file, repeated metadata and unanswered metadata"
+                     src="assets/features/editor_fixups_dark.png"
+                     data-light="assets/features/editor_fixups_light.png">
+                <figcaption>
+                  Five repairs that apply to the dataset as a whole. At the top,
+                  <strong>whether it is fit to hand to somebody else</strong>,
+                  which is not the same question as whether it is legal BIDS: is
+                  anybody named as an author, is a licence stated, is there a
+                  README worth reading. Then the <strong>tables and sidecars the
+                  standard associates with a recording</strong> but that are not
+                  there, each listed with what would be written into it. Then a
+                  <code class="inline">CITATION.cff</code> generated from the
+                  dataset description. Then <strong>repeated metadata</strong>:
+                  a field every file in a group states identically belongs once,
+                  higher up, where BIDS inheritance applies it to all of them,
+                  and only fields that are identical everywhere are offered, so
+                  moving one cannot change what any file says. Last,
+                  <strong>unanswered metadata</strong>, which writes the literal
+                  <code class="inline">TODO</code> into missing fields so an
+                  absence is visible in the file and reported by validation
+                  rather than going unnoticed. Nothing is applied until you
+                  press its own button, and each one is a single undoable step.
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9. Change the shape of a dataset -->
+        <div class="media-group">
+          <div class="media-group-head">
+            <h3>9. Change the shape of a dataset</h3>
+            <p>Sooner or later a converted dataset is the wrong shape. A task
+              label is wrong on forty files, two scanning visits were never
+              recorded as sessions, a pilot run should not have been converted
+              at all.</p>
+            <p><strong>Moving the files is the easy half.</strong> What
+              actually breaks a dataset is everything left pointing at what
+              moved: the <code class="inline">*_scans.tsv</code> row naming a
+              path that is gone, the
+              <code class="inline">IntendedFor</code> entry pointing at a
+              renamed image, the
+              <code class="inline">participants.tsv</code> row for a subject
+              that no longer exists. A validator does not report any of those
+              as a broken link, so a dataset can be quietly wrong for years.
+              Each of the actions below repairs all of it, and each is
+              <strong>one undoable step</strong>.</p>
+          </div>
+          <div class="media-grid cols-2">
+            <div class="media-block">
+              <h4>Add or remove an entity</h4>
+              <figure class="media-figure">
+                <img class="feature-shot" loading="lazy"
+                     alt="Adding an acquisition label to a functional run, with the plan already previewed"
+                     src="assets/features/editor_entities_dark.png"
+                     data-light="assets/features/editor_entities_light.png">
+                <figcaption>
+                  The key-value pairs in a BIDS filename are called entities,
+                  and this adds one a file is permitted to have, or removes an
+                  optional one it already has. The list of entities on offer is
+                  short on purpose: it holds only what the standard allows for
+                  this kind of file, so there is no
+                  <code class="inline">echo</code> on an EEG recording, and a
+                  required entity cannot be taken away. The new pair is placed
+                  in the order the standard defines rather than where you typed
+                  it. Sidecars, event tables and channel tables travel with
+                  their recording.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Create or dissolve a session</h4>
+              <figure class="media-figure">
+                <img class="feature-shot" loading="lazy"
+                     alt="Creating a session, with the preview showing the whole destination path for each file"
+                     src="assets/features/editor_sessions_dark.png"
+                     data-light="assets/features/editor_sessions_light.png">
+                <figcaption>
+                  A session is an ordinary entity that happens to name a
+                  folder, so creating one is the same operation as adding any
+                  other label, and the folder follows from the standard rather
+                  than from anything you have to type. The preview shows the
+                  whole destination path, because these files change folder and
+                  not only filename, and the scans table moves to the level
+                  BIDS defines for a dataset that has sessions. Dissolving a
+                  session is the same thing in reverse.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Delete, with the references repaired</h4>
+              <figure class="media-figure">
+                <img class="feature-shot" loading="lazy"
+                     alt="Deleting an anatomy folder, with the repairs that follow listed underneath"
+                     src="assets/features/editor_delete_dark.png"
+                     data-light="assets/features/editor_delete_light.png">
+                <figcaption>
+                  Remove a recording, a datatype, a session or a whole subject.
+                  <em>Follows automatically</em> is the part worth reading: the
+                  scans rows that named those files, the
+                  <code class="inline">IntendedFor</code> entries pointing at
+                  them, the participants row of a subject with nothing left,
+                  and the folders the deletion empties. A scans table is
+                  removed only when nothing it describes survives; otherwise it
+                  is edited instead. The dataset root,
+                  <code class="inline">dataset_description.json</code> and the
+                  change history itself are refused.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Choose file by file, and see what follows</h4>
+              <figure class="media-figure">
+                <img class="feature-shot" loading="lazy"
+                     alt="The preview tree nested by subject, session and datatype, with one file unticked and its folders shown part-selected"
+                     src="assets/features/editor_move_preview_dark.png"
+                     data-light="assets/features/editor_move_preview_light.png">
+                <figcaption>
+                  All three of those, and <em>Rename entity</em> alongside
+                  them, preview into this same tree, nested the way the dataset
+                  is actually shaped: subject, then session, then datatype,
+                  then file. The one pictured is a rename of a task label. Every file has its own tick box, and the
+                  folders above a part-ticked one show that they are part
+                  ticked, so acting on some of a selection is a legitimate
+                  answer. Here one channels table is left out, the counter
+                  reads nine of ten, and the references are recalculated for
+                  the nine that are actually going. The repairs that follow are
+                  listed underneath and cannot be unticked, because switching
+                  one off would reintroduce exactly the damage the action
+                  exists to prevent.
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10. Settings -->
+        <div class="media-group" id="settings">
+          <div class="media-group-head">
+            <h3>10. Settings</h3>
             <p>Sensible defaults out of the box, so you can convert a dataset
               without opening this at all. The gear in the header opens seven
               tabs; everything in them is remembered between sessions, and
@@ -778,8 +1030,8 @@
                   scanned</em> bounds how far into a long table the column and value
                   checks read, which keeps validation fast on large datasets.
                   <em>Show findings</em> filters the Validation pane to errors, warnings
-                  or both, so you can work errors first; the tree dots and the counters
-                  always show the full picture regardless. <em>Flag TODO placeholder
+                  or both, so you can work errors first; the counts on the tree and
+                  the chips always show the full picture regardless. <em>Flag TODO placeholder
                   values</em> is a BIDS Manager convention rather than part of the
                   standard, on by default; turning it off gives counts identical to the
                   standalone bidsval engine. The <em>Deep checks</em> toggle is not here:

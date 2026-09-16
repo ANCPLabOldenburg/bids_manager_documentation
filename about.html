@@ -352,9 +352,11 @@
         <p>
           A conversion that crashes is an inconvenience, and you fix it. The
           costly ones are the conversions that succeed, produce a dataset that
-          looks correct, and are wrong. Every failure below is real, every one
-          is silent by default, and each is grouped under the modality it
-          happens to. The first group happens to all of them.
+          looks correct, and are wrong. Every failure below is real and every
+          one is silent by default. They are grouped by where they happen: the
+          first group to any modality, then the three that are particular to
+          MRI, to electrophysiology and to PET, and a last group that happens
+          later, when a finished dataset is changed.
         </p>
 
         <div class="risk-list">
@@ -613,6 +615,68 @@
             </p>
           </article>
 
+          <div class="risk-group mod-all"><h3>After conversion, when you change something</h3></div>
+
+          <article class="risk-card mod-all">
+            <span class="risk-tag">Left behind</span>
+            <h3>A table still listing a file that moved</h3>
+            <p>
+              Rename a task, put a datatype into a session, delete a pilot run.
+              The files change; the things that named them do not. The
+              <code class="inline">*_scans.tsv</code> row still lists the old
+              path, the <code class="inline">IntendedFor</code> entry on a
+              fieldmap still points at the old image, the
+              <code class="inline">participants.tsv</code> row is still there
+              for a subject who is not. Every filename left in the dataset is
+              valid, so the dataset passes, and the fieldmap is simply never
+              applied to anything.
+            </p>
+            <p class="risk-answer">
+              BIDS Manager treats the reference as part of the operation rather
+              than as follow-up work. Renaming, restructuring and deleting each
+              repair the scans tables, the sidecar fields the standard defines
+              as holding a path, the participants and sessions rows, and the
+              folders left empty, as one step that can be undone as one step.
+            </p>
+          </article>
+
+          <article class="risk-card mod-all">
+            <span class="risk-tag">Contradicted</span>
+            <h3>A task name that no longer matches its own label</h3>
+            <p>
+              <code class="inline">TaskName</code> inside the sidecar is
+              supposed to be the readable form of the
+              <code class="inline">task-</code> label in the filename. Rename
+              the label and the sidecar keeps the old name, so the file says
+              one thing and the folder says another. No validator compares the
+              two, and the wrong one is the one most analysis code reads.
+            </p>
+            <p class="risk-answer">
+              BIDS Manager follows the rename into the sidecar, but only when
+              the value there really does derive from the old label. A
+              <code class="inline">TaskName</code> somebody wrote by hand is
+              left alone rather than overwritten with a guess.
+            </p>
+          </article>
+
+          <article class="risk-card mod-all">
+            <span class="risk-tag">Half-rewritten</span>
+            <h3>A link whose folder and filename disagree</h3>
+            <p>
+              The standard lets one file point at another with a URI such as
+              <code class="inline">bids::sub-001/anat/sub-001_T1w.nii.gz</code>,
+              where the subject appears twice, once as a folder and once inside
+              the name. Rename the subject and a tool that rewrites only the
+              part it recognises leaves a link whose two halves name different
+              people. It resolves to nothing, and it is not reported.
+            </p>
+            <p class="risk-answer">
+              BIDS Manager reads the link as a path rather than as text, so
+              both halves are rewritten together, in all three of the spellings
+              BIDS uses for pointing at a file.
+            </p>
+          </article>
+
         </div>
       </div>
     </section>
@@ -840,8 +904,9 @@
             <strong>Enrich</strong> fills the sidecar fields that can be filled,
             from the captured metadata, your template answers and the schema,
             and repairs what the engines leave incomplete.
-            <strong>Fix-ups</strong> is the manual stage: you open the Editor
-            and settle what no algorithm could infer.
+            <strong>Fix-ups</strong> is the manual stage: you open the Editor,
+            settle what no algorithm could infer, and correct anything about the
+            dataset's shape that turned out wrong.
             <strong>Validate</strong> audits the result against the schema.
             <strong>BIDS</strong> is the finished dataset.
           </p>

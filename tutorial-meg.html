@@ -371,7 +371,7 @@
               <tr><th>Field</th><th>Why it is asked</th></tr>
             </thead>
             <tbody>
-              <tr><td><code class="inline">PowerLineFrequency</code></td><td>Required. A property of the building.</td></tr>
+              <tr><td><code class="inline">PowerLineFrequency</code></td><td>Required. A property of the building rather than the recording, so nothing in the file states it. Answer it here or it is written as <code class="inline">n/a</code>.</td></tr>
               <tr><td><code class="inline">DewarPosition</code></td><td>Upright or supine. Not in the file, and it changes how the data should be interpreted.</td></tr>
               <tr><td><code class="inline">AssociatedEmptyRoom</code></td><td>Which noise recording goes with this session.</td></tr>
               <tr><td>Subject artefact description</td><td>Dental work, an implant, anything that shows in the data and has an explanation.</td></tr>
@@ -469,6 +469,26 @@
             events from the BIDS <code class="inline">events.tsv</code>.
           </figcaption>
         </figure>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Nobody guesses the mains frequency for you.</strong>
+            <p>
+              If no one states it, the sidecar is written with
+              <code class="inline">PowerLineFrequency</code> set to
+              <code class="inline">n/a</code>, and validation reports it as
+              missing until you answer. Earlier versions filled in 50, which is
+              right in Europe and wrong everywhere the mains runs at 60, and a
+              confidently wrong number is worse than a visible blank: a blank
+              gets noticed and corrected, whereas 50 in a sidecar reads as a
+              measurement somebody made. Set it once in
+              <strong>Dataset metadata</strong> and every recording in the
+              study inherits it. The power spectrum below is how you check the
+              value you gave against the data itself.
+            </p>
+          </div>
+        </div>
 
         <h3>Check the empty-room recording too</h3>
         <p>

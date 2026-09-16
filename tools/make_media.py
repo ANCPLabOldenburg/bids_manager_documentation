@@ -116,10 +116,17 @@ def _app():
 _CURRENT_THEME = ["dark"]
 
 
+# The application's own font scale, the one in Settings -> Display, applied to
+# every rendered figure. Slightly larger than the default: a screenshot is read
+# scaled down inside a column of prose, where 1.0 lands below comfortable
+# reading size. Overridable with DOCS_MEDIA_FONT_SCALE.
+FONT_SCALE = float(os.environ.get("DOCS_MEDIA_FONT_SCALE", "1.15"))
+
+
 def _theme(app, theme: str):
     from bidsmgr.gui.theme_manager import ThemeManager
     _CURRENT_THEME[0] = theme
-    ThemeManager(app).apply(theme)
+    ThemeManager(app, font_scale=FONT_SCALE).apply(theme)
 
 
 def _show(path: Path) -> str:
@@ -447,8 +454,36 @@ def inventory_skipped(app, theme: str) -> None:
           OUT / f"inventory_skipped_{theme}.png", 1320, 26 * (len(sub) + 2))
 
 
+def _badges(root: Path, report):
+    """Severities AND counts, exactly as the Editor stamps them.
+
+    The tree stopped carrying a bare dot several releases ago; it carries how
+    many errors and how many warnings each row holds. Passing only the
+    severities renders the OLD figure from the NEW application, which is the
+    one failure this generator exists to prevent. Mirrored findings are the
+    same finding shown twice, on the data file and on its editable sidecar,
+    so counting both would double every number in the tree.
+    """
+    severities: dict[Path, str] = {}
+    counts: dict[Path, tuple[int, int]] = {}
+    for f in report.files:
+        countable = [i for i in f.issues if not getattr(i, "mirrored", False)]
+        n_err = sum(1 for i in countable if i.severity.value == "err")
+        n_warn = sum(1 for i in countable if i.severity.value == "warn")
+        worst = "ok"
+        if any(i.severity.value == "err" for i in f.issues):
+            worst = "err"
+        elif any(i.severity.value == "warn" for i in f.issues):
+            worst = "warn"
+        absolute = root / f.path
+        severities[absolute] = worst
+        if n_err or n_warn:
+            counts[absolute] = (n_err, n_warn)
+    return severities, counts
+
+
 def editor_tree(app, theme: str) -> None:
-    """The Editor's BIDS tree with a status dot on every file.
+    """The Editor's BIDS tree, with what each row holds counted on it.
 
     Deliberately a CLEAN dataset. This figure introduces the tree in the
     walkthrough, and it used to be rendered on a dataset with two mistyped
@@ -464,18 +499,7 @@ def editor_tree(app, theme: str) -> None:
     tree = BidsTreePane()
     tree.set_root(root)
     app.processEvents()
-    badges = {}
-    for f in report.files:
-        worst = "ok"
-        for i in f.issues:
-            v = i.severity.value
-            if v == "err":
-                worst = "err"
-                break
-            if v == "warn":
-                worst = "warn"
-        badges[root / f.path] = worst
-    tree.set_badges(badges)
+    tree.set_badges(*_badges(root, report))
     app.processEvents()
     # open the tree so the dots are visible rather than collapsed away
     from PyQt6.QtWidgets import QTreeWidget
@@ -483,7 +507,10 @@ def editor_tree(app, theme: str) -> None:
     if inner is not None:
         inner.expandToDepth(2)
         app.processEvents()
-    _grab(app, tree, OUT / f"editor_tree_{theme}.png", 380, 350)
+    # Wide enough that the folder rollups ("3 ses, 33 files") and the count
+    # pills sit side by side instead of the rollup being elided, and tall
+    # enough to end on a whole row.
+    _grab(app, tree, OUT / f"editor_tree_{theme}.png", 430, 402)
 
 
 def editor_tree_mm(app, theme: str) -> None:
@@ -498,17 +525,7 @@ def editor_tree_mm(app, theme: str) -> None:
     tree = BidsTreePane()
     tree.set_root(root)
     app.processEvents()
-    badges = {}
-    for f in report.files:
-        worst = "ok"
-        for i in f.issues:
-            if i.severity.value == "err":
-                worst = "err"
-                break
-            if i.severity.value == "warn":
-                worst = "warn"
-        badges[root / f.path] = worst
-    tree.set_badges(badges)
+    tree.set_badges(*_badges(root, report))
     app.processEvents()
     inner = tree.findChild(QTreeWidget)
     if inner is not None:
@@ -528,10 +545,14 @@ def editor_window(app, theme: str) -> None:
     shows what a finished dataset looks like rather than a broken one.
     """
     from bidsmgr.gui.editor_panel import EditorPanel
-    root = DATA / "multimodal_tutorial"
-    if not root.exists():
-        print(f"  (no dataset at {root}; skipping)")
+    from PyQt6.QtWidgets import QTreeWidget
+    if not (DATA / "multimodal_tutorial").exists():
+        print("  (no tutorial dataset; skipping)")
         return
+    # This window PRINTS ITS DATASET PATH across the top, so rendering it from
+    # the author's own output folder publishes their home directory and
+    # username in the site's flagship Editor figure.
+    root = _demo_copy("multimodal_tutorial")
     ed = EditorPanel()
     ed.resize(1680, 880)
     ed.show()
@@ -541,14 +562,21 @@ def editor_window(app, theme: str) -> None:
     report = _report(root)
     ed._on_report_ready(report, root)
     app.processEvents()
-    # Select a file that actually carries findings, so all three panes are
-    # populated rather than showing their empty-state text.
+    # A sidecar INSIDE a subject, not dataset_description.json. The dataset
+    # description holds four fields, so the form reads as mostly empty space,
+    # and the figure has to show what a populated schema-aware form looks like.
     target = next((f for f in report.files
-                   if str(f.path).endswith(".json") and f.issues), None)
+                   if str(f.path).startswith("sub-")
+                   and str(f.path).endswith(".json") and f.issues), None)
     if target is not None:
         ed._on_file_selected(root / target.path)
         for _ in range(4):
             app.processEvents()
+    # An unexpanded tree shows two rows and teaches nothing about the layout.
+    inner = ed._tree_pane.findChild(QTreeWidget)
+    if inner is not None:
+        inner.expandToDepth(2)
+        app.processEvents()
     _grab(app, ed, OUT / f"editor_window_{theme}.png", 1680, 880)
 
 
@@ -572,7 +600,7 @@ def _main_window(app, view: str, project_root=None):
     QCoreApplication.setOrganizationName("bidsmgr-docs-shot")
     QCoreApplication.setApplicationName("bidsmgr-docs-shot")
 
-    tm = ThemeManager(app)
+    tm = ThemeManager(app, font_scale=FONT_SCALE)
     tm.apply("dark" if _CURRENT_THEME[0] == "dark" else "light")
     win = MainWindow(tm)
     win.resize(1480, 900)
@@ -587,8 +615,75 @@ def _main_window(app, view: str, project_root=None):
 
 def window_home(app, theme: str) -> None:
     """The Home tab of the real window, in its first-run state."""
+    from PyQt6.QtWidgets import QLineEdit
     win = _main_window(app, "welcome")
+    # The location field is prefilled with the home directory, which publishes
+    # the author's username in a figure six markers point at.
+    for edit in win.findChildren(QLineEdit):
+        if edit.objectName() == "welcome-input" and edit.isReadOnly():
+            edit.setText("/data/bids")
+    app.processEvents()
     _grab(app, win, OUT / f"window_home_{theme}.png", 1480, 900)
+
+
+def window_converter(app, theme: str) -> None:
+    """The Converter view inside the window, with a real scan loaded.
+
+    Replaces a hand-taken screenshot that still showed v1.2.1 in the status
+    bar and the author's home directory in both path bars.
+    """
+    tsv = INVENTORIES["multimodal"]
+    win = _main_window(app, "converter")
+    if tsv.exists():
+        # Open a project first. Without one the header carries no project
+        # switcher, and the tutorial's marker overlay has a numbered marker
+        # pointing at a control that is not there.
+        if (DATA / "multimodal_tutorial").exists():
+            try:
+                win.welcome.open_project(_demo_copy("multimodal_sample"))
+                for _ in range(6):
+                    app.processEvents()
+            except Exception as exc:
+                print(f"  (could not open the demo project: {exc})")
+        conv = win.stack.widget(0)
+        df = _read("multimodal")
+        # The raw folder this was scanned from is misspelt, and its name
+        # becomes the dataset slug, so the typo would appear on every row of a
+        # published figure as if the tool had made it.
+        if "dataset" in df.columns:
+            df["dataset"] = "multimodal_sample"
+        conv.load_inventory(df, output_tsv=tsv)
+        # The raw tree reads the folder, so it has to be the real one. The
+        # PATH BARS do not: they are the widest text on screen, and a real one
+        # publishes a home directory and elides everything useful.
+        # Through a symlink, so the tree's root row agrees with the path bar
+        # above it. The real folder's name is misspelt, and a figure whose two
+        # halves disagree is the kind of detail a careful reader trusts less.
+        real = DATA.parent / "raw_data" / "mutilmodal"
+        raw = DEMO_ROOT / "raw" / "multimodal_study"
+        if real.exists():
+            raw.parent.mkdir(parents=True, exist_ok=True)
+            if raw.is_symlink() or raw.exists():
+                raw.unlink()
+            raw.symlink_to(real, target_is_directory=True)
+            conv._raw_root = raw
+            conv._raw_pane.set_root(raw)
+        conv._raw_pathbar.set_value(str(raw), ok=True)
+        conv._bids_pathbar.set_value(str(DEMO_ROOT / "multimodal_sample"), ok=True)
+        app.processEvents()
+        # An INCLUDED row, so the Properties panel shows a recording that is
+        # going to be converted rather than one the scan set aside.
+        model = conv._table.model()
+        row = 0
+        if model is not None:
+            for i in range(model.rowCount()):
+                if str(df.iloc[i].get("suffix", "")) == "bold":
+                    row = i
+                    break
+            conv._table.selectRow(row)
+        for _ in range(4):
+            app.processEvents()
+    _grab(app, win, OUT / f"window_converter_{theme}.png", 1480, 900)
 
 
 def window_editor(app, theme: str) -> None:
@@ -600,9 +695,11 @@ def window_editor(app, theme: str) -> None:
     belongs three steps later.
     """
     from bidsmgr.editor.validator import validate
-    root = DATA / "multimodal_tutorial"
+    from PyQt6.QtWidgets import QTreeWidget
     win = _main_window(app, "editor")
-    if root.exists():
+    # Same reason as editor_window: the path bar is on screen.
+    if (DATA / "multimodal_tutorial").exists():
+        root = _demo_copy("multimodal_tutorial")
         ed = win.stack.widget(1)
         ed._set_root(root, persist=False)
         app.processEvents()
@@ -610,10 +707,15 @@ def window_editor(app, theme: str) -> None:
         ed._on_report_ready(report, root)
         app.processEvents()
         target = next((f for f in report.files
-                       if str(f.path).endswith(".json") and f.issues), None)
+                       if str(f.path).startswith("sub-")
+                       and str(f.path).endswith(".json") and f.issues), None)
         if target is not None:
             ed._on_file_selected(root / target.path)
         for _ in range(4):
+            app.processEvents()
+        inner = ed._tree_pane.findChild(QTreeWidget)
+        if inner is not None:
+            inner.expandToDepth(2)
             app.processEvents()
     _grab(app, win, OUT / f"window_editor_{theme}.png", 1480, 900)
 
@@ -912,6 +1014,252 @@ def psd(app, theme: str) -> None:
 
 
 
+# ----------------------------------------------------------------------
+# 1.3.0: restructuring, and the parts of the Editor the site never showed
+# ----------------------------------------------------------------------
+
+
+# Where the figures below stage their dataset.
+#
+# NOT the real one under ``DATA``, for two reasons. Every dialog here would
+# CHANGE a dataset if it were applied, and although none of them apply
+# anything, a delete dialog aimed at the data every other figure on the site
+# renders from is one stray click from a bad afternoon.
+#
+# And these dialogs PRINT THEIR PATH. Rendering from ``DATA`` puts the author's
+# home directory, including their username, into a published screenshot. A
+# neutral staging path shows a reader something anonymous and short instead.
+DEMO_ROOT = Path("/tmp/bids")
+
+
+def _demo_copy(name: str = "multimodal_demo"):
+    """A throwaway copy of the tutorial dataset, at a neutral path."""
+    import json
+    import shutil
+    dst = DEMO_ROOT / name
+    if dst.exists():
+        shutil.rmtree(dst)
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copytree(DATA / "multimodal_tutorial", dst)
+    # The test dataset is titled "raw", after the folder it was scanned from.
+    # Anything that prints the dataset TITLE, the Dashboard header for one,
+    # then reads as if the tool got it wrong. Retitle the throwaway copy.
+    desc = dst / "dataset_description.json"
+    try:
+        doc = json.loads(desc.read_text())
+        if doc.get("Name") in (None, "", "raw"):
+            doc["Name"] = "Multimodal sample"
+            desc.write_text(json.dumps(doc, indent=2) + "\n")
+    except (OSError, ValueError):
+        pass
+    return dst
+
+
+def editor_dashboard(app, theme: str) -> None:
+    """What is in this dataset, counted.
+
+    Rendered on the tutorial dataset precisely because it is UNEVEN: one
+    subject has three sessions and four modalities, the other a single PET
+    scan. Bars of differing length are the whole argument for the figure, and
+    a tidy dataset produces a screenshot that argues against it.
+    """
+    from bidsmgr.gui.dashboard_dialog import DashboardDialog
+    if not (DATA / "multimodal_tutorial").exists():
+        print("  (no tutorial dataset; skipping)")
+        return
+    root = _demo_copy()
+    dlg = DashboardDialog(root, _report(root))
+    _grab(app, dlg, OUT / f"editor_dashboard_{theme}.png", 800, 1125)
+
+
+def editor_entities(app, theme: str) -> None:
+    """Adding an entity, with the plan already made.
+
+    An empty dialog shows nothing, so this one has a value typed and a
+    preview populated. What the reader should notice is how SHORT the entity
+    list is: it holds only what the standard permits for this kind of file,
+    which is the feature, and no amount of prose demonstrates it as quickly.
+    """
+    from bidsmgr.gui.edit_entities_dialog import EditEntitiesDialog
+    root = _demo_copy()
+    # A functional run, which carries NO acq- yet. The anatomy in this dataset
+    # already has one, so adding it there reads as "2 of 2 would be changed",
+    # which demonstrates the wrong half of the feature: this figure is about
+    # giving a recording a label it lacks.
+    target = next(root.rglob("*_bold.nii.gz"), None)
+    if target is None:
+        print("  (no functional run; skipping)")
+        return
+    dlg = EditEntitiesDialog(root, [target])
+    at = dlg._entity.findData("acq")
+    if at >= 0:
+        dlg._entity.setCurrentIndex(at)
+    dlg._value.setCurrentText("highres")
+    dlg.plan_now()
+    app.processEvents()
+    _grab(app, dlg, OUT / f"editor_entities_{theme}.png", 1020, 780)
+
+
+def editor_sessions(app, theme: str) -> None:
+    """Creating a session, showing that the FOLDER moves too.
+
+    The second column carries the whole destination path rather than just the
+    new name, which is the only way a still image can show that the recordings
+    change folder and not merely filename.
+    """
+    from bidsmgr.gui.edit_entities_dialog import EditEntitiesDialog
+    root = _demo_copy()
+    # A subject that has NO session yet, so this is a genuine creation. Run it
+    # on one that already has sessions and the dialog truthfully reports that
+    # every file would be changed, which teaches the wrong thing: this figure
+    # is about recordings gaining a session they did not have. It is also
+    # short, so no destination path is truncated.
+    subject = next((p for p in sorted(root.glob("sub-*"))
+                    if p.is_dir() and not any(p.glob("ses-*"))), None)
+    if subject is None:
+        print("  (every subject already has a session; skipping)")
+        return
+    dlg = EditEntitiesDialog(root, [subject], session_mode=True)
+    dlg._value.setCurrentText("baseline")
+    dlg.plan_now()
+    app.processEvents()
+    _grab(app, dlg, OUT / f"editor_sessions_{theme}.png", 1020, 760)
+
+
+def editor_delete(app, theme: str) -> None:
+    """A deletion, with the repairs visible.
+
+    "Follows automatically" is expanded on purpose. Collapsed, the figure
+    shows a list of files being removed, which is the unremarkable half. The
+    repairs underneath, the scans rows and the references, are the argument
+    for the feature existing at all.
+    """
+    from bidsmgr.gui.delete_dialog import DeleteDialog
+    root = _demo_copy()
+    # An ANATOMY folder, not a whole session. A session deletes a dozen files,
+    # and the file list then fills the preview and pushes the repairs out of
+    # sight, which is the one thing this figure has to show. Anatomy is small
+    # AND well connected: the fieldmap points at it, so the repairs include a
+    # scans row and an IntendedFor entry rather than only an emptied folder.
+    target = next((p for p in sorted(root.rglob("anat")) if p.is_dir()), None)
+    if target is None:
+        print("  (no anat folder; skipping)")
+        return
+    dlg = DeleteDialog(root, [target])
+    dlg._preview.expandAll()
+    app.processEvents()
+    _grab(app, dlg, OUT / f"editor_delete_{theme}.png", 1000, 720)
+
+
+def editor_move_preview(app, theme: str) -> None:
+    """The preview tree, nested, with one file deliberately unticked.
+
+    Every restructuring action previews into this same widget, so the figure
+    is about the WIDGET rather than about renaming: per-file choice and the
+    part-ticked folder above it, which no amount of prose conveys as fast.
+    Rendered from Rename because a rename reaches across sessions, so the tree
+    has more than one level of nesting to show.
+    """
+    from bidsmgr.gui.rename_entity_dialog import RenameEntityDialog
+    from PyQt6.QtCore import Qt
+    if not (DATA / "multimodal_tutorial").exists():
+        print("  (no tutorial dataset; skipping)")
+        return
+    root = _demo_copy()
+    dlg = RenameEntityDialog(root, entity="task", value="rest")
+    dlg._new.setText("restingstate")
+    dlg.plan_now()
+    app.processEvents()
+    dlg._preview.expandAll()
+    app.processEvents()
+    # Untick ONE file. A fully ticked tree looks like a list of what is about
+    # to happen; a part-ticked one is visibly a choice, and the folder above
+    # it goes half-checked, which is the behaviour worth showing.
+    it = dlg._preview.topLevelItem(0)
+    while it is not None and it.childCount():
+        it = it.child(0)
+    if it is not None:
+        it.setCheckState(0, Qt.CheckState.Unchecked)
+        app.processEvents()
+    _grab(app, dlg, OUT / f"editor_move_preview_{theme}.png", 1020, 780)
+
+
+def editor_fixups(app, theme: str) -> None:
+    """The repairs the dataset can be given, with what each would do.
+
+    Rendered on a COPY, because two of the three buttons in it write files,
+    and because the dialog prints the dataset path in its own header.
+    """
+    from bidsmgr.gui.fixups_dialog import FixupsDialog
+    if not (DATA / "multimodal_tutorial").exists():
+        print("  (no tutorial dataset; skipping)")
+        return
+    root = _demo_copy()
+    dlg = FixupsDialog(root, report=_report(root))
+    app.processEvents()
+    # Tall enough for all FIVE cards. At the dialog's own default height the
+    # last ones are below the scroll, and a reader would never learn they exist.
+    _grab(app, dlg, OUT / f"editor_fixups_{theme}.png", 860, 1570)
+
+
+def editor_fix_all(app, theme: str) -> None:
+    """One finding, and every file it fired on, each with its current value.
+
+    The figure has to show the LIST, not the count. "12 files" says how many
+    and nothing else; what makes the feature safe to use is that every
+    candidate is named, shows what it says now, and is ticked only where the
+    value would actually change.
+    """
+    from bidsmgr.editor import bulk_edit as be
+    from bidsmgr.editor.grouping import group_report
+    from bidsmgr.gui.bulk_field_dialog import BulkFieldDialog
+    if not (DATA / "multimodal_tutorial").exists():
+        print("  (no tutorial dataset; skipping)")
+        return
+    root = _demo_copy()
+    report = _report(root)
+    # The best frame is the finding that fired on the MOST files: a group of
+    # two demonstrates nothing that one file would not.
+    best, cands = None, []
+    for grp in sorted(group_report(report), key=lambda g: -g.count):
+        if not grp.field:
+            continue
+        found = be.candidates(root, grp.field,
+                              paths=[root / p for p in grp.files])
+        if len(found) > len(cands):
+            best, cands = grp, found
+    if best is None or not cands:
+        print("  (no grouped finding with a field; skipping)")
+        return
+    dlg = BulkFieldDialog(
+        root, best.field, candidates=cands,
+        title=f"Fix {best.field} in {len(cands)} file(s)",
+    )
+    # With no value typed the "becomes" column is empty, and the figure then
+    # shows only half of what it is for. Type one so each row reads
+    # "now: not set, becomes: ...".
+    from PyQt6.QtWidgets import QLineEdit
+    if isinstance(dlg._value_edit, QLineEdit):
+        dlg._value_edit.setText("Department of Psychology")
+    app.processEvents()
+    _grab(app, dlg, OUT / f"editor_fix_all_{theme}.png", 1000, 700)
+
+
+def editor_tools_menu(app, theme: str) -> None:
+    """Where all of this lives. People cannot use what they cannot find."""
+    from bidsmgr.gui.editor_panel import EditorPanel
+    if not (DATA / "multimodal_tutorial").exists():
+        print("  (no tutorial dataset; skipping)")
+        return
+    panel = EditorPanel()
+    panel._set_root(_demo_copy(), persist=False)
+    app.processEvents()
+    menu = panel._tools_menu
+    menu.adjustSize()
+    app.processEvents()
+    _grab(app, menu, OUT / f"editor_tools_menu_{theme}.png", 290, 250)
+
+
 ASSETS = {
     "inventory-multimodal": inventory_multimodal,
     "inventory-pet-formats": inventory_pet_formats,
@@ -935,6 +1283,7 @@ ASSETS = {
     "editor-tree-mm": editor_tree_mm,
     "editor-window": editor_window,
     "window-home": window_home,
+    "window-converter": window_converter,
     "window-editor": window_editor,
     "sidecar-form": sidecar_form,
     "sidecar-form-pet": sidecar_form_pet,
@@ -949,6 +1298,14 @@ ASSETS = {
     "validation-missing-companion": validation_missing_companion,
     "validation-pet-checks": validation_pet_checks,
     "psd": psd,
+    "editor-dashboard": editor_dashboard,
+    "editor-entities": editor_entities,
+    "editor-sessions": editor_sessions,
+    "editor-delete": editor_delete,
+    "editor-tools-menu": editor_tools_menu,
+    "editor-fixups": editor_fixups,
+    "editor-move-preview": editor_move_preview,
+    "editor-fix-all": editor_fix_all,
 }
 
 

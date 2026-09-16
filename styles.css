@@ -7803,7 +7803,8 @@ ol.checklist li {
  * Each dt is a flag / positional name; the dd that follows is its
  * description. Two-column grid on wide screens, stacked on narrow.
  * ==================================================================== */
-.cli-args {
+.cli-args,
+.def-list {
   display: grid;
   grid-template-columns: minmax(220px, max-content) 1fr;
   column-gap: 28px;
@@ -7811,7 +7812,8 @@ ol.checklist li {
   margin: 14px 0 22px;
   padding: 0;
 }
-.cli-args dt {
+.cli-args dt,
+.def-list dt {
   margin: 0;
   padding-top: 2px;
   font-size: 0.92rem;
@@ -7821,13 +7823,17 @@ ol.checklist li {
 .cli-args dt code {
   white-space: nowrap;
 }
-.cli-args dd {
+/* A prose term wraps; a flag must not. */
+.def-list dt { font-weight: 650; }
+.cli-args dd,
+.def-list dd {
   margin: 0;
   font-size: 0.92rem;
   line-height: 1.5;
   color: var(--muted);
 }
-.cli-args dd code {
+.cli-args dd code,
+.def-list dd code {
   white-space: nowrap;
 }
 .prose .cli-args + h4,
@@ -7840,9 +7846,12 @@ ol.checklist li {
   color: var(--muted);
 }
 @media (max-width: 720px) {
-  .cli-args { grid-template-columns: 1fr; row-gap: 6px; }
-  .cli-args dt { padding-top: 14px; border-top: 1px solid var(--border-glass); }
-  .cli-args dt:first-of-type { border-top: none; padding-top: 0; }
+  .cli-args,
+  .def-list { grid-template-columns: 1fr; row-gap: 6px; }
+  .cli-args dt,
+  .def-list dt { padding-top: 14px; border-top: 1px solid var(--border-glass); }
+  .cli-args dt:first-of-type,
+  .def-list dt:first-of-type { border-top: none; padding-top: 0; }
 }
 
 /* ====================================================================
