@@ -8952,9 +8952,21 @@ body.lightbox-open { overflow: hidden; }
  * 45 degrees with period P along its own axis is unchanged by any shift whose
  * component along that axis is a whole number of periods. A shift of (d, -d)
  * has component d * sqrt(2), so d = P / sqrt(2) advances it exactly one
- * period and the loop has no seam. P = 34px gives d = 24.042px. The second
- * layer uses P = 46px, d = 32.527px, and travels the other way, so the two
- * never line up and the lattice never visibly repeats.
+ * period and the loop has no seam.
+ *
+ * The first version advanced ONE period per cycle and was a mistake worth
+ * recording: P = 34px over 38s is 0.89 pixels per second, which is not slow
+ * motion, it is a still image. The waves next door travel a whole 900px tile
+ * per cycle, about 19 px/s, which is why they read as moving at all. These
+ * now advance EIGHT and SIX periods respectively, at 21 and 16 px/s, so the
+ * two grids visibly slide past each other. Different speeds and opposite
+ * directions are what turn two sets of lines into a weave rather than a
+ * texture being dragged.
+ *
+ * The opacity breathes in the same keyframes, which costs nothing: opacity is
+ * a compositor property like transform, so the layer is still rasterized once
+ * and Safari is still happy. It is what makes the beams look lit rather than
+ * drawn. Start and end values match, or the loop would blink.
  * ================================================================== */
 
 .page-updates .release.is-lattice {
@@ -8978,7 +8990,7 @@ body.lightbox-open { overflow: hidden; }
   inset: -120px;
   filter: blur(3px);
   opacity: 0.18;
-  animation: lattice-drift-a 38s linear infinite;
+  animation: lattice-drift-a 13s linear infinite;
 }
 
 /* The far beams: broader, fainter, crossing the other way and slower. */
@@ -8995,16 +9007,20 @@ body.lightbox-open { overflow: hidden; }
   inset: -140px;
   filter: blur(2px);
   opacity: 0.11;
-  animation: lattice-drift-b 59s linear infinite;
+  animation: lattice-drift-b 17s linear infinite;
 }
 
+/* Eight periods of P = 34px: 8 * 34 / sqrt(2) = 192.334px on each axis. */
 @keyframes lattice-drift-a {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(24.042px, -24.042px, 0); }
+  0%   { transform: translate3d(0, 0, 0);                    opacity: 0.14; }
+  50%  { transform: translate3d(96.167px, -96.167px, 0);     opacity: 0.22; }
+  100% { transform: translate3d(192.334px, -192.334px, 0);   opacity: 0.14; }
 }
+/* Six periods of P = 46px: 6 * 46 / sqrt(2) = 195.161px, the other way. */
 @keyframes lattice-drift-b {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(-32.527px, -32.527px, 0); }
+  0%   { transform: translate3d(0, 0, 0);                    opacity: 0.09; }
+  50%  { transform: translate3d(-97.580px, -97.580px, 0);    opacity: 0.14; }
+  100% { transform: translate3d(-195.161px, -195.161px, 0);  opacity: 0.09; }
 }
 
 /* The version number. The waves card pulses its BRIGHTNESS; this one travels
