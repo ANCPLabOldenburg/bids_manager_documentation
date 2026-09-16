@@ -25,6 +25,8 @@
       </button>
       <nav id="page-toc-panel" class="page-toc-panel" aria-label="Versions">
         <span class="page-toc-title">Jump to a version</span>
+        <a class="page-toc-link" href="#v130">
+          <span class="page-toc-dot" aria-hidden="true"></span>1.3.0</a>
         <a class="page-toc-link" href="#v126">
           <span class="page-toc-dot" aria-hidden="true"></span>1.2.6 - 1.2.6.1</a>
         <a class="page-toc-link" href="#v125">
@@ -76,8 +78,134 @@
           </p>
         </div>
 
+        <!-- ============ 1.3.0 ============ -->
+        <div class="release reveal is-latest is-landmark is-wavefield" id="v130">
+          <div class="release-head">
+            <h2>1.3.0</h2>
+            <span class="release-date">September 2026</span>
+            <span class="release-badge is-wavefield-badge">Major release</span>
+          </div>
+          <p class="rel-lede">
+            The Editor stops being a place you look at a converted dataset and
+            becomes a place you can change its shape. Entities can be added and
+            removed, sessions created and dissolved, and recordings deleted, and
+            every one of those carries the files that point at them along with
+            it.
+          </p>
+          <p class="rel-kind k-new">New</p>
+          <ul>
+            <li>
+              <strong>Add or remove an entity.</strong> A recording can gain a
+              label it should have had, or lose one it never needed: an
+              <code>acq-</code> to tell two protocols apart, a <code>run-</code>
+              that was only ever going to be one run. Only entities the
+              standard permits for that kind of file are offered, so an EEG
+              recording is never offered <code>echo-</code>, and a
+              <code>_bold</code> is never allowed to lose its
+              <code>task-</code>, because a file without one has no reading.
+              The new entity is placed where the standard puts it rather than
+              where you typed it.
+            </li>
+            <li>
+              <strong>Sessions can be created and dissolved.</strong> A session
+              is a folder and a label at the same time, which is why moving
+              recordings into or out of one by hand goes wrong so easily. Now
+              it is one action: pick the recordings, name the session, and the
+              folder, the filenames, the <code>*_scans.tsv</code> and every
+              reference move together. Taking the last session out again works
+              the same way.
+            </li>
+            <li>
+              <strong>Delete recordings, datatypes and sessions.</strong>
+              Deleting the files is the easy half. What leaves a dataset broken
+              is everything still naming them, so the same step removes the
+              <code>*_scans.tsv</code> rows, the <code>IntendedFor</code>
+              entries, the participants row of a subject with nothing left, and
+              any folder the deletion empties. A sidecar that sat above several
+              recordings and now describes none of them goes too.
+            </li>
+            <li>
+              <strong>Everything is one step, and every step can be undone.</strong>
+              A deletion that touches forty files is one entry in the Editor's
+              history, not forty, so changing your mind is one action as well.
+            </li>
+            <li>
+              <strong>The preview looks like your dataset.</strong> Before any
+              of this happens you see what it would do, arranged the way the
+              data is: subject, then session, then datatype, then files. Untick
+              anything you want left alone. What follows automatically, the
+              table rows and the references, is listed but not offered as a
+              choice, because a half-applied cross-reference is worse than
+              either outcome.
+            </li>
+          </ul>
+          <p class="rel-kind k-fix">Fixed</p>
+          <ul>
+            <li>
+              <strong>Renaming from a right-click now offers what you clicked.</strong>
+              Choosing to rename a subject from one file used to tick every
+              file that subject has, across every datatype. It now starts with
+              that recording and the files that belong to it, and widening is a
+              click away.
+            </li>
+            <li>
+              <strong>Choosing to merge no longer discards your selection.</strong>
+              Narrowing a rename and then ticking "merge them into one subject"
+              silently reselected everything.
+            </li>
+            <li>
+              <strong>Merging two subjects leaves nothing behind.</strong> The
+              folder that was merged away used to survive as an empty shell.
+              Anything inside it that was not named after the subject, an
+              inherited sidecar, a note you left, stayed with it, and the
+              sidecar then described recordings that had moved. All of it now
+              travels, and the record of how the merged subject was converted
+              is kept beside the target's own rather than overwriting it.
+            </li>
+            <li>
+              <strong>A rename now carries everything that names the old
+              value.</strong> Renaming a task left <code>TaskName</code> in the
+              sidecar saying the old one. Renaming a session left
+              <code>*_sessions.tsv</code> listing a session that no longer
+              existed. Fieldmap and empty-room pointers, and the
+              <code>Sources</code> fields that record what a file was derived
+              from, were left aimed at names nothing had. None of that was
+              reported by any validator, which is what made it worth finding.
+            </li>
+            <li>
+              <strong>Renaming a subject fixes the whole reference, not half of
+              it.</strong> Where a pointer was written in the
+              <code>bids::</code> form, the file name was updated and the folder
+              in the same path was not, leaving a reference that resolved to
+              nothing.
+            </li>
+          </ul>
+          <p class="rel-kind k-note">Changed</p>
+          <ul>
+            <li>
+              <strong>The power-line frequency is no longer guessed.</strong>
+              When nothing stated one, EEG and MEG sidecars used to be written
+              with <code>PowerLineFrequency</code> set to 50. That is correct in
+              Europe and wrong in the Americas and Japan, and nothing in the
+              file distinguished it from a value somebody had measured.
+              Filtering at 50 on 60 Hz data leaves the interference exactly
+              where it was. The field is now written as <code>n/a</code> unless
+              the recording's own header, the inventory, or your metadata
+              template supplies a value. That is still valid, and it is true.
+              <strong>If your recordings are 50 Hz, state it once</strong> in
+              Dataset metadata and every recording will carry it.
+            </li>
+            <li>
+              Deleting is deliberately limited to what sits inside a subject.
+              The dataset description and the Editor's own history are not
+              removable from the interface, because losing either turns a
+              dataset back into an ordinary folder.
+            </li>
+          </ul>
+        </div>
+
         <!-- ============ 1.2.6 ============ -->
-        <div class="release reveal is-latest is-landmark" id="v126">
+        <div class="release reveal is-landmark is-waves" id="v126">
           <!-- The card covers both versions, so it answers to both anchors:
                the in-app "What changed" link builds one from the version that
                is installed. -->
