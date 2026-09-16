@@ -8779,8 +8779,10 @@ body.lightbox-open { overflow: hidden; }
  * and the SVG is only the MASK, so both themes tint it from --accent without
  * a second copy of the artwork.
  */
-.page-updates .release.is-landmark::before,
-.page-updates .release.is-landmark::after {
+.page-updates .release.is-waves::before,
+.page-updates .release.is-waves::after,
+.page-updates .release.is-lattice::before,
+.page-updates .release.is-lattice::after {
   content: "";
   position: absolute;
   z-index: -1;
@@ -8803,7 +8805,7 @@ body.lightbox-open { overflow: hidden; }
  * than at a line. Doing it this way needs no mask-composite, which is the one
  * part of CSS masking whose support is still worth not relying on.
  */
-.page-updates .release.is-landmark::before {
+.page-updates .release.is-waves::before {
   background: linear-gradient(103deg,
       transparent 0%,
       color-mix(in srgb, var(--accent) 62%, transparent) 22%,
@@ -8834,7 +8836,7 @@ body.lightbox-open { overflow: hidden; }
 
 /* The far layer: broader waves on a larger tile, drifting the other way and
  * slower, so the two never line up and the pattern never visibly repeats. */
-.page-updates .release.is-landmark::after {
+.page-updates .release.is-waves::after {
   background: linear-gradient(77deg,
       transparent 0%,
       color-mix(in srgb, var(--purple, #a371f7) 46%, transparent) 30%,
@@ -8874,7 +8876,7 @@ body.lightbox-open { overflow: hidden; }
 }
 
 /* The version number itself. */
-.page-updates .release.is-landmark .release-head h2 {
+.page-updates .release.is-waves .release-head h2 {
   color: color-mix(in srgb, var(--accent) 22%, #fff);
   letter-spacing: 0.01em;
   text-shadow:
@@ -8901,9 +8903,9 @@ body.lightbox-open { overflow: hidden; }
 
 /* Light theme: the same idea, dialled back. White paper does not need as much
  * glow to read as lit, and too much of it turns the heading to mush. */
-:root[data-theme="light"] .page-updates .release.is-landmark::before { opacity: 0.13; }
-:root[data-theme="light"] .page-updates .release.is-landmark::after  { opacity: 0.08; }
-:root[data-theme="light"] .page-updates .release.is-landmark .release-head h2 {
+:root[data-theme="light"] .page-updates .release.is-waves::before { opacity: 0.13; }
+:root[data-theme="light"] .page-updates .release.is-waves::after  { opacity: 0.08; }
+:root[data-theme="light"] .page-updates .release.is-waves .release-head h2 {
   color: color-mix(in srgb, var(--accent) 78%, #000);
   text-shadow:
     0 0 10px color-mix(in srgb, var(--accent) 42%, transparent),
@@ -8918,14 +8920,161 @@ body.lightbox-open { overflow: hidden; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .page-updates .release.is-landmark::before,
-  .page-updates .release.is-landmark::after {
+  .page-updates .release.is-waves::before,
+  .page-updates .release.is-waves::after {
     animation: none;
     will-change: auto;
   }
-  .page-updates .release.is-landmark::before { opacity: 0.15; }
-  .page-updates .release.is-landmark::after  { opacity: 0.09; }
-  .page-updates .release.is-landmark .release-head h2 { animation: none; }
+  .page-updates .release.is-waves::before { opacity: 0.15; }
+  .page-updates .release.is-waves::after  { opacity: 0.09; }
+  .page-updates .release.is-waves .release-head h2 { animation: none; }
+}
+
+/* ==================================================================
+ * The 1.3.0 motif: a drifting LATTICE, in teal and cyan.
+ *
+ * Deliberately not the waves. 1.2.6 was a modality arriving and it flows;
+ * 1.3.0 is about taking a dataset apart and putting it back together, so the
+ * decoration is two sets of parallel beams crossing at opposite angles,
+ * sliding across each other. It reads as structure rather than as current,
+ * and it is the one card on the page that is not blue.
+ *
+ * The technique is the one the waves already proved, because it is the one
+ * that survived Safari: the colour is a CSS gradient, the pattern is only the
+ * MASK, and the animation moves the LAYER with a transform rather than moving
+ * the mask inside it. mask-position is a paint property, and animating it
+ * made Safari re-run the blur over the whole layer every frame.
+ *
+ * The mask here is a repeating-linear-gradient rather than an SVG, which is
+ * seamless by construction: there is no tile to line up, only a period.
+ *
+ * WHY THE TRANSFORM IS DIAGONAL AND WHY THOSE NUMBERS. A stripe pattern at
+ * 45 degrees with period P along its own axis is unchanged by any shift whose
+ * component along that axis is a whole number of periods. A shift of (d, -d)
+ * has component d * sqrt(2), so d = P / sqrt(2) advances it exactly one
+ * period and the loop has no seam. P = 34px gives d = 24.042px. The second
+ * layer uses P = 46px, d = 32.527px, and travels the other way, so the two
+ * never line up and the lattice never visibly repeats.
+ * ================================================================== */
+
+.page-updates .release.is-lattice {
+  border-color: color-mix(in srgb, var(--teal) 58%, var(--border));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--teal) 42%, transparent),
+              0 18px 60px color-mix(in srgb, var(--teal) 14%, transparent);
+}
+
+/* The near beams: finer, brighter, travelling up and to the right. */
+.page-updates .release.is-lattice::before {
+  background: linear-gradient(108deg,
+      transparent 0%,
+      color-mix(in srgb, var(--teal) 66%, transparent) 24%,
+      color-mix(in srgb, var(--cyan, #4de3ff) 54%, transparent) 58%,
+      color-mix(in srgb, var(--teal) 60%, transparent) 84%,
+      transparent 100%);
+  -webkit-mask-image: repeating-linear-gradient(45deg,
+      #000 0 2px, transparent 2px 34px);
+  mask-image: repeating-linear-gradient(45deg,
+      #000 0 2px, transparent 2px 34px);
+  inset: -120px;
+  filter: blur(3px);
+  opacity: 0.18;
+  animation: lattice-drift-a 38s linear infinite;
+}
+
+/* The far beams: broader, fainter, crossing the other way and slower. */
+.page-updates .release.is-lattice::after {
+  background: linear-gradient(72deg,
+      transparent 0%,
+      color-mix(in srgb, var(--cyan, #4de3ff) 48%, transparent) 32%,
+      color-mix(in srgb, var(--teal) 52%, transparent) 72%,
+      transparent 100%);
+  -webkit-mask-image: repeating-linear-gradient(-45deg,
+      #000 0 3px, transparent 3px 46px);
+  mask-image: repeating-linear-gradient(-45deg,
+      #000 0 3px, transparent 3px 46px);
+  inset: -140px;
+  filter: blur(2px);
+  opacity: 0.11;
+  animation: lattice-drift-b 59s linear infinite;
+}
+
+@keyframes lattice-drift-a {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(24.042px, -24.042px, 0); }
+}
+@keyframes lattice-drift-b {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-32.527px, -32.527px, 0); }
+}
+
+/* The version number. The waves card pulses its BRIGHTNESS; this one travels
+ * in HUE, between the two colours of the lattice, so the two cards differ
+ * when read as well as when glanced at. */
+.page-updates .release.is-lattice .release-head h2 {
+  color: color-mix(in srgb, var(--teal) 26%, #fff);
+  letter-spacing: 0.01em;
+  animation: lattice-version 6.5s ease-in-out infinite;
+}
+
+@keyframes lattice-version {
+  0%, 100% {
+    color: color-mix(in srgb, var(--teal) 26%, #fff);
+    text-shadow:
+      0 0 5px color-mix(in srgb, var(--teal) 88%, transparent),
+      0 0 16px color-mix(in srgb, var(--teal) 58%, transparent),
+      0 0 38px color-mix(in srgb, var(--teal) 34%, transparent);
+  }
+  50% {
+    color: color-mix(in srgb, var(--cyan, #4de3ff) 30%, #fff);
+    text-shadow:
+      0 0 5px color-mix(in srgb, var(--cyan, #4de3ff) 90%, transparent),
+      0 0 18px color-mix(in srgb, var(--cyan, #4de3ff) 62%, transparent),
+      0 0 44px color-mix(in srgb, var(--teal) 40%, transparent);
+  }
+}
+
+/* Light theme: same idea, dialled back, for the reason the waves are. */
+:root[data-theme="light"] .page-updates .release.is-lattice::before { opacity: 0.14; }
+:root[data-theme="light"] .page-updates .release.is-lattice::after  { opacity: 0.09; }
+:root[data-theme="light"] .page-updates .release.is-lattice .release-head h2 {
+  color: color-mix(in srgb, var(--teal) 82%, #000);
+  animation: none;
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--teal) 40%, transparent),
+    0 0 26px color-mix(in srgb, var(--cyan, #4de3ff) 22%, transparent);
+}
+
+/* Its badge, so the two landmark cards do not share a pill either. */
+.page-updates .release-badge.is-lattice-badge {
+  background: linear-gradient(100deg,
+      var(--teal), color-mix(in srgb, var(--teal) 40%, var(--cyan, #4de3ff)));
+  box-shadow: 0 0 16px color-mix(in srgb, var(--teal) 55%, transparent);
+  color: #06232a;
+}
+
+/* Reduced motion, for the lattice.
+ *
+ * This block has to come AFTER the motif above rather than joining the waves'
+ * block higher up the file. Both have the same specificity, so the later rule
+ * wins, and putting it earlier produced a card that looked like it respected
+ * the setting and did not: the beams kept drifting while the waves stopped.
+ * A meaningful share of this audience browses with the flag forced on.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .page-updates .release.is-lattice::before,
+  .page-updates .release.is-lattice::after {
+    animation: none;
+    will-change: auto;
+  }
+  .page-updates .release.is-lattice::before { opacity: 0.16; }
+  .page-updates .release.is-lattice::after  { opacity: 0.10; }
+  .page-updates .release.is-lattice .release-head h2 {
+    animation: none;
+    color: color-mix(in srgb, var(--teal) 26%, #fff);
+    text-shadow:
+      0 0 5px color-mix(in srgb, var(--teal) 88%, transparent),
+      0 0 16px color-mix(in srgb, var(--teal) 58%, transparent);
+  }
 }
 
 /* A one-paragraph lede on a landmark release, set apart from the change lists
