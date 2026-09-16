@@ -458,10 +458,14 @@
                        data-dark="assets/features/run_convertion_dark.mp4"
                        data-light="assets/features/run_convertion_light.mp4"></video>
                 <figcaption>
-                  Each row is dispatched to the right backend
-                  (<code class="inline">dcm2niix</code> for DICOM,
-                  <code class="inline">mne-bids</code> for EEG / MEG / iEEG,
-                  <code class="inline">bidsphysio</code> for Siemens physio).
+                  Each row is dispatched to the right backend:
+                  <code class="inline">dcm2niix</code> for DICOM, including PET
+                  DICOM, <code class="inline">mne-bids</code> for EEG, MEG and
+                  iEEG, <code class="inline">pet2bids</code> for PET ECAT files
+                  and blood curves, and
+                  <code class="inline">bidsphysio</code> for the physiological
+                  signals stored inside Siemens MRI DICOM.
+                  You do not pick the engine; the row's format does.
                   Subjects stage in a private temp tree and commit
                   atomically; the Log dock streams every line, and re-runs
                   merge new data in safely.
@@ -679,7 +683,7 @@
         </div>
 
         <!-- 7. Understand a dataset before you change it -->
-        <div class="media-group">
+        <div class="media-group" id="dashboard">
           <div class="media-group-head">
             <h3>7. Understand a dataset before you change it</h3>
             <p>Two questions come before any edit: what is actually in here,
@@ -795,7 +799,7 @@
         </div>
 
         <!-- 9. Change the shape of a dataset -->
-        <div class="media-group">
+        <div class="media-group" id="restructure">
           <div class="media-group-head">
             <h3>9. Change the shape of a dataset</h3>
             <p>Sooner or later a converted dataset is the wrong shape. A task

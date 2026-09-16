@@ -1116,22 +1116,41 @@
         <div class="results-grid">
           <div class="results-card">
             <span class="results-card-eyebrow">Dose sheet skipped</span>
-            <strong class="results-card-num">6 / 61</strong>
+            <strong class="results-card-num">2 / 62</strong>
             <span class="results-card-label">errors / warnings</span>
-            <p class="muted">Five of the nine required fields have no value and
-              no sensible placeholder, so they are errors. The other four are
-              marked <code class="inline">TODO</code>, which is a warning rather
-              than an error but is not an answer either. The sixth error belongs
-              to the blood file, and is dealt with just below.</p>
+            <p class="muted">Seven of the nine unanswered fields hold text, so
+              the post-conversion chain marked them
+              <code class="inline">TODO</code>: a warning you can find again,
+              not an answer. The two that are left are errors because no
+              placeholder fits them, and one more error belongs to the blood
+              file. See the note below.</p>
           </div>
           <div class="results-card">
             <span class="results-card-eyebrow">Dose sheet filled in</span>
-            <strong class="results-card-num">0 / 58</strong>
+            <strong class="results-card-num">1 / 59</strong>
             <span class="results-card-label">errors / warnings</span>
-            <p class="muted">Filling exactly those nine, plus the one blood
-              question, clears every error. What is left is recommended, not
-              required: fields this study never recorded, most of them marked
-              <code class="inline">TODO</code> so you can find them again.</p>
+            <p class="muted">Filling those nine clears every error the scan
+              itself raised. The one that remains is the blood question below;
+              answer it and the count is <strong>0 / 59</strong>. What is left
+              is recommended, not required: fields this study never recorded.</p>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Why only two of the nine are errors.</strong>
+            <p>
+              A <code class="inline">TODO</code> placeholder is a piece of
+              text, so it can only stand in for a field whose value is text. A
+              number, a true or false, or a list has no placeholder that would
+              be valid, so those fields stay empty and stay errors. That is
+              why <code class="inline">ModeOfAdministration</code> reads
+              <code class="inline">TODO</code> and is a warning, while
+              <code class="inline">ReconMethodParameterValues</code>, which is
+              a list of numbers, is still an error. Both are unanswered; only
+              one of them could be marked as such.
+            </p>
           </div>
         </div>
 
@@ -1156,9 +1175,12 @@
               nothing standing in for the missing answers, every unanswered
               required field is reported on its own, and the totals read
               <strong>10 errors and 45 warnings</strong> before the dose sheet
-              and <strong>0 and 43</strong> after it. Ten, because the nine from
-              the dose sheet are joined by the one from the blood file. Same
-              dataset, a different question asked of it.
+              and <strong>1 and 43</strong> after it, going to
+              <strong>0 and 43</strong> once the blood question is answered.
+              Ten, because the nine from the dose sheet are joined by the one
+              from the blood file. Same dataset, a different question asked of
+              it, and it is the clearer one to look at if you want to see
+              exactly which nine fields this step is about.
             </p>
           </div>
         </div>
@@ -1166,8 +1188,8 @@
         <figure class="media-figure">
           <img class="feature-shot" loading="lazy"
                alt="A validation error with the schema rule it came from printed underneath"
-               src="assets/features/validation_provenance_dark.png"
-               data-light="assets/features/validation_provenance_light.png">
+               src="assets/features/validation_provenance_pet_dark.png"
+               data-light="assets/features/validation_provenance_pet_light.png">
           <figcaption>
             <strong>Every finding names its rule.</strong> The grey line under
             the message is the part of the BIDS schema the requirement is drawn
@@ -1180,11 +1202,16 @@
         <h3>The ECAT project, for comparison</h3>
         <p>
           Validate the other one and the arc is the same shape with different
-          numbers: <strong>9 errors and 45 warnings</strong> before its dose
-          sheet, <strong>0 and 38</strong> after, on a sidecar that grows from
-          50 fields to 59. Nine rather than five, because that header left more
-          out. Both datasets end at zero, which is the point: the format decided
-          how much you had to type, not whether you could finish.
+          numbers: <strong>4 errors and 47 warnings</strong> before its dose
+          sheet and <strong>0 and 39</strong> after, on a sidecar that grows
+          from 55 fields to 59. It has no blood file, so nothing is left over
+          at the end. Turn the placeholders off, as above, and the same two
+          runs read <strong>14 and 31</strong> before and
+          <strong>0 and 29</strong> after, on a sidecar that grows from 23
+          fields to 38: fifteen answers rather than the DICOM scan's nine,
+          because that header left more out. Both datasets end at zero, which
+          is the point. The format decided how much you had to type, not
+          whether you could finish.
         </p>
 
         <h3>The one question the blood file asks back</h3>

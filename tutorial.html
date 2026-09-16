@@ -784,8 +784,31 @@
         <span class="section-eyebrow">Step 4</span>
         <h2>Read the inventory</h2>
         <p>
-          One row per recording. Before changing anything, read what the scan
-          found. These are the columns that carry the most information.
+          One row per recording, whatever produced it. A PET DICOM series, a
+          Siemens physiological log, an EEGLAB file and a MEG FIF all arrive in
+          the same table with the same columns, which is what lets you curate a
+          multimodal study as one piece of work instead of four.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The inventory table with PET, MRI, physiological, EEG and MEG rows together, each with its format and confidence"
+               src="assets/features/multimodal_inventory_dark.png"
+               data-light="assets/features/multimodal_inventory_light.png">
+          <figcaption>
+            <strong>Four modalities, one table.</strong> Read down the
+            <em>format</em> column: DICOM, EEGLAB, FIF. Read down
+            <em>conf</em> and you can see how the classification was reached:
+            1.00 where the file format itself settles it, 0.85 where the
+            converter's own guess agreed with the schema, 0.45 where only the
+            sequence name suggested it. The low ones are the rows worth reading
+            before you convert.
+          </figcaption>
+        </figure>
+
+        <p>
+          Before changing anything, read what the scan found. These are the
+          columns that carry the most information.
         </p>
 
         <div class="table-wrap">
@@ -795,7 +818,7 @@
             </thead>
             <tbody>
               <tr><td>the tick box</td><td>Whether this row will be converted. Untick to leave it out.</td></tr>
-              <tr><td>the status dot</td><td>Valid, warning, error, skipped, or an object with no image data.</td></tr>
+              <tr><td>the status icon</td><td>Valid, warning, error, skipped, or an object with no image data. Hover it for the reason.</td></tr>
               <tr><td><code class="inline">id</code></td><td>The subject label this recording was grouped under.</td></tr>
               <tr><td><code class="inline">ses</code></td><td>The session, where there is one.</td></tr>
               <tr><td><code class="inline">data</code>, <code class="inline">suffix</code></td><td>The datatype and suffix the classifier decided on.</td></tr>
@@ -900,10 +923,37 @@
 
         <h3>Excluding what you do not want</h3>
         <p>
-          Untick the include box on anything that should not be in the dataset:
-          localisers, calibration scans, a run that was aborted and repeated.
-          The scan already excluded what it could recognise as unconvertible,
-          but only you know that the second T1w was the one worth keeping.
+          The first column of the table is a tick box, and it is the only thing
+          that decides whether a row becomes a file. Untick anything that should
+          not be in the dataset: localisers, calibration scans, a run that was
+          aborted and repeated. The scan already excluded what it could
+          recognise as unconvertible, but only you know that the second T1w was
+          the one worth keeping.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The inventory table with five rows ticked and four unticked, the unticked ones dimmed and showing no predicted name"
+               src="assets/features/inventory_include_dark.png"
+               data-light="assets/features/inventory_include_light.png">
+          <figcaption>
+            <strong>The answer is visible without reading the column.</strong>
+            A ticked row is bright and shows the name it will be written under.
+            An unticked one is dimmed and shows no name, because it is not going
+            to have one. Nothing is deleted and nothing is written: unticking is
+            a decision you can change until you press Run. The teal row is a
+            different case again, a DICOM object with no image in it, which the
+            scan set aside for you and explains on hover.
+          </figcaption>
+        </figure>
+
+        <p>
+          You can also work from the <strong>Filter / structure</strong> tree on
+          the left, which shows the same recordings grouped by subject, session
+          and datatype. Unticking a folder there unticks everything inside it,
+          which is how you drop a whole session or a whole datatype without
+          hunting for its rows in the table. It is one model shown two ways, so
+          a change in either is a change in both.
         </p>
 
         <h3>Editing many rows at once</h3>
@@ -1180,6 +1230,122 @@
           </figcaption>
         </figure>
 
+        <h3>What the form looks like for your data</h3>
+        <p>
+          The dialog is built from the standard and from what your scan found,
+          so it asks a different set of questions for each modality. Pick yours:
+        </p>
+
+        <div class="tabs" data-tabs>
+          <div class="tab-buttons" role="tablist" aria-label="The template by modality">
+            <button class="tab-btn is-active" data-tab="t-mri"
+                    role="tab" aria-selected="true">MRI</button>
+            <button class="tab-btn" data-tab="t-eeg"
+                    role="tab" aria-selected="false">EEG</button>
+            <button class="tab-btn" data-tab="t-meg"
+                    role="tab" aria-selected="false">MEG</button>
+            <button class="tab-btn" data-tab="t-pet"
+                    role="tab" aria-selected="false">PET</button>
+          </div>
+
+          <div class="tab-panel is-active" data-panel="t-mri" role="tabpanel">
+            <p>
+              MRI is the modality that asks you for least, because a DICOM
+              header states most of what BIDS wants. Nearly everything arrives
+              in the green block already answered, and your job is to read it
+              rather than type it.
+            </p>
+            <figure class="media-figure">
+              <img class="feature-shot" loading="lazy"
+                   alt="The MRI section of the template with the green already-answered block open, showing 29 fields filled from the DICOM header"
+                   src="assets/features/template_mri_dark.png"
+                   data-light="assets/features/template_mri_light.png">
+              <figcaption>
+                <strong>Twenty-nine fields you do not have to type.</strong>
+                This is the <em>Already answered by the conversion</em> block
+                opened up on an anatomical section: manufacturer, model, coil,
+                field strength, echo and inversion times, the institution, all
+                read out of the DICOM header. It is folded away by default
+                because the form is about what is still missing, and it is
+                editable rather than read-only because when the header is wrong
+                this is the only place to correct it.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="tab-panel" data-panel="t-eeg" role="tabpanel">
+            <p>
+              EEG is the opposite case. An EEG header records the signal and
+              very little about the setup, so the standard's three required
+              fields have to come from you.
+            </p>
+            <figure class="media-figure">
+              <img class="feature-shot" loading="lazy"
+                   alt="The EEG section of the template, with red asterisks on EEGReference, PowerLineFrequency and SoftwareFilters"
+                   src="assets/features/template_eeg_dark.png"
+                   data-light="assets/features/template_eeg_light.png">
+              <figcaption>
+                <strong>Three red asterisks at the top.</strong>
+                <code class="inline">EEGReference</code>,
+                <code class="inline">PowerLineFrequency</code> and
+                <code class="inline">SoftwareFilters</code> are required and no
+                file states them, so nothing can fill them but you. Below them,
+                amber dots mark what the standard recommends: the cap, the
+                ground, the device, the institution. Answer them here and every
+                EEG recording in the dataset carries the same answer.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="tab-panel" data-panel="t-meg" role="tabpanel">
+            <p>
+              MEG sits in between. <code class="inline">mne-bids</code> derives
+              the channel counts, the sampling rate and the head-coil fields
+              from the recording, so the template asks only for what the file
+              genuinely cannot say.
+            </p>
+            <figure class="media-figure">
+              <img class="feature-shot" loading="lazy"
+                   alt="The MEG section of the template, asking for dewar position, associated empty room and subject artefacts"
+                   src="assets/features/template_meg_dark.png"
+                   data-light="assets/features/template_meg_light.png">
+              <figcaption>
+                <strong>Only what the file cannot say.</strong> Dewar position,
+                which noise recording belongs to this session, and anything in
+                the subject that shows up in the data, such as dental work.
+                Notice what is <em>not</em> asked: the channel counts, the
+                digitised head points and the head-coil frequencies are all
+                derived from the recording, so asking for them would only invite
+                a second, disagreeing answer.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="tab-panel" data-panel="t-pet" role="tabpanel">
+            <p>
+              PET asks the most, and not because the format is poor. The numbers
+              BIDS requires, injected dose and mass, specific activity, how the
+              tracer was given, are recorded on a dose sheet at the scanner and
+              never enter the image file at all.
+            </p>
+            <figure class="media-figure">
+              <img class="feature-shot" loading="lazy"
+                   alt="The PET groups of the template: radiochemistry, dosage, reconstruction and blood"
+                   src="assets/features/pet_template_groups_dark.png"
+                   data-light="assets/features/pet_template_groups_light.png">
+              <figcaption>
+                <strong>Grouped the way the standard groups them.</strong>
+                Radiochemistry, dosage, the reconstruction, and, when you have
+                linked blood curves, a section for those. Each field carries the
+                standard's own description, which is worth reading here more
+                than anywhere else: the units for dose and specific activity are
+                easy to get wrong, and a wrong unit produces a number that looks
+                plausible.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -1242,70 +1408,132 @@
         <span class="section-eyebrow">Step 9</span>
         <h2>Attach companion and blood files</h2>
         <p>
-          Some of what belongs in a BIDS dataset is not produced by the
-          scanner. Events written by your stimulus software, behavioural logs,
-          stimulus files, and for PET the arterial blood curves. These are
-          attached to the recording they belong to, one row at a time, in the
-          properties panel.
+          Some of what belongs in a BIDS dataset never passes through the
+          scanner. The events your stimulus software wrote, a behavioural log,
+          the stimulus files themselves, a channel table somebody corrected by
+          hand, the electrode positions a digitiser produced, and for PET the
+          arterial blood curves. BIDS has a place for all of them, and the
+          software cannot invent any of them, so this is the step where you say
+          which file goes with which recording.
         </p>
-        <div class="tabs" data-tabs>
-          <div class="tab-buttons" role="tablist" aria-label="Companion files by modality">
-            <button class="tab-btn is-active" data-tab="pet"
-                    role="tab" aria-selected="true">PET blood</button>
-            <button class="tab-btn" data-tab="eegmeg"
-                    role="tab" aria-selected="false">EEG and MEG</button>
-          </div>
+        <p>
+          Every row can carry companions, whatever it holds.
+          <strong>Companions are not an EEG feature or a PET feature.</strong>
+          An MRI functional run has events, a behavioural session has a
+          <code class="inline">_beh.tsv</code> and no image at all, and a
+          physiological recording can arrive as a separate file. Select a row,
+          then find <strong>COMPANION FILES</strong> in the properties panel on
+          the right.
+        </p>
 
-          <div class="tab-panel is-active" data-panel="pet" role="tabpanel">
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The companion files section of the properties panel, with a kind dropdown, a Link file button and a Remove button"
+               src="assets/features/companion_files_dark.png"
+               data-light="assets/features/companion_files_light.png">
+          <figcaption>
+            <strong>On every row, whatever the modality.</strong> Pick the kind,
+            choose the file, and it is copied into the dataset when the
+            conversion runs, renamed to match the recording it belongs to. You
+            never type the destination name: it is the recording's own name with
+            the companion's suffix, so it cannot drift out of step.
+          </figcaption>
+        </figure>
+
+        <h3>The six kinds, and when you would use each</h3>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Kind</th><th>What it is</th><th>Typical source</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code class="inline">events</code></td>
+                <td>What happened during the run and when. Onsets, durations and
+                  condition labels.</td>
+                <td>Presentation, PsychoPy, E-Prime, a lab script</td>
+              </tr>
+              <tr>
+                <td><code class="inline">beh</code></td>
+                <td>Behavioural measures for a task: responses, accuracy,
+                  reaction times. Can also stand alone as a run with no imaging
+                  data.</td>
+                <td>The same stimulus software, or a questionnaire tool</td>
+              </tr>
+              <tr>
+                <td><code class="inline">stim</code></td>
+                <td>A continuous stimulus trace sampled alongside the recording,
+                  such as an audio envelope or a video luminance signal.</td>
+                <td>The stimulus computer</td>
+              </tr>
+              <tr>
+                <td><code class="inline">physio</code></td>
+                <td>Continuous physiological signals: pulse, respiration, skin
+                  conductance. Only needed when they are a separate file.
+                  Siemens physio stored inside the DICOM is converted for you
+                  and needs no link.</td>
+                <td>BIOPAC, a pulse oximeter, a respiration belt</td>
+              </tr>
+              <tr>
+                <td><code class="inline">channels</code></td>
+                <td>The channel table for an electrophysiology recording: name,
+                  type, units, status. Link one when you have corrected it by
+                  hand rather than accepting what the header says.</td>
+                <td>Your own quality control</td>
+              </tr>
+              <tr>
+                <td><code class="inline">electrodes</code></td>
+                <td>Where the electrodes actually were, in coordinates, which
+                  matters for source analysis and is not in most recordings.</td>
+                <td>A Polhemus or optical digitiser</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>You do not have to link the obvious ones.</strong>
             <p>
-              Select the PET run, then find <strong>BLOOD SAMPLING</strong> in
-              the properties panel. Three curves are linked separately: whole
-              blood, plasma, and parent fraction, read from PMOD
-              <code class="inline">.bld</code> exports.
-            </p>
-            <p>
-              For each, say whether the samples were drawn <strong>manually</strong>
-              or by an <strong>autosampler</strong>. This is not a formality:
-              hand-drawn and autosampled series have different time resolution,
-              so BIDS writes them into separate files, and your choice decides
-              which file each curve lands in.
-            </p>
-            <p>
-              After conversion you get
-              <code class="inline">sub-001_trc-FDG_run-1_recording-manual_blood.tsv</code>
-              and its sidecar, carrying the run's own entities so a subject with
-              two tracers gets two distinct sets rather than two files competing
-              for one name. The data dictionary is generated from the table that
-              was actually written, and the availability flags follow from what
-              you linked, so you are never asked to state them.
-            </p>
-            <p>
-              Linking blood also adds an <em>every
-              <code class="inline">*_blood.json</code></em> section to the
-              dataset template, asking for what the curves cannot tell you:
-              whether the plasma was dispersion corrected, which BIDS requires,
-              the withdrawal rate, the tubing, the haematocrit. If you linked a
-              parent fraction curve it also asks how metabolites were measured,
-              because that requirement applies only when metabolite data exists.
-            </p>
-          </div>
-          <div class="tab-panel" data-panel="eegmeg" role="tabpanel">
-            <p>
-              Events, behavioural logs and stimulus files are linked as
-              companions and copied into the dataset beside the recording, named
-              correctly for it. Pick the role, choose the file, and it is placed
-              when the conversion runs.
-            </p>
-            <p>
-              Event codes are a common case worth handling here. A recording
-              often carries numeric trigger codes rather than labels, and only
-              you know that code 3 was the target condition. The recording
-              metadata dialog takes those labels once for the dataset, and the
-              conversion writes them into <code class="inline">events.tsv</code>
-              and its sidecar.
+              A companion that already sits beside the recording in a form the
+              converter understands is picked up on its own: the channel table
+              and sidecar that <code class="inline">mne-bids</code> writes from
+              an EEG or MEG header, the <code class="inline">.bval</code> and
+              <code class="inline">.bvec</code> that come out of a diffusion
+              series, the physiological trace stored inside a Siemens DICOM.
+              This step is for the files that live somewhere else, in a format
+              nothing can guess.
             </p>
           </div>
         </div>
+
+        <h3>Event codes, while you are here</h3>
+        <p>
+          A recording usually carries numeric trigger codes rather than labels,
+          and only you know that code 3 was the target condition. You do not
+          link a file for that: the recording metadata dialog takes the labels
+          once for the whole dataset, and the conversion writes them into
+          <code class="inline">events.tsv</code> and its sidecar, so every run
+          gets the same vocabulary.
+        </p>
+
+        <h3>PET blood is a companion too, but it is converted</h3>
+        <p>
+          Blood curves have their own section, <strong>BLOOD SAMPLING</strong>,
+          because they are the one companion that is not simply copied. A PMOD
+          <code class="inline">.bld</code> export is read, merged and rewritten
+          as a BIDS blood table, with the sample times converted to seconds.
+          Three curves are linked separately: whole blood, plasma, and parent
+          fraction.
+        </p>
+        <p>
+          For each, say whether the samples were drawn <strong>manually</strong>
+          or by an <strong>autosampler</strong>. This is not a formality:
+          hand-drawn and autosampled series have different time resolution, so
+          BIDS writes them into separate files, and your choice decides which
+          file each curve lands in.
+        </p>
 
         <figure class="media-figure">
           <img class="feature-shot" loading="lazy"
@@ -1313,15 +1541,33 @@
                src="assets/features/pet_blood_linking_dark.png"
                data-light="assets/features/pet_blood_linking_light.png">
           <figcaption>
-            <strong>Attaching blood data to a PET run.</strong> The three curves the
-            standard recognises, whole blood, plasma and parent fraction, are linked
-            separately, and each is marked as manually drawn or taken by an
-            autosampler. That answer is not cosmetic: it decides an entity in the
-            filename, so the preview changes to <code
-            class="inline">recording-manual</code> or <code
-            class="inline">recording-autosampler</code> as you set it.
+            <strong>Attaching blood data to a PET run.</strong> The three curves
+            the standard recognises are linked separately, and each is marked as
+            manually drawn or taken by an autosampler. That answer is not
+            cosmetic: it decides an entity in the filename, so the preview
+            changes to <code class="inline">recording-manual</code> or
+            <code class="inline">recording-autosampler</code> as you set it.
           </figcaption>
         </figure>
+
+        <p>
+          After conversion you get
+          <code class="inline">sub-001_trc-FDG_run-1_recording-manual_blood.tsv</code>
+          and its sidecar, carrying the run's own entities so a subject with two
+          tracers gets two distinct sets rather than two files competing for one
+          name. The data dictionary is generated from the table that was
+          actually written, and the availability flags follow from what you
+          linked, so you are never asked to state them.
+        </p>
+        <p>
+          Linking blood also adds an <em>every
+          <code class="inline">*_blood.json</code></em> section to the dataset
+          template, asking for what the curves cannot tell you: whether the
+          plasma was dispersion corrected, which BIDS requires, the withdrawal
+          rate, the tubing, the haematocrit. If you linked a parent fraction
+          curve it also asks how metabolites were measured, because that
+          requirement applies only when metabolite data exists.
+        </p>
 
       </div>
     </section>
@@ -1464,6 +1710,16 @@
             </tbody>
           </table>
         </div>
+
+        <p>
+          For the other half of the question, what you actually ended up with,
+          the Editor has a <strong>Dashboard</strong> under Tools: how many
+          subjects, which modalities, how much of the metadata each one has
+          answered, and which subject is the odd one out. The log says what
+          happened; the dashboard says what you have. It is covered in
+          <a href="gui-tour.html#dashboard">the GUI tour</a>, and you will use it
+          in a moment.
+        </p>
 
         <p><strong>What you should see now:</strong> a populated BIDS dataset
           on disk, and the Editor tab ready to open it.</p>
@@ -1920,17 +2176,37 @@
           needs no attention.
         </p>
 
+        <div class="callout callout-info">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Two different threes, and they are easy to confuse.</strong>
+            <p>
+              The <em>buttons</em> choose how much gets checked: this file, this
+              folder, or the whole dataset. The <em>sections in the pane</em>
+              say what each finding is about. You can validate the whole dataset
+              and still see a zero beside the dataset section, because
+              practically every rule in the standard is a rule about one file.
+              In normal use the file section is where the work is, and a number
+              beside dataset means something structural: a table that describes
+              nothing, a file the standard cannot place.
+            </p>
+          </div>
+        </div>
+
         <figure class="media-figure">
           <img class="feature-shot" loading="lazy"
                alt="The validation pane showing the dataset, folder and file scopes each with a count"
-               src="assets/features/validation_dataset_scope_dark.png"
-               data-light="assets/features/validation_dataset_scope_light.png">
+               src="assets/features/validation_scopes_dark.png"
+               data-light="assets/features/validation_scopes_light.png">
           <figcaption>
-            <strong>Three scopes, one pane.</strong> Reading from the top: what is
-            wrong with the dataset, what is wrong with this folder, what is wrong
-            with this file. The tree on the left carries the same information as a
-            count per file, so you can find the problem files, and the worst of
-            them, without clicking through every one.
+            <strong>Three scopes, one pane.</strong> Reading from the top:
+            what is wrong with the dataset, what is wrong with this folder, what
+            is wrong with this file. Here the dataset section is not empty
+            because a sidecar in it describes a data file that is not there,
+            which is nobody's file in particular. The tree on the left carries
+            the per-file half of the same information, so you can find the
+            problem files, and the worst of them, without clicking through every
+            one.
           </figcaption>
         </figure>
 
@@ -1995,13 +2271,15 @@
                src="assets/features/validation_sidecar_error_dark.png"
                data-light="assets/features/validation_sidecar_error_light.png">
           <figcaption>
-            <strong>Two type errors on one sidecar.</strong>
-            <code class="inline">HeadCircumference</code> must be a number and
-            <code class="inline">HardwareFilters</code> must be an object or a
-            string. Each finding carries the standard's description of the field
-            and an example of a correct value, so the fix does not require looking
-            anything up. The amber finding below them is a different thing
-            entirely: a field still holding <code class="inline">TODO</code>.
+            <strong>A type error inside a sidecar.</strong>
+            <code class="inline">SamplingFrequency</code> holds
+            <code class="inline">"160 Hz"</code> where the standard declares a
+            number. It reads correctly to a person and is the wrong type to
+            every tool, which is the kind of mistake no filename check can
+            catch. The finding carries the field's own description and an
+            example of a correct value, so the fix does not require looking
+            anything up. The amber finding below it is a different thing
+            entirely: a recommended field nobody has answered.
           </figcaption>
         </figure>
 
@@ -2493,8 +2771,9 @@
         <p>
           Reads the inventory and converts every keeper row to BIDS using
           the right backend per modality
-          (<code class="inline">dcm2niix</code> for DICOM,
+          (<code class="inline">dcm2niix</code> for DICOM including PET DICOM,
           <code class="inline">mne-bids</code> for EEG / MEG / iEEG,
+          <code class="inline">pet2bids</code> for PET ECAT and blood curves,
           <code class="inline">bidsphysio</code> for Siemens CMRR physio).
           Stages each subject privately, then atomic-renames into the BIDS
           root. Re-running merges new subjects and sessions in safely. With

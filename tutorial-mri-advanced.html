@@ -140,7 +140,7 @@
         </div>
 
         <p>
-          The scan produces 51 rows: 32 keepers and 19 skipped.
+          The scan produces 51 rows: 29 keepers and 22 skipped.
         </p>
       </div>
     </section>
@@ -418,27 +418,55 @@
         <div class="results-grid">
           <div class="results-card">
             <span class="results-card-eyebrow">Scan</span>
-            <strong class="results-card-num">51 / 19</strong>
+            <strong class="results-card-num">51 / 22</strong>
             <span class="results-card-label">rows / skipped</span>
-            <p class="muted">32 keepers across both subjects. The 19 skipped are
+            <p class="muted">29 keepers across both subjects. The 22 skipped are
               localiser variants, report objects and calibrations. With probe
               convert on, about 30 seconds.</p>
           </div>
           <div class="results-card">
             <span class="results-card-eyebrow">Convert</span>
-            <strong class="results-card-num">32 + 9</strong>
+            <strong class="results-card-num">32 + 12</strong>
             <span class="results-card-label">images + physio tables</span>
-            <p class="muted">32 NIfTI files across anat, func, dwi and fmap, 9
-              physiological tables, 44 sidecars. Three physiological rows fail
-              cleanly and are reported.</p>
+            <p class="muted">32 NIfTI files across anat, func, dwi and fmap,
+              12 physiological tables, six gradient table pairs, and 46
+              sidecars. No failures.</p>
           </div>
           <div class="results-card">
             <span class="results-card-eyebrow">Validate</span>
-            <strong class="results-card-num">75 / 5 / 0</strong>
+            <strong class="results-card-num">13 / 253 / 2</strong>
             <span class="results-card-label">ok / warn / err</span>
-            <p class="muted">No errors. The 5 warnings are licence and authors,
-              plus task descriptions and instructions on the functional
-              sidecars.</p>
+            <p class="muted">Counts are per finding, not per file: 161 of the
+              warnings are one <code class="inline">TODO</code> placeholder
+              each. The two errors belong to the diffusion derivatives and are
+              explained below; they are the reason this dataset is the advanced
+              one.</p>
+          </div>
+        </div>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Both errors are gradient tables beside a scanner
+              derivative.</strong>
+            <p>
+              The scanner produced a trace-weighted image alongside the
+              diffusion series, and <code class="inline">dcm2niix</code> wrote a
+              <code class="inline">.bval</code> and a
+              <code class="inline">.bvec</code> next to it as it does for any
+              diffusion output. BIDS allows those two extensions beside a
+              <code class="inline">_dwi</code> image and not beside a
+              <code class="inline">_trace</code> one, because a derivative has
+              no gradient table of its own to describe. So the files are real,
+              the names are right, and the pairing is not allowed.
+            </p>
+            <p>
+              The fix is to delete the two files:
+              <strong>Tools &rarr; Delete...</strong> in the Editor, or untick
+              the trace row before converting if you do not want the derivative
+              at all. Nothing else in the dataset refers to them, which the
+              delete preview will confirm before it does anything.
+            </p>
           </div>
         </div>
       </div>

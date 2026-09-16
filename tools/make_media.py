@@ -151,16 +151,30 @@ def _grab(app, widget, path: Path, width: int, height: int, *,
     app.processEvents()
     if expand:
         from bidsmgr.gui.widgets.template_form import CollapsibleSection
-        for section in widget.findChildren(CollapsibleSection):
-            section.set_expanded(True)
-        app.processEvents()
-        app.processEvents()
-    from PyQt6.QtWidgets import QLabel, QScrollArea
+        # Twice. Expanding an outer section BUILDS the sections nested inside
+        # it, so a single pass opens the parents and leaves every child folded,
+        # which is how a figure of the "already answered" block ended up
+        # showing its collapsed header and the next section's empty fields.
+        for _ in range(3):
+            found = [x for x in widget.findChildren(CollapsibleSection)
+                     if not x.is_expanded()] if hasattr(
+                         CollapsibleSection, "is_expanded") else \
+                    widget.findChildren(CollapsibleSection)
+            if not found:
+                break
+            for section in found:
+                section.set_expanded(True)
+            app.processEvents()
+            app.processEvents()
+    from PyQt6.QtWidgets import QAbstractButton, QLabel, QScrollArea
     area = widget.findChild(QScrollArea)
     if scroll_to is not None and area is not None:
+        # Labels AND buttons: a collapsible section's title is a button, so
+        # searching only labels silently left the view at the top.
+        candidates = widget.findChildren(QLabel) + widget.findChildren(QAbstractButton)
         target = next(
-            (lb for lb in widget.findChildren(QLabel)
-             if scroll_to.lower() in lb.text().lower()), None)
+            (w for w in candidates
+             if scroll_to.lower() in (w.text() or "").lower()), None)
         if target is None:
             print(f"  (no label matching {scroll_to!r}; leaving at top)")
         else:
@@ -305,11 +319,26 @@ def inventory_collisions(app, theme: str) -> None:
           OUT / f"name_collision_red_{theme}.png", 1080, 26 * (len(sub) + 2))
 
 
-def _dialog(modalities, pairs, counts, examples):
+# The scaffold a real scan writes beside its inventory. It carries the
+# ``converter_preview`` block, which is what the template shows folded away as
+# "Already answered by the conversion". Built from a scratch file the dialog
+# has nothing to show there, and a figure about that block shows an empty one.
+SCAFFOLD = INVENTORIES["multimodal"].with_suffix(".tsv.recording_meta.json")
+
+
+def _dialog(modalities, pairs, counts, examples, *, scaffold=True):
+    """The dataset metadata dialog, on a copy of a real scan's scaffold.
+
+    The copy matters: the dialog writes to the path it is given on Save, and
+    a figure should never be one keystroke away from editing the test data.
+    """
     from bidsmgr.gui.recording_meta_dialog import RecordingMetaDialog
-    scratch = Path(tempfile.mkdtemp())
+    import shutil
+    scratch = Path(tempfile.mkdtemp()) / "meta.recording_meta.json"
+    if scaffold and SCAFFOLD.exists():
+        shutil.copyfile(SCAFFOLD, scratch)
     return RecordingMetaDialog(
-        scratch / "meta.recording_meta.json", modalities, None,
+        scratch, modalities, None,
         present_pairs=pairs, pair_counts=counts, example_paths=examples,
     )
 
@@ -373,16 +402,6 @@ def template_pet(app, theme: str) -> None:
           expand=True, scroll_to="AcquisitionMode")
 
 
-def inventory_pet_sample(app, theme: str) -> None:
-    """The PET tutorial's own download: one scan, one row."""
-    df = _read("pet-sample")
-    cols = ["include", "status", "id", "datatype", "suffix", "conf",
-            "source_folder", "format", "n_files", "sequence", "basename"]
-    wide = {"source_folder": 170, "sequence": 170, "basename": 190}
-    _grab(app, _inventory_table(df, cols, wide),
-          OUT / f"pet_sample_inventory_{theme}.png", 1090, 26 * (len(df) + 2))
-
-
 def properties_pet(app, theme: str) -> None:
     """The per-row PET panel, where a dataset answer is overridden."""
     df = _read("pet-sample")
@@ -408,6 +427,34 @@ def properties_eeg(app, theme: str) -> None:
         return
     _grab(app, _panel(row), OUT / f"eeg_properties_{theme}.png", 460, 800,
           expand=True, scroll_to="REFERENCE")
+
+
+def properties_companions(app, theme: str) -> None:
+    """The companion-file section, which is on EVERY row, not just EEG or PET.
+
+    The tutorial used to present companions through a PET tab and an EEG tab,
+    which reads as though they were a feature of those two modalities. The
+    section is modality-agnostic and offers six kinds, and the dropdown is the
+    quickest way to show that.
+    """
+    from PyQt6.QtWidgets import QComboBox
+    df = _read("multimodal")
+    row = df[df["proposed_datatype"] == "func"].head(1)
+    if row.empty:
+        row = df.head(1)
+    panel = _panel(row)
+    panel.resize(470, 900)
+    panel.show()
+    app.processEvents()
+    # Open the suffix dropdown so the six kinds are on screen. A closed combo
+    # shows one word and teaches nothing.
+    combo = getattr(panel, "_companion_suffix", None)
+    if isinstance(combo, QComboBox):
+        combo.showPopup()
+        for _ in range(4):
+            app.processEvents()
+    _grab(app, panel, OUT / f"companion_files_{theme}.png", 470, 300,
+          scroll_to="COMPANION")
 
 
 def inventory_eeg(app, theme: str) -> None:
@@ -451,7 +498,26 @@ def inventory_skipped(app, theme: str) -> None:
     cols = ["include", "status", "id", "ses", "datatype", "suffix",
             "conf", "sequence", "basename", "proposed_issues"]
     _grab(app, _inventory_table(sub, cols, {"sequence": 250, "proposed_issues": 230}),
-          OUT / f"inventory_skipped_{theme}.png", 1320, 26 * (len(sub) + 2))
+          OUT / f"inventory_skipped_{theme}.png", 1320, 25 * (len(sub) + 2))
+
+
+def inventory_include(app, theme: str) -> None:
+    """The include column, with the decision half made.
+
+    The curation step is where a reader decides what converts, and the page
+    described it in prose with no picture of the control. This is that column,
+    on a mix of rows: two localisers the user has just unticked, and the
+    recordings that are staying. The row state follows the tick, so the answer
+    is visible without reading the column.
+    """
+    df = _read("multimodal")
+    kept = df[(df["include"].astype(str) == "1")].head(5)
+    off = df[(df["include"].astype(str) == "0")].head(4)
+    sub = pd.concat([kept, off]).reset_index(drop=True)
+    cols = ["include", "status", "id", "ses", "datatype", "suffix",
+            "sequence", "basename"]
+    _grab(app, _inventory_table(sub, cols, {"sequence": 270, "basename": 300}),
+          OUT / f"inventory_include_{theme}.png", 1180, 25 * (len(sub) + 2))
 
 
 def _badges(root: Path, report):
@@ -745,7 +811,7 @@ def sidecar_form_pet(app, theme: str) -> None:
     conversion.
     """
     from bidsmgr.gui.widgets.sidecar_form_pane import SidecarFormPane
-    root = DATA / "testing_pet_sample" / "pet_tutorial"
+    root = DATA / "pet_tutorial_dicom"
     target = root / "sub-001" / "pet" / "sub-001_pet.json"
     if not target.exists():
         print("  (no converted PET sample; skipping)")
@@ -843,12 +909,18 @@ def _file_with_rule(report, rule_id: str):
 
 
 def _pane_shot(app, theme, dataset, out_name, *, rule=None, rel=None,
-               width=520, height=520, base=None, flag_todos=True):
+               width=520, height=520, base=None, flag_todos=True,
+               scroll_to="FILE \u00b7"):
     """Render the validation pane on a real dataset, at a chosen file.
 
     ``flag_todos=False`` drops the TODO-placeholder warnings, which is how a
     figure about one KIND of finding shows that kind rather than a wall of
     unfinished metadata underneath it.
+
+    ``scroll_to`` defaults to the FILE section because the pane opens on the
+    dataset and folder sections, and a figure about a finding in a file
+    otherwise shows two other sections and not the finding. Pass ``None`` for a
+    figure that is genuinely about the top of the pane.
     """
     root = (base or BIDS) / dataset
     if not root.exists():
@@ -863,36 +935,207 @@ def _pane_shot(app, theme, dataset, out_name, *, rule=None, rel=None,
             return
         target = hit.path
     _grab(app, _pane(report, root, target),
-          OUT / f"{out_name}_{theme}.png", width, height)
+          OUT / f"{out_name}_{theme}.png", width, height, scroll_to=scroll_to)
 
 
-def validation_dataset(app, theme: str) -> None:
-    """The three scopes, on a dataset whose findings are dataset-level."""
-    root = BIDS / "ds_pet"
+def _file_with_provenance(report, *, severity=None, folder_only=False):
+    """A file carrying a finding that NAMES the schema rule it came from.
+
+    Not every finding has one. The structural checks (a sidecar describing no
+    data file, a file in a folder that is not a datatype) are bidsval's own
+    rules and have no path into the standard to print, so a figure about
+    provenance rendered on the first finding it found showed one with no
+    provenance line at all. This picks a finding that actually has one.
+    """
+    for f in report.files:
+        if folder_only and "/" not in str(f.path):
+            continue
+        for i in f.issues:
+            if getattr(i, "mirrored", False):
+                continue
+            if not getattr(i, "schema_rule", None):
+                continue
+            if severity and i.severity.value != severity:
+                continue
+            return f, i
+    return None, None
+
+
+def validation_provenance_pet(app, theme: str) -> None:
+    """The same idea on a PET sidecar, where the rule paths earn their keep.
+
+    PET has around forty sidecar fields and the rules for units and timing are
+    easy to misread, so the PET page needs a PET rule path rather than an EEG
+    one borrowed from another chapter.
+    """
+    root = DATA / "pet_tutorial_dicom"
     if not root.exists():
-        print("  (ds_pet missing; skipping)")
+        print("  (no converted PET sample; skipping)")
         return
-    report = _report(root)
-    _grab(app, _pane(report, root), OUT / f"validation_dataset_scope_{theme}.png",
-          520, 560)
+    report = _report(root, flag_todos=False)
+    hit, issue = _file_with_provenance(report, folder_only=True)
+    if hit is None:
+        print("  (no PET finding carries a schema rule; skipping)")
+        return
+    print(f"    (showing {issue.rule_id} from {issue.schema_rule})")
+    _grab(app, _pane(report, root, hit.path),
+          OUT / f"validation_provenance_pet_{theme}.png", 560, 470,
+          scroll_to="FILE \u00b7")
+
+
+def validation_scopes(app, theme: str) -> None:
+    """The pane's three sections, with the dataset one actually populated."""
+    if not (DATA / "multimodal_tutorial").exists():
+        print("  (no tutorial dataset; skipping)")
+        return
+    root = _scopes_demo()
+    report = _report(root, flag_todos=False)
+    hit, _ = _file_with_provenance(report, folder_only=True)
+    if hit is None:
+        print("  (no nested file with findings; skipping)")
+        return
+    _grab(app, _pane(report, root, hit.path),
+          OUT / f"validation_scopes_{theme}.png", 560, 900)
+
+
+def _bad_scans_demo():
+    """A copy whose scans table holds one malformed timestamp.
+
+    Broken by hand, because that is how it happens: a spreadsheet, an export,
+    a careless edit. Every filename stays valid, so no naming check can see it,
+    which is the whole point of the figure.
+    """
+    root = _demo_copy("bad_scans_demo")
+    for tsv in sorted(root.rglob("*_scans.tsv")):
+        lines = tsv.read_text().splitlines()
+        if len(lines) < 2 or "acq_time" not in lines[0].split("\t"):
+            continue
+        col = lines[0].split("\t").index("acq_time")
+        cells = lines[1].split("\t")
+        if len(cells) <= col:
+            continue
+        # A real timestamp with the seconds left unpadded, which reads as a
+        # time to a person and is not a valid date-time to the standard.
+        cells[col] = "2009-10-02T08:50:3"
+        lines[1] = "\t".join(cells)
+        tsv.write_text("\n".join(lines) + "\n")
+        return root
+    return root
 
 
 def validation_error(app, theme: str) -> None:
-    """A value inside a table that is the wrong type."""
-    _pane_shot(app, theme, "ds_MRI", "validation_provenance",
-               rule="TSV_VALUE_INCORRECT_TYPE", height=430)
+    """A value inside a table that is the wrong type, with its rule path.
+
+    Five pages caption this asset as "the rule in the BIDS schema the
+    requirement is drawn from", so it has to be a finding that HAS one, AND it
+    has to be scrolled to that finding: rendered at the top of the pane it
+    showed a dataset-level error with no rule path, which is the opposite of
+    what every one of those captions claims.
+    """
+    if not (DATA / "multimodal_tutorial").exists():
+        print("  (no tutorial dataset; skipping)")
+        return
+    root = _bad_scans_demo()
+    report = _report(root, flag_todos=False)
+    hit = _file_with_rule(report, "TSV_VALUE_INCORRECT_TYPE")
+    if hit is None:
+        print("  (no malformed table value; skipping)")
+        return
+    _grab(app, _pane(report, root, hit.path),
+          OUT / f"validation_provenance_{theme}.png", 560, 470,
+          scroll_to="FILE \u00b7")
+
+
+def _structural_demo():
+    """A copy with three structural mistakes in it, made the way people make
+    them: a datatype folder mistyped, a second one mistyped, and an entity
+    added to a filename that may not carry it.
+
+    Built here rather than kept as a folder on disk, because a hand-made
+    fixture goes missing and its builders then skip in silence, which is how
+    four figures on this site ended up years out of date.
+    """
+    root = _demo_copy("structural_demo")
+    ses = next((p for p in sorted(root.glob("sub-001/ses-*")) if (p / "anat").is_dir()), None)
+    if ses is None:
+        return root, None
+    (ses / "anat").rename(ses / "anatt")
+    if (ses / "func").is_dir():
+        (ses / "func").rename(ses / "funce")
+    return root, ses
+
+
+def _bad_entity_demo():
+    """A copy where an EEG recording carries an entity EEG may not have."""
+    root = _demo_copy("bad_entity_demo")
+    target = None
+    for rec in sorted(root.rglob("*_eeg.*")):
+        if rec.suffix in (".json", ".tsv"):
+            continue
+        stem = rec.name.rsplit("_eeg", 1)[0]
+        for sib in sorted(rec.parent.glob(stem + "_eeg.*")):
+            new = sib.with_name(sib.name.replace("_eeg", "_echo-1_eeg"))
+            sib.rename(new)
+            if sib is rec:
+                target = new
+        target = target or rec.parent / (stem + "_echo-1_eeg" + rec.suffix)
+        break
+    return root, target
+
+
+def _events_demo():
+    """A copy with one events table removed, so its recording has none."""
+    root = _demo_copy("events_demo")
+    target = None
+    for ev in sorted(root.rglob("*_events.tsv")):
+        stem = ev.name.rsplit("_events", 1)[0]
+        rec = next((p for p in sorted(ev.parent.glob(stem + "_*"))
+                    if p.suffix not in (".json", ".tsv")), None)
+        if rec is None:
+            continue
+        ev.unlink()
+        (ev.with_suffix(".json")).unlink(missing_ok=True)
+        target = rec
+        break
+    return root, target
+
+
+def _rel(root, path):
+    return str(path.relative_to(root)) if path else None
 
 
 def validation_warnings(app, theme: str) -> None:
     """Recommended fields nobody has answered, on the dataset description."""
-    _pane_shot(app, theme, "ds_MRI", "validation_warnings",
-               rel="dataset_description.json", height=600)
+    _pane_shot(app, theme, "multimodal_tutorial", "validation_warnings",
+               rel="dataset_description.json", base=DATA, flag_todos=False,
+               width=560, height=600)
 
 
 def validation_sidecar_error(app, theme: str) -> None:
     """An error inside a sidecar: a field holding the wrong kind of value."""
-    _pane_shot(app, theme, "ds_eeg", "validation_sidecar_error",
-               rule="JSON_SCHEMA_VALIDATION_ERROR", height=560)
+    import json
+    if not (DATA / "multimodal_tutorial").exists():
+        print("  (no tutorial dataset; skipping)")
+        return
+    root = _demo_copy("sidecar_error_demo")
+    sc = next((p for p in sorted(root.rglob("*_eeg.json"))), None)
+    if sc is None:
+        print("  (no EEG sidecar; skipping)")
+        return
+    doc = json.loads(sc.read_text())
+    # A sampling rate typed as text. Reads correctly to a person and is the
+    # wrong type to the standard, which is the point of the figure.
+    doc["SamplingFrequency"] = "160 Hz"
+    sc.write_text(json.dumps(doc, indent=2))
+    report = _report(root, flag_todos=False)
+    hit = _file_with_rule(report, "JSON_SCHEMA_VALIDATION_ERROR") or \
+        _file_with_rule(report, "SIDECAR_VALUE_INCORRECT_TYPE")
+    if hit is None:
+        print("  (no sidecar type error; skipping)")
+        return
+    _grab(app, _pane(report, root, hit.path),
+          OUT / f"validation_sidecar_error_{theme}.png", 560, 470,
+          scroll_to="FILE \u00b7")
 
 
 def validation_invalid_location(app, theme: str) -> None:
@@ -904,23 +1147,53 @@ def validation_invalid_location(app, theme: str) -> None:
     entity added to an EEG filename. TODO warnings are turned off so the figure
     shows the structural finding rather than a column of unfinished metadata.
     """
-    _pane_shot(app, theme, "ds_structural_demo", "invalid_location",
-               rel="sub-001/ses-01/anatt/sub-001_ses-01_acq-tfl3p2_T1w.nii.gz",
-               base=DATA, flag_todos=False, width=560, height=350)
+    if not (DATA / "multimodal_tutorial").exists():
+        print("  (no tutorial dataset; skipping)")
+        return
+    root, ses = _structural_demo()
+    if ses is None:
+        print("  (no anat folder to mistype; skipping)")
+        return
+    report = _report(root, flag_todos=False)
+    hit = _file_with_rule(report, "INVALID_LOCATION")
+    if hit is None:
+        print("  (no INVALID_LOCATION; skipping)")
+        return
+    _grab(app, _pane(report, root, hit.path),
+          OUT / f"invalid_location_{theme}.png", 560, 470,
+          scroll_to="FILE \u00b7")
 
 
 def validation_bad_entity(app, theme: str) -> None:
     """An entity the standard does not allow on this kind of file."""
-    _pane_shot(app, theme, "ds_structural_demo", "validation_bad_entity",
-               rel="sub-001/ses-01/eeg/sub-001_ses-01_task-rest_echo-1_eeg.edf",
-               base=DATA, flag_todos=False, width=560, height=360)
+    if not (DATA / "multimodal_tutorial").exists():
+        print("  (no tutorial dataset; skipping)")
+        return
+    root, target = _bad_entity_demo()
+    report = _report(root, flag_todos=False)
+    hit = _file_with_rule(report, "ENTITY_NOT_IN_RULE")
+    if hit is None:
+        print("  (no ENTITY_NOT_IN_RULE; skipping)")
+        return
+    _grab(app, _pane(report, root, hit.path),
+          OUT / f"validation_bad_entity_{theme}.png", 560, 470,
+          scroll_to="FILE \u00b7")
 
 
 def validation_broken_manifest(app, theme: str) -> None:
     """The knock-on effect: scans.tsv still lists the paths that moved."""
-    _pane_shot(app, theme, "ds_structural_demo", "validation_broken_manifest",
-               rel="sub-001/ses-01/sub-001_ses-01_scans.tsv",
-               base=DATA, flag_todos=False, width=560, height=350)
+    if not (DATA / "multimodal_tutorial").exists():
+        print("  (no tutorial dataset; skipping)")
+        return
+    root, ses = _structural_demo()
+    report = _report(root, flag_todos=False)
+    hit = _file_with_rule(report, "SCANS_FILENAME_NOT_MATCH_DATASET")
+    if hit is None:
+        print("  (no scans mismatch; skipping)")
+        return
+    _grab(app, _pane(report, root, hit.path),
+          OUT / f"validation_broken_manifest_{theme}.png", 560, 470,
+          scroll_to="FILE \u00b7")
 
 
 def validation_mm(app, theme: str) -> None:
@@ -929,9 +1202,16 @@ def validation_mm(app, theme: str) -> None:
     A whole four-modality dataset with nothing wrong in it, which is worth a
     figure of its own: every other validation image on the site is a failure.
     """
+    root = DATA / "multimodal_tutorial"
+    if not root.exists():
+        print("  (no tutorial dataset; skipping)")
+        return
+    report = _report(root, flag_todos=False)
+    hit = next((f for f in report.files
+                if str(f.path).endswith(".fif")), None)
     _pane_shot(app, theme, "multimodal_tutorial", "mm_validation",
-               rel="sub-001/ses-01/meg/sub-001_ses-01_task-rest_meg.fif",
-               base=DATA, flag_todos=False, width=560, height=360)
+               rel=str(hit.path) if hit else None,
+               base=DATA, flag_todos=False, width=560, height=470)
 
 
 def validation_missing_companion(app, theme: str) -> None:
@@ -943,9 +1223,18 @@ def validation_missing_companion(app, theme: str) -> None:
     its own, and they appeared stacked above the warning the caption was
     talking about.
     """
-    _pane_shot(app, theme, "ds_events_demo", "validation_missing_events",
-               rel="sub-001/ses-01/eeg/sub-001_ses-01_task-motorimagery_eeg.edf",
-               base=DATA, flag_todos=False, width=560, height=335)
+    if not (DATA / "multimodal_tutorial").exists():
+        print("  (no tutorial dataset; skipping)")
+        return
+    root, target = _events_demo()
+    report = _report(root, flag_todos=False)
+    hit = _file_with_rule(report, "EVENTS_TSV_MISSING")
+    if hit is None:
+        print("  (no EVENTS_TSV_MISSING; skipping)")
+        return
+    _grab(app, _pane(report, root, hit.path),
+          OUT / f"validation_missing_events_{theme}.png", 560, 470,
+          scroll_to="FILE \u00b7")
 
 
 def validation_pet_checks(app, theme: str) -> None:
@@ -956,8 +1245,8 @@ def validation_pet_checks(app, theme: str) -> None:
     """
     PET_RULES = ("PET_FRAME_CONSISTENCY", "bidsmgr.pet.time_zero_format",
                  "bidsmgr.pet.recon_parameter_length_mismatch")
-    for ds in ("ds_pets", "ds_pet3"):
-        root = BIDS / ds
+    for ds in ("pet_tutorial_dicom", "pet_tutorial_ecat"):
+        root = DATA / ds
         if not root.exists():
             continue
         report = _report(root)
@@ -1263,7 +1552,6 @@ def editor_tools_menu(app, theme: str) -> None:
 ASSETS = {
     "inventory-multimodal": inventory_multimodal,
     "inventory-pet-formats": inventory_pet_formats,
-    "inventory-pet-sample": inventory_pet_sample,
     "inventory-mm-raw": inventory_mm_raw,
     "inventory-mm-fixed": inventory_mm_fixed,
     "inventory-collisions": inventory_collisions,
@@ -1275,9 +1563,11 @@ ASSETS = {
     "properties-pet": properties_pet,
     "properties-blood": properties_blood,
     "properties-eeg": properties_eeg,
+    "properties-companions": properties_companions,
     "inventory-eeg": inventory_eeg,
     "inventory-meg": inventory_meg,
     "inventory-skipped": inventory_skipped,
+    "inventory-include": inventory_include,
     "settings": settings_all,
     "editor-tree": editor_tree,
     "editor-tree-mm": editor_tree_mm,
@@ -1287,7 +1577,8 @@ ASSETS = {
     "window-editor": window_editor,
     "sidecar-form": sidecar_form,
     "sidecar-form-pet": sidecar_form_pet,
-    "validation-dataset": validation_dataset,
+    "validation-scopes": validation_scopes,
+    "validation-provenance-pet": validation_provenance_pet,
     "validation-error": validation_error,
     "validation-warnings": validation_warnings,
     "validation-invalid-location": validation_invalid_location,
