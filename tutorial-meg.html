@@ -371,7 +371,7 @@
               <tr><th>Field</th><th>Why it is asked</th></tr>
             </thead>
             <tbody>
-              <tr><td><code class="inline">PowerLineFrequency</code></td><td>Required. A property of the building.</td></tr>
+              <tr><td><code class="inline">PowerLineFrequency</code></td><td>Required. A property of the building rather than the recording, so nothing in the file states it. Answer it here or it is written as <code class="inline">n/a</code>.</td></tr>
               <tr><td><code class="inline">DewarPosition</code></td><td>Upright or supine. Not in the file, and it changes how the data should be interpreted.</td></tr>
               <tr><td><code class="inline">AssociatedEmptyRoom</code></td><td>Which noise recording goes with this session.</td></tr>
               <tr><td>Subject artefact description</td><td>Dental work, an implant, anything that shows in the data and has an explanation.</td></tr>
@@ -470,6 +470,26 @@
           </figcaption>
         </figure>
 
+        <div class="callout callout-warning">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Nobody guesses the mains frequency for you.</strong>
+            <p>
+              If no one states it, the sidecar is written with
+              <code class="inline">PowerLineFrequency</code> set to
+              <code class="inline">n/a</code>, and validation reports it as
+              missing until you answer. Earlier versions filled in 50, which is
+              right in Europe and wrong everywhere the mains runs at 60, and a
+              confidently wrong number is worse than a visible blank: a blank
+              gets noticed and corrected, whereas 50 in a sidecar reads as a
+              measurement somebody made. Set it once in
+              <strong>Dataset metadata</strong> and every recording in the
+              study inherits it. The power spectrum below is how you check the
+              value you gave against the data itself.
+            </p>
+          </div>
+        </div>
+
         <h3>Check the empty-room recording too</h3>
         <p>
           The power spectrum of a noise recording is the most useful single view
@@ -524,13 +544,14 @@
         <figure class="media-figure">
           <img class="feature-shot" loading="lazy"
                alt="The validation pane showing the dataset, folder and file scopes each with a count"
-               src="assets/features/validation_dataset_scope_dark.png"
-               data-light="assets/features/validation_dataset_scope_light.png">
+               src="assets/features/validation_scopes_dark.png"
+               data-light="assets/features/validation_scopes_light.png">
           <figcaption>
-            <strong>Three scopes at once.</strong> Findings about the dataset,
-            about the folder you are in, and about the file you have selected, each
-            with its own count. A zero beside a section means there is nothing to
-            read there.
+            <strong>Three scopes at once.</strong> A finding is about the
+            dataset, about the folder you are in, or about the file you have
+            selected, and each section carries its own count. A zero means there
+            is nothing to read there, which is the usual state of the top two:
+            almost every finding belongs to a particular file.
           </figcaption>
         </figure>
 
@@ -540,10 +561,11 @@
                src="assets/features/validation_warnings_dark.png"
                data-light="assets/features/validation_warnings_light.png">
           <figcaption>
-            <strong>A warning, in full.</strong> The rule it came from is printed
-            underneath, the chip names the field, and <strong>Fix</strong> opens
-            that field for editing. This is what the 24 warnings on this dataset
-            look like.
+            <strong>A warning, in full.</strong> The rule it came from is
+            printed underneath, the chip names the field, and
+            <strong>Fix</strong> opens that field for editing. This is what
+            almost every warning on this dataset looks like: a recommended
+            field the standard would like and nobody has answered yet.
           </figcaption>
         </figure>
       </div>
@@ -578,11 +600,41 @@
           </div>
           <div class="results-card">
             <span class="results-card-eyebrow">Validate</span>
-            <strong class="results-card-num">50 / 24 / 0</strong>
+            <strong class="results-card-num">30 / 402 / 23</strong>
             <span class="results-card-label">ok / warn / err</span>
-            <p class="muted">No errors. The 24 warnings are
-              <code class="inline">TODO</code> placeholders in recommended
-              fields.</p>
+            <p class="muted">Counts are per finding, not per file: 311 of the
+              warnings are one <code class="inline">TODO</code> placeholder
+              each. The 23 errors are all the same thing, and they are worth
+              understanding rather than clearing. See the note below.</p>
+          </div>
+        </div>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>All 23 errors are one unanswered question:
+              <code class="inline">AssociatedEmptyRoom</code>.</strong>
+            <p>
+              The post-conversion step writes the literal
+              <code class="inline">TODO</code> into recommended fields nobody has
+              answered, so that an absence is visible rather than silent. That
+              works for a field holding text. It does not work for a field
+              holding a <em>path</em>: a sidecar that says its empty-room
+              recording is a file called <code class="inline">TODO</code> is
+              asserting a link to a file that does not exist, and the validator
+              is right to call it an error.
+            </p>
+            <p>
+              Two ways out, and both are one action.
+              Either <strong>answer it</strong>, in
+              <strong>Dataset metadata</strong> under the MEG acquisition group,
+              pointing at the noise recording for the session, which is what the
+              field is for. Or, if you have no empty-room recording,
+              <strong>remove the field</strong>: select the finding, press
+              <em>Fix in all files</em>, and clear it across all 23 at once. A
+              recommended field you have decided against is better absent than
+              present and wrong.
+            </p>
           </div>
         </div>
       </div>

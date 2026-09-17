@@ -463,9 +463,11 @@
         </p>
 
         <p>
-          On this dataset: 21 NIfTI files across anatomical, functional,
-          diffusion and fieldmap, one physiological table, and 28 sidecars. No
-          failures.
+          On this dataset: 24 NIfTI files across anatomical, functional,
+          diffusion and fieldmap, three physiological tables, three
+          <code class="inline">.bval</code> and
+          <code class="inline">.bvec</code> pairs beside the diffusion series,
+          and 29 sidecars. No failures.
         </p>
 
         <figure class="media-figure">
@@ -649,13 +651,16 @@
         <figure class="media-figure">
           <img class="feature-shot" loading="lazy"
                alt="The validation pane showing the dataset, folder and file scopes each with a count"
-               src="assets/features/validation_dataset_scope_dark.png"
-               data-light="assets/features/validation_dataset_scope_light.png">
+               src="assets/features/validation_scopes_dark.png"
+               data-light="assets/features/validation_scopes_light.png">
           <figcaption>
             <strong>Three scopes, one pane.</strong> What is wrong with the
-            dataset, with this folder, and with this file, each with its own count.
-            The tree on the left carries the same information as a coloured dot per
-            file, so the problem files are findable without opening every one.
+            dataset, with this folder, and with this file, each with its own
+            count. These are not the same three as the toolbar buttons: those
+            choose how much gets checked, these say what each finding is about.
+            The tree on the left carries the per-file half of the same
+            information, so the problem files, and the worst of them, are
+            findable without opening every one.
           </figcaption>
         </figure>
 
@@ -680,10 +685,12 @@
                src="assets/features/validation_warnings_dark.png"
                data-light="assets/features/validation_warnings_light.png">
           <figcaption>
-            <strong>The seven warnings on this dataset.</strong> Recommended
-            fields nobody has answered yet, each with the standard's description of
-            what it is for and an example of the value expected.
-            <strong>Fix</strong> opens the field.
+            <strong>What a warning looks like.</strong> Recommended fields
+            nobody has answered yet, here on the dataset description, each with
+            the standard's description of what it is for, an example of the
+            value expected, and the rule it comes from.
+            <strong>Fix</strong> opens the field. The amber pill beside the
+            filename counts how many the file holds.
           </figcaption>
         </figure>
 
@@ -737,19 +744,21 @@
           </div>
           <div class="results-card">
             <span class="results-card-eyebrow">Convert</span>
-            <strong class="results-card-num">21</strong>
-            <span class="results-card-label">images written</span>
-            <p class="muted">21 NIfTI files across anat, func, dwi and fmap, one
-              physiological table from the embedded log, and 28 sidecars. No
-              failures.</p>
+            <strong class="results-card-num">24 + 3</strong>
+            <span class="results-card-label">images + physio tables</span>
+            <p class="muted">24 NIfTI files across anat, func, dwi and fmap,
+              three physiological tables from the embedded logs, three gradient
+              table pairs, and 29 sidecars. No failures.</p>
           </div>
           <div class="results-card">
             <span class="results-card-eyebrow">Validate</span>
-            <strong class="results-card-num">55 / 7 / 0</strong>
+            <strong class="results-card-num">16 / 200 / 0</strong>
             <span class="results-card-label">ok / warn / err</span>
-            <p class="muted">No errors. The 7 warnings are placeholders in
-              licence and authors, plus task descriptions and instructions on the
-              functional sidecars.</p>
+            <p class="muted">No errors. Counts are per finding, not per file, so
+              160 of those warnings are one <code class="inline">TODO</code>
+              placeholder each, in a recommended field nobody has answered yet.
+              Another 12 are functional runs with no events table beside
+              them.</p>
           </div>
         </div>
       </div>

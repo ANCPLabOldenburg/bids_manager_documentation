@@ -128,11 +128,11 @@
             </div>
             <h3>Method 2. Manual install (CLI)</h3>
             <p>
-              Install Python yourself, create a virtual environment
-              (venv, conda, or uv), and
-              <code class="inline">pip install bids-manager</code>. Useful
-              if you already manage Python environments or want to keep
-              everything inside your existing toolchain.
+              Set up an environment with <strong>uv</strong>, venv or conda,
+              then install <code class="inline">bids-manager</code> into it.
+              Useful if you already manage Python environments or want to keep
+              everything inside your existing toolchain. With uv you do not
+              need a system Python at all: it fetches one for you.
             </p>
             <span class="method-go">Go to the manual guide &rarr;</span>
           </a>
@@ -604,8 +604,8 @@ bidsmgr
         <figure class="media-figure">
           <img class="feature-shot" loading="lazy"
                alt="The BIDS Manager Home tab after a fresh install"
-               src="assets/gui/home_tab_dark.png"
-               data-light="assets/gui/home_tab_light.png">
+               src="assets/features/window_home_dark.png"
+               data-light="assets/features/window_home_light.png">
           <figcaption>
             <strong>What a working install looks like.</strong> BIDS Manager opens
             on the Home tab, where you create a dataset project or open one you
@@ -671,26 +671,20 @@ bidsmgr
     <section class="section" id="manual">
       <div class="container container-narrow prose">
         <span class="section-eyebrow">Method 2 . Manual (CLI)</span>
-        <h2 style="margin-top:0;">Install with pip in your own environment</h2>
+        <h2 style="margin-top:0;">Install into your own Python environment</h2>
         <p>
-          Four short steps: install Python, create an environment, install
-          BIDS Manager, run it. Pick whichever Python and environment
-          manager you already use; we show
-          <code class="inline">venv</code>,
-          <code class="inline">conda</code>, and
-          <code class="inline">uv</code>.
+          Pick your system, then the tool you want to hold the environment, and
+          follow the four commands underneath. Each combination is written out
+          in full, so there is nothing to translate from another platform.
         </p>
-
-        <!-- ----- Step 1: install Python ----- -->
-        <h3 id="install-python">Step 1. Install Python</h3>
-        <p>
-          BIDS Manager needs Python 3.10 to 3.14. If
-          <code class="inline">python3 --version</code> already prints a
-          supported version, skip to Step 2.
+        <p class="muted" id="install-python">
+          BIDS Manager needs <strong>Python 3.10 to 3.14</strong>. Where that
+          Python comes from depends on the tool: uv and conda both fetch one,
+          venv uses the one you already have.
         </p>
 
         <div class="tabs" data-tabs>
-          <div class="tab-buttons" role="tablist" aria-label="Install Python">
+          <div class="tab-buttons" role="tablist" aria-label="Operating system">
             <button class="tab-btn is-active" data-tab="macos"
                     role="tab" aria-selected="true">macOS</button>
             <button class="tab-btn" data-tab="linux"
@@ -700,157 +694,297 @@ bidsmgr
           </div>
 
           <div class="tab-panel is-active" data-panel="macos" role="tabpanel">
-            <p>Easiest: Homebrew.</p>
-<pre class="code">brew install python@3.12
+            <p>Everything below is run in Terminal. Pick the tool you
+              want to hold the environment:</p>
+
+            <div class="tabs" data-tabs data-tabs-sync="env">
+              <div class="tab-buttons" role="tablist" aria-label="Environment tool">
+                <button class="tab-btn is-active" data-tab="uv"
+                        role="tab" aria-selected="true">uv</button>
+                <button class="tab-btn" data-tab="venv"
+                        role="tab" aria-selected="false">venv</button>
+                <button class="tab-btn" data-tab="conda"
+                        role="tab" aria-selected="false">conda</button>
+              </div>
+
+              <div class="tab-panel is-active" data-panel="uv" role="tabpanel">
+                <p class="muted">uv fetches the Python version you ask for, so there is nothing else to install.</p>
+
+                <p><strong>1. Install uv</strong></p>
+                <p>With <a href="https://brew.sh/" target="_blank" rel="noopener">Homebrew</a>:</p>
+<pre class="code">brew install uv
 </pre>
-            <p>
-              Or download the official installer from
-              <a href="https://www.python.org/downloads/macos/"
-                 target="_blank" rel="noopener">python.org/downloads/macos</a>.
-              Open the <code class="inline">.pkg</code> and follow the
-              wizard.
-            </p>
+                <p>Without Homebrew. The official installer needs nothing installed first (<a href="https://curl.se/download.html" target="_blank" rel="noopener">curl</a> ships with macOS) and puts uv in <code class="inline">~/.local/bin</code>:</p>
+<pre class="code">curl -LsSf https://astral.sh/uv/install.sh | sh
+</pre>
+                <p class="muted">Open a new terminal afterwards so <code class="inline">uv</code> is on your PATH, then check it with <code class="inline">uv --version</code>. Every other way to install it is listed in the <a href="https://docs.astral.sh/uv/getting-started/installation/" target="_blank" rel="noopener">uv installation guide</a>.</p>
+                <p><strong>2. Create the environment and activate it</strong></p>
+<pre class="code">uv venv ~/bidsmgr-env --python 3.12
+source ~/bidsmgr-env/bin/activate
+</pre>
+                <p><strong>3. Install BIDS Manager</strong></p>
+<pre class="code">uv pip install bids-manager
+</pre>
+                <p class="muted">
+                  <code class="inline">uv pip</code>, not
+                  <code class="inline">pip</code>: uv installs packages itself, so
+                  this environment has no <code class="inline">pip</code> of its own.
+                </p>
+                <p><strong>4. Run it</strong></p>
+<pre class="code">bidsmgr
+</pre>
+              </div>
+
+              <div class="tab-panel" data-panel="venv" role="tabpanel">
+                <p class="muted">venv ships with Python and wraps the one you already have, so that one has to be a supported version.</p>
+
+                <p><strong>1. Check your Python</strong></p>
+<pre class="code">python3 --version
+</pre>
+                <p class="muted">You need 3.10 to 3.14. If it is older, or the command is not found, install one with <code class="inline">brew install python@3.12</code> (<a href="https://brew.sh/" target="_blank" rel="noopener">Homebrew</a>), or download the installer from <a href="https://www.python.org/downloads/macos/" target="_blank" rel="noopener">python.org</a>, which needs no package manager.</p>
+                <p><strong>2. Create the environment and activate it</strong></p>
+<pre class="code">python3 -m venv ~/bidsmgr-env
+source ~/bidsmgr-env/bin/activate
+</pre>
+                <p><strong>3. Install BIDS Manager</strong></p>
+<pre class="code">pip install bids-manager
+</pre>
+                <p><strong>4. Run it</strong></p>
+<pre class="code">bidsmgr
+</pre>
+              </div>
+
+              <div class="tab-panel" data-panel="conda" role="tabpanel">
+                <p class="muted">conda brings its own Python, so there is nothing else to install.</p>
+
+                <p><strong>1. Install Miniforge</strong></p>
+                <p>Skip this if you already have conda. With <a href="https://brew.sh/" target="_blank" rel="noopener">Homebrew</a>:</p>
+<pre class="code">brew install --cask miniforge
+</pre>
+                <p>Without Homebrew:</p>
+<pre class="code">URL=https://github.com/conda-forge/miniforge/releases/latest/download
+curl -L -O "$URL/Miniforge3-$(uname)-$(uname -m).sh"
+bash Miniforge3-$(uname)-$(uname -m).sh
+</pre>
+                <p class="muted">Run <code class="inline">conda init</code> once afterwards, then open a new terminal. Every build is listed on the <a href="https://github.com/conda-forge/miniforge#download" target="_blank" rel="noopener">Miniforge releases page</a>.</p>
+                <p><strong>2. Create the environment and activate it</strong></p>
+<pre class="code">conda create -n bidsmgr python=3.12 -y
+conda activate bidsmgr
+</pre>
+                <p><strong>3. Install BIDS Manager</strong></p>
+<pre class="code">pip install bids-manager
+</pre>
+                <p><strong>4. Run it</strong></p>
+<pre class="code">bidsmgr
+</pre>
+              </div>
+
+            </div>
           </div>
 
           <div class="tab-panel" data-panel="linux" role="tabpanel">
-            <p>Debian / Ubuntu:</p>
-<pre class="code">sudo apt update
-sudo apt install python3 python3-venv python3-pip
+            <p>Everything below is run in your terminal. Pick the tool you
+              want to hold the environment:</p>
+
+            <div class="tabs" data-tabs data-tabs-sync="env">
+              <div class="tab-buttons" role="tablist" aria-label="Environment tool">
+                <button class="tab-btn is-active" data-tab="uv"
+                        role="tab" aria-selected="true">uv</button>
+                <button class="tab-btn" data-tab="venv"
+                        role="tab" aria-selected="false">venv</button>
+                <button class="tab-btn" data-tab="conda"
+                        role="tab" aria-selected="false">conda</button>
+              </div>
+
+              <div class="tab-panel is-active" data-panel="uv" role="tabpanel">
+                <p class="muted">uv fetches the Python version you ask for, so there is nothing else to install.</p>
+
+                <p><strong>1. Install uv</strong></p>
+                <p>The official installer works on every distribution and needs nothing installed first. It puts uv in <code class="inline">~/.local/bin</code>:</p>
+<pre class="code">curl -LsSf https://astral.sh/uv/install.sh | sh
 </pre>
-            <p>Fedora:</p>
-<pre class="code">sudo dnf install python3 python3-pip
+                <p>If <a href="https://curl.se/download.html" target="_blank" rel="noopener">curl</a> is not installed, the same script through wget:</p>
+<pre class="code">wget -qO- https://astral.sh/uv/install.sh | sh
 </pre>
-            <p>Arch:</p>
-<pre class="code">sudo pacman -S python python-pip
+                <p>Or with <a href="https://pipx.pypa.io/stable/" target="_blank" rel="noopener">pipx</a>, if you already use it:</p>
+<pre class="code">pipx install uv
 </pre>
-            <p>
-              If your distro ships Python older than 3.10, install
-              <a href="https://github.com/pyenv/pyenv"
-                 target="_blank" rel="noopener">pyenv</a> and pull a
-              newer build (<code class="inline">pyenv install 3.12</code>).
-            </p>
+                <p class="muted">Open a new terminal afterwards so <code class="inline">uv</code> is on your PATH, then check it with <code class="inline">uv --version</code>. Your distribution may also package uv; the <a href="https://docs.astral.sh/uv/getting-started/installation/" target="_blank" rel="noopener">uv installation guide</a> lists what is available.</p>
+                <p><strong>2. Create the environment and activate it</strong></p>
+<pre class="code">uv venv ~/bidsmgr-env --python 3.12
+source ~/bidsmgr-env/bin/activate
+</pre>
+                <p><strong>3. Install BIDS Manager</strong></p>
+<pre class="code">uv pip install bids-manager
+</pre>
+                <p class="muted">
+                  <code class="inline">uv pip</code>, not
+                  <code class="inline">pip</code>: uv installs packages itself, so
+                  this environment has no <code class="inline">pip</code> of its own.
+                </p>
+                <p><strong>4. Run it</strong></p>
+<pre class="code">bidsmgr
+</pre>
+              </div>
+
+              <div class="tab-panel" data-panel="venv" role="tabpanel">
+                <p class="muted">venv ships with Python and wraps the one you already have, so that one has to be a supported version.</p>
+
+                <p><strong>1. Check your Python</strong></p>
+<pre class="code">python3 --version
+</pre>
+                <p class="muted">You need 3.10 to 3.14. On Debian or Ubuntu install one with <code class="inline">sudo apt install python3 python3-venv python3-pip</code>; Fedora uses <code class="inline">dnf</code>, Arch uses <code class="inline">pacman</code>. If your distribution only ships something older, use <a href="https://github.com/pyenv/pyenv" target="_blank" rel="noopener">pyenv</a>, or switch to the uv tab, which fetches a Python without building one.</p>
+                <p><strong>2. Create the environment and activate it</strong></p>
+<pre class="code">python3 -m venv ~/bidsmgr-env
+source ~/bidsmgr-env/bin/activate
+</pre>
+                <p><strong>3. Install BIDS Manager</strong></p>
+<pre class="code">pip install bids-manager
+</pre>
+                <p><strong>4. Run it</strong></p>
+<pre class="code">bidsmgr
+</pre>
+              </div>
+
+              <div class="tab-panel" data-panel="conda" role="tabpanel">
+                <p class="muted">conda brings its own Python, so there is nothing else to install.</p>
+
+                <p><strong>1. Install Miniforge</strong></p>
+                <p>Skip this if you already have conda:</p>
+<pre class="code">URL=https://github.com/conda-forge/miniforge/releases/latest/download
+curl -L -O "$URL/Miniforge3-$(uname)-$(uname -m).sh"
+bash Miniforge3-$(uname)-$(uname -m).sh
+</pre>
+                <p class="muted">Run <code class="inline">conda init</code> once afterwards, then open a new terminal. Every build is listed on the <a href="https://github.com/conda-forge/miniforge#download" target="_blank" rel="noopener">Miniforge releases page</a>.</p>
+                <p><strong>2. Create the environment and activate it</strong></p>
+<pre class="code">conda create -n bidsmgr python=3.12 -y
+conda activate bidsmgr
+</pre>
+                <p><strong>3. Install BIDS Manager</strong></p>
+<pre class="code">pip install bids-manager
+</pre>
+                <p><strong>4. Run it</strong></p>
+<pre class="code">bidsmgr
+</pre>
+              </div>
+
+            </div>
           </div>
 
           <div class="tab-panel" data-panel="windows" role="tabpanel">
-            <p>Easiest: winget.</p>
-<pre class="code">winget install Python.Python.3.12
+            <p>Everything below is run in PowerShell. Pick the tool you
+              want to hold the environment:</p>
+
+            <div class="tabs" data-tabs data-tabs-sync="env">
+              <div class="tab-buttons" role="tablist" aria-label="Environment tool">
+                <button class="tab-btn is-active" data-tab="uv"
+                        role="tab" aria-selected="true">uv</button>
+                <button class="tab-btn" data-tab="venv"
+                        role="tab" aria-selected="false">venv</button>
+                <button class="tab-btn" data-tab="conda"
+                        role="tab" aria-selected="false">conda</button>
+              </div>
+
+              <div class="tab-panel is-active" data-panel="uv" role="tabpanel">
+                <p class="muted">uv fetches the Python version you ask for, so there is nothing else to install.</p>
+
+                <p><strong>1. Install uv</strong></p>
+                <p>With <a href="https://learn.microsoft.com/windows/package-manager/winget/" target="_blank" rel="noopener">winget</a>, which ships with Windows 10 and 11:</p>
+<pre class="code">winget install --id=astral-sh.uv -e
 </pre>
-            <p>
-              Or download the official installer from
-              <a href="https://www.python.org/downloads/windows/"
-                 target="_blank" rel="noopener">python.org/downloads/windows</a>.
-              When the installer opens, tick
-              <strong>Add python.exe to PATH</strong>, then click
-              <em>Install Now</em>.
-            </p>
-          </div>
-        </div>
-
-        <!-- ----- Step 2: create a venv ----- -->
-        <h3 id="create-env">Step 2. Create a virtual environment</h3>
-        <p>
-          BIDS Manager pulls in PyQt6, mne-bids, dcm2niix, pydicom,
-          bidsschematools, and the rest of the dependency tree. Keep it in
-          its own environment so it doesn't interfere with other projects.
-        </p>
-
-        <div class="tabs" data-tabs>
-          <div class="tab-buttons" role="tablist" aria-label="Environment manager">
-            <button class="tab-btn is-active" data-tab="venv"
-                    role="tab" aria-selected="true">venv (built-in)</button>
-            <button class="tab-btn" data-tab="conda"
-                    role="tab" aria-selected="false">conda</button>
-            <button class="tab-btn" data-tab="uv"
-                    role="tab" aria-selected="false">uv</button>
-          </div>
-
-          <!-- venv -->
-          <div class="tab-panel is-active" data-panel="venv" role="tabpanel">
-            <p>The
-              <code class="inline">venv</code> module ships with every
-              Python 3.3+, so no extra install needed.
-            </p>
-<pre class="code"><span class="cmt"># create the environment</span>
-python3 -m venv ~/bidsmgr-env
-
-<span class="cmt"># activate it (macOS / Linux)</span>
-source ~/bidsmgr-env/bin/activate
-
-<span class="cmt"># activate it (Windows, PowerShell)</span>
-~/bidsmgr-env/Scripts/Activate.ps1
+                <p>Without winget. The official installer needs nothing installed first:</p>
+<pre class="code">powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 </pre>
-            <p class="muted">
-              After activation your shell prompt is prefixed with
-              <code class="inline">(bidsmgr-env)</code>. Run
-              <code class="inline">deactivate</code> when you're done.
-            </p>
-          </div>
-
-          <!-- conda -->
-          <div class="tab-panel" data-panel="conda" role="tabpanel">
-            <p>
-              If you already use
-              <a href="https://docs.anaconda.com/miniconda/"
-                 target="_blank" rel="noopener">Miniconda</a> or
-              <a href="https://docs.conda.io/projects/miniforge/"
-                 target="_blank" rel="noopener">Miniforge</a>:
-            </p>
-<pre class="code"><span class="cmt"># create + activate</span>
-conda create -n bidsmgr python=3.12 -y
-conda activate bidsmgr
+                <p class="muted">Open a new PowerShell window afterwards so <code class="inline">uv</code> is on your PATH, then check it with <code class="inline">uv --version</code>. Every other way to install it is listed in the <a href="https://docs.astral.sh/uv/getting-started/installation/" target="_blank" rel="noopener">uv installation guide</a>.</p>
+                <p><strong>2. Create the environment and activate it</strong></p>
+<pre class="code">uv venv $HOME\bidsmgr-env --python 3.12
+$HOME\bidsmgr-env\Scripts\Activate.ps1
 </pre>
-            <p class="muted">
-              <code class="inline">conda activate</code> works in every
-              shell (bash, zsh, fish, PowerShell, cmd) once conda has
-              initialised your profile.
-            </p>
-          </div>
-
-          <!-- uv -->
-          <div class="tab-panel" data-panel="uv" role="tabpanel">
-            <p>
-              <a href="https://docs.astral.sh/uv/" target="_blank"
-                 rel="noopener">uv</a> is a fast modern Python launcher.
-              It manages Python versions and venvs in one tool.
-            </p>
-<pre class="code"><span class="cmt"># create a venv pinned to Python 3.12</span>
-uv venv ~/bidsmgr-env --python 3.12
-
-<span class="cmt"># activate it</span>
-source ~/bidsmgr-env/bin/activate
+                <p><strong>3. Install BIDS Manager</strong></p>
+<pre class="code">uv pip install bids-manager
 </pre>
-            <p class="muted">
-              You can also skip the activation step and prefix every
-              <code class="inline">pip</code> /
-              <code class="inline">python</code> call with
-              <code class="inline">uv run</code>.
-            </p>
-          </div>
-        </div>
+                <p class="muted">
+                  <code class="inline">uv pip</code>, not
+                  <code class="inline">pip</code>: uv installs packages itself, so
+                  this environment has no <code class="inline">pip</code> of its own.
+                </p>
+                <p><strong>4. Run it</strong></p>
+<pre class="code">bidsmgr
+</pre>
+              </div>
 
-        <!-- ----- Step 3: install bids-manager ----- -->
-        <h3 id="install-bidsmgr">Step 3. Install BIDS Manager</h3>
-        <p>
-          With the environment active:
-        </p>
+              <div class="tab-panel" data-panel="venv" role="tabpanel">
+                <p class="muted">venv ships with Python and wraps the one you already have, so that one has to be a supported version.</p>
+
+                <p><strong>1. Check your Python</strong></p>
+<pre class="code">python --version
+</pre>
+                <p class="muted">You need 3.10 to 3.14. If it is older, or the command is not found, install one with <code class="inline">winget install Python.Python.3.12</code> (<a href="https://learn.microsoft.com/windows/package-manager/winget/" target="_blank" rel="noopener">winget</a>), or download the installer from <a href="https://www.python.org/downloads/windows/" target="_blank" rel="noopener">python.org</a> and tick <strong>Add python.exe to PATH</strong>.</p>
+                <p><strong>2. Create the environment and activate it</strong></p>
+<pre class="code">python -m venv $HOME\bidsmgr-env
+$HOME\bidsmgr-env\Scripts\Activate.ps1
+</pre>
+                <p><strong>3. Install BIDS Manager</strong></p>
 <pre class="code">pip install bids-manager
 </pre>
+                <p><strong>4. Run it</strong></p>
+<pre class="code">bidsmgr
+</pre>
+              </div>
+
+              <div class="tab-panel" data-panel="conda" role="tabpanel">
+                <p class="muted">conda brings its own Python, so there is nothing else to install.</p>
+
+                <p><strong>1. Install Miniforge</strong></p>
+                <p>Skip this if you already have conda. With <a href="https://learn.microsoft.com/windows/package-manager/winget/" target="_blank" rel="noopener">winget</a>, which ships with Windows 10 and 11:</p>
+<pre class="code">winget install --id=CondaForge.Miniforge3 -e
+</pre>
+                <p class="muted">Without winget, download <code class="inline">Miniforge3-Windows-x86_64.exe</code> from the <a href="https://github.com/conda-forge/miniforge#download" target="_blank" rel="noopener">Miniforge releases page</a> and double-click it: that one is a normal Windows installer, not a command. Either way, use the <strong>Miniforge Prompt</strong> from the Start menu afterwards, or run <code class="inline">conda init powershell</code> once to use PowerShell instead.</p>
+                <p><strong>2. Create the environment and activate it</strong></p>
+<pre class="code">conda create -n bidsmgr python=3.12 -y
+conda activate bidsmgr
+</pre>
+                <p><strong>3. Install BIDS Manager</strong></p>
+<pre class="code">pip install bids-manager
+</pre>
+                <p><strong>4. Run it</strong></p>
+<pre class="code">bidsmgr
+</pre>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Re-activating later.</strong>
+            <p>
+              Every new shell session needs the environment activated again.
+              That is the second line of step 2 on your tab, on its own:
+              <code class="inline">source ~/bidsmgr-env/bin/activate</code> for
+              uv and venv on macOS and Linux,
+              <code class="inline">$HOME\bidsmgr-env\Scripts\Activate.ps1</code>
+              in PowerShell, and
+              <code class="inline">conda activate bidsmgr</code> for conda on
+              any system.
+            </p>
+          </div>
+        </div>
+
+        <h3 id="install-bidsmgr">About the package</h3>
         <p class="muted">
           The package on PyPI is named
-          <code class="inline">bids-manager</code>. The Python import name
-          is <code class="inline">bidsmgr</code> (same pattern as
+          <code class="inline">bids-manager</code>. The Python import name is
+          <code class="inline">bidsmgr</code> (same pattern as
           <code class="inline">pip install scikit-learn</code> /
           <code class="inline">import sklearn</code>).
           <a href="https://pypi.org/project/bids-manager/"
              target="_blank" rel="noopener">PyPI page</a>.
         </p>
 
-        <!-- ----- Step 4: run ----- -->
-        <h3 id="run">Step 4. Run BIDS Manager</h3>
-        <p>Launch the GUI:</p>
-<pre class="code">bidsmgr
-</pre>
-
+        <h3 id="run">The command line</h3>
         <p>Or use the CLI directly. Eight commands are installed:</p>
         <ul>
           <li><code class="inline">bidsmgr</code>. The graphical interface,
@@ -873,26 +1007,17 @@ source ~/bidsmgr-env/bin/activate
             validation, with the rule behind every finding.</li>
         </ul>
 
-        <div class="callout callout-tip">
-          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
-          <div>
-            <strong>Re-activating later.</strong>
-            <p>
-              Every new shell session needs the environment activated
-              again. For venv / uv:
-              <code class="inline">source ~/bidsmgr-env/bin/activate</code>.
-              For conda:
-              <code class="inline">conda activate bidsmgr</code>.
-            </p>
-          </div>
-        </div>
 
-        <h3>Upgrading</h3>
+        <h3 id="upgrading">Upgrading</h3>
+        <p>With the environment active. <strong>uv</strong>:</p>
+<pre class="code">uv pip install --upgrade bids-manager
+</pre>
+        <p><strong>venv and conda</strong>:</p>
 <pre class="code">pip install --upgrade bids-manager
 </pre>
         <p class="muted">
           Close the GUI first on Windows. Newer dependency pins may
-          require recreating the venv if a pinned major version moves.
+          require recreating the environment if a pinned major version moves.
         </p>
       </div>
     </section>

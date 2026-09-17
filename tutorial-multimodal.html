@@ -714,28 +714,61 @@
         <div class="results-grid">
           <div class="results-card">
             <span class="results-card-eyebrow">Errors</span>
-            <strong class="results-card-num">0</strong>
+            <strong class="results-card-num">2</strong>
             <span class="results-card-label">across four modalities</span>
-            <p class="muted">Nothing is malformed, misnamed, mistyped or in the
-              wrong place, in any of the six datatypes.</p>
+            <p class="muted">Nothing is malformed, misnamed or in the wrong
+              place. Both errors are unanswered questions that only you can
+              answer, and both are explained below.</p>
           </div>
           <div class="results-card">
             <span class="results-card-eyebrow">Warnings</span>
-            <strong class="results-card-num">149</strong>
+            <strong class="results-card-num">156</strong>
             <span class="results-card-label">recommended, not required</span>
-            <p class="muted">Fields the standard recommends that this composite
-              never recorded. Most are marked
+            <p class="muted">Fields the standard recommends that this
+              composite never recorded. 121 of them are marked
               <code class="inline">TODO</code> so you can find them again.</p>
           </div>
         </div>
 
         <p>
-          A hundred and forty-nine warnings sounds like a lot until you notice
-          what it is counting: every recommended field, on every one of six
-          datatypes, on a dataset assembled from four unrelated acquisitions
-          with no shared study documentation. A real study answers most of them
-          once in the shared region of the metadata form.
+          A hundred and fifty-six warnings sounds like a lot until you notice
+          what it is counting. The number is per <em>finding</em>, not per file:
+          every recommended field, on every one of six datatypes, on a dataset
+          assembled from four unrelated acquisitions with no shared study
+          documentation. A real study answers most of them once in the shared
+          region of the metadata form, and one answer there clears the same
+          warning from every file at once.
         </p>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>The two errors, and why neither is a conversion failure.</strong>
+            <p>
+              <code class="inline">AssociatedEmptyRoom</code> on the MEG
+              recording points at a file called
+              <code class="inline">TODO</code>. The post-conversion step marks
+              unanswered recommended fields that way so that an absence is
+              visible, which works for a field holding text and not for one
+              holding a path: a link to a file named TODO is a link to nothing.
+              Answer it in <strong>Dataset metadata</strong> with the noise
+              recording for that session, or clear the field if there is none.
+            </p>
+            <p>
+              <code class="inline">ReconMethodParameterValues</code> on the PET
+              sidecar is missing outright. It is required, it is a list of
+              numbers, and no placeholder is a valid list of numbers, so unlike
+              the text fields around it there is nothing standing in for it. It
+              comes off the dose sheet, which the
+              <a href="tutorial-pet.html">PET tutorial</a> walks through.
+            </p>
+            <p>
+              Both are the same lesson in different clothes: a converter can
+              place and name a file correctly and still not know what was in the
+              room when it was recorded.
+            </p>
+          </div>
+        </div>
 
         <figure class="media-figure">
           <img class="feature-shot" loading="lazy"
@@ -744,12 +777,14 @@
                data-light="assets/features/mm_validation_light.png">
           <figcaption>
             <strong>The MEG recording of this dataset, in the Editor.</strong>
-            No dataset-level issues, no folder-level issues, and on the file
-            itself only amber: a recommended field the standard would like and
-            this recording has no answer for. The grey line under the message,
-            <code class="inline">rules.sidecars.meg.MEGRecommended</code>, is
-            the part of the schema it comes from. Every one of the six
-            datatypes reads like this.
+            Nothing red: every finding on it is amber, a recommended field the
+            standard would like and this recording has no answer for. The grey
+            line under the message,
+            <code class="inline">rules.sidecars.meg.MEGHardware</code>, is the
+            part of the schema it comes from, so you can go and read the rule
+            rather than take the count on trust. <em>Fix</em> opens the field;
+            the counter beside the filename says how many more of these the
+            file holds. Every one of the six datatypes reads like this.
           </figcaption>
         </figure>
 

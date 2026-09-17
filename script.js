@@ -1463,9 +1463,25 @@ function initInstallPipeline() {
 function initTabs() {
   const osDefault = detectOsKey();
 
+  /* Groups that answer the SAME question in different places on a page.
+   * The installation guide asks which environment you use in step 2 and
+   * then which install command to run in step 3, and they are the same
+   * answer: picking uv once should leave both steps showing uv. Mark such
+   * groups with data-tabs-sync="<name>" and they follow each other. */
+  const synced = new Map();
+
+  /* A control belongs to the NEAREST enclosing group. Without this an
+   * outer group would claim a nested group's buttons and panels, and the
+   * installation page carries both OS groups (macos / linux / windows) and
+   * environment groups (uv / venv / conda). They must never drive each
+   * other. */
+  const owns = (group, el) => el.closest("[data-tabs]") === group;
+
   document.querySelectorAll("[data-tabs]").forEach((group) => {
-    const buttons = Array.from(group.querySelectorAll(".tab-btn"));
-    const panels  = Array.from(group.querySelectorAll(".tab-panel"));
+    const buttons = Array.from(group.querySelectorAll(".tab-btn"))
+      .filter((b) => owns(group, b));
+    const panels  = Array.from(group.querySelectorAll(".tab-panel"))
+      .filter((p) => owns(group, p));
     if (!buttons.length || !panels.length) return;
 
     function activate(key) {
@@ -1479,8 +1495,24 @@ function initTabs() {
       });
     }
 
+    const sync = group.dataset.tabsSync || null;
+    if (sync) {
+      if (!synced.has(sync)) synced.set(sync, []);
+      synced.get(sync).push({ activate, keys: buttons.map((b) => b.dataset.tab) });
+    }
+
     buttons.forEach((b) => {
-      b.addEventListener("click", () => activate(b.dataset.tab));
+      b.addEventListener("click", () => {
+        if (sync) {
+          /* Only the groups that actually offer this key. A group that
+           * does not have it keeps whatever it was showing. */
+          synced.get(sync).forEach((g) => {
+            if (g.keys.includes(b.dataset.tab)) g.activate(b.dataset.tab);
+          });
+        } else {
+          activate(b.dataset.tab);
+        }
+      });
     });
 
     /* If the group exposes one of the known OS keys, preselect the

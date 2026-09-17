@@ -24,23 +24,23 @@
              src=dark default, data-light=light variant. Theme toggle
              swaps every shot at once via swapThemedImages(). -->
         <img class="hero-shot shot-a"
-             src="assets/screenshots/full_converter_window_dark.png"
-             data-light="assets/screenshots/full_converter_window_light.png" alt="">
+             src="assets/features/window_converter_dark.png"
+             data-light="assets/features/window_converter_light.png" alt="">
         <img class="hero-shot shot-b"
-             src="assets/screenshots/full_editor_window_dark.png"
-             data-light="assets/screenshots/full_editor_window_light.png" alt="">
+             src="assets/features/window_editor_dark.png"
+             data-light="assets/features/window_editor_light.png" alt="">
         <img class="hero-shot shot-c"
-             src="assets/gui/home_tab_dark.png"
-             data-light="assets/gui/home_tab_light.png" alt="">
+             src="assets/features/window_home_dark.png"
+             data-light="assets/features/window_home_light.png" alt="">
         <img class="hero-shot shot-d"
-             src="assets/gui/converter_tab_dark.png"
-             data-light="assets/gui/converter_tab_light.png" alt="">
+             src="assets/features/window_converter_dark.png"
+             data-light="assets/features/window_converter_light.png" alt="">
         <img class="hero-shot shot-e"
-             src="assets/gui/editor_tab_dark.png"
-             data-light="assets/gui/editor_tab_light.png" alt="">
+             src="assets/features/window_editor_dark.png"
+             data-light="assets/features/window_editor_light.png" alt="">
         <img class="hero-shot shot-f"
-             src="assets/gui/home_tab_dark.png"
-             data-light="assets/gui/home_tab_light.png" alt="">
+             src="assets/features/window_home_dark.png"
+             data-light="assets/features/window_home_light.png" alt="">
       </div>
       <div class="hero-overlay"></div>
       <div class="hero-content">
@@ -387,6 +387,19 @@
           </div>
 
           <div class="point">
+            <h3>Change a dataset's shape without breaking it.</h3>
+            <p>
+              Rename a label, add or remove an entity, put recordings into a
+              session or take them out, delete a run or a whole subject. Moving
+              the files is the easy half. Every reference that named them is
+              repaired in the same step: the scans tables, the
+              <code>IntendedFor</code> entries, the participants row, the
+              folders left empty. Nothing else reports those as broken, and
+              every change can be undone.
+            </p>
+          </div>
+
+          <div class="point">
             <h3>Validation is built in, and shows its reasoning.</h3>
             <p>
               Check the dataset without installing anything else. Every finding
@@ -430,8 +443,10 @@
         </p>
         <p>
           There is nothing else to install. Every conversion engine comes with
-          it: dcm2niix for MRI, mne-bids for EEG, MEG and iEEG, pet2bids for
-          PET, and bidsphysio for MRI physiological recordings. You do not need
+          it: <code>dcm2niix</code> for MRI and PET DICOM,
+          <code>mne-bids</code> for EEG, MEG and iEEG, <code>pet2bids</code> for
+          PET ECAT files and blood curves, and <code>bidsphysio</code> for the
+          physiological recordings stored inside MRI DICOM. You do not need
           to compile dcm2niix, install MNE, or set up a Python environment
           yourself. If you already work in Python,
           <code>pip install bids-manager</code> gives you the same thing.
