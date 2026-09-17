@@ -821,10 +821,14 @@ uv venv ~/bidsmgr-env --python 3.12
 source ~/bidsmgr-env/bin/activate
 </pre>
             <p class="muted">
-              You can also skip the activation step and prefix every
-              <code class="inline">pip</code> /
-              <code class="inline">python</code> call with
-              <code class="inline">uv run</code>.
+              uv installs packages itself, so this environment has no
+              <code class="inline">pip</code> of its own: use
+              <code class="inline">uv pip install</code> rather than
+              <code class="inline">pip install</code> in the next step. You can
+              skip the activation line entirely by pointing uv at the
+              environment, <code class="inline">uv pip install --python
+              ~/bidsmgr-env bids-manager</code>, or run a command inside it
+              with <code class="inline">uv run</code>.
             </p>
           </div>
         </div>
@@ -836,6 +840,24 @@ source ~/bidsmgr-env/bin/activate
         </p>
 <pre class="code">pip install bids-manager
 </pre>
+        <div class="callout callout-warning">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>If you made the environment with uv, the command is
+              <code class="inline">uv pip install</code>.</strong>
+            <p>
+              <code class="inline">uv venv</code> does not put
+              <code class="inline">pip</code> inside the environment, because
+              uv installs packages itself. So a plain
+              <code class="inline">pip install</code> there either reports that
+              the command is not found or, on a machine that has pip somewhere
+              else on the PATH, quietly installs into that other environment
+              and leaves your new one empty.
+            </p>
+<pre class="code">uv pip install bids-manager
+</pre>
+          </div>
+        </div>
         <p class="muted">
           The package on PyPI is named
           <code class="inline">bids-manager</code>. The Python import name
@@ -890,6 +912,9 @@ source ~/bidsmgr-env/bin/activate
 
         <h3>Upgrading</h3>
 <pre class="code">pip install --upgrade bids-manager
+
+<span class="cmt"># or, in a uv environment</span>
+uv pip install --upgrade bids-manager
 </pre>
         <p class="muted">
           Close the GUI first on Windows. Newer dependency pins may
