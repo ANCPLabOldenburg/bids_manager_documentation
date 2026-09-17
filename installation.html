@@ -711,8 +711,13 @@ bidsmgr
                 <p class="muted">uv fetches the Python version you ask for, so there is nothing else to install.</p>
 
                 <p><strong>1. Install uv</strong></p>
+                <p>With <a href="https://brew.sh/" target="_blank" rel="noopener">Homebrew</a>:</p>
 <pre class="code">brew install uv
 </pre>
+                <p>Without Homebrew. The official installer needs nothing installed first (<a href="https://curl.se/download.html" target="_blank" rel="noopener">curl</a> ships with macOS) and puts uv in <code class="inline">~/.local/bin</code>:</p>
+<pre class="code">curl -LsSf https://astral.sh/uv/install.sh | sh
+</pre>
+                <p class="muted">Open a new terminal afterwards so <code class="inline">uv</code> is on your PATH, then check it with <code class="inline">uv --version</code>. Every other way to install it is listed in the <a href="https://docs.astral.sh/uv/getting-started/installation/" target="_blank" rel="noopener">uv installation guide</a>.</p>
                 <p><strong>2. Create the environment and activate it</strong></p>
 <pre class="code">uv venv ~/bidsmgr-env --python 3.12
 source ~/bidsmgr-env/bin/activate
@@ -736,7 +741,7 @@ source ~/bidsmgr-env/bin/activate
                 <p><strong>1. Check your Python</strong></p>
 <pre class="code">python3 --version
 </pre>
-                <p class="muted">You need 3.10 to 3.14. If it is older, or the command is not found, install one with <code class="inline">brew install python@3.12</code>, or from <a href="https://www.python.org/downloads/macos/" target="_blank" rel="noopener">python.org</a>.</p>
+                <p class="muted">You need 3.10 to 3.14. If it is older, or the command is not found, install one with <code class="inline">brew install python@3.12</code> (<a href="https://brew.sh/" target="_blank" rel="noopener">Homebrew</a>), or download the installer from <a href="https://www.python.org/downloads/macos/" target="_blank" rel="noopener">python.org</a>, which needs no package manager.</p>
                 <p><strong>2. Create the environment and activate it</strong></p>
 <pre class="code">python3 -m venv ~/bidsmgr-env
 source ~/bidsmgr-env/bin/activate
@@ -753,9 +758,15 @@ source ~/bidsmgr-env/bin/activate
                 <p class="muted">conda brings its own Python, so there is nothing else to install.</p>
 
                 <p><strong>1. Install Miniforge</strong></p>
+                <p>Skip this if you already have conda. With <a href="https://brew.sh/" target="_blank" rel="noopener">Homebrew</a>:</p>
 <pre class="code">brew install --cask miniforge
 </pre>
-                <p class="muted">Skip this if you already have conda. Run <code class="inline">conda init</code> once, then open a new terminal.</p>
+                <p>Without Homebrew:</p>
+<pre class="code">URL=https://github.com/conda-forge/miniforge/releases/latest/download
+curl -L -O "$URL/Miniforge3-$(uname)-$(uname -m).sh"
+bash Miniforge3-$(uname)-$(uname -m).sh
+</pre>
+                <p class="muted">Run <code class="inline">conda init</code> once afterwards, then open a new terminal. Every build is listed on the <a href="https://github.com/conda-forge/miniforge#download" target="_blank" rel="noopener">Miniforge releases page</a>.</p>
                 <p><strong>2. Create the environment and activate it</strong></p>
 <pre class="code">conda create -n bidsmgr python=3.12 -y
 conda activate bidsmgr
@@ -789,8 +800,16 @@ conda activate bidsmgr
                 <p class="muted">uv fetches the Python version you ask for, so there is nothing else to install.</p>
 
                 <p><strong>1. Install uv</strong></p>
+                <p>The official installer works on every distribution and needs nothing installed first. It puts uv in <code class="inline">~/.local/bin</code>:</p>
 <pre class="code">curl -LsSf https://astral.sh/uv/install.sh | sh
 </pre>
+                <p>If <a href="https://curl.se/download.html" target="_blank" rel="noopener">curl</a> is not installed, the same script through wget:</p>
+<pre class="code">wget -qO- https://astral.sh/uv/install.sh | sh
+</pre>
+                <p>Or with <a href="https://pipx.pypa.io/stable/" target="_blank" rel="noopener">pipx</a>, if you already use it:</p>
+<pre class="code">pipx install uv
+</pre>
+                <p class="muted">Open a new terminal afterwards so <code class="inline">uv</code> is on your PATH, then check it with <code class="inline">uv --version</code>. Your distribution may also package uv; the <a href="https://docs.astral.sh/uv/getting-started/installation/" target="_blank" rel="noopener">uv installation guide</a> lists what is available.</p>
                 <p><strong>2. Create the environment and activate it</strong></p>
 <pre class="code">uv venv ~/bidsmgr-env --python 3.12
 source ~/bidsmgr-env/bin/activate
@@ -831,11 +850,12 @@ source ~/bidsmgr-env/bin/activate
                 <p class="muted">conda brings its own Python, so there is nothing else to install.</p>
 
                 <p><strong>1. Install Miniforge</strong></p>
+                <p>Skip this if you already have conda:</p>
 <pre class="code">URL=https://github.com/conda-forge/miniforge/releases/latest/download
 curl -L -O "$URL/Miniforge3-$(uname)-$(uname -m).sh"
 bash Miniforge3-$(uname)-$(uname -m).sh
 </pre>
-                <p class="muted">Skip this if you already have conda. Run <code class="inline">conda init</code> once, then open a new terminal.</p>
+                <p class="muted">Run <code class="inline">conda init</code> once afterwards, then open a new terminal. Every build is listed on the <a href="https://github.com/conda-forge/miniforge#download" target="_blank" rel="noopener">Miniforge releases page</a>.</p>
                 <p><strong>2. Create the environment and activate it</strong></p>
 <pre class="code">conda create -n bidsmgr python=3.12 -y
 conda activate bidsmgr
@@ -869,8 +889,13 @@ conda activate bidsmgr
                 <p class="muted">uv fetches the Python version you ask for, so there is nothing else to install.</p>
 
                 <p><strong>1. Install uv</strong></p>
+                <p>With <a href="https://learn.microsoft.com/windows/package-manager/winget/" target="_blank" rel="noopener">winget</a>, which ships with Windows 10 and 11:</p>
 <pre class="code">winget install --id=astral-sh.uv -e
 </pre>
+                <p>Without winget. The official installer needs nothing installed first:</p>
+<pre class="code">powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+</pre>
+                <p class="muted">Open a new PowerShell window afterwards so <code class="inline">uv</code> is on your PATH, then check it with <code class="inline">uv --version</code>. Every other way to install it is listed in the <a href="https://docs.astral.sh/uv/getting-started/installation/" target="_blank" rel="noopener">uv installation guide</a>.</p>
                 <p><strong>2. Create the environment and activate it</strong></p>
 <pre class="code">uv venv $HOME\bidsmgr-env --python 3.12
 $HOME\bidsmgr-env\Scripts\Activate.ps1
@@ -894,7 +919,7 @@ $HOME\bidsmgr-env\Scripts\Activate.ps1
                 <p><strong>1. Check your Python</strong></p>
 <pre class="code">python --version
 </pre>
-                <p class="muted">You need 3.10 to 3.14. If it is older, or the command is not found, install one with <code class="inline">winget install Python.Python.3.12</code>, or from <a href="https://www.python.org/downloads/windows/" target="_blank" rel="noopener">python.org</a>, ticking <strong>Add python.exe to PATH</strong>.</p>
+                <p class="muted">You need 3.10 to 3.14. If it is older, or the command is not found, install one with <code class="inline">winget install Python.Python.3.12</code> (<a href="https://learn.microsoft.com/windows/package-manager/winget/" target="_blank" rel="noopener">winget</a>), or download the installer from <a href="https://www.python.org/downloads/windows/" target="_blank" rel="noopener">python.org</a> and tick <strong>Add python.exe to PATH</strong>.</p>
                 <p><strong>2. Create the environment and activate it</strong></p>
 <pre class="code">python -m venv $HOME\bidsmgr-env
 $HOME\bidsmgr-env\Scripts\Activate.ps1
@@ -911,9 +936,10 @@ $HOME\bidsmgr-env\Scripts\Activate.ps1
                 <p class="muted">conda brings its own Python, so there is nothing else to install.</p>
 
                 <p><strong>1. Install Miniforge</strong></p>
+                <p>Skip this if you already have conda. With <a href="https://learn.microsoft.com/windows/package-manager/winget/" target="_blank" rel="noopener">winget</a>, which ships with Windows 10 and 11:</p>
 <pre class="code">winget install --id=CondaForge.Miniforge3 -e
 </pre>
-                <p class="muted">Skip this if you already have conda. Use the <strong>Miniforge Prompt</strong> from the Start menu, or run <code class="inline">conda init powershell</code> once to use PowerShell.</p>
+                <p class="muted">Without winget, download <code class="inline">Miniforge3-Windows-x86_64.exe</code> from the <a href="https://github.com/conda-forge/miniforge#download" target="_blank" rel="noopener">Miniforge releases page</a> and double-click it: that one is a normal Windows installer, not a command. Either way, use the <strong>Miniforge Prompt</strong> from the Start menu afterwards, or run <code class="inline">conda init powershell</code> once to use PowerShell instead.</p>
                 <p><strong>2. Create the environment and activate it</strong></p>
 <pre class="code">conda create -n bidsmgr python=3.12 -y
 conda activate bidsmgr
@@ -930,8 +956,6 @@ conda activate bidsmgr
           </div>
 
         </div>
-
-
         <div class="callout callout-tip">
           <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
           <div>
