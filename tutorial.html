@@ -249,6 +249,15 @@
             </p>
           </div>
         </div>
+
+        <p>
+          There is one more page, and it is a task rather than a route:
+          <a href="tutorial-deface.html"><strong>defacing and skull
+          stripping</strong></a>. Read it before an MRI or PET dataset leaves
+          the people who collected it. It applies whichever route you took,
+          because a face can be removed during the conversion or at any point
+          afterwards.
+        </p>
       </div>
     </section>
 
@@ -475,7 +484,7 @@
               anatomical, functional, diffusion, fieldmap and physiological data
               in one small folder. Only the engine behind each row changes:
               <code class="inline">dcm2niix</code> for DICOM,
-              <code class="inline">mne-bids</code> for EEG, MEG and iEEG
+              <code class="inline">mne-bids</code> for EEG and MEG
               recordings, <code class="inline">pet2bids</code> for PET ECAT and
               blood curves, and <code class="inline">bidsphysio</code> for the
               physiological signals stored inside Siemens MRI DICOM files. For
@@ -1698,8 +1707,8 @@
         <h2>Run the conversion</h2>
         <p>
           Press <strong>Run conversion</strong>. Each row is sent to the engine
-          that reads its format: dcm2niix for DICOM, mne-bids for EEG, MEG and
-          iEEG recordings, pet2bids for ECAT and blood, bidsphysio for the
+          that reads its format: dcm2niix for DICOM, mne-bids for EEG and MEG
+          recordings, pet2bids for ECAT and blood, bidsphysio for the
           physiological signals inside Siemens MRI DICOM files. You do not pick
           the engine; the row's format does.
         </p>
@@ -1798,6 +1807,22 @@
 
         <p><strong>What you should see now:</strong> a populated BIDS dataset
           on disk, and the Editor tab ready to open it.</p>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x2713;</div>
+          <div>
+            <strong>Sharing this dataset later?</strong>
+            <p>
+              A head scan contains a face, and a face can be rendered from
+              one. BIDS Manager can remove faces during the conversion itself,
+              so the identifiable image never enters the dataset, or
+              afterwards from the Editor's Tools menu, and it shows you the
+              before and the after side by side so you can check.
+              <a href="tutorial-deface.html">Defacing and skull stripping
+              &rarr;</a>
+            </p>
+          </div>
+        </div>
 
       </div>
     </section>
@@ -2065,7 +2090,7 @@
             <button class="tab-btn is-active" data-tab="mri"
                     role="tab" aria-selected="true">MRI and PET images</button>
             <button class="tab-btn" data-tab="eegmeg"
-                    role="tab" aria-selected="false">EEG, MEG and iEEG</button>
+                    role="tab" aria-selected="false">EEG and MEG</button>
             <button class="tab-btn" data-tab="tables"
                     role="tab" aria-selected="false">Sidecars and tables</button>
           </div>
@@ -2144,6 +2169,20 @@
             </p>
           </div>
         </div>
+
+        <p>
+          Any two NIfTI images can also be opened side by side, through
+          <strong>Tools &rarr; Compare images</strong> or by right-clicking a
+          selection in the tree. One set of controls drives both panes:
+          crosshair, slice, plane, volume, the 4-D graph, the 3-D camera and
+          its effects. Images of different shapes work, because the crosshair
+          travels in millimetres rather than in voxels. It was built for
+          checking a defaced image against the original and turned out to be
+          useful for raw against preprocessed, echo against echo, and one
+          session against another.
+          <a href="tutorial-deface.html#compare">How the compare viewer works
+          &rarr;</a>
+        </p>
 
       </div>
     </section>
@@ -2847,7 +2886,7 @@
           Reads the inventory and converts every keeper row to BIDS using
           the right backend per modality
           (<code class="inline">dcm2niix</code> for DICOM including PET DICOM,
-          <code class="inline">mne-bids</code> for EEG / MEG / iEEG,
+          <code class="inline">mne-bids</code> for EEG / MEG,
           <code class="inline">pet2bids</code> for PET ECAT and blood curves,
           <code class="inline">bidsphysio</code> for Siemens CMRR physio).
           Stages each subject privately, then atomic-renames into the BIDS
@@ -2908,10 +2947,27 @@
             <code class="inline">n/a</code>, since the mains frequency is a
             property of the building and nothing in the recording states it.</dd>
           <dt><code class="inline">--force-edf</code></dt>
-          <dd>Re-encode EEG / iEEG recordings to EDF on write instead of
+          <dd>Re-encode EEG recordings to EDF on write instead of
             keeping the source format. Harmonises a study to one BIDS-native
             format and makes a non-BIDS-native but mne-readable source
             convertible. MEG / NIRS are unaffected.</dd>
+          <dt><code class="inline">--deface</code></dt>
+          <dd>Remove the face from anatomical and PET images before each
+            subject is committed, so the identifiable image never enters the
+            dataset. This is the safest placement, because conversion stages a
+            subject in a temporary folder and defacing runs there, before the
+            move. Nothing is kept to undo from: your raw source data is where
+            a re-run starts. See
+            <a href="tutorial-deface.html">the defacing tutorial</a>.</dd>
+          <dt><code class="inline">--deface-engine NAME</code></dt>
+          <dd>Which engine, one of
+            <code class="inline">allineate</code> (the default),
+            <code class="inline">allineate-robust</code>,
+            <code class="inline">allineate-afni</code>,
+            <code class="inline">mindgrab</code> or
+            <code class="inline">strip-atlas</code>. The last two keep only
+            the brain and write a derivative rather than replacing the
+            image.</dd>
           <dt><code class="inline">--keep-residuals</code></dt>
           <dd>Keep dcm2niix residual / secondary outputs. By default the
             converter drops the derived single-volume duplicates dcm2niix
@@ -3055,6 +3111,47 @@
           <dt><code class="inline">--no-report</code></dt>
           <dd>Skip writing
             <code class="inline">.bidsmgr/validation_report.json</code>.</dd>
+        </dl>
+
+        <!-- bidsmgr-deface -->
+        <h3 id="cli-ref-deface"><code class="inline">bidsmgr-deface</code></h3>
+        <p>
+          Removes the face from the anatomical and PET images of a dataset
+          that already exists, or keeps only the brain and writes the result
+          as a derivative. One reversible operation, recorded in the Editor's
+          history. <code class="inline">--dry-run</code> reads headers only, so
+          it reports what would happen without needing the engine installed.
+          The <a href="tutorial-deface.html">defacing tutorial</a> covers every
+          option with pictures.
+        </p>
+<pre class="code">bidsmgr-deface &lt;bids_root&gt; [options]</pre>
+        <h4>Options</h4>
+        <dl class="cli-args">
+          <dt><code class="inline">--target PATH</code></dt>
+          <dd>Limit the run to this file or folder. Repeatable. Defaults to
+            the whole dataset.</dd>
+          <dt><code class="inline">--engine NAME</code></dt>
+          <dd><code class="inline">allineate</code> (default),
+            <code class="inline">allineate-robust</code>,
+            <code class="inline">allineate-afni</code>,
+            <code class="inline">mindgrab</code>,
+            <code class="inline">strip-atlas</code>. The first three remove
+            the face; the last two keep only the brain.</dd>
+          <dt><code class="inline">--dry-run</code></dt>
+          <dd>Print the images that would be treated and the ones that would
+            be skipped with the reason, and stop.</dd>
+          <dt><code class="inline">--keep-original-in-sourcedata</code></dt>
+          <dd>Copy each original to <code class="inline">sourcedata/</code>
+            first, so it can be restored at any point later. Those copies
+            still contain the face, so remove them before sharing.</dd>
+          <dt><code class="inline">--in-place</code></dt>
+          <dd>For a skull-strip engine: overwrite the original instead of
+            writing to
+            <code class="inline">derivatives/bidsmgr-skullstrip/</code>.</dd>
+          <dt><code class="inline">--list-engines</code></dt>
+          <dd>Describe every engine and exit.</dd>
+          <dt><code class="inline">-q</code>, <code class="inline">--quiet</code></dt>
+          <dd>Only report the outcome.</dd>
         </dl>
 
         <!-- bidsmgr-project -->
@@ -3217,7 +3314,7 @@ bidsmgr-convert --project /data/bids/my_study --on-existing skip</pre>
 <pre class="code">bidsmgr-scan /data/raw inv.tsv --schema 1.8.0
 bidsmgr-validate /data/bids --schema 1.8.0</pre>
 
-        <p><strong>Re-encode EEG and iEEG recordings to EDF on the way
+        <p><strong>Re-encode EEG recordings to EDF on the way
           in.</strong></p>
 <pre class="code">bidsmgr-convert inv.tsv /data/bids --force-edf</pre>
 

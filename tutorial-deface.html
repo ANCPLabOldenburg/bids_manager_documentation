@@ -1,0 +1,891 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Defacing and skull stripping in BIDS Manager: remove the face during conversion, from the Tools menu or by right-clicking an image, check the result in the synchronised before-and-after viewer, and put the face back when you need to.">
+  <title>Defacing and skull stripping &middot; BIDS Manager</title>
+  <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Privacy-friendly analytics (GoatCounter, no cookies) -->
+  <script data-goatcounter="https://bids-manager.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+  <div data-include="header"></div>
+
+  <div data-include="tutorial-back-to-landing"></div>
+
+  <main>
+
+    <aside class="page-toc" data-toc aria-label="Page navigation">
+      <button class="page-toc-toggle" type="button"
+              aria-expanded="false" aria-controls="page-toc-panel"
+              aria-label="Toggle page navigation">
+        <span class="toc-bars" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+      <nav id="page-toc-panel" class="page-toc-panel" aria-label="Sections">
+        <span class="page-toc-title">On this page</span>
+        <a class="page-toc-link" href="#why">
+          <span class="page-toc-dot" aria-hidden="true"></span>Why a face matters</a>
+        <a class="page-toc-link" href="#engines">
+          <span class="page-toc-dot" aria-hidden="true"></span>The engines</a>
+        <a class="page-toc-link" href="#during-conversion">
+          <span class="page-toc-dot" aria-hidden="true"></span>1. During conversion</a>
+        <a class="page-toc-link" href="#tools">
+          <span class="page-toc-dot" aria-hidden="true"></span>2. From the Tools menu</a>
+        <a class="page-toc-link" href="#right-click">
+          <span class="page-toc-dot" aria-hidden="true"></span>3. By right-clicking</a>
+        <a class="page-toc-link" href="#preview">
+          <span class="page-toc-dot" aria-hidden="true"></span>Reading the preview</a>
+        <a class="page-toc-link" href="#check">
+          <span class="page-toc-dot" aria-hidden="true"></span>Check the result</a>
+        <a class="page-toc-link" href="#skull-strip">
+          <span class="page-toc-dot" aria-hidden="true"></span>Skull stripping</a>
+        <a class="page-toc-link" href="#revert">
+          <span class="page-toc-dot" aria-hidden="true"></span>Putting the face back</a>
+        <a class="page-toc-link" href="#compare">
+          <span class="page-toc-dot" aria-hidden="true"></span>The compare viewer</a>
+        <a class="page-toc-link" href="#cli">
+          <span class="page-toc-dot" aria-hidden="true"></span>From the command line</a>
+        <a class="page-toc-link" href="#limits">
+          <span class="page-toc-dot" aria-hidden="true"></span>What it does not cover</a>
+        <a class="page-toc-link" href="#credits">
+          <span class="page-toc-dot" aria-hidden="true"></span>The tools behind it</a>
+      </nav>
+    </aside>
+
+    <!-- ============================================================
+         Hero
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Defacing tutorial</span>
+        <h1>Remove the face. Check that you did.</h1>
+        <p class="lead">
+          A head MRI contains a face, and a face can be rendered from one, so
+          a dataset shared with its faces intact is a dataset shared with its
+          participants identifiable. BIDS Manager removes faces in three
+          places, keeps the original so the operation can be undone, and gives
+          you a before-and-after viewer to confirm that the right thing was
+          removed.
+        </p>
+
+        <div class="callout callout-info">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Nothing to install.</strong>
+            <p>
+              Both engines ship with BIDS Manager. There is no FSL, no
+              FreeSurfer, no ANTs and no separate download to arrange, and
+              nothing here needs the command line.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Why
+         ============================================================ -->
+    <section class="section" id="why">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">The problem</span>
+        <h2>Why a face matters, and why checking matters more.</h2>
+        <p>
+          Removing identifiers from the sidecar does not deidentify a head
+          scan. A T1w has enough of the face in it to render a recognisable
+          portrait, and face-recognition software has been shown to match such
+          renders to photographs. If your consent or your repository requires
+          deidentified imaging, the pixels are part of what has to be dealt
+          with, not only the metadata.
+        </p>
+        <p>
+          Every defacing tool ends its documentation by telling you to inspect
+          the result, and then leaves you to find your own viewer. That advice
+          is not decoration, because defacing fails in two opposite
+          directions and both are easy to see and impossible to reason about:
+        </p>
+        <ul>
+          <li>
+            <strong>Too little removed</strong> and the participant is still
+            identifiable, which is the failure you were trying to avoid in the
+            first place.
+          </li>
+          <li>
+            <strong>Too much removed</strong> and the front of the brain or
+            the cerebellum has gone with it. That quietly ruins the analysis,
+            and it passes every validator, because a smaller brain is still a
+            valid NIfTI.
+          </li>
+        </ul>
+        <p>
+          So the <a href="#check">before-and-after viewer</a> is part of the
+          feature rather than an extra, and this page treats checking the
+          result as a step, not a suggestion.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Engines
+         ============================================================ -->
+    <section class="section" id="engines">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">What runs</span>
+        <h2>Two jobs, five engines.</h2>
+        <p>
+          <strong>Defacing</strong> blanks the voxels that carry the face and
+          leaves everything else, including the skull, alone. The result is
+          still raw data, so it replaces the image in place.
+          <strong>Skull stripping</strong> throws away everything outside the
+          brain, which removes the face and a great deal besides. That result
+          is a derivative, and it is written as one. Pick by what you need to
+          share, not by which sounds more thorough.
+        </p>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Engine</th><th>Job</th><th>How it works</th><th>When</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code class="inline">allineate</code></td>
+                <td>Deface</td>
+                <td>Registers a face mask from the avg152T1 atlas and blanks
+                    what the mask covers.</td>
+                <td><strong>The default.</strong> Right for most images, and
+                    about two seconds each.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">allineate-robust</code></td>
+                <td>Deface</td>
+                <td>The same, after cropping the neck and lower head first.</td>
+                <td>Steadier when the scan reaches well below the chin. Note
+                    that it <strong>changes the image dimensions</strong>: the
+                    cropped slices are gone.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">allineate-afni</code></td>
+                <td>Deface</td>
+                <td>The same, matched with an AFNI-style Hellinger cost
+                    instead of the fast one.</td>
+                <td>Slower. Worth trying when the default fits badly.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">mindgrab</code></td>
+                <td>Skull strip</td>
+                <td>A small neural network that finds the brain directly in
+                    the image.</td>
+                <td><strong>The default for stripping.</strong> About ten
+                    seconds an image on a laptop, plus a one-off model
+                    download the first time it runs.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">strip-atlas</code></td>
+                <td>Skull strip</td>
+                <td>Registers a brain mask from the same atlas the defacer
+                    uses, and keeps what it covers.</td>
+                <td>Works offline with no model download, and it is an affine
+                    fit of an average brain: expect it to clip cortex in
+                    places and leave dura in others.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x2713;</div>
+          <div>
+            <strong>If you are unsure, deface with <code class="inline">allineate</code>.</strong>
+            <p>
+              It is the default because it is the one that keeps the data you
+              are going to analyse. Skull stripping is for when you need a
+              brain-only image for a specific reason, and it gives you a
+              derivative rather than a replacement.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          None of these five are BIDS Manager's own work. They are
+          <a href="https://github.com/rordenlab/niimath" target="_blank" rel="noopener">niimath</a>
+          and
+          <a href="https://github.com/neuroneural/brainchop-cli" target="_blank" rel="noopener">brainchop</a>,
+          both established and openly licensed, and both
+          <a href="#credits">credited in full at the end of this page</a>.
+          What BIDS Manager adds is everything around them: which files to
+          treat, the preview, the copy kept so you can undo it, the record in
+          the sidecar, and the viewer for checking the result.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         1. During conversion
+         ============================================================ -->
+    <section class="section" id="during-conversion">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Way 1 of 3</span>
+        <h2>During conversion: the safest moment.</h2>
+        <p>
+          Open <strong>Settings &rarr; Convert + post-convert</strong> and tick
+          <strong>Deface</strong>. Every conversion from then on removes faces
+          from anatomical and PET images before the subject is written.
+        </p>
+        <p>
+          This placement is worth understanding, because it is the one that
+          actually protects a participant. Conversion assembles each subject in
+          a temporary staging folder and moves it into the dataset only when
+          everything has succeeded. Defacing runs inside that staging folder,
+          as the last step before the move, so the identifiable image exists
+          for a few seconds in a working directory and
+          <strong>what lands in your dataset was never identifiable</strong>.
+          Deface afterwards and there is a window, however short, in which a
+          face-bearing image sat in a folder that may be synced, backed up or
+          shared.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The Convert tab of Settings, with the Deface checkbox and the engine dropdown under Convert defaults"
+               src="assets/features/settings_convert_tab_dark.png"
+               data-light="assets/features/settings_convert_tab_light.png">
+          <figcaption>
+            <strong>Settings &rarr; Convert + post-convert.</strong>
+            <strong>Deface</strong> and <strong>Deface engine</strong> sit with
+            the other conversion defaults, above the post-convert chain. They
+            are remembered, so this is a decision you make once for a study
+            rather than per run. Leave the engine on
+            <code class="inline">allineate</code> unless you have a reason not
+            to.
+          </figcaption>
+        </figure>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon" aria-hidden="true">&#x26a0;</div>
+          <div>
+            <strong>There is nothing to undo here, by design.</strong>
+            <p>
+              A conversion-time deface keeps no copy, because there is nothing
+              to keep: the undefaced version never existed inside the dataset.
+              Your raw source data is untouched and is where a re-run starts
+              from. If you want a copy you can compare against and restore
+              from, deface from the Tools menu instead and tick
+              <em>keep the originals in sourcedata/</em>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         2. Tools menu
+         ============================================================ -->
+    <section class="section" id="tools">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Way 2 of 3</span>
+        <h2>From the Tools menu, on a dataset you already have.</h2>
+        <p>
+          Open the dataset in the <strong>Editor</strong> and choose
+          <strong>Tools &rarr; Deface&hellip;</strong>. With nothing selected in
+          the tree it acts on the whole dataset; with a subject, a session or a
+          folder selected it acts on that.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The Editor Tools menu listing Deface, Remove the skull, Compare with the original and Put the face back"
+               src="assets/features/editor_tools_menu_dark.png"
+               data-light="assets/features/editor_tools_menu_light.png">
+          <figcaption>
+            <strong>Everything on this page lives in one menu.</strong>
+            <strong>Deface</strong> and <strong>Remove the skull</strong> do the
+            work; <strong>Compare with the original</strong> checks it;
+            <strong>Put the face back</strong> undoes it later. They sit with
+            <em>Fix ups</em>, above the separator, because all of them act on
+            the dataset rather than on one selected row.
+          </figcaption>
+        </figure>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The defacing dialog: the scope, the engine and its description, and a ticked list of images with a grouped list of the ones that cannot be defaced"
+               src="assets/features/editor_deface_dark.png"
+               data-light="assets/features/editor_deface_light.png">
+          <figcaption>
+            <strong>Nothing happens until you press the button.</strong> The
+            card at the top says what the run covers and how much it is. The
+            engine dropdown explains itself as you change it. The list is
+            ticked, so unticking is how you leave something alone, and
+            underneath it are the images that <em>cannot</em> be defaced,
+            grouped by the reason. The whole run is one entry in the Editor's
+            history, so <strong>Edit &rarr; Undo</strong> puts the dataset back.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         3. Right-click
+         ============================================================ -->
+    <section class="section" id="right-click">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Way 3 of 3</span>
+        <h2>By right-clicking, when you want one image.</h2>
+        <p>
+          Right-click anything in the BIDS tree. The same four actions are
+          there, acting on what you clicked. Right-click inside an existing
+          multiple selection and they act on the whole selection, which is
+          how you deface four subjects and not the fifth.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The tree right-click menu on an anatomical image, showing Remove faces, Compare with the original, Remove the skull and Put the face back"
+               src="assets/features/editor_tree_menu_dark.png"
+               data-light="assets/features/editor_tree_menu_light.png">
+          <figcaption>
+            <strong>The same actions, on what you clicked.</strong>
+            <strong>Remove faces</strong> and <strong>Remove the skull</strong>
+            work on a file, a datatype folder, a session or a subject.
+            <strong>Compare with the original</strong> and
+            <strong>Compare with another image</strong> are offered on a
+            <code class="inline">.nii</code> only, because comparing is per
+            image.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Reading the preview
+         ============================================================ -->
+    <section class="section" id="preview">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Before you press it</span>
+        <h2>The skipped list is the half that matters.</h2>
+        <p>
+          A user told &ldquo;4 images defaced&rdquo; and not told that three
+          more were skipped walks away with a dataset that still has a face in
+          it and no reason to suspect one. So every image the selector walked
+          past is on screen, with its reason, grouped so that seven fieldmaps
+          skipped for one reason read as one fact rather than seven.
+        </p>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Reason</th><th>What it means</th><th>What to do</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>not a single 3-D volume</td>
+                <td>A time series or a multi-echo file. The engines take one
+                    volume.</td>
+                <td>Nothing. A 4-D functional image does not carry a
+                    renderable face.</td>
+              </tr>
+              <tr>
+                <td>not a datatype that shows a face</td>
+                <td>The image is not in <code class="inline">anat/</code> or
+                    <code class="inline">pet/</code>.</td>
+                <td>Nothing, usually. Fieldmaps and functional runs are
+                    skipped on purpose.</td>
+              </tr>
+              <tr>
+                <td>not raw subject data</td>
+                <td>It lives under <code class="inline">derivatives/</code> or
+                    outside a subject folder.</td>
+                <td>Deface the raw image and regenerate the derivative, or
+                    treat the derivative as its own dataset.</td>
+              </tr>
+              <tr>
+                <td>not a readable NIfTI-1 image</td>
+                <td>The header could not be read.</td>
+                <td>Check the file. This usually means a truncated or
+                    corrupted image, which is worth knowing about anyway.</td>
+              </tr>
+              <tr>
+                <td>already defaced by BIDS Manager</td>
+                <td>The sidecar records a previous run.</td>
+                <td>Nothing. It is still listed and still tickable, so you can
+                    deliberately run a second engine over it.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          The run itself happens on a background thread with a progress bar and
+          a <strong>Stop</strong> button. Stopping rolls the whole operation
+          back rather than leaving half a dataset defaced, because a
+          half-defaced dataset is the hardest state to recover from: it looks
+          finished.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Check the result
+         ============================================================ -->
+    <section class="section" id="check">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">The step people skip</span>
+        <h2>Look at what you removed.</h2>
+        <p>
+          Right-click the image and choose
+          <strong>Compare with the original</strong>, or use
+          <strong>Tools &rarr; Compare with the original</strong> with the image
+          selected. The undefaced copy opens on the left and what is in the
+          dataset opens on the right, driven as one: move the crosshair,
+          change the plane, rotate the 3-D render, and both follow.
+        </p>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="The before-and-after viewer: an intact face on the left, the defaced image on the right, both rotating together in 3-D"
+                 data-dark="assets/features/deface_dark.mp4"
+                 data-light="assets/features/deface_light.mp4"></video>
+          <figcaption>
+            <strong>Before and after, rotating together.</strong> The face, the
+            nose and the jaw are gone on the right; the brain, the cerebellum
+            and the brainstem are untouched. Because the two renders share one
+            camera, they turn together, and anything the defacer took that it
+            should not have would show up as a difference between two otherwise
+            identical heads. The <strong>Put the face back</strong> button in
+            the corner restores this image from the copy on the left.
+          </figcaption>
+        </figure>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x2713;</div>
+          <div>
+            <strong>Rotate to the front.</strong>
+            <p>
+              A mid-sagittal slice tells you the nose has gone. The 3-D render
+              turned to face you tells you whether the result is still
+              recognisable, which is the actual question.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Skull stripping
+         ============================================================ -->
+    <section class="section" id="skull-strip">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">The other job</span>
+        <h2>Skull stripping writes a derivative.</h2>
+        <p>
+          <strong>Tools &rarr; Remove the skull&hellip;</strong>, or
+          <strong>Remove the skull</strong> from the tree's right-click. The
+          dialog is the same shape as the defacing one, and it differs in the
+          one way that matters: where the output goes.
+        </p>
+        <p>
+          A defaced image is the same scan with some voxels blanked, so it
+          replaces the original. A skull-stripped one is not. Everything
+          outside the brain has been discarded by an algorithm that can be
+          wrong, and BIDS has a word for a file an algorithm produced from raw
+          data. So the result is written to
+          <code class="inline">derivatives/bidsmgr-skullstrip/</code> as
+          <code class="inline">desc-brain</code>, with the
+          <code class="inline">dataset_description.json</code> that makes that
+          folder a real derivative dataset, and
+          <strong>your raw scan is left exactly as it is</strong>.
+        </p>
+
+        <pre class="code">my_dataset/
+├── sub-001/ses-pre/anat/
+│   └── sub-001_ses-pre_acq-tfl3p2_T1w.nii.gz      <span class="cmt">← untouched</span>
+└── derivatives/bidsmgr-skullstrip/
+    ├── dataset_description.json                   <span class="cmt">← GeneratedBy</span>
+    └── sub-001/ses-pre/anat/
+        ├── sub-001_ses-pre_acq-tfl3p2_desc-brain_T1w.nii.gz
+        └── sub-001_ses-pre_acq-tfl3p2_desc-brain_T1w.json</pre>
+        <p>
+          The derivative's own sidecar carries the fields the source had, plus
+          a <code class="inline">Sources</code> entry naming the image it came
+          from, so the pair stays interpretable if somebody moves one of them.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The skull stripping dialog, with the mindgrab engine selected and a status line saying the results go to derivatives"
+               src="assets/features/editor_strip_dark.png"
+               data-light="assets/features/editor_strip_light.png">
+          <figcaption>
+            <strong>Read the status line.</strong> It says where the output is
+            going and that the originals are untouched, and it changes if you
+            tick <strong>Overwrite the original instead of writing a
+            derivative</strong>. That option exists because some workflows want
+            it; it is off by default, because a skull-stripped scan sitting in
+            a raw BIDS tree is a dataset whose raw data has been processed with
+            nothing in the tree saying so.
+          </figcaption>
+        </figure>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="A raw T1w on the left and the skull-stripped derivative on the right, rotating together in 3-D"
+                 data-dark="assets/features/skull_strip_dark.mp4"
+                 data-light="assets/features/skull_strip_light.mp4"></video>
+          <figcaption>
+            <strong>The derivative beside the scan it came from.</strong> Left,
+            the raw image in the dataset; right,
+            <code class="inline">desc-brain</code> from
+            <code class="inline">derivatives/</code>. This is the check worth
+            doing on a strip: cortex clipped at the edges or a cerebellum cut
+            in half is obvious here and invisible in a validator.
+          </figcaption>
+        </figure>
+
+        <div class="callout callout-info">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>The result keeps the image's own grid.</strong>
+            <p>
+              Dimensions, affine and data type come back exactly as they were,
+              so the derivative lines up voxel for voxel with the scan it came
+              from and anything computed from one applies to the other. The
+              neural engine works internally on a resampled copy and the mask
+              is mapped back; you never see that.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Revert
+         ============================================================ -->
+    <section class="section" id="revert">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Going back</span>
+        <h2>Putting the face back.</h2>
+        <p>
+          <strong>Edit &rarr; Undo</strong> reverses a defacing, and it is the
+          right tool for about five minutes. After a dozen other edits it is
+          not reachable without undoing all of them. So there is a second
+          route that works however much came afterwards:
+          <strong>Tools &rarr; Put the face back&hellip;</strong>
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The restore dialog listing two defaced images and where each undefaced copy comes from"
+               src="assets/features/editor_deface_revert_dark.png"
+               data-light="assets/features/editor_deface_revert_light.png">
+          <figcaption>
+            <strong>It lists only what it can actually restore, and says where
+            from.</strong> &ldquo;The copy kept in sourcedata/&rdquo; survives
+            anything; &ldquo;the copy kept in the edit history&rdquo; survives
+            until that history is cleared. Restoring also removes the
+            deidentification entries from the sidecar, because an image that
+            still claims to be defaced will never be defaced again by anyone
+            reading the metadata. <strong>The copies themselves are kept</strong>,
+            so you can deface again with a different engine.
+          </figcaption>
+        </figure>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Where you defaced</th><th>Is there a copy?</th><th>How to get the face back</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Tools or right-click, default settings</td>
+                <td>Yes, in <code class="inline">.bidsmgr/</code></td>
+                <td>Undo, or <em>Put the face back</em> while that history
+                    lasts.</td>
+              </tr>
+              <tr>
+                <td>Tools or right-click, with
+                    <em>keep the originals in sourcedata/</em></td>
+                <td>Yes, in <code class="inline">sourcedata/</code></td>
+                <td><em>Put the face back</em>, at any point in the future.</td>
+              </tr>
+              <tr>
+                <td>During conversion</td>
+                <td>No, deliberately</td>
+                <td>Convert again from your raw data with defacing off.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon" aria-hidden="true">&#x26a0;</div>
+          <div>
+            <strong>A copy in <code class="inline">sourcedata/</code> still
+            contains the face.</strong>
+            <p>
+              That is the whole point of it, and it is why the option is off by
+              default. <code class="inline">sourcedata/</code> is ordinary
+              dataset content as far as every BIDS tool is concerned, so a
+              dataset shared with those copies in place is
+              <strong>not</strong> deidentified. Delete them before you share,
+              or use the default, which keeps the originals in
+              <code class="inline">.bidsmgr/</code> where tools ignore them.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Compare viewer
+         ============================================================ -->
+    <section class="section" id="compare">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Beyond defacing</span>
+        <h2>The compare viewer works on any two images.</h2>
+        <p>
+          The side-by-side viewer was built for checking a deface and turned
+          out to be the thing people wanted for everything else, so it is a
+          feature in its own right:
+          <strong>Tools &rarr; Compare images&hellip;</strong>, or
+          <strong>Compare with another image</strong> from the right-click on
+          any <code class="inline">.nii</code>. Raw against preprocessed, two
+          echoes, a derivative against the scan it came from, this week's run
+          against last week's, one subject against another.
+        </p>
+
+        <figure class="media-figure">
+          <video class="feature-video" muted loop playsinline preload="metadata"
+                 aria-label="Two images driven as one: the 3-D camera, the rendering effect and the 2-D crosshair all stay together"
+                 data-dark="assets/features/compare_viewer_dark.mp4"
+                 data-light="assets/features/compare_viewer_light.mp4"></video>
+          <figcaption>
+            <strong>One set of controls, two images.</strong> The camera, the
+            cut plane, the rendering effect, the plane, the slice, the volume
+            and the crosshair all stay together, so what you see is the
+            difference between the two images rather than the difference
+            between two viewers. Untick <strong>Sync the two views</strong> and
+            each side gets its own controls.
+          </figcaption>
+        </figure>
+
+        <h3>Choosing the second image</h3>
+        <p>
+          The picker lists the dataset's own images, in the dataset's own
+          shape, with a filter whose words can come in any order. It does not
+          send you to the system file dialog to navigate folders from memory.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The image picker, filtered to one image by typing 001 t1, with a Browse button for files outside the dataset"
+               src="assets/features/editor_compare_picker_dark.png"
+               data-light="assets/features/editor_compare_picker_light.png">
+          <figcaption>
+            <strong>Type any parts of the path.</strong>
+            <code class="inline">001 t1</code> finds
+            <code class="inline">sub-001/&hellip;/sub-001_&hellip;_T1w.nii.gz</code>
+            without you having to remember which comes first. Derivatives are
+            listed too, since comparing one against its source is the common
+            case. <strong>Browse&hellip;</strong> is there for an image from
+            outside the dataset, which is the one thing the system dialog is
+            right for.
+          </figcaption>
+        </figure>
+
+        <h3>Images that do not match</h3>
+        <p>
+          Two images of different sizes, resolutions or storage orders open
+          and stay linked. The crosshair travels as
+          <strong>millimetres in the scanner</strong> rather than as a voxel
+          index, so it points at the same anatomy in both, and a note says the
+          shapes differ so you know what you are looking at. A cropped result
+          against its source, or a PET against a T1w, works exactly as you
+          would want.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CLI
+         ============================================================ -->
+    <section class="section" id="cli">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Without the GUI</span>
+        <h2>From the command line.</h2>
+
+        <pre class="code"><span class="cmt"># What would happen, without changing anything. Reads headers only,</span>
+<span class="cmt"># so it works even where the engine is not installed.</span>
+bidsmgr-deface /data/my_dataset --dry-run
+
+<span class="cmt"># Deface the whole dataset with the default engine.</span>
+bidsmgr-deface /data/my_dataset
+
+<span class="cmt"># One subject, the neck-cropping engine, keeping a visible copy.</span>
+bidsmgr-deface /data/my_dataset --target /data/my_dataset/sub-001 \
+               --engine allineate-robust --keep-original-in-sourcedata
+
+<span class="cmt"># Skull strip into derivatives/bidsmgr-skullstrip/.</span>
+bidsmgr-deface /data/my_dataset --engine mindgrab
+
+<span class="cmt"># Describe every engine and stop.</span>
+bidsmgr-deface --list-engines
+
+<span class="cmt"># Deface as part of the conversion, which is the safest placement.</span>
+bidsmgr-convert inventory.tsv /data/out --deface --deface-engine allineate</pre>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Option</th><th>What it does</th></tr></thead>
+            <tbody>
+              <tr><td><code class="inline">--target PATH</code></td>
+                  <td>Limit to a file or folder. Repeatable. Default: the whole
+                      dataset.</td></tr>
+              <tr><td><code class="inline">--engine NAME</code></td>
+                  <td>One of the five in the table above. Default
+                      <code class="inline">allineate</code>.</td></tr>
+              <tr><td><code class="inline">--dry-run</code></td>
+                  <td>Print the candidates and the skips, write nothing.</td></tr>
+              <tr><td><code class="inline">--keep-original-in-sourcedata</code></td>
+                  <td>Copy each original to
+                      <code class="inline">sourcedata/</code> first. Those
+                      copies still contain the face.</td></tr>
+              <tr><td><code class="inline">--in-place</code></td>
+                  <td>For a skull-strip engine: overwrite the original instead
+                      of writing a derivative.</td></tr>
+              <tr><td><code class="inline">--list-engines</code></td>
+                  <td>Describe the engines and exit.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          The exit code is <code class="inline">0</code> on success,
+          <code class="inline">1</code> if the run failed and was rolled back,
+          and <code class="inline">2</code> for a bad argument or a missing
+          engine.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Limits
+         ============================================================ -->
+    <section class="section" id="limits">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Being honest</span>
+        <h2>What this does not cover.</h2>
+        <ul>
+          <li>
+            <strong>Defacing is not anonymisation.</strong> It deals with the
+            pixels. Names, dates, identifiers in sidecars and identifiers in
+            filenames are a separate job, and BIDS Manager's metadata tools
+            handle those.
+          </li>
+          <li>
+            <strong>Only <code class="inline">anat/</code> and
+            <code class="inline">pet/</code> are treated.</strong> Those are
+            the datatypes whose images carry a renderable face. Everything
+            else is listed as skipped, with the reason, rather than passed over
+            silently.
+          </li>
+          <li>
+            <strong>A defaced image can still be re-identified in principle.</strong>
+            No defacer is a guarantee. Removing the face raises the effort
+            considerably; it does not reduce it to zero.
+          </li>
+          <li>
+            <strong>Check the result.</strong> Every engine here is an
+            algorithm fitting a template or a model to one head, and heads
+            vary. That is why the comparison viewer exists and why this page
+            treats it as a step.
+          </li>
+          <li>
+            <strong>Not on Python 3.14 yet.</strong> niimath publishes a
+            wheel per Python version and has not published one for 3.14.
+            There, <strong>Deface</strong> is greyed out with a tooltip
+            saying why, and the skull-stripping dialog opens with its Run
+            button disabled and the same explanation on it. Everything else
+            works as usual. Python 3.10 to 3.13 have the wheel, and the
+            one-click installer brings its own Python, so this only affects a
+            <code class="inline">pip install</code> into a 3.14 environment.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Credits
+         ============================================================ -->
+    <section class="section" id="credits">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Credit</span>
+        <h2>The tools behind it.</h2>
+        <p>
+          BIDS Manager does not implement defacing or brain extraction. It
+          uses the tools that already do it well, the same way it uses
+          dcm2niix for DICOM and mne-bids for EEG and MEG. If you publish work
+          on a dataset prepared this way, these are what you cite.
+        </p>
+        <ul>
+          <li>
+            <a href="https://github.com/rordenlab/niimath" target="_blank" rel="noopener"><strong>niimath</strong></a>,
+            from Chris Rorden's lab, BSD-2-Clause. It performs the registration and
+            the masking for the three defacing engines and for
+            <code class="inline">strip-atlas</code>. The program itself is
+            installed with BIDS Manager, on macOS, Linux and Windows alike.
+          </li>
+          <li>
+            <a href="https://github.com/neuroneural/brainchop-cli" target="_blank" rel="noopener"><strong>brainchop</strong></a>,
+            MIT, which runs the
+            <a href="https://github.com/niivue/niivue/tree/main/packages/nv-ext-brain2print" target="_blank" rel="noopener"><strong>mindgrab</strong></a>
+            brain-extraction network. It runs on
+            <a href="https://github.com/tinygrad/tinygrad" target="_blank" rel="noopener">tinygrad</a>,
+            which is why the skull strip needs no PyTorch and no ONNX runtime,
+            and why it is small enough to install with everything else.
+          </li>
+          <li>
+            The <code class="inline">avg152T1</code> template and its face and
+            brain masks come from
+            <a href="https://github.com/niivue/deface" target="_blank" rel="noopener"><strong>niivue/deface</strong></a>,
+            BSD-2-Clause. They ship inside the package, so defacing works with
+            no download and no network.
+          </li>
+        </ul>
+        <p>
+          Pairing them is deliberate. niimath is fast, offline and
+          dependency-free, and mindgrab handles the heads an affine fit of an
+          average brain does badly on. A third implementation of defacing
+          written here would only be a third thing to be wrong in its own way.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Next
+         ============================================================ -->
+    <section class="section">
+      <div class="container container-narrow prose">
+        <h2>Next</h2>
+        <p>
+          <a href="tutorial.html#gui-walkthrough">The GUI walkthrough</a>
+          covers the rest of the Editor, including the validator and the
+          metadata forms. <a href="gui-tour.html">The GUI tour</a> explains
+          each pane and control once.
+        </p>
+        <p style="margin-top: 8px;">
+          <a class="btn btn-primary" href="tutorial.html#gui-walkthrough">The full GUI walkthrough &rarr;</a>
+          <a class="btn btn-ghost" href="updates.html">What changed in 1.4.0</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <div data-include="footer"></div>
+  <script src="script.js" defer></script>
+</body>
+</html>

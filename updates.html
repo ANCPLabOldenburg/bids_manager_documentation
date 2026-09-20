@@ -25,6 +25,8 @@
       </button>
       <nav id="page-toc-panel" class="page-toc-panel" aria-label="Versions">
         <span class="page-toc-title">Jump to a version</span>
+        <a class="page-toc-link" href="#v140">
+          <span class="page-toc-dot" aria-hidden="true"></span>1.4.0</a>
         <a class="page-toc-link" href="#v130">
           <span class="page-toc-dot" aria-hidden="true"></span>1.3.0</a>
         <a class="page-toc-link" href="#v126">
@@ -78,8 +80,179 @@
           </p>
         </div>
 
+        <!-- ============ 1.4.0 ============ -->
+        <div class="release reveal is-latest is-landmark is-zigdots" id="v140">
+          <div class="release-head">
+            <h2>1.4.0</h2>
+            <span class="release-date">September 2026</span>
+            <span class="release-badge is-zigdots-badge">Major release</span>
+          </div>
+          <p class="rel-lede">
+            A head scan contains a face, and a face can be rendered from one.
+            BIDS Manager can now remove it, during the conversion itself or
+            afterwards, keep the original so the operation can be undone, and
+            show you the before and the after side by side so you can confirm
+            that the face went and the brain did not.
+          </p>
+
+          <p class="rel-kind k-new">New</p>
+          <ul>
+            <li>
+              <strong>Defacing, in three places.</strong> Tick
+              <strong>Deface</strong> in Settings and every conversion removes
+              faces from anatomical and PET images before the subject is
+              written, so the identifiable image never enters the dataset at
+              all. Or do it afterwards, from
+              <strong>Tools &rarr; Deface</strong> on a whole dataset or a
+              selection, or by right-clicking any image in the tree. Same
+              engine in all three; only the moment differs.
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="The before-and-after viewer: a head with its face on the left, the defaced version on the right, rotating together"
+                       data-dark="assets/features/deface_dark.mp4"
+                       data-light="assets/features/deface_light.mp4"></video>
+                <figcaption>
+                  Before and after, rotating together. The face, nose and jaw
+                  are gone; the brain, cerebellum and brainstem are untouched.
+                </figcaption>
+              </figure>
+              The engine is
+              <a href="https://github.com/rordenlab/niimath" target="_blank" rel="noopener">niimath</a>,
+              whose program ships inside BIDS Manager, so there is no FSL, no
+              FreeSurfer and no ANTs to arrange.
+            </li>
+            <li>
+              <strong>Skull stripping, and it writes a derivative.</strong>
+              <strong>Tools &rarr; Remove the skull</strong> keeps only the
+              brain, using either the
+              <a href="https://github.com/niivue/niivue/tree/main/packages/nv-ext-brain2print" target="_blank" rel="noopener">mindgrab</a>
+              network run through
+              <a href="https://github.com/neuroneural/brainchop-cli" target="_blank" rel="noopener">brainchop</a>,
+              or a mask from the same atlas the defacer uses. The
+              result goes to
+              <code>derivatives/bidsmgr-skullstrip/</code> as
+              <code>desc-brain</code>, with the
+              <code>dataset_description.json</code> that makes the folder a
+              real derivative dataset, and <strong>your raw scan is left
+              exactly as it is</strong>. A skull-stripped image is not raw
+              data, and a raw tree that quietly contains one is a dataset
+              nobody can interpret. Overwriting in place is offered, and is
+              not the default.
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="A raw T1w on the left and the skull-stripped derivative on the right, rotating together"
+                       data-dark="assets/features/skull_strip_dark.mp4"
+                       data-light="assets/features/skull_strip_light.mp4"></video>
+                <figcaption>
+                  The derivative beside the scan it came from. Clipped cortex
+                  is obvious here and invisible to a validator.
+                </figcaption>
+              </figure>
+            </li>
+            <li>
+              <strong>A synchronised before-and-after viewer.</strong> Every
+              defacing tool tells you to inspect the result and then leaves you
+              to find your own viewer. This one is built in: two images side by
+              side, driven as one. The crosshair, the slice, the plane, the
+              volume, the 4-D graph, the 3-D camera, the rendering effect and
+              the cut plane all stay together, so what you see is the
+              difference between the two images rather than the difference
+              between two viewers.
+            </li>
+            <li>
+              <strong>Compare any two images, not just a defacing pair.</strong>
+              <strong>Tools &rarr; Compare images</strong> puts any two NIfTI
+              files side by side: raw against preprocessed, two echoes, a
+              derivative against the scan it came from, one subject against
+              another. Images of different sizes work too, because the
+              crosshair is matched by position in the scanner rather than by
+              voxel index.
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="Two images driven as one: camera, rendering effect and crosshair all stay together"
+                       data-dark="assets/features/compare_viewer_dark.mp4"
+                       data-light="assets/features/compare_viewer_light.mp4"></video>
+                <figcaption>
+                  One set of controls, two images. Untick
+                  <strong>Sync the two views</strong> and each side gets its
+                  own.
+                </figcaption>
+              </figure>
+            </li>
+            <li>
+              <strong>Choosing an image no longer sends you to the file
+              dialog.</strong> The picker lists the dataset's own images, in
+              the dataset's own shape, with a filter whose words can come in
+              any order: <code>014 t1</code> finds
+              <code>sub-014/&hellip;/sub-014_T1w.nii.gz</code>. Derivatives are
+              listed too, since comparing one against its source is the common
+              case, and <strong>Browse</strong> is still there for a file from
+              outside the dataset.
+            </li>
+            <li>
+              <strong>Putting the face back.</strong> Undo reverses a defacing
+              for as long as it is the last thing you did.
+              <strong>Tools &rarr; Put the face back</strong> works however
+              many edits came afterwards, restoring from the copy kept in
+              <code>.bidsmgr/</code> or in <code>sourcedata/</code>, and taking
+              the deidentification entries back out of the sidecar so the image
+              can be defaced again later.
+            </li>
+            <li>
+              <strong>The viewer opens in the layout you left it in.</strong>
+              The plane and the view mode are remembered between sessions, and
+              a new scan opens in the multi-planar view, or the multi-planar
+              3-D view where there is a GPU, rather than on a single slice.
+            </li>
+          </ul>
+
+          <p class="rel-kind k-fix">Fixed</p>
+          <ul>
+            <li>
+              <strong>Checkboxes follow the theme.</strong> An unstyled
+              checkbox fell back to the platform control, which does not know
+              about the palette: in the dark theme a plain unchecked box
+              painted a light grey block that read as disabled, or as already
+              ticked. Every checkbox and radio button in the application now
+              takes its colours from the theme, in every state.
+            </li>
+            <li>
+              <strong>A wide figure in the documentation sat half its width off
+              to the left</strong> and was clipped at the edge of the window.
+            </li>
+          </ul>
+
+          <p class="rel-kind k-note">Changed</p>
+          <ul>
+            <li>
+              <strong>Convert provenance moved to the dataset root.</strong> It
+              used to be written into a hidden folder inside every subject,
+              which cost more than it was worth: deleting a subject removed
+              every recording and left the folder standing, because the tool's
+              own state is excluded from a deletion. It now lives with
+              everything else the tool writes, at
+              <code>.bidsmgr/provenance/</code>. Datasets converted by an
+              earlier version still have theirs in the subject folder, and the
+              Editor's delete now clears those too.
+            </li>
+            <li>
+              The defacing and skull-stripping engines are ordinary
+              dependencies rather than optional extras, because these features
+              are reached from the interface and somebody who installed by
+              double-clicking an installer has no terminal in which to add one.
+              On Python 3.14 the defacing engine has no wheel yet, so the menu
+              entry is greyed out with the reason; everything else is
+              unaffected.
+            </li>
+          </ul>
+
+          <p>
+            <a class="btn btn-primary" href="tutorial-deface.html">The defacing tutorial &rarr;</a>
+          </p>
+        </div>
+
         <!-- ============ 1.3.0 ============ -->
-        <div class="release reveal is-latest is-landmark is-wavefield" id="v130">
+        <div class="release reveal is-landmark is-wavefield" id="v130">
           <div class="release-head">
             <h2>1.3.0</h2>
             <span class="release-date">September 2026</span>
@@ -680,7 +853,7 @@
               <strong>Preview a spectrum before converting.</strong> The
               Converter's inspection table gained a per-row <strong>Compute
               PSD</strong> button, so you can check the power spectrum of an
-              EEG, MEG, iEEG or NIRS recording before you convert it.
+              EEG, MEG or NIRS recording before you convert it.
             </li>
           </ul>
           <p class="rel-kind k-note">Changed</p>
@@ -707,7 +880,7 @@
           <p class="rel-kind k-new">New</p>
           <ul>
             <li>
-              <strong>An MEG / EEG / iEEG signal viewer in the Editor.</strong>
+              <strong>An MEG / EEG signal viewer in the Editor.</strong>
               Click a recording to see a metadata card, then <strong>Load
               signal</strong> for an interactive time-series viewer: channel
               picking, filtering, resampling, an in-app power-spectrum (PSD)
@@ -741,7 +914,7 @@
               undo / redo in the Editor and a project switcher in the header.
             </li>
             <li>
-              <strong>Force-EDF conversion</strong> for EEG and iEEG (re-encode to
+              <strong>Force-EDF conversion</strong> for EEG (re-encode to
               EDF on the way in).
             </li>
             <li>

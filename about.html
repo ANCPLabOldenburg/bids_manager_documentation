@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="What BIDS Manager is, why it exists, and how the schema-driven engine works: the conversion engines it builds on, the silent failures it catches in MRI, PET, EEG and MEG data, validation, and privacy.">
+  <meta name="description" content="What BIDS Manager is, why it exists, and how the schema-driven engine works: the conversion and defacing engines it builds on, the silent failures it catches in MRI, PET, EEG and MEG data, validation, and privacy.">
   <title>About &middot; BIDS Manager</title>
   <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
   <link rel="stylesheet" href="styles.css">
@@ -28,7 +28,7 @@
         <a class="page-toc-link" href="#what">
           <span class="page-toc-dot" aria-hidden="true"></span>What it is</a>
         <a class="page-toc-link" href="#engines">
-          <span class="page-toc-dot" aria-hidden="true"></span>The conversion engines</a>
+          <span class="page-toc-dot" aria-hidden="true"></span>The engines underneath</a>
         <a class="page-toc-link" href="#adds">
           <span class="page-toc-dot" aria-hidden="true"></span>What it adds</a>
         <a class="page-toc-link" href="#why">
@@ -61,7 +61,7 @@
         <h1>What is BIDS Manager?</h1>
         <p class="lead">
           BIDS Manager is a multimodal raw-to-BIDS conversion and curation
-          tool. It covers the full workflow for MRI, PET, EEG, MEG, iEEG and
+          tool. It covers the full workflow for MRI, PET, EEG, MEG and
           the physiological recordings stored inside MRI DICOM files, in a
           single application, with the official BIDS schema as the source of
           truth for naming, structure and validation.
@@ -92,8 +92,9 @@
           <div>
             <strong>Everything arrives in one installation.</strong>
             <p>
-              The conversion engines, the validator and the viewers are
-              installed with the application, on macOS, Linux and Windows.
+              The conversion and defacing engines, the validator and the
+              viewers are installed with the application, on macOS, Linux and
+              Windows.
               There is no separate toolchain to assemble and no compiler to
               set up. See <a href="installation.html">Installation</a>.
             </p>
@@ -103,17 +104,18 @@
     </section>
 
     <!-- ============================================================
-         The conversion engines
+         The engines underneath
          ============================================================ -->
     <section class="section" id="engines">
       <div class="container container-narrow prose">
         <span class="section-eyebrow">Foundations</span>
-        <h2>The conversion engines</h2>
+        <h2>The engines underneath</h2>
 
         <p>
-          File conversion is a solved problem, and BIDS Manager does not solve
-          it again. It uses the established engine for each modality and
-          extends each one with additional functionality.
+          Converting a scanner file, and removing the face from a head scan,
+          are both solved problems. BIDS Manager does not solve either again.
+          It uses the established tool for each job and extends it with the
+          work that tool was never meant to cover.
         </p>
 
         <ul>
@@ -123,7 +125,7 @@
           </li>
           <li>
             <a href="https://mne.tools/mne-bids/" target="_blank" rel="noopener"><strong>mne-bids</strong></a>
-            writes EEG, MEG and iEEG recordings into the BIDS layout, and
+            writes EEG and MEG recordings into the BIDS layout, and
             fNIRS recordings where the channels identify them as such.
           </li>
           <li>
@@ -137,13 +139,42 @@
             alongside an image and store inside the DICOM files: respiration,
             ECG and pulse oximetry.
           </li>
+          <li>
+            <a href="https://github.com/rordenlab/niimath" target="_blank" rel="noopener"><strong>niimath</strong></a>
+            removes the face from anatomical and PET images, by registering a
+            mask from the <code class="inline">avg152T1</code> atlas and
+            blanking what it covers. The same operation with a brain mask is
+            the atlas skull-strip engine. The template and mask pair comes
+            from
+            <a href="https://github.com/niivue/deface" target="_blank" rel="noopener">niivue/deface</a>.
+          </li>
+          <li>
+            <a href="https://github.com/neuroneural/brainchop-cli" target="_blank" rel="noopener"><strong>brainchop</strong></a>
+            runs the
+            <a href="https://github.com/niivue/niivue/tree/main/packages/nv-ext-brain2print" target="_blank" rel="noopener">mindgrab</a>
+            brain-extraction network, which finds the brain in an image
+            directly rather than fitting an average one to it. It runs on
+            <a href="https://github.com/tinygrad/tinygrad" target="_blank" rel="noopener">tinygrad</a>,
+            so it needs no PyTorch and no ONNX runtime.
+          </li>
         </ul>
 
         <p>
-          All four are installed with BIDS Manager. The dcm2niix binary is
-          included, MNE and pet2bids arrive as dependencies, and bidsphysio is
-          built in. There is no separate installation step for any of them, on
-          any platform.
+          All six are installed with BIDS Manager. The dcm2niix and niimath
+          binaries are included, MNE, pet2bids and brainchop arrive as
+          dependencies, and bidsphysio is built in. There is no separate
+          installation step for any of them, on any platform. The single
+          exception is niimath on Python 3.14, which has no wheel for it yet:
+          BIDS Manager installs and runs, and the defacing entry greys out
+          with a tooltip saying why.
+        </p>
+
+        <p>
+          Defacing follows the same principle as conversion: these are
+          established, openly licensed tools, and reimplementing either would
+          only mean a second implementation to be wrong in its own way. What
+          BIDS Manager adds around them is the preview, the reversibility and
+          the before-and-after viewer.
         </p>
 
         <h3>You decide what each engine does, after you have seen the data</h3>
@@ -444,6 +475,26 @@
             </p>
           </article>
 
+          <article class="risk-card mod-all">
+            <span class="risk-tag">Shared anyway</span>
+            <h3>A deidentified dataset with the faces still in it</h3>
+            <p>
+              Removing names and dates from the sidecars feels like the job is
+              done, and every validator agrees. But a T1w contains enough of
+              the face to render a recognisable portrait, and nothing in the
+              dataset says so. The metadata is clean, the imaging is not, and
+              the failure only surfaces once the data is somewhere you cannot
+              take it back from.
+            </p>
+            <p class="risk-answer">
+              BIDS Manager can remove faces during the conversion itself, so
+              the identifiable image never enters the dataset, and shows you
+              the before and after side by side so you can confirm that the
+              face went and the brain did not.
+              <a href="tutorial-deface.html">How defacing works</a>.
+            </p>
+          </article>
+
           <div class="risk-group mod-mri"><h3>MRI</h3></div>
 
           <article class="risk-card mod-mri">
@@ -496,7 +547,7 @@
             </p>
           </article>
 
-          <div class="risk-group mod-eeg"><h3>EEG, MEG and iEEG</h3></div>
+          <div class="risk-group mod-eeg"><h3>EEG and MEG</h3></div>
 
           <article class="risk-card mod-eeg">
             <span class="risk-tag">Answered falsely</span>

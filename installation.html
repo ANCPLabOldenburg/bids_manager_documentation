@@ -71,7 +71,7 @@
 
         <p>
           Whichever you pick, there is nothing else to install afterwards.
-          Every conversion engine BIDS Manager uses is installed with it.
+          Every engine BIDS Manager uses is installed with it.
         </p>
 
         <div class="table-wrap">
@@ -81,9 +81,11 @@
             </thead>
             <tbody>
               <tr><td>MRI DICOM to NIfTI</td><td>dcm2niix</td><td>Included, program and all</td></tr>
-              <tr><td>EEG, MEG, iEEG</td><td>mne-bids</td><td>Included</td></tr>
+              <tr><td>EEG and MEG</td><td>mne-bids</td><td>Included</td></tr>
               <tr><td>PET DICOM, ECAT and blood</td><td>pet2bids</td><td>Included</td></tr>
               <tr><td>MRI physiological recordings</td><td>bidsphysio</td><td>Built in</td></tr>
+              <tr><td>Defacing, and the atlas skull strip</td><td>niimath</td><td>Included, program and all</td></tr>
+              <tr><td>The neural skull strip</td><td>brainchop, running mindgrab</td><td>Included</td></tr>
               <tr><td>Naming and validation</td><td>The BIDS schema and validator</td><td>Built in</td></tr>
             </tbody>
           </table>
@@ -93,6 +95,18 @@
           You do not need Python installed beforehand if you use the one-click
           installer: it brings its own. Nothing is installed system-wide, and
           removing BIDS Manager means deleting a single folder.
+        </p>
+
+        <p class="muted">
+          One gap, and it is upstream: niimath publishes a wheel per Python
+          version and does not have one for 3.14 yet. On Python 3.14 BIDS
+          Manager installs and runs normally: the <strong>Deface</strong>
+          entry is greyed out with a tooltip saying why, and the
+          skull-stripping dialog opens with its Run button disabled and the
+          same explanation on it. Every Python version from 3.10 to 3.13 has
+          the wheel. The one-click installer brings its own Python, so this
+          affects only a <code class="inline">pip install</code> into a 3.14
+          environment.
         </p>
 
         <div class="method-cards">
