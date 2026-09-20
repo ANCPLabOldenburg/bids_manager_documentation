@@ -108,7 +108,7 @@
               <h3>Converter: raw &rarr; BIDS</h3>
               <p>
                 The Converter is where curation happens: you review every
-                recording the scan found, MRI, PET, EEG, MEG, iEEG and the
+                recording the scan found, MRI, PET, EEG, MEG and the
                 physiological signals stored inside MRI DICOM files, and decide
                 what becomes BIDS before a single file is written. The top header carries the
                 <em>Scan</em> button, the active-project switcher, Undo /
@@ -161,7 +161,7 @@
                 <li><strong>Centre viewer</strong>: routes by file type, a
                   schema-aware form for JSON sidecars, an editable table for
                   TSVs, the Multi-Planar view for NIfTI, and an interactive signal
-                  viewer for MEG / EEG / iEEG recordings.</li>
+                  viewer for MEG / EEG recordings.</li>
                 <li><strong>Validation pane</strong>: the issue list by
                   severity, with the schema rule each one came from; click an
                   item to jump straight to the file that triggered it, or fix
@@ -461,7 +461,7 @@
                   Each row is dispatched to the right backend:
                   <code class="inline">dcm2niix</code> for DICOM, including PET
                   DICOM, <code class="inline">mne-bids</code> for EEG, MEG and
-                  iEEG, <code class="inline">pet2bids</code> for PET ECAT files
+                  <code class="inline">pet2bids</code> for PET ECAT files
                   and blood curves, and
                   <code class="inline">bidsphysio</code> for the physiological
                   signals stored inside Siemens MRI DICOM.
@@ -498,7 +498,7 @@
           <div class="media-group-head">
             <h3>5. Inspect the converted data</h3>
             <p>Open the result in the Editor and look at volumes, time
-              series, and MEG / EEG / iEEG recordings, all rendered in-app.</p>
+              series, and MEG / EEG recordings, all rendered in-app.</p>
           </div>
           <div class="media-grid cols-3">
             <div class="media-block">
@@ -549,7 +549,7 @@
               </figure>
             </div>
             <div class="media-block">
-              <h4>MEG / EEG / iEEG signal viewer</h4>
+              <h4>MEG / EEG signal viewer</h4>
               <figure class="media-figure">
                 <video class="feature-video" muted loop playsinline preload="metadata"
                        aria-label="MEG and EEG signal viewer"
@@ -906,10 +906,67 @@
           </div>
         </div>
 
-        <!-- 10. Settings -->
+        <!-- 10. Remove the face -->
+        <div class="media-group" id="deface">
+          <div class="media-group-head">
+            <h3>10. Remove the face before you share</h3>
+            <p>A head scan contains a face, and a face can be rendered from
+              one, so a dataset shared with its faces intact is a dataset
+              shared with its participants identifiable. This can happen
+              during the conversion itself, where the identifiable image never
+              enters the dataset at all, or afterwards from
+              <strong>Tools</strong> or the tree's right-click.</p>
+            <p>Every defacing tool tells you to inspect the result and then
+              leaves you to find your own viewer, so the check is built in:
+              <strong>the before and the after, side by side, driven as
+              one</strong>. The engines are
+              <a href="https://github.com/rordenlab/niimath" target="_blank" rel="noopener">niimath</a>
+              and the
+              <a href="https://github.com/neuroneural/brainchop-cli" target="_blank" rel="noopener">brainchop</a>
+              brain-extraction network, both installed with BIDS Manager. The
+              full walkthrough is in
+              <a href="tutorial-deface.html">the defacing tutorial</a>.</p>
+          </div>
+          <div class="media-grid cols-2">
+            <div class="media-block">
+              <h4>Choose what goes, and see what cannot</h4>
+              <figure class="media-figure">
+                <img class="feature-shot" loading="lazy"
+                     alt="The defacing dialog with its engine dropdown, the ticked list of images and the grouped list of images that cannot be defaced"
+                     src="assets/features/editor_deface_dark.png"
+                     data-light="assets/features/editor_deface_light.png">
+                <figcaption>
+                  The list is ticked, so unticking is how you leave something
+                  alone. Underneath it are the images that <em>cannot</em> be
+                  defaced, grouped by the reason, because an image quietly
+                  skipped is a face quietly kept. The whole run is one entry
+                  in the Editor's history.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>Confirm the right thing was removed</h4>
+              <figure class="media-figure">
+                <video class="feature-video" muted loop playsinline preload="metadata"
+                       aria-label="The before-and-after viewer, with the two heads rotating together"
+                       data-dark="assets/features/deface_dark.mp4"
+                       data-light="assets/features/deface_light.mp4"></video>
+                <figcaption>
+                  Defacing fails in two opposite directions: too little
+                  removed and the participant is still identifiable, too much
+                  and the front of the brain has gone with the face, which
+                  passes every validator. Both are obvious here and neither is
+                  obvious in a file listing.
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11. Settings -->
         <div class="media-group" id="settings">
           <div class="media-group-head">
-            <h3>10. Settings</h3>
+            <h3>11. Settings</h3>
             <p>Sensible defaults out of the box, so you can convert a dataset
               without opening this at all. The gear in the header opens seven
               tabs; everything in them is remembered between sessions, and

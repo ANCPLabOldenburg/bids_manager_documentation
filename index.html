@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="BIDS Manager: schema-driven raw-to-BIDS curation for MRI, PET, EEG, MEG and iEEG. Documentation, installation guides, and an interactive tutorial.">
+  <meta name="description" content="BIDS Manager: schema-driven raw-to-BIDS curation for MRI, PET, EEG, MEG. Documentation, installation guides, and an interactive tutorial.">
   <title>BIDS Manager &middot; Documentation</title>
   <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
   <link rel="stylesheet" href="styles.css">
@@ -244,7 +244,7 @@
         <h1 id="hero-title" class="hero-title"><em>BIDS</em> Manager</h1>
         <p class="hero-tagline">Raw-to-BIDS without custom scripts.</p>
         <p class="hero-lead">
-          BIDS Manager turns raw MRI, PET, EEG, MEG, iEEG and the
+          BIDS Manager turns raw MRI, PET, EEG, MEG and the
           physiological recordings embedded in MRI DICOM files into a validated
           BIDS dataset. Its intuitive graphical user interface supports
           interactive metadata inspection, curation, conversion, and validation
@@ -276,7 +276,7 @@
 
         <div class="points">
           <div class="point">
-            <h3>One workflow for MRI, PET, EEG, MEG, iEEG and physio.</h3>
+            <h3>One workflow for MRI, PET, EEG, MEG and physio.</h3>
             <p>
               BIDS Manager wires the trusted converters,
               <a href="https://github.com/rordenlab/dcm2niix" target="_blank" rel="noopener">dcm2niix</a>,
@@ -295,6 +295,18 @@
               which electrode was used as the reference. BIDS Manager works the
               first out from what it read during the scan, asks you once for the
               second, writes both into the files, and then checks the result.
+            </p>
+            <p>
+              Each modality also gets what only it needs. MRI and PET images
+              can have the face removed as they are written, with
+              <a href="https://github.com/rordenlab/niimath" target="_blank" rel="noopener">niimath</a>
+              and the
+              <a href="https://github.com/neuroneural/brainchop-cli" target="_blank" rel="noopener">brainchop</a>
+              brain-extraction network, so the identifiable image never enters
+              the dataset. EEG and MEG get the reference, ground, montage and
+              event labels that no recording file carries. PET gets the
+              tracer, the dose and the frame timing, read from the lab's own
+              spreadsheet when the scanner did not record them.
             </p>
           </div>
 
@@ -380,7 +392,7 @@
               The Editor opens the converted dataset for review: metadata forms
               listing every field the standard defines for that kind of file,
               editable TSV tables, a NIfTI Multi-Planar view and
-              GPU 3-D renderer, and an interactive MEG / EEG / iEEG signal
+              GPU 3-D renderer, and an interactive MEG / EEG signal
               viewer with an in-app PSD and a BIDS-native events overlay. No
               external tools.
             </p>
@@ -442,14 +454,16 @@
           any other program.
         </p>
         <p>
-          There is nothing else to install. Every conversion engine comes with
+          There is nothing else to install. Every engine comes with
           it: <code>dcm2niix</code> for MRI and PET DICOM,
-          <code>mne-bids</code> for EEG, MEG and iEEG, <code>pet2bids</code> for
-          PET ECAT files and blood curves, and <code>bidsphysio</code> for the
-          physiological recordings stored inside MRI DICOM. You do not need
-          to compile dcm2niix, install MNE, or set up a Python environment
-          yourself. If you already work in Python,
-          <code>pip install bids-manager</code> gives you the same thing.
+          <code>mne-bids</code> for EEG and MEG, <code>pet2bids</code> for
+          PET ECAT files and blood curves, <code>bidsphysio</code> for the
+          physiological recordings stored inside MRI DICOM, and
+          <code>niimath</code> with <code>brainchop</code> for defacing and
+          skull stripping. You do not need to compile dcm2niix, install MNE,
+          or set up a Python environment yourself. If you already work in
+          Python, <code>pip install bids-manager</code> gives you the same
+          thing.
         </p>
         <p>
           <a class="btn btn-primary" href="installation.html">Read the installation guide &rarr;</a>

@@ -482,6 +482,21 @@
           </figcaption>
         </figure>
 
+        <h3>Removing the face during the conversion</h3>
+        <p>
+          A T1-weighted head scan contains a face, and a face can be rendered
+          from one. <strong>Settings &rarr; Convert &rarr; Deface anatomical
+          and PET images</strong> removes it as each image is written, so the
+          identifiable version never exists inside the dataset at all. It
+          costs about two seconds per image, it touches only
+          <code class="inline">anat/</code> and
+          <code class="inline">pet/</code>, and it can equally be done
+          afterwards from the Editor if you would rather look at the images
+          first.
+          <a href="tutorial-deface.html">Defacing and skull stripping
+          &rarr;</a>
+        </p>
+
         <h3>Residual outputs, dropped by default</h3>
         <p>
           dcm2niix sometimes splits one series into the real image plus derived
@@ -722,6 +737,23 @@
             </p>
           </div>
         </div>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon" aria-hidden="true">&#x26a0;</div>
+          <div>
+            <strong>A valid dataset is not a shareable one.</strong>
+            <p>
+              Nothing the validator checks has anything to say about the face
+              in <code class="inline">sub-001_T1w.nii.gz</code>. If this
+              dataset is going to anyone outside the people who collected it,
+              deface it, and look at the result rather than trusting it: too
+              little removed leaves the participant identifiable, too much
+              takes the front of the brain with it.
+              <a href="tutorial-deface.html">Defacing and skull stripping
+              &rarr;</a>
+            </p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -870,6 +902,13 @@ bidsmgr-validate ~/bids/neuroimaging_unit</pre>
           diffusion maps, and a physiological log that fails at source.
           <a href="tutorial-multimodal.html">The multimodal tutorial</a> shows
           MRI converting alongside PET, EEG and MEG in one pass.
+        </p>
+        <p>
+          <a href="tutorial-deface.html">Defacing and skull stripping</a> is
+          the page to read before this dataset leaves your group: the three
+          ways to remove a face, how to check the result in the linked
+          before-and-after viewer, and how to put the face back if the
+          defacer took too much.
         </p>
         <p style="margin-top: 8px;">
           <a class="btn btn-primary" href="tutorial.html#gui-walkthrough">The full GUI walkthrough &rarr;</a>

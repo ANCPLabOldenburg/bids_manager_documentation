@@ -1500,6 +1500,143 @@ def editor_move_preview(app, theme: str) -> None:
     _grab(app, dlg, OUT / f"editor_move_preview_{theme}.png", 1020, 780)
 
 
+def editor_deface(app, theme: str) -> None:
+    """Removing faces, with the skipped images visible.
+
+    The skipped list is the half that has to be on screen: an image quietly
+    passed over is a face quietly kept. So this frame is taken on a dataset
+    that HAS something to skip.
+    """
+    from bidsmgr.gui.deface_dialog import DefaceDialog
+    if not (DATA / "multimodal_tutorial").exists():
+        print("  (no tutorial dataset; skipping)")
+        return
+    root = _demo_copy("deface_demo")
+    dlg = DefaceDialog(root)
+    app.processEvents()
+    _grab(app, dlg, OUT / f"editor_deface_{theme}.png", 900, 760)
+
+
+def editor_strip(app, theme: str) -> None:
+    """Keeping only the brain, and where the result goes.
+
+    The sentence that matters is in the status line: the output is a
+    DERIVATIVE, and the original scan is untouched. A frame that cropped it
+    out would document the wrong mental model.
+    """
+    from bidsmgr.deface import engines
+    from bidsmgr.gui.deface_dialog import DefaceDialog
+    if not (DATA / "multimodal_tutorial").exists():
+        print("  (no tutorial dataset; skipping)")
+        return
+    root = _demo_copy("strip_demo")
+    dlg = DefaceDialog(root, kind=engines.KIND_STRIP)
+    app.processEvents()
+    _grab(app, dlg, OUT / f"editor_strip_{theme}.png", 900, 760)
+
+
+def _defaced_demo(name: str):
+    """A dataset with one image defaced and its original kept.
+
+    Built by running the real engine, not by faking a sidecar: the restore
+    dialog lists what it can actually restore, so a fake would either show
+    nothing or show a row that does not work.
+    """
+    from bidsmgr.deface.apply import deface_dataset
+    root = _demo_copy(name)
+    deface_dataset(root, keep_original_in_sourcedata=True)
+    return root
+
+
+def editor_deface_revert(app, theme: str) -> None:
+    """Putting the face back, and saying where each copy comes from."""
+    from bidsmgr.gui.deface_revert_dialog import DefaceRevertDialog
+    if not (DATA / "multimodal_tutorial").exists():
+        print("  (no tutorial dataset; skipping)")
+        return
+    root = _defaced_demo("revert_demo")
+    dlg = DefaceRevertDialog(root)
+    app.processEvents()
+    _grab(app, dlg, OUT / f"editor_deface_revert_{theme}.png", 860, 620)
+
+
+def editor_compare_picker(app, theme: str) -> None:
+    """Choosing the second image from the dataset, with the filter working.
+
+    Rendered WITH a filter typed. An empty picker looks like a file dialog;
+    the point is that two words narrow the whole dataset to one image.
+    """
+    from bidsmgr.gui.widgets.nifti_picker import NiftiPickerDialog
+    if not (DATA / "multimodal_tutorial").exists():
+        print("  (no tutorial dataset; skipping)")
+        return
+    root = _demo_copy("picker_demo")
+    dlg = NiftiPickerDialog(root, title="Choose the right image")
+    dlg._filter.setText("001 t1")
+    app.processEvents()
+    _grab(app, dlg, OUT / f"editor_compare_picker_{theme}.png", 680, 560)
+
+
+def editor_tree_menu(app, theme: str) -> None:
+    """The right-click on an image, where all four actions are reachable."""
+    from PyQt6.QtCore import Qt
+    from PyQt6.QtWidgets import QMenu, QTreeWidgetItemIterator
+    from bidsmgr.gui.widgets.bids_tree_pane import PATH_ROLE, BidsTreePane
+    if not (DATA / "multimodal_tutorial").exists():
+        print("  (no tutorial dataset; skipping)")
+        return
+    root = _demo_copy("tree_menu_demo")
+    pane = BidsTreePane()
+    pane.set_root(root)
+    pane._tree.expandAll()
+    app.processEvents()
+
+    target = None
+    it = QTreeWidgetItemIterator(pane._tree)
+    while it.value():
+        value = it.value().data(0, PATH_ROLE)
+        if value and str(value).endswith("T1w.nii.gz"):
+            target = it.value()
+            break
+        it += 1
+    if target is None:
+        print("  (no anatomical image in the demo dataset; skipping)")
+        return
+
+    # The menu is built and shown rather than exec'd: exec spins its own
+    # event loop and would never return here.
+    captured = {}
+
+    def _capture(self, *a, **k):
+        captured["menu"] = self
+        return None
+
+    original = QMenu.exec
+    QMenu.exec = _capture
+    try:
+        pane._tree.setCurrentItem(target)
+        pane._tree.itemAt = lambda _pos: target
+        from PyQt6.QtCore import QPoint
+        pane._on_show_context_menu(QPoint(1, 1))
+    finally:
+        QMenu.exec = original
+
+    menu = captured.get("menu")
+    if menu is None:
+        print("  (no context menu; skipping)")
+        return
+    menu.adjustSize()
+    app.processEvents()
+    # The menu's OWN size, not a guessed box. Too small and Qt wraps it into
+    # two columns, which is not what anybody sees when they right-click; too
+    # large and the frame is mostly empty background. Render this one with
+    # QT_QPA_PLATFORM=cocoa: the offscreen platform reports a short screen,
+    # and a menu taller than the screen is exactly what Qt splits.
+    hint = menu.sizeHint()
+    _grab(app, menu, OUT / f"editor_tree_menu_{theme}.png",
+          hint.width(), hint.height())
+
+
 def editor_fixups(app, theme: str) -> None:
     """The repairs the dataset can be given, with what each would do.
 
@@ -1573,7 +1710,11 @@ def editor_tools_menu(app, theme: str) -> None:
     menu = panel._tools_menu
     menu.adjustSize()
     app.processEvents()
-    _grab(app, menu, OUT / f"editor_tools_menu_{theme}.png", 290, 250)
+    # The menu's own size: it has grown, and a fixed box either clips the
+    # bottom entries or pads the frame with empty background.
+    hint = menu.sizeHint()
+    _grab(app, menu, OUT / f"editor_tools_menu_{theme}.png",
+          hint.width(), hint.height())
 
 
 ASSETS = {
@@ -1623,6 +1764,11 @@ ASSETS = {
     "editor-sessions": editor_sessions,
     "editor-delete": editor_delete,
     "editor-tools-menu": editor_tools_menu,
+    "editor-deface": editor_deface,
+    "editor-strip": editor_strip,
+    "editor-deface-revert": editor_deface_revert,
+    "editor-compare-picker": editor_compare_picker,
+    "editor-tree-menu": editor_tree_menu,
     "editor-fixups": editor_fixups,
     "editor-move-preview": editor_move_preview,
     "editor-fix-all": editor_fix_all,

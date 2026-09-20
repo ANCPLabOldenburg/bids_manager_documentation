@@ -9,6 +9,7 @@
  *   4. Scroll-reveal animation on .reveal elements.
  *   5. Interactive workflow flowchart on /intro.html (mode tabs, hover /
  *      click highlight, traveling dot).
+ *   6. Neon comets on the latest release card (/updates.html).
  *
  * Each section is guarded so a page that does not use a feature does not
  * fire its code (e.g. the workflow only runs when the SVG is present).
@@ -57,6 +58,7 @@
   initFeatureVideos();
   initMediaTrueSize();
   initLightbox();
+  initReleaseComets();
 })();
 
 
@@ -2844,3 +2846,255 @@ function initWorkflowFlowchart() {
 }
 
 
+/* ======================================================================
+ * Neon comets on the latest release card
+ *
+ * The motif behind this card used to be a tiled SVG of dot-trails that slid
+ * across it. Nothing in it was actually travelling: the whole picture moved,
+ * and it read exactly like what it was.
+ *
+ * This is the real thing. A few dots run along zigzag lanes at different
+ * speeds, and each one drags a trail that fades out BY AGE: every point the
+ * head has passed through is kept with the time it was laid down, and its
+ * opacity is a function of how old it is. That is what makes the trail
+ * continuous at any speed, and what makes it disappear over time rather than
+ * stopping at a fixed distance behind the head.
+ *
+ * Why age and not the usual trick of fading the whole canvas a few percent
+ * each frame: an 8-bit alpha channel stops decaying once the rounded step is
+ * zero, so that method leaves a permanent ghost of every path at about five
+ * percent, and with additive compositing the ghosts pile up. Redrawing from
+ * a short history has neither problem and is frame-rate independent, which
+ * the fade method is not.
+ *
+ * Neon is three things together: `lighter` compositing so overlapping passes
+ * brighten each other, a shadow blur standing in for the glow, and a hot
+ * near-white core inside the coloured head.
+ *
+ * Cost control, in the order that matters:
+ *   - The canvas is capped in HEIGHT and pinned to the top of the card. The
+ *     1.4.0 card is around three thousand pixels tall, and a backing store
+ *     that size at device pixel ratio 2 is some 57 MB of video memory for a
+ *     decoration.
+ *   - It runs only while the card is on screen.
+ *   - It never starts under prefers-reduced-motion. There, the still CSS
+ *     field behind it is the whole motif.
+ *   - The trail is stroked as eight contiguous age BANDS rather than one
+ *     stroke per segment: thirty-two strokes a frame instead of hundreds,
+ *     and the joins are invisible because each band starts on the previous
+ *     band's last point.
+ * ====================================================================== */
+function initReleaseComets() {
+  const cards = document.querySelectorAll(".release.is-zigdots");
+  if (!cards.length) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  cards.forEach(startReleaseComets);
+}
+
+function startReleaseComets(card) {
+  const canvas = document.createElement("canvas");
+  canvas.className = "release-fx";
+  canvas.setAttribute("aria-hidden", "true");
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+  card.prepend(canvas);
+  card.classList.add("has-fx");
+
+  /* The band the comets live in, and how long a mark survives in it. */
+  const BAND = 460;
+  const LIFE = 0.9;           // seconds from full to gone
+  const STEP = 6;             // px between recorded points: corners stay sharp
+  const BANDS = 8;            // age bands the trail is stroked in
+
+  /* Lanes: vertical position as a fraction of the band, speed in px/s, and
+   * a zigzag whose period and amplitude differ per lane so the four never
+   * fall into step with each other. */
+  const lanes = [
+    { yf: 0.17, speed: 340, amp: 26, period: 200, tone: 0, w: 3.0, at: 0.08, gap: 0 },
+    { yf: 0.41, speed: 245, amp: 34, period: 265, tone: 1, w: 2.5, at: 0.40, gap: 260 },
+    { yf: 0.64, speed: 415, amp: 21, period: 170, tone: 0, w: 2.3, at: 0.66, gap: 620 },
+    { yf: 0.86, speed: 200, amp: 31, period: 310, tone: 1, w: 2.1, at: 0.88, gap: 140 },
+  ];
+  lanes.forEach((lane) => { lane.pts = []; lane.x = 0; });
+
+  let tones = readTones();
+  let isLight = document.documentElement.dataset.theme === "light";
+  let w = 0, h = 0, raf = 0, last = 0, running = false;
+
+  /* The two colours come from the palette, so the light theme gets its own
+   * pair without a second copy of any of this. */
+  function readTones() {
+    const cs = getComputedStyle(document.documentElement);
+    const pick = (name, fallback) =>
+      (cs.getPropertyValue(name).trim() || fallback);
+    return [pick("--fuchsia", "#ff5cd1"),
+            pick("--neon-violet", "#a855ff")].map(toRgb);
+  }
+
+  function toRgb(colour) {
+    const hex = colour.replace("#", "").trim();
+    if (hex.length === 6 && /^[0-9a-f]{6}$/i.test(hex)) {
+      return [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16));
+    }
+    const m = colour.match(/(\d+)[,\s]+(\d+)[,\s]+(\d+)/);
+    return m ? [+m[1], +m[2], +m[3]] : [255, 92, 209];
+  }
+
+  const rgba = (c, a) => `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${a})`;
+
+  /* A triangle wave: the zigzag has corners, which is the point of it. */
+  function zig(x, period, amp) {
+    const t = (((x % period) + period) % period) / period;
+    return amp * (4 * Math.abs(t - 0.5) - 1);
+  }
+
+  function resize() {
+    const rect = card.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = Math.max(1, Math.round(rect.width));
+    h = Math.max(1, Math.round(Math.min(rect.height, BAND)));
+    canvas.style.height = h + "px";
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    lanes.forEach((lane) => {
+      lane.pts.length = 0;
+      lane.x = lane.at * w;
+    });
+  }
+
+  function frame(now) {
+    if (!running) return;
+    const dt = last ? Math.min((now - last) / 1000, 0.05) : 0.016;
+    last = now;
+    const t = now / 1000;
+
+    ctx.clearRect(0, 0, w, h);
+    ctx.globalCompositeOperation = "lighter";
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    lanes.forEach((lane) => {
+      const colour = tones[lane.tone];
+      const y0 = lane.yf * h;
+      const target = lane.x + lane.speed * dt;
+
+      /* Record where the head has been, one point every STEP px, so the
+       * trail follows the corners instead of cutting them. */
+      for (let x = lane.x + STEP; x <= target; x += STEP) {
+        lane.pts.push({ x: x, y: y0 + zig(x, lane.period, lane.amp), t: t });
+      }
+      lane.x = target;
+      const hx = lane.x;
+      const hy = y0 + zig(hx, lane.period, lane.amp);
+      lane.pts.push({ x: hx, y: hy, t: t });
+
+      /* Anything older than LIFE is gone, so the history stays short. */
+      while (lane.pts.length && t - lane.pts[0].t > LIFE) lane.pts.shift();
+
+      /* Stroke the trail in contiguous age bands, oldest first. */
+      const pts = lane.pts;
+      if (pts.length > 1) {
+        ctx.shadowColor = rgba(colour, 0.75);
+        for (let b = 0; b < BANDS; b++) {
+          const from = Math.floor((pts.length - 1) * (b / BANDS));
+          const to = Math.floor((pts.length - 1) * ((b + 1) / BANDS));
+          if (to <= from) continue;
+          /* Age of the middle of this band, 0 at the head, 1 at the end. */
+          const mid = pts[Math.floor((from + to) / 2)];
+          const age = Math.min((t - mid.t) / LIFE, 1);
+          const f = Math.pow(1 - age, 1.7);
+          ctx.strokeStyle = rgba(colour, 0.95 * f);
+          ctx.lineWidth = lane.w * (0.3 + 0.7 * f);
+          ctx.shadowBlur = 7 * f;
+          ctx.beginPath();
+          ctx.moveTo(pts[from].x, pts[from].y);
+          for (let i = from + 1; i <= to; i++) {
+            /* A jump backwards is the head having wrapped to the left edge.
+             * Lift the pen: the tail it left on the right goes on fading
+             * where it is instead of being joined across the whole card. */
+            if (pts[i].x < pts[i - 1].x - 1) ctx.moveTo(pts[i].x, pts[i].y);
+            else ctx.lineTo(pts[i].x, pts[i].y);
+          }
+          ctx.stroke();
+        }
+      }
+
+      /* The head: a coloured glow with a hot core inside it. */
+      ctx.shadowColor = rgba(colour, 0.95);
+      ctx.shadowBlur = 18;
+      ctx.fillStyle = rgba(colour, 1);
+      ctx.beginPath();
+      ctx.arc(hx, hy, lane.w * 1.45, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      /* Dark theme only. On white a white core turns the head into a ring,
+       * which is the opposite of the intended hot centre. */
+      if (!isLight) {
+        ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
+        ctx.beginPath();
+        ctx.arc(hx, hy, lane.w * 0.55, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      /* Off the right edge: back to the left, each lane with its own head
+       * start, so the four never settle into a formation. The history is
+       * kept: the jump is detected when the trail is stroked. */
+      if (lane.x > w + 30) lane.x = -30 - lane.gap;
+    });
+
+    ctx.shadowBlur = 0;
+    ctx.globalCompositeOperation = "source-over";
+    raf = requestAnimationFrame(frame);
+  }
+
+  function start() {
+    if (running) return;
+    running = true;
+    last = 0;
+    raf = requestAnimationFrame(frame);
+  }
+
+  function stop() {
+    running = false;
+    if (raf) cancelAnimationFrame(raf);
+    raf = 0;
+  }
+
+  resize();
+
+  /* Only while it is on screen, and only while the tab is. */
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver((entries) => {
+      entries.forEach((e) => (e.isIntersecting ? start() : stop()));
+    }, { rootMargin: "120px" }).observe(card);
+  } else {
+    start();
+  }
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) stop();
+    else if (card.getBoundingClientRect().top < window.innerHeight) start();
+  });
+
+  /* The palette changes under us when the theme is toggled. */
+  new MutationObserver(() => {
+    tones = readTones();
+    isLight = document.documentElement.dataset.theme === "light";
+  })
+    .observe(document.documentElement, { attributes: true,
+                                         attributeFilter: ["data-theme"] });
+
+  let resizeTimer = 0;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(resize, 150);
+  });
+  if ("ResizeObserver" in window) {
+    let first = true;
+    new ResizeObserver(() => {
+      if (first) { first = false; return; }
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(resize, 150);
+    }).observe(card);
+  }
+}

@@ -37,6 +37,8 @@
   --lime:          #b8f46d;
   --coral:         #ff8b6b;
   --violet:        #bda6ff;
+  --fuchsia:       #ff5cd1;
+  --neon-violet:   #a855ff;
 
   /* Decorative glow tokens (from INDoS aesthetic) */
   --glow-accent:   rgba(88, 166, 255, 0.48);
@@ -106,6 +108,8 @@
   --lime:          #3f7c14;
   --coral:         #b94f33;
   --violet:        #6550b8;
+  --fuchsia:       #b5179e;
+  --neon-violet:   #7b2ff7;
 
   --glow-accent:   rgba(9, 105, 218, 0.32);
   --glow-purple:   rgba(130, 80, 223, 0.32);
@@ -8551,6 +8555,11 @@ body.lightbox-open { overflow: hidden; }
 
 .risk-list {
   display: grid;
+  /* minmax(0, 1fr), not the default `auto`: a grid item refuses to shrink
+     below its content's intrinsic minimum, so one long unbreakable token in
+     a card made the whole page 438px wide on a 375px phone and every
+     section then scrolled independently of the header. */
+  grid-template-columns: minmax(0, 1fr);
   gap: 14px;
   margin: 24px 0 8px;
 }
@@ -8634,6 +8643,14 @@ body.lightbox-open { overflow: hidden; }
   text-transform: uppercase;
   color: var(--muted);
   white-space: nowrap;
+}
+/* On a phone the longest of these labels ("After conversion, when you change
+   something") is wider than the screen, and `nowrap` made it push the whole
+   document sideways. The rule beside it is decoration; the label wrapping is
+   not a problem. */
+@media (max-width: 720px) {
+  .risk-group { flex-wrap: wrap; }
+  .risk-group h3 { white-space: normal; }
 }
 .risk-group::after {
   content: "";
@@ -8751,7 +8768,17 @@ body.lightbox-open { overflow: hidden; }
  * lightbox still opens them at full size on click.
  * ------------------------------------------------------------------ */
 
-.media-figure-wide {
+/* A figure allowed to be wider than the prose column it sits in.
+ *
+ * The centring is two halves: push the left edge to the middle of the
+ * container, then pull the box back by half its own width. Both halves are
+ * needed. `.prose figure.media-figure` sets `margin: 34px 0`, which resets
+ * `margin-left` to 0, and at (0,2,1) it outranks a bare `.media-figure-wide`
+ * whatever the order in this file, so the selector below has to match that
+ * specificity. Without it only the pull applies and every wide figure sits
+ * half its width off to the left, clipped at the edge of the window. */
+.media-figure-wide,
+.prose figure.media-figure-wide {
   width: min(1360px, calc(100vw - 48px));
   max-width: none !important;
   margin-left: 50%;
@@ -8759,14 +8786,23 @@ body.lightbox-open { overflow: hidden; }
 }
 .media-figure-wide > .feature-shot,
 .media-figure-wide > .feature-video { max-width: none !important; }
-.media-figure-wide figcaption {
+/* The image may be wider than the prose; the CAPTION may not. A sentence
+ * measured across 1350px is not readable, which is the whole reason the rest
+ * of the page is in a narrow column. Same specificity note as above:
+ * `.prose figure.media-figure figcaption` sets `margin: 0` at (0,3,1) and
+ * would otherwise cancel the centring. */
+.media-figure-wide figcaption,
+.prose figure.media-figure-wide figcaption {
   max-width: var(--max-narrow);
   margin-left: auto;
   margin-right: auto;
 }
 
 @media (max-width: 1000px) {
-  .media-figure-wide {
+  /* Same specificity as the rule above, or the desktop centring stays on
+     and the figure hangs off the side of a phone. */
+  .media-figure-wide,
+  .prose figure.media-figure-wide {
     width: 100%;
     margin-left: 0;
     transform: none;
@@ -8852,7 +8888,9 @@ body.lightbox-open { overflow: hidden; }
 .page-updates .release.is-waves::before,
 .page-updates .release.is-waves::after,
 .page-updates .release.is-wavefield::before,
-.page-updates .release.is-wavefield::after {
+.page-updates .release.is-wavefield::after,
+.page-updates .release.is-zigdots::before,
+.page-updates .release.is-zigdots::after {
   content: "";
   position: absolute;
   z-index: -1;
@@ -9173,6 +9211,205 @@ body.lightbox-open { overflow: hidden; }
     text-shadow:
       0 0 5px color-mix(in srgb, var(--teal) 88%, transparent),
       0 0 16px color-mix(in srgb, var(--teal) 58%, transparent);
+  }
+}
+
+/* ==================================================================
+ * The 1.4.0 motif: zigzag comets.
+ *
+ * Each landmark release card gets its own motif, so a reader who has been
+ * here before can tell which one is new without reading a version number.
+ * 1.2.6 has the waves, 1.3.0 the wave field, and this one has dots running
+ * along a zigzag, each dragging a trail that fades out behind it.
+ *
+ * The trail is what makes a dot read as MOVING while the layer itself drifts
+ * slowly: it is the same cue a long-exposure photograph uses. It is drawn
+ * into the mask as nine or ten circles of shrinking radius and opacity
+ * following the path backwards, not as a blur, because a blur that strong
+ * would cost a full-surface repaint on every frame and Safari is the one
+ * that minds.
+ *
+ * Purple and fuchsia rather than the teal the other two share, and the
+ * colour is the only thing the SVG does not carry: the artwork is the MASK
+ * and the colour is a CSS gradient underneath it, so both themes tint one
+ * copy of it. Same technique as the wave field, same reason.
+ *
+ * Every number in the tiles divides the tile: the zigzag period divides the
+ * width, the comet spacing divides the width, the row spacing divides the
+ * height, and each layer travels exactly one tile width per cycle. Anything
+ * else puts a visible seam in the loop. Generated rather than hand-written;
+ * the generator is in the commit that added this block.
+ * ================================================================== */
+
+.page-updates .release.is-zigdots {
+  border-color: color-mix(in srgb, var(--fuchsia, #ff5cd1) 52%, var(--border));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--fuchsia, #ff5cd1) 38%, transparent),
+              0 18px 60px color-mix(in srgb, var(--purple) 18%, transparent);
+}
+
+/* The near field: smaller, closer-packed comets running to the right. */
+.page-updates .release.is-zigdots::before {
+  background: linear-gradient(172deg,
+      color-mix(in srgb, var(--fuchsia, #ff5cd1) 94%, transparent) 0%,
+      color-mix(in srgb, var(--purple) 88%, transparent) 34%,
+      color-mix(in srgb, var(--fuchsia, #ff5cd1) 80%, transparent) 62%,
+      color-mix(in srgb, var(--purple) 60%, transparent) 84%,
+      transparent 99%);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='1200'%20height='600'%20viewBox='0%200%201200%20600'%20fill='%23000'%3E%3Cg%20fill-opacity='0.95'%3E%3Ccircle%20cx='0.0'%20cy='94.0'%20r='3.0'/%3E%3Ccircle%20cx='240.0'%20cy='94.0'%20r='3.0'/%3E%3Ccircle%20cx='480.0'%20cy='94.0'%20r='3.0'/%3E%3Ccircle%20cx='720.0'%20cy='94.0'%20r='3.0'/%3E%3Ccircle%20cx='960.0'%20cy='94.0'%20r='3.0'/%3E%3Ccircle%20cx='71.0'%20cy='173.8'%20r='3.0'/%3E%3Ccircle%20cx='311.0'%20cy='173.8'%20r='3.0'/%3E%3Ccircle%20cx='551.0'%20cy='173.8'%20r='3.0'/%3E%3Ccircle%20cx='791.0'%20cy='173.8'%20r='3.0'/%3E%3Ccircle%20cx='1031.0'%20cy='173.8'%20r='3.0'/%3E%3Ccircle%20cx='142.0'%20cy='278.5'%20r='3.0'/%3E%3Ccircle%20cx='382.0'%20cy='278.5'%20r='3.0'/%3E%3Ccircle%20cx='622.0'%20cy='278.5'%20r='3.0'/%3E%3Ccircle%20cx='862.0'%20cy='278.5'%20r='3.0'/%3E%3Ccircle%20cx='1102.0'%20cy='278.5'%20r='3.0'/%3E%3Ccircle%20cx='213.0'%20cy='438.7'%20r='3.0'/%3E%3Ccircle%20cx='453.0'%20cy='438.7'%20r='3.0'/%3E%3Ccircle%20cx='693.0'%20cy='438.7'%20r='3.0'/%3E%3Ccircle%20cx='933.0'%20cy='438.7'%20r='3.0'/%3E%3Ccircle%20cx='1173.0'%20cy='438.7'%20r='3.0'/%3E%3Ccircle%20cx='284.0'%20cy='549.1'%20r='3.0'/%3E%3Ccircle%20cx='524.0'%20cy='549.1'%20r='3.0'/%3E%3Ccircle%20cx='764.0'%20cy='549.1'%20r='3.0'/%3E%3Ccircle%20cx='1004.0'%20cy='549.1'%20r='3.0'/%3E%3Ccircle%20cx='44.0'%20cy='549.1'%20r='3.0'/%3E%3C/g%3E%3Cg%20fill-opacity='0.741'%3E%3Ccircle%20cx='1191.5'%20cy='89.2'%20r='2.61'/%3E%3Ccircle%20cx='231.5'%20cy='89.2'%20r='2.61'/%3E%3Ccircle%20cx='471.5'%20cy='89.2'%20r='2.61'/%3E%3Ccircle%20cx='711.5'%20cy='89.2'%20r='2.61'/%3E%3Ccircle%20cx='951.5'%20cy='89.2'%20r='2.61'/%3E%3Ccircle%20cx='62.5'%20cy='178.6'%20r='2.61'/%3E%3Ccircle%20cx='302.5'%20cy='178.6'%20r='2.61'/%3E%3Ccircle%20cx='542.5'%20cy='178.6'%20r='2.61'/%3E%3Ccircle%20cx='782.5'%20cy='178.6'%20r='2.61'/%3E%3Ccircle%20cx='1022.5'%20cy='178.6'%20r='2.61'/%3E%3Ccircle%20cx='133.5'%20cy='273.6'%20r='2.61'/%3E%3Ccircle%20cx='373.5'%20cy='273.6'%20r='2.61'/%3E%3Ccircle%20cx='613.5'%20cy='273.6'%20r='2.61'/%3E%3Ccircle%20cx='853.5'%20cy='273.6'%20r='2.61'/%3E%3Ccircle%20cx='1093.5'%20cy='273.6'%20r='2.61'/%3E%3Ccircle%20cx='204.5'%20cy='433.9'%20r='2.61'/%3E%3Ccircle%20cx='444.5'%20cy='433.9'%20r='2.61'/%3E%3Ccircle%20cx='684.5'%20cy='433.9'%20r='2.61'/%3E%3Ccircle%20cx='924.5'%20cy='433.9'%20r='2.61'/%3E%3Ccircle%20cx='1164.5'%20cy='433.9'%20r='2.61'/%3E%3Ccircle%20cx='275.5'%20cy='553.9'%20r='2.61'/%3E%3Ccircle%20cx='515.5'%20cy='553.9'%20r='2.61'/%3E%3Ccircle%20cx='755.5'%20cy='553.9'%20r='2.61'/%3E%3Ccircle%20cx='995.5'%20cy='553.9'%20r='2.61'/%3E%3Ccircle%20cx='35.5'%20cy='553.9'%20r='2.61'/%3E%3C/g%3E%3Cg%20fill-opacity='0.578'%3E%3Ccircle%20cx='1183.0'%20cy='84.4'%20r='2.27'/%3E%3Ccircle%20cx='223.0'%20cy='84.4'%20r='2.27'/%3E%3Ccircle%20cx='463.0'%20cy='84.4'%20r='2.27'/%3E%3Ccircle%20cx='703.0'%20cy='84.4'%20r='2.27'/%3E%3Ccircle%20cx='943.0'%20cy='84.4'%20r='2.27'/%3E%3Ccircle%20cx='54.0'%20cy='183.4'%20r='2.27'/%3E%3Ccircle%20cx='294.0'%20cy='183.4'%20r='2.27'/%3E%3Ccircle%20cx='534.0'%20cy='183.4'%20r='2.27'/%3E%3Ccircle%20cx='774.0'%20cy='183.4'%20r='2.27'/%3E%3Ccircle%20cx='1014.0'%20cy='183.4'%20r='2.27'/%3E%3Ccircle%20cx='125.0'%20cy='268.8'%20r='2.27'/%3E%3Ccircle%20cx='365.0'%20cy='268.8'%20r='2.27'/%3E%3Ccircle%20cx='605.0'%20cy='268.8'%20r='2.27'/%3E%3Ccircle%20cx='845.0'%20cy='268.8'%20r='2.27'/%3E%3Ccircle%20cx='1085.0'%20cy='268.8'%20r='2.27'/%3E%3Ccircle%20cx='196.0'%20cy='429.1'%20r='2.27'/%3E%3Ccircle%20cx='436.0'%20cy='429.1'%20r='2.27'/%3E%3Ccircle%20cx='676.0'%20cy='429.1'%20r='2.27'/%3E%3Ccircle%20cx='916.0'%20cy='429.1'%20r='2.27'/%3E%3Ccircle%20cx='1156.0'%20cy='429.1'%20r='2.27'/%3E%3Ccircle%20cx='267.0'%20cy='558.7'%20r='2.27'/%3E%3Ccircle%20cx='507.0'%20cy='558.7'%20r='2.27'/%3E%3Ccircle%20cx='747.0'%20cy='558.7'%20r='2.27'/%3E%3Ccircle%20cx='987.0'%20cy='558.7'%20r='2.27'/%3E%3Ccircle%20cx='27.0'%20cy='558.7'%20r='2.27'/%3E%3C/g%3E%3Cg%20fill-opacity='0.451'%3E%3Ccircle%20cx='1174.5'%20cy='79.6'%20r='1.98'/%3E%3Ccircle%20cx='214.5'%20cy='79.6'%20r='1.98'/%3E%3Ccircle%20cx='454.5'%20cy='79.6'%20r='1.98'/%3E%3Ccircle%20cx='694.5'%20cy='79.6'%20r='1.98'/%3E%3Ccircle%20cx='934.5'%20cy='79.6'%20r='1.98'/%3E%3Ccircle%20cx='45.5'%20cy='188.2'%20r='1.98'/%3E%3Ccircle%20cx='285.5'%20cy='188.2'%20r='1.98'/%3E%3Ccircle%20cx='525.5'%20cy='188.2'%20r='1.98'/%3E%3Ccircle%20cx='765.5'%20cy='188.2'%20r='1.98'/%3E%3Ccircle%20cx='1005.5'%20cy='188.2'%20r='1.98'/%3E%3Ccircle%20cx='116.5'%20cy='268.0'%20r='1.98'/%3E%3Ccircle%20cx='356.5'%20cy='268.0'%20r='1.98'/%3E%3Ccircle%20cx='596.5'%20cy='268.0'%20r='1.98'/%3E%3Ccircle%20cx='836.5'%20cy='268.0'%20r='1.98'/%3E%3Ccircle%20cx='1076.5'%20cy='268.0'%20r='1.98'/%3E%3Ccircle%20cx='187.5'%20cy='424.2'%20r='1.98'/%3E%3Ccircle%20cx='427.5'%20cy='424.2'%20r='1.98'/%3E%3Ccircle%20cx='667.5'%20cy='424.2'%20r='1.98'/%3E%3Ccircle%20cx='907.5'%20cy='424.2'%20r='1.98'/%3E%3Ccircle%20cx='1147.5'%20cy='424.2'%20r='1.98'/%3E%3Ccircle%20cx='258.5'%20cy='563.5'%20r='1.98'/%3E%3Ccircle%20cx='498.5'%20cy='563.5'%20r='1.98'/%3E%3Ccircle%20cx='738.5'%20cy='563.5'%20r='1.98'/%3E%3Ccircle%20cx='978.5'%20cy='563.5'%20r='1.98'/%3E%3Ccircle%20cx='18.5'%20cy='563.5'%20r='1.98'/%3E%3C/g%3E%3Cg%20fill-opacity='0.352'%3E%3Ccircle%20cx='1166.0'%20cy='74.7'%20r='1.72'/%3E%3Ccircle%20cx='206.0'%20cy='74.7'%20r='1.72'/%3E%3Ccircle%20cx='446.0'%20cy='74.7'%20r='1.72'/%3E%3Ccircle%20cx='686.0'%20cy='74.7'%20r='1.72'/%3E%3Ccircle%20cx='926.0'%20cy='74.7'%20r='1.72'/%3E%3Ccircle%20cx='37.0'%20cy='193.0'%20r='1.72'/%3E%3Ccircle%20cx='277.0'%20cy='193.0'%20r='1.72'/%3E%3Ccircle%20cx='517.0'%20cy='193.0'%20r='1.72'/%3E%3Ccircle%20cx='757.0'%20cy='193.0'%20r='1.72'/%3E%3Ccircle%20cx='997.0'%20cy='193.0'%20r='1.72'/%3E%3Ccircle%20cx='108.0'%20cy='272.8'%20r='1.72'/%3E%3Ccircle%20cx='348.0'%20cy='272.8'%20r='1.72'/%3E%3Ccircle%20cx='588.0'%20cy='272.8'%20r='1.72'/%3E%3Ccircle%20cx='828.0'%20cy='272.8'%20r='1.72'/%3E%3Ccircle%20cx='1068.0'%20cy='272.8'%20r='1.72'/%3E%3Ccircle%20cx='179.0'%20cy='419.4'%20r='1.72'/%3E%3Ccircle%20cx='419.0'%20cy='419.4'%20r='1.72'/%3E%3Ccircle%20cx='659.0'%20cy='419.4'%20r='1.72'/%3E%3Ccircle%20cx='899.0'%20cy='419.4'%20r='1.72'/%3E%3Ccircle%20cx='1139.0'%20cy='419.4'%20r='1.72'/%3E%3Ccircle%20cx='250.0'%20cy='568.3'%20r='1.72'/%3E%3Ccircle%20cx='490.0'%20cy='568.3'%20r='1.72'/%3E%3Ccircle%20cx='730.0'%20cy='568.3'%20r='1.72'/%3E%3Ccircle%20cx='970.0'%20cy='568.3'%20r='1.72'/%3E%3Ccircle%20cx='10.0'%20cy='568.3'%20r='1.72'/%3E%3C/g%3E%3Cg%20fill-opacity='0.274'%3E%3Ccircle%20cx='1157.5'%20cy='69.9'%20r='1.5'/%3E%3Ccircle%20cx='197.5'%20cy='69.9'%20r='1.5'/%3E%3Ccircle%20cx='437.5'%20cy='69.9'%20r='1.5'/%3E%3Ccircle%20cx='677.5'%20cy='69.9'%20r='1.5'/%3E%3Ccircle%20cx='917.5'%20cy='69.9'%20r='1.5'/%3E%3Ccircle%20cx='28.5'%20cy='197.8'%20r='1.5'/%3E%3Ccircle%20cx='268.5'%20cy='197.8'%20r='1.5'/%3E%3Ccircle%20cx='508.5'%20cy='197.8'%20r='1.5'/%3E%3Ccircle%20cx='748.5'%20cy='197.8'%20r='1.5'/%3E%3Ccircle%20cx='988.5'%20cy='197.8'%20r='1.5'/%3E%3Ccircle%20cx='99.5'%20cy='277.6'%20r='1.5'/%3E%3Ccircle%20cx='339.5'%20cy='277.6'%20r='1.5'/%3E%3Ccircle%20cx='579.5'%20cy='277.6'%20r='1.5'/%3E%3Ccircle%20cx='819.5'%20cy='277.6'%20r='1.5'/%3E%3Ccircle%20cx='1059.5'%20cy='277.6'%20r='1.5'/%3E%3Ccircle%20cx='170.5'%20cy='414.6'%20r='1.5'/%3E%3Ccircle%20cx='410.5'%20cy='414.6'%20r='1.5'/%3E%3Ccircle%20cx='650.5'%20cy='414.6'%20r='1.5'/%3E%3Ccircle%20cx='890.5'%20cy='414.6'%20r='1.5'/%3E%3Ccircle%20cx='1130.5'%20cy='414.6'%20r='1.5'/%3E%3Ccircle%20cx='241.5'%20cy='573.1'%20r='1.5'/%3E%3Ccircle%20cx='481.5'%20cy='573.1'%20r='1.5'/%3E%3Ccircle%20cx='721.5'%20cy='573.1'%20r='1.5'/%3E%3Ccircle%20cx='961.5'%20cy='573.1'%20r='1.5'/%3E%3Ccircle%20cx='1.5'%20cy='573.1'%20r='1.5'/%3E%3C/g%3E%3Cg%20fill-opacity='0.214'%3E%3Ccircle%20cx='1149.0'%20cy='65.1'%20r='1.3'/%3E%3Ccircle%20cx='189.0'%20cy='65.1'%20r='1.3'/%3E%3Ccircle%20cx='429.0'%20cy='65.1'%20r='1.3'/%3E%3Ccircle%20cx='669.0'%20cy='65.1'%20r='1.3'/%3E%3Ccircle%20cx='909.0'%20cy='65.1'%20r='1.3'/%3E%3Ccircle%20cx='20.0'%20cy='202.7'%20r='1.3'/%3E%3Ccircle%20cx='260.0'%20cy='202.7'%20r='1.3'/%3E%3Ccircle%20cx='500.0'%20cy='202.7'%20r='1.3'/%3E%3Ccircle%20cx='740.0'%20cy='202.7'%20r='1.3'/%3E%3Ccircle%20cx='980.0'%20cy='202.7'%20r='1.3'/%3E%3Ccircle%20cx='91.0'%20cy='282.4'%20r='1.3'/%3E%3Ccircle%20cx='331.0'%20cy='282.4'%20r='1.3'/%3E%3Ccircle%20cx='571.0'%20cy='282.4'%20r='1.3'/%3E%3Ccircle%20cx='811.0'%20cy='282.4'%20r='1.3'/%3E%3Ccircle%20cx='1051.0'%20cy='282.4'%20r='1.3'/%3E%3Ccircle%20cx='162.0'%20cy='409.8'%20r='1.3'/%3E%3Ccircle%20cx='402.0'%20cy='409.8'%20r='1.3'/%3E%3Ccircle%20cx='642.0'%20cy='409.8'%20r='1.3'/%3E%3Ccircle%20cx='882.0'%20cy='409.8'%20r='1.3'/%3E%3Ccircle%20cx='1122.0'%20cy='409.8'%20r='1.3'/%3E%3Ccircle%20cx='233.0'%20cy='570.0'%20r='1.3'/%3E%3Ccircle%20cx='473.0'%20cy='570.0'%20r='1.3'/%3E%3Ccircle%20cx='713.0'%20cy='570.0'%20r='1.3'/%3E%3Ccircle%20cx='953.0'%20cy='570.0'%20r='1.3'/%3E%3Ccircle%20cx='1193.0'%20cy='570.0'%20r='1.3'/%3E%3C/g%3E%3Cg%20fill-opacity='0.167'%3E%3Ccircle%20cx='1140.5'%20cy='60.3'%20r='1.13'/%3E%3Ccircle%20cx='180.5'%20cy='60.3'%20r='1.13'/%3E%3Ccircle%20cx='420.5'%20cy='60.3'%20r='1.13'/%3E%3Ccircle%20cx='660.5'%20cy='60.3'%20r='1.13'/%3E%3Ccircle%20cx='900.5'%20cy='60.3'%20r='1.13'/%3E%3Ccircle%20cx='11.5'%20cy='207.5'%20r='1.13'/%3E%3Ccircle%20cx='251.5'%20cy='207.5'%20r='1.13'/%3E%3Ccircle%20cx='491.5'%20cy='207.5'%20r='1.13'/%3E%3Ccircle%20cx='731.5'%20cy='207.5'%20r='1.13'/%3E%3Ccircle%20cx='971.5'%20cy='207.5'%20r='1.13'/%3E%3Ccircle%20cx='82.5'%20cy='287.2'%20r='1.13'/%3E%3Ccircle%20cx='322.5'%20cy='287.2'%20r='1.13'/%3E%3Ccircle%20cx='562.5'%20cy='287.2'%20r='1.13'/%3E%3Ccircle%20cx='802.5'%20cy='287.2'%20r='1.13'/%3E%3Ccircle%20cx='1042.5'%20cy='287.2'%20r='1.13'/%3E%3Ccircle%20cx='153.5'%20cy='405.0'%20r='1.13'/%3E%3Ccircle%20cx='393.5'%20cy='405.0'%20r='1.13'/%3E%3Ccircle%20cx='633.5'%20cy='405.0'%20r='1.13'/%3E%3Ccircle%20cx='873.5'%20cy='405.0'%20r='1.13'/%3E%3Ccircle%20cx='1113.5'%20cy='405.0'%20r='1.13'/%3E%3Ccircle%20cx='224.5'%20cy='565.2'%20r='1.13'/%3E%3Ccircle%20cx='464.5'%20cy='565.2'%20r='1.13'/%3E%3Ccircle%20cx='704.5'%20cy='565.2'%20r='1.13'/%3E%3Ccircle%20cx='944.5'%20cy='565.2'%20r='1.13'/%3E%3Ccircle%20cx='1184.5'%20cy='565.2'%20r='1.13'/%3E%3C/g%3E%3Cg%20fill-opacity='0.13'%3E%3Ccircle%20cx='1132.0'%20cy='55.5'%20r='0.98'/%3E%3Ccircle%20cx='172.0'%20cy='55.5'%20r='0.98'/%3E%3Ccircle%20cx='412.0'%20cy='55.5'%20r='0.98'/%3E%3Ccircle%20cx='652.0'%20cy='55.5'%20r='0.98'/%3E%3Ccircle%20cx='892.0'%20cy='55.5'%20r='0.98'/%3E%3Ccircle%20cx='3.0'%20cy='212.3'%20r='0.98'/%3E%3Ccircle%20cx='243.0'%20cy='212.3'%20r='0.98'/%3E%3Ccircle%20cx='483.0'%20cy='212.3'%20r='0.98'/%3E%3Ccircle%20cx='723.0'%20cy='212.3'%20r='0.98'/%3E%3Ccircle%20cx='963.0'%20cy='212.3'%20r='0.98'/%3E%3Ccircle%20cx='74.0'%20cy='292.1'%20r='0.98'/%3E%3Ccircle%20cx='314.0'%20cy='292.1'%20r='0.98'/%3E%3Ccircle%20cx='554.0'%20cy='292.1'%20r='0.98'/%3E%3Ccircle%20cx='794.0'%20cy='292.1'%20r='0.98'/%3E%3Ccircle%20cx='1034.0'%20cy='292.1'%20r='0.98'/%3E%3Ccircle%20cx='145.0'%20cy='400.2'%20r='0.98'/%3E%3Ccircle%20cx='385.0'%20cy='400.2'%20r='0.98'/%3E%3Ccircle%20cx='625.0'%20cy='400.2'%20r='0.98'/%3E%3Ccircle%20cx='865.0'%20cy='400.2'%20r='0.98'/%3E%3Ccircle%20cx='1105.0'%20cy='400.2'%20r='0.98'/%3E%3Ccircle%20cx='216.0'%20cy='560.4'%20r='0.98'/%3E%3Ccircle%20cx='456.0'%20cy='560.4'%20r='0.98'/%3E%3Ccircle%20cx='696.0'%20cy='560.4'%20r='0.98'/%3E%3Ccircle%20cx='936.0'%20cy='560.4'%20r='0.98'/%3E%3Ccircle%20cx='1176.0'%20cy='560.4'%20r='0.98'/%3E%3C/g%3E%3Cg%20fill-opacity='0.102'%3E%3Ccircle%20cx='1123.5'%20cy='50.7'%20r='0.86'/%3E%3Ccircle%20cx='163.5'%20cy='50.7'%20r='0.86'/%3E%3Ccircle%20cx='403.5'%20cy='50.7'%20r='0.86'/%3E%3Ccircle%20cx='643.5'%20cy='50.7'%20r='0.86'/%3E%3Ccircle%20cx='883.5'%20cy='50.7'%20r='0.86'/%3E%3Ccircle%20cx='1194.5'%20cy='210.9'%20r='0.86'/%3E%3Ccircle%20cx='234.5'%20cy='210.9'%20r='0.86'/%3E%3Ccircle%20cx='474.5'%20cy='210.9'%20r='0.86'/%3E%3Ccircle%20cx='714.5'%20cy='210.9'%20r='0.86'/%3E%3Ccircle%20cx='954.5'%20cy='210.9'%20r='0.86'/%3E%3Ccircle%20cx='65.5'%20cy='296.9'%20r='0.86'/%3E%3Ccircle%20cx='305.5'%20cy='296.9'%20r='0.86'/%3E%3Ccircle%20cx='545.5'%20cy='296.9'%20r='0.86'/%3E%3Ccircle%20cx='785.5'%20cy='296.9'%20r='0.86'/%3E%3Ccircle%20cx='1025.5'%20cy='296.9'%20r='0.86'/%3E%3Ccircle%20cx='136.5'%20cy='395.4'%20r='0.86'/%3E%3Ccircle%20cx='376.5'%20cy='395.4'%20r='0.86'/%3E%3Ccircle%20cx='616.5'%20cy='395.4'%20r='0.86'/%3E%3Ccircle%20cx='856.5'%20cy='395.4'%20r='0.86'/%3E%3Ccircle%20cx='1096.5'%20cy='395.4'%20r='0.86'/%3E%3Ccircle%20cx='207.5'%20cy='555.6'%20r='0.86'/%3E%3Ccircle%20cx='447.5'%20cy='555.6'%20r='0.86'/%3E%3Ccircle%20cx='687.5'%20cy='555.6'%20r='0.86'/%3E%3Ccircle%20cx='927.5'%20cy='555.6'%20r='0.86'/%3E%3Ccircle%20cx='1167.5'%20cy='555.6'%20r='0.86'/%3E%3C/g%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='1200'%20height='600'%20viewBox='0%200%201200%20600'%20fill='%23000'%3E%3Cg%20fill-opacity='0.95'%3E%3Ccircle%20cx='0.0'%20cy='94.0'%20r='3.0'/%3E%3Ccircle%20cx='240.0'%20cy='94.0'%20r='3.0'/%3E%3Ccircle%20cx='480.0'%20cy='94.0'%20r='3.0'/%3E%3Ccircle%20cx='720.0'%20cy='94.0'%20r='3.0'/%3E%3Ccircle%20cx='960.0'%20cy='94.0'%20r='3.0'/%3E%3Ccircle%20cx='71.0'%20cy='173.8'%20r='3.0'/%3E%3Ccircle%20cx='311.0'%20cy='173.8'%20r='3.0'/%3E%3Ccircle%20cx='551.0'%20cy='173.8'%20r='3.0'/%3E%3Ccircle%20cx='791.0'%20cy='173.8'%20r='3.0'/%3E%3Ccircle%20cx='1031.0'%20cy='173.8'%20r='3.0'/%3E%3Ccircle%20cx='142.0'%20cy='278.5'%20r='3.0'/%3E%3Ccircle%20cx='382.0'%20cy='278.5'%20r='3.0'/%3E%3Ccircle%20cx='622.0'%20cy='278.5'%20r='3.0'/%3E%3Ccircle%20cx='862.0'%20cy='278.5'%20r='3.0'/%3E%3Ccircle%20cx='1102.0'%20cy='278.5'%20r='3.0'/%3E%3Ccircle%20cx='213.0'%20cy='438.7'%20r='3.0'/%3E%3Ccircle%20cx='453.0'%20cy='438.7'%20r='3.0'/%3E%3Ccircle%20cx='693.0'%20cy='438.7'%20r='3.0'/%3E%3Ccircle%20cx='933.0'%20cy='438.7'%20r='3.0'/%3E%3Ccircle%20cx='1173.0'%20cy='438.7'%20r='3.0'/%3E%3Ccircle%20cx='284.0'%20cy='549.1'%20r='3.0'/%3E%3Ccircle%20cx='524.0'%20cy='549.1'%20r='3.0'/%3E%3Ccircle%20cx='764.0'%20cy='549.1'%20r='3.0'/%3E%3Ccircle%20cx='1004.0'%20cy='549.1'%20r='3.0'/%3E%3Ccircle%20cx='44.0'%20cy='549.1'%20r='3.0'/%3E%3C/g%3E%3Cg%20fill-opacity='0.741'%3E%3Ccircle%20cx='1191.5'%20cy='89.2'%20r='2.61'/%3E%3Ccircle%20cx='231.5'%20cy='89.2'%20r='2.61'/%3E%3Ccircle%20cx='471.5'%20cy='89.2'%20r='2.61'/%3E%3Ccircle%20cx='711.5'%20cy='89.2'%20r='2.61'/%3E%3Ccircle%20cx='951.5'%20cy='89.2'%20r='2.61'/%3E%3Ccircle%20cx='62.5'%20cy='178.6'%20r='2.61'/%3E%3Ccircle%20cx='302.5'%20cy='178.6'%20r='2.61'/%3E%3Ccircle%20cx='542.5'%20cy='178.6'%20r='2.61'/%3E%3Ccircle%20cx='782.5'%20cy='178.6'%20r='2.61'/%3E%3Ccircle%20cx='1022.5'%20cy='178.6'%20r='2.61'/%3E%3Ccircle%20cx='133.5'%20cy='273.6'%20r='2.61'/%3E%3Ccircle%20cx='373.5'%20cy='273.6'%20r='2.61'/%3E%3Ccircle%20cx='613.5'%20cy='273.6'%20r='2.61'/%3E%3Ccircle%20cx='853.5'%20cy='273.6'%20r='2.61'/%3E%3Ccircle%20cx='1093.5'%20cy='273.6'%20r='2.61'/%3E%3Ccircle%20cx='204.5'%20cy='433.9'%20r='2.61'/%3E%3Ccircle%20cx='444.5'%20cy='433.9'%20r='2.61'/%3E%3Ccircle%20cx='684.5'%20cy='433.9'%20r='2.61'/%3E%3Ccircle%20cx='924.5'%20cy='433.9'%20r='2.61'/%3E%3Ccircle%20cx='1164.5'%20cy='433.9'%20r='2.61'/%3E%3Ccircle%20cx='275.5'%20cy='553.9'%20r='2.61'/%3E%3Ccircle%20cx='515.5'%20cy='553.9'%20r='2.61'/%3E%3Ccircle%20cx='755.5'%20cy='553.9'%20r='2.61'/%3E%3Ccircle%20cx='995.5'%20cy='553.9'%20r='2.61'/%3E%3Ccircle%20cx='35.5'%20cy='553.9'%20r='2.61'/%3E%3C/g%3E%3Cg%20fill-opacity='0.578'%3E%3Ccircle%20cx='1183.0'%20cy='84.4'%20r='2.27'/%3E%3Ccircle%20cx='223.0'%20cy='84.4'%20r='2.27'/%3E%3Ccircle%20cx='463.0'%20cy='84.4'%20r='2.27'/%3E%3Ccircle%20cx='703.0'%20cy='84.4'%20r='2.27'/%3E%3Ccircle%20cx='943.0'%20cy='84.4'%20r='2.27'/%3E%3Ccircle%20cx='54.0'%20cy='183.4'%20r='2.27'/%3E%3Ccircle%20cx='294.0'%20cy='183.4'%20r='2.27'/%3E%3Ccircle%20cx='534.0'%20cy='183.4'%20r='2.27'/%3E%3Ccircle%20cx='774.0'%20cy='183.4'%20r='2.27'/%3E%3Ccircle%20cx='1014.0'%20cy='183.4'%20r='2.27'/%3E%3Ccircle%20cx='125.0'%20cy='268.8'%20r='2.27'/%3E%3Ccircle%20cx='365.0'%20cy='268.8'%20r='2.27'/%3E%3Ccircle%20cx='605.0'%20cy='268.8'%20r='2.27'/%3E%3Ccircle%20cx='845.0'%20cy='268.8'%20r='2.27'/%3E%3Ccircle%20cx='1085.0'%20cy='268.8'%20r='2.27'/%3E%3Ccircle%20cx='196.0'%20cy='429.1'%20r='2.27'/%3E%3Ccircle%20cx='436.0'%20cy='429.1'%20r='2.27'/%3E%3Ccircle%20cx='676.0'%20cy='429.1'%20r='2.27'/%3E%3Ccircle%20cx='916.0'%20cy='429.1'%20r='2.27'/%3E%3Ccircle%20cx='1156.0'%20cy='429.1'%20r='2.27'/%3E%3Ccircle%20cx='267.0'%20cy='558.7'%20r='2.27'/%3E%3Ccircle%20cx='507.0'%20cy='558.7'%20r='2.27'/%3E%3Ccircle%20cx='747.0'%20cy='558.7'%20r='2.27'/%3E%3Ccircle%20cx='987.0'%20cy='558.7'%20r='2.27'/%3E%3Ccircle%20cx='27.0'%20cy='558.7'%20r='2.27'/%3E%3C/g%3E%3Cg%20fill-opacity='0.451'%3E%3Ccircle%20cx='1174.5'%20cy='79.6'%20r='1.98'/%3E%3Ccircle%20cx='214.5'%20cy='79.6'%20r='1.98'/%3E%3Ccircle%20cx='454.5'%20cy='79.6'%20r='1.98'/%3E%3Ccircle%20cx='694.5'%20cy='79.6'%20r='1.98'/%3E%3Ccircle%20cx='934.5'%20cy='79.6'%20r='1.98'/%3E%3Ccircle%20cx='45.5'%20cy='188.2'%20r='1.98'/%3E%3Ccircle%20cx='285.5'%20cy='188.2'%20r='1.98'/%3E%3Ccircle%20cx='525.5'%20cy='188.2'%20r='1.98'/%3E%3Ccircle%20cx='765.5'%20cy='188.2'%20r='1.98'/%3E%3Ccircle%20cx='1005.5'%20cy='188.2'%20r='1.98'/%3E%3Ccircle%20cx='116.5'%20cy='268.0'%20r='1.98'/%3E%3Ccircle%20cx='356.5'%20cy='268.0'%20r='1.98'/%3E%3Ccircle%20cx='596.5'%20cy='268.0'%20r='1.98'/%3E%3Ccircle%20cx='836.5'%20cy='268.0'%20r='1.98'/%3E%3Ccircle%20cx='1076.5'%20cy='268.0'%20r='1.98'/%3E%3Ccircle%20cx='187.5'%20cy='424.2'%20r='1.98'/%3E%3Ccircle%20cx='427.5'%20cy='424.2'%20r='1.98'/%3E%3Ccircle%20cx='667.5'%20cy='424.2'%20r='1.98'/%3E%3Ccircle%20cx='907.5'%20cy='424.2'%20r='1.98'/%3E%3Ccircle%20cx='1147.5'%20cy='424.2'%20r='1.98'/%3E%3Ccircle%20cx='258.5'%20cy='563.5'%20r='1.98'/%3E%3Ccircle%20cx='498.5'%20cy='563.5'%20r='1.98'/%3E%3Ccircle%20cx='738.5'%20cy='563.5'%20r='1.98'/%3E%3Ccircle%20cx='978.5'%20cy='563.5'%20r='1.98'/%3E%3Ccircle%20cx='18.5'%20cy='563.5'%20r='1.98'/%3E%3C/g%3E%3Cg%20fill-opacity='0.352'%3E%3Ccircle%20cx='1166.0'%20cy='74.7'%20r='1.72'/%3E%3Ccircle%20cx='206.0'%20cy='74.7'%20r='1.72'/%3E%3Ccircle%20cx='446.0'%20cy='74.7'%20r='1.72'/%3E%3Ccircle%20cx='686.0'%20cy='74.7'%20r='1.72'/%3E%3Ccircle%20cx='926.0'%20cy='74.7'%20r='1.72'/%3E%3Ccircle%20cx='37.0'%20cy='193.0'%20r='1.72'/%3E%3Ccircle%20cx='277.0'%20cy='193.0'%20r='1.72'/%3E%3Ccircle%20cx='517.0'%20cy='193.0'%20r='1.72'/%3E%3Ccircle%20cx='757.0'%20cy='193.0'%20r='1.72'/%3E%3Ccircle%20cx='997.0'%20cy='193.0'%20r='1.72'/%3E%3Ccircle%20cx='108.0'%20cy='272.8'%20r='1.72'/%3E%3Ccircle%20cx='348.0'%20cy='272.8'%20r='1.72'/%3E%3Ccircle%20cx='588.0'%20cy='272.8'%20r='1.72'/%3E%3Ccircle%20cx='828.0'%20cy='272.8'%20r='1.72'/%3E%3Ccircle%20cx='1068.0'%20cy='272.8'%20r='1.72'/%3E%3Ccircle%20cx='179.0'%20cy='419.4'%20r='1.72'/%3E%3Ccircle%20cx='419.0'%20cy='419.4'%20r='1.72'/%3E%3Ccircle%20cx='659.0'%20cy='419.4'%20r='1.72'/%3E%3Ccircle%20cx='899.0'%20cy='419.4'%20r='1.72'/%3E%3Ccircle%20cx='1139.0'%20cy='419.4'%20r='1.72'/%3E%3Ccircle%20cx='250.0'%20cy='568.3'%20r='1.72'/%3E%3Ccircle%20cx='490.0'%20cy='568.3'%20r='1.72'/%3E%3Ccircle%20cx='730.0'%20cy='568.3'%20r='1.72'/%3E%3Ccircle%20cx='970.0'%20cy='568.3'%20r='1.72'/%3E%3Ccircle%20cx='10.0'%20cy='568.3'%20r='1.72'/%3E%3C/g%3E%3Cg%20fill-opacity='0.274'%3E%3Ccircle%20cx='1157.5'%20cy='69.9'%20r='1.5'/%3E%3Ccircle%20cx='197.5'%20cy='69.9'%20r='1.5'/%3E%3Ccircle%20cx='437.5'%20cy='69.9'%20r='1.5'/%3E%3Ccircle%20cx='677.5'%20cy='69.9'%20r='1.5'/%3E%3Ccircle%20cx='917.5'%20cy='69.9'%20r='1.5'/%3E%3Ccircle%20cx='28.5'%20cy='197.8'%20r='1.5'/%3E%3Ccircle%20cx='268.5'%20cy='197.8'%20r='1.5'/%3E%3Ccircle%20cx='508.5'%20cy='197.8'%20r='1.5'/%3E%3Ccircle%20cx='748.5'%20cy='197.8'%20r='1.5'/%3E%3Ccircle%20cx='988.5'%20cy='197.8'%20r='1.5'/%3E%3Ccircle%20cx='99.5'%20cy='277.6'%20r='1.5'/%3E%3Ccircle%20cx='339.5'%20cy='277.6'%20r='1.5'/%3E%3Ccircle%20cx='579.5'%20cy='277.6'%20r='1.5'/%3E%3Ccircle%20cx='819.5'%20cy='277.6'%20r='1.5'/%3E%3Ccircle%20cx='1059.5'%20cy='277.6'%20r='1.5'/%3E%3Ccircle%20cx='170.5'%20cy='414.6'%20r='1.5'/%3E%3Ccircle%20cx='410.5'%20cy='414.6'%20r='1.5'/%3E%3Ccircle%20cx='650.5'%20cy='414.6'%20r='1.5'/%3E%3Ccircle%20cx='890.5'%20cy='414.6'%20r='1.5'/%3E%3Ccircle%20cx='1130.5'%20cy='414.6'%20r='1.5'/%3E%3Ccircle%20cx='241.5'%20cy='573.1'%20r='1.5'/%3E%3Ccircle%20cx='481.5'%20cy='573.1'%20r='1.5'/%3E%3Ccircle%20cx='721.5'%20cy='573.1'%20r='1.5'/%3E%3Ccircle%20cx='961.5'%20cy='573.1'%20r='1.5'/%3E%3Ccircle%20cx='1.5'%20cy='573.1'%20r='1.5'/%3E%3C/g%3E%3Cg%20fill-opacity='0.214'%3E%3Ccircle%20cx='1149.0'%20cy='65.1'%20r='1.3'/%3E%3Ccircle%20cx='189.0'%20cy='65.1'%20r='1.3'/%3E%3Ccircle%20cx='429.0'%20cy='65.1'%20r='1.3'/%3E%3Ccircle%20cx='669.0'%20cy='65.1'%20r='1.3'/%3E%3Ccircle%20cx='909.0'%20cy='65.1'%20r='1.3'/%3E%3Ccircle%20cx='20.0'%20cy='202.7'%20r='1.3'/%3E%3Ccircle%20cx='260.0'%20cy='202.7'%20r='1.3'/%3E%3Ccircle%20cx='500.0'%20cy='202.7'%20r='1.3'/%3E%3Ccircle%20cx='740.0'%20cy='202.7'%20r='1.3'/%3E%3Ccircle%20cx='980.0'%20cy='202.7'%20r='1.3'/%3E%3Ccircle%20cx='91.0'%20cy='282.4'%20r='1.3'/%3E%3Ccircle%20cx='331.0'%20cy='282.4'%20r='1.3'/%3E%3Ccircle%20cx='571.0'%20cy='282.4'%20r='1.3'/%3E%3Ccircle%20cx='811.0'%20cy='282.4'%20r='1.3'/%3E%3Ccircle%20cx='1051.0'%20cy='282.4'%20r='1.3'/%3E%3Ccircle%20cx='162.0'%20cy='409.8'%20r='1.3'/%3E%3Ccircle%20cx='402.0'%20cy='409.8'%20r='1.3'/%3E%3Ccircle%20cx='642.0'%20cy='409.8'%20r='1.3'/%3E%3Ccircle%20cx='882.0'%20cy='409.8'%20r='1.3'/%3E%3Ccircle%20cx='1122.0'%20cy='409.8'%20r='1.3'/%3E%3Ccircle%20cx='233.0'%20cy='570.0'%20r='1.3'/%3E%3Ccircle%20cx='473.0'%20cy='570.0'%20r='1.3'/%3E%3Ccircle%20cx='713.0'%20cy='570.0'%20r='1.3'/%3E%3Ccircle%20cx='953.0'%20cy='570.0'%20r='1.3'/%3E%3Ccircle%20cx='1193.0'%20cy='570.0'%20r='1.3'/%3E%3C/g%3E%3Cg%20fill-opacity='0.167'%3E%3Ccircle%20cx='1140.5'%20cy='60.3'%20r='1.13'/%3E%3Ccircle%20cx='180.5'%20cy='60.3'%20r='1.13'/%3E%3Ccircle%20cx='420.5'%20cy='60.3'%20r='1.13'/%3E%3Ccircle%20cx='660.5'%20cy='60.3'%20r='1.13'/%3E%3Ccircle%20cx='900.5'%20cy='60.3'%20r='1.13'/%3E%3Ccircle%20cx='11.5'%20cy='207.5'%20r='1.13'/%3E%3Ccircle%20cx='251.5'%20cy='207.5'%20r='1.13'/%3E%3Ccircle%20cx='491.5'%20cy='207.5'%20r='1.13'/%3E%3Ccircle%20cx='731.5'%20cy='207.5'%20r='1.13'/%3E%3Ccircle%20cx='971.5'%20cy='207.5'%20r='1.13'/%3E%3Ccircle%20cx='82.5'%20cy='287.2'%20r='1.13'/%3E%3Ccircle%20cx='322.5'%20cy='287.2'%20r='1.13'/%3E%3Ccircle%20cx='562.5'%20cy='287.2'%20r='1.13'/%3E%3Ccircle%20cx='802.5'%20cy='287.2'%20r='1.13'/%3E%3Ccircle%20cx='1042.5'%20cy='287.2'%20r='1.13'/%3E%3Ccircle%20cx='153.5'%20cy='405.0'%20r='1.13'/%3E%3Ccircle%20cx='393.5'%20cy='405.0'%20r='1.13'/%3E%3Ccircle%20cx='633.5'%20cy='405.0'%20r='1.13'/%3E%3Ccircle%20cx='873.5'%20cy='405.0'%20r='1.13'/%3E%3Ccircle%20cx='1113.5'%20cy='405.0'%20r='1.13'/%3E%3Ccircle%20cx='224.5'%20cy='565.2'%20r='1.13'/%3E%3Ccircle%20cx='464.5'%20cy='565.2'%20r='1.13'/%3E%3Ccircle%20cx='704.5'%20cy='565.2'%20r='1.13'/%3E%3Ccircle%20cx='944.5'%20cy='565.2'%20r='1.13'/%3E%3Ccircle%20cx='1184.5'%20cy='565.2'%20r='1.13'/%3E%3C/g%3E%3Cg%20fill-opacity='0.13'%3E%3Ccircle%20cx='1132.0'%20cy='55.5'%20r='0.98'/%3E%3Ccircle%20cx='172.0'%20cy='55.5'%20r='0.98'/%3E%3Ccircle%20cx='412.0'%20cy='55.5'%20r='0.98'/%3E%3Ccircle%20cx='652.0'%20cy='55.5'%20r='0.98'/%3E%3Ccircle%20cx='892.0'%20cy='55.5'%20r='0.98'/%3E%3Ccircle%20cx='3.0'%20cy='212.3'%20r='0.98'/%3E%3Ccircle%20cx='243.0'%20cy='212.3'%20r='0.98'/%3E%3Ccircle%20cx='483.0'%20cy='212.3'%20r='0.98'/%3E%3Ccircle%20cx='723.0'%20cy='212.3'%20r='0.98'/%3E%3Ccircle%20cx='963.0'%20cy='212.3'%20r='0.98'/%3E%3Ccircle%20cx='74.0'%20cy='292.1'%20r='0.98'/%3E%3Ccircle%20cx='314.0'%20cy='292.1'%20r='0.98'/%3E%3Ccircle%20cx='554.0'%20cy='292.1'%20r='0.98'/%3E%3Ccircle%20cx='794.0'%20cy='292.1'%20r='0.98'/%3E%3Ccircle%20cx='1034.0'%20cy='292.1'%20r='0.98'/%3E%3Ccircle%20cx='145.0'%20cy='400.2'%20r='0.98'/%3E%3Ccircle%20cx='385.0'%20cy='400.2'%20r='0.98'/%3E%3Ccircle%20cx='625.0'%20cy='400.2'%20r='0.98'/%3E%3Ccircle%20cx='865.0'%20cy='400.2'%20r='0.98'/%3E%3Ccircle%20cx='1105.0'%20cy='400.2'%20r='0.98'/%3E%3Ccircle%20cx='216.0'%20cy='560.4'%20r='0.98'/%3E%3Ccircle%20cx='456.0'%20cy='560.4'%20r='0.98'/%3E%3Ccircle%20cx='696.0'%20cy='560.4'%20r='0.98'/%3E%3Ccircle%20cx='936.0'%20cy='560.4'%20r='0.98'/%3E%3Ccircle%20cx='1176.0'%20cy='560.4'%20r='0.98'/%3E%3C/g%3E%3Cg%20fill-opacity='0.102'%3E%3Ccircle%20cx='1123.5'%20cy='50.7'%20r='0.86'/%3E%3Ccircle%20cx='163.5'%20cy='50.7'%20r='0.86'/%3E%3Ccircle%20cx='403.5'%20cy='50.7'%20r='0.86'/%3E%3Ccircle%20cx='643.5'%20cy='50.7'%20r='0.86'/%3E%3Ccircle%20cx='883.5'%20cy='50.7'%20r='0.86'/%3E%3Ccircle%20cx='1194.5'%20cy='210.9'%20r='0.86'/%3E%3Ccircle%20cx='234.5'%20cy='210.9'%20r='0.86'/%3E%3Ccircle%20cx='474.5'%20cy='210.9'%20r='0.86'/%3E%3Ccircle%20cx='714.5'%20cy='210.9'%20r='0.86'/%3E%3Ccircle%20cx='954.5'%20cy='210.9'%20r='0.86'/%3E%3Ccircle%20cx='65.5'%20cy='296.9'%20r='0.86'/%3E%3Ccircle%20cx='305.5'%20cy='296.9'%20r='0.86'/%3E%3Ccircle%20cx='545.5'%20cy='296.9'%20r='0.86'/%3E%3Ccircle%20cx='785.5'%20cy='296.9'%20r='0.86'/%3E%3Ccircle%20cx='1025.5'%20cy='296.9'%20r='0.86'/%3E%3Ccircle%20cx='136.5'%20cy='395.4'%20r='0.86'/%3E%3Ccircle%20cx='376.5'%20cy='395.4'%20r='0.86'/%3E%3Ccircle%20cx='616.5'%20cy='395.4'%20r='0.86'/%3E%3Ccircle%20cx='856.5'%20cy='395.4'%20r='0.86'/%3E%3Ccircle%20cx='1096.5'%20cy='395.4'%20r='0.86'/%3E%3Ccircle%20cx='207.5'%20cy='555.6'%20r='0.86'/%3E%3Ccircle%20cx='447.5'%20cy='555.6'%20r='0.86'/%3E%3Ccircle%20cx='687.5'%20cy='555.6'%20r='0.86'/%3E%3Ccircle%20cx='927.5'%20cy='555.6'%20r='0.86'/%3E%3Ccircle%20cx='1167.5'%20cy='555.6'%20r='0.86'/%3E%3C/g%3E%3C/svg%3E");
+  -webkit-mask-size: 1200px 600px;
+  mask-size: 1200px 600px;
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  /* One spare tile on the side it travels FROM, and a bounded height: a
+   * composited layer the full height of a three-thousand-pixel card is a
+   * very large surface, and the colour gradient runs out before the bottom
+   * of this one anyway. */
+  top: -40px;
+  height: 2200px;
+  left: -1240px;
+  right: -40px;
+  /* Barely any: enough to soften a 3px dot into a glow, not enough to smear
+   * the trail into a line. */
+  filter: blur(1px);
+  opacity: 0.46;
+  animation: zigdots-run-a 26s linear infinite;
+}
+
+/* The far field: fewer, larger, slower, and the other way, so the two never
+ * line up and the pattern never visibly repeats. */
+.page-updates .release.is-zigdots::after {
+  background: linear-gradient(188deg,
+      color-mix(in srgb, var(--purple) 88%, transparent) 0%,
+      color-mix(in srgb, var(--fuchsia, #ff5cd1) 72%, transparent) 44%,
+      color-mix(in srgb, var(--purple) 54%, transparent) 76%,
+      transparent 97%);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='1600'%20height='800'%20viewBox='0%200%201600%20800'%20fill='%23000'%3E%3Cg%20fill-opacity='0.95'%3E%3Ccircle%20cx='0'%20cy='146.0'%20r='4.2'/%3E%3Ccircle%20cx='400'%20cy='100.0'%20r='4.2'/%3E%3Ccircle%20cx='800'%20cy='54.0'%20r='4.2'/%3E%3Ccircle%20cx='1200'%20cy='100.0'%20r='4.2'/%3E%3Ccircle%20cx='137'%20cy='267.2'%20r='4.2'/%3E%3Ccircle%20cx='537'%20cy='286.8'%20r='4.2'/%3E%3Ccircle%20cx='937'%20cy='332.8'%20r='4.2'/%3E%3Ccircle%20cx='1337'%20cy='313.2'%20r='4.2'/%3E%3Ccircle%20cx='274'%20cy='519.5'%20r='4.2'/%3E%3Ccircle%20cx='674'%20cy='526.5'%20r='4.2'/%3E%3Ccircle%20cx='1074'%20cy='480.4'%20r='4.2'/%3E%3Ccircle%20cx='1474'%20cy='473.6'%20r='4.2'/%3E%3Ccircle%20cx='411'%20cy='693.7'%20r='4.2'/%3E%3Ccircle%20cx='811'%20cy='660.3'%20r='4.2'/%3E%3Ccircle%20cx='1211'%20cy='706.3'%20r='4.2'/%3E%3Ccircle%20cx='11'%20cy='739.7'%20r='4.2'/%3E%3C/g%3E%3Cg%20fill-opacity='0.741'%3E%3Ccircle%20cx='1588'%20cy='139.1'%20r='3.65'/%3E%3Ccircle%20cx='388'%20cy='106.9'%20r='3.65'/%3E%3Ccircle%20cx='788'%20cy='60.9'%20r='3.65'/%3E%3Ccircle%20cx='1188'%20cy='93.1'%20r='3.65'/%3E%3Ccircle%20cx='125'%20cy='274.1'%20r='3.65'/%3E%3Ccircle%20cx='525'%20cy='279.9'%20r='3.65'/%3E%3Ccircle%20cx='925'%20cy='325.9'%20r='3.65'/%3E%3Ccircle%20cx='1325'%20cy='320.1'%20r='3.65'/%3E%3Ccircle%20cx='262'%20cy='512.6'%20r='3.65'/%3E%3Ccircle%20cx='662'%20cy='533.4'%20r='3.65'/%3E%3Ccircle%20cx='1062'%20cy='487.4'%20r='3.65'/%3E%3Ccircle%20cx='1462'%20cy='466.6'%20r='3.65'/%3E%3Ccircle%20cx='399'%20cy='700.6'%20r='3.65'/%3E%3Ccircle%20cx='799'%20cy='654.6'%20r='3.65'/%3E%3Ccircle%20cx='1199'%20cy='699.4'%20r='3.65'/%3E%3Ccircle%20cx='1599'%20cy='745.4'%20r='3.65'/%3E%3C/g%3E%3Cg%20fill-opacity='0.578'%3E%3Ccircle%20cx='1576'%20cy='132.2'%20r='3.18'/%3E%3Ccircle%20cx='376'%20cy='113.8'%20r='3.18'/%3E%3Ccircle%20cx='776'%20cy='67.8'%20r='3.18'/%3E%3Ccircle%20cx='1176'%20cy='86.2'%20r='3.18'/%3E%3Ccircle%20cx='113'%20cy='281.0'%20r='3.18'/%3E%3Ccircle%20cx='513'%20cy='273.0'%20r='3.18'/%3E%3Ccircle%20cx='913'%20cy='319.0'%20r='3.18'/%3E%3Ccircle%20cx='1313'%20cy='327.0'%20r='3.18'/%3E%3Ccircle%20cx='250'%20cy='505.8'%20r='3.18'/%3E%3Ccircle%20cx='650'%20cy='540.2'%20r='3.18'/%3E%3Ccircle%20cx='1050'%20cy='494.2'%20r='3.18'/%3E%3Ccircle%20cx='1450'%20cy='459.8'%20r='3.18'/%3E%3Ccircle%20cx='387'%20cy='707.5'%20r='3.18'/%3E%3Ccircle%20cx='787'%20cy='661.5'%20r='3.18'/%3E%3Ccircle%20cx='1187'%20cy='692.5'%20r='3.18'/%3E%3Ccircle%20cx='1587'%20cy='738.5'%20r='3.18'/%3E%3C/g%3E%3Cg%20fill-opacity='0.451'%3E%3Ccircle%20cx='1564'%20cy='125.3'%20r='2.77'/%3E%3Ccircle%20cx='364'%20cy='120.7'%20r='2.77'/%3E%3Ccircle%20cx='764'%20cy='74.7'%20r='2.77'/%3E%3Ccircle%20cx='1164'%20cy='79.3'%20r='2.77'/%3E%3Ccircle%20cx='101'%20cy='287.9'%20r='2.77'/%3E%3Ccircle%20cx='501'%20cy='266.1'%20r='2.77'/%3E%3Ccircle%20cx='901'%20cy='312.1'%20r='2.77'/%3E%3Ccircle%20cx='1301'%20cy='333.9'%20r='2.77'/%3E%3Ccircle%20cx='238'%20cy='498.9'%20r='2.77'/%3E%3Ccircle%20cx='638'%20cy='544.9'%20r='2.77'/%3E%3Ccircle%20cx='1038'%20cy='501.1'%20r='2.77'/%3E%3Ccircle%20cx='1438'%20cy='455.1'%20r='2.77'/%3E%3Ccircle%20cx='375'%20cy='714.4'%20r='2.77'/%3E%3Ccircle%20cx='775'%20cy='668.4'%20r='2.77'/%3E%3Ccircle%20cx='1175'%20cy='685.6'%20r='2.77'/%3E%3Ccircle%20cx='1575'%20cy='731.6'%20r='2.77'/%3E%3C/g%3E%3Cg%20fill-opacity='0.352'%3E%3Ccircle%20cx='1552'%20cy='118.4'%20r='2.41'/%3E%3Ccircle%20cx='352'%20cy='127.6'%20r='2.41'/%3E%3Ccircle%20cx='752'%20cy='81.6'%20r='2.41'/%3E%3Ccircle%20cx='1152'%20cy='72.4'%20r='2.41'/%3E%3Ccircle%20cx='89'%20cy='294.8'%20r='2.41'/%3E%3Ccircle%20cx='489'%20cy='259.2'%20r='2.41'/%3E%3Ccircle%20cx='889'%20cy='305.2'%20r='2.41'/%3E%3Ccircle%20cx='1289'%20cy='340.8'%20r='2.41'/%3E%3Ccircle%20cx='226'%20cy='491.9'%20r='2.41'/%3E%3Ccircle%20cx='626'%20cy='538.0'%20r='2.41'/%3E%3Ccircle%20cx='1026'%20cy='508.1'%20r='2.41'/%3E%3Ccircle%20cx='1426'%20cy='462.1'%20r='2.41'/%3E%3Ccircle%20cx='363'%20cy='721.3'%20r='2.41'/%3E%3Ccircle%20cx='763'%20cy='675.3'%20r='2.41'/%3E%3Ccircle%20cx='1163'%20cy='678.7'%20r='2.41'/%3E%3Ccircle%20cx='1563'%20cy='724.7'%20r='2.41'/%3E%3C/g%3E%3Cg%20fill-opacity='0.274'%3E%3Ccircle%20cx='1540'%20cy='111.5'%20r='2.09'/%3E%3Ccircle%20cx='340'%20cy='134.5'%20r='2.09'/%3E%3Ccircle%20cx='740'%20cy='88.5'%20r='2.09'/%3E%3Ccircle%20cx='1140'%20cy='65.5'%20r='2.09'/%3E%3Ccircle%20cx='77'%20cy='301.7'%20r='2.09'/%3E%3Ccircle%20cx='477'%20cy='255.7'%20r='2.09'/%3E%3Ccircle%20cx='877'%20cy='298.3'%20r='2.09'/%3E%3Ccircle%20cx='1277'%20cy='344.3'%20r='2.09'/%3E%3Ccircle%20cx='214'%20cy='485.1'%20r='2.09'/%3E%3Ccircle%20cx='614'%20cy='531.0'%20r='2.09'/%3E%3Ccircle%20cx='1014'%20cy='515.0'%20r='2.09'/%3E%3Ccircle%20cx='1414'%20cy='468.9'%20r='2.09'/%3E%3Ccircle%20cx='351'%20cy='728.2'%20r='2.09'/%3E%3Ccircle%20cx='751'%20cy='682.2'%20r='2.09'/%3E%3Ccircle%20cx='1151'%20cy='671.8'%20r='2.09'/%3E%3Ccircle%20cx='1551'%20cy='717.8'%20r='2.09'/%3E%3C/g%3E%3Cg%20fill-opacity='0.214'%3E%3Ccircle%20cx='1528'%20cy='104.6'%20r='1.82'/%3E%3Ccircle%20cx='328'%20cy='141.4'%20r='1.82'/%3E%3Ccircle%20cx='728'%20cy='95.4'%20r='1.82'/%3E%3Ccircle%20cx='1128'%20cy='58.6'%20r='1.82'/%3E%3Ccircle%20cx='65'%20cy='308.6'%20r='1.82'/%3E%3Ccircle%20cx='465'%20cy='262.6'%20r='1.82'/%3E%3Ccircle%20cx='865'%20cy='291.4'%20r='1.82'/%3E%3Ccircle%20cx='1265'%20cy='337.4'%20r='1.82'/%3E%3Ccircle%20cx='202'%20cy='478.1'%20r='1.82'/%3E%3Ccircle%20cx='602'%20cy='524.1'%20r='1.82'/%3E%3Ccircle%20cx='1002'%20cy='521.9'%20r='1.82'/%3E%3Ccircle%20cx='1402'%20cy='475.9'%20r='1.82'/%3E%3Ccircle%20cx='339'%20cy='735.1'%20r='1.82'/%3E%3Ccircle%20cx='739'%20cy='689.1'%20r='1.82'/%3E%3Ccircle%20cx='1139'%20cy='664.9'%20r='1.82'/%3E%3Ccircle%20cx='1539'%20cy='710.9'%20r='1.82'/%3E%3C/g%3E%3Cg%20fill-opacity='0.167'%3E%3Ccircle%20cx='1516'%20cy='97.7'%20r='1.58'/%3E%3Ccircle%20cx='316'%20cy='143.7'%20r='1.58'/%3E%3Ccircle%20cx='716'%20cy='102.3'%20r='1.58'/%3E%3Ccircle%20cx='1116'%20cy='56.3'%20r='1.58'/%3E%3Ccircle%20cx='53'%20cy='315.5'%20r='1.58'/%3E%3Ccircle%20cx='453'%20cy='269.5'%20r='1.58'/%3E%3Ccircle%20cx='853'%20cy='284.5'%20r='1.58'/%3E%3Ccircle%20cx='1253'%20cy='330.5'%20r='1.58'/%3E%3Ccircle%20cx='190'%20cy='471.2'%20r='1.58'/%3E%3Ccircle%20cx='590'%20cy='517.2'%20r='1.58'/%3E%3Ccircle%20cx='990'%20cy='528.8'%20r='1.58'/%3E%3Ccircle%20cx='1390'%20cy='482.8'%20r='1.58'/%3E%3Ccircle%20cx='327'%20cy='742.0'%20r='1.58'/%3E%3Ccircle%20cx='727'%20cy='696.0'%20r='1.58'/%3E%3Ccircle%20cx='1127'%20cy='658.0'%20r='1.58'/%3E%3Ccircle%20cx='1527'%20cy='704.0'%20r='1.58'/%3E%3C/g%3E%3Cg%20fill-opacity='0.13'%3E%3Ccircle%20cx='1504'%20cy='90.8'%20r='1.38'/%3E%3Ccircle%20cx='304'%20cy='136.8'%20r='1.38'/%3E%3Ccircle%20cx='704'%20cy='109.2'%20r='1.38'/%3E%3Ccircle%20cx='1104'%20cy='63.2'%20r='1.38'/%3E%3Ccircle%20cx='41'%20cy='322.4'%20r='1.38'/%3E%3Ccircle%20cx='441'%20cy='276.4'%20r='1.38'/%3E%3Ccircle%20cx='841'%20cy='277.6'%20r='1.38'/%3E%3Ccircle%20cx='1241'%20cy='323.6'%20r='1.38'/%3E%3Ccircle%20cx='178'%20cy='464.4'%20r='1.38'/%3E%3Ccircle%20cx='578'%20cy='510.4'%20r='1.38'/%3E%3Ccircle%20cx='978'%20cy='535.6'%20r='1.38'/%3E%3Ccircle%20cx='1378'%20cy='489.6'%20r='1.38'/%3E%3Ccircle%20cx='315'%20cy='743.1'%20r='1.38'/%3E%3Ccircle%20cx='715'%20cy='702.9'%20r='1.38'/%3E%3Ccircle%20cx='1115'%20cy='656.9'%20r='1.38'/%3E%3Ccircle%20cx='1515'%20cy='697.1'%20r='1.38'/%3E%3C/g%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='1600'%20height='800'%20viewBox='0%200%201600%20800'%20fill='%23000'%3E%3Cg%20fill-opacity='0.95'%3E%3Ccircle%20cx='0'%20cy='146.0'%20r='4.2'/%3E%3Ccircle%20cx='400'%20cy='100.0'%20r='4.2'/%3E%3Ccircle%20cx='800'%20cy='54.0'%20r='4.2'/%3E%3Ccircle%20cx='1200'%20cy='100.0'%20r='4.2'/%3E%3Ccircle%20cx='137'%20cy='267.2'%20r='4.2'/%3E%3Ccircle%20cx='537'%20cy='286.8'%20r='4.2'/%3E%3Ccircle%20cx='937'%20cy='332.8'%20r='4.2'/%3E%3Ccircle%20cx='1337'%20cy='313.2'%20r='4.2'/%3E%3Ccircle%20cx='274'%20cy='519.5'%20r='4.2'/%3E%3Ccircle%20cx='674'%20cy='526.5'%20r='4.2'/%3E%3Ccircle%20cx='1074'%20cy='480.4'%20r='4.2'/%3E%3Ccircle%20cx='1474'%20cy='473.6'%20r='4.2'/%3E%3Ccircle%20cx='411'%20cy='693.7'%20r='4.2'/%3E%3Ccircle%20cx='811'%20cy='660.3'%20r='4.2'/%3E%3Ccircle%20cx='1211'%20cy='706.3'%20r='4.2'/%3E%3Ccircle%20cx='11'%20cy='739.7'%20r='4.2'/%3E%3C/g%3E%3Cg%20fill-opacity='0.741'%3E%3Ccircle%20cx='1588'%20cy='139.1'%20r='3.65'/%3E%3Ccircle%20cx='388'%20cy='106.9'%20r='3.65'/%3E%3Ccircle%20cx='788'%20cy='60.9'%20r='3.65'/%3E%3Ccircle%20cx='1188'%20cy='93.1'%20r='3.65'/%3E%3Ccircle%20cx='125'%20cy='274.1'%20r='3.65'/%3E%3Ccircle%20cx='525'%20cy='279.9'%20r='3.65'/%3E%3Ccircle%20cx='925'%20cy='325.9'%20r='3.65'/%3E%3Ccircle%20cx='1325'%20cy='320.1'%20r='3.65'/%3E%3Ccircle%20cx='262'%20cy='512.6'%20r='3.65'/%3E%3Ccircle%20cx='662'%20cy='533.4'%20r='3.65'/%3E%3Ccircle%20cx='1062'%20cy='487.4'%20r='3.65'/%3E%3Ccircle%20cx='1462'%20cy='466.6'%20r='3.65'/%3E%3Ccircle%20cx='399'%20cy='700.6'%20r='3.65'/%3E%3Ccircle%20cx='799'%20cy='654.6'%20r='3.65'/%3E%3Ccircle%20cx='1199'%20cy='699.4'%20r='3.65'/%3E%3Ccircle%20cx='1599'%20cy='745.4'%20r='3.65'/%3E%3C/g%3E%3Cg%20fill-opacity='0.578'%3E%3Ccircle%20cx='1576'%20cy='132.2'%20r='3.18'/%3E%3Ccircle%20cx='376'%20cy='113.8'%20r='3.18'/%3E%3Ccircle%20cx='776'%20cy='67.8'%20r='3.18'/%3E%3Ccircle%20cx='1176'%20cy='86.2'%20r='3.18'/%3E%3Ccircle%20cx='113'%20cy='281.0'%20r='3.18'/%3E%3Ccircle%20cx='513'%20cy='273.0'%20r='3.18'/%3E%3Ccircle%20cx='913'%20cy='319.0'%20r='3.18'/%3E%3Ccircle%20cx='1313'%20cy='327.0'%20r='3.18'/%3E%3Ccircle%20cx='250'%20cy='505.8'%20r='3.18'/%3E%3Ccircle%20cx='650'%20cy='540.2'%20r='3.18'/%3E%3Ccircle%20cx='1050'%20cy='494.2'%20r='3.18'/%3E%3Ccircle%20cx='1450'%20cy='459.8'%20r='3.18'/%3E%3Ccircle%20cx='387'%20cy='707.5'%20r='3.18'/%3E%3Ccircle%20cx='787'%20cy='661.5'%20r='3.18'/%3E%3Ccircle%20cx='1187'%20cy='692.5'%20r='3.18'/%3E%3Ccircle%20cx='1587'%20cy='738.5'%20r='3.18'/%3E%3C/g%3E%3Cg%20fill-opacity='0.451'%3E%3Ccircle%20cx='1564'%20cy='125.3'%20r='2.77'/%3E%3Ccircle%20cx='364'%20cy='120.7'%20r='2.77'/%3E%3Ccircle%20cx='764'%20cy='74.7'%20r='2.77'/%3E%3Ccircle%20cx='1164'%20cy='79.3'%20r='2.77'/%3E%3Ccircle%20cx='101'%20cy='287.9'%20r='2.77'/%3E%3Ccircle%20cx='501'%20cy='266.1'%20r='2.77'/%3E%3Ccircle%20cx='901'%20cy='312.1'%20r='2.77'/%3E%3Ccircle%20cx='1301'%20cy='333.9'%20r='2.77'/%3E%3Ccircle%20cx='238'%20cy='498.9'%20r='2.77'/%3E%3Ccircle%20cx='638'%20cy='544.9'%20r='2.77'/%3E%3Ccircle%20cx='1038'%20cy='501.1'%20r='2.77'/%3E%3Ccircle%20cx='1438'%20cy='455.1'%20r='2.77'/%3E%3Ccircle%20cx='375'%20cy='714.4'%20r='2.77'/%3E%3Ccircle%20cx='775'%20cy='668.4'%20r='2.77'/%3E%3Ccircle%20cx='1175'%20cy='685.6'%20r='2.77'/%3E%3Ccircle%20cx='1575'%20cy='731.6'%20r='2.77'/%3E%3C/g%3E%3Cg%20fill-opacity='0.352'%3E%3Ccircle%20cx='1552'%20cy='118.4'%20r='2.41'/%3E%3Ccircle%20cx='352'%20cy='127.6'%20r='2.41'/%3E%3Ccircle%20cx='752'%20cy='81.6'%20r='2.41'/%3E%3Ccircle%20cx='1152'%20cy='72.4'%20r='2.41'/%3E%3Ccircle%20cx='89'%20cy='294.8'%20r='2.41'/%3E%3Ccircle%20cx='489'%20cy='259.2'%20r='2.41'/%3E%3Ccircle%20cx='889'%20cy='305.2'%20r='2.41'/%3E%3Ccircle%20cx='1289'%20cy='340.8'%20r='2.41'/%3E%3Ccircle%20cx='226'%20cy='491.9'%20r='2.41'/%3E%3Ccircle%20cx='626'%20cy='538.0'%20r='2.41'/%3E%3Ccircle%20cx='1026'%20cy='508.1'%20r='2.41'/%3E%3Ccircle%20cx='1426'%20cy='462.1'%20r='2.41'/%3E%3Ccircle%20cx='363'%20cy='721.3'%20r='2.41'/%3E%3Ccircle%20cx='763'%20cy='675.3'%20r='2.41'/%3E%3Ccircle%20cx='1163'%20cy='678.7'%20r='2.41'/%3E%3Ccircle%20cx='1563'%20cy='724.7'%20r='2.41'/%3E%3C/g%3E%3Cg%20fill-opacity='0.274'%3E%3Ccircle%20cx='1540'%20cy='111.5'%20r='2.09'/%3E%3Ccircle%20cx='340'%20cy='134.5'%20r='2.09'/%3E%3Ccircle%20cx='740'%20cy='88.5'%20r='2.09'/%3E%3Ccircle%20cx='1140'%20cy='65.5'%20r='2.09'/%3E%3Ccircle%20cx='77'%20cy='301.7'%20r='2.09'/%3E%3Ccircle%20cx='477'%20cy='255.7'%20r='2.09'/%3E%3Ccircle%20cx='877'%20cy='298.3'%20r='2.09'/%3E%3Ccircle%20cx='1277'%20cy='344.3'%20r='2.09'/%3E%3Ccircle%20cx='214'%20cy='485.1'%20r='2.09'/%3E%3Ccircle%20cx='614'%20cy='531.0'%20r='2.09'/%3E%3Ccircle%20cx='1014'%20cy='515.0'%20r='2.09'/%3E%3Ccircle%20cx='1414'%20cy='468.9'%20r='2.09'/%3E%3Ccircle%20cx='351'%20cy='728.2'%20r='2.09'/%3E%3Ccircle%20cx='751'%20cy='682.2'%20r='2.09'/%3E%3Ccircle%20cx='1151'%20cy='671.8'%20r='2.09'/%3E%3Ccircle%20cx='1551'%20cy='717.8'%20r='2.09'/%3E%3C/g%3E%3Cg%20fill-opacity='0.214'%3E%3Ccircle%20cx='1528'%20cy='104.6'%20r='1.82'/%3E%3Ccircle%20cx='328'%20cy='141.4'%20r='1.82'/%3E%3Ccircle%20cx='728'%20cy='95.4'%20r='1.82'/%3E%3Ccircle%20cx='1128'%20cy='58.6'%20r='1.82'/%3E%3Ccircle%20cx='65'%20cy='308.6'%20r='1.82'/%3E%3Ccircle%20cx='465'%20cy='262.6'%20r='1.82'/%3E%3Ccircle%20cx='865'%20cy='291.4'%20r='1.82'/%3E%3Ccircle%20cx='1265'%20cy='337.4'%20r='1.82'/%3E%3Ccircle%20cx='202'%20cy='478.1'%20r='1.82'/%3E%3Ccircle%20cx='602'%20cy='524.1'%20r='1.82'/%3E%3Ccircle%20cx='1002'%20cy='521.9'%20r='1.82'/%3E%3Ccircle%20cx='1402'%20cy='475.9'%20r='1.82'/%3E%3Ccircle%20cx='339'%20cy='735.1'%20r='1.82'/%3E%3Ccircle%20cx='739'%20cy='689.1'%20r='1.82'/%3E%3Ccircle%20cx='1139'%20cy='664.9'%20r='1.82'/%3E%3Ccircle%20cx='1539'%20cy='710.9'%20r='1.82'/%3E%3C/g%3E%3Cg%20fill-opacity='0.167'%3E%3Ccircle%20cx='1516'%20cy='97.7'%20r='1.58'/%3E%3Ccircle%20cx='316'%20cy='143.7'%20r='1.58'/%3E%3Ccircle%20cx='716'%20cy='102.3'%20r='1.58'/%3E%3Ccircle%20cx='1116'%20cy='56.3'%20r='1.58'/%3E%3Ccircle%20cx='53'%20cy='315.5'%20r='1.58'/%3E%3Ccircle%20cx='453'%20cy='269.5'%20r='1.58'/%3E%3Ccircle%20cx='853'%20cy='284.5'%20r='1.58'/%3E%3Ccircle%20cx='1253'%20cy='330.5'%20r='1.58'/%3E%3Ccircle%20cx='190'%20cy='471.2'%20r='1.58'/%3E%3Ccircle%20cx='590'%20cy='517.2'%20r='1.58'/%3E%3Ccircle%20cx='990'%20cy='528.8'%20r='1.58'/%3E%3Ccircle%20cx='1390'%20cy='482.8'%20r='1.58'/%3E%3Ccircle%20cx='327'%20cy='742.0'%20r='1.58'/%3E%3Ccircle%20cx='727'%20cy='696.0'%20r='1.58'/%3E%3Ccircle%20cx='1127'%20cy='658.0'%20r='1.58'/%3E%3Ccircle%20cx='1527'%20cy='704.0'%20r='1.58'/%3E%3C/g%3E%3Cg%20fill-opacity='0.13'%3E%3Ccircle%20cx='1504'%20cy='90.8'%20r='1.38'/%3E%3Ccircle%20cx='304'%20cy='136.8'%20r='1.38'/%3E%3Ccircle%20cx='704'%20cy='109.2'%20r='1.38'/%3E%3Ccircle%20cx='1104'%20cy='63.2'%20r='1.38'/%3E%3Ccircle%20cx='41'%20cy='322.4'%20r='1.38'/%3E%3Ccircle%20cx='441'%20cy='276.4'%20r='1.38'/%3E%3Ccircle%20cx='841'%20cy='277.6'%20r='1.38'/%3E%3Ccircle%20cx='1241'%20cy='323.6'%20r='1.38'/%3E%3Ccircle%20cx='178'%20cy='464.4'%20r='1.38'/%3E%3Ccircle%20cx='578'%20cy='510.4'%20r='1.38'/%3E%3Ccircle%20cx='978'%20cy='535.6'%20r='1.38'/%3E%3Ccircle%20cx='1378'%20cy='489.6'%20r='1.38'/%3E%3Ccircle%20cx='315'%20cy='743.1'%20r='1.38'/%3E%3Ccircle%20cx='715'%20cy='702.9'%20r='1.38'/%3E%3Ccircle%20cx='1115'%20cy='656.9'%20r='1.38'/%3E%3Ccircle%20cx='1515'%20cy='697.1'%20r='1.38'/%3E%3C/g%3E%3C/svg%3E");
+  -webkit-mask-size: 1600px 800px;
+  mask-size: 1600px 800px;
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  top: -40px;
+  height: 2200px;
+  left: -40px;
+  right: -1640px;
+  filter: blur(1.5px);
+  opacity: 0.30;
+  animation: zigdots-run-b 41s linear infinite;
+}
+
+/* Exactly one tile per cycle, so the loop has no seam. The opacity breathes
+ * in the same keyframes, which is free: both are compositor properties. */
+@keyframes zigdots-run-a {
+  0%   { transform: translate3d(0, 0, 0);          opacity: 0.40; }
+  50%  { transform: translate3d(600px, 0, 0);      opacity: 0.54; }
+  100% { transform: translate3d(1200px, 0, 0);     opacity: 0.40; }
+}
+@keyframes zigdots-run-b {
+  0%   { transform: translate3d(0, 0, 0);          opacity: 0.24; }
+  50%  { transform: translate3d(-800px, 0, 0);     opacity: 0.34; }
+  100% { transform: translate3d(-1600px, 0, 0);    opacity: 0.24; }
+}
+
+/* The version number travels between the two colours of the field, the way
+ * the 1.3.0 one travels between its own two. */
+.page-updates .release.is-zigdots .release-head h2 {
+  color: color-mix(in srgb, var(--fuchsia, #ff5cd1) 28%, #fff);
+  letter-spacing: 0.01em;
+  animation: zigdots-version 6s ease-in-out infinite;
+}
+
+@keyframes zigdots-version {
+  0%, 100% {
+    color: color-mix(in srgb, var(--fuchsia, #ff5cd1) 28%, #fff);
+    text-shadow:
+      0 0 5px color-mix(in srgb, var(--fuchsia, #ff5cd1) 88%, transparent),
+      0 0 16px color-mix(in srgb, var(--fuchsia, #ff5cd1) 56%, transparent),
+      0 0 38px color-mix(in srgb, var(--purple) 36%, transparent);
+  }
+  50% {
+    color: color-mix(in srgb, var(--purple) 32%, #fff);
+    text-shadow:
+      0 0 5px color-mix(in srgb, var(--purple) 90%, transparent),
+      0 0 18px color-mix(in srgb, var(--purple) 62%, transparent),
+      0 0 44px color-mix(in srgb, var(--fuchsia, #ff5cd1) 40%, transparent);
+  }
+}
+
+/* Light theme: same idea, dialled back, for the reason the waves are. */
+:root[data-theme="light"] .page-updates .release.is-zigdots::before { opacity: 0.30; }
+:root[data-theme="light"] .page-updates .release.is-zigdots::after  { opacity: 0.20; }
+:root[data-theme="light"] .page-updates .release.is-zigdots .release-head h2 {
+  color: color-mix(in srgb, var(--purple) 86%, #000);
+  animation: none;
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--fuchsia, #ff5cd1) 34%, transparent),
+    0 0 26px color-mix(in srgb, var(--purple) 20%, transparent);
+}
+
+/* The canvas the comets are drawn on.
+ *
+ * Pinned to the top of the card and capped in height by the script, because
+ * this card is around three thousand pixels tall and a backing store that
+ * size is video memory spent on a decoration. It fades out into the card at
+ * the bottom rather than ending on a line.
+ */
+.page-updates .release.is-zigdots > .release-fx {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: -1;
+  pointer-events: none;
+  /* Full strength across the head of the card, then dropping away, so the
+   * lanes that cross body text sit well behind it. */
+  -webkit-mask-image: linear-gradient(to bottom,
+      #000 30%, rgba(0, 0, 0, 0.5) 68%, transparent 100%);
+  mask-image: linear-gradient(to bottom,
+      #000 30%, rgba(0, 0, 0, 0.5) 68%, transparent 100%);
+}
+
+/* With something real moving in front of it, the tiled field is only depth.
+ * Held still and dropped to where it reads as grain rather than as a
+ * picture sliding across the card, which is what it looked like when it was
+ * carrying the motif on its own. Without the script, or under reduced
+ * motion, the rules above still apply and it is the motif again. */
+.page-updates .release.is-zigdots.has-fx::before,
+.page-updates .release.is-zigdots.has-fx::after {
+  animation: none;
+  will-change: auto;
+}
+.page-updates .release.is-zigdots.has-fx::before { opacity: 0.11; }
+.page-updates .release.is-zigdots.has-fx::after  { opacity: 0.07; }
+:root[data-theme="light"] .page-updates .release.is-zigdots.has-fx::before { opacity: 0.10; }
+:root[data-theme="light"] .page-updates .release.is-zigdots.has-fx::after  { opacity: 0.07; }
+
+/* Its badge, so no two landmark cards share a pill either. */
+.page-updates .release-badge.is-zigdots-badge {
+  background: linear-gradient(100deg,
+      var(--fuchsia, #ff5cd1), color-mix(in srgb, var(--purple) 70%, var(--fuchsia, #ff5cd1)));
+  box-shadow: 0 0 16px color-mix(in srgb, var(--fuchsia, #ff5cd1) 55%, transparent);
+  color: #2a0720;
+}
+
+/* Reduced motion. AFTER the motif, for the reason given on the block above:
+ * same specificity, later rule wins, and a card that stops its dots while
+ * the field keeps drifting is worse than one that never moved. */
+@media (prefers-reduced-motion: reduce) {
+  .page-updates .release.is-zigdots::before,
+  .page-updates .release.is-zigdots::after {
+    animation: none;
+    will-change: auto;
+  }
+  .page-updates .release.is-zigdots::before { opacity: 0.42; }
+  .page-updates .release.is-zigdots::after  { opacity: 0.28; }
+  .page-updates .release.is-zigdots .release-head h2 {
+    animation: none;
+    color: color-mix(in srgb, var(--fuchsia, #ff5cd1) 28%, #fff);
+    text-shadow:
+      0 0 5px color-mix(in srgb, var(--fuchsia, #ff5cd1) 88%, transparent),
+      0 0 16px color-mix(in srgb, var(--purple) 50%, transparent);
   }
 }
 
