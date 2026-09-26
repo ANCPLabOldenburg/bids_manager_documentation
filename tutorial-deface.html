@@ -345,17 +345,21 @@
 
         <figure class="media-figure">
           <img class="feature-shot" loading="lazy"
-               alt="The tree right-click menu on an anatomical image, showing Remove faces, Compare with the original, Remove the skull and Put the face back"
+               alt="The tree right-click menu on an anatomical image, grouped into Look at this, Check and repair, Names and structure, Identifiable data, Remove and This file"
                src="assets/features/editor_tree_menu_dark.png"
                data-light="assets/features/editor_tree_menu_light.png">
           <figcaption>
-            <strong>The same actions, on what you clicked.</strong>
+            <strong>The same actions, on what you clicked.</strong> The menu is
+            grouped by what each entry does, and
+            <strong>Identifiable data</strong> is the group this page is about:
             <strong>Remove faces</strong> and <strong>Remove the skull</strong>
-            work on a file, a datatype folder, a session or a subject.
+            work on a file, a datatype folder, a session or a subject, while
             <strong>Compare with the original</strong> and
             <strong>Compare with another image</strong> are offered on a
             <code class="inline">.nii</code> only, because comparing is per
-            image.
+            image. The renaming entries name the value they would change, so
+            <em>Rename acquisition acq-tfl3p2</em> says what it is about to do
+            before you open anything.
           </figcaption>
         </figure>
       </div>
@@ -451,13 +455,14 @@
                  data-dark="assets/features/deface_dark.mp4"
                  data-light="assets/features/deface_light.mp4"></video>
           <figcaption>
-            <strong>Before and after, rotating together.</strong> The face, the
-            nose and the jaw are gone on the right; the brain, the cerebellum
-            and the brainstem are untouched. Because the two renders share one
-            camera, they turn together, and anything the defacer took that it
-            should not have would show up as a difference between two otherwise
-            identical heads. The <strong>Put the face back</strong> button in
-            the corner restores this image from the copy on the left.
+            <strong>Before and after, rotating together.</strong> On the left,
+            the scan as it arrived, with the face, nose and jaw intact. On the
+            right, the same scan after defacing: the face is gone and the
+            brain, the cerebellum and the brainstem are exactly as they were.
+            This is a good result, and it is what a good result looks like.
+            The two renders share one camera, so they turn together and stay
+            comparable from every angle. The <strong>Put the face back</strong>
+            button in the corner restores the image from the copy on the left.
           </figcaption>
         </figure>
 
@@ -490,10 +495,10 @@
         </p>
         <p>
           A defaced image is the same scan with some voxels blanked, so it
-          replaces the original. A skull-stripped one is not. Everything
-          outside the brain has been discarded by an algorithm that can be
-          wrong, and BIDS has a word for a file an algorithm produced from raw
-          data. So the result is written to
+          replaces the original. A skull-stripped one is a new image: a brain
+          extraction network decided which voxels are brain, and BIDS has a
+          word for a file produced from raw data by an algorithm. So the result
+          is written to
           <code class="inline">derivatives/bidsmgr-skullstrip/</code> as
           <code class="inline">desc-brain</code>, with the
           <code class="inline">dataset_description.json</code> that makes that
@@ -538,11 +543,12 @@
                  data-light="assets/features/skull_strip_light.mp4"></video>
           <figcaption>
             <strong>The derivative beside the scan it came from.</strong> Left,
-            the raw image in the dataset; right,
+            the raw image in the dataset, skull and scalp and all. Right,
             <code class="inline">desc-brain</code> from
-            <code class="inline">derivatives/</code>. This is the check worth
-            doing on a strip: cortex clipped at the edges or a cerebellum cut
-            in half is obvious here and invisible in a validator.
+            <code class="inline">derivatives/</code>, with everything outside
+            the brain removed and the cortex and cerebellum complete. That is
+            what a clean strip looks like, and looking at it side by side is
+            how you confirm one.
           </figcaption>
         </figure>
 
@@ -859,8 +865,9 @@ bidsmgr-convert inventory.tsv /data/out --deface --deface-engine allineate</pre>
         <p>
           Pairing them is deliberate. niimath is fast, offline and
           dependency-free, and mindgrab handles the heads an affine fit of an
-          average brain does badly on. A third implementation of defacing
-          written here would only be a third thing to be wrong in its own way.
+          average brain does badly on. Between them they cover the range, and
+          both are established tools maintained by the people who wrote them,
+          which is worth more than a third implementation written here.
         </p>
       </div>
     </section>
@@ -879,7 +886,7 @@ bidsmgr-convert inventory.tsv /data/out --deface --deface-engine allineate</pre>
         </p>
         <p style="margin-top: 8px;">
           <a class="btn btn-primary" href="tutorial.html#gui-walkthrough">The full GUI walkthrough &rarr;</a>
-          <a class="btn btn-ghost" href="updates.html">What changed in 1.4.0</a>
+          <a class="btn btn-ghost" href="updates.html">What changed in 1.4.1</a>
         </p>
       </div>
     </section>

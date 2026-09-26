@@ -258,7 +258,7 @@ def inventory_multimodal(app, theme: str) -> None:
     # rather than the first N rows, which are all PET.
     picks = []
     for mod in ("pet", "func", "anat", "dwi", "fmap", "eeg", "meg"):
-        hit = df[df["proposed_datatype"] == mod]
+        hit = df[df["datatype"] == mod]
         picks.extend(hit.head(2).index.tolist())
     sub = df.loc[sorted(set(picks))].reset_index(drop=True)
     cols = ["include", "status", "id", "ses", "mod", "datatype", "suffix",
@@ -305,7 +305,7 @@ def inventory_pet_formats(app, theme: str) -> None:
 def inventory_collisions(app, theme: str) -> None:
     """Placeholder 01, still frame: two rows resolving to the same name."""
     df = _read("collisions")
-    names = df["proposed_basename"]
+    names = df["bids_name"]
     dupes = names[names.duplicated(keep=False) & (names != "")]
     if dupes.empty:
         print("  (no colliding names in that inventory; skipping)")
@@ -405,7 +405,7 @@ def template_pet(app, theme: str) -> None:
 def properties_pet(app, theme: str) -> None:
     """The per-row PET panel, where a dataset answer is overridden."""
     df = _read("pet-sample")
-    row = df[df["proposed_datatype"] == "pet"].head(1)
+    row = df[df["datatype"] == "pet"].head(1)
     _grab(app, _panel(row), OUT / f"pet_properties_{theme}.png", 460, 940,
           expand=True, scroll_to="PREDICTED PATH")
 
@@ -413,7 +413,7 @@ def properties_pet(app, theme: str) -> None:
 def properties_blood(app, theme: str) -> None:
     """Placeholder 04 and 12: the blood-sampling section of a PET row."""
     df = _read("pet-sample")
-    row = df[df["proposed_datatype"] == "pet"].head(1)
+    row = df[df["datatype"] == "pet"].head(1)
     _grab(app, _panel(row), OUT / f"pet_blood_linking_{theme}.png", 470, 330,
           expand=True, scroll_to="BLOOD SAMPLING")
 
@@ -421,7 +421,7 @@ def properties_blood(app, theme: str) -> None:
 def properties_eeg(app, theme: str) -> None:
     """The per-row panel on an EEG recording: reference, ground, montage."""
     df = _read("multimodal")
-    row = df[df["proposed_datatype"] == "eeg"].head(1)
+    row = df[df["datatype"] == "eeg"].head(1)
     if row.empty:
         print("  (no eeg row in that inventory; skipping)")
         return
@@ -437,7 +437,7 @@ def properties_mri(app, theme: str) -> None:
     metadata, which is the opposite of the EEG case beside it.
     """
     df = _read("multimodal")
-    row = df[df["proposed_datatype"] == "anat"].head(1)
+    row = df[df["datatype"] == "anat"].head(1)
     if row.empty:
         print("  (no anat row; skipping)")
         return
@@ -448,7 +448,7 @@ def properties_mri(app, theme: str) -> None:
 def properties_meg(app, theme: str) -> None:
     """The per-row panel on a MEG recording."""
     df = _read("multimodal")
-    row = df[df["proposed_datatype"] == "meg"].head(1)
+    row = df[df["datatype"] == "meg"].head(1)
     if row.empty:
         print("  (no meg row; skipping)")
         return
@@ -466,7 +466,7 @@ def properties_companions(app, theme: str) -> None:
     """
     from PyQt6.QtWidgets import QComboBox
     df = _read("multimodal")
-    row = df[df["proposed_datatype"] == "func"].head(1)
+    row = df[df["datatype"] == "func"].head(1)
     if row.empty:
         row = df.head(1)
     panel = _panel(row)
@@ -487,7 +487,7 @@ def properties_companions(app, theme: str) -> None:
 def inventory_eeg(app, theme: str) -> None:
     """The EEG inventory: task placeholders taken from the filenames."""
     df = _read("multimodal")
-    sub = df[df["proposed_datatype"] == "eeg"].head(8)
+    sub = df[df["datatype"] == "eeg"].head(8)
     if sub.empty:
         print("  (no eeg rows; skipping)")
         return
@@ -500,7 +500,7 @@ def inventory_eeg(app, theme: str) -> None:
 def inventory_meg(app, theme: str) -> None:
     """The MEG inventory: sessions inferred from date-named folders."""
     df = _read("multimodal")
-    sub = df[df["proposed_datatype"] == "meg"].head(8)
+    sub = df[df["datatype"] == "meg"].head(8)
     if sub.empty:
         print("  (no meg rows; skipping)")
         return
@@ -520,11 +520,11 @@ def inventory_skipped(app, theme: str) -> None:
     df = _read("multimodal")
     skipped = df[df["include"].astype(str) == "0"]
     kept = df[(df["include"].astype(str) == "1")
-              & (df["proposed_datatype"].isin(["anat", "func", "dwi", "fmap"]))]
+              & (df["datatype"].isin(["anat", "func", "dwi", "fmap"]))]
     sub = pd.concat([skipped.head(5), kept.head(4)]).reset_index(drop=True)
     cols = ["include", "status", "id", "ses", "datatype", "suffix",
-            "conf", "sequence", "basename", "proposed_issues"]
-    _grab(app, _inventory_table(sub, cols, {"sequence": 250, "proposed_issues": 230}),
+            "conf", "sequence", "basename", "issues"]
+    _grab(app, _inventory_table(sub, cols, {"sequence": 250, "issues": 230}),
           OUT / f"inventory_skipped_{theme}.png", 1320, 25 * (len(sub) + 2))
 
 
@@ -1588,7 +1588,12 @@ def editor_tree_menu(app, theme: str) -> None:
     root = _demo_copy("tree_menu_demo")
     pane = BidsTreePane()
     pane.set_root(root)
-    pane._tree.expandAll()
+    # Repeatedly, because the tree fills a folder's children only when it is
+    # expanded: one pass opens the subjects and leaves every datatype folder
+    # empty, so the iterator below finds no files at all.
+    for _ in range(6):
+        pane._tree.expandAll()
+        app.processEvents()
     app.processEvents()
 
     target = None
@@ -1698,6 +1703,272 @@ def editor_fix_all(app, theme: str) -> None:
     _grab(app, dlg, OUT / f"editor_fix_all_{theme}.png", 1000, 700)
 
 
+# ----------------------------------------------------------------------
+# The signal viewers
+# ----------------------------------------------------------------------
+
+# Real recordings, from the outputs the project already keeps. Named here
+# rather than found by glob so a figure is reproducible: if one of these moves,
+# the target says so instead of quietly shooting a different recording.
+MEG_FIF = Path(
+    "/Users/karelo/Development/datasets/BIDS_Manager/raw_data/MEG"
+    "/MEG_Elekta_sample_data/sub_ye07us06/220221/task_driving_run_02.fif"
+)
+# One run of a real study, split by the ``recording`` entity the way BIDS
+# splits physio: a cardiac trace, a respiratory belt, an ECG and a trigger,
+# four files describing one acquisition. Chosen because all four carry signal
+# over the same stretch, which is what makes a combined figure show anything.
+PHYSIO_ECG = BIDS / ("multimodal_physio/bids/mutilmodal/sub-003/ses-pre/func/"
+                     "sub-003_ses-pre_task-rest_recording-ecg_physio.tsv.gz")
+PHYSIO_GAPPY = BIDS / ("ds_4/sub-001/func/sub-001_task-dmaging_run-03"
+                       "_recording-externalTrigger_physio.tsv.gz")
+MRS_SVS = BIDS / "ds_8/sub-002/mrs/sub-002_run-01_svs.nii.gz"
+
+
+def _meeg_view(app, *, window: float = 10.0, shown: int = 8,
+               ch_type: str = "mag", band=(1.0, 40.0),
+               start: float = 40.0):
+    """The shared time-series view with a real MEG recording loaded.
+
+    Loaded synchronously rather than through the worker: a screenshot has no
+    event loop to wait in, and the worker exists for the GUI's sake, not the
+    reader's.
+
+    ``ch_type`` defaults to the magnetometers rather than ``all``. A MEGIN
+    file's first twenty channels are the internal active shielding and the
+    system status, whose amplitudes swamp the plot: a figure of them is a
+    figure of the scanner's housekeeping, not of anybody's data.
+    """
+    import mne
+    from bidsmgr.gui.widgets.time_series_view import TimeSeriesView
+
+    raw = mne.io.read_raw_fif(str(MEG_FIF), preload=True, verbose="ERROR")
+    view = TimeSeriesView()
+    view.load_raw(raw)
+    if ch_type:
+        index = view.cmb_ch_type.findText(ch_type)
+        if index >= 0:
+            view.cmb_ch_type.blockSignals(True)
+            view.cmb_ch_type.setCurrentIndex(index)
+            view.cmb_ch_type.blockSignals(False)
+            view._active_ch_type = ch_type
+    view._time_window = window
+    view._visible_channels = shown
+    # A few seconds in, NOT at sample zero. A filter has no data beyond the
+    # first sample, so the very start of any recording carries a transient
+    # that is inherent rather than a fault. It is worth explaining in prose
+    # and it is not what a figure of the viewer should be showing.
+    view._time_start = min(start, max(0.0, view._duration - window))
+    view.spn_window.blockSignals(True)
+    view.spn_window.setValue(window)
+    view.spn_window.blockSignals(False)
+    view.spn_n.blockSignals(True)
+    view.spn_n.setValue(shown)
+    view.spn_n.blockSignals(False)
+    # Band-passed, because that is how MEG is read. Raw, the mains and the
+    # drift are most of the amplitude and twenty traces overlap into one
+    # band: a figure of unfiltered MEG shows the viewer working and the data
+    # unreadable, which teaches the reader the wrong thing about both.
+    if band:
+        view._current_filter = band
+        view.spn_hp.blockSignals(True)
+        view.spn_hp.setValue(band[0] or 0.0)
+        view.spn_hp.blockSignals(False)
+        view.spn_lp.blockSignals(True)
+        view.spn_lp.setValue(band[1] or 0.0)
+        view.spn_lp.blockSignals(False)
+    view._update_display_indices()
+    view._update_channel_scrollbar()
+    view._redraw()
+    app.processEvents()
+    return view
+
+
+def _physio_view(app, path: Path, *, together: bool = False):
+    """The same view on a physio recording, optionally with its relatives."""
+    from bidsmgr.gui.widgets.physio_viewer import (
+        build_combined_raw, build_raw, read_columns, read_timing,
+        related_recordings,
+    )
+    from bidsmgr.gui.widgets.time_series_view import TimeSeriesView
+
+    if together:
+        raw, gaps = build_combined_raw(related_recordings(path))
+    else:
+        columns, _total, step = read_columns(path)
+        raw, gaps = build_raw(columns, read_timing(path), step)
+    view = TimeSeriesView()
+    # Physio is the one consumer that offers Fit all: a channel or four fits in
+    # a window whole, where a 323-channel MEG recording does not.
+    view.enable_fit_all(True)
+    view.load_raw(raw, gaps=gaps)
+    app.processEvents()
+    return view
+
+
+def viewer_meeg(app, theme: str) -> None:
+    """The shared viewer on real MEG: the controls, wrapped, over real traces."""
+    if not MEG_FIF.exists():
+        print("  (no MEG sample; skipping)")
+        return
+    view = _meeg_view(app)
+    _grab(app, view, OUT / f"viewer_meeg_{theme}.png", 1180, 760)
+
+
+def viewer_physio(app, theme: str) -> None:
+    """One physio channel. The channel controls are gone, because they would
+    each have one answer."""
+    if not PHYSIO_ECG.exists():
+        print("  (no physio sample; skipping)")
+        return
+    view = _physio_view(app, PHYSIO_ECG)
+    view._time_window = min(8.0, view._duration)
+    view._time_start = min(30.0, max(0.0, view._duration - view._time_window))
+    view.spn_window.blockSignals(True)
+    view.spn_window.setValue(view._time_window)
+    view.spn_window.blockSignals(False)
+    view._redraw()
+    app.processEvents()
+    _grab(app, view, OUT / f"viewer_physio_{theme}.png", 1180, 620)
+
+
+def viewer_physio_together(app, theme: str) -> None:
+    """All of this run: the cardiac trace, the belt and the trigger on one
+    grid, which is the only way to see whether they line up."""
+    if not PHYSIO_ECG.exists():
+        print("  (no physio sample; skipping)")
+        return
+    view = _physio_view(app, PHYSIO_ECG, together=True)
+    view._time_window = 12.0
+    # Into the recording, where all four are present. At sample zero some of
+    # them have not started and the figure would be flat lines illustrating
+    # nothing.
+    view._time_start = 30.0
+    view.spn_window.blockSignals(True)
+    view.spn_window.setValue(view._time_window)
+    view.spn_window.blockSignals(False)
+    view._redraw()
+    app.processEvents()
+    _grab(app, view, OUT / f"viewer_physio_together_{theme}.png", 1180, 620)
+
+
+def viewer_physio_gaps(app, theme: str) -> None:
+    """A trace whose dropped samples are drawn as breaks. This file is 99.7 per
+    cent absent, which is what makes the point visible at all."""
+    if not PHYSIO_GAPPY.exists():
+        print("  (no gappy physio sample; skipping)")
+        return
+    view = _physio_view(app, PHYSIO_GAPPY)
+    view._fit_all()
+    app.processEvents()
+    _grab(app, view, OUT / f"viewer_physio_gaps_{theme}.png", 1180, 560)
+
+
+def _mrs_pane(app, path: Path):
+    """The MRS pane with a spectrum read and drawn, synchronously."""
+    from bidsmgr.gui.widgets.mrs_spectrum import read_mrs
+    from bidsmgr.gui.widgets.mrs_viewer_pane import MrsViewerPane
+
+    pane = MrsViewerPane()
+    pane._path = path
+    pane._on_read((path, read_mrs(path)))
+    app.processEvents()
+    return pane
+
+
+def viewer_mrs(app, theme: str) -> None:
+    """The spectrum, with the metabolite names staggered so none covers
+    another."""
+    if not MRS_SVS.exists():
+        print("  (no MRS sample; skipping)")
+        return
+    pane = _mrs_pane(app, MRS_SVS)
+    pane._reset_view()
+    app.processEvents()
+    _grab(app, pane, OUT / f"viewer_mrs_{theme}.png", 1120, 640)
+
+
+def viewer_mrs_fid(app, theme: str) -> None:
+    """The FID page, so the second page is discoverable at all."""
+    if not MRS_SVS.exists():
+        print("  (no MRS sample; skipping)")
+        return
+    pane = _mrs_pane(app, MRS_SVS)
+    pane._domain.setCurrentIndex(1)
+    app.processEvents()
+    _grab(app, pane, OUT / f"viewer_mrs_fid_{theme}.png", 1120, 620)
+
+
+def line_dialog(app, theme: str) -> None:
+    """The Line popup with a swatch per channel type and Reset defaults."""
+    from bidsmgr.gui.widgets.line_style_dialog import MAX_WIDTH, LineStyleDialog
+
+    types = ["mag", "grad", "eeg", "eog", "ecg", "stim"]
+    dlg = LineStyleDialog(0, None, channel_types=types,
+                          max_width=MAX_WIDTH, traces_shown=2)
+    app.processEvents()
+    _grab(app, dlg, OUT / f"line_dialog_{theme}.png",
+          max(dlg.sizeHint().width(), 460), dlg.sizeHint().height())
+
+
+def line_dialog_capped(app, theme: str) -> None:
+    """The same popup on a many-channel view: the slider is disabled and says
+    why, rather than offering a width that would be capped on the way out."""
+    from bidsmgr.gui.widgets.line_style_dialog import LineStyleDialog
+
+    types = ["mag", "grad", "stim"]
+    dlg = LineStyleDialog(0, None, channel_types=types,
+                          max_width=1, traces_shown=20)
+    app.processEvents()
+    _grab(app, dlg, OUT / f"line_dialog_capped_{theme}.png",
+          max(dlg.sizeHint().width(), 460), dlg.sizeHint().height())
+
+
+def bulk_edit_entities(app, theme: str) -> None:
+    """Bulk edit on the WHOLE inventory, removing the acquisition label.
+
+    The case the per-row rule exists for: select everything, ask for ``acq``
+    to go, and it comes off only the rows that have one. A selection where
+    every row qualifies shows the dialog working and hides the point.
+    """
+    from bidsmgr.gui.bulk_edit_dialog import BulkEditDialog
+    from bidsmgr.gui.models import InventoryTableModel
+
+    df = _read("multimodal")
+    model = InventoryTableModel(df)
+    rows = list(range(len(df)))
+    dlg = BulkEditDialog(model, rows)
+    for i in range(dlg._col_combo.count()):
+        if dlg._col_combo.itemText(i).lower().startswith("acq"):
+            dlg._col_combo.setCurrentIndex(i)
+            break
+    app.processEvents()
+    dlg._remove_check.setChecked(True)
+    app.processEvents()
+    _grab(app, dlg, OUT / f"bulk_edit_entities_{theme}.png", 900, 1080)
+
+def manage_columns(app, theme: str) -> None:
+    """The Manage columns dialog, with Reset defaults."""
+    from bidsmgr.gui.column_manager_dialog import ColumnManagerDialog
+    from bidsmgr.gui.models import COLUMNS
+
+    dlg = ColumnManagerDialog({c.key: c.default_visible for c in COLUMNS})
+    app.processEvents()
+    _grab(app, dlg, OUT / f"manage_columns_{theme}.png", 640, 720)
+
+
+def properties_pet_dose(app, theme: str) -> None:
+    """The DOSE FILE section, in place inside the PET region of a PET row."""
+    df = _read("pet")
+    panel = _panel(df)
+    # Cropped to the two sections this figure is about. Taller, it runs on
+    # into "Already answered by the conversion", which on a row that has NOT
+    # been converted yet is a column of empty fields under a heading saying
+    # they are answered: true of the finished dataset, a contradiction here.
+    _grab(app, panel, OUT / f"properties_pet_dose_{theme}.png", 520, 330,
+          expand=True, scroll_to="dose file")
+
+
 def editor_tools_menu(app, theme: str) -> None:
     """Where all of this lives. People cannot use what they cannot find."""
     from bidsmgr.gui.editor_panel import EditorPanel
@@ -1763,6 +2034,17 @@ ASSETS = {
     "editor-entities": editor_entities,
     "editor-sessions": editor_sessions,
     "editor-delete": editor_delete,
+    "viewer-meeg": viewer_meeg,
+    "viewer-physio": viewer_physio,
+    "viewer-physio-together": viewer_physio_together,
+    "viewer-physio-gaps": viewer_physio_gaps,
+    "viewer-mrs": viewer_mrs,
+    "viewer-mrs-fid": viewer_mrs_fid,
+    "line-dialog": line_dialog,
+    "line-dialog-capped": line_dialog_capped,
+    "bulk-edit-entities": bulk_edit_entities,
+    "manage-columns": manage_columns,
+    "properties-pet-dose": properties_pet_dose,
     "editor-tools-menu": editor_tools_menu,
     "editor-deface": editor_deface,
     "editor-strip": editor_strip,
