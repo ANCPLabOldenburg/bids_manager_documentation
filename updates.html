@@ -189,6 +189,48 @@
               all, so a file written for that tool works unmodified. Keys BIDS
               does not define are reported and dropped, never written.
             </li>
+            <li>
+              <strong>Four Editor tools for what a validator cannot see.</strong>
+              <strong>Check coherence</strong> looks for mistakes that are
+              valid BIDS and still wrong: a scans row naming a file that is
+              gone, a participants row for a deleted subject, a link pointing
+              at nothing, an index written at two widths, a value spelled two
+              ways, a <code>TaskName</code> that does not match its task, an
+              <code>IntendedFor</code> that disagrees with the acquisition
+              times. Each finding shows its exact change and nothing is written
+              until you press Repair. <strong>References</strong> shows every
+              pointer in the dataset from both ends, which is how you find out
+              whether a run has a fieldmap at all. <strong>Find and replace a
+              value</strong> changes an entity value across the dataset, a
+              subject or a session, and <strong>Index widths</strong> sets one
+              width per index, refusing a padding that would fuse two runs
+              into one name.
+            </li>
+            <li>
+              <strong>The Tools menu is grouped by purpose</strong>, under six
+              headings from <em>Look at the dataset</em> to
+              <em>History</em>, and the tree's right-click menu uses the same
+              groups. Headings rather than sub-menus, so every tool is still
+              one click away.
+            </li>
+            <li>
+              <strong>Tools open on a scope you choose.</strong> Add or remove
+              an entity, Sessions, Delete, Deface and Remove the skull used to
+              need a tree selection first. They now offer the selection, the
+              whole dataset, one subject or one session, narrowed to a
+              datatype if you like, so putting every anatomical scan into a
+              session no longer means selecting them all by hand.
+            </li>
+            <li>
+              <strong>The preview can sit beside the controls</strong> instead
+              of under them, in every tool that has one. One button flips it,
+              and the choice is remembered per tool.
+            </li>
+            <li>
+              <strong>Every viewer can be made narrow.</strong> Toolbars wrap
+              onto a second row instead of pinning the pane at their full width
+              or hiding controls behind a sideways scrollbar.
+            </li>
           </ul>
 
           <p class="rel-kind k-fixed">Fixed</p>
@@ -296,6 +338,86 @@
               view</strong>, which it did not: it recomputed the range and left
               the view where it was, so the tick looked like it did nothing.
             </li>
+            <li>
+              <strong>Spectroscopy passes validation.</strong> dcm2niix writes
+              <code>InversionTime: 0</code> for a spectroscopy series that has
+              no inversion pulse, and the standard requires the field to be
+              above zero wherever it appears, so every converted spectrum
+              carried an error. A zero there means "not done" and is now
+              removed, from the sidecar and from the NIfTI-MRS header it would
+              otherwise be copied back from. A real inversion time is kept.
+            </li>
+            <li>
+              <strong>Channel names line up with their traces.</strong> The
+              names were spaced evenly down the pane while the plot spaced the
+              traces, so by the eighth channel a name sat a whole trace below
+              its signal. Names are now placed where the plot draws each trace,
+              and a name too long for the column is shortened in the middle,
+              with the full name on hover.
+            </li>
+            <li>
+              <strong>Two fieldmap acquisitions no longer merge into one
+              row.</strong> Siemens XA scanners write no acquisition time, and
+              the rows were grouped by the clock, so both acquisitions fell
+              into one group and the conversion wrote six images, three of
+              them under the converter's own collision names instead of BIDS
+              ones. They are now told apart by their image types repeating,
+              which needs no clock.
+            </li>
+            <li>
+              <strong>A phase-difference fieldmap is named
+              <code>phasediff</code>, not <code>phase2</code>.</strong> The
+              suffix is now decided from the echo times in the sidecar, as the
+              standard defines it, rather than from the converter's filename,
+              which names the echo the image came from.
+            </li>
+            <li>
+              <strong><code>IntendedFor</code> pairs each fieldmap with the
+              runs that follow it</strong>, not with every run in the session.
+              Times written in the ISO form were misread, so
+              <code>2026-09-17T09:33:59</code> came back as 20:26:00, and
+              every comparison built on it was wrong without saying so.
+            </li>
+            <li>
+              <strong>No more <code>*_scans.tsv</code> rows for
+              <code>.DS_Store</code></strong>, <code>Thumbs.db</code> or other
+              files that are not recordings. Any dataset that had been opened
+              on a Mac picked them up.
+            </li>
+            <li>
+              <strong>A physiological recording's label is valid BIDS.</strong>
+              The Siemens channel <code>external_trigger</code> became
+              <code>recording-external_trigger</code>, and because the
+              underscore separates entities, every tool that reads BIDS names
+              saw a different file from the one written. It is now
+              <code>recording-externalTrigger</code>.
+            </li>
+            <li>
+              <strong>A row the classifier excluded says why.</strong> A third
+              of the excluded rows in our test data sat unticked with an empty
+              issues cell.
+            </li>
+            <li>
+              <strong>The window no longer freezes after a scan or during a
+              conversion.</strong> Neither was the scan or the conversion
+              itself. After a scan, loading the result blocked for 606 ms
+              and now takes 173. During a conversion, the file trees
+              re-registered every folder in the dataset with the operating
+              system twice a second; they now register only what changed,
+              and draw a folder when it is opened rather than all at once.
+            </li>
+            <li>
+              <strong>A folder that was open stays drawn after the tree
+              refreshes</strong>, instead of coming back as one blank row, and
+              a click anywhere on a folder's row opens or closes it rather than
+              only a click on its small arrow.
+            </li>
+            <li>
+              <strong>At a large font size, dialog text no longer runs over
+              its own controls</strong>, and the inspection table's columns
+              are sized from the text they show rather than from fixed
+              numbers.
+            </li>
           </ul>
 
           <p class="rel-kind k-changed">Changed</p>
@@ -318,7 +440,23 @@
               version writes 21. An installation made while the older version
               satisfied the range kept it through every later upgrade, which is
               why spectroscopy appeared to work on one machine and not another.
-              </li>
+            </li>
+            <li>
+              <strong>The inventory's columns say what they hold.</strong> One
+              word was doing three jobs. A <em>modality</em> is how data was
+              acquired (<code>mri</code>, <code>eeg</code>, <code>meg</code>,
+              <code>pet</code>), a <em>datatype</em> is the folder it lands in
+              (<code>anat</code>, <code>func</code>), and a <em>suffix</em> is
+              what the recording is (<code>T1w</code>, <code>bold</code>), and
+              the columns now use each word only for its own thing:
+              <code>modality</code>, <code>datatype</code>,
+              <code>sequence_kind</code>, <code>bids_name</code>,
+              <code>bids_path</code>, <code>issues</code> and
+              <code>participant_id</code>. <strong>An inventory saved by an
+              earlier version cannot be read</strong>; opening one says so and
+              asks for a new scan, rather than failing on whichever old column
+              is touched first.
+            </li>
           </ul>
         </div>
 
@@ -601,7 +739,7 @@
               <strong>The power-line frequency is no longer guessed.</strong>
               When nothing stated one, EEG and MEG sidecars used to be written
               with <code>PowerLineFrequency</code> set to 50. That is correct in
-              Europe and wrong in the Americas and Japan, and nothing in the
+              Europe and wrong across most of the Americas and in western Japan, and nothing in the
               file distinguished it from a value somebody had measured.
               Filtering at 50 on 60 Hz data leaves the interference exactly
               where it was. The field is now written as <code>n/a</code> unless

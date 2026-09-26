@@ -109,6 +109,14 @@ INVENTORIES = {
 # ----------------------------------------------------------------------
 
 def _app():
+    # Numbers in the figures are read by an English-language audience, so they
+    # are drawn in an English locale whatever the machine rendering them uses.
+    # Left to the system, a German desktop writes a 1 Hz high-pass as "1,000",
+    # which a reader of this site takes for one thousand. Set before any widget
+    # exists, because a spin box takes its locale when it is built.
+    from PyQt6.QtCore import QLocale
+    QLocale.setDefault(QLocale(QLocale.Language.English,
+                               QLocale.Country.UnitedStates))
     app = QApplication.instance() or QApplication(sys.argv[:1])
     return app
 
@@ -1295,23 +1303,29 @@ def validation_pet_checks(app, theme: str) -> None:
 # Signals
 # ----------------------------------------------------------------------
 
-def psd(app, theme: str) -> None:
-    """The power spectrum of a real EEG recording.
+# A recording from the EEG tutorial's own download, pinned rather than globbed
+# for the same reason as ``MEG_FIF`` below. This subject is chosen because its
+# 100 Hz harmonic stands clear of the noise, which the caption points out.
+PSD_EEG = Path(
+    "/Users/karelo/Development/datasets/BIDS_Manager/raw_data/EEG"
+    "/Raw_workshop-2/sub-003/CLV005.set"
+)
+# The empty-room recording taken before the session in the MEG download.
+MEG_EMPTY_ROOM = Path(
+    "/Users/karelo/Development/datasets/BIDS_Manager/raw_data/MEG"
+    "/MEG_Elekta_sample_data/sub_ye07us06/220221/task_emptypre.fif"
+)
 
-    The mains peak is the point: it is how you check that the power-line
-    frequency you declared is the one actually in the data.
-    """
+
+def _psd_dialog(raw, picks=None):
+    """The application's own PSD dialog over ``raw``, computed the way the
+    viewer computes it."""
     import numpy as np
     import mne
-    from bidsmgr.gui.widgets.recording_viewer_pane import _PsdDialog
+    from bidsmgr.gui.widgets.psd_dialog import PsdDialog
 
-    rec = next((BIDS / "ds_eeg").rglob("*_eeg.edf"), None)
-    if rec is None:
-        print("  (no EEG recording found; skipping)")
-        return
-    raw = mne.io.read_raw_edf(rec, preload=True, verbose=False)
     spectrum = raw.compute_psd(fmin=0.1, fmax=min(raw.info["sfreq"] / 2.0, 150.0),
-                               verbose=False)
+                               picks=picks, verbose=False)
     names = list(spectrum.ch_names)
     raw_names = list(raw.ch_names)
     types = []
@@ -1324,9 +1338,44 @@ def psd(app, theme: str) -> None:
     n = min(data.shape[0], len(names), len(types))
     result = {"freqs": np.asarray(spectrum.freqs), "data": data[:n],
               "ch_names": names[:n], "ch_types": types[:n]}
+    return PsdDialog(result)
 
-    dlg = _PsdDialog(result)
+
+def psd(app, theme: str) -> None:
+    """The power spectrum of a real EEG recording.
+
+    The mains peak is the point: it is how you check that the power-line
+    frequency you declared is the one actually in the data.
+    """
+    import mne
+
+    if not PSD_EEG.exists():
+        print(f"  (no EEG recording at {PSD_EEG}; skipping)")
+        return
+    raw = mne.io.read_raw(PSD_EEG, preload=True, verbose=False)
+    dlg = _psd_dialog(raw)
     _grab(app, dlg, OUT / f"psd_line_frequency_{theme}.png", 900, 560)
+
+
+def psd_meg(app, theme: str) -> None:
+    """The same dialog on the MEG sample's empty-room recording, on the
+    per-type average, because that is the recording the MEG tutorial tells
+    the reader to check.
+
+    The MEG tutorial needs its own figure, not the EEG one: on these
+    magnetometers the tallest mains spike is the 100 Hz harmonic and the
+    50 Hz fundamental barely rises, which is the opposite of what the EEG
+    figure teaches and exactly what somebody reading an MEG spectrum meets.
+    """
+    import mne
+
+    if not MEG_EMPTY_ROOM.exists():
+        print(f"  (no empty-room recording at {MEG_EMPTY_ROOM}; skipping)")
+        return
+    raw = mne.io.read_raw_fif(str(MEG_EMPTY_ROOM), preload=True, verbose="ERROR")
+    dlg = _psd_dialog(raw, picks=["mag", "grad"])
+    dlg._tabs.setCurrentIndex(1)
+    _grab(app, dlg, OUT / f"psd_meg_{theme}.png", 900, 560)
 
 
 
@@ -1945,7 +1994,7 @@ def bulk_edit_entities(app, theme: str) -> None:
     app.processEvents()
     dlg._remove_check.setChecked(True)
     app.processEvents()
-    _grab(app, dlg, OUT / f"bulk_edit_entities_{theme}.png", 900, 1080)
+    _grab(app, dlg, OUT / f"bulk_edit_entities_{theme}.png", 760, 620)
 
 def manage_columns(app, theme: str) -> None:
     """The Manage columns dialog, with Reset defaults."""
@@ -2030,6 +2079,7 @@ ASSETS = {
     "validation-missing-companion": validation_missing_companion,
     "validation-pet-checks": validation_pet_checks,
     "psd": psd,
+    "psd-meg": psd_meg,
     "editor-dashboard": editor_dashboard,
     "editor-entities": editor_entities,
     "editor-sessions": editor_sessions,
