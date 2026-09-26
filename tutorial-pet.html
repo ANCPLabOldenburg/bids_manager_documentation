@@ -572,6 +572,27 @@
             has no curves to attach.
           </figcaption>
         </figure>
+
+        <p>
+          The same panel carries a <strong>DOSE FILE</strong> section, inside
+          the PET block and directly above blood sampling. Importing a dose file
+          there fills the fields below it, which is the point of putting it in
+          the same panel: you see what the file answered, on the recording it
+          answered it for, without opening anything else.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The dose file section of the per-row PET panel, sitting above the blood sampling section"
+               src="assets/features/properties_pet_dose_dark.png"
+               data-light="assets/features/properties_pet_dose_light.png">
+          <figcaption>
+            <strong>The dose file, where the fields it fills are.</strong>
+            A key the file carries that BIDS does not define for a PET sidecar is
+            reported rather than written, so a lab's own extra columns are safe
+            to leave in the file.
+          </figcaption>
+        </figure>
       </div>
     </section>
 
@@ -754,6 +775,67 @@
           Neither list is an arbitrary selection. We converted each scan, asked
           the validator what was still missing, and wrote that down. The values
           are the ones published with the phantom datasets, not invented.
+        </p>
+
+        <h3 id="dose-routes">Three ways in, and when each is the right one</h3>
+        <p>
+          Typing the values into the form, which is what the rest of this step
+          walks through, is one of three routes. They all end in the same place,
+          so the choice is about where the numbers already live.
+        </p>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Route</th><th>Use it when</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>The form</strong>, plus
+                  <strong>PET dose file &rarr; Import</strong> to read a file
+                  into it</td>
+                <td><strong>Prefer this.</strong> The values land in the form
+                  before anything is converted, so you see what will be written
+                  and can correct it there. Importing also tells you about a key
+                  it did not recognise instead of dropping it silently.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">--pet-metadata dose.json</code></td>
+                <td>The lab already has a JSON file, or the conversion runs
+                  unattended. It reads the shape pypet2bids accepts, its
+                  <code class="inline">nifti_json</code> wrapper included, so a
+                  file written for that tool works here unmodified.</td>
+              </tr>
+              <tr>
+                <td><code class="inline">--pet-spreadsheet doses.xlsx</code></td>
+                <td>The dose record is the spreadsheet by the scanner. One row
+                  per scan or one row per field; loose about column naming and
+                  strict about values.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          A flat JSON object applies to every PET run in the conversion. An
+          object keyed by <code class="inline">sub-&lt;label&gt;</code> scopes
+          it per subject, which is what a study with a different dose per
+          participant needs:
+        </p>
+<pre class="code"><span class="cmt">// dose.json, scoped per subject</span>
+{
+  "sub-001": {
+    "TracerName": "FDG",
+    "TracerRadionuclide": "F18",
+    "InjectedRadioactivity": 75.85,
+    "InjectedRadioactivityUnits": "MBq",
+    "ModeOfAdministration": "bolus"
+  },
+  "sub-002": { "InjectedRadioactivity": 81.20 }
+}</pre>
+<pre class="code">bidsmgr-convert inv.tsv /data/bids --pet-metadata dose.json</pre>
+        <p>
+          Keys BIDS does not define for a PET sidecar are reported and dropped,
+          never written, so a file carrying a lab's own extra columns is safe to
+          hand over as it is.
         </p>
 
         <h3>Open the form</h3>

@@ -45,13 +45,13 @@
         <span class="page-toc-dot" aria-hidden="true"></span>
         Pick a dataset
       </a>
-      <a class="page-toc-link" href="#settings-first">
-        <span class="page-toc-dot" aria-hidden="true"></span>
-        Settings worth a look
-      </a>
       <a class="page-toc-link" href="#gui-tour">
         <span class="page-toc-dot" aria-hidden="true"></span>
         GUI tour
+      </a>
+      <a class="page-toc-link" href="#settings-first">
+        <span class="page-toc-dot" aria-hidden="true"></span>
+        Settings worth a look
       </a>
       <div class="page-toc-group" data-toc-group>
         <div class="page-toc-group-head">
@@ -853,19 +853,20 @@
         <div class="callout callout-info">
           <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
           <div>
-            <strong>The headings are short on purpose.</strong>
+            <strong>Three headings differ from the column behind them.</strong>
             <p>
-              The table uses abbreviated headings so more columns fit on screen,
-              and the inventory TSV uses longer names for the same data. The
-              <code class="inline">id</code> column is
-              <code class="inline">BIDS_name</code> in the file,
-              <code class="inline">data</code> is
-              <code class="inline">proposed_datatype</code>,
-              <code class="inline">conf</code> is
-              <code class="inline">bids_guess_confidence</code>, and
-              <code class="inline">origin</code> is
-              <code class="inline">source_folder</code>. It matters when you open
-              the TSV in a spreadsheet, or read the
+              Most of the table's headings are the name of the TSV column, so
+              <code class="inline">session</code>,
+              <code class="inline">datatype</code> and
+              <code class="inline">modality</code> are what you will find in the
+              file. Three are not:
+              <code class="inline">subject</code> is
+              <code class="inline">participant_id</code>,
+              <code class="inline">suffix</code> is
+              <code class="inline">bids_guess_suffix</code>, and
+              <code class="inline">confidence</code> is
+              <code class="inline">bids_guess_confidence</code>. It matters when
+              you open the TSV in a spreadsheet, or read the
               <a href="#cli-ref">CLI reference</a>, which names the file's
               columns rather than the table's headings.
             </p>
@@ -972,6 +973,36 @@
           session across a whole subject. This is the fastest way to fix a
           systematic naming problem.
         </p>
+        <p>
+          It also <strong>removes</strong> an entity, and both the set and the
+          remove are applied <strong>row by row</strong>. Select the whole
+          study and ask for the acquisition label to go: it comes off the rows
+          that have one and are allowed to lose it, and the rest are left
+          alone rather than the edit being refused. A
+          <code class="inline">_bold</code> keeps its
+          <code class="inline">task</code> because the schema requires it; an
+          anatomical row does not have to. The dialog says how many rows it
+          will touch before you tick anything.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The bulk edit dialog with all 56 rows selected and the acquisition entity set to be removed, taking it off the 6 rows that carry one"
+               src="assets/features/bulk_edit_entities_dark.png"
+               data-light="assets/features/bulk_edit_entities_light.png">
+          <figcaption>
+            <strong>Every row selected, and only six change.</strong> This is
+            the whole inventory, fifty-six rows across MRI, PET, EEG and MEG,
+            with the acquisition label set to go. It comes off the six rows
+            that carry one and every other row is untouched, and the dialog
+            says so twice before anything is written: in the count under the
+            tick and on the button. Removing is not the same as
+            blanking a cell, which used to leave the entity in the filename.
+            <strong>Subject is never offered</strong>: the
+            <code class="inline">participants.tsv</code> row has to travel
+            with it, which is what <em>Rename</em> in the Editor is for.
+          </figcaption>
+        </figure>
 
         <figure class="media-figure">
           <video class="feature-video" muted loop playsinline preload="metadata"
@@ -994,6 +1025,26 @@
           hide, reorder and resize columns, and every column carries a
           description of what it holds.
         </p>
+        <p>
+          The table opens with <strong>subject, format, session, datatype,
+          suffix, BIDS name and sequence</strong> first, which is the order a row
+          reads in. If you have already arranged the columns to suit yourself,
+          that arrangement is left alone; <strong>Reset defaults</strong> in the
+          Manage columns dialog puts them back to that order whenever you want
+          them back.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The Manage columns dialog listing every inventory column with its description and a Reset defaults button"
+               src="assets/features/manage_columns_dark.png"
+               data-light="assets/features/manage_columns_light.png">
+          <figcaption>
+            <strong>Every column, with what it holds.</strong> The inventory
+            carries far more columns than any one dataset needs, so the dialog
+            explains each before you decide to show it.
+          </figcaption>
+        </figure>
 
         <figure class="media-figure">
           <video class="feature-video" muted loop playsinline preload="metadata"
@@ -1030,6 +1081,29 @@
           the predicted path, so you can see the consequence of an edit
           immediately, and any validation messages for that row.
         </p>
+        <p>
+          An entity that carries a value and is allowed to do without one has a
+          <strong>&times;</strong> beside it that takes it off this recording.
+          Clearing the field does the same thing, but nothing on screen said
+          so: an empty box reads as <em>not filled in yet</em> rather than as an
+          instruction. Required entities have no button, because there is
+          nothing to offer.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The properties panel for an anatomical row, with a remove button beside the session and acquisition entities and none beside subject"
+               src="assets/features/mri_properties_dark.png"
+               data-light="assets/features/mri_properties_light.png">
+          <figcaption>
+            <strong>The schema decides what is offered.</strong> On this
+            <code class="inline">anat/T1w</code> row,
+            <code class="inline">session</code> and
+            <code class="inline">acquisition</code> can be taken off and
+            <code class="inline">subject</code> cannot, so only the first two
+            carry the button. The predicted path below updates as you edit.
+          </figcaption>
+        </figure>
 
         <figure class="media-figure">
           <video class="feature-video" muted loop playsinline preload="metadata"
@@ -2607,7 +2681,9 @@
             offer holds only what the standard allows for that kind of file, so
             a required entity cannot be taken away and an entity that does not
             belong cannot be added. The new pair is placed in the standard's
-            own order rather than where you typed it.
+            own order rather than where you typed it. Across a selection it
+            works file by file, so a file that cannot take the change is left
+            alone rather than stopping the others.
           </dd>
           <dt>Delete</dt>
           <dd>
@@ -2814,7 +2890,7 @@
             <code class="inline">probe_n_volumes</code> /
             <code class="inline">probe_extensions</code> columns and surfaces
             conversion anomalies in
-            <code class="inline">proposed_issues</code>. The staging tree is
+            <code class="inline">issues</code>. The staging tree is
             always removed, including on error. Slow but most accurate.</dd>
           <dt><code class="inline">--no-bids-guess</code></dt>
           <dd>Skip the dcm2niix BidsGuess classifier and fall back to the
@@ -2829,8 +2905,8 @@
           <dd>EEG / MEG only. Power-line frequency in Hz, stamped into every
             EEG / MEG row's <code class="inline">line_freq</code> column
             (goes into <code class="inline">PowerLineFrequency</code> in the
-            sidecar). Typical values: 50 (most of the world), 60 (Americas /
-            parts of Asia). Per-row TSV value wins.</dd>
+            sidecar). Typical values: 50 (most of the world), 60 (most of the
+            Americas, parts of Asia). Per-row TSV value wins.</dd>
           <dt><code class="inline">--montage NAME</code></dt>
           <dd>EEG / MEG only. Name of a built-in mne montage (e.g.
             <code class="inline">standard_1005</code>,
@@ -2854,7 +2930,7 @@
         <p>
           Reconciles the inventory TSV's
           <code class="inline">entities</code> JSON column with its derived
-          display cells (<code class="inline">proposed_basename</code>,
+          display cells (<code class="inline">bids_name</code>,
           <code class="inline">session</code>,
           <code class="inline">task</code>, <code class="inline">run</code>).
           <code class="inline">bidsmgr-convert</code> runs this automatically
@@ -2946,11 +3022,41 @@
             <code class="inline">PowerLineFrequency</code> as
             <code class="inline">n/a</code>, since the mains frequency is a
             property of the building and nothing in the recording states it.</dd>
+          <dt><code class="inline">--pet-metadata PATH</code></dt>
+          <dd>PET dose and tracer metadata as JSON, keyed by BIDS sidecar
+            field names
+            (<code class="inline">TracerName</code>,
+            <code class="inline">InjectedRadioactivity</code>,
+            <code class="inline">ModeOfAdministration</code> and the rest). A
+            flat object applies to every PET run; an object keyed by
+            <code class="inline">sub-&lt;label&gt;</code> scopes it per
+            subject. It reads the shape pypet2bids accepts, its
+            <code class="inline">nifti_json</code> wrapper included, so a file
+            written for that tool works here unmodified. Keys BIDS does not
+            define for a PET sidecar are reported and dropped, never
+            written.</dd>
+          <dt><code class="inline">--pet-spreadsheet PATH</code></dt>
+          <dd>The same information from the dose table a lab already keeps.
+            One row per scan or one row per field; loose about column naming
+            and strict about values.</dd>
           <dt><code class="inline">--force-edf</code></dt>
           <dd>Re-encode EEG recordings to EDF on write instead of
             keeping the source format. Harmonises a study to one BIDS-native
             format and makes a non-BIDS-native but mne-readable source
             convertible. MEG / NIRS are unaffected.</dd>
+          <dt><code class="inline">--overwrite-curation</code></dt>
+          <dd>When re-converting a subject that already exists, let the fresh
+            conversion win outright. By default a JSON sidecar and a
+            <code class="inline">*_scans.tsv</code> are merged field by field
+            instead, so metadata you curated in the Editor survives the second
+            pass. Only has an effect together with
+            <code class="inline">--on-existing update</code> or
+            <code class="inline">replace</code>.</dd>
+          <dt><code class="inline">-v</code> / <code class="inline">--verbose</code></dt>
+          <dd>More log detail: <code class="inline">-v</code> for INFO,
+            <code class="inline">-vv</code> for DEBUG. Worth reaching for when
+            a conversion produced something you did not expect and the default
+            log does not say why.</dd>
           <dt><code class="inline">--deface</code></dt>
           <dd>Remove the face from anatomical and PET images before each
             subject is committed, so the identifiable image never enters the

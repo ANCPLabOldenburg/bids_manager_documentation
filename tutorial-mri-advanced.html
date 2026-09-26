@@ -41,8 +41,12 @@
           <span class="page-toc-dot" aria-hidden="true"></span>5. Physio that fails</a>
         <a class="page-toc-link" href="#rules">
           <span class="page-toc-dot" aria-hidden="true"></span>6. Teach the classifier</a>
+        <a class="page-toc-link" href="#mrs">
+          <span class="page-toc-dot" aria-hidden="true"></span>7. Spectroscopy</a>
+        <a class="page-toc-link" href="#identifiers">
+          <span class="page-toc-dot" aria-hidden="true"></span>8. Identifiers</a>
         <a class="page-toc-link" href="#validate">
-          <span class="page-toc-dot" aria-hidden="true"></span>7. Validate</a>
+          <span class="page-toc-dot" aria-hidden="true"></span>9. Validate</a>
         <a class="page-toc-link" href="#numbers">
           <span class="page-toc-dot" aria-hidden="true"></span>Real numbers</a>
         <a class="page-toc-link" href="#trouble">
@@ -255,13 +259,29 @@
         <span class="section-eyebrow">Situation 4</span>
         <h2>Objects that are not images.</h2>
         <p>
-          A DICOM file does not have to contain a picture. Report objects,
-          spectroscopy frames and derived maps like
-          <code class="inline">TENSOR</code> are DICOM in every respect except
-          the one that matters: they carry no image pixel data. A converter asked
-          to convert one fails, and the failure looks exactly like a failed
-          conversion of something you wanted.
+          A DICOM file does not have to contain a picture. Report objects and
+          derived maps like <code class="inline">TENSOR</code> are DICOM in
+          every respect except the one that matters: they carry no image pixel
+          data. A converter asked to convert one fails, and the failure looks
+          exactly like a failed conversion of something you wanted.
         </p>
+        <div class="callout callout-info">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Spectroscopy used to be in this group and no longer is.</strong>
+            <p>
+              A spectroscopy frame carries no image pixels either, so for a long
+              time it was excluded for the same reason. It is now converted:
+              dcm2niix writes NIfTI-MRS, and
+              <code class="inline">mrs</code> has been a BIDS datatype since
+              1.11, so the frame becomes a real file in
+              <code class="inline">mrs/</code> rather than a row set aside. It
+              is exempt from the no-pixel rule the way
+              <code class="inline">physio</code> already was. There is a viewer
+              for it in <a href="#mrs">the next section</a>.
+            </p>
+          </div>
+        </div>
         <p>
           The scan checks each file for image data and marks a series that has
           none. Those rows are excluded with the reason shown, tinted teal, and
@@ -404,6 +424,232 @@
           </figcaption>
         </figure>
 
+      </div>
+    </section>
+
+    <!-- ============================================================
+         7. Spectroscopy
+         ============================================================ -->
+    <section class="section" id="mrs">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Situation 7</span>
+        <h2>Spectroscopy is not an image, and has its own viewer.</h2>
+        <p>
+          A single-voxel spectroscopy acquisition converts to NIfTI-MRS and
+          lands in <code class="inline">mrs/</code>. The file ends in
+          <code class="inline">.nii.gz</code>, but it is a NIfTI by container
+          only: the data block is a complex free induction decay, one voxel
+          deep, and showing it as slices would show nothing at all. So clicking
+          one in the Editor opens a spectrum instead.
+        </p>
+        <p>
+          <strong>How the scan finds it.</strong> A spectroscopy series is
+          recognised from its DICOM header rather than from its name, in any of
+          three forms: the standard MR Spectroscopy storage class, an image type
+          that says <code class="inline">SPECTROSCOPY</code>, or Siemens' own
+          non-image storage when its header marks the contents as spectra. That
+          last one needs care, because Siemens stores physiological logs in the
+          same class, and a physiological log is told apart by its image type.
+          So a series named like a functional run still lands in
+          <code class="inline">mrs/</code>, and the scan keeps it rather than
+          setting it aside for carrying no image pixels.
+        </p>
+        <p>
+          The suffix follows the standard: <code class="inline">svs</code> for a
+          single voxel, <code class="inline">mrsi</code> for a spectroscopic
+          image, <code class="inline">unloc</code> when the header says no
+          localisation was used. <code class="inline">mrsref</code> is never
+          guessed. A water reference cannot be told apart reliably from its
+          header, so if a series is one, set its suffix yourself in the
+          inspection table.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="An MR spectrum with the chemical shift axis running right to left and the metabolite names staggered across two rows"
+               src="assets/features/viewer_mrs_dark.png"
+               data-light="assets/features/viewer_mrs_light.png">
+          <figcaption>
+            <strong>The reason to open this viewer is the labels.</strong>
+            NAA at 2.01 ppm, creatine at 3.03, choline at 3.22, myo-inositol at
+            3.56 and the rest, drawn as reference positions with their names.
+            Without them a spectrum is a row of unlabelled bumps; with them, the
+            question a reader actually brings, whether the NAA is where it should
+            be, is answered by looking. On this scan the strongest peak in the
+            band lands at 3.02 against creatine's textbook 3.03.
+          </figcaption>
+        </figure>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Control</th><th>What it is for</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Show</strong>: Spectrum or FID</td>
+                <td>The spectrum is what a spectrum is read from. The FID is
+                  what the scanner measured, and is what to look at when a
+                  spectrum looks wrong: the question is usually whether the
+                  time-domain signal decayed at all.</td>
+              </tr>
+              <tr>
+                <td><strong>Part</strong></td>
+                <td>A spectrum is complex. Magnitude needs no phasing and is the
+                  safe default; the real part is what quantification uses, once
+                  the phase is right.</td>
+              </tr>
+              <tr>
+                <td><strong>Line broadening</strong></td>
+                <td>Multiplies the FID by a decaying exponential before the
+                  transform, trading resolution for signal to noise. Every MRS
+                  package applies a few Hz, because the tail of an in-vivo FID is
+                  noise with no signal left in it.</td>
+              </tr>
+              <tr>
+                <td><strong>Phase</strong></td>
+                <td>Zero-order phase. An unphased real part shows peaks dipping
+                  below the baseline, which reads as an artefact rather than as a
+                  phase.</td>
+              </tr>
+              <tr>
+                <td><strong>Repeat</strong></td>
+                <td>The repeats exist to be averaged, and that is where the
+                  signal to noise comes from. Stepping through them one at a
+                  time is how a corrupted repeat gets found.</td>
+              </tr>
+              <tr>
+                <td><strong>Standard window</strong> / <strong>Fit all</strong></td>
+                <td>0.2 to 4.2 ppm is the window a brain spectrum is
+                  conventionally read in. <strong>Fit all</strong> shows the
+                  whole sampled band instead, water and lipid included, which is
+                  the only way to see the residual the sequence was meant to
+                  suppress.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Two details that are easy to get wrong and hard to
+            notice.</strong>
+            <p>
+              <strong>The chemical shift axis runs right to left</strong>, which
+              is the convention every textbook, every fitting package and every
+              paper uses. Drawn the other way round you get a plausible-looking
+              picture with every metabolite on the wrong side of the water.
+            </p>
+            <p>
+              <strong>The names move as you zoom.</strong> Creatine at 3.03 and
+              choline at 3.22 are a fifth of a ppm apart: across the whole
+              window their labels collide, and zoomed into half a ppm they have
+              the pane to themselves. A label's width in pixels does not change
+              with the zoom, so which names overlap is a fact about the current
+              window, and the rows are recomputed every time it changes.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          The FID is a second page of the same viewer, not a separate tool:
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The free induction decay of the same acquisition, plotted against real seconds"
+               src="assets/features/viewer_mrs_fid_dark.png"
+               data-light="assets/features/viewer_mrs_fid_light.png">
+          <figcaption>
+            <strong>The signal the scanner actually measured</strong>, against
+            real seconds. A spectrum that looks wrong usually has a
+            straightforward explanation here.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         8. Identifiers
+         ============================================================ -->
+    <section class="section" id="identifiers">
+      <div class="container container-narrow prose">
+        <span class="section-eyebrow">Situation 8</span>
+        <h2>What the converter takes out of the metadata.</h2>
+        <p>
+          A DICOM header carries the participant's name, their identifier, their
+          date of birth, their age, sex, height and weight. A converter that
+          copies the header into a JSON sidecar copies those too, and a validator
+          will not mention it, because a sidecar carrying a date of birth is
+          perfectly well-formed BIDS.
+        </p>
+        <p>
+          Those fields are removed from every sidecar in the dataset, as the last
+          step of the conversion. The UIDs are kept, because they are what lets
+          an image be traced back to the series it came from and they identify
+          nothing on their own.
+        </p>
+
+        <div class="callout callout-info">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Spectroscopy needed its own pass.</strong>
+            <p>
+              NIfTI-MRS carries its metadata <em>inside</em> the
+              <code class="inline">.nii.gz</code>, in a header extension, rather
+              than in a sidecar beside it. No amount of cleaning JSON files
+              reaches it, so the extension is rewritten in place.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon" aria-hidden="true">&#x2713;</div>
+          <div>
+            <strong>One field that looks like an oversight and is not.</strong>
+            <p>
+              <code class="inline">InstitutionAddress</code> is left alone. The
+              BIDS schema declares it a recommended field, and it describes the
+              site rather than the participant, so removing it would be this tool
+              overriding the standard rather than protecting anybody. If your
+              ethics approval requires it gone, remove it in the Editor with
+              <strong>Find and replace a value</strong>, which does the whole
+              dataset at once.
+            </p>
+          </div>
+        </div>
+
+        <h3>A note on dcm2niix versions</h3>
+        <p>
+          BIDS Manager pins <code class="inline">dcm2niix</code> to one exact
+          version and installs it with everything else. The converter's
+          behaviour moves between releases in ways that change the dataset you
+          get, so the version is part of what makes a conversion repeatable.
+          Two moves are worth knowing about if you point it at your own build
+          with <code class="inline">--dcm2niix</code>:
+        </p>
+        <ul>
+          <li>
+            <strong>Older builds cannot convert spectroscopy.</strong> Run over
+            the same study, 1.0.20260416 wrote 19 images and no spectra where
+            the pinned version writes 21. It fails quietly: the spectra are
+            simply absent.
+          </li>
+          <li>
+            The label dcm2niix gives a diffusion derivative changed. It is a
+            no-emit decision either way, so a build on the wrong side of that
+            change silently stops converting those files rather than reporting a
+            failure. The classifier now holds that decision back until the
+            fallback has had its turn.
+          </li>
+        </ul>
+        <p>
+          On Windows, one more thing: the released build is killed by the
+          operating system on a spectroscopy series, because it runs out of the
+          stack its build reserves. BIDS Manager carries a Windows build with
+          enough stack and uses it only for that case, so nothing else changes.
+        </p>
       </div>
     </section>
 

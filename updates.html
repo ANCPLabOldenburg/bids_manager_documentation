@@ -25,6 +25,8 @@
       </button>
       <nav id="page-toc-panel" class="page-toc-panel" aria-label="Versions">
         <span class="page-toc-title">Jump to a version</span>
+        <a class="page-toc-link" href="#v141">
+          <span class="page-toc-dot" aria-hidden="true"></span>1.4.1</a>
         <a class="page-toc-link" href="#v140">
           <span class="page-toc-dot" aria-hidden="true"></span>1.4.0</a>
         <a class="page-toc-link" href="#v130">
@@ -80,8 +82,386 @@
           </p>
         </div>
 
+        <!-- ============ 1.4.1 ============ -->
+        <div class="release reveal is-latest" id="v141">
+          <div class="release-head">
+            <h2>1.4.1</h2>
+            <span class="release-date">September 2026</span>
+          </div>
+
+          <p class="rel-kind k-new">New</p>
+          <ul>
+            <li>
+              <strong>Physiological recordings open in the signal viewer.</strong>
+              A <code>*_physio.tsv.gz</code> is a table of numbers, and reading
+              it as one answers nothing about the shape of the trace. It now has
+              a <strong>Visualize</strong> button that opens the same viewer MEG
+              and EEG use, with the same filters, the same spectrum and the same
+              controls. Whether a file gets the button is decided by its sidecar
+              rather than by its name, so a table of onsets is not offered a
+              viewer it would have nothing to draw in.
+            </li>
+            <li>
+              <strong>All of this run.</strong> BIDS splits a run's physiological
+              data by the <code>recording</code> entity, so the cardiac trace,
+              the belt and the trigger are three files describing one
+              acquisition. One button loads the lot onto the fastest one's grid,
+              each at its own <code>StartTime</code>, which is the only way to
+              see whether the trigger lines up with the belt.
+              <figure class="media-figure">
+                <img class="feature-shot" loading="lazy"
+                     alt="Four physiological recordings of one run drawn together on one time axis"
+                     src="assets/features/viewer_physio_together_dark.png"
+                     data-light="assets/features/viewer_physio_together_light.png">
+                <figcaption>
+                  Four recordings of one run, each sampled at its own rate in its
+                  own file, on one axis.
+                </figcaption>
+              </figure>
+            </li>
+            <li>
+              <strong>A viewer for MR spectroscopy.</strong> An
+              <code>mrs/</code> file is a NIfTI by container only: its data block
+              is a complex free induction decay, and slices would show nothing.
+              It now opens as a spectrum, with labelled metabolite positions, the
+              chemical shift axis the right way round, line broadening, phasing,
+              per-repeat stepping and the free induction decay as a second page.
+              <figure class="media-figure">
+                <img class="feature-shot" loading="lazy"
+                     alt="An MR spectrum with metabolite names staggered across two rows"
+                     src="assets/features/viewer_mrs_dark.png"
+                     data-light="assets/features/viewer_mrs_light.png">
+                <figcaption>
+                  The metabolite names stagger so none covers another, and the
+                  rows are recomputed as you zoom.
+                </figcaption>
+              </figure>
+            </li>
+            <li>
+              <strong>Line thickness and a colour per channel type</strong>, with
+              <strong>Reset defaults</strong>. Colouring by type is what makes a
+              multi-channel view readable, and every type present in a recording
+              now has a swatch you can change. The reset restores the shipped
+              colours, which are theme-aware rather than fixed.
+            </li>
+            <li>
+              <strong>Fit all</strong> puts a whole recording in the window in
+              one click, on physiological recordings and spectra.
+            </li>
+            <li>
+              <strong>Dragging a trace moves through the recording</strong>, one
+              pixel of drag to one pixel of signal, instead of sliding the drawn
+              segment and leaving blank pane behind it.
+            </li>
+            <li>
+              <strong>Bulk edit removes any entity the schema permits</strong>,
+              not just acquisition, and it applies <strong>row by row</strong>.
+              Select the whole study and ask for the acquisition label to go:
+              it comes off every row that has one and is allowed to lose it,
+              and the rest are left alone instead of the edit being refused. A
+              <code>_bold</code> keeps its <code>task</code> because the
+              standard requires one; an anatomical row can lose it. The dialog
+              says how many rows it will touch before you tick anything. The
+              Editor's <strong>Add or remove an entity</strong> tool follows
+              the same rule, file by file.
+            </li>
+            <li>
+              <strong>An entity can be taken off one row</strong> from the
+              Properties panel. Each entity that carries a value and is allowed
+              to go has a remove button beside it; required ones have none.
+            </li>
+            <li>
+              <strong>The inspection table opens in a sensible column
+              order</strong>: subject, format, session, datatype, suffix, BIDS
+              name, sequence. A layout you have already arranged is left alone,
+              and <strong>Reset defaults</strong> in Manage columns puts that
+              order back whenever you want it.
+            </li>
+            <li>
+              <strong>The PET dose file is in the per-file panel</strong>, inside
+              the PET section and above blood sampling, so the fields it filled
+              are the next thing on screen rather than in another dialog.
+            </li>
+            <li>
+              <strong><code>bidsmgr-convert --pet-metadata</code></strong> reads
+              dose and tracer metadata as JSON, flat for the whole conversion or
+              keyed by subject. It accepts the shape pypet2bids uses, wrapper and
+              all, so a file written for that tool works unmodified. Keys BIDS
+              does not define are reported and dropped, never written.
+            </li>
+            <li>
+              <strong>Four Editor tools for what a validator cannot see.</strong>
+              <strong>Check coherence</strong> looks for mistakes that are
+              valid BIDS and still wrong: a scans row naming a file that is
+              gone, a participants row for a deleted subject, a link pointing
+              at nothing, an index written at two widths, a value spelled two
+              ways, a <code>TaskName</code> that does not match its task, an
+              <code>IntendedFor</code> that disagrees with the acquisition
+              times. Each finding shows its exact change and nothing is written
+              until you press Repair. <strong>References</strong> shows every
+              pointer in the dataset from both ends, which is how you find out
+              whether a run has a fieldmap at all. <strong>Find and replace a
+              value</strong> changes an entity value across the dataset, a
+              subject or a session, and <strong>Index widths</strong> sets one
+              width per index, refusing a padding that would fuse two runs
+              into one name.
+            </li>
+            <li>
+              <strong>The Tools menu is grouped by purpose</strong>, under six
+              headings from <em>Look at the dataset</em> to
+              <em>History</em>, and the tree's right-click menu uses the same
+              groups. Headings rather than sub-menus, so every tool is still
+              one click away.
+            </li>
+            <li>
+              <strong>Tools open on a scope you choose.</strong> Add or remove
+              an entity, Sessions, Delete, Deface and Remove the skull used to
+              need a tree selection first. They now offer the selection, the
+              whole dataset, one subject or one session, narrowed to a
+              datatype if you like, so putting every anatomical scan into a
+              session no longer means selecting them all by hand.
+            </li>
+            <li>
+              <strong>The preview can sit beside the controls</strong> instead
+              of under them, in every tool that has one. One button flips it,
+              and the choice is remembered per tool.
+            </li>
+            <li>
+              <strong>Every viewer can be made narrow.</strong> Toolbars wrap
+              onto a second row instead of pinning the pane at their full width
+              or hiding controls behind a sideways scrollbar.
+            </li>
+          </ul>
+
+          <p class="rel-kind k-fix">Fixed</p>
+          <ul>
+            <li>
+              <strong>A dropped sample is drawn as a break, not as a zero.</strong>
+              Physiological files arrive full of gaps, and drawing one as a
+              measurement of zero puts a spike to the floor of a trace that sits
+              nowhere near zero, which reads as an artefact in the data.
+            </li>
+            <li>
+              <strong>Opening a long recording no longer starts it zoomed into
+              its first fraction.</strong> The window, the scroll and the scale
+              are measured in the recording's own terms, so they are reset when a
+              new one is loaded: a ten-second window carried onto a forty-minute
+              recording opened it at its first 0.4 per cent.
+            </li>
+            <li>
+              <strong>Spectroscopy converts instead of being set aside.</strong>
+              It carries no image pixels, so it used to be excluded with the
+              report objects. dcm2niix writes NIfTI-MRS and
+              <code>mrs</code> is a BIDS datatype, so it is now a real file in
+              <code>mrs/</code>.
+            </li>
+            <li>
+              <strong>Spectroscopy converts on Windows.</strong> The released
+              Windows build of dcm2niix is killed by the operating system on a
+              spectroscopy series before it writes anything: it runs out of the
+              stack its build reserves, and it says nothing on the way out.
+              BIDS Manager now carries a Windows build of the same converter
+              with enough stack, and uses it only when the released one is
+              killed in exactly that way, so every other conversion still runs
+              on the released build. It is removed again once the fix, which
+              has been submitted upstream, reaches a release.
+            </li>
+            <li>
+              <strong>Spectroscopy is recognised from the DICOM header</strong>,
+              not only from the converter's guess. The standard MR
+              Spectroscopy storage class, a <code>SPECTROSCOPY</code> image
+              type, and Siemens' own spectroscopy storage are all read directly,
+              so a spectroscopy series lands in <code>mrs/</code> even where the
+              converter cannot help, and a sequence name that looks functional
+              no longer sends it to <code>func/</code>.
+            </li>
+            <li>
+              <strong>Spectroscopy exported under the standard storage class
+              was classified as nothing.</strong> For those series dcm2niix
+              writes the series <em>time</em> where the series identifier
+              belongs, so its classification could not be matched back to the
+              series it described. BIDS Manager now notices an identifier that
+              is not one and matches on the series description instead, but
+              only when that description names a single series, since two runs
+              of one protocol share one.
+            </li>
+            <li>
+              <strong>Windows: classification works in deep folders, and
+              fieldmaps are named correctly again.</strong> A DICOM folder only
+              a little under the Windows path limit holds files well past it,
+              because vendor filenames are long. The converter's classifier
+              could then open none of them, every series fell back to guessing
+              from its name, and a fieldmap's magnitude image came out as
+              <code>phasediff</code> on Windows while macOS and Linux said
+              <code>magnitude1</code>. Folders are now handed over in the form
+              Windows accepts at any length, and the classifier no longer spends
+              a sixty-character identifier on each file it writes.
+            </li>
+            <li>
+              <strong>A converter that dies now says so.</strong> When the
+              classifier gets nothing back from a folder that had series to
+              classify, the scan log names the folder, how many series went
+              unclassified, and the exit code in words rather than as a number.
+              Before, it read as a successful scan that had quietly classified
+              nothing.
+            </li>
+            <li>
+              <strong>A derivative row no longer empties the bulk edit
+              menu.</strong> Selecting one row the standard has no rule for,
+              such as a scanner-derived diffusion map, alongside ordinary rows
+              took every entity out of the list, acquisition included.
+            </li>
+            <li>
+              <strong>Patient identifiers are removed from every sidecar in the
+              dataset</strong>, not just from PET. Name, identifier, date of
+              birth, age, sex, height and weight are taken out as the last step
+              of a conversion; the UIDs stay, because they trace an image back to
+              its series and identify nobody. Spectroscopy needed its own pass,
+              because NIfTI-MRS carries its metadata inside the image where no
+              sidecar pass reaches.
+            </li>
+            <li>
+              <strong>Eight diffusion derivative files that silently stopped
+              converting</strong> under a newer dcm2niix, whose label for them
+              changed to one the classifier read as a decision not to emit
+              anything.
+            </li>
+            <li>
+              <strong>PET <code>TimeZero</code> is right on 22 of 23 test
+              conversions</strong>, up from 13. It is derived from the series
+              time rather than the acquisition time, because the frame start
+              times are computed as the difference between the two: taking the
+              wrong one puts every frame out by the gap between them.
+            </li>
+            <li>
+              <strong>The Standard window tick in the spectrum viewer moves the
+              view</strong>, which it did not: it recomputed the range and left
+              the view where it was, so the tick looked like it did nothing.
+            </li>
+            <li>
+              <strong>Spectroscopy passes validation.</strong> dcm2niix writes
+              <code>InversionTime: 0</code> for a spectroscopy series that has
+              no inversion pulse, and the standard requires the field to be
+              above zero wherever it appears, so every converted spectrum
+              carried an error. A zero there means "not done" and is now
+              removed, from the sidecar and from the NIfTI-MRS header it would
+              otherwise be copied back from. A real inversion time is kept.
+            </li>
+            <li>
+              <strong>Channel names line up with their traces.</strong> The
+              names were spaced evenly down the pane while the plot spaced the
+              traces, so by the eighth channel a name sat a whole trace below
+              its signal. Names are now placed where the plot draws each trace,
+              and a name too long for the column is shortened in the middle,
+              with the full name on hover.
+            </li>
+            <li>
+              <strong>Two fieldmap acquisitions no longer merge into one
+              row.</strong> Siemens XA scanners write no acquisition time, and
+              the rows were grouped by the clock, so both acquisitions fell
+              into one group and the conversion wrote six images, three of
+              them under the converter's own collision names instead of BIDS
+              ones. They are now told apart by their image types repeating,
+              which needs no clock.
+            </li>
+            <li>
+              <strong>A phase-difference fieldmap is named
+              <code>phasediff</code>, not <code>phase2</code>.</strong> The
+              suffix is now decided from the echo times in the sidecar, as the
+              standard defines it, rather than from the converter's filename,
+              which names the echo the image came from.
+            </li>
+            <li>
+              <strong><code>IntendedFor</code> pairs each fieldmap with the
+              runs that follow it</strong>, not with every run in the session.
+              Times written in the ISO form were misread, so
+              <code>2026-09-17T09:33:59</code> came back as 20:26:00, and
+              every comparison built on it was wrong without saying so.
+            </li>
+            <li>
+              <strong>No more <code>*_scans.tsv</code> rows for
+              <code>.DS_Store</code></strong>, <code>Thumbs.db</code> or other
+              files that are not recordings. Any dataset that had been opened
+              on a Mac picked them up.
+            </li>
+            <li>
+              <strong>A physiological recording's label is valid BIDS.</strong>
+              The Siemens channel <code>external_trigger</code> became
+              <code>recording-external_trigger</code>, and because the
+              underscore separates entities, every tool that reads BIDS names
+              saw a different file from the one written. It is now
+              <code>recording-externalTrigger</code>.
+            </li>
+            <li>
+              <strong>A row the classifier excluded says why.</strong> A third
+              of the excluded rows in our test data sat unticked with an empty
+              issues cell.
+            </li>
+            <li>
+              <strong>The window no longer freezes after a scan or during a
+              conversion.</strong> Neither was the scan or the conversion
+              itself. After a scan, loading the result blocked for 606 ms
+              and now takes 173. During a conversion, the file trees
+              re-registered every folder in the dataset with the operating
+              system twice a second; they now register only what changed,
+              and draw a folder when it is opened rather than all at once.
+            </li>
+            <li>
+              <strong>A folder that was open stays drawn after the tree
+              refreshes</strong>, instead of coming back as one blank row, and
+              a click anywhere on a folder's row opens or closes it rather than
+              only a click on its small arrow.
+            </li>
+            <li>
+              <strong>At a large font size, dialog text no longer runs over
+              its own controls</strong>, and the inspection table's columns
+              are sized from the text they show rather than from fixed
+              numbers.
+            </li>
+          </ul>
+
+          <p class="rel-kind k-note">Changed</p>
+          <ul>
+            <li>
+              <strong>Trace thickness is automatic, and fixed at one pixel above
+              two traces.</strong> This is a measurement rather than a
+              preference: a wider line cannot use the fast path a one-pixel line
+              uses, and on a twenty-channel window that is 88 ms of drawing per
+              frame against 13. A drag pays it on every frame. With one or two
+              traces on screen the wider line costs nothing noticeable and is
+              used, and the Line dialog says which case you are in instead of
+              offering a number it would ignore.
+            </li>
+            <li>
+              <strong><code>dcm2niix</code> is pinned to one exact version,
+              1.0.20260724.</strong> The range used to allow 1.0.20260416 too,
+              and that version cannot convert spectroscopy at all: run over the
+              same study, it wrote 19 images and no spectra where the pinned
+              version writes 21. An installation made while the older version
+              satisfied the range kept it through every later upgrade, which is
+              why spectroscopy appeared to work on one machine and not another.
+            </li>
+            <li>
+              <strong>The inventory's columns say what they hold.</strong> One
+              word was doing three jobs. A <em>modality</em> is how data was
+              acquired (<code>mri</code>, <code>eeg</code>, <code>meg</code>,
+              <code>pet</code>), a <em>datatype</em> is the folder it lands in
+              (<code>anat</code>, <code>func</code>), and a <em>suffix</em> is
+              what the recording is (<code>T1w</code>, <code>bold</code>), and
+              the columns now use each word only for its own thing:
+              <code>modality</code>, <code>datatype</code>,
+              <code>sequence_kind</code>, <code>bids_name</code>,
+              <code>bids_path</code>, <code>issues</code> and
+              <code>participant_id</code>. <strong>An inventory saved by an
+              earlier version cannot be read</strong>; opening one says so and
+              asks for a new scan, rather than failing on whichever old column
+              is touched first.
+            </li>
+          </ul>
+        </div>
+
         <!-- ============ 1.4.0 ============ -->
-        <div class="release reveal is-latest is-landmark is-zigdots" id="v140">
+        <div class="release reveal is-landmark is-zigdots" id="v140">
           <div class="release-head">
             <h2>1.4.0</h2>
             <span class="release-date">September 2026</span>
@@ -144,8 +524,8 @@
                        data-dark="assets/features/skull_strip_dark.mp4"
                        data-light="assets/features/skull_strip_light.mp4"></video>
                 <figcaption>
-                  The derivative beside the scan it came from. Clipped cortex
-                  is obvious here and invisible to a validator.
+                  The derivative beside the scan it came from: skull and scalp
+                  on the left, brain only on the right.
                 </figcaption>
               </figure>
             </li>
@@ -359,7 +739,7 @@
               <strong>The power-line frequency is no longer guessed.</strong>
               When nothing stated one, EEG and MEG sidecars used to be written
               with <code>PowerLineFrequency</code> set to 50. That is correct in
-              Europe and wrong in the Americas and Japan, and nothing in the
+              Europe and wrong across most of the Americas and in western Japan, and nothing in the
               file distinguished it from a value somebody had measured.
               Filtering at 50 on 60 Hz data leaves the interference exactly
               where it was. The field is now written as <code>n/a</code> unless

@@ -551,6 +551,102 @@
           miss entirely, because nothing in the folder looks like a physiological
           recording.
         </p>
+
+        <h3 id="physio-viewer">Looking at one, in the Editor</h3>
+        <p>
+          A <code class="inline">*_physio.tsv.gz</code> opens as a table, which
+          answers nothing about the shape of a trace. Above the table is a
+          <strong>Visualize</strong> button, and it opens the same viewer MEG and
+          EEG use, with the same filters, the same spectrum and the same controls
+          described in <a href="tutorial-eeg.html#inspect">the EEG tutorial</a>.
+        </p>
+        <p>
+          The button is offered on the strength of the <strong>sidecar</strong>,
+          not the filename. A table with a sampling frequency is a continuous
+          recording whatever it is called; a table of onsets, like
+          <code class="inline">_events.tsv</code>, is not, and is not offered a
+          viewer it would have nothing to draw in.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="A single physiological channel in the shared signal viewer, with the channel-selection controls hidden"
+               src="assets/features/viewer_physio_dark.png"
+               data-light="assets/features/viewer_physio_light.png">
+          <figcaption>
+            <strong>One channel, so the channel controls are gone.</strong>
+            Which of one channel to show, and how many of them, are both
+            questions with one answer, so the type filter, the visible-count box
+            and the channel picker are hidden. <strong>Fit all</strong> puts the
+            whole recording in the window in one click, instead of winding the
+            window length up a step at a time.
+          </figcaption>
+        </figure>
+
+        <h3>All of this run, together</h3>
+        <p>
+          BIDS splits a run's physiological data by the
+          <code class="inline">recording</code> entity, so the cardiac trace, the
+          respiratory belt and the trigger are three files describing one
+          acquisition. Reading them one at a time is reading a three-channel
+          recording one channel at a time, and whether the trigger lines up with
+          the belt is exactly the question people bring to them.
+        </p>
+        <p>
+          <strong>All of this run</strong> loads the lot. They are put on the
+          fastest one's grid, because that is the only rate at which nothing is
+          thrown away, each at its own
+          <code class="inline">StartTime</code> offset. Upsampling is
+          nearest-sample rather than interpolated, and a stretch a slower or
+          shorter recording does not cover is drawn as a gap rather than filled
+          with an invented value.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="Four physiological recordings of one run drawn together on a single time axis"
+               src="assets/features/viewer_physio_together_dark.png"
+               data-light="assets/features/viewer_physio_together_light.png">
+          <figcaption>
+            <strong>Four recordings of one run, on one axis.</strong> From the
+            top: the ECG, the cardiac trace, the respiratory belt and the
+            trigger, each sampled at its own rate in its own file. With more than
+            one channel the type filter and the visible-count control come back,
+            because now they have something to choose between.
+          </figcaption>
+        </figure>
+
+        <div class="callout callout-info">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>A missing sample is drawn as a break, not as a zero.</strong>
+            <p>
+              Physiological files arrive full of gaps: one of the recordings in
+              our own test set is 99.7 per cent absent, a trigger with a hundred
+              and thirty real marks in forty-four thousand rows. A dropped sample
+              is not a measurement of zero, and drawing it as one puts a spike
+              down to the floor of a trace that sits nowhere near zero, which
+              reads as an artefact in the data. The viewer breaks the line
+              instead. The filters still see a continuous signal, because they
+              have to.
+            </p>
+          </div>
+        </div>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="A trigger recording that is almost entirely gaps, drawn as short marks separated by empty space rather than as a line at zero"
+               src="assets/features/viewer_physio_gaps_dark.png"
+               data-light="assets/features/viewer_physio_gaps_light.png">
+          <figcaption>
+            <strong>What a mostly-absent recording looks like.</strong> An
+            external trigger with a hundred and thirty real marks in
+            forty-four thousand rows, shown whole. The empty stretches are
+            empty because nothing was recorded there, which is the honest
+            picture; drawn as zeros it would be a solid line with spikes, and
+            it would look like data.
+          </figcaption>
+        </figure>
       </div>
     </section>
 
@@ -863,9 +959,11 @@ bidsmgr-validate ~/bids/neuroimaging_unit</pre>
               <tr>
                 <td>A teal row with a crossed circle</td>
                 <td>An object with no image data inside:
-                  <code class="inline">TENSOR</code>, a report, a spectroscopy
-                  frame. Nothing can convert it. It is excluded on purpose, with
-                  the reason shown.</td>
+                  <code class="inline">TENSOR</code>, a scanner report. Nothing
+                  can convert it. It is excluded on purpose, with the reason
+                  shown. Spectroscopy is <em>not</em> in this group: it converts
+                  to NIfTI-MRS and lands in
+                  <code class="inline">mrs/</code>.</td>
               </tr>
               <tr>
                 <td>Far more runs than you acquired</td>

@@ -502,17 +502,21 @@
 
         <figure class="media-figure">
           <img class="feature-shot" loading="lazy"
-               alt="A power spectrum with a sharp peak at 50 Hz and a harmonic at 100 Hz"
-               src="assets/features/psd_line_frequency_dark.png"
-               data-light="assets/features/psd_line_frequency_light.png">
+               alt="The empty-room power spectrum averaged per sensor type: magnetometers with a tall spike at 100 Hz and smaller ones at 50, 60 and 120 Hz, gradiometers nearly flat"
+               src="assets/features/psd_meg_dark.png"
+               data-light="assets/features/psd_meg_light.png">
           <figcaption>
-            <strong>The power spectrum.</strong> The tall spike is the mains
-            frequency, here 50 Hz, with its harmonic at 100. That is also how you
-            confirm the <code class="inline">PowerLineFrequency</code> you put in
-            the template is the one actually present in the data. Switch to
-            <em>Average (per type)</em> to read magnetometers and gradiometers
-            separately, since they sit on very different scales. Drag to pan,
-            wheel to zoom, and the crosshair reads out frequency and power.
+            <strong>The empty-room spectrum, averaged per sensor type.</strong>
+            Magnetometers and gradiometers sit on very different scales, so
+            <em>Average (per type)</em> gives each its own mean with a standard
+            deviation band. Read the spacing of the spikes rather than their
+            height: on these magnetometers the 100 Hz harmonic stands far above
+            the 50 Hz fundamental. The mains is the family at multiples of 50,
+            and that is the number <code class="inline">PowerLineFrequency</code>
+            should hold. The other spikes, near 17 and 44 Hz and the smaller
+            pair at 60 and 120 Hz, come from something other than the mains.
+            Drag to pan, wheel to zoom, and the crosshair reads out frequency
+            and power.
           </figcaption>
         </figure>
       </div>

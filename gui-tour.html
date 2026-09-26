@@ -564,6 +564,61 @@
                 </figcaption>
               </figure>
             </div>
+            <div class="media-block">
+              <h4>Physiological recordings, in the same viewer</h4>
+              <figure class="media-figure">
+                <img class="feature-shot" loading="lazy"
+                     alt="Four physiological recordings of one run drawn together on one time axis"
+                     src="assets/features/viewer_physio_together_dark.png"
+                     data-light="assets/features/viewer_physio_together_light.png">
+                <figcaption>
+                  A <code class="inline">*_physio.tsv.gz</code> is a table of
+                  numbers, and reading it as one says nothing about the shape of
+                  the trace. <strong>Visualize</strong> opens it in the viewer
+                  above, with the same filters and the same spectrum.
+                  <strong>All of this run</strong> loads the cardiac trace, the
+                  belt and the trigger together, which is the only way to see
+                  whether they line up. A dropped sample is drawn as a break
+                  rather than as a zero.
+                  <a href="tutorial-mri.html#physio-viewer">How it works &rarr;</a>
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>MR spectroscopy</h4>
+              <figure class="media-figure">
+                <img class="feature-shot" loading="lazy"
+                     alt="An MR spectrum with the chemical shift axis running right to left and the metabolite names staggered across two rows"
+                     src="assets/features/viewer_mrs_dark.png"
+                     data-light="assets/features/viewer_mrs_light.png">
+                <figcaption>
+                  An <code class="inline">mrs/</code> file is a NIfTI by
+                  container only: its data block is a complex free induction
+                  decay, so slices would show nothing. It opens as a spectrum
+                  with the metabolites labelled, staggered so none covers
+                  another, and the chemical shift axis running right to left the
+                  way every fitting package draws it.
+                  <a href="tutorial-mri-advanced.html#mrs">How it works &rarr;</a>
+                </figcaption>
+              </figure>
+            </div>
+            <div class="media-block">
+              <h4>How the traces are drawn</h4>
+              <figure class="media-figure">
+                <img class="feature-shot" loading="lazy"
+                     alt="The Line dialog with a thickness slider and a colour swatch for each channel type, plus a Reset defaults button"
+                     src="assets/features/line_dialog_dark.png"
+                     data-light="assets/features/line_dialog_light.png">
+                <figcaption>
+                  Colouring <strong>by channel type</strong> is what makes a
+                  multi-channel view readable: magnetometers one colour and
+                  gradiometers another. Every type the recording has gets a
+                  swatch you can change, and <strong>Reset defaults</strong>
+                  puts them all back.
+                  <a href="tutorial-eeg.html#inspect">How it works &rarr;</a>
+                </figcaption>
+              </figure>
+            </div>
           </div>
         </div>
 
@@ -734,6 +789,69 @@
                 </figcaption>
               </figure>
             </div>
+            <div class="media-block">
+              <h4>What is in the Tools menu, and what it acts on</h4>
+              <p>
+                Sixteen entries in six groups. What a tool acts on depends on
+                whether anything is selected in the tree: with nothing selected
+                the dataset-wide tools take the whole dataset, and with a file,
+                a folder, a session or a subject selected they take that. Every
+                entry that changes the dataset is one entry in the Editor's
+                history, so <strong>Edit &rarr; Undo</strong> reverses the whole
+                operation rather than part of it.
+              </p>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr><th>Group</th><th>Entries</th><th>What it does</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Look at the dataset</td>
+                      <td>Dashboard, Compare images</td>
+                      <td>Read-only. Nothing is written.</td>
+                    </tr>
+                    <tr>
+                      <td>Check and repair</td>
+                      <td>Check coherence, References, Fix ups</td>
+                      <td>Finds disagreements between files, and offers the
+                        repairs the dataset can be given.</td>
+                    </tr>
+                    <tr>
+                      <td>Names and structure</td>
+                      <td>Rename entity, Find and replace a value, Index widths,
+                        Add or remove an entity, Sessions</td>
+                      <td>Changes filenames, and follows every reference that
+                        pointed at the old ones.</td>
+                    </tr>
+                    <tr>
+                      <td>Identifiable data</td>
+                      <td>Deface, Remove the skull, Compare with the original,
+                        Put the face back</td>
+                      <td>See
+                        <a href="tutorial-deface.html">the defacing tutorial</a>.</td>
+                    </tr>
+                    <tr>
+                      <td>Remove</td>
+                      <td>Delete</td>
+                      <td>Removes files and repairs everything that named them:
+                        the scans rows, the references, the participants row.</td>
+                    </tr>
+                    <tr>
+                      <td>History</td>
+                      <td>Track changes</td>
+                      <td>Only on a dataset with no history yet, as above.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p>
+                The tree's right-click offers the same actions on whatever you
+                clicked, and acts on the whole selection when the click lands
+                inside one. That is how you deface four subjects and not the
+                fifth.
+              </p>
+            </div>
           </div>
         </div>
 
@@ -836,7 +954,10 @@
                   required entity cannot be taken away. The new pair is placed
                   in the order the standard defines rather than where you typed
                   it. Sidecars, event tables and channel tables travel with
-                  their recording.
+                  their recording. Across a selection it works file by file:
+                  select a whole subject and remove the acquisition label, and
+                  it comes off every file that has one and can lose it while the
+                  rest are left as they are.
                 </figcaption>
               </figure>
             </div>
@@ -952,11 +1073,11 @@
                        data-dark="assets/features/deface_dark.mp4"
                        data-light="assets/features/deface_light.mp4"></video>
                 <figcaption>
-                  Defacing fails in two opposite directions: too little
-                  removed and the participant is still identifiable, too much
-                  and the front of the brain has gone with the face, which
-                  passes every validator. Both are obvious here and neither is
-                  obvious in a file listing.
+                  The scan as it arrived on the left, the same scan defaced on
+                  the right: the face gone, the brain untouched. One camera
+                  drives both renders, so they turn together and stay
+                  comparable from every angle. Neither the face nor the brain
+                  is visible in a file listing, which is why this view exists.
                 </figcaption>
               </figure>
             </div>

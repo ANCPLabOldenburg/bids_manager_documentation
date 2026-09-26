@@ -217,8 +217,8 @@
             <strong>Also worth collecting first.</strong>
             <p>
               The reference and ground electrodes, the mains frequency at the
-              recording site (50 Hz in most of the world, 60 Hz in the Americas
-              and parts of Asia), the amplifier make and model, and the cap. Five
+              recording site (50 Hz in most of the world, 60 Hz in most of the
+              Americas and parts of Asia), the amplifier make and model, and the cap. Five
               answers, given once, that reach all 28 sidecars.
             </p>
           </div>
@@ -502,9 +502,10 @@
           <figcaption>
             <strong>The answer is the tall spike.</strong> This recording has a
             sharp peak at exactly 50 Hz, and a smaller one at its 100 Hz harmonic,
-            so <code class="inline">PowerLineFrequency</code> is 50. On a
-            recording made in the Americas the same peak sits at 60 Hz. The broad
-            bump around 10 Hz is the alpha rhythm and is signal, not interference.
+            so <code class="inline">PowerLineFrequency</code> is 50. Where the
+            mains runs at 60 Hz, as across most of the Americas, the same peak
+            sits at 60. The peak around 10 Hz is the alpha rhythm and is signal,
+            not interference.
           </figcaption>
         </figure>
 
@@ -679,9 +680,109 @@
           Press <strong>Load signal</strong> for the interactive viewer. From
           there you can filter by channel type, pick individual channels, set how
           many are visible at once, change the amplitude scaling and the time
-          window, and move through the recording with the scrollbar, the wheel or
-          the keyboard. Hovering a trace names the channel.
+          window, and move through the recording with the scrollbar, the wheel,
+          the keyboard, or by <strong>dragging the traces</strong>: one pixel of
+          drag is one pixel of signal at whatever zoom you are on, and the data
+          is fetched as the window travels. Hovering a trace names the channel.
         </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The signal viewer showing eight band-passed magnetometer traces with the filter, channel and window controls above them"
+               src="assets/features/viewer_meeg_dark.png"
+               data-light="assets/features/viewer_meeg_light.png">
+          <figcaption>
+            <strong>The same viewer serves EEG, MEG and physio.</strong> Here,
+            eight magnetometers of a real MEG recording with a 1 to 40 Hz band
+            pass applied, forty seconds in. The controls reflow instead of
+            forcing the pane wide, so the viewer survives being squeezed into a
+            narrow splitter.
+          </figcaption>
+        </figure>
+
+        <div class="callout callout-info">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Two things about the filters that will otherwise puzzle
+            you.</strong>
+            <p>
+              <strong>They apply to the segment you are looking at</strong>, and
+              that segment is padded so the filter has room to work. The padding
+              is budgeted by how many samples are being read, so one physio
+              channel can afford several minutes either side and three hundred
+              MEG channels cannot. A cut-off the recording is too short for is
+              refused with a message rather than silently applied, because MNE's
+              answer in that case is a warning followed by a trace that is mostly
+              ringing.
+            </p>
+            <p>
+              <strong>The wobble at the very start and end of a recording is
+              inherent, not a fault.</strong> A filter has no data beyond the
+              first sample, so the transient there is unavoidable. Measured on a
+              real MEG file, the edge carries about eight times the variation of
+              the middle, which is identical to what MNE's own
+              <code class="inline">raw.filter()</code> produces on the same data.
+              Inside the recording, where there is signal on both sides to pad
+              with, the ratio is about one.
+            </p>
+          </div>
+        </div>
+
+        <h3>Thickness and colour</h3>
+        <p>
+          The <strong>Line</strong> button sets how the traces are drawn.
+          Colouring <strong>by channel type</strong> is the default and is what
+          makes a multi-channel view readable: magnetometers in one colour and
+          gradiometers in another is the difference between three hundred traces
+          and three hundred traces you can tell apart. Every type present in the
+          recording gets a swatch you can change, and
+          <strong>Reset defaults</strong> puts them all back.
+        </p>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The Line dialog with a thickness slider and a colour swatch for each channel type, plus a Reset defaults button"
+               src="assets/features/line_dialog_dark.png"
+               data-light="assets/features/line_dialog_light.png">
+          <figcaption>
+            <strong>Only the types this recording has.</strong> A MEG file
+            offers magnetometers, gradiometers and the reference channels; a
+            physio run offers cardiac, respiratory and trigger. The shipped
+            colours are theme-aware rather than fixed, so
+            <strong>Reset defaults</strong> also restores legibility in whichever
+            theme you are in.
+          </figcaption>
+        </figure>
+
+        <div class="callout callout-info">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Thickness is automatic, and above two traces it is
+            fixed at one pixel.</strong>
+            <p>
+              This is a measurement, not a preference. Qt draws a one-pixel line
+              through a fast path and has to stroke anything wider properly: on a
+              twenty-channel window that is 88 ms of drawing per frame against
+              13. A drag pays it on every frame, so the viewer would stop
+              following the cursor. With one or two traces on screen the wider
+              line costs nothing noticeable and is used. The slider says so
+              rather than offering a number it would ignore.
+            </p>
+          </div>
+        </div>
+
+        <figure class="media-figure">
+          <img class="feature-shot" loading="lazy"
+               alt="The Line dialog on a twenty-channel view, with the thickness slider disabled and a line of text explaining why"
+               src="assets/features/line_dialog_capped_dark.png"
+               data-light="assets/features/line_dialog_capped_light.png">
+          <figcaption>
+            <strong>The same dialog on a twenty-channel view.</strong> The
+            thickness control is disabled and says which view you are in and
+            what to do about it. The colours are still yours to change, because
+            those cost nothing.
+          </figcaption>
+        </figure>
 
         <figure class="media-figure">
           <video class="feature-video" muted loop playsinline preload="metadata"
