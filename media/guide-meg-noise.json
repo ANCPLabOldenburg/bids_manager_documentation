@@ -1,0 +1,41 @@
+{
+ "id": "guide-meg-noise",
+ "kind": "figure",
+ "width": 520,
+ "height": 621,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "520": "guide-meg-noise-dark-520-fccfdd47.avif",
+    "1040": "guide-meg-noise-dark-1040-1fb405da.avif"
+   },
+   "webp": {
+    "520": "guide-meg-noise-dark-520-ba0b386a.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "520": "guide-meg-noise-light-520-6f741e80.avif",
+    "1040": "guide-meg-noise-light-1040-b1551084.avif"
+   },
+   "webp": {
+    "520": "guide-meg-noise-light-520-34816bfb.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "An empty-room recording after renaming: task noise, run 1 (before the session's recordings; run 2 is the one after).",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

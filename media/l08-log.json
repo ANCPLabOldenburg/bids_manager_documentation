@@ -1,0 +1,41 @@
+{
+ "id": "l08-log",
+ "kind": "figure",
+ "width": 1584,
+ "height": 190,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1584": "l08-log-dark-1584-5eb6d9a1.avif",
+    "3168": "l08-log-dark-3168-1f7374ba.avif"
+   },
+   "webp": {
+    "1584": "l08-log-dark-1584-bf0db0b0.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1584": "l08-log-light-1584-ab43d39d.avif",
+    "3168": "l08-log-light-3168-27caabe5.avif"
+   },
+   "webp": {
+    "1584": "l08-log-light-1584-6fdf6fa9.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The end of the Log after the conversion: the conversion's summary, then the Metadata and Validation runs, each under its own heading.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

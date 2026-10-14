@@ -1,0 +1,41 @@
+{
+ "id": "settings-bids-version",
+ "kind": "figure",
+ "width": 900,
+ "height": 520,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "900": "settings-bids-version-dark-900-9c1359cf.avif",
+    "1800": "settings-bids-version-dark-1800-dee7188d.avif"
+   },
+   "webp": {
+    "900": "settings-bids-version-dark-900-e29d21c7.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "900": "settings-bids-version-light-900-38fb10ca.avif",
+    "1800": "settings-bids-version-light-1800-dd8d4353.avif"
+   },
+   "webp": {
+    "900": "settings-bids-version-light-900-d7c35133.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, BIDS version page: the version of the standard datasets are written and validated against.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

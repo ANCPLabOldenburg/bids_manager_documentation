@@ -1,0 +1,42 @@
+{
+ "scan": {
+  "rows": 33,
+  "included": 21,
+  "seconds": 21.8,
+  "subjects": [
+   "sub-001",
+   "sub-002"
+  ],
+  "sessions": [
+   "ses-post",
+   "ses-pre"
+  ],
+  "chips": {
+   "valid": "21 valid",
+   "warn": "3 warnings",
+   "err": "0 error",
+   "skip": "9 skipped"
+  }
+ },
+ "convert": {
+  "rc": 0,
+  "seconds": 10.3
+ },
+ "converted": {
+  "files": 69,
+  "validation": {
+   "ok": 30,
+   "warn": 70,
+   "err": 0
+  },
+  "todo": {
+   "inserted": 49,
+   "files": 25
+  }
+ },
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14"
+ }
+}

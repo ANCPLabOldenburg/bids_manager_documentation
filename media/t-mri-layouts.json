@@ -1,0 +1,56 @@
+{
+ "id": "t-mri-layouts",
+ "kind": "clip",
+ "width": 1304,
+ "height": 782,
+ "duration": 11.0,
+ "chapters": [
+  {
+   "t": 0.6,
+   "title": "One plane"
+  },
+  {
+   "t": 2.23,
+   "title": "Three planes"
+  },
+  {
+   "t": 3.87,
+   "title": "A large view"
+  },
+  {
+   "t": 5.5,
+   "title": "Mosaic"
+  },
+  {
+   "t": 7.13,
+   "title": "3-D"
+  },
+  {
+   "t": 8.77,
+   "title": "Planes + 3-D"
+  }
+ ],
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "mp4": "t-mri-layouts-dark-ca762ca9.mp4",
+   "webm": "t-mri-layouts-dark-8111104c.webm",
+   "poster": "t-mri-layouts-dark-poster-fd997222.webp"
+  },
+  "light": {
+   "mp4": "t-mri-layouts-light-d04b3289.mp4",
+   "webm": "t-mri-layouts-light-d29cdf37.webm",
+   "poster": "t-mri-layouts-light-poster-929fae64.webp"
+  }
+ },
+ "alt": "The layouts of the image viewer on the T1w, one after the other: one plane, three planes, a large view with two small ones, a mosaic of slices, the 3-D rendering, and Planes + 3-D.",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "7bb684f",
+  "date": "2026-10-14",
+  "sample": "multimodal v2 (OL_3844, consented)"
+ }
+}

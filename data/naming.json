@@ -1,0 +1,151 @@
+{
+ "examples": [
+  {
+   "series": "ses-pre_T2w",
+   "by_name": "anat/T2w",
+   "by_dcm2niix": "anat/FLAIR",
+   "by_parameters": "anat/FLAIR",
+   "chosen": "anat/FLAIR",
+   "decided_by": "agreement",
+   "confidence": 0.873,
+   "bids_name": "sub-001_ses-pre_acq-spcir2p3_FLAIR",
+   "parameters": {
+    "Sequence": "*spcir_278ns",
+    "Readout": "3D spin echo, inversion recovery",
+    "Repetition time": "5000 ms",
+    "Echo time": "390 ms",
+    "Inversion time": "1800 ms",
+    "Flip angle": "120°",
+    "Image type": "ORIGINAL\\PRIMARY\\M\\NORM\\DIS2D"
+   },
+   "evidence": [
+    {
+     "for": "anat/FLAIR",
+     "source": "parameters",
+     "text": "an inversion long enough to null the fluid",
+     "points": 4.0
+    },
+    {
+     "for": "anat/FLAIR",
+     "source": "parameters",
+     "text": "a turbo spin echo",
+     "points": 0.5
+    },
+    {
+     "for": "anat/FLAIR",
+     "source": "parameters",
+     "text": "a high-resolution 3-D acquisition",
+     "points": 0.5
+    }
+   ],
+   "runner_up": [
+    {
+     "for": "anat/PDw",
+     "source": "parameters",
+     "text": "a turbo spin echo",
+     "points": 0.5
+    }
+   ]
+  },
+  {
+   "series": "ses-post_acq-grenm2mm_run-01_T1w",
+   "by_name": "anat/T1w",
+   "by_dcm2niix": "anat/T2starw",
+   "by_parameters": "anat/T1w",
+   "chosen": "anat/T1w",
+   "decided_by": "parameters",
+   "confidence": 0.921,
+   "bids_name": "sub-001_ses-post_acq-fl3_run-1_part-mag_T1w",
+   "parameters": {
+    "Sequence": "*fl3d1",
+    "Readout": "3D gradient echo",
+    "Repetition time": "35 ms",
+    "Echo time": "4.15 ms",
+    "Inversion time": "none",
+    "Flip angle": "20°",
+    "Image type": "ORIGINAL\\PRIMARY\\M\\ND\\NORM"
+   },
+   "evidence": [
+    {
+     "for": "anat/T1w",
+     "source": "names",
+     "text": "the name says T1",
+     "points": 2.5
+    },
+    {
+     "for": "anat/T1w",
+     "source": "parameters",
+     "text": "a fast 3-D spoiled gradient echo",
+     "points": 1.5
+    },
+    {
+     "for": "anat/T1w",
+     "source": "parameters",
+     "text": "a magnetisation-transfer pulse before a short echo (MT-weighted T1, as for neuromelanin)",
+     "points": 1.0
+    },
+    {
+     "for": "anat/T1w",
+     "source": "parameters",
+     "text": "not an EPI readout",
+     "points": 0.5
+    }
+   ],
+   "runner_up": [
+    {
+     "for": "fmap/magnitude1",
+     "source": "parameters",
+     "text": "a magnitude image",
+     "points": 0.5
+    }
+   ]
+  },
+  {
+   "series": "ses-post_acq-tse_T2w",
+   "by_name": "anat/T2w",
+   "by_dcm2niix": "anat/T2w",
+   "by_parameters": "anat/T2w",
+   "chosen": "anat/T2w",
+   "decided_by": "agreement",
+   "confidence": 0.966,
+   "bids_name": "sub-001_ses-post_acq-tse2_T2w",
+   "parameters": {
+    "Sequence": "*tse2d1rr17",
+    "Readout": "2D spin echo",
+    "Repetition time": "5000 ms",
+    "Echo time": "79 ms",
+    "Inversion time": "none",
+    "Flip angle": "150°",
+    "Image type": "ORIGINAL\\PRIMARY\\M\\ND\\NORM"
+   },
+   "evidence": [
+    {
+     "for": "anat/T2w",
+     "source": "parameters",
+     "text": "a spin echo with a long repetition time and an echo of 79 ms",
+     "points": 3.5
+    },
+    {
+     "for": "anat/T2w",
+     "source": "names",
+     "text": "the name says T2",
+     "points": 2.5
+    },
+    {
+     "for": "anat/T2w",
+     "source": "parameters",
+     "text": "a turbo spin echo",
+     "points": 0.5
+    }
+   ],
+   "runner_up": [
+    {
+     "for": "anat/FLAIR",
+     "source": "parameters",
+     "text": "a turbo spin echo",
+     "points": 0.5
+    }
+   ]
+  }
+ ]
+}

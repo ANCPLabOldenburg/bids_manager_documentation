@@ -1,0 +1,41 @@
+{
+ "id": "l07-template-bold",
+ "kind": "figure",
+ "width": 700,
+ "height": 820,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "700": "l07-template-bold-dark-700-25a53f44.avif",
+    "1400": "l07-template-bold-dark-1400-1ed609ba.avif"
+   },
+   "webp": {
+    "700": "l07-template-bold-dark-700-78f54cb3.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "700": "l07-template-bold-light-700-c2ae687c.avif",
+    "1400": "l07-template-bold-light-1400-eb93c89d.avif"
+   },
+   "webp": {
+    "700": "l07-template-bold-light-700-c38cfb77.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The section for every *_bold.json: the task's description and instructions asked once, written into every BOLD run's sidecar.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

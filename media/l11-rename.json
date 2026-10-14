@@ -1,0 +1,41 @@
+{
+ "id": "l11-rename",
+ "kind": "figure",
+ "width": 980,
+ "height": 720,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "980": "l11-rename-dark-980-96e587e0.avif",
+    "1960": "l11-rename-dark-1960-eb703032.avif"
+   },
+   "webp": {
+    "980": "l11-rename-dark-980-92ee86d1.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "980": "l11-rename-light-980-6e7561da.avif",
+    "1960": "l11-rename-light-1960-d1018e87.avif"
+   },
+   "webp": {
+    "980": "l11-rename-light-980-85e9b78c.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Rename an entity: the task motorimagery renamed to imagery, with every file that moves and every reference that follows.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

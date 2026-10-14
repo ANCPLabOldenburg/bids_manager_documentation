@@ -1,0 +1,41 @@
+{
+ "id": "l10-sidecar-tree",
+ "kind": "figure",
+ "width": 828,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "828": "l10-sidecar-tree-dark-828-6ac6031f.avif",
+    "1656": "l10-sidecar-tree-dark-1656-0c4e1066.avif"
+   },
+   "webp": {
+    "828": "l10-sidecar-tree-dark-828-db73bb0b.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "828": "l10-sidecar-tree-light-828-54eaf6bf.avif",
+    "1656": "l10-sidecar-tree-light-1656-cc46a55b.avif"
+   },
+   "webp": {
+    "828": "l10-sidecar-tree-light-828-ecf777a2.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The same sidecar in the Tree view: keys and values as the file holds them.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

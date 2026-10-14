@@ -1,0 +1,36 @@
+# The About page's comparison: the same situations, with a converter alone and
+# with BIDS Manager. Every case is one the course or a guide shows on real
+# sample data; the link goes there.
+cases:
+  - title: One participant, four subjects
+    alone: "Each source is converted under its own identity: the MRI scanner's patient ID, the PET study's, the EEG folder's code, the eye tracker's folder. One person becomes four subjects, and nobody notices until the analysis."
+    bm: "Every recording is a row in one table before anything is written. The course's sample proposes four subjects for one participant; one bulk edit sets them all to sub-001."
+    link: /learn/04-scan-table/
+  - title: A FLAIR called T2w
+    alone: "A converter that trusts the series name writes ses-pre_T2w as a T2-weighted image, because that is what someone typed at the scanner."
+    bm: "The parameter classifier reads how the series was acquired: an inversion long enough to null the fluid. It is named FLAIR, and Why this name shows the evidence."
+    link: /concepts/how-names-are-decided/
+  - title: A fieldmap that corrects nothing
+    alone: "The fieldmaps are written, but nothing links them to the runs they correct. The dataset is valid, and the correction never happens."
+    bm: "Each fieldmap is linked to the runs it corrects, by their shim settings and then by time, with IntendedFor and with B0FieldIdentifier and B0FieldSource, the way fMRIPrep reads them."
+    link: /concepts/fieldmap-links/
+  - title: A task nobody described
+    alone: "TaskDescription and Instructions are not in any file, so they are not in the dataset, and nothing says they are missing."
+    bm: "A template for every BOLD sidecar asks for them once and writes the answer into every run; what nobody answered is a TODO placeholder that validation counts until it is filled."
+    link: /learn/07-metadata/
+  - title: A PET dose on a sheet of paper
+    alone: "The injected mass, the specific activity and the mode of administration are not in the DICOM header, so the PET sidecar lacks fields BIDS requires."
+    bm: "The lab's dose sheet is imported before converting: seven fields of the course's sheet land in the PET sidecar, checked where they will be written."
+    link: /guides/pet/
+  - title: Events written as codes
+    alone: "The EEG's events.tsv lists the trigger codes T0, T1 and T2, and only the person who wrote the experiment knows what they mean."
+    bm: "Each code is given a label once, in Dataset metadata, and the labels are written into the trial_type column of every run."
+    link: /guides/eeg/
+  - title: A face in a head scan
+    alone: "An anatomical image holds the participant's face; anyone can render it from the dataset."
+    bm: "Images are defaced during or after the conversion, the result is checked side by side, and the quality check reports a face still present."
+    link: /guides/defacing/
+  - title: A renamed file that breaks its references
+    alone: "Renaming a file by hand leaves the scans table, the IntendedFor of the fieldmaps and the participants table naming a file that no longer exists."
+    bm: "The Editor's renaming moves the file and every reference to it in one operation: the scans tables, IntendedFor and the other fields that name files, the participants and sessions tables, and TaskName where it was derived from the task."
+    link: /learn/11-dataset-shape/

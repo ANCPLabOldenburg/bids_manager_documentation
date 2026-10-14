@@ -1,0 +1,41 @@
+{
+ "id": "t-meg-butterfly",
+ "kind": "figure",
+ "width": 1294,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1294": "t-meg-butterfly-dark-1294-b2b99015.avif",
+    "2588": "t-meg-butterfly-dark-2588-92d58d82.avif"
+   },
+   "webp": {
+    "1294": "t-meg-butterfly-dark-1294-c07ef94d.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1294": "t-meg-butterfly-light-1294-de2f3380.avif",
+    "2588": "t-meg-butterfly-light-2588-7ed10d89.avif"
+   },
+   "webp": {
+    "1294": "t-meg-butterfly-light-1294-0456b109.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The MEG magnetometers in butterfly mode: every channel drawn on one axis.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "7bb684f",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

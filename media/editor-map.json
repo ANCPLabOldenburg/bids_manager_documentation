@@ -1,0 +1,92 @@
+{
+ "id": "editor-map",
+ "kind": "figure",
+ "width": 1600,
+ "height": 1000,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1600": "editor-map-dark-1600-9eca1682.avif",
+    "3200": "editor-map-dark-3200-47d6cd85.avif"
+   },
+   "webp": {
+    "1600": "editor-map-dark-1600-0f188764.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1600": "editor-map-light-1600-174cad3e.avif",
+    "3200": "editor-map-light-3200-b4590f36.avif"
+   },
+   "webp": {
+    "1600": "editor-map-light-1600-a27883ec.webp"
+   }
+  }
+ },
+ "regions": [
+  {
+   "key": "toolbar",
+   "label": "The toolbar: open, undo, validate, deep checks, tools, the counts",
+   "x": 0.0,
+   "y": 0.053,
+   "w": 1.0,
+   "h": 0.05,
+   "mx": 0.00125,
+   "my": 0.078
+  },
+  {
+   "key": "path",
+   "label": "The dataset and how it is open",
+   "x": 0.0,
+   "y": 0.097,
+   "w": 1.0,
+   "h": 0.054,
+   "mx": 0.00125,
+   "my": 0.124
+  },
+  {
+   "key": "tree",
+   "label": "The BIDS tree",
+   "x": 0.00313,
+   "y": 0.149,
+   "w": 0.185,
+   "h": 0.82,
+   "mx": 0.00438,
+   "my": 0.151
+  },
+  {
+   "key": "viewer",
+   "label": "The viewer: a form, a table, an image, a signal",
+   "x": 0.18937,
+   "y": 0.149,
+   "w": 0.465,
+   "h": 0.82,
+   "mx": 0.19062,
+   "my": 0.151
+  },
+  {
+   "key": "validation",
+   "label": "Validation",
+   "x": 0.65563,
+   "y": 0.149,
+   "w": 0.34125,
+   "h": 0.82,
+   "mx": 0.65687,
+   "my": 0.151
+  }
+ ],
+ "alt": "The Editor on the converted sample: the toolbar, the dataset's path, the BIDS tree with its validation marks, the BOLD run's sidecar as a form, and its findings.",
+ "window": true,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

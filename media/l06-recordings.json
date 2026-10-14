@@ -1,0 +1,41 @@
+{
+ "id": "l06-recordings",
+ "kind": "figure",
+ "width": 302,
+ "height": 598,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "302": "l06-recordings-dark-302-7f47faca.avif",
+    "604": "l06-recordings-dark-604-9f3be8f5.avif"
+   },
+   "webp": {
+    "302": "l06-recordings-dark-302-b0e73f99.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "302": "l06-recordings-light-302-020d4c49.avif",
+    "604": "l06-recordings-light-604-d9517010.avif"
+   },
+   "webp": {
+    "302": "l06-recordings-light-302-10e28735.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The Recordings view beside the table: each kind of recording, and which subjects have it.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

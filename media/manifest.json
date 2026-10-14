@@ -1,0 +1,4101 @@
+{
+ "assets": {
+  "converter-map": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1600": "converter-map-dark-1600-09834d01.avif",
+      "3200": "converter-map-dark-3200-d8fc3a57.avif"
+     },
+     "webp": {
+      "1600": "converter-map-dark-1600-3a7cc312.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1600": "converter-map-light-1600-af56b785.avif",
+      "3200": "converter-map-light-3200-a8a19803.avif"
+     },
+     "webp": {
+      "1600": "converter-map-light-1600-0f1d18e0.webp"
+     }
+    }
+   },
+   "bytes": 472029,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "header": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1440": "header-dark-1440-f2cb1320.avif",
+      "2880": "header-dark-2880-e0fe5490.avif"
+     },
+     "webp": {
+      "1440": "header-dark-1440-79a846c3.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1440": "header-light-1440-31dc0b5b.avif",
+      "2880": "header-light-2880-beb54a7e.avif"
+     },
+     "webp": {
+      "1440": "header-light-1440-089d6b87.webp"
+     }
+    }
+   },
+   "bytes": 28658,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "window-home": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1440": "window-home-dark-1440-c1cfd6a1.avif",
+      "2880": "window-home-dark-2880-7fd85bb4.avif"
+     },
+     "webp": {
+      "1440": "window-home-dark-1440-1de52585.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1440": "window-home-light-1440-2b887f6a.avif",
+      "2880": "window-home-light-2880-906d5bc2.avif"
+     },
+     "webp": {
+      "1440": "window-home-light-1440-4b7fba42.webp"
+     }
+    }
+   },
+   "bytes": 300525,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l03-scan": {
+   "kind": "clip",
+   "files": {
+    "dark": {
+     "mp4": "l03-scan-dark-7e430080.mp4",
+     "poster": "l03-scan-dark-poster-3f9cba97.webp"
+    },
+    "light": {
+     "mp4": "l03-scan-light-87cfab4a.mp4",
+     "poster": "l03-scan-light-poster-9b928800.webp"
+    }
+   },
+   "bytes": 1486762,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l04-bulk-subject": {
+   "kind": "clip",
+   "files": {
+    "dark": {
+     "mp4": "l04-bulk-subject-dark-c9e7c110.mp4",
+     "poster": "l04-bulk-subject-dark-poster-e69dd85a.webp"
+    },
+    "light": {
+     "mp4": "l04-bulk-subject-light-b3717289.mp4",
+     "poster": "l04-bulk-subject-light-poster-12ea6e51.webp"
+    }
+   },
+   "bytes": 1698296,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "settings-display": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "900": "settings-display-dark-900-cea44ec7.avif",
+      "1800": "settings-display-dark-1800-0bd2c3dd.avif"
+     },
+     "webp": {
+      "900": "settings-display-dark-900-2c749060.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "900": "settings-display-light-900-a666d8be.avif",
+      "1800": "settings-display-light-1800-fc76ce10.avif"
+     },
+     "webp": {
+      "900": "settings-display-light-900-52a8e1db.webp"
+     }
+    }
+   },
+   "bytes": 212367,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "theme-menu": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "199": "theme-menu-dark-199-d4a30684.avif",
+      "398": "theme-menu-dark-398-9ced8938.avif"
+     },
+     "webp": {
+      "199": "theme-menu-dark-199-4d27e4ce.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "199": "theme-menu-light-199-4020d8f9.avif",
+      "398": "theme-menu-light-398-3cee97b0.avif"
+     },
+     "webp": {
+      "199": "theme-menu-light-199-90201cbd.webp"
+     }
+    }
+   },
+   "bytes": 67892,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "settings-bids-version": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "900": "settings-bids-version-dark-900-9c1359cf.avif",
+      "1800": "settings-bids-version-dark-1800-dee7188d.avif"
+     },
+     "webp": {
+      "900": "settings-bids-version-dark-900-e29d21c7.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "900": "settings-bids-version-light-900-38fb10ca.avif",
+      "1800": "settings-bids-version-light-1800-dd8d4353.avif"
+     },
+     "webp": {
+      "900": "settings-bids-version-light-900-d7c35133.webp"
+     }
+    }
+   },
+   "bytes": 140986,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "settings-classification": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "900": "settings-classification-dark-900-02c777dc.avif",
+      "1800": "settings-classification-dark-1800-98496a83.avif"
+     },
+     "webp": {
+      "900": "settings-classification-dark-900-84e4658b.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "900": "settings-classification-light-900-9f7aab51.avif",
+      "1800": "settings-classification-light-1800-ca3e56b1.avif"
+     },
+     "webp": {
+      "900": "settings-classification-light-900-d60035e5.webp"
+     }
+    }
+   },
+   "bytes": 216693,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "settings-shortcuts": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "900": "settings-shortcuts-dark-900-b86f40f0.avif",
+      "1800": "settings-shortcuts-dark-1800-259bb1f5.avif"
+     },
+     "webp": {
+      "900": "settings-shortcuts-dark-900-b0e5c5de.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "900": "settings-shortcuts-light-900-fe501224.avif",
+      "1800": "settings-shortcuts-light-1800-05ed0659.avif"
+     },
+     "webp": {
+      "900": "settings-shortcuts-light-900-f422f209.webp"
+     }
+    }
+   },
+   "bytes": 194378,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "settings-system": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "900": "settings-system-dark-900-7329c57c.avif",
+      "1800": "settings-system-dark-1800-ca3fa9d9.avif"
+     },
+     "webp": {
+      "900": "settings-system-dark-900-948043ec.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "900": "settings-system-light-900-8dad57b3.avif",
+      "1800": "settings-system-light-1800-1b839d45.avif"
+     },
+     "webp": {
+      "900": "settings-system-light-900-2947af72.webp"
+     }
+    }
+   },
+   "bytes": 130089,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "settings-validation": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "900": "settings-validation-dark-900-723b95ff.avif",
+      "1800": "settings-validation-dark-1800-a18d2a90.avif"
+     },
+     "webp": {
+      "900": "settings-validation-dark-900-d45bbb71.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "900": "settings-validation-light-900-c550a60a.avif",
+      "1800": "settings-validation-light-1800-262dc042.avif"
+     },
+     "webp": {
+      "900": "settings-validation-light-900-db32460d.webp"
+     }
+    }
+   },
+   "bytes": 151289,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "settings-viewer": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "900": "settings-viewer-dark-900-95df9560.avif",
+      "1800": "settings-viewer-dark-1800-1b232f52.avif"
+     },
+     "webp": {
+      "900": "settings-viewer-dark-900-9ca66f1b.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "900": "settings-viewer-light-900-864b7245.avif",
+      "1800": "settings-viewer-light-1800-b875ae15.avif"
+     },
+     "webp": {
+      "900": "settings-viewer-light-900-d06fffdb.webp"
+     }
+    }
+   },
+   "bytes": 164407,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "home-convert": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1600": "home-convert-dark-1600-05460731.avif",
+      "3200": "home-convert-dark-3200-8c81a4f7.avif"
+     },
+     "webp": {
+      "1600": "home-convert-dark-1600-94acb14a.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1600": "home-convert-light-1600-69de2bdf.avif",
+      "3200": "home-convert-light-3200-78e26555.avif"
+     },
+     "webp": {
+      "1600": "home-convert-light-1600-2e4c8b34.webp"
+     }
+    }
+   },
+   "bytes": 511411,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "home-curate": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1600": "home-curate-dark-1600-53a2575d.avif",
+      "3200": "home-curate-dark-3200-d8492dc4.avif"
+     },
+     "webp": {
+      "1600": "home-curate-dark-1600-38aa4eec.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1600": "home-curate-light-1600-e0579ccb.avif",
+      "3200": "home-curate-light-3200-d7e51e31.avif"
+     },
+     "webp": {
+      "1600": "home-curate-light-1600-851b5a3d.webp"
+     }
+    }
+   },
+   "bytes": 416756,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "home-editor": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1600": "home-editor-dark-1600-e71c0e26.avif",
+      "3200": "home-editor-dark-3200-67735269.avif"
+     },
+     "webp": {
+      "1600": "home-editor-dark-1600-de9db01f.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1600": "home-editor-light-1600-1079d867.avif",
+      "3200": "home-editor-light-3200-7e3af531.avif"
+     },
+     "webp": {
+      "1600": "home-editor-light-1600-e7b1bfa5.webp"
+     }
+    }
+   },
+   "bytes": 584575,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2 (OL_3844, consented)"
+   },
+   "published": "2026-10-14"
+  },
+  "home-scan": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1600": "home-scan-dark-1600-03992894.avif",
+      "3200": "home-scan-dark-3200-be5fe0b6.avif"
+     },
+     "webp": {
+      "1600": "home-scan-dark-1600-fce76055.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1600": "home-scan-light-1600-00defbc0.avif",
+      "3200": "home-scan-light-3200-f1fdaf1a.avif"
+     },
+     "webp": {
+      "1600": "home-scan-light-1600-1bd711dc.webp"
+     }
+    }
+   },
+   "bytes": 515314,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l02-after-create": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1440": "l02-after-create-dark-1440-e41421ad.avif",
+      "2880": "l02-after-create-dark-2880-883f1992.avif"
+     },
+     "webp": {
+      "1440": "l02-after-create-dark-1440-9c8936bd.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1440": "l02-after-create-light-1440-1a6079d3.avif",
+      "2880": "l02-after-create-light-2880-cb190d09.avif"
+     },
+     "webp": {
+      "1440": "l02-after-create-light-1440-d0e77e97.webp"
+     }
+    }
+   },
+   "bytes": 201042,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l02-create": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "522": "l02-create-dark-522-30978756.avif",
+      "1044": "l02-create-dark-1044-5933bad2.avif"
+     },
+     "webp": {
+      "522": "l02-create-dark-522-15e3b8ac.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "522": "l02-create-light-522-bcd6dce8.avif",
+      "1044": "l02-create-light-1044-69de99fb.avif"
+     },
+     "webp": {
+      "522": "l02-create-light-522-4500209e.webp"
+     }
+    }
+   },
+   "bytes": 50998,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l02-switcher": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "820": "l02-switcher-dark-820-d478e332.avif",
+      "1640": "l02-switcher-dark-1640-6d4dfde4.avif"
+     },
+     "webp": {
+      "820": "l02-switcher-dark-820-b9398036.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "820": "l02-switcher-light-820-e1d5090d.avif",
+      "1640": "l02-switcher-light-1640-95a448dc.avif"
+     },
+     "webp": {
+      "820": "l02-switcher-light-820-1978bacc.webp"
+     }
+    }
+   },
+   "bytes": 107822,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l03-after-scan": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1600": "l03-after-scan-dark-1600-f603ec69.avif",
+      "3200": "l03-after-scan-dark-3200-84b283e1.avif"
+     },
+     "webp": {
+      "1600": "l03-after-scan-dark-1600-e826483e.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1600": "l03-after-scan-light-1600-1058025e.avif",
+      "3200": "l03-after-scan-light-3200-1896d74d.avif"
+     },
+     "webp": {
+      "1600": "l03-after-scan-light-1600-ef90ae3d.webp"
+     }
+    }
+   },
+   "bytes": 585104,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l03-chips": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1166": "l03-chips-dark-1166-9e1d0af1.avif",
+      "2332": "l03-chips-dark-2332-d0de5495.avif"
+     },
+     "webp": {
+      "1166": "l03-chips-dark-1166-c69c6ec3.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1166": "l03-chips-light-1166-6b58eef6.avif",
+      "2332": "l03-chips-light-2332-5f821be4.avif"
+     },
+     "webp": {
+      "1166": "l03-chips-light-1166-542b81fd.webp"
+     }
+    }
+   },
+   "bytes": 31922,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l03-log": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1584": "l03-log-dark-1584-16ef7100.avif",
+      "3168": "l03-log-dark-3168-b503a833.avif"
+     },
+     "webp": {
+      "1584": "l03-log-dark-1584-d352d1d3.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1584": "l03-log-light-1584-144ff9ab.avif",
+      "3168": "l03-log-light-3168-6783ef74.avif"
+     },
+     "webp": {
+      "1584": "l03-log-light-1584-220f113c.webp"
+     }
+    }
+   },
+   "bytes": 115854,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l03-raw-bar": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1600": "l03-raw-bar-dark-1600-95ebb6bf.avif",
+      "3200": "l03-raw-bar-dark-3200-3116e0c2.avif"
+     },
+     "webp": {
+      "1600": "l03-raw-bar-dark-1600-69532bad.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1600": "l03-raw-bar-light-1600-53c1f096.avif",
+      "3200": "l03-raw-bar-light-3200-8cedf162.avif"
+     },
+     "webp": {
+      "1600": "l03-raw-bar-light-1600-e4ccc6c7.webp"
+     }
+    }
+   },
+   "bytes": 56151,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l03-raw-tree": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "244": "l03-raw-tree-dark-244-6d4bfea5.avif",
+      "488": "l03-raw-tree-dark-488-778bb44e.avif"
+     },
+     "webp": {
+      "244": "l03-raw-tree-dark-244-f034b4d8.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "244": "l03-raw-tree-light-244-3efb9fe4.avif",
+      "488": "l03-raw-tree-light-488-520d533d.avif"
+     },
+     "webp": {
+      "244": "l03-raw-tree-light-244-9d706a62.webp"
+     }
+    }
+   },
+   "bytes": 48579,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l03-settings-rules": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "900": "l03-settings-rules-dark-900-a7338f3b.avif",
+      "1800": "l03-settings-rules-dark-1800-9ff54f58.avif"
+     },
+     "webp": {
+      "900": "l03-settings-rules-dark-900-3603fc63.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "900": "l03-settings-rules-light-900-037be9d1.avif",
+      "1800": "l03-settings-rules-light-1800-7c072b1c.avif"
+     },
+     "webp": {
+      "900": "l03-settings-rules-light-900-01371572.webp"
+     }
+    }
+   },
+   "bytes": 165464,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l03-settings-scan": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "900": "l03-settings-scan-dark-900-3eedc594.avif",
+      "1800": "l03-settings-scan-dark-1800-e5e64209.avif"
+     },
+     "webp": {
+      "900": "l03-settings-scan-dark-900-eecf2b9f.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "900": "l03-settings-scan-light-900-f195acd6.avif",
+      "1800": "l03-settings-scan-light-1800-0c379070.avif"
+     },
+     "webp": {
+      "900": "l03-settings-scan-light-900-342287d1.webp"
+     }
+    }
+   },
+   "bytes": 230308,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l03-skipped": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "560": "l03-skipped-dark-560-cf24f71e.avif",
+      "1120": "l03-skipped-dark-1120-ee5076dc.avif"
+     },
+     "webp": {
+      "560": "l03-skipped-dark-560-e3094756.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "560": "l03-skipped-light-560-b13c67cf.avif",
+      "1120": "l03-skipped-light-1120-d246ea22.avif"
+     },
+     "webp": {
+      "560": "l03-skipped-light-560-1c4f6000.webp"
+     }
+    }
+   },
+   "bytes": 174542,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l03-warnings": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "560": "l03-warnings-dark-560-d52d42a1.avif",
+      "1120": "l03-warnings-dark-1120-47e0b753.avif"
+     },
+     "webp": {
+      "560": "l03-warnings-dark-560-be324e70.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "560": "l03-warnings-light-560-fd531ad1.avif",
+      "1120": "l03-warnings-light-1120-2bdc5e70.avif"
+     },
+     "webp": {
+      "560": "l03-warnings-light-560-50bf92b1.webp"
+     }
+    }
+   },
+   "bytes": 168125,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l04-bulk-dialog": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "640": "l04-bulk-dialog-dark-640-8e7f13f2.avif",
+      "1280": "l04-bulk-dialog-dark-1280-1f1b36a6.avif"
+     },
+     "webp": {
+      "640": "l04-bulk-dialog-dark-640-723475f1.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "640": "l04-bulk-dialog-light-640-6291faba.avif",
+      "1280": "l04-bulk-dialog-light-1280-8dafe569.avif"
+     },
+     "webp": {
+      "640": "l04-bulk-dialog-light-640-21426fc9.webp"
+     }
+    }
+   },
+   "bytes": 157479,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l04-columns": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "600": "l04-columns-dark-600-8e40f547.avif",
+      "1200": "l04-columns-dark-1200-0ff94324.avif"
+     },
+     "webp": {
+      "600": "l04-columns-dark-600-76b4ca47.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "600": "l04-columns-light-600-9be77313.avif",
+      "1200": "l04-columns-light-1200-2448bec8.avif"
+     },
+     "webp": {
+      "600": "l04-columns-light-600-1466a3ac.webp"
+     }
+    }
+   },
+   "bytes": 209316,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l04-edit-cell": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1018": "l04-edit-cell-dark-1018-2c627081.avif",
+      "2036": "l04-edit-cell-dark-2036-bad4f59e.avif"
+     },
+     "webp": {
+      "1018": "l04-edit-cell-dark-1018-f75c7fbd.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1018": "l04-edit-cell-light-1018-fc89a5ac.avif",
+      "2036": "l04-edit-cell-light-2036-49c96e65.avif"
+     },
+     "webp": {
+      "1018": "l04-edit-cell-light-1018-df1e88b4.webp"
+     }
+    }
+   },
+   "bytes": 117144,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l04-table-after": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1018": "l04-table-after-dark-1018-baeb1cce.avif",
+      "2036": "l04-table-after-dark-2036-c0aa9302.avif"
+     },
+     "webp": {
+      "1018": "l04-table-after-dark-1018-e93c1b0d.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1018": "l04-table-after-light-1018-9b598957.avif",
+      "2036": "l04-table-after-light-2036-53b5722a.avif"
+     },
+     "webp": {
+      "1018": "l04-table-after-light-1018-d1604e80.webp"
+     }
+    }
+   },
+   "bytes": 228764,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l04-table": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1018": "l04-table-dark-1018-91b97270.avif",
+      "2036": "l04-table-dark-2036-240e96ac.avif"
+     },
+     "webp": {
+      "1018": "l04-table-dark-1018-85683023.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1018": "l04-table-light-1018-c81f334e.avif",
+      "2036": "l04-table-light-2036-168ef766.avif"
+     },
+     "webp": {
+      "1018": "l04-table-light-1018-8a2da57e.webp"
+     }
+    }
+   },
+   "bytes": 230876,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l05-dicom": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "980": "l05-dicom-dark-980-8a4f25e5.avif",
+      "1960": "l05-dicom-dark-1960-ee8e6600.avif"
+     },
+     "webp": {
+      "980": "l05-dicom-dark-980-72935528.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "980": "l05-dicom-light-980-1cb77f66.avif",
+      "1960": "l05-dicom-light-1960-dc3e280a.avif"
+     },
+     "webp": {
+      "980": "l05-dicom-light-980-91f0dfc3.webp"
+     }
+    }
+   },
+   "bytes": 244760,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l05-mrsref": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "430": "l05-mrsref-dark-430-21a7e642.avif",
+      "860": "l05-mrsref-dark-860-31899e4a.avif"
+     },
+     "webp": {
+      "430": "l05-mrsref-dark-430-7a4c921e.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "430": "l05-mrsref-light-430-54d720a8.avif",
+      "860": "l05-mrsref-light-860-1397e8c0.avif"
+     },
+     "webp": {
+      "430": "l05-mrsref-light-430-fca64d17.webp"
+     }
+    }
+   },
+   "bytes": 44951,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l05-preview": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1000": "l05-preview-dark-1000-6701b26f.avif",
+      "2000": "l05-preview-dark-2000-124eb2d7.avif"
+     },
+     "webp": {
+      "1000": "l05-preview-dark-1000-b4a1766b.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1000": "l05-preview-light-1000-07cbb322.avif",
+      "2000": "l05-preview-light-2000-845fb2ab.avif"
+     },
+     "webp": {
+      "1000": "l05-preview-light-1000-41387578.webp"
+     }
+    }
+   },
+   "bytes": 315381,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2 (OL_3844, consented)"
+   },
+   "published": "2026-10-14"
+  },
+  "l05-properties": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "430": "l05-properties-dark-430-e75d4a06.avif",
+      "860": "l05-properties-dark-860-44183e98.avif"
+     },
+     "webp": {
+      "430": "l05-properties-dark-430-52a3ddb9.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "430": "l05-properties-light-430-e65887ad.avif",
+      "860": "l05-properties-light-860-07867349.avif"
+     },
+     "webp": {
+      "430": "l05-properties-light-430-77b02130.webp"
+     }
+    }
+   },
+   "bytes": 47910,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l05-row-menu": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1244": "l05-row-menu-dark-1244-c63e3a5f.avif",
+      "2488": "l05-row-menu-dark-2488-93d6bed3.avif"
+     },
+     "webp": {
+      "1244": "l05-row-menu-dark-1244-d88dacf1.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1244": "l05-row-menu-light-1244-00bbc8f6.avif",
+      "2488": "l05-row-menu-light-2488-a52efa4d.avif"
+     },
+     "webp": {
+      "1244": "l05-row-menu-light-1244-f38f2047.webp"
+     }
+    }
+   },
+   "bytes": 255761,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l05-why": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "560": "l05-why-dark-560-c41ec84c.avif",
+      "1120": "l05-why-dark-1120-b8ff4eb2.avif"
+     },
+     "webp": {
+      "560": "l05-why-dark-560-de74fa11.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "560": "l05-why-light-560-d08a7ed0.avif",
+      "1120": "l05-why-light-1120-7ba653a3.avif"
+     },
+     "webp": {
+      "560": "l05-why-light-560-4ee8a782.webp"
+     }
+    }
+   },
+   "bytes": 128906,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l06-overview-after": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1018": "l06-overview-after-dark-1018-2d8c312f.avif",
+      "2036": "l06-overview-after-dark-2036-bab08bea.avif"
+     },
+     "webp": {
+      "1018": "l06-overview-after-dark-1018-156505a7.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1018": "l06-overview-after-light-1018-737505dd.avif",
+      "2036": "l06-overview-after-light-2036-0ac58cd6.avif"
+     },
+     "webp": {
+      "1018": "l06-overview-after-light-1018-1c5aded8.webp"
+     }
+    }
+   },
+   "bytes": 152587,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l06-overview-before": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1018": "l06-overview-before-dark-1018-05923172.avif",
+      "2036": "l06-overview-before-dark-2036-6ab7463d.avif"
+     },
+     "webp": {
+      "1018": "l06-overview-before-dark-1018-c2f4eb9c.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1018": "l06-overview-before-light-1018-f43acf13.avif",
+      "2036": "l06-overview-before-light-2036-ed30e46e.avif"
+     },
+     "webp": {
+      "1018": "l06-overview-before-light-1018-19314dee.webp"
+     }
+    }
+   },
+   "bytes": 172989,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l06-preview-json": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "558": "l06-preview-json-dark-558-89503ce3.avif",
+      "1116": "l06-preview-json-dark-1116-4b33f443.avif"
+     },
+     "webp": {
+      "558": "l06-preview-json-dark-558-367d09aa.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "558": "l06-preview-json-light-558-3d811321.avif",
+      "1116": "l06-preview-json-light-1116-d08e23b0.avif"
+     },
+     "webp": {
+      "558": "l06-preview-json-light-558-09be9df3.webp"
+     }
+    }
+   },
+   "bytes": 132333,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l06-recordings": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "302": "l06-recordings-dark-302-7f47faca.avif",
+      "604": "l06-recordings-dark-604-9f3be8f5.avif"
+     },
+     "webp": {
+      "302": "l06-recordings-dark-302-b0e73f99.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "302": "l06-recordings-light-302-020d4c49.avif",
+      "604": "l06-recordings-light-604-d9517010.avif"
+     },
+     "webp": {
+      "302": "l06-recordings-light-302-10e28735.webp"
+     }
+    }
+   },
+   "bytes": 81804,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l06-structure": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "300": "l06-structure-dark-300-e6b8c6e6.avif",
+      "600": "l06-structure-dark-600-5bb45165.avif"
+     },
+     "webp": {
+      "300": "l06-structure-dark-300-c6037367.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "300": "l06-structure-light-300-5c97b536.avif",
+      "600": "l06-structure-light-600-2fc2616e.avif"
+     },
+     "webp": {
+      "300": "l06-structure-light-300-c91c1865.webp"
+     }
+    }
+   },
+   "bytes": 87873,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l07-description": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "700": "l07-description-dark-700-e35789da.avif",
+      "1400": "l07-description-dark-1400-468cdd37.avif"
+     },
+     "webp": {
+      "700": "l07-description-dark-700-a16839f4.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "700": "l07-description-light-700-9d1c7991.avif",
+      "1400": "l07-description-light-1400-ba61711e.avif"
+     },
+     "webp": {
+      "700": "l07-description-light-700-cc114b2a.webp"
+     }
+    }
+   },
+   "bytes": 176676,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l07-dialog": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "700": "l07-dialog-dark-700-da42456d.avif",
+      "1400": "l07-dialog-dark-1400-a82eaa4e.avif"
+     },
+     "webp": {
+      "700": "l07-dialog-dark-700-2deccd1c.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "700": "l07-dialog-light-700-c809b8f0.avif",
+      "1400": "l07-dialog-light-1400-6b08f649.avif"
+     },
+     "webp": {
+      "700": "l07-dialog-light-700-2fe8fb5b.webp"
+     }
+    }
+   },
+   "bytes": 175029,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l07-pet-dose": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "700": "l07-pet-dose-dark-700-1d7f1a79.avif",
+      "1400": "l07-pet-dose-dark-1400-9fb36e56.avif"
+     },
+     "webp": {
+      "700": "l07-pet-dose-dark-700-7806b3aa.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "700": "l07-pet-dose-light-700-059c52b6.avif",
+      "1400": "l07-pet-dose-light-1400-bfa22231.avif"
+     },
+     "webp": {
+      "700": "l07-pet-dose-light-700-247dae3a.webp"
+     }
+    }
+   },
+   "bytes": 276703,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l07-properties-minimal": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "355": "l07-properties-minimal-dark-355-e04a012d.avif",
+      "710": "l07-properties-minimal-dark-710-14d66b76.avif"
+     },
+     "webp": {
+      "355": "l07-properties-minimal-dark-355-90c803c6.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "355": "l07-properties-minimal-light-355-456492e9.avif",
+      "710": "l07-properties-minimal-light-710-dd6bcdf9.avif"
+     },
+     "webp": {
+      "355": "l07-properties-minimal-light-355-42498480.webp"
+     }
+    }
+   },
+   "bytes": 85481,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l07-template-bold": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "700": "l07-template-bold-dark-700-25a53f44.avif",
+      "1400": "l07-template-bold-dark-1400-1ed609ba.avif"
+     },
+     "webp": {
+      "700": "l07-template-bold-dark-700-78f54cb3.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "700": "l07-template-bold-light-700-c2ae687c.avif",
+      "1400": "l07-template-bold-light-1400-eb93c89d.avif"
+     },
+     "webp": {
+      "700": "l07-template-bold-light-700-c38cfb77.webp"
+     }
+    }
+   },
+   "bytes": 203542,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l08-output-tree": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "420": "l08-output-tree-dark-420-bf6ba110.avif",
+      "840": "l08-output-tree-dark-840-ea5086e3.avif"
+     },
+     "webp": {
+      "420": "l08-output-tree-dark-420-259cff70.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "420": "l08-output-tree-light-420-a863cbb4.avif",
+      "840": "l08-output-tree-light-840-6b7c6cd7.avif"
+     },
+     "webp": {
+      "420": "l08-output-tree-light-420-0b3fb888.webp"
+     }
+    }
+   },
+   "bytes": 65290,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l08-settings-chain": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "900": "l08-settings-chain-dark-900-b3008122.avif",
+      "1800": "l08-settings-chain-dark-1800-8f476f6e.avif"
+     },
+     "webp": {
+      "900": "l08-settings-chain-dark-900-cec66c5c.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "900": "l08-settings-chain-light-900-04bc5556.avif",
+      "1800": "l08-settings-chain-light-1800-6bbde727.avif"
+     },
+     "webp": {
+      "900": "l08-settings-chain-light-900-1d1fdbd4.webp"
+     }
+    }
+   },
+   "bytes": 258709,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l08-settings-convert": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "900": "l08-settings-convert-dark-900-584c0625.avif",
+      "1800": "l08-settings-convert-dark-1800-dcc540d8.avif"
+     },
+     "webp": {
+      "900": "l08-settings-convert-dark-900-dfc304c4.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "900": "l08-settings-convert-light-900-f904d693.avif",
+      "1800": "l08-settings-convert-light-1800-33d105c7.avif"
+     },
+     "webp": {
+      "900": "l08-settings-convert-light-900-dac2b14e.webp"
+     }
+    }
+   },
+   "bytes": 245636,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-13",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "editor-map": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1600": "editor-map-dark-1600-9eca1682.avif",
+      "3200": "editor-map-dark-3200-47d6cd85.avif"
+     },
+     "webp": {
+      "1600": "editor-map-dark-1600-0f188764.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1600": "editor-map-light-1600-174cad3e.avif",
+      "3200": "editor-map-light-3200-b4590f36.avif"
+     },
+     "webp": {
+      "1600": "editor-map-light-1600-a27883ec.webp"
+     }
+    }
+   },
+   "bytes": 534522,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l01-tree": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "290": "l01-tree-dark-290-cc435661.avif",
+      "580": "l01-tree-dark-580-7bd63909.avif"
+     },
+     "webp": {
+      "290": "l01-tree-dark-290-b72332c9.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "290": "l01-tree-light-290-bace680e.avif",
+      "580": "l01-tree-light-580-4b9d4aa2.avif"
+     },
+     "webp": {
+      "290": "l01-tree-light-290-9c0835ca.webp"
+     }
+    }
+   },
+   "bytes": 143530,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l08-log": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1584": "l08-log-dark-1584-5eb6d9a1.avif",
+      "3168": "l08-log-dark-3168-1f7374ba.avif"
+     },
+     "webp": {
+      "1584": "l08-log-dark-1584-bf0db0b0.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1584": "l08-log-light-1584-ab43d39d.avif",
+      "3168": "l08-log-light-3168-27caabe5.avif"
+     },
+     "webp": {
+      "1584": "l08-log-light-1584-6fdf6fa9.webp"
+     }
+    }
+   },
+   "bytes": 53102,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l09-error": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1326": "l09-error-dark-1326-f912e73b.avif",
+      "2652": "l09-error-dark-2652-6ba3a3bb.avif"
+     },
+     "webp": {
+      "1326": "l09-error-dark-1326-566eaf3d.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1326": "l09-error-light-1326-143749b7.avif",
+      "2652": "l09-error-light-2652-bc7bc25f.avif"
+     },
+     "webp": {
+      "1326": "l09-error-light-1326-1068e547.webp"
+     }
+    }
+   },
+   "bytes": 399999,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l09-fixups": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "760": "l09-fixups-dark-760-71712edf.avif",
+      "1520": "l09-fixups-dark-1520-9c94f863.avif"
+     },
+     "webp": {
+      "760": "l09-fixups-dark-760-7fee1393.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "760": "l09-fixups-light-760-732b6336.avif",
+      "1520": "l09-fixups-light-1520-9a52d0bb.avif"
+     },
+     "webp": {
+      "760": "l09-fixups-light-760-7988f0c5.webp"
+     }
+    }
+   },
+   "bytes": 264219,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l09-toolbar": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1600": "l09-toolbar-dark-1600-37d8fd42.avif",
+      "3200": "l09-toolbar-dark-3200-8be5ed41.avif"
+     },
+     "webp": {
+      "1600": "l09-toolbar-dark-1600-ac05fed6.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1600": "l09-toolbar-light-1600-d9dbcf0f.avif",
+      "3200": "l09-toolbar-light-3200-a69d3fee.avif"
+     },
+     "webp": {
+      "1600": "l09-toolbar-light-1600-8d7155b8.webp"
+     }
+    }
+   },
+   "bytes": 41120,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l09-tree-badges": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "320": "l09-tree-badges-dark-320-a550a246.avif",
+      "640": "l09-tree-badges-dark-640-21547148.avif"
+     },
+     "webp": {
+      "320": "l09-tree-badges-dark-320-0bd0b874.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "320": "l09-tree-badges-light-320-c3e048b5.avif",
+      "640": "l09-tree-badges-light-640-79f382a2.avif"
+     },
+     "webp": {
+      "320": "l09-tree-badges-light-320-08959db6.webp"
+     }
+    }
+   },
+   "bytes": 48784,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l09-validation-dataset": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "680": "l09-validation-dataset-dark-680-9933bd50.avif",
+      "1360": "l09-validation-dataset-dark-1360-23203099.avif"
+     },
+     "webp": {
+      "680": "l09-validation-dataset-dark-680-9f4f4f4b.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "680": "l09-validation-dataset-light-680-368004d7.avif",
+      "1360": "l09-validation-dataset-light-1360-8454bfd2.avif"
+     },
+     "webp": {
+      "680": "l09-validation-dataset-light-680-bc5413f6.webp"
+     }
+    }
+   },
+   "bytes": 258920,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l09-validation-file": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "540": "l09-validation-file-dark-540-00921ac4.avif",
+      "1080": "l09-validation-file-dark-1080-36531cad.avif"
+     },
+     "webp": {
+      "540": "l09-validation-file-dark-540-6a9f815e.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "540": "l09-validation-file-light-540-d82a366c.avif",
+      "1080": "l09-validation-file-light-1080-4862a83e.avif"
+     },
+     "webp": {
+      "540": "l09-validation-file-light-540-ec69f424.webp"
+     }
+    }
+   },
+   "bytes": 150372,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l10-edit": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "828": "l10-edit-dark-828-2ac57c9b.avif",
+      "1656": "l10-edit-dark-1656-5f1cd917.avif"
+     },
+     "webp": {
+      "828": "l10-edit-dark-828-c2c28d0e.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "828": "l10-edit-light-828-5e2f55a5.avif",
+      "1656": "l10-edit-light-1656-6e7c6cf3.avif"
+     },
+     "webp": {
+      "828": "l10-edit-light-828-3b4eb177.webp"
+     }
+    }
+   },
+   "bytes": 197352,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l10-search": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "828": "l10-search-dark-828-bb0cf161.avif",
+      "1656": "l10-search-dark-1656-82d9718a.avif"
+     },
+     "webp": {
+      "828": "l10-search-dark-828-9279aaee.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "828": "l10-search-light-828-3d3ad480.avif",
+      "1656": "l10-search-light-1656-ab0999f9.avif"
+     },
+     "webp": {
+      "828": "l10-search-light-828-36a8120d.webp"
+     }
+    }
+   },
+   "bytes": 97676,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l10-sidecar-bids": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "828": "l10-sidecar-bids-dark-828-6bffa6f2.avif",
+      "1656": "l10-sidecar-bids-dark-1656-785809d2.avif"
+     },
+     "webp": {
+      "828": "l10-sidecar-bids-dark-828-5bbabe45.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "828": "l10-sidecar-bids-light-828-6a4df00e.avif",
+      "1656": "l10-sidecar-bids-light-1656-142c73ad.avif"
+     },
+     "webp": {
+      "828": "l10-sidecar-bids-light-828-93083546.webp"
+     }
+    }
+   },
+   "bytes": 169335,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l10-sidecar-tree": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "828": "l10-sidecar-tree-dark-828-6ac6031f.avif",
+      "1656": "l10-sidecar-tree-dark-1656-0c4e1066.avif"
+     },
+     "webp": {
+      "828": "l10-sidecar-tree-dark-828-db73bb0b.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "828": "l10-sidecar-tree-light-828-54eaf6bf.avif",
+      "1656": "l10-sidecar-tree-light-1656-cc46a55b.avif"
+     },
+     "webp": {
+      "828": "l10-sidecar-tree-light-828-ecf777a2.webp"
+     }
+    }
+   },
+   "bytes": 236826,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l10-tsv": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "828": "l10-tsv-dark-828-d66c1631.avif",
+      "1656": "l10-tsv-dark-1656-5428d39d.avif"
+     },
+     "webp": {
+      "828": "l10-tsv-dark-828-025fcd8a.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "828": "l10-tsv-light-828-1dadc2d6.avif",
+      "1656": "l10-tsv-light-1656-283ffedb.avif"
+     },
+     "webp": {
+      "828": "l10-tsv-light-828-e06e656b.webp"
+     }
+    }
+   },
+   "bytes": 66582,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l11-coherence": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "980": "l11-coherence-dark-980-2dd19329.avif",
+      "1960": "l11-coherence-dark-1960-3f50eaa2.avif"
+     },
+     "webp": {
+      "980": "l11-coherence-dark-980-e6c782c6.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "980": "l11-coherence-light-980-eaee4574.avif",
+      "1960": "l11-coherence-light-1960-c19e2a42.avif"
+     },
+     "webp": {
+      "980": "l11-coherence-light-980-60199faf.webp"
+     }
+    }
+   },
+   "bytes": 180805,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l11-delete": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "980": "l11-delete-dark-980-a4211404.avif",
+      "1960": "l11-delete-dark-1960-6ebb1c70.avif"
+     },
+     "webp": {
+      "980": "l11-delete-dark-980-7b5615fc.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "980": "l11-delete-light-980-8cf36f47.avif",
+      "1960": "l11-delete-light-1960-b128b58d.avif"
+     },
+     "webp": {
+      "980": "l11-delete-light-980-2c08533f.webp"
+     }
+    }
+   },
+   "bytes": 216030,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l11-references": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1100": "l11-references-dark-1100-848e6f70.avif",
+      "2200": "l11-references-dark-2200-74aef243.avif"
+     },
+     "webp": {
+      "1100": "l11-references-dark-1100-082ddf92.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1100": "l11-references-light-1100-a5750507.avif",
+      "2200": "l11-references-light-2200-e9a78ab6.avif"
+     },
+     "webp": {
+      "1100": "l11-references-light-1100-e29ad2af.webp"
+     }
+    }
+   },
+   "bytes": 287721,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l11-rename": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "980": "l11-rename-dark-980-96e587e0.avif",
+      "1960": "l11-rename-dark-1960-eb703032.avif"
+     },
+     "webp": {
+      "980": "l11-rename-dark-980-92ee86d1.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "980": "l11-rename-light-980-6e7561da.avif",
+      "1960": "l11-rename-light-1960-d1018e87.avif"
+     },
+     "webp": {
+      "980": "l11-rename-light-980-85e9b78c.webp"
+     }
+    }
+   },
+   "bytes": 218668,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l11-sessions": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "980": "l11-sessions-dark-980-d8cc0a1d.avif",
+      "1960": "l11-sessions-dark-1960-15ecdeca.avif"
+     },
+     "webp": {
+      "980": "l11-sessions-dark-980-64d093c6.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "980": "l11-sessions-light-980-f8e59b2e.avif",
+      "1960": "l11-sessions-light-1960-b3bd0b2e.avif"
+     },
+     "webp": {
+      "980": "l11-sessions-light-980-391aff30.webp"
+     }
+    }
+   },
+   "bytes": 261172,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l11-tools-menu": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1440": "l11-tools-menu-dark-1440-9c88895c.avif",
+      "2880": "l11-tools-menu-dark-2880-3e1b4765.avif"
+     },
+     "webp": {
+      "1440": "l11-tools-menu-dark-1440-fe751ad0.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1440": "l11-tools-menu-light-1440-989d0248.avif",
+      "2880": "l11-tools-menu-light-2880-bacc8e8d.avif"
+     },
+     "webp": {
+      "1440": "l11-tools-menu-light-1440-b6e06dcc.webp"
+     }
+    }
+   },
+   "bytes": 250368,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l11-tree-menu": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "433": "l11-tree-menu-dark-433-02d0a8e1.avif",
+      "866": "l11-tree-menu-dark-866-eed0d722.avif"
+     },
+     "webp": {
+      "433": "l11-tree-menu-dark-433-09b9662f.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "433": "l11-tree-menu-light-433-67b4f4de.avif",
+      "866": "l11-tree-menu-light-866-b1fc1d30.avif"
+     },
+     "webp": {
+      "433": "l11-tree-menu-light-433-2265042d.webp"
+     }
+    }
+   },
+   "bytes": 249669,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l12-eeg": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1294": "l12-eeg-dark-1294-fd2f53a9.avif",
+      "2588": "l12-eeg-dark-2588-02d6b4f0.avif"
+     },
+     "webp": {
+      "1294": "l12-eeg-dark-1294-39498575.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1294": "l12-eeg-light-1294-bdb918e3.avif",
+      "2588": "l12-eeg-light-2588-e3092b16.avif"
+     },
+     "webp": {
+      "1294": "l12-eeg-light-1294-1e5430b7.webp"
+     }
+    }
+   },
+   "bytes": 610514,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l12-gradients": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1294": "l12-gradients-dark-1294-598aa7dd.avif",
+      "2588": "l12-gradients-dark-2588-1278019e.avif"
+     },
+     "webp": {
+      "1294": "l12-gradients-dark-1294-4d7b4d65.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1294": "l12-gradients-light-1294-f76b8003.avif",
+      "2588": "l12-gradients-light-2588-2832f707.avif"
+     },
+     "webp": {
+      "1294": "l12-gradients-light-1294-e603b1bd.webp"
+     }
+    }
+   },
+   "bytes": 243516,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l12-meg": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1294": "l12-meg-dark-1294-7e308857.avif",
+      "2588": "l12-meg-dark-2588-8de40a8c.avif"
+     },
+     "webp": {
+      "1294": "l12-meg-dark-1294-93a54938.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1294": "l12-meg-light-1294-1177fdbb.avif",
+      "2588": "l12-meg-light-2588-481d7fa6.avif"
+     },
+     "webp": {
+      "1294": "l12-meg-light-1294-8af13d93.webp"
+     }
+    }
+   },
+   "bytes": 648403,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l12-mrs": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1294": "l12-mrs-dark-1294-854f67ee.avif",
+      "2588": "l12-mrs-dark-2588-c7f79e50.avif"
+     },
+     "webp": {
+      "1294": "l12-mrs-dark-1294-f7b2bb24.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1294": "l12-mrs-light-1294-5392c23d.avif",
+      "2588": "l12-mrs-light-2588-7050a2f7.avif"
+     },
+     "webp": {
+      "1294": "l12-mrs-light-1294-109d6779.webp"
+     }
+    }
+   },
+   "bytes": 302942,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l12-physio": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1294": "l12-physio-dark-1294-f97f5fd9.avif",
+      "2588": "l12-physio-dark-2588-740d1405.avif"
+     },
+     "webp": {
+      "1294": "l12-physio-dark-1294-77b9b0b1.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1294": "l12-physio-light-1294-aef62a28.avif",
+      "2588": "l12-physio-light-2588-24ccfecd.avif"
+     },
+     "webp": {
+      "1294": "l12-physio-light-1294-4d594577.webp"
+     }
+    }
+   },
+   "bytes": 373305,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l13-meeg-qc": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1294": "l13-meeg-qc-dark-1294-8eb441a8.avif",
+      "2588": "l13-meeg-qc-dark-2588-041ca82b.avif"
+     },
+     "webp": {
+      "1294": "l13-meeg-qc-dark-1294-3053b0b2.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1294": "l13-meeg-qc-light-1294-35ccd183.avif",
+      "2588": "l13-meeg-qc-light-2588-1028646a.avif"
+     },
+     "webp": {
+      "1294": "l13-meeg-qc-light-1294-01f68434.webp"
+     }
+    }
+   },
+   "bytes": 863868,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l13-qc-dialog": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1180": "l13-qc-dialog-dark-1180-b48f3806.avif",
+      "2360": "l13-qc-dialog-dark-2360-2f141076.avif"
+     },
+     "webp": {
+      "1180": "l13-qc-dialog-dark-1180-455c1355.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1180": "l13-qc-dialog-light-1180-0bd0467b.avif",
+      "2360": "l13-qc-dialog-light-2360-c44d4fb9.avif"
+     },
+     "webp": {
+      "1180": "l13-qc-dialog-light-1180-6ff6184d.webp"
+     }
+    }
+   },
+   "bytes": 204261,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l13-settings-qc": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "960": "l13-settings-qc-dark-960-2076bff8.avif",
+      "1920": "l13-settings-qc-dark-1920-147d77fa.avif"
+     },
+     "webp": {
+      "960": "l13-settings-qc-dark-960-b017c344.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "960": "l13-settings-qc-light-960-ad086c2f.avif",
+      "1920": "l13-settings-qc-light-1920-92abd8d8.avif"
+     },
+     "webp": {
+      "960": "l13-settings-qc-light-960-23243e23.webp"
+     }
+    }
+   },
+   "bytes": 250137,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l14-dashboard": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1100": "l14-dashboard-dark-1100-ae3aecab.avif",
+      "2200": "l14-dashboard-dark-2200-99566c7c.avif"
+     },
+     "webp": {
+      "1100": "l14-dashboard-dark-1100-0517bf75.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1100": "l14-dashboard-light-1100-3c0d8291.avif",
+      "2200": "l14-dashboard-light-2200-580fd197.avif"
+     },
+     "webp": {
+      "1100": "l14-dashboard-light-1100-a9a0b7c6.webp"
+     }
+    }
+   },
+   "bytes": 234867,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l14-deface": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "980": "l14-deface-dark-980-b9dd0816.avif",
+      "1960": "l14-deface-dark-1960-95318bea.avif"
+     },
+     "webp": {
+      "980": "l14-deface-dark-980-03013e6b.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "980": "l14-deface-light-980-f850afd6.avif",
+      "1960": "l14-deface-light-1960-9e7ffb8a.avif"
+     },
+     "webp": {
+      "980": "l14-deface-light-980-0465a29f.webp"
+     }
+    }
+   },
+   "bytes": 246694,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l14-participants": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "888": "l14-participants-dark-888-7a86b5fa.avif",
+      "1776": "l14-participants-dark-1776-8d8e635c.avif"
+     },
+     "webp": {
+      "888": "l14-participants-dark-888-c37aeb9d.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "888": "l14-participants-light-888-86efb0f9.avif",
+      "1776": "l14-participants-light-1776-6e0b0a9e.avif"
+     },
+     "webp": {
+      "888": "l14-participants-light-888-90a1ddda.webp"
+     }
+    }
+   },
+   "bytes": 68319,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l14-readme": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "888": "l14-readme-dark-888-ae6d8358.avif",
+      "1776": "l14-readme-dark-1776-c0d91eea.avif"
+     },
+     "webp": {
+      "888": "l14-readme-dark-888-5cfa3203.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "888": "l14-readme-light-888-43997b42.avif",
+      "1776": "l14-readme-light-1776-dad738f9.avif"
+     },
+     "webp": {
+      "888": "l14-readme-light-888-578e072c.webp"
+     }
+    }
+   },
+   "bytes": 69366,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l08-convert": {
+   "kind": "clip",
+   "files": {
+    "dark": {
+     "mp4": "l08-convert-dark-e1550a66.mp4",
+     "webm": "l08-convert-dark-2aaab2df.webm",
+     "poster": "l08-convert-dark-poster-b531bdb2.webp"
+    },
+    "light": {
+     "mp4": "l08-convert-light-bf4e9f29.mp4",
+     "webm": "l08-convert-light-de4e7c72.webm",
+     "poster": "l08-convert-light-poster-1e4d50b5.webp"
+    }
+   },
+   "bytes": 2664427,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l09-fix": {
+   "kind": "clip",
+   "files": {
+    "dark": {
+     "mp4": "l09-fix-dark-552ac8fd.mp4",
+     "poster": "l09-fix-dark-poster-6f3d7b97.webp"
+    },
+    "light": {
+     "mp4": "l09-fix-light-cf9f10a8.mp4",
+     "poster": "l09-fix-light-poster-be7151c7.webp"
+    }
+   },
+   "bytes": 1756214,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l09-validate": {
+   "kind": "clip",
+   "files": {
+    "dark": {
+     "mp4": "l09-validate-dark-ac049cbf.mp4",
+     "poster": "l09-validate-dark-poster-60f2395d.webp"
+    },
+    "light": {
+     "mp4": "l09-validate-light-bc8ba81c.mp4",
+     "poster": "l09-validate-light-poster-43a9e0a1.webp"
+    }
+   },
+   "bytes": 334130,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l10-edit-save": {
+   "kind": "clip",
+   "files": {
+    "dark": {
+     "mp4": "l10-edit-save-dark-06b58259.mp4",
+     "poster": "l10-edit-save-dark-poster-0cd833c8.webp"
+    },
+    "light": {
+     "mp4": "l10-edit-save-light-4d18a1b5.mp4",
+     "poster": "l10-edit-save-light-poster-3f516517.webp"
+    }
+   },
+   "bytes": 1455619,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "l12-bold": {
+   "kind": "clip",
+   "files": {
+    "dark": {
+     "mp4": "l12-bold-dark-e07259a9.mp4",
+     "webm": "l12-bold-dark-de7251d5.webm",
+     "poster": "l12-bold-dark-poster-4132ef7e.webp"
+    },
+    "light": {
+     "mp4": "l12-bold-light-12bd1c29.mp4",
+     "webm": "l12-bold-light-cc6e5805.webm",
+     "poster": "l12-bold-light-poster-8d41ba2b.webp"
+    }
+   },
+   "bytes": 4707131,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2 (OL_3844, consented)"
+   },
+   "published": "2026-10-14"
+  },
+  "l12-compare": {
+   "kind": "clip",
+   "files": {
+    "dark": {
+     "mp4": "l12-compare-dark-2ed3c2c2.mp4",
+     "webm": "l12-compare-dark-d2493225.webm",
+     "poster": "l12-compare-dark-poster-4e838312.webp"
+    },
+    "light": {
+     "mp4": "l12-compare-light-22203e16.mp4",
+     "webm": "l12-compare-light-b8d61460.webm",
+     "poster": "l12-compare-light-poster-8ee90594.webp"
+    }
+   },
+   "bytes": 5510115,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2 (OL_3844, consented)"
+   },
+   "published": "2026-10-14"
+  },
+  "l12-pet": {
+   "kind": "clip",
+   "files": {
+    "dark": {
+     "mp4": "l12-pet-dark-7f33365d.mp4",
+     "webm": "l12-pet-dark-ee5f5342.webm",
+     "poster": "l12-pet-dark-poster-1a5bdd97.webp"
+    },
+    "light": {
+     "mp4": "l12-pet-light-7012f788.mp4",
+     "webm": "l12-pet-light-abc54815.webm",
+     "poster": "l12-pet-light-poster-2034ba53.webp"
+    }
+   },
+   "bytes": 4729963,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2 (PET phantom)"
+   },
+   "published": "2026-10-14"
+  },
+  "l12-t1": {
+   "kind": "clip",
+   "files": {
+    "dark": {
+     "mp4": "l12-t1-dark-90931d37.mp4",
+     "webm": "l12-t1-dark-48b5b1e8.webm",
+     "poster": "l12-t1-dark-poster-ffb8bef9.webp"
+    },
+    "light": {
+     "mp4": "l12-t1-light-f2b71f96.mp4",
+     "webm": "l12-t1-light-28d5b041.webm",
+     "poster": "l12-t1-light-poster-ab7f66c1.webp"
+    }
+   },
+   "bytes": 8080712,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2 (OL_3844, consented)"
+   },
+   "published": "2026-10-14"
+  },
+  "l12-t1-controls": {
+   "kind": "clip",
+   "files": {
+    "dark": {
+     "mp4": "l12-t1-controls-dark-b5508312.mp4",
+     "webm": "l12-t1-controls-dark-6130f228.webm",
+     "poster": "l12-t1-controls-dark-poster-c5a5e440.webp"
+    },
+    "light": {
+     "mp4": "l12-t1-controls-light-c9ce278c.mp4",
+     "webm": "l12-t1-controls-light-fd6c9392.webm",
+     "poster": "l12-t1-controls-light-poster-d42a28f9.webp"
+    }
+   },
+   "bytes": 4595966,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2 (OL_3844, consented)"
+   },
+   "published": "2026-10-14"
+  },
+  "l13-bold-qc": {
+   "kind": "clip",
+   "files": {
+    "dark": {
+     "mp4": "l13-bold-qc-dark-cbf1e414.mp4",
+     "webm": "l13-bold-qc-dark-8b882a67.webm",
+     "poster": "l13-bold-qc-dark-poster-e98866bd.webp"
+    },
+    "light": {
+     "mp4": "l13-bold-qc-light-08f309f3.mp4",
+     "webm": "l13-bold-qc-light-36080b60.webm",
+     "poster": "l13-bold-qc-light-poster-9e0f9bd6.webp"
+    }
+   },
+   "bytes": 3007055,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2 (OL_3844, consented)"
+   },
+   "published": "2026-10-14"
+  },
+  "l13-qc-panel": {
+   "kind": "clip",
+   "files": {
+    "dark": {
+     "mp4": "l13-qc-panel-dark-6d9d3dcd.mp4",
+     "webm": "l13-qc-panel-dark-62b6e77f.webm",
+     "poster": "l13-qc-panel-dark-poster-951307c7.webp"
+    },
+    "light": {
+     "mp4": "l13-qc-panel-light-eeeddde6.mp4",
+     "webm": "l13-qc-panel-light-69f336e3.webm",
+     "poster": "l13-qc-panel-light-poster-ec212f6d.webp"
+    }
+   },
+   "bytes": 4725526,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2 (OL_3844, consented)"
+   },
+   "published": "2026-10-14"
+  },
+  "l14-deface-compare": {
+   "kind": "clip",
+   "files": {
+    "dark": {
+     "mp4": "l14-deface-compare-dark-fb89f47e.mp4",
+     "webm": "l14-deface-compare-dark-ae49fa8c.webm",
+     "poster": "l14-deface-compare-dark-poster-6a551425.webp"
+    },
+    "light": {
+     "mp4": "l14-deface-compare-light-07d77f32.mp4",
+     "webm": "l14-deface-compare-light-97973caa.webm",
+     "poster": "l14-deface-compare-light-poster-e189fb0c.webp"
+    }
+   },
+   "bytes": 4532352,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2 (OL_3844, consented)"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-adopt-project": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1600": "guide-adopt-project-dark-1600-324427c8.avif",
+      "3200": "guide-adopt-project-dark-3200-7368f135.avif"
+     },
+     "webp": {
+      "1600": "guide-adopt-project-dark-1600-ddc7defb.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1600": "guide-adopt-project-light-1600-3c7edc3d.avif",
+      "3200": "guide-adopt-project-light-3200-61b4d720.avif"
+     },
+     "webp": {
+      "1600": "guide-adopt-project-light-1600-9db578ac.webp"
+     }
+    }
+   },
+   "bytes": 343182,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-adopt-view": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1600": "guide-adopt-view-dark-1600-8bc4f600.avif",
+      "3200": "guide-adopt-view-dark-3200-4fde7a30.avif"
+     },
+     "webp": {
+      "1600": "guide-adopt-view-dark-1600-e93687c5.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1600": "guide-adopt-view-light-1600-3cc0751b.avif",
+      "3200": "guide-adopt-view-light-3200-917c6b2a.avif"
+     },
+     "webp": {
+      "1600": "guide-adopt-view-light-1600-666c6bbd.webp"
+     }
+    }
+   },
+   "bytes": 202243,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-adv-dwi": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1600": "guide-adv-dwi-dark-1600-6276144d.avif",
+      "3200": "guide-adv-dwi-dark-3200-881160ed.avif"
+     },
+     "webp": {
+      "1600": "guide-adv-dwi-dark-1600-32872c3e.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1600": "guide-adv-dwi-light-1600-4d1dcbb7.avif",
+      "3200": "guide-adv-dwi-light-3200-db604576.avif"
+     },
+     "webp": {
+      "1600": "guide-adv-dwi-light-1600-2922bd8d.webp"
+     }
+    }
+   },
+   "bytes": 432431,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-adv-table": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1018": "guide-adv-table-dark-1018-0e7253d3.avif",
+      "2036": "guide-adv-table-dark-2036-bd5cbee8.avif"
+     },
+     "webp": {
+      "1018": "guide-adv-table-dark-1018-71c84267.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1018": "guide-adv-table-light-1018-de2aae7d.avif",
+      "2036": "guide-adv-table-light-2036-0eb6cf35.avif"
+     },
+     "webp": {
+      "1018": "guide-adv-table-light-1018-a814a0d5.webp"
+     }
+    }
+   },
+   "bytes": 261021,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-adv-why": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "461": "guide-adv-why-dark-461-aeee54db.avif",
+      "922": "guide-adv-why-dark-922-def502c7.avif"
+     },
+     "webp": {
+      "461": "guide-adv-why-dark-461-b7326a3a.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "461": "guide-adv-why-light-461-e5b2c395.avif",
+      "922": "guide-adv-why-light-922-792c6a54.avif"
+     },
+     "webp": {
+      "461": "guide-adv-why-light-461-9f72d10b.webp"
+     }
+    }
+   },
+   "bytes": 129217,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-eeg-bulk": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "640": "guide-eeg-bulk-dark-640-d1ea325e.avif",
+      "1280": "guide-eeg-bulk-dark-1280-d31f1be9.avif"
+     },
+     "webp": {
+      "640": "guide-eeg-bulk-dark-640-7ba31f98.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "640": "guide-eeg-bulk-light-640-02db1f30.avif",
+      "1280": "guide-eeg-bulk-light-1280-fb0d9648.avif"
+     },
+     "webp": {
+      "640": "guide-eeg-bulk-light-640-86e087f0.webp"
+     }
+    }
+   },
+   "bytes": 176961,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-eeg-meta": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "700": "guide-eeg-meta-dark-700-0e6787f8.avif",
+      "1400": "guide-eeg-meta-dark-1400-eb3eb56f.avif"
+     },
+     "webp": {
+      "700": "guide-eeg-meta-dark-700-c2df236d.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "700": "guide-eeg-meta-light-700-94cf27bc.avif",
+      "1400": "guide-eeg-meta-light-1400-c873993f.avif"
+     },
+     "webp": {
+      "700": "guide-eeg-meta-light-700-f46f5ae7.webp"
+     }
+    }
+   },
+   "bytes": 205429,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-eeg-table-after": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1018": "guide-eeg-table-after-dark-1018-5e7bfef3.avif",
+      "2036": "guide-eeg-table-after-dark-2036-e4a834cd.avif"
+     },
+     "webp": {
+      "1018": "guide-eeg-table-after-dark-1018-a921eb2b.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1018": "guide-eeg-table-after-light-1018-52172e0c.avif",
+      "2036": "guide-eeg-table-after-light-2036-c0d99043.avif"
+     },
+     "webp": {
+      "1018": "guide-eeg-table-after-light-1018-497f664a.webp"
+     }
+    }
+   },
+   "bytes": 232857,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-eeg-table": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1018": "guide-eeg-table-dark-1018-a997e474.avif",
+      "2036": "guide-eeg-table-dark-2036-25fd6301.avif"
+     },
+     "webp": {
+      "1018": "guide-eeg-table-dark-1018-4156ccc8.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1018": "guide-eeg-table-light-1018-e491ac86.avif",
+      "2036": "guide-eeg-table-light-2036-6f53d437.avif"
+     },
+     "webp": {
+      "1018": "guide-eeg-table-light-1018-1fdec28d.webp"
+     }
+    }
+   },
+   "bytes": 231181,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-eeg-viewer": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1284": "guide-eeg-viewer-dark-1284-00dcca8a.avif",
+      "2568": "guide-eeg-viewer-dark-2568-a8533bbb.avif"
+     },
+     "webp": {
+      "1284": "guide-eeg-viewer-dark-1284-305c9686.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1284": "guide-eeg-viewer-light-1284-d8160c67.avif",
+      "2568": "guide-eeg-viewer-light-2568-208b31e2.avif"
+     },
+     "webp": {
+      "1284": "guide-eeg-viewer-light-1284-aea86b02.webp"
+     }
+    }
+   },
+   "bytes": 657672,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-eye-paired": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1018": "guide-eye-paired-dark-1018-472b6e48.avif",
+      "2036": "guide-eye-paired-dark-2036-04dce84b.avif"
+     },
+     "webp": {
+      "1018": "guide-eye-paired-dark-1018-b0031c0a.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1018": "guide-eye-paired-light-1018-e9c35351.avif",
+      "2036": "guide-eye-paired-light-2036-86b8c853.avif"
+     },
+     "webp": {
+      "1018": "guide-eye-paired-light-1018-61435da0.webp"
+     }
+    }
+   },
+   "bytes": 257215,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-eye-plot": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1224": "guide-eye-plot-dark-1224-201710dd.avif",
+      "2448": "guide-eye-plot-dark-2448-f12f6be0.avif"
+     },
+     "webp": {
+      "1224": "guide-eye-plot-dark-1224-3900de7e.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1224": "guide-eye-plot-light-1224-7b91c395.avif",
+      "2448": "guide-eye-plot-light-2448-6187f1d3.avif"
+     },
+     "webp": {
+      "1224": "guide-eye-plot-light-1224-9d81a4de.webp"
+     }
+    }
+   },
+   "bytes": 289962,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-eye-props": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "520": "guide-eye-props-dark-520-61c8d443.avif",
+      "1040": "guide-eye-props-dark-1040-da693bff.avif"
+     },
+     "webp": {
+      "520": "guide-eye-props-dark-520-daf466e8.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "520": "guide-eye-props-light-520-57680c18.avif",
+      "1040": "guide-eye-props-light-1040-3289245d.avif"
+     },
+     "webp": {
+      "520": "guide-eye-props-light-520-171858cf.webp"
+     }
+    }
+   },
+   "bytes": 107939,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-meg-noise": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "520": "guide-meg-noise-dark-520-fccfdd47.avif",
+      "1040": "guide-meg-noise-dark-1040-1fb405da.avif"
+     },
+     "webp": {
+      "520": "guide-meg-noise-dark-520-ba0b386a.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "520": "guide-meg-noise-light-520-6f741e80.avif",
+      "1040": "guide-meg-noise-light-1040-b1551084.avif"
+     },
+     "webp": {
+      "520": "guide-meg-noise-light-520-34816bfb.webp"
+     }
+    }
+   },
+   "bytes": 67818,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-meg-overview": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1018": "guide-meg-overview-dark-1018-20a7245a.avif",
+      "2036": "guide-meg-overview-dark-2036-2eb511b7.avif"
+     },
+     "webp": {
+      "1018": "guide-meg-overview-dark-1018-86b98549.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1018": "guide-meg-overview-light-1018-f477e6b5.avif",
+      "2036": "guide-meg-overview-light-2036-2645e297.avif"
+     },
+     "webp": {
+      "1018": "guide-meg-overview-light-1018-ad2fd487.webp"
+     }
+    }
+   },
+   "bytes": 181967,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-meg-table": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1018": "guide-meg-table-dark-1018-e6db56e7.avif",
+      "2036": "guide-meg-table-dark-2036-a212a8cf.avif"
+     },
+     "webp": {
+      "1018": "guide-meg-table-dark-1018-e93a68c1.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1018": "guide-meg-table-light-1018-6bbc817e.avif",
+      "2036": "guide-meg-table-light-2036-bfd10f87.avif"
+     },
+     "webp": {
+      "1018": "guide-meg-table-light-1018-f48d2415.webp"
+     }
+    }
+   },
+   "bytes": 220818,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-meg-viewer": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1244": "guide-meg-viewer-dark-1244-cb5e7dda.avif",
+      "2488": "guide-meg-viewer-dark-2488-67774c89.avif"
+     },
+     "webp": {
+      "1244": "guide-meg-viewer-dark-1244-135fa459.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1244": "guide-meg-viewer-light-1244-fdd70e74.avif",
+      "2488": "guide-meg-viewer-light-2488-d33e2b1d.avif"
+     },
+     "webp": {
+      "1244": "guide-meg-viewer-light-1244-ceb1315b.webp"
+     }
+    }
+   },
+   "bytes": 628076,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-mri-editor": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1600": "guide-mri-editor-dark-1600-78d24c74.avif",
+      "3200": "guide-mri-editor-dark-3200-15329797.avif"
+     },
+     "webp": {
+      "1600": "guide-mri-editor-dark-1600-c53c4c0d.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1600": "guide-mri-editor-light-1600-954a0b28.avif",
+      "3200": "guide-mri-editor-light-3200-f1d48785.avif"
+     },
+     "webp": {
+      "1600": "guide-mri-editor-light-1600-31e0288c.webp"
+     }
+    }
+   },
+   "bytes": 497529,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-mri-fmap": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "520": "guide-mri-fmap-dark-520-87fd6f37.avif",
+      "1040": "guide-mri-fmap-dark-1040-9370c724.avif"
+     },
+     "webp": {
+      "520": "guide-mri-fmap-dark-520-5911f89b.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "520": "guide-mri-fmap-light-520-7002ae96.avif",
+      "1040": "guide-mri-fmap-light-1040-9631d8e7.avif"
+     },
+     "webp": {
+      "520": "guide-mri-fmap-light-520-e0a1d9c8.webp"
+     }
+    }
+   },
+   "bytes": 174373,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-mri-overview": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1018": "guide-mri-overview-dark-1018-96e4b533.avif",
+      "2036": "guide-mri-overview-dark-2036-d23fa20e.avif"
+     },
+     "webp": {
+      "1018": "guide-mri-overview-dark-1018-55499057.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1018": "guide-mri-overview-light-1018-a913c338.avif",
+      "2036": "guide-mri-overview-light-2036-740b5d58.avif"
+     },
+     "webp": {
+      "1018": "guide-mri-overview-light-1018-a8b5075a.webp"
+     }
+    }
+   },
+   "bytes": 203225,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-mri-table": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1018": "guide-mri-table-dark-1018-f3ab6f31.avif",
+      "2036": "guide-mri-table-dark-2036-5692c3ae.avif"
+     },
+     "webp": {
+      "1018": "guide-mri-table-dark-1018-4222f4d9.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1018": "guide-mri-table-light-1018-0596e158.avif",
+      "2036": "guide-mri-table-light-2036-9b9ca927.avif"
+     },
+     "webp": {
+      "1018": "guide-mri-table-light-1018-e08b80fe.webp"
+     }
+    }
+   },
+   "bytes": 246703,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-pet-blood": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "520": "guide-pet-blood-dark-520-136d102a.avif",
+      "1040": "guide-pet-blood-dark-1040-66951066.avif"
+     },
+     "webp": {
+      "520": "guide-pet-blood-dark-520-6df9be14.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "520": "guide-pet-blood-light-520-d3f5279c.avif",
+      "1040": "guide-pet-blood-light-1040-3acac09a.avif"
+     },
+     "webp": {
+      "520": "guide-pet-blood-light-520-5223a389.webp"
+     }
+    }
+   },
+   "bytes": 134666,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-pet-dose": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "700": "guide-pet-dose-dark-700-8a93e178.avif",
+      "1400": "guide-pet-dose-dark-1400-781dd3a3.avif"
+     },
+     "webp": {
+      "700": "guide-pet-dose-dark-700-0313696b.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "700": "guide-pet-dose-light-700-4e7fbcf7.avif",
+      "1400": "guide-pet-dose-light-1400-53ce60a9.avif"
+     },
+     "webp": {
+      "700": "guide-pet-dose-light-700-0dce8d11.webp"
+     }
+    }
+   },
+   "bytes": 261439,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-pet-ecat": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1018": "guide-pet-ecat-dark-1018-00fbfb43.avif",
+      "2036": "guide-pet-ecat-dark-2036-5910d676.avif"
+     },
+     "webp": {
+      "1018": "guide-pet-ecat-dark-1018-8a03f4cb.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1018": "guide-pet-ecat-light-1018-1750f18d.avif",
+      "2036": "guide-pet-ecat-light-2036-4cb0a9c6.avif"
+     },
+     "webp": {
+      "1018": "guide-pet-ecat-light-1018-e8659ece.webp"
+     }
+    }
+   },
+   "bytes": 112550,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "guide-pet-editor": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1600": "guide-pet-editor-dark-1600-d6e86e70.avif",
+      "3200": "guide-pet-editor-dark-3200-7ffa170e.avif"
+     },
+     "webp": {
+      "1600": "guide-pet-editor-dark-1600-39e137a3.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1600": "guide-pet-editor-light-1600-267251cd.avif",
+      "3200": "guide-pet-editor-light-3200-aea159fe.avif"
+     },
+     "webp": {
+      "1600": "guide-pet-editor-light-1600-371440bb.webp"
+     }
+    }
+   },
+   "bytes": 343536,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "373b09d",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "t-eeg-psd": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1280": "t-eeg-psd-dark-1280-20ed4e00.avif",
+      "2560": "t-eeg-psd-dark-2560-030a80f9.avif"
+     },
+     "webp": {
+      "1280": "t-eeg-psd-dark-1280-72c4a4fb.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1280": "t-eeg-psd-light-1280-40376679.avif",
+      "2560": "t-eeg-psd-light-2560-773fda17.avif"
+     },
+     "webp": {
+      "1280": "t-eeg-psd-light-1280-da325fda.webp"
+     }
+    }
+   },
+   "bytes": 321187,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "7bb684f",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "t-meg-butterfly": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1294": "t-meg-butterfly-dark-1294-b2b99015.avif",
+      "2588": "t-meg-butterfly-dark-2588-92d58d82.avif"
+     },
+     "webp": {
+      "1294": "t-meg-butterfly-dark-1294-c07ef94d.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1294": "t-meg-butterfly-light-1294-de2f3380.avif",
+      "2588": "t-meg-butterfly-light-2588-7ed10d89.avif"
+     },
+     "webp": {
+      "1294": "t-meg-butterfly-light-1294-0456b109.webp"
+     }
+    }
+   },
+   "bytes": 288738,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "7bb684f",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "t-mri-header": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1294": "t-mri-header-dark-1294-66c4c840.avif",
+      "2588": "t-mri-header-dark-2588-90373144.avif"
+     },
+     "webp": {
+      "1294": "t-mri-header-dark-1294-cb27d48c.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1294": "t-mri-header-light-1294-d1ae9e1b.avif",
+      "2588": "t-mri-header-light-2588-9d238e13.avif"
+     },
+     "webp": {
+      "1294": "t-mri-header-light-1294-b422e9e3.webp"
+     }
+    }
+   },
+   "bytes": 499939,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "7bb684f",
+    "date": "2026-10-14",
+    "sample": "multimodal v2 (OL_3844, consented)"
+   },
+   "published": "2026-10-14"
+  },
+  "t-mri-mosaic": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1294": "t-mri-mosaic-dark-1294-b8ef76a3.avif",
+      "2588": "t-mri-mosaic-dark-2588-e30c06a0.avif"
+     },
+     "webp": {
+      "1294": "t-mri-mosaic-dark-1294-2bcec7b0.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1294": "t-mri-mosaic-light-1294-7496e29a.avif",
+      "2588": "t-mri-mosaic-light-2588-7cc3cbdc.avif"
+     },
+     "webp": {
+      "1294": "t-mri-mosaic-light-1294-7afd571a.webp"
+     }
+    }
+   },
+   "bytes": 660983,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "7bb684f",
+    "date": "2026-10-14",
+    "sample": "multimodal v2 (OL_3844, consented)"
+   },
+   "published": "2026-10-14"
+  },
+  "w-add-entity": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "980": "w-add-entity-dark-980-2651e4f4.avif",
+      "1960": "w-add-entity-dark-1960-a4ac99a0.avif"
+     },
+     "webp": {
+      "980": "w-add-entity-dark-980-797cbf96.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "980": "w-add-entity-light-980-4e667301.avif",
+      "1960": "w-add-entity-light-1960-9ab4e6a4.avif"
+     },
+     "webp": {
+      "980": "w-add-entity-light-980-2122c1f5.webp"
+     }
+    }
+   },
+   "bytes": 295668,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "7bb684f",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "w-bulk-remove": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "680": "w-bulk-remove-dark-680-d128f31d.avif",
+      "1360": "w-bulk-remove-dark-1360-b0484e3b.avif"
+     },
+     "webp": {
+      "680": "w-bulk-remove-dark-680-77da17b6.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "680": "w-bulk-remove-light-680-41462904.avif",
+      "1360": "w-bulk-remove-light-1360-6629a16c.avif"
+     },
+     "webp": {
+      "680": "w-bulk-remove-light-680-2b236365.webp"
+     }
+    }
+   },
+   "bytes": 201772,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "7bb684f",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "w-find-replace": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "980": "w-find-replace-dark-980-5dd34ab4.avif",
+      "1960": "w-find-replace-dark-1960-b1cf2cc7.avif"
+     },
+     "webp": {
+      "980": "w-find-replace-dark-980-5dd13cfd.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "980": "w-find-replace-light-980-b73c37be.avif",
+      "1960": "w-find-replace-light-1960-0569692a.avif"
+     },
+     "webp": {
+      "980": "w-find-replace-light-980-b84acd9c.webp"
+     }
+    }
+   },
+   "bytes": 332245,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "7bb684f",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  },
+  "w-index-widths": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "900": "w-index-widths-dark-900-435ea60b.avif",
+      "1800": "w-index-widths-dark-1800-b0148802.avif"
+     },
+     "webp": {
+      "900": "w-index-widths-dark-900-69eb1815.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "900": "w-index-widths-light-900-c0fe7127.avif",
+      "1800": "w-index-widths-light-1800-4de76ad6.avif"
+     },
+     "webp": {
+      "900": "w-index-widths-light-900-bc58621f.webp"
+     }
+    }
+   },
+   "bytes": 200829,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "7bb684f",
+    "date": "2026-10-14",
+    "sample": "MRI sample (Oldenburg 1)"
+   },
+   "published": "2026-10-14"
+  },
+  "t-eeg-annotate": {
+   "kind": "clip",
+   "files": {
+    "dark": {
+     "mp4": "t-eeg-annotate-dark-3138916e.mp4",
+     "poster": "t-eeg-annotate-dark-poster-8fc76080.webp"
+    },
+    "light": {
+     "mp4": "t-eeg-annotate-light-8b2ae890.mp4",
+     "poster": "t-eeg-annotate-light-poster-fb2091ee.webp"
+    }
+   },
+   "bytes": 2153204,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "7bb684f",
+    "date": "2026-10-14",
+    "sample": "multimodal v2 (PhysioNet EEG, ODC-By 1.0)"
+   },
+   "published": "2026-10-14"
+  },
+  "t-eeg-filters": {
+   "kind": "clip",
+   "files": {
+    "dark": {
+     "mp4": "t-eeg-filters-dark-263e333e.mp4",
+     "poster": "t-eeg-filters-dark-poster-75404d1a.webp"
+    },
+    "light": {
+     "mp4": "t-eeg-filters-light-12d4dbf1.mp4",
+     "webm": "t-eeg-filters-light-5c9a7262.webm",
+     "poster": "t-eeg-filters-light-poster-e8b5283a.webp"
+    }
+   },
+   "bytes": 5988594,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "7bb684f",
+    "date": "2026-10-14",
+    "sample": "multimodal v2 (PhysioNet EEG, ODC-By 1.0)"
+   },
+   "published": "2026-10-14"
+  },
+  "t-mri-clip": {
+   "kind": "clip",
+   "files": {
+    "dark": {
+     "mp4": "t-mri-clip-dark-ac882b81.mp4",
+     "webm": "t-mri-clip-dark-66e16a7a.webm",
+     "poster": "t-mri-clip-dark-poster-43eb72b2.webp"
+    },
+    "light": {
+     "mp4": "t-mri-clip-light-61af61be.mp4",
+     "webm": "t-mri-clip-light-11283383.webm",
+     "poster": "t-mri-clip-light-poster-d733bd21.webp"
+    }
+   },
+   "bytes": 7070309,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "7bb684f",
+    "date": "2026-10-14",
+    "sample": "multimodal v2 (OL_3844, consented)"
+   },
+   "published": "2026-10-14"
+  },
+  "t-mri-effects": {
+   "kind": "clip",
+   "files": {
+    "dark": {
+     "mp4": "t-mri-effects-dark-b15c2929.mp4",
+     "webm": "t-mri-effects-dark-5e34f104.webm",
+     "poster": "t-mri-effects-dark-poster-ce2ce871.webp"
+    },
+    "light": {
+     "mp4": "t-mri-effects-light-b41163a3.mp4",
+     "webm": "t-mri-effects-light-642d5a61.webm",
+     "poster": "t-mri-effects-light-poster-4750942e.webp"
+    }
+   },
+   "bytes": 9993375,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "7bb684f",
+    "date": "2026-10-14",
+    "sample": "multimodal v2 (OL_3844, consented)"
+   },
+   "published": "2026-10-14"
+  },
+  "t-mri-layouts": {
+   "kind": "clip",
+   "files": {
+    "dark": {
+     "mp4": "t-mri-layouts-dark-ca762ca9.mp4",
+     "webm": "t-mri-layouts-dark-8111104c.webm",
+     "poster": "t-mri-layouts-dark-poster-fd997222.webp"
+    },
+    "light": {
+     "mp4": "t-mri-layouts-light-d04b3289.mp4",
+     "webm": "t-mri-layouts-light-d29cdf37.webm",
+     "poster": "t-mri-layouts-light-poster-929fae64.webp"
+    }
+   },
+   "bytes": 8754587,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "7bb684f",
+    "date": "2026-10-14",
+    "sample": "multimodal v2 (OL_3844, consented)"
+   },
+   "published": "2026-10-14"
+  },
+  "t-mri-overlay": {
+   "kind": "clip",
+   "files": {
+    "dark": {
+     "mp4": "t-mri-overlay-dark-14f25e78.mp4",
+     "webm": "t-mri-overlay-dark-00e751db.webm",
+     "poster": "t-mri-overlay-dark-poster-ef85c12e.webp"
+    },
+    "light": {
+     "mp4": "t-mri-overlay-light-5f7bb1cf.mp4",
+     "webm": "t-mri-overlay-light-43c42795.webm",
+     "poster": "t-mri-overlay-light-poster-5f435d37.webp"
+    }
+   },
+   "bytes": 4037354,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "7bb684f",
+    "date": "2026-10-14",
+    "sample": "multimodal v2 (OL_3844, consented)"
+   },
+   "published": "2026-10-14"
+  },
+  "t-mrs": {
+   "kind": "clip",
+   "files": {
+    "dark": {
+     "mp4": "t-mrs-dark-24315b5f.mp4",
+     "webm": "t-mrs-dark-787c7028.webm",
+     "poster": "t-mrs-dark-poster-593a2d73.webp"
+    },
+    "light": {
+     "mp4": "t-mrs-light-d1b98d26.mp4",
+     "webm": "t-mrs-light-93be13dd.webm",
+     "poster": "t-mrs-light-poster-cdb250d9.webp"
+    }
+   },
+   "bytes": 3429427,
+   "source": {
+    "bids_manager": "1.5.0",
+    "commit": "7bb684f",
+    "date": "2026-10-14",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-14"
+  }
+ }
+}

@@ -1,0 +1,42 @@
+{
+ "id": "t-eeg-annotate",
+ "kind": "clip",
+ "width": 1294,
+ "height": 814,
+ "duration": 4.7,
+ "chapters": [
+  {
+   "t": 1.0,
+   "title": "Annotate"
+  },
+  {
+   "t": 1.83,
+   "title": "A bad channel"
+  },
+  {
+   "t": 3.07,
+   "title": "A bad segment"
+  }
+ ],
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "mp4": "t-eeg-annotate-dark-3138916e.mp4",
+   "poster": "t-eeg-annotate-dark-poster-8fc76080.webp"
+  },
+  "light": {
+   "mp4": "t-eeg-annotate-light-8b2ae890.mp4",
+   "poster": "t-eeg-annotate-light-poster-fb2091ee.webp"
+  }
+ },
+ "alt": "Annotate on the EEG: a channel clicked bad, and a stretch of time marked as a bad segment, ready for Save to dataset.",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "7bb684f",
+  "date": "2026-10-14",
+  "sample": "multimodal v2 (PhysioNet EEG, ODC-By 1.0)"
+ }
+}

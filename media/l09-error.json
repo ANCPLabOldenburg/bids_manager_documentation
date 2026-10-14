@@ -1,0 +1,41 @@
+{
+ "id": "l09-error",
+ "kind": "figure",
+ "width": 1326,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1326": "l09-error-dark-1326-f912e73b.avif",
+    "2652": "l09-error-dark-2652-6ba3a3bb.avif"
+   },
+   "webp": {
+    "1326": "l09-error-dark-1326-566eaf3d.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1326": "l09-error-light-1326-143749b7.avif",
+    "2652": "l09-error-light-2652-bc7bc25f.avif"
+   },
+   "webp": {
+    "1326": "l09-error-light-1326-1068e547.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The session's scans table with the PET row's acquisition time marked, and the error in the Validation panel.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

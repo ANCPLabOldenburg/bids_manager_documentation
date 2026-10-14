@@ -1,0 +1,41 @@
+{
+ "id": "guide-pet-blood",
+ "kind": "figure",
+ "width": 520,
+ "height": 621,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "520": "guide-pet-blood-dark-520-136d102a.avif",
+    "1040": "guide-pet-blood-dark-1040-66951066.avif"
+   },
+   "webp": {
+    "520": "guide-pet-blood-dark-520-6df9be14.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "520": "guide-pet-blood-light-520-d3f5279c.avif",
+    "1040": "guide-pet-blood-light-1040-3acac09a.avif"
+   },
+   "webp": {
+    "520": "guide-pet-blood-light-520-5223a389.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The PET row's blood sampling: the whole-blood and plasma curves attached, both drawn by hand.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

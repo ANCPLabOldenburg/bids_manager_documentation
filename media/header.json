@@ -1,0 +1,92 @@
+{
+ "id": "header",
+ "kind": "figure",
+ "width": 1440,
+ "height": 56,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1440": "header-dark-1440-f2cb1320.avif",
+    "2880": "header-dark-2880-e0fe5490.avif"
+   },
+   "webp": {
+    "1440": "header-dark-1440-79a846c3.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1440": "header-light-1440-31dc0b5b.avif",
+    "2880": "header-light-2880-beb54a7e.avif"
+   },
+   "webp": {
+    "1440": "header-light-1440-089d6b87.webp"
+   }
+  }
+ },
+ "regions": [
+  {
+   "key": "logo",
+   "label": "The logo: opens About",
+   "x": 0.00764,
+   "y": 0.05357,
+   "w": 0.0375,
+   "h": 0.89286,
+   "mx": 0.02639,
+   "my": 0.5
+  },
+  {
+   "key": "views",
+   "label": "The three views",
+   "x": 0.15069,
+   "y": 0.05357,
+   "w": 0.23333,
+   "h": 0.89286,
+   "mx": 0.15208,
+   "my": 0.08929
+  },
+  {
+   "key": "project",
+   "label": "The project switcher",
+   "x": 0.39931,
+   "y": 0.10714,
+   "w": 0.14028,
+   "h": 0.76786,
+   "mx": 0.46944,
+   "my": 0.49107
+  },
+  {
+   "key": "settings",
+   "label": "Settings",
+   "x": 0.93681,
+   "y": 0.19643,
+   "w": 0.02639,
+   "h": 0.60714,
+   "mx": 0.95,
+   "my": 0.5
+  },
+  {
+   "key": "theme",
+   "label": "The theme menu",
+   "x": 0.96597,
+   "y": 0.19643,
+   "w": 0.02639,
+   "h": 0.60714,
+   "mx": 0.97917,
+   "my": 0.5
+  }
+ ],
+ "alt": "The header of the GUI with a project open: the logo, the Home, Converter and Editor views, the project switcher, Settings and the theme menu.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

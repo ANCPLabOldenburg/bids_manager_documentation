@@ -1,0 +1,41 @@
+{
+ "id": "l14-participants",
+ "kind": "figure",
+ "width": 888,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "888": "l14-participants-dark-888-7a86b5fa.avif",
+    "1776": "l14-participants-dark-1776-8d8e635c.avif"
+   },
+   "webp": {
+    "888": "l14-participants-dark-888-c37aeb9d.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "888": "l14-participants-light-888-86efb0f9.avif",
+    "1776": "l14-participants-light-1776-6e0b0a9e.avif"
+   },
+   "webp": {
+    "888": "l14-participants-light-888-90a1ddda.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "participants.tsv with the given_name column selected: given_name, family_name and patient_id came from the DICOM header and identify the participant.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

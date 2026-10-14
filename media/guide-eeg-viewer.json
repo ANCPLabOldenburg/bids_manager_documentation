@@ -1,0 +1,41 @@
+{
+ "id": "guide-eeg-viewer",
+ "kind": "figure",
+ "width": 1284,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1284": "guide-eeg-viewer-dark-1284-00dcca8a.avif",
+    "2568": "guide-eeg-viewer-dark-2568-a8533bbb.avif"
+   },
+   "webp": {
+    "1284": "guide-eeg-viewer-dark-1284-305c9686.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1284": "guide-eeg-viewer-light-1284-d8160c67.avif",
+    "2568": "guide-eeg-viewer-light-2568-208b31e2.avif"
+   },
+   "webp": {
+    "1284": "guide-eeg-viewer-light-1284-aea86b02.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The first run of the fist task, converted, in the signal viewer: 20 of the 64 channels, filtered from 1 to 40 Hz, with the task's events drawn over them.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "id": "guide-eeg-table-after",
+ "kind": "figure",
+ "width": 1018,
+ "height": 655,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1018": "guide-eeg-table-after-dark-1018-5e7bfef3.avif",
+    "2036": "guide-eeg-table-after-dark-2036-e4a834cd.avif"
+   },
+   "webp": {
+    "1018": "guide-eeg-table-after-dark-1018-a921eb2b.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1018": "guide-eeg-table-after-light-1018-52172e0c.avif",
+    "2036": "guide-eeg-table-after-light-2036-c0d99043.avif"
+   },
+   "webp": {
+    "1018": "guide-eeg-table-after-light-1018-497f664a.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The EEG sample after naming the tasks and runs: fist, fistimagined, fistsfeet and fistsfeetimagined with runs 1 to 3, eyesopen and eyesclosed.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

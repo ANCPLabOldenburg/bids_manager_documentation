@@ -1,0 +1,41 @@
+{
+ "id": "l08-settings-convert",
+ "kind": "figure",
+ "width": 900,
+ "height": 760,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "900": "l08-settings-convert-dark-900-584c0625.avif",
+    "1800": "l08-settings-convert-dark-1800-dcc540d8.avif"
+   },
+   "webp": {
+    "900": "l08-settings-convert-dark-900-dfc304c4.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "900": "l08-settings-convert-light-900-f904d693.avif",
+    "1800": "l08-settings-convert-light-1800-33d105c7.avif"
+   },
+   "webp": {
+    "900": "l08-settings-convert-light-900-dac2b14e.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, Convert page: existing subjects, curated metadata, residuals, fieldmap links, EEG to EDF and defacing.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

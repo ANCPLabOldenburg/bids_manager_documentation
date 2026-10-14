@@ -1,0 +1,41 @@
+{
+ "id": "l14-deface",
+ "kind": "figure",
+ "width": 980,
+ "height": 760,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "980": "l14-deface-dark-980-b9dd0816.avif",
+    "1960": "l14-deface-dark-1960-95318bea.avif"
+   },
+   "webp": {
+    "980": "l14-deface-dark-980-03013e6b.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "980": "l14-deface-light-980-f850afd6.avif",
+    "1960": "l14-deface-light-1960-9e7ffb8a.avif"
+   },
+   "webp": {
+    "980": "l14-deface-light-980-0465a29f.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Remove faces: the dataset's anatomical images, the engine, and what would happen to each.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

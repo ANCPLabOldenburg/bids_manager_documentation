@@ -1,0 +1,41 @@
+{
+ "id": "settings-shortcuts",
+ "kind": "figure",
+ "width": 900,
+ "height": 760,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "900": "settings-shortcuts-dark-900-b86f40f0.avif",
+    "1800": "settings-shortcuts-dark-1800-259bb1f5.avif"
+   },
+   "webp": {
+    "900": "settings-shortcuts-dark-900-b0e5c5de.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "900": "settings-shortcuts-light-900-fe501224.avif",
+    "1800": "settings-shortcuts-light-1800-05ed0659.avif"
+   },
+   "webp": {
+    "900": "settings-shortcuts-light-900-f422f209.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, Viewer shortcuts page: every key and mouse gesture of the viewers, each of which can be changed.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

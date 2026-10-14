@@ -1,0 +1,41 @@
+{
+ "id": "guide-eeg-meta",
+ "kind": "figure",
+ "width": 700,
+ "height": 820,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "700": "guide-eeg-meta-dark-700-0e6787f8.avif",
+    "1400": "guide-eeg-meta-dark-1400-eb3eb56f.avif"
+   },
+   "webp": {
+    "700": "guide-eeg-meta-dark-700-c2df236d.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "700": "guide-eeg-meta-light-700-94cf27bc.avif",
+    "1400": "guide-eeg-meta-light-1400-c873993f.avif"
+   },
+   "webp": {
+    "700": "guide-eeg-meta-light-700-f46f5ae7.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Dataset metadata for the EEG sample: the montage the scan suggests, and the three event codes of the recordings, each given a label.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

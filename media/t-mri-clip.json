@@ -1,0 +1,44 @@
+{
+ "id": "t-mri-clip",
+ "kind": "clip",
+ "width": 1304,
+ "height": 782,
+ "duration": 6.97,
+ "chapters": [
+  {
+   "t": 0.6,
+   "title": "Axial cut through the crosshair"
+  },
+  {
+   "t": 2.63,
+   "title": "Sagittal cut"
+  },
+  {
+   "t": 4.33,
+   "title": "Corner cut at the crosshair"
+  }
+ ],
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "mp4": "t-mri-clip-dark-ac882b81.mp4",
+   "webm": "t-mri-clip-dark-66e16a7a.webm",
+   "poster": "t-mri-clip-dark-poster-43eb72b2.webp"
+  },
+  "light": {
+   "mp4": "t-mri-clip-light-61af61be.mp4",
+   "webm": "t-mri-clip-light-11283383.webm",
+   "poster": "t-mri-clip-light-poster-d733bd21.webp"
+  }
+ },
+ "alt": "Clip planes on the T1w: an axial cut through the crosshair moving down, then a sagittal one, then the corner cut at the crosshair, while the camera swings.",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "7bb684f",
+  "date": "2026-10-14",
+  "sample": "multimodal v2 (OL_3844, consented)"
+ }
+}

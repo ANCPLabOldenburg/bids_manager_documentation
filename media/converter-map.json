@@ -1,0 +1,122 @@
+{
+ "id": "converter-map",
+ "kind": "figure",
+ "width": 1600,
+ "height": 1000,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1600": "converter-map-dark-1600-09834d01.avif",
+    "3200": "converter-map-dark-3200-d8fc3a57.avif"
+   },
+   "webp": {
+    "1600": "converter-map-dark-1600-3a7cc312.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1600": "converter-map-light-1600-af56b785.avif",
+    "3200": "converter-map-light-3200-a8a19803.avif"
+   },
+   "webp": {
+    "1600": "converter-map-light-1600-0f1d18e0.webp"
+   }
+  }
+ },
+ "regions": [
+  {
+   "key": "toolbar",
+   "label": "The toolbar: Scan, the scan table, Undo and Redo, the counts, Run conversion",
+   "x": 0.0,
+   "y": 0.053,
+   "w": 1.0,
+   "h": 0.05,
+   "mx": 0.00125,
+   "my": 0.078
+  },
+  {
+   "key": "paths",
+   "label": "Raw input and BIDS output",
+   "x": 0.0,
+   "y": 0.097,
+   "w": 1.0,
+   "h": 0.054,
+   "mx": 0.00125,
+   "my": 0.124
+  },
+  {
+   "key": "trees",
+   "label": "The raw data tree and the output data tree",
+   "x": 0.00313,
+   "y": 0.197,
+   "w": 0.16,
+   "h": 0.604,
+   "mx": 0.00438,
+   "my": 0.199
+  },
+  {
+   "key": "filter",
+   "label": "Structure: the subjects, sessions and recordings the scan found",
+   "x": 0.16437,
+   "y": 0.197,
+   "w": 0.19125,
+   "h": 0.604,
+   "mx": 0.16562,
+   "my": 0.199
+  },
+  {
+   "key": "inspection",
+   "label": "Inspection: the table of recordings, or the Overview",
+   "x": 0.35687,
+   "y": 0.197,
+   "w": 0.64,
+   "h": 0.604,
+   "mx": 0.35812,
+   "my": 0.199
+  },
+  {
+   "key": "properties",
+   "label": "Properties of the selected row",
+   "x": 0.78563,
+   "y": 0.229,
+   "w": 0.21,
+   "h": 0.57,
+   "mx": 0.78687,
+   "my": 0.231
+  },
+  {
+   "key": "log",
+   "label": "The Log",
+   "x": 0.00313,
+   "y": 0.803,
+   "w": 0.99375,
+   "h": 0.166,
+   "mx": 0.00438,
+   "my": 0.805
+  },
+  {
+   "key": "run",
+   "label": "Run conversion",
+   "x": 0.88875,
+   "y": 0.059,
+   "w": 0.10437,
+   "h": 0.038,
+   "mx": 0.94094,
+   "my": 0.078
+  }
+ ],
+ "alt": "The Converter after scanning the multimodal sample: the toolbar, the raw input and BIDS output bars, the raw and output trees, the Structure panel beside the table, the scan table in the Table view with one row selected, the Properties panel and the Log.",
+ "window": true,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

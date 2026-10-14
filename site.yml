@@ -1,0 +1,207 @@
+# The site in one file: its name, where it lives, the release it documents,
+# every download link, and the navigation. tools/build.py reads it.
+
+title: BIDS Manager
+description: >-
+  Documentation for BIDS Manager, a GUI and a set of commands
+  that turn raw MRI, PET, MR spectroscopy, EEG, MEG, physiological and
+  eye-tracking recordings into a BIDS dataset, then validate, view, check and
+  edit it.
+base_url: https://ancplaboldenburg.github.io/bids_manager_documentation/
+version: "1.5.0"
+release_date: "October 2026"
+repo: https://github.com/ANCPLabOldenburg/BIDS-Manager
+docs_repo: https://github.com/ANCPLabOldenburg/bids_manager_documentation
+docs_repo_branch: main
+pypi: https://pypi.org/project/bids-manager/
+analytics: https://bids-manager.goatcounter.com/count
+
+# Every download in one place. A sample whose zip has no public link yet has
+# an empty url: the pages then describe it without a download button, and the
+# build lists it under "missing downloads". `build.py --release` refuses to
+# build while any is missing, unless the entry says `coming_soon: true`: then
+# the page says the download is coming soon and the release build goes ahead.
+downloads:
+  installers:
+    url: https://github.com/ANCPLabOldenburg/BIDS-Manager/raw/main/Installers/Installers.zip
+    label: Installers.zip
+    goatcounter: download-installers-zip
+  multimodal:
+    url: https://cloud.uol.de/s/kY9nQwdzgyQF6At/download
+    file: BIDS_Manager_multimodal_sample_v2.zip
+    size: 126 MB
+    unpacked: 318 MB
+    goatcounter: download-dataset-multimodal
+  meg:
+    url: https://cloud.uol.de/s/XQoEqsa42bNQ4JX/download
+    file: MEG_Elekta_sample_data_small.zip
+    size: 474 MB
+    unpacked: 853 MB
+    goatcounter: download-dataset-meg
+  pet:
+    url: https://cloud.uol.de/s/Sfmdo6m2GCrKyfi/download
+    file: BIDS_Manager_PET_sample.zip
+    size: 9 MB
+    unpacked: 29 MB
+    goatcounter: download-dataset-pet
+  eeg:
+    url: https://cloud.uol.de/s/8YcmPwFJ5qzfEAq/download
+    file: EEG_motor_imagery_sample_data.zip
+    size: 36 MB
+    unpacked: 67 MB
+    goatcounter: download-dataset-eeg
+  mri:
+    url: https://cloud.uol.de/s/qpE8KeBpqgTn2LB/download
+    file: MRI_sample_data_neuroimging_unit_oldenburg_2.zip
+    size: 346 MB
+    unpacked: 603 MB
+    goatcounter: download-dataset-mri
+  mri_advanced:
+    # Being uploaded (the old share is gone, 404). Put the public link in url
+    # and remove coming_soon when it is there.
+    url: ""
+    coming_soon: true
+    file: MRI_sample_data_neuroimging_unit_oldenburg_1.zip
+    size: 4.7 GB
+    unpacked: 8.0 GB
+    goatcounter: download-dataset-mri-advanced
+
+# The header's sections, in order. Concepts and About are reached from the
+# pages and the footer.
+header: [start, learn, guides, reference, help, updates, about]
+
+sections:
+  start:
+    title: Start
+    pages:
+      - start/
+      - start/install/
+      - start/first-launch/
+      - start/sample-data/
+      - start/quick-start/
+  learn:
+    title: Learn
+    numbered: true
+    pages:
+      - learn/
+      - learn/01-bids/
+      - learn/02-projects/
+      - learn/03-scanning/
+      - learn/04-scan-table/
+      - learn/05-naming/
+      - learn/06-checking-before-converting/
+      - learn/07-metadata/
+      - learn/08-converting/
+      - learn/09-validating/
+      - learn/10-editing-metadata/
+      - learn/11-dataset-shape/
+      - learn/12-viewing-data/
+      - learn/13-image-quality/
+      - learn/14-sharing/
+      - learn/15-command-line/
+    also: concepts
+  concepts:
+    title: Concepts
+    pages:
+      - concepts/
+      - concepts/how-names-are-decided/
+      - concepts/fieldmap-links/
+      - concepts/metadata-levels/
+      - concepts/inheritance/
+      - concepts/bids-preview/
+      - concepts/identifiers-and-privacy/
+      - concepts/project-folder/
+  guides:
+    title: Guides
+    pages:
+      - guides/
+      - guides/mri/
+      - guides/mri-advanced/
+      - guides/pet/
+      - guides/eeg/
+      - guides/meg/
+      - guides/eye-tracking/
+      - guides/multimodal/
+      - guides/defacing/
+      - guides/adopting-a-dataset/
+      - guides/viewing/
+      - guides/worked-examples/
+  reference:
+    title: Reference
+    pages:
+      - reference/
+      - reference/interface/
+      - reference/interface/converter/
+      - reference/interface/editor/
+      - reference/editor-tools/
+      - reference/settings/
+      - reference/viewers/
+      - reference/quality-measures/
+      - reference/scan-table-columns/
+      - reference/command-line/
+      - reference/files/
+      - reference/classifier/
+      - reference/glossary/
+  help:
+    title: Help
+    pages:
+      - help/
+      - help/faq/
+      - help/troubleshooting/
+      - help/known-issues/
+      - help/reporting/
+      - help/citing/
+  updates:
+    title: Updates
+    pages:
+      - updates/
+  about:
+    title: About
+    pages:
+      - about/
+      - about/mistakes/
+      - about/project/
+
+# Old pages and where they went. Anchors are mapped where a section has a
+# clear successor; anything else lands on the page itself.
+redirects:
+  index.html: {to: ""}
+  intro.html: {to: about/}
+  gui-tour.html: {to: reference/interface/}
+  installation.html:
+    to: start/install/
+    anchors:
+      bootstrap: start/install/#installers
+      manual: start/install/#python
+      arch: start/install/#which-installer
+  tutorial.html:
+    to: learn/
+    anchors:
+      intro: learn/
+      need: start/quick-start/
+      workflow: learn/
+      datasets: start/sample-data/
+      gui-tour: reference/interface/
+      scenes: learn/03-scanning/
+      step-scan: learn/03-scanning/
+      cli-ref: reference/command-line/
+      cli: learn/15-command-line/
+  tutorial-mri.html: {to: guides/mri/}
+  tutorial-mri-advanced.html: {to: guides/mri-advanced/}
+  tutorial-eeg.html: {to: guides/eeg/}
+  tutorial-meg.html: {to: guides/meg/}
+  tutorial-pet.html: {to: guides/pet/}
+  tutorial-multimodal.html: {to: guides/multimodal/}
+  tutorial-deface.html: {to: guides/defacing/}
+  updates.html: {to: updates/}
+  learn/04-inventory-table/: {to: learn/04-scan-table/}
+  reference/inventory-columns/: {to: reference/scan-table-columns/}
+  about.html:
+    to: about/
+    anchors:
+      issues: help/reporting/
+      cite: help/citing/
+      silent: about/mistakes/
+      engines: about/project/
+      privacy: about/project/
+      who: about/project/

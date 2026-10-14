@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Moved | {{ title }}</title>
+<meta name="robots" content="noindex">
+<meta http-equiv="refresh" content="0; url={{ target }}">
+<link rel="canonical" href="{{ target }}">
+<script>
+(function () {
+  var anchors = {{ anchors }};
+  var hash = location.hash.replace(/^#/, '');
+  var to = '{{ target }}';
+  if (hash && anchors[hash]) { to = anchors[hash]; }
+  else if (hash) { to = to.split('#')[0] + '#' + hash; }
+  location.replace(to);
+})();
+</script>
+<style>body{font:16px/1.6 system-ui,sans-serif;margin:3rem auto;max-width:36rem;padding:0 1rem}</style>
+</head>
+<body>
+<p>This page has moved. If you are not taken there, <a href="{{ target }}">open the new page</a>.</p>
+</body>
+</html>

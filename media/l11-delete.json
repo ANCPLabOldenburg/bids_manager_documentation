@@ -1,0 +1,41 @@
+{
+ "id": "l11-delete",
+ "kind": "figure",
+ "width": 980,
+ "height": 720,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "980": "l11-delete-dark-980-a4211404.avif",
+    "1960": "l11-delete-dark-1960-6ebb1c70.avif"
+   },
+   "webp": {
+    "980": "l11-delete-dark-980-7b5615fc.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "980": "l11-delete-light-980-8cf36f47.avif",
+    "1960": "l11-delete-light-1960-b128b58d.avif"
+   },
+   "webp": {
+    "980": "l11-delete-light-980-2c08533f.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Delete from the dataset: the eye-tracking folder, with the scans rows that go with it.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

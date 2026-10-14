@@ -1,0 +1,41 @@
+{
+ "id": "guide-adv-table",
+ "kind": "figure",
+ "width": 1018,
+ "height": 655,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1018": "guide-adv-table-dark-1018-0e7253d3.avif",
+    "2036": "guide-adv-table-dark-2036-bd5cbee8.avif"
+   },
+   "webp": {
+    "1018": "guide-adv-table-dark-1018-71c84267.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1018": "guide-adv-table-light-1018-de2aae7d.avif",
+    "2036": "guide-adv-table-light-2036-0eb6cf35.avif"
+   },
+   "webp": {
+    "1018": "guide-adv-table-light-1018-a814a0d5.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The advanced MRI sample after the scan, scrolled to the diffusion series: the scanner's FA, colour FA and trace maps kept as diffusion files, its tensor left out because it holds no image.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

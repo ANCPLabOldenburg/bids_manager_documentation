@@ -1,0 +1,44 @@
+{
+ "id": "l08-convert",
+ "kind": "clip",
+ "width": 1600,
+ "height": 1000,
+ "duration": 8.4,
+ "chapters": [
+  {
+   "t": 0.5,
+   "title": "Run conversion"
+  },
+  {
+   "t": 1.83,
+   "title": "The conversion"
+  },
+  {
+   "t": 3.33,
+   "title": "Done"
+  }
+ ],
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "mp4": "l08-convert-dark-e1550a66.mp4",
+   "webm": "l08-convert-dark-2aaab2df.webm",
+   "poster": "l08-convert-dark-poster-b531bdb2.webp"
+  },
+  "light": {
+   "mp4": "l08-convert-light-bf4e9f29.mp4",
+   "webm": "l08-convert-light-de4e7c72.webm",
+   "poster": "l08-convert-light-poster-1e4d50b5.webp"
+  }
+ },
+ "alt": "Pressing Run conversion: the Log reports each step, the output tree fills with the dataset, metadata and validation run after it, and a message says where the output was written.",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

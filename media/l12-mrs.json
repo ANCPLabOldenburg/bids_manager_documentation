@@ -1,0 +1,41 @@
+{
+ "id": "l12-mrs",
+ "kind": "figure",
+ "width": 1294,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1294": "l12-mrs-dark-1294-854f67ee.avif",
+    "2588": "l12-mrs-dark-2588-c7f79e50.avif"
+   },
+   "webp": {
+    "1294": "l12-mrs-dark-1294-f7b2bb24.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1294": "l12-mrs-light-1294-5392c23d.avif",
+    "2588": "l12-mrs-light-2588-7050a2f7.avif"
+   },
+   "webp": {
+    "1294": "l12-mrs-light-1294-109d6779.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The spectroscopy file as a spectrum, with the chemical shift axis in ppm from right to left and the metabolites labelled.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

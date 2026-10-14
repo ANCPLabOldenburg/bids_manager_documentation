@@ -1,0 +1,41 @@
+{
+ "id": "l13-meeg-qc",
+ "kind": "figure",
+ "width": 1294,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1294": "l13-meeg-qc-dark-1294-8eb441a8.avif",
+    "2588": "l13-meeg-qc-dark-2588-041ca82b.avif"
+   },
+   "webp": {
+    "1294": "l13-meeg-qc-dark-1294-3053b0b2.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1294": "l13-meeg-qc-light-1294-35ccd183.avif",
+    "2588": "l13-meeg-qc-light-2588-1028646a.avif"
+   },
+   "webp": {
+    "1294": "l13-meeg-qc-light-1294-01f68434.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The MEG recording's quality check: each channel's level against its type, per segment, beside the traces.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

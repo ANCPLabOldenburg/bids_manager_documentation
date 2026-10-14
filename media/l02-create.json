@@ -1,0 +1,82 @@
+{
+ "id": "l02-create",
+ "kind": "figure",
+ "width": 522,
+ "height": 242,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "522": "l02-create-dark-522-30978756.avif",
+    "1044": "l02-create-dark-1044-5933bad2.avif"
+   },
+   "webp": {
+    "522": "l02-create-dark-522-15e3b8ac.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "522": "l02-create-light-522-bcd6dce8.avif",
+    "1044": "l02-create-light-1044-69de99fb.avif"
+   },
+   "webp": {
+    "522": "l02-create-light-522-4500209e.webp"
+   }
+  }
+ },
+ "regions": [
+  {
+   "key": "name",
+   "label": "Dataset name",
+   "x": 0.05364,
+   "y": 0.39669,
+   "w": 0.89272,
+   "h": 0.16529,
+   "mx": 0.05747,
+   "my": 0.47934
+  },
+  {
+   "key": "where",
+   "label": "Where it is created",
+   "x": 0.05364,
+   "y": 0.57851,
+   "w": 0.72797,
+   "h": 0.16529,
+   "mx": 0.05747,
+   "my": 0.66116
+  },
+  {
+   "key": "browse",
+   "label": "Browse\u2026",
+   "x": 0.78544,
+   "y": 0.59091,
+   "w": 0.16092,
+   "h": 0.1405,
+   "mx": 0.8659,
+   "my": 0.66116
+  },
+  {
+   "key": "create",
+   "label": "Create dataset",
+   "x": 0.69923,
+   "y": 0.76033,
+   "w": 0.24713,
+   "h": 0.1405,
+   "mx": 0.8228,
+   "my": 0.83058
+  }
+ ],
+ "alt": "The Create a new dataset card on Home, with the name multimodal_study and the location /tmp/studies.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

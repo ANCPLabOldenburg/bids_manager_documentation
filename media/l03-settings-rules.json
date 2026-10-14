@@ -1,0 +1,41 @@
+{
+ "id": "l03-settings-rules",
+ "kind": "figure",
+ "width": 900,
+ "height": 700,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "900": "l03-settings-rules-dark-900-a7338f3b.avif",
+    "1800": "l03-settings-rules-dark-1800-9ff54f58.avif"
+   },
+   "webp": {
+    "900": "l03-settings-rules-dark-900-3603fc63.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "900": "l03-settings-rules-light-900-037be9d1.avif",
+    "1800": "l03-settings-rules-light-1800-7c072b1c.avif"
+   },
+   "webp": {
+    "900": "l03-settings-rules-light-900-01371572.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, Scan rules page: series to leave out, your own naming hints, and the built-in criteria.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

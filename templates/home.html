@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block body_class %}page-home{% endblock %}
+{% block head %}
+<link rel="preload" href="{{ link('/static/hero/hero.bin') }}" as="fetch" type="application/octet-stream" crossorigin>
+<link rel="preload" href="{{ link('/static/fonts/JetBrainsMono-Regular.woff2') }}" as="font" type="font/woff2" crossorigin>
+{% endblock %}
+{% block main %}
+<main id="main" class="home" tabindex="-1">
+  <section class="hero" aria-labelledby="hero-title" data-hero>
+    <div class="hero-sticky">
+      <canvas class="hero-canvas" aria-hidden="true"></canvas>
+      <img class="hero-still theme-light" src="{{ link('/static/hero/hero-light.svg') }}" alt="" aria-hidden="true" width="900" height="640">
+      <img class="hero-still theme-dark" src="{{ link('/static/hero/hero-dark.svg') }}" alt="" aria-hidden="true" width="900" height="640">
+      <div class="hero-labels" aria-hidden="true"></div>
+      <div class="hero-tree" aria-hidden="true"></div>
+      <div class="hero-card" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <p class="hero-kicker">{{ meta.hero_kicker }}</p>
+        <h1 id="hero-title">{{ meta.hero_title | inline }}</h1>
+        <p class="hero-lede"><span class="lede-long">{{ meta.hero_lede | inline }}</span><span class="lede-short">{{ meta.hero_lede_short | inline }}</span></p>
+        <div class="btn-row hero-actions">
+          <a class="btn btn--primary" href="{{ link('/start/install/') }}">Install BIDS Manager</a>
+          <a class="btn btn--secondary" href="{{ link('/learn/') }}">Take the course<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11.5M11 5.5l4.5 4.5-4.5 4.5"/></svg></a>
+        </div>
+        <p class="hero-meta">Free and open source, for Windows, macOS and Linux.</p>
+      </div>
+      <div class="hero-end" aria-hidden="true">
+        <p class="hero-kicker">The same recordings, in BIDS</p>
+        <p class="hero-end-title">Every file named by the standard, every sidecar <em>described</em>.</p>
+      </div>
+      <div class="hero-hud" aria-hidden="true">
+        <span><i>state</i> <b data-hud-state>raw recordings</b></span>
+        <span class="hero-hint"><i>scroll</i> to convert</span>
+      </div>
+    </div>
+    <p class="visually-hidden">The picture behind this text draws seven kinds of recording from real data as points of light: an MRI brain, an MR spectrum, a PET image, EEG traces, the MEG sensor helmet, a heartbeat and breathing trace, and an eye-tracking scanpath, around BIDS Manager's mark, a folder holding a brain. Scrolling carries every point through the mark into the folders and file names of one BIDS dataset, and the sidecars beside the recordings fill in field by field. The same dataset is shown in text below.</p>
+  </section>
+  <div class="home-body">
+{{ page.html }}
+  </div>
+</main>
+{% endblock %}
+{% block scripts %}
+<script src="{{ link('/static/js/home.js') }}" defer></script>
+{% endblock %}

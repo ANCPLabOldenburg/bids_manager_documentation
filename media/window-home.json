@@ -1,0 +1,122 @@
+{
+ "id": "window-home",
+ "kind": "figure",
+ "width": 1440,
+ "height": 900,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1440": "window-home-dark-1440-c1cfd6a1.avif",
+    "2880": "window-home-dark-2880-7fd85bb4.avif"
+   },
+   "webp": {
+    "1440": "window-home-dark-1440-1de52585.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1440": "window-home-light-1440-2b887f6a.avif",
+    "2880": "window-home-light-2880-906d5bc2.avif"
+   },
+   "webp": {
+    "1440": "window-home-light-1440-4b7fba42.webp"
+   }
+  }
+ },
+ "regions": [
+  {
+   "key": "header",
+   "label": "The header: the views, the project, Settings and the theme",
+   "x": 0.0,
+   "y": 0.0,
+   "w": 1.0,
+   "h": 0.06556,
+   "mx": 0.00139,
+   "my": 0.00222
+  },
+  {
+   "key": "views",
+   "label": "Home, Converter and Editor",
+   "x": 0.15069,
+   "y": 0.00333,
+   "w": 0.23333,
+   "h": 0.05556,
+   "mx": 0.15208,
+   "my": 0.00556
+  },
+  {
+   "key": "create",
+   "label": "Create a new dataset",
+   "x": 0.13681,
+   "y": 0.17667,
+   "w": 0.35556,
+   "h": 0.25778,
+   "mx": 0.13819,
+   "my": 0.17889
+  },
+  {
+   "key": "open",
+   "label": "Open an existing dataset",
+   "x": 0.50069,
+   "y": 0.17667,
+   "w": 0.35486,
+   "h": 0.18444,
+   "mx": 0.50208,
+   "my": 0.17889
+  },
+  {
+   "key": "recent",
+   "label": "Recent projects",
+   "x": 0.50069,
+   "y": 0.37222,
+   "w": 0.35486,
+   "h": 0.62778,
+   "mx": 0.50208,
+   "my": 0.37444
+  },
+  {
+   "key": "settings",
+   "label": "Settings",
+   "x": 0.93681,
+   "y": 0.01222,
+   "w": 0.02639,
+   "h": 0.03778,
+   "mx": 0.95,
+   "my": 0.03111
+  },
+  {
+   "key": "theme",
+   "label": "Theme",
+   "x": 0.96597,
+   "y": 0.01222,
+   "w": 0.02639,
+   "h": 0.03778,
+   "mx": 0.97917,
+   "my": 0.03111
+  },
+  {
+   "key": "status",
+   "label": "The status bar: messages, the version, Check updates",
+   "x": 0.0,
+   "y": 0.96778,
+   "w": 1.0,
+   "h": 0.03222,
+   "mx": 0.5,
+   "my": 0.97
+  }
+ ],
+ "alt": "BIDS Manager's GUI on first launch, showing the Home view: a card to create a dataset, a card to open one, links to get started, and the list of recent projects.",
+ "window": true,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

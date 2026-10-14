@@ -1,0 +1,41 @@
+{
+ "id": "l06-structure",
+ "kind": "figure",
+ "width": 300,
+ "height": 598,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "300": "l06-structure-dark-300-e6b8c6e6.avif",
+    "600": "l06-structure-dark-600-5bb45165.avif"
+   },
+   "webp": {
+    "300": "l06-structure-dark-300-c6037367.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "300": "l06-structure-light-300-5c97b536.avif",
+    "600": "l06-structure-light-600-2fc2616e.avif"
+   },
+   "webp": {
+    "300": "l06-structure-light-300-c91c1865.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The Structure view beside the table after the scan: one branch per proposed subject and session, then datatypes and the BIDS names.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

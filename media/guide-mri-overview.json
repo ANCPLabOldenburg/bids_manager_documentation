@@ -1,0 +1,41 @@
+{
+ "id": "guide-mri-overview",
+ "kind": "figure",
+ "width": 1018,
+ "height": 655,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1018": "guide-mri-overview-dark-1018-96e4b533.avif",
+    "2036": "guide-mri-overview-dark-2036-d23fa20e.avif"
+   },
+   "webp": {
+    "1018": "guide-mri-overview-dark-1018-55499057.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1018": "guide-mri-overview-light-1018-a913c338.avif",
+    "2036": "guide-mri-overview-light-2036-740b5d58.avif"
+   },
+   "webp": {
+    "1018": "guide-mri-overview-light-1018-a8b5075a.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The Overview of the MRI sample: two subjects, one with two sessions and one without, which it points out.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

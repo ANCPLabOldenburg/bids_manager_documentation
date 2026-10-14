@@ -1,0 +1,24 @@
+# What the installers do, step by step, read from the scripts in
+# BIDS-Manager/Installers/Installers.zip (macOS .command, Windows .bat,
+# Linux .sh). Shown as the animated steps on the install page.
+steps:
+  - id: check
+    title: Check
+    all: "Looks for about 2.5 GB of free disk space and for a connection to PyPI, and warns if either is missing. If BIDS Manager is already installed, asks what to do (see Upgrade, below). Then lists what it will do and asks you to confirm."
+  - id: python
+    title: A Python of its own
+    macos: "Downloads a portable Python 3.10 for Apple silicon (about 60 MB) into ~/BIDS-Manager/."
+    windows: "Downloads an embeddable Python 3.10 (about 12 MB) into %USERPROFILE%\\BIDS-Manager\\, and gives it pip."
+    linux: "Downloads a portable Python 3.10 for x86_64 (about 65 MB) into ~/BIDS-Manager/."
+  - id: env
+    title: An environment
+    all: "Creates an isolated environment inside that folder, so nothing it installs touches the rest of your computer's Python."
+  - id: install
+    title: BIDS Manager
+    all: "Installs bids-manager from PyPI with everything it needs, dcm2niix and niimath included (about 1.5 GB). This is the long step."
+    windows_extra: "Then checks that the EyeLink reader loads, and if it does not, installs the Microsoft Visual C++ 2008 runtime it needs (Windows asks for permission)."
+  - id: launcher
+    title: A launcher
+    macos: "Builds ~/Applications/BIDS-Manager.app with the BIDS Manager icon, an uninstaller, and a Desktop shortcut."
+    windows: "Creates a Desktop shortcut and a Start Menu entry with the BIDS Manager icon, and an uninstaller."
+    linux: "Registers BIDS-Manager in the application menu with its icon, adds Desktop shortcuts and an uninstaller."

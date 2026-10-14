@@ -1,0 +1,41 @@
+{
+ "id": "guide-pet-dose",
+ "kind": "figure",
+ "width": 700,
+ "height": 820,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "700": "guide-pet-dose-dark-700-8a93e178.avif",
+    "1400": "guide-pet-dose-dark-1400-781dd3a3.avif"
+   },
+   "webp": {
+    "700": "guide-pet-dose-dark-700-0313696b.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "700": "guide-pet-dose-light-700-4e7fbcf7.avif",
+    "1400": "guide-pet-dose-light-1400-53ce60a9.avif"
+   },
+   "webp": {
+    "700": "guide-pet-dose-light-700-0dce8d11.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Dataset metadata after importing the sample's dose sheet: the status line says how many fields it filled, and the PET fields below hold them.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

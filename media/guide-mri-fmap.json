@@ -1,0 +1,41 @@
+{
+ "id": "guide-mri-fmap",
+ "kind": "figure",
+ "width": 520,
+ "height": 621,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "520": "guide-mri-fmap-dark-520-87fd6f37.avif",
+    "1040": "guide-mri-fmap-dark-1040-9370c724.avif"
+   },
+   "webp": {
+    "520": "guide-mri-fmap-dark-520-5911f89b.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "520": "guide-mri-fmap-light-520-7002ae96.avif",
+    "1040": "guide-mri-fmap-light-1040-9631d8e7.avif"
+   },
+   "webp": {
+    "520": "guide-mri-fmap-light-520-e0a1d9c8.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Properties of the second fieldmap of session pre: Corrects these runs, with the resting run ticked, because it was acquired just before it.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

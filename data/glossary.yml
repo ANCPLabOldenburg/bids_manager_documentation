@@ -1,0 +1,151 @@
+# The glossary. `short` is the one-line definition shown when a reader hovers
+# a [[term]] in a page; `long` (optional) is what the Glossary page shows;
+# `see` (optional) links to where the idea is explained.
+
+- term: BIDS
+  short: The Brain Imaging Data Structure, a standard for naming and describing neuroimaging and electrophysiology data in folders, files, JSON sidecars and tables.
+  see: /learn/01-bids/
+
+- term: BIDS preview
+  short: The third view of the panel beside the Converter's table, which lists every file a conversion will write and predicts the content of each.
+  see: /concepts/bids-preview/
+
+- term: BIDS URI
+  short: "A reference to a file inside a dataset written as bids::sub-01/func/..., used by IntendedFor and similar fields."
+
+- term: B0FieldIdentifier
+  short: A sidecar field that names a fieldmap acquisition; the runs it corrects name it in their B0FieldSource. The newer way to link fieldmaps and runs.
+  see: /concepts/fieldmap-links/
+
+- term: classifier
+  short: The part of the scan that decides what each MRI series is, from its acquisition parameters, the series name and the series around it.
+  see: /reference/classifier/
+
+- term: companion file
+  short: A file that belongs with a recording but is not its data, such as events.tsv, channels.tsv or a physiological recording.
+
+- term: confidence
+  short: How sure the classifier is of the name it proposed for a series, from 0 to 1. Rows below the threshold are marked to check.
+
+- term: datatype
+  short: The folder a recording lands in inside a session, such as anat, func, dwi, fmap, eeg, meg, pet, mrs or beh.
+  see: /learn/01-bids/
+
+- term: deep checks
+  short: A slower validation that also reads the image headers and file contents, and finds a header that disagrees with its sidecar.
+
+- term: defacing
+  short: Removing the face from an anatomical image so the participant cannot be recognised from a rendering of it.
+  see: /guides/defacing/
+
+- term: derivatives
+  short: The folder of a dataset for data computed from the raw data, such as skull-stripped images or quality-check results.
+
+- term: DICOM
+  short: "The file format scanners write: one file per slice or frame, each with a header describing the acquisition and the patient."
+
+- term: empty-room recording
+  short: An MEG recording made with nobody in the scanner, to measure the noise of the room and the sensors.
+
+- term: entity
+  short: A key-value pair in a BIDS file name, such as sub-001, ses-01, task-rest or run-1. The standard says which entities a file may have and in which order.
+  see: /learn/01-bids/
+
+- term: fieldmap
+  short: An acquisition that measures distortions of the magnetic field, used to correct the functional and diffusion images taken in the same session.
+  see: /concepts/fieldmap-links/
+
+- term: finding
+  short: "One thing validation reports about a file: an error, which breaks the standard, or a warning, which is worth fixing."
+
+- term: index
+  short: An entity whose value is a number, such as run or echo.
+
+- term: inheritance
+  short: The BIDS rule that a sidecar higher in the folder tree applies to every matching file below it, unless a closer sidecar says otherwise.
+  see: /concepts/inheritance/
+
+- term: IntendedFor
+  short: A fieldmap's sidecar field listing the runs it corrects.
+  see: /concepts/fieldmap-links/
+
+- term: label
+  short: An entity whose value is a word made of letters and digits, such as task-rest or acq-highres.
+
+- term: modality
+  short: "How data was acquired: MRI, PET, EEG, MEG. Not the same as the datatype (the folder) or the suffix (what the recording is)."
+  see: /learn/01-bids/
+
+- term: NIfTI
+  short: The image format BIDS uses for MRI and PET, one file per series (.nii or .nii.gz), with the voxel sizes and orientation in its header.
+
+- term: participants.tsv
+  short: The dataset's table of participants, one row per subject, with columns such as age, sex and handedness, described in participants.json.
+
+- term: physiological recording
+  short: A recording taken alongside another one, such as heart rate, breathing or a trigger during an MRI run, stored as _physio.tsv.gz with a sidecar.
+
+- term: placeholder
+  short: "The value BIDS Manager writes into a field the standard asks for and no file answered, so the field is easy to find and fill: TODO, or n/a where the field accepts it."
+  see: /concepts/metadata-levels/
+
+- term: project
+  short: A BIDS dataset folder that BIDS Manager keeps a history in, in its .bidsmgr/ folder, so scans and edits can be resumed and undone.
+  see: /concepts/project-folder/
+
+- term: raw folder
+  short: The folder of recordings as they came from the scanner or the recording system, before conversion. BIDS Manager reads it and never writes into it.
+
+- term: requirement level
+  short: Whether the standard calls a field required, recommended or optional for a given file.
+  see: /concepts/metadata-levels/
+
+- term: residual
+  short: A secondary file dcm2niix writes beside the real image of a series, such as a single-volume duplicate. Skipped by default.
+
+- term: scan
+  short: Reading a raw folder and listing what is in it, one row per recording, without converting anything.
+  see: /learn/03-scanning/
+
+- term: scan rules
+  short: Your own rules applied at every scan, to leave out series by name or to give your own names to series.
+
+- term: scan table
+  short: "The table a scan produces: one row per recording found in the raw folder, with its properties and proposed BIDS name, and every edit made to it. The Converter shows it in the Table view; the file is inventory.tsv. A project can hold several."
+  see: /learn/04-scan-table/
+
+- term: scans table
+  short: The _scans.tsv file of a session (or subject) that lists each recording with its acquisition time.
+
+- term: schema
+  short: The machine-readable form of the BIDS standard, from which BIDS Manager reads which names, entities and fields are allowed.
+
+- term: series
+  short: "One acquisition on an MRI or PET scanner, such as a T1w or a BOLD run: a set of DICOM files sharing a series identifier."
+
+- term: session
+  short: One visit of a participant, written as the ses entity and a ses- folder. A dataset where everyone came once may have no sessions.
+
+- term: sidecar
+  short: A JSON file beside a data file that holds its metadata, named like the data file with the extension .json.
+
+- term: skull stripping
+  short: Keeping only the brain of an anatomical image. The result is a derivative, not raw data.
+
+- term: sourcedata
+  short: The folder of a dataset for the data before conversion, such as the DICOM files. Optional, and not to be shared when it holds identifiers.
+
+- term: subject
+  short: One participant of a study, written as the sub entity and a sub- folder.
+
+- term: suffix
+  short: The last part of a BIDS file name before the extension, saying what the recording is, such as T1w, bold, dwi, eeg or physio.
+  see: /learn/01-bids/
+
+- term: TODO
+  short: The placeholder value BIDS Manager writes into a field the standard asks for and no file answered.
+  see: /concepts/metadata-levels/
+
+- term: validation
+  short: Checking a dataset against the BIDS standard. BIDS Manager validates after each conversion in the GUI (a setting, on by default) and on request in the Editor.
+  see: /learn/09-validating/

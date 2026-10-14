@@ -1,0 +1,41 @@
+{
+ "id": "guide-eeg-table",
+ "kind": "figure",
+ "width": 1018,
+ "height": 655,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1018": "guide-eeg-table-dark-1018-a997e474.avif",
+    "2036": "guide-eeg-table-dark-2036-25fd6301.avif"
+   },
+   "webp": {
+    "1018": "guide-eeg-table-dark-1018-4156ccc8.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1018": "guide-eeg-table-light-1018-e491ac86.avif",
+    "2036": "guide-eeg-table-light-2036-6f53d437.avif"
+   },
+   "webp": {
+    "1018": "guide-eeg-table-light-1018-1fdec28d.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The EEG sample after the scan: 28 recordings, each with the file name as its task (S001R01, S001R02, ...) and the run number from the file name.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

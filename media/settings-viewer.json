@@ -1,0 +1,41 @@
+{
+ "id": "settings-viewer",
+ "kind": "figure",
+ "width": 900,
+ "height": 760,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "900": "settings-viewer-dark-900-95df9560.avif",
+    "1800": "settings-viewer-dark-1800-1b232f52.avif"
+   },
+   "webp": {
+    "900": "settings-viewer-dark-900-9ca66f1b.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "900": "settings-viewer-light-900-864b7245.avif",
+    "1800": "settings-viewer-light-1800-b875ae15.avif"
+   },
+   "webp": {
+    "900": "settings-viewer-light-900-d06fffdb.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, Viewer page: the crosshair, how images and signals open, and the 3-D view.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

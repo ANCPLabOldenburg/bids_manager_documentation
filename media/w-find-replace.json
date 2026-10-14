@@ -1,0 +1,41 @@
+{
+ "id": "w-find-replace",
+ "kind": "figure",
+ "width": 980,
+ "height": 700,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "980": "w-find-replace-dark-980-5dd34ab4.avif",
+    "1960": "w-find-replace-dark-1960-b1cf2cc7.avif"
+   },
+   "webp": {
+    "980": "w-find-replace-dark-980-5dd13cfd.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "980": "w-find-replace-light-980-b73c37be.avif",
+    "1960": "w-find-replace-light-1960-0569692a.avif"
+   },
+   "webp": {
+    "980": "w-find-replace-light-980-b84acd9c.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Find and replace an entity value: every acq-tfl3p2 in the dataset becomes acq-mprage, files and references together.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "7bb684f",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

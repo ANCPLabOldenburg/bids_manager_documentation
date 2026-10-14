@@ -1,0 +1,30 @@
+<!doctype html>
+<!-- The social card (static/brand/social-card.png, 1200 x 630). Render with
+     Chrome headless --allow-file-access-from-files --window-size=1200,630
+     --screenshot=static/brand/social-card.png tools/brand/social-card.html -->
+<html><head><meta charset="utf-8"><style>
+@font-face{font-family:"Instrument Serif";src:url("../../static/fonts/InstrumentSerif-Regular.woff2")}
+@font-face{font-family:"Instrument Serif";font-style:italic;src:url("../../static/fonts/InstrumentSerif-Italic.woff2")}
+@font-face{font-family:"Inter";src:url("../../static/fonts/Inter-Regular.woff2")}
+@font-face{font-family:"JetBrains Mono";src:url("../../static/fonts/JetBrainsMono-Regular.woff2")}
+html,body{margin:0;width:1200px;height:630px;overflow:hidden;background:#0e0e0c;color:#efebe2}
+body{position:relative;background:#0e0e0c}
+.art{position:absolute;left:590px;top:88px;width:600px;height:427px}
+.art img{width:100%;height:100%}
+.copy{position:absolute;left:72px;top:160px;width:480px}
+.k{font:13px "JetBrains Mono";letter-spacing:.22em;text-transform:uppercase;color:#b5afa2;display:flex;align-items:center;gap:12px}
+.k:before,.k:after{content:"";width:7px;height:7px;transform:rotate(45deg);border:0;background:#e0c39a;transform:none;width:20px;height:1px}
+h1{font:400 64px/1.02 "Instrument Serif";margin:22px 0 22px;letter-spacing:-.01em}
+h1 em{color:inherit;text-decoration:underline;text-decoration-color:#9ccfb0;text-decoration-thickness:.09em;text-underline-offset:.14em}
+p{font:19px/1.45 Inter;color:#b5afa2;margin:0}
+.foot{position:absolute;left:72px;bottom:56px;font:14px "JetBrains Mono";color:#8c8a84;letter-spacing:.06em}
+.rule{position:absolute;left:72px;right:640px;bottom:92px;height:1px;background:linear-gradient(90deg,#e0c39a99,transparent)}
+.logo{position:absolute;left:72px;top:64px;display:flex;align-items:center;gap:14px;font:600 20px Inter}
+.logo img{width:44px;height:44px}
+</style></head><body>
+<div class="art"><img src="../../static/hero/hero-dark.svg"></div>
+<div class="logo"><img src="../../static/brand/icon-96.png">BIDS Manager</div>
+<div class="copy"><div class="k">Documentation</div><h1>From raw recordings to a <em>curated</em> BIDS dataset</h1><p>Scan, curate, convert, check and edit neuroimaging data on Windows, macOS and Linux.</p></div>
+<div class="rule"></div>
+<div class="foot">ancplaboldenburg.github.io/bids_manager_documentation</div>
+</body></html>

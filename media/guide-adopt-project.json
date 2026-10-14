@@ -1,0 +1,41 @@
+{
+ "id": "guide-adopt-project",
+ "kind": "figure",
+ "width": 1600,
+ "height": 1000,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1600": "guide-adopt-project-dark-1600-324427c8.avif",
+    "3200": "guide-adopt-project-dark-3200-7368f135.avif"
+   },
+   "webp": {
+    "1600": "guide-adopt-project-dark-1600-ddc7defb.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1600": "guide-adopt-project-light-1600-3c7edc3d.avif",
+    "3200": "guide-adopt-project-light-3200-61b4d720.avif"
+   },
+   "webp": {
+    "1600": "guide-adopt-project-light-1600-9db578ac.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The same dataset opened as a project: BIDS Manager added its .bidsmgr folder, and every tool of the Editor is available.",
+ "window": true,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

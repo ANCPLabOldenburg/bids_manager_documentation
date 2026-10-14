@@ -1,0 +1,126 @@
+{
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13"
+ },
+ "scan": {
+  "rows": 19,
+  "included": 15,
+  "subjects": [
+   "sub-001",
+   "sub-002",
+   "sub-003",
+   "sub-004"
+  ],
+  "chips": {
+   "valid": "4 valid",
+   "warn": "12 warnings",
+   "err": "0 error",
+   "skip": "3 skipped"
+  }
+ },
+ "curate": {
+  "subject": 4,
+  "session": 15
+ },
+ "curated": {
+  "names": [
+   "sub-001_ses-01_acq-fm2_magnitude1",
+   "sub-001_ses-01_task-rest_sbref",
+   "sub-001_ses-01_task-rest_bold",
+   "sub-001_ses-01_task-rest_physio",
+   "sub-001_ses-01_acq-tfl3p2_T1w",
+   "sub-001_ses-01_acq-spcir2p3_FLAIR",
+   "sub-001_ses-01_acq-epb0p2_dir-PA_epi",
+   "sub-001_ses-01_acq-epb0p2_dir-AP_dwi",
+   "sub-001_ses-01_svs",
+   "sub-001_ses-01_mrsref",
+   "sub-001_ses-01_pet",
+   "sub-001_ses-01_task-motorimagery_eeg",
+   "sub-001_ses-01_task-rest_eeg",
+   "sub-001_ses-01_task-rest_meg",
+   "sub-001_ses-01_task-rest_recording-eye1_physio"
+  ],
+  "chips": {
+   "valid": "4 valid",
+   "warn": "12 warnings",
+   "err": "0 error",
+   "skip": "3 skipped"
+  }
+ },
+ "convert": {
+  "rc": 0
+ },
+ "converted": {
+  "rows": 19,
+  "included": 15,
+  "files": 65,
+  "validation": {
+   "ok": 27,
+   "warn": 112,
+   "err": 1
+  }
+ },
+ "todo": {
+  "inserted": 69,
+  "files": 8
+ },
+ "fixed": {
+  "validation": {
+   "ok": 28,
+   "warn": 112,
+   "err": 0
+  }
+ },
+ "edited": {
+  "validation": {
+   "ok": 28,
+   "warn": 110,
+   "err": 0
+  }
+ },
+ "cli": {
+  "project_convert_files": 65,
+  "project_validation": {
+   "ok": 27,
+   "warn": 112,
+   "err": 1
+  },
+  "without_fill_todos": {
+   "ok": 26,
+   "warn": 116,
+   "err": 3
+  },
+  "todo_inserted": 69,
+  "convert_seconds": 5.3
+ },
+ "quick_start": {
+  "rc": 0,
+  "files": 65,
+  "validation": {
+   "ok": 27,
+   "warn": 114,
+   "err": 1
+  },
+  "names": [
+   "sub-001_ses-01_acq-fm2_magnitude1",
+   "sub-001_ses-01_task-rest_sbref",
+   "sub-001_ses-01_task-rest_bold",
+   "sub-001_ses-01_task-rest_physio",
+   "sub-001_ses-01_acq-tfl3p2_T1w",
+   "sub-001_ses-01_acq-spcir2p3_FLAIR",
+   "sub-001_ses-01_acq-epb0p2_dir-PA_epi",
+   "sub-001_ses-01_acq-epb0p2_dir-AP_dwi",
+   "sub-001_ses-01_run-1_svs",
+   "sub-001_ses-01_run-2_svs",
+   "sub-001_ses-01_pet",
+   "sub-001_ses-01_task-motorimagery_eeg",
+   "sub-001_ses-01_task-rest_eeg",
+   "sub-001_ses-01_task-rest_meg",
+   "sub-001_ses-01_task-rest_recording-eye1_physio"
+  ],
+  "seconds": 15.6,
+  "errors": []
+ }
+}

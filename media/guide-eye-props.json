@@ -1,0 +1,41 @@
+{
+ "id": "guide-eye-props",
+ "kind": "figure",
+ "width": 520,
+ "height": 621,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "520": "guide-eye-props-dark-520-61c8d443.avif",
+    "1040": "guide-eye-props-dark-1040-da693bff.avif"
+   },
+   "webp": {
+    "520": "guide-eye-props-dark-520-daf466e8.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "520": "guide-eye-props-light-520-57680c18.avif",
+    "1040": "guide-eye-props-light-1040-3289245d.avif"
+   },
+   "webp": {
+    "520": "guide-eye-props-light-520-171858cf.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Properties of the eye-tracking row: the run it was recorded during (not chosen yet), and the screen and distances the standard asks for.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

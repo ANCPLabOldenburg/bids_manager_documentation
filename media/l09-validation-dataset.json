@@ -1,0 +1,41 @@
+{
+ "id": "l09-validation-dataset",
+ "kind": "figure",
+ "width": 680,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "680": "l09-validation-dataset-dark-680-9933bd50.avif",
+    "1360": "l09-validation-dataset-dark-1360-23203099.avif"
+   },
+   "webp": {
+    "680": "l09-validation-dataset-dark-680-9f4f4f4b.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "680": "l09-validation-dataset-light-680-368004d7.avif",
+    "1360": "l09-validation-dataset-light-1360-8454bfd2.avif"
+   },
+   "webp": {
+    "680": "l09-validation-dataset-light-680-bc5413f6.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The Validation panel's Whole dataset view: every kind of finding once, with the number of files it fired on.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

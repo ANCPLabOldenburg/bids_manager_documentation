@@ -1,0 +1,41 @@
+{
+ "id": "settings-display",
+ "kind": "figure",
+ "width": 900,
+ "height": 760,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "900": "settings-display-dark-900-cea44ec7.avif",
+    "1800": "settings-display-dark-1800-0bd2c3dd.avif"
+   },
+   "webp": {
+    "900": "settings-display-dark-900-2c749060.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "900": "settings-display-light-900-a666d8be.avif",
+    "1800": "settings-display-light-1800-fc76ce10.avif"
+   },
+   "webp": {
+    "900": "settings-display-light-900-52a8e1db.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, Display page: the theme, its appearance (accent, tint, icons, file colours), the font scale, the Log, the header logo, hidden files in the Editor tree and saving sidecar edits as you go.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

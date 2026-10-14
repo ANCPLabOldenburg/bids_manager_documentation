@@ -1,0 +1,71 @@
+{
+ "scan": {
+  "rows": 1,
+  "included": 1,
+  "seconds": 0.5,
+  "subjects": [
+   "sub-001"
+  ],
+  "sessions": [],
+  "chips": {
+   "valid": "1 valid",
+   "warn": "0 warnings",
+   "err": "0 error",
+   "skip": "0 skipped"
+  }
+ },
+ "convert": {
+  "rc": 0,
+  "seconds": 0.3
+ },
+ "converted": {
+  "files": 11,
+  "validation": {
+   "ok": 4,
+   "warn": 40,
+   "err": 2
+  },
+  "todo": {
+   "inserted": 19,
+   "files": 3
+  }
+ },
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14"
+ },
+ "ecat": {
+  "scan": {
+   "rows": 1,
+   "included": 1,
+   "seconds": 0.1,
+   "subjects": [
+    "sub-001"
+   ],
+   "sessions": [],
+   "chips": {
+    "valid": "1 valid",
+    "warn": "0 warnings",
+    "err": "0 error",
+    "skip": "0 skipped"
+   }
+  },
+  "convert": {
+   "rc": 0,
+   "seconds": 1.0
+  },
+  "converted": {
+   "files": 9,
+   "validation": {
+    "ok": 5,
+    "warn": 28,
+    "err": 0
+   },
+   "todo": {
+    "inserted": 17,
+    "files": 2
+   }
+  }
+ }
+}

@@ -1,0 +1,44 @@
+{
+ "id": "t-mrs",
+ "kind": "clip",
+ "width": 1294,
+ "height": 814,
+ "duration": 6.12,
+ "chapters": [
+  {
+   "t": 0.8,
+   "title": "Phase"
+  },
+  {
+   "t": 2.7,
+   "title": "Line broadening"
+  },
+  {
+   "t": 4.15,
+   "title": "FID"
+  }
+ ],
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "mp4": "t-mrs-dark-24315b5f.mp4",
+   "webm": "t-mrs-dark-787c7028.webm",
+   "poster": "t-mrs-dark-poster-593a2d73.webp"
+  },
+  "light": {
+   "mp4": "t-mrs-light-d1b98d26.mp4",
+   "webm": "t-mrs-light-93be13dd.webm",
+   "poster": "t-mrs-light-poster-cdb250d9.webp"
+  }
+ },
+ "alt": "The spectroscopy file in the spectrum viewer: the zero-order phase turned by hand and set back with Auto phase, line broadening raised, and the FID.",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "7bb684f",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

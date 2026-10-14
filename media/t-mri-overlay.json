@@ -1,0 +1,31 @@
+{
+ "id": "t-mri-overlay",
+ "kind": "clip",
+ "width": 1304,
+ "height": 782,
+ "duration": 5.53,
+ "chapters": [],
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "mp4": "t-mri-overlay-dark-14f25e78.mp4",
+   "webm": "t-mri-overlay-dark-00e751db.webm",
+   "poster": "t-mri-overlay-dark-poster-ef85c12e.webp"
+  },
+  "light": {
+   "mp4": "t-mri-overlay-light-5f7bb1cf.mp4",
+   "webm": "t-mri-overlay-light-43c42795.webm",
+   "poster": "t-mri-overlay-light-poster-5f435d37.webp"
+  }
+ },
+ "alt": "The brain from skull stripping laid over the T1w as an overlay, in a warm colour map at half opacity, in the planes and the rendering; Advanced controls lists both layers.",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "7bb684f",
+  "date": "2026-10-14",
+  "sample": "multimodal v2 (OL_3844, consented)"
+ }
+}

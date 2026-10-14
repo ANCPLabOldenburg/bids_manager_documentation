@@ -1,0 +1,41 @@
+{
+ "id": "l12-gradients",
+ "kind": "figure",
+ "width": 1294,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1294": "l12-gradients-dark-1294-598aa7dd.avif",
+    "2588": "l12-gradients-dark-2588-1278019e.avif"
+   },
+   "webp": {
+    "1294": "l12-gradients-dark-1294-4d7b4d65.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1294": "l12-gradients-light-1294-f76b8003.avif",
+    "2588": "l12-gradients-light-2588-2832f707.avif"
+   },
+   "webp": {
+    "1294": "l12-gradients-light-1294-e603b1bd.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The diffusion run's gradient table: the directions on a hemisphere, the b-value of each volume, and the table of volumes.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

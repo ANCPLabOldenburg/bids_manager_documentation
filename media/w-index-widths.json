@@ -1,0 +1,41 @@
+{
+ "id": "w-index-widths",
+ "kind": "figure",
+ "width": 900,
+ "height": 708,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "900": "w-index-widths-dark-900-435ea60b.avif",
+    "1800": "w-index-widths-dark-1800-b0148802.avif"
+   },
+   "webp": {
+    "900": "w-index-widths-dark-900-69eb1815.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "900": "w-index-widths-light-900-c0fe7127.avif",
+    "1800": "w-index-widths-light-1800-4de76ad6.avif"
+   },
+   "webp": {
+    "900": "w-index-widths-light-900-bc58621f.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Index widths on the advanced MRI sample: every run written with two digits (run-1 becomes run-01), files and references together.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "7bb684f",
+  "date": "2026-10-14",
+  "sample": "MRI sample (Oldenburg 1)"
+ }
+}

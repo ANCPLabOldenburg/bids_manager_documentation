@@ -1,0 +1,41 @@
+{
+ "id": "l05-row-menu",
+ "kind": "figure",
+ "width": 1244,
+ "height": 598,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1244": "l05-row-menu-dark-1244-c63e3a5f.avif",
+    "2488": "l05-row-menu-dark-2488-93d6bed3.avif"
+   },
+   "webp": {
+    "1244": "l05-row-menu-dark-1244-d88dacf1.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1244": "l05-row-menu-light-1244-00bbc8f6.avif",
+    "2488": "l05-row-menu-light-2488-a52efa4d.avif"
+   },
+   "webp": {
+    "1244": "l05-row-menu-light-1244-f38f2047.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The table's right-click menu on the FLAIR row: preview the image, show the DICOM header, or give the person a new subject number.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

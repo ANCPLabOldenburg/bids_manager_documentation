@@ -1,0 +1,41 @@
+{
+ "id": "l05-preview",
+ "kind": "figure",
+ "width": 1000,
+ "height": 700,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1000": "l05-preview-dark-1000-6701b26f.avif",
+    "2000": "l05-preview-dark-2000-124eb2d7.avif"
+   },
+   "webp": {
+    "1000": "l05-preview-dark-1000-b4a1766b.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1000": "l05-preview-light-1000-07cbb322.avif",
+    "2000": "l05-preview-light-2000-845fb2ab.avif"
+   },
+   "webp": {
+    "1000": "l05-preview-light-1000-41387578.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Preview the image on the T1w row: the series converted aside and shown in the viewer before anything is written to the dataset.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2 (OL_3844, consented)"
+ }
+}

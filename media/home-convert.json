@@ -1,0 +1,41 @@
+{
+ "id": "home-convert",
+ "kind": "figure",
+ "width": 1600,
+ "height": 1000,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1600": "home-convert-dark-1600-05460731.avif",
+    "3200": "home-convert-dark-3200-8c81a4f7.avif"
+   },
+   "webp": {
+    "1600": "home-convert-dark-1600-94acb14a.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1600": "home-convert-light-1600-69de2bdf.avif",
+    "3200": "home-convert-light-3200-78e26555.avif"
+   },
+   "webp": {
+    "1600": "home-convert-light-1600-2e4c8b34.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The Converter before the conversion: the BIDS preview shows the PET sidecar the conversion will write, each value coloured by where it comes from, and Properties shows the PET row.",
+ "window": true,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

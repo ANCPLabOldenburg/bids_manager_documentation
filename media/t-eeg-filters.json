@@ -1,0 +1,51 @@
+{
+ "id": "t-eeg-filters",
+ "kind": "clip",
+ "width": 1294,
+ "height": 814,
+ "duration": 7.17,
+ "chapters": [
+  {
+   "t": 1.0,
+   "title": "No filter"
+  },
+  {
+   "t": 2.23,
+   "title": "1 to 40 Hz"
+  },
+  {
+   "t": 3.47,
+   "title": "8 to 13 Hz"
+  },
+  {
+   "t": 4.7,
+   "title": "Events"
+  },
+  {
+   "t": 5.93,
+   "title": "Next page"
+  }
+ ],
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "mp4": "t-eeg-filters-dark-263e333e.mp4",
+   "poster": "t-eeg-filters-dark-poster-75404d1a.webp"
+  },
+  "light": {
+   "mp4": "t-eeg-filters-light-12d4dbf1.mp4",
+   "webm": "t-eeg-filters-light-5c9a7262.webm",
+   "poster": "t-eeg-filters-light-poster-e8b5283a.webp"
+  }
+ },
+ "alt": "The motor-imagery EEG: unfiltered, then 1 to 40 Hz, then 8 to 13 Hz (the alpha band), with the task's events drawn over the traces, and a page forward in time.",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "7bb684f",
+  "date": "2026-10-14",
+  "sample": "multimodal v2 (PhysioNet EEG, ODC-By 1.0)"
+ }
+}

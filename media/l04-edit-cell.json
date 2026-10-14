@@ -1,0 +1,41 @@
+{
+ "id": "l04-edit-cell",
+ "kind": "figure",
+ "width": 1018,
+ "height": 282,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1018": "l04-edit-cell-dark-1018-2c627081.avif",
+    "2036": "l04-edit-cell-dark-2036-bad4f59e.avif"
+   },
+   "webp": {
+    "1018": "l04-edit-cell-dark-1018-f75c7fbd.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1018": "l04-edit-cell-light-1018-fc89a5ac.avif",
+    "2036": "l04-edit-cell-light-2036-49c96e65.avif"
+   },
+   "webp": {
+    "1018": "l04-edit-cell-light-1018-df1e88b4.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Editing the session of one row in the table: the cell becomes a field.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

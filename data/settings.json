@@ -1,0 +1,1553 @@
+{
+ "pages": [
+  {
+   "title": "BIDS version",
+   "description": "The version of the standard datasets are written and validated against.",
+   "groups": [
+    {
+     "title": "",
+     "hint": "",
+     "items": [
+      {
+       "label": "Work to",
+       "tip": "The version of BIDS this session works to. Several ship with BIDS Manager. Choose an older one to work to a dataset that was built against it, so the forms ask for that version's fields and validation judges it by that version's rules.",
+       "default": "Newest available (recommended)",
+       "choices": [
+        "Newest available (recommended)",
+        "BIDS 1.10.0",
+        "BIDS 1.10.1",
+        "BIDS 1.11.0",
+        "BIDS 1.11.1",
+        "BIDS 1.8.0",
+        "BIDS 1.9.0"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Display",
+   "description": "Theme, text size and how the Editor shows the dataset.",
+   "groups": [
+    {
+     "title": "",
+     "hint": "Theme, text size and how the Editor shows the dataset.",
+     "items": [
+      {
+       "label": "Theme",
+       "tip": "",
+       "default": "Dark",
+       "choices": [
+        "Graphite",
+        "Carbon",
+        "Ash",
+        "Porcelain",
+        "",
+        "Dark",
+        "Dim",
+        "Original dark",
+        "Light",
+        "Paper",
+        "Original light",
+        "",
+        "Nord",
+        "Ember",
+        "Forest",
+        "Aubergine",
+        "Monokai",
+        "Sakura",
+        "Sage",
+        "",
+        "High contrast dark",
+        "High contrast light"
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Appearance",
+     "hint": "0 %",
+     "items": [
+      {
+       "label": "Icons",
+       "tip": "How toolbar and action icons are coloured. Status icons (ok, warning, error) and the file trees' icons keep their own colours.",
+       "default": "Monochrome (the text colour)",
+       "choices": [
+        "Monochrome (the text colour)",
+        "Accent",
+        "Colourful (by purpose)"
+       ]
+      }
+     ]
+    },
+    {
+     "title": "",
+     "hint": "",
+     "items": [
+      {
+       "label": "Font scale",
+       "tip": "",
+       "default": "Normal (1.00x)",
+       "choices": [
+        "Compact (0.85x)",
+        "Normal (1.00x)",
+        "Comfortable (1.15x)",
+        "Large (1.30x)",
+        "Extra large (1.50x)"
+       ]
+      },
+      {
+       "label": "Log",
+       "tip": "The Converter's Log shows one run at a time. Every run is also kept as a file: the Log's history icon lists them.",
+       "default": "On",
+       "choices": null,
+       "control": "Start each scan and conversion with an empty Log"
+      },
+      {
+       "label": "Header logo",
+       "tip": "",
+       "default": "Default (monochrome mark)",
+       "choices": [
+        "Default (monochrome mark)",
+        "App icon (full color)"
+       ]
+      },
+      {
+       "label": "Editor tree",
+       "tip": "Dotfiles and dot-folders (.bidsignore, .bidsmgr, .git) are hidden by default. Shown, they are dimmed so they do not compete with the dataset. Needed to open .bidsignore.",
+       "default": "Off",
+       "choices": null,
+       "control": "Show hidden files and folders"
+      },
+      {
+       "label": "Editor saving",
+       "tip": "Off by default: edits wait for the Save button, and the toolbar says there are unsaved changes from the first keystroke either way. On, a field commits when it loses focus or you press Enter and is written after a short pause, so a burst of typing is one write. Every write is reversible, so this cannot lose what was there before.",
+       "default": "Off",
+       "choices": null,
+       "control": "Save sidecar edits as you go"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "System",
+   "description": "What this computer offers the parallel steps.",
+   "groups": [
+    {
+     "title": "System info (detected)",
+     "hint": "",
+     "items": []
+    }
+   ]
+  },
+  {
+   "title": "Scan",
+   "description": "How a scan reads raw data and proposes names.",
+   "groups": [
+    {
+     "title": "Scan defaults",
+     "hint": "",
+     "items": [
+      {
+       "label": "Parallel workers (-j)",
+       "tip": "Capped at the detected thread count (10).",
+       "default": "1",
+       "choices": null
+      },
+      {
+       "label": "Probe",
+       "tip": "Runs dcm2niix on each series during the scan (--probe-convert), so the proposed names know the real number of files and their extensions.",
+       "default": "On",
+       "choices": null,
+       "control": "Probe each series with dcm2niix"
+      },
+      {
+       "label": "Converter fields",
+       "tip": "Note, per kind of file, the values dcm2niix and mne-bids produce, so the metadata form can show them instead of asking for a field nobody has to answer. Costs nothing extra: it reads what the scan, and any probe conversion, already produced. With Probe on it covers MRI and PET as well as EEG and MEG.",
+       "default": "On",
+       "choices": null,
+       "control": "Record what the conversion fills in by itself"
+      },
+      {
+       "label": "Classifier",
+       "tip": "Propose datatypes and suffixes from the series names alone (the older pattern-matching layer), without dcm2niix's BidsGuess.",
+       "default": "Off",
+       "choices": null,
+       "control": "Skip dcm2niix's BidsGuess classifier"
+      }
+     ]
+    },
+    {
+     "title": "Index width in proposed names",
+     "hint": "An index entity is one whose value is a number: run, echo, and the others below. BIDS accepts run-1 and run-01 equally, so this is a house style rather than a correction. Setting a width here makes the inspection table propose that width from the moment a scan finishes, so you never have to go and repad the dataset afterwards. As found keeps whatever the source gives, which is what every earlier version did and what stays out of your way. run-7 stays run-7 echo-7 stays echo-7 flip-7 stays flip-7 inv-7 stays inv-7 split-7 stays split-7 chunk-7 stays chunk-7",
+     "items": []
+    }
+   ]
+  },
+  {
+   "title": "Scan rules",
+   "description": "Your own hints for naming series, and series to leave out.",
+   "groups": [
+    {
+     "title": "Scan exclusions (skip matching series)",
+     "hint": "",
+     "items": [
+      {
+       "label": "Table",
+       "tip": "Columns: Pattern, Match against, Mode",
+       "default": "",
+       "choices": null,
+       "table": true
+      }
+     ]
+    },
+    {
+     "title": "Custom sequence hints (MRI / DICOM only)",
+     "hint": "",
+     "items": [
+      {
+       "label": "Table",
+       "tip": "Columns: Patterns (comma-separated), Datatype, Suffix, Task, Mode, Force",
+       "default": "",
+       "choices": null,
+       "table": true
+      }
+     ]
+    },
+    {
+     "title": "Built-in MRI classifier criteria (read-only)",
+     "hint": "What the MRI classifier already matches. EEG / MEG do not use this table - their datatype comes from mne channel types.",
+     "items": [
+      {
+       "label": "Table",
+       "tip": "Columns: Label / group, Datatype, Suffix, Match patterns",
+       "default": "",
+       "choices": null,
+       "table": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Classification",
+   "description": "How MRI series are named from their acquisition parameters.",
+   "groups": [
+    {
+     "title": "Classification",
+     "hint": "What the classifier does with what it finds.",
+     "items": [
+      {
+       "label": "Use the acquisition parameters",
+       "tip": "Applied: the parameters name the series, with dcm2niix's guess and the series name as second opinions. Shadow: the names stay as before and the classifier only reports what it would do. Off: not run.",
+       "default": "To name the series",
+       "choices": [
+        "To name the series",
+        "Only to report",
+        "Not at all"
+       ],
+       "key": "mode"
+      },
+      {
+       "label": "Name without asking above",
+       "tip": "A name this sure (0 to 1) is used as it is. Below it, the row is named but marked to check. Range 0.5 to 0.99.",
+       "default": "0.8",
+       "choices": null,
+       "key": "apply_at"
+      },
+      {
+       "label": "Leave to the other opinions below",
+       "tip": "Below this, the classifier does not decide: dcm2niix's guess or the series name does, and the row is marked to check. Range 0.1 to 0.9.",
+       "default": "0.4",
+       "choices": null,
+       "key": "check_at"
+      }
+     ]
+    },
+    {
+     "title": "Weight of the evidence",
+     "hint": "How much each kind of evidence counts (1 is as built).",
+     "items": [
+      {
+       "label": "Acquisition parameters",
+       "tip": "Echo, repetition and inversion times, flip angle, readout, volumes, diffusion weighting: what the scanner did. Range 0 to 3.",
+       "default": "1",
+       "choices": null,
+       "key": "parameters"
+      },
+      {
+       "label": "Series name",
+       "tip": "Words in the series description and protocol name (T1, FLAIR, bold, SBRef, a ReproIn name): what the operator called it. Range 0 to 3.",
+       "default": "1",
+       "choices": null,
+       "key": "names"
+      },
+      {
+       "label": "Neighbouring series",
+       "tip": "What the series next to it are: an SBRef before its run, a reversed-phase reference beside a run, the two inversions of an MP2RAGE. Range 0 to 3.",
+       "default": "1",
+       "choices": null,
+       "key": "context"
+      }
+     ]
+    },
+    {
+     "title": "Anatomical contrasts",
+     "hint": "The ranges that tell anatomical contrasts apart.",
+     "items": [
+      {
+       "label": "T1-weighted inversion from",
+       "tip": "An inversion-recovery gradient echo (MPRAGE) inverts this long or longer before it reads. Range 0.05 to 2 s.",
+       "default": "0.3 s",
+       "choices": null,
+       "key": "t1_ti_min"
+      },
+      {
+       "label": "T1-weighted inversion up to",
+       "tip": "... and no longer than this. Range 0.5 to 3 s.",
+       "default": "1.5 s",
+       "choices": null,
+       "key": "t1_ti_max"
+      },
+      {
+       "label": "FLAIR inversion from",
+       "tip": "A spin echo inverting at least this long before it reads nulls the fluid: FLAIR. Range 1 to 4 s.",
+       "default": "1.6 s",
+       "choices": null,
+       "key": "flair_ti_min"
+      },
+      {
+       "label": "T2-weighted echo from",
+       "tip": "A spin echo with an echo time this long or longer is T2-weighted. Range 30 to 200 ms.",
+       "default": "60 ms",
+       "choices": null,
+       "key": "t2_te_min"
+      },
+      {
+       "label": "Proton density echo up to",
+       "tip": "A spin echo with a short echo time and a long repetition time is proton density weighted. Range 5 to 60 ms.",
+       "default": "30 ms",
+       "choices": null,
+       "key": "pd_te_max"
+      },
+      {
+       "label": "Long repetition time from",
+       "tip": "Repetition times this long or longer let the tissue recover (T2 and proton density weighting). Range 1 to 6 s.",
+       "default": "2 s",
+       "choices": null,
+       "key": "long_tr_min"
+      },
+      {
+       "label": "T2*-weighted echo from",
+       "tip": "A gradient echo this long or longer (and not an EPI) is T2*-weighted. Range 5 to 60 ms.",
+       "default": "15 ms",
+       "choices": null,
+       "key": "t2star_te_min"
+      },
+      {
+       "label": "MP2RAGE repetition from",
+       "tip": "An inversion-recovery 3-D gradient echo repeating this slowly or slower reads two inversions per repetition: an MP2RAGE. Faster, it is an MPRAGE (T1-weighted). Range 2 to 10 s.",
+       "default": "3.5 s",
+       "choices": null,
+       "key": "mp2rage_tr_min"
+      },
+      {
+       "label": "Turbo spin echo from",
+       "tip": "A spin echo reading this many echoes per excitation or more (its echo train) is a turbo or fast spin echo, how T2-weighted, PD-weighted and FLAIR images are made. Range 2 to 64 echoes.",
+       "default": "2 echoes",
+       "choices": null,
+       "key": "tse_etl_min"
+      },
+      {
+       "label": "High-resolution 3-D up to",
+       "tip": "A 3-D series with voxels this small or smaller in every direction is a structural image (and no localizer). Range 0.3 to 3 mm.",
+       "default": "1.3 mm",
+       "choices": null,
+       "key": "high_res_max_mm"
+      }
+     ]
+    },
+    {
+     "title": "Gradient-echo contrasts",
+     "hint": "The ranges that make a gradient echo T1-weighted, or an angiogram.",
+     "items": [
+      {
+       "label": "3-D spoiled gradient echo, repetition up to",
+       "tip": "A 3-D gradient echo repeating this fast or faster, with a small flip angle, is T1-weighted (FLASH, SPGR, a T1 VIBE). Range 5 to 200 ms.",
+       "default": "50 ms",
+       "choices": null,
+       "key": "spoiled_3d_tr_max"
+      },
+      {
+       "label": "3-D spoiled gradient echo, flip angle up to",
+       "tip": "... and a flip angle this small or smaller. Range 2 to 90 °.",
+       "default": "30 °",
+       "choices": null,
+       "key": "spoiled_3d_flip_max"
+      },
+      {
+       "label": "2-D spoiled gradient echo, echo up to",
+       "tip": "A 2-D gradient echo with an echo this short or shorter, a short repetition and a large flip angle is T1-weighted. Range 1 to 30 ms.",
+       "default": "10 ms",
+       "choices": null,
+       "key": "spoiled_2d_te_max"
+      },
+      {
+       "label": "2-D spoiled gradient echo, repetition up to",
+       "tip": "... repeating this fast or faster ... Range 0.05 to 3 s.",
+       "default": "1 s",
+       "choices": null,
+       "key": "spoiled_2d_tr_max"
+      },
+      {
+       "label": "2-D spoiled gradient echo, flip angle from",
+       "tip": "... with a flip angle this large or larger. Range 5 to 90 °.",
+       "default": "20 °",
+       "choices": null,
+       "key": "spoiled_2d_flip_min"
+      },
+      {
+       "label": "Magnetization transfer echo up to",
+       "tip": "A gradient echo with magnetization transfer and an echo this short or shorter is a T1-weighted MT image, not a T2*-weighted one. Range 2 to 30 ms.",
+       "default": "10 ms",
+       "choices": null,
+       "key": "mt_te_max"
+      },
+      {
+       "label": "Time-of-flight angiography, repetition up to",
+       "tip": "A flow-compensated 3-D gradient echo repeating this fast or faster, with a moderate flip angle, is a time-of-flight angiogram: inflowing blood is bright. Range 5 to 150 ms.",
+       "default": "50 ms",
+       "choices": null,
+       "key": "angio_tr_max"
+      },
+      {
+       "label": "Time-of-flight angiography, echo up to",
+       "tip": "... with an echo this short ... Range 1 to 20 ms.",
+       "default": "10 ms",
+       "choices": null,
+       "key": "angio_te_max"
+      },
+      {
+       "label": "Time-of-flight angiography, flip angle from",
+       "tip": "... a flip angle from ... Range 1 to 60 °.",
+       "default": "10 °",
+       "choices": null,
+       "key": "angio_flip_min"
+      },
+      {
+       "label": "Time-of-flight angiography, flip angle up to",
+       "tip": "... up to this. Range 5 to 90 °.",
+       "default": "40 °",
+       "choices": null,
+       "key": "angio_flip_max"
+      }
+     ]
+    },
+    {
+     "title": "Echoes and fieldmaps",
+     "hint": "Echo counts and fieldmaps.",
+     "items": [
+      {
+       "label": "Multi-echo from",
+       "tip": "A series read at this many echo times or more is multi-echo (MEGRE, MESE), not one contrast. Two echoes are a fieldmap's or a proton density and T2 pair. Range 2 to 12 echoes.",
+       "default": "3 echoes",
+       "choices": null,
+       "key": "multi_echo_min"
+      },
+      {
+       "label": "Fieldmap first echo up to",
+       "tip": "A two-echo gradient echo whose first echo is this short or shorter is a fieldmap's magnitude. Range 2 to 40 ms.",
+       "default": "15 ms",
+       "choices": null,
+       "key": "fieldmap_te_max"
+      }
+     ]
+    },
+    {
+     "title": "Time series and diffusion",
+     "hint": "The counts that tell time series from references and diffusion.",
+     "items": [
+      {
+       "label": "A run has at least",
+       "tip": "An EPI series with this many volumes or more is a run (BOLD); fewer is a reference or a test. Range 3 to 100 volumes.",
+       "default": "10 volumes",
+       "choices": null,
+       "key": "run_min_volumes"
+      },
+      {
+       "label": "A reference has at most",
+       "tip": "An EPI series with this many volumes or fewer, phase-encoded opposite to a run, is that run's fieldmap. Range 1 to 30 volumes.",
+       "default": "9 volumes",
+       "choices": null,
+       "key": "reference_max_volumes"
+      },
+      {
+       "label": "Diffusion weighting from",
+       "tip": "A b-value above this is diffusion weighting. Range 0 to 500 s/mm².",
+       "default": "50 s/mm²",
+       "choices": null,
+       "key": "dwi_min_b"
+      },
+      {
+       "label": "A diffusion series has at least",
+       "tip": "Distinct gradient directions in a diffusion series. Range 1 to 30 directions.",
+       "default": "3 directions",
+       "choices": null,
+       "key": "dwi_min_directions"
+      },
+      {
+       "label": "A localizer has at most",
+       "tip": "A non-EPI series with this many slices or fewer (in several orientations) is a localizer, left out. Range 1 to 20 slices.",
+       "default": "5 slices",
+       "choices": null,
+       "key": "localizer_max_slices"
+      },
+      {
+       "label": "BOLD echo from",
+       "tip": "A gradient-echo EPI time series with an echo this long or longer (and no longer than the next setting) has the T2* weighting of BOLD. Range 5 to 60 ms.",
+       "default": "15 ms",
+       "choices": null,
+       "key": "bold_te_min"
+      },
+      {
+       "label": "BOLD echo up to",
+       "tip": "... and no longer than this. Range 20 to 120 ms.",
+       "default": "60 ms",
+       "choices": null,
+       "key": "bold_te_max"
+      },
+      {
+       "label": "A BOLD run repeats at most every",
+       "tip": "A time series repeating more slowly than this is unlikely to be BOLD. Range 1 to 20 s.",
+       "default": "4 s",
+       "choices": null,
+       "key": "bold_tr_max"
+      },
+      {
+       "label": "An SBRef precedes its run by at most",
+       "tip": "A one-volume EPI is the SBRef of a run with its geometry among the next this many series. Range 1 to 10 series.",
+       "default": "3 series",
+       "choices": null,
+       "key": "sbref_lookahead"
+      }
+     ]
+    },
+    {
+     "title": "Contrast agent and perfusion",
+     "hint": "A contrast agent, and the series made with one or with labelled blood.",
+     "items": [
+      {
+       "label": "Name the contrast agent (ce-)",
+       "tip": "A series acquired after a contrast agent was injected carries BIDS's ce- entity: named after the agent in its header (ce-multihance), a fixed label, or not at all.",
+       "default": "After the agent in the header",
+       "choices": [
+        "After the agent in the header",
+        "With a fixed label",
+        "Not at all"
+       ],
+       "key": "entity"
+      },
+      {
+       "label": "Fixed label",
+       "tip": "The ce- label when the agent is not named, or always when 'With a fixed label' is chosen. Letters and digits only.",
+       "default": "gadolinium",
+       "choices": null,
+       "key": "fixed_label"
+      },
+      {
+       "label": "Also when only the series name says so",
+       "tip": "A series named post-contrast (post, +C, Gd, KM, contrast) whose header names no agent gets the ce- entity too, marked to check.",
+       "default": "On",
+       "choices": null,
+       "key": "from_names"
+      },
+      {
+       "label": "A contrast bolus series (DSC perfusion)",
+       "tip": "An EPI time series acquired during a contrast bolus measures perfusion (dynamic susceptibility contrast). BIDS 1.11 has no raw suffix for it: leave it out (keep it in sourcedata/), or name it func/cbv, BIDS's contrast-agent blood-volume series.",
+       "default": "Leave it out",
+       "choices": [
+        "Leave it out",
+        "Name it func/cbv"
+       ],
+       "key": "dsc"
+      },
+      {
+       "label": "A bolus series has at least",
+       "tip": "An EPI series with a contrast agent and this many volumes or more follows a bolus. Range 3 to 300 volumes.",
+       "default": "20 volumes",
+       "choices": null,
+       "key": "dsc_min_volumes"
+      },
+      {
+       "label": "An ASL M0 reference has at most",
+       "tip": "An unlabelled ASL readout with this many volumes or fewer is the M0 reference. Range 1 to 10 volumes.",
+       "default": "2 volumes",
+       "choices": null,
+       "key": "m0_max_volumes"
+      }
+     ]
+    }
+   ],
+   "generated": true
+  },
+  {
+   "title": "Convert",
+   "description": "How a conversion writes the dataset, and what runs after it.",
+   "groups": [
+    {
+     "title": "Convert defaults",
+     "hint": "",
+     "items": [
+      {
+       "label": "Parallel workers (-j)",
+       "tip": "Capped at the detected thread count (10).",
+       "default": "1",
+       "choices": null
+      },
+      {
+       "label": "Existing subjects",
+       "tip": "What to do when a subject already exists in the dataset. Adding a new session or datatype always merges in; this only governs files that collide with existing ones. Existing data is never lost on the default (Skip).",
+       "default": "Skip: keep existing files, add only new (safe default)",
+       "choices": [
+        "Skip: keep existing files, add only new (safe default)",
+        "Update: replace only files whose content changed",
+        "Replace: back up and replace colliding files",
+        "Error: abort a subject if any file would be overwritten"
+       ]
+      },
+      {
+       "label": "Curated metadata",
+       "tip": "Merge sidecars field by field instead of overwriting them. When a subject you already curated in the Editor is converted again, merge its JSON sidecars and _scans.tsv field by field: a value you stated is kept, a TODO placeholder is replaced, and anything the fresh conversion newly knows is added. Turn it off to let the fresh conversion win outright. Only has an effect with Update or Replace above. Recommended: on.",
+       "default": "On",
+       "choices": null,
+       "control": "Keep curated metadata"
+      },
+      {
+       "label": "Residuals",
+       "tip": "Drop the secondary duplicates dcm2niix writes (..._bolda, _Eq_, _ROI), which are not real images. dcm2niix splits a single input series into the real image plus derived single-volume duplicates it names ..._bolda, ..._Eq_1, etc. These have no valid BIDS suffix. Recommended: on.",
+       "default": "On",
+       "choices": null,
+       "control": "Skip residual volumes"
+      },
+      {
+       "label": "Fieldmap links",
+       "tip": "How a fieldmap's IntendedFor names the runs it corrects. BIDS URIs are the current form; fMRIPrep 24.1 and earlier ignore them silently. Paths from the subject are the older form every version reads.",
+       "default": "BIDS URIs (bids::sub-01/...), the current form",
+       "choices": [
+        "BIDS URIs (bids::sub-01/...), the current form",
+        "Paths from the subject (ses-1/func/...)"
+       ]
+      },
+      {
+       "label": "Also write B0FieldIdentifier and B0FieldSource",
+       "tip": "The newer pairing of a fieldmap and its runs, read by every fMRIPrep version and preferred to IntendedFor. Recommended: on.",
+       "default": "On",
+       "choices": null
+      },
+      {
+       "label": "Force EDF",
+       "tip": "Re-encode EEG recordings to EDF instead of keeping the source format. Harmonises a study to one BIDS-native format, and makes a non-BIDS-native but mne-readable source (GDF, EGI, ...) convertible. MEG / NIRS are unaffected.",
+       "default": "Off",
+       "choices": null,
+       "control": "Re-encode EEG to EDF"
+      },
+      {
+       "label": "Deface",
+       "tip": "Blank the face before the subject is committed, so the identifiable image never enters the dataset at all. Off by default because it cannot be undone from the conversion: the original stays in your raw data, not in the BIDS tree. Needs niimath, which ships with BIDS Manager.",
+       "default": "Off",
+       "choices": null,
+       "control": "Remove faces from anatomical and PET images"
+      },
+      {
+       "label": "Deface engine",
+       "tip": "allineate: Affine registration of a face mask, then blank the face. The fast default; right for most images. allineate, neck cropped: The same, after cropping the neck and lower head. Steadier when the scan reaches well below the chin. Note that this one CHANGES THE IMAGE DIMENSIONS: the cropped slices are gone, so the result no longer lines up voxel-for-voxel with anything derived from the original. allineate, Hellinger cost: The same, matched with the AFNI-style Hellinger cost instead of the fast one. Slower; worth trying when the default fits badly. mindgrab: A small neural network that finds the brain directly in the image. Much better than fitting an atlas to it. About ten seconds an image on a laptop CPU, plus a one-off download of the model the first time it runs. atlas brain mask: Affine registration of a brain mask from the same atlas the defacer uses, keeping what the mask covers. No extra to install and it works offline, but it is an affine fit of an average brain: expect it to clip cortex in places and leave dura in others. Use mindgrab when the result has to be analysed.",
+       "default": "allineate",
+       "choices": [
+        "allineate",
+        "allineate, neck cropped",
+        "allineate, Hellinger cost",
+        "mindgrab",
+        "atlas brain mask"
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Source data",
+     "hint": "",
+     "items": [
+      {
+       "label": "Keep in sourcedata/",
+       "tip": "Keep each subject's source data in the dataset's sourcedata/ folder, the place BIDS reserves for data before conversion: sourcedata/sub-/[ses-/]//. A manifest.tsv per subject lists every file with its checksum. Archives are fewer files, compress DICOM well and keep paths short on Windows. The conversion is refused before it starts when the disk cannot hold them.",
+       "default": "No (default)",
+       "choices": [
+        "No (default)",
+        "Copy the files as they are",
+        "One archive per series (.tar.gz)"
+       ]
+      },
+      {
+       "label": "MRI (DICOM)",
+       "tip": "Keep the MRI (DICOM) source data",
+       "default": "On",
+       "choices": null
+      },
+      {
+       "label": "PET (DICOM, ECAT, blood)",
+       "tip": "Keep the PET (DICOM, ECAT, blood) source data",
+       "default": "On",
+       "choices": null
+      },
+      {
+       "label": "EEG",
+       "tip": "Keep the EEG source data",
+       "default": "On",
+       "choices": null
+      },
+      {
+       "label": "MEG",
+       "tip": "Keep the MEG source data",
+       "default": "On",
+       "choices": null
+      },
+      {
+       "label": "NIRS",
+       "tip": "Keep the NIRS source data",
+       "default": "On",
+       "choices": null
+      },
+      {
+       "label": "Physiology",
+       "tip": "Keep the Physiology source data",
+       "default": "On",
+       "choices": null
+      },
+      {
+       "label": "Eye tracking",
+       "tip": "Keep the Eye tracking source data",
+       "default": "On",
+       "choices": null
+      }
+     ]
+    },
+    {
+     "title": "Post-convert chain (run after every conversion)",
+     "hint": "",
+     "items": [
+      {
+       "label": "Generate metadata",
+       "tip": "dataset_description.json, participants.tsv, the *_scans.tsv tables, what your metadata templates and per-file answers state, and an audit of every sidecar.",
+       "default": "On",
+       "choices": null
+      },
+      {
+       "label": "Write TODO into missing fields",
+       "tip": "Only placeholders, nothing else. Every field the standard declares for a file that nothing filled (not the converter, not the scanner header, not your templates) gets the literal TODO, or n/a where the field accepts it, so the gap is visible in the file and reported by validation instead of being an absence nobody notices. No value is invented and an existing value is never overwritten. The TODOs follow this setting on every run: a narrower choice below takes back the ones a wider one wrote, and turning this off takes them all back.",
+       "default": "On",
+       "choices": null
+      },
+      {
+       "label": "Generate missing companion files",
+       "tip": "events.tsv, channels.tsv and JSON sidecars a recording should have. What can be read from a recording is read from it, so a channels table is real content. The rest is a stub carrying TODO rows. A generated events table is deliberately INVALID until you fill it in: TODO is not a valid onset, so validation reports an error for each one. That is the point. An empty but valid events table would be indistinguishable from a recording that genuinely had no events, and would pass quietly forever.",
+       "default": "Off",
+       "choices": null
+      },
+      {
+       "label": "Write CITATION.cff from the dataset description",
+       "tip": "Writes CITATION.cff from what dataset_description.json already says. This runs without asking, so here is exactly what it changes. MOVED: Authors. It is taken OUT of dataset_description.json, because stating authorship in both files is an error (AUTHORS_AND_CITATION_FILE_MUTUALLY_EXCLUSIVE). COPIED and KEPT: License, HowToAcknowledge and ReferencesAndLinks. They are written into the citation file and left where they are, so a value you typed does not disappear from the file you typed it into. The validator would rather each lived in one place only and says so as a warning (SINGLE_SOURCE_CITATION_FIELDS). That warning is the cost of not deleting your answer. An existing CITATION.cff is never overwritten.",
+       "default": "Off",
+       "choices": null
+      },
+      {
+       "label": "Validate the dataset",
+       "tip": "Schema-driven validation (bidsval), the same as the Editor's Validate dataset.",
+       "default": "On",
+       "choices": null
+      },
+      {
+       "label": "Deep checks (slower)",
+       "tip": "When on, validation reads NIfTI headers and file contents in addition to the structural checks. More thorough, slower on large trees. Maps to the validator's read-headers mode.",
+       "default": "On",
+       "choices": null
+      },
+      {
+       "label": "Write an HTML validation report",
+       "tip": "A self-contained validation_report.html beside the dataset (--html).",
+       "default": "On",
+       "choices": null
+      },
+      {
+       "label": "Check image quality",
+       "tip": "Anatomical and diffusion images, a few seconds each, with the methods and thresholds of the Quality control page. Last: the fast quality check of every anatomical and diffusion image not checked yet, into derivatives/bidsmgr-qc/ (read it in the Editor, Tools, Quality check). The air is measured only in images that are not defaced.",
+       "default": "Off",
+       "choices": null
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Validation",
+   "description": "What validation checks and what it shows.",
+   "groups": [
+    {
+     "title": "Validation engine (bidsval)",
+     "hint": "",
+     "items": [
+      {
+       "label": "Max TSV rows scanned",
+       "tip": "Maximum number of rows scanned per TSV during column / value validation. Large tables are bounded to keep validation fast; raise this to scan more of very long tables.",
+       "default": "1000",
+       "choices": null
+      },
+      {
+       "label": "Show findings",
+       "tip": "Filter which findings the Editor's Validation pane lists. The tree badges and the error / warning counters always show the full picture; this only narrows the list so you can focus.",
+       "default": "Errors and warnings",
+       "choices": [
+        "Errors and warnings",
+        "Errors only",
+        "Warnings only"
+       ]
+      },
+      {
+       "label": "TODO placeholders",
+       "tip": "A BIDS Manager convention: the metadata engine writes the literal string 'TODO' into missing recommended fields so you can find and fill them. On by default. Turn it off for exact parity with the standalone bidsval engine (which does not know this convention).",
+       "default": "On",
+       "choices": null,
+       "control": "Flag 'TODO' placeholder values as warnings"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Quality control",
+   "description": "When the quality checks run, with which methods, and every threshold.",
+   "groups": [
+    {
+     "title": "When QC runs",
+     "hint": "Quality control in every viewer.",
+     "items": [
+      {
+       "label": "Run QC when a file opens",
+       "tip": "On: QC that was on stays on for the next file and is computed as soon as it opens (the QC plots under a BOLD's time course, the MEG and EEG check). Off: every file opens with QC off, and QC is computed when you switch it on.",
+       "default": "Off",
+       "choices": null,
+       "key": "on_open"
+      }
+     ]
+    },
+    {
+     "title": "Methods",
+     "hint": "Which method makes the masks, the tissue classes and the registration.",
+     "items": [
+      {
+       "label": "Brain mask (anatomical)",
+       "tip": "mindgrab: brainchop's network, any contrast, about 12 s. Template: the template's brain registered to the image, seconds faster and approximate (it follows the registration, not the image).",
+       "default": "mindgrab network (brainchop)",
+       "choices": [
+        "mindgrab network (brainchop)",
+        "Registered template (fast, approximate)"
+       ],
+       "key": "brain"
+      },
+      {
+       "label": "Tissue classes",
+       "tip": "robust_tissue: brainchop's grey and white matter network (T1w, T2w, FLAIR). EM: three Gaussian classes with the template's tissue maps as priors and a bias field (T1w and T2w only).",
+       "default": "robust_tissue network (brainchop)",
+       "choices": [
+        "robust_tissue network (brainchop)",
+        "EM with template priors (fast)"
+       ],
+       "key": "tissues"
+      },
+      {
+       "label": "Registration to the template",
+       "tip": "niimath: AFNI's 3dAllineate (affine), the brain against the template's brain when the brain mask is mindgrab's. Outline and intensity: BIDS Manager's own affine fit, no external tool.",
+       "default": "niimath -allineate (affine)",
+       "choices": [
+        "niimath -allineate (affine)",
+        "Outline and intensity (no external tool)"
+       ],
+       "key": "registration"
+      },
+      {
+       "label": "Brain mask (diffusion)",
+       "tip": "mindgrab on the mean b=0, or a median filter and Otsu's threshold (as dipy's median_otsu): faster, and looser at the skull base.",
+       "default": "mindgrab network (brainchop)",
+       "choices": [
+        "mindgrab network (brainchop)",
+        "Median filter and Otsu (fast)"
+       ],
+       "key": "dwi_brain"
+      },
+      {
+       "label": "Head motion of a BOLD run",
+       "tip": "Read it from fMRIPrep's confounds table when the run has one (the same numbers the analysis will use), else estimate it here. Or always estimate it here.",
+       "default": "fMRIPrep's confounds when there, else estimated",
+       "choices": [
+        "fMRIPrep's confounds when there, else estimated",
+        "Always estimated here"
+       ],
+       "key": "bold_motion"
+      },
+      {
+       "label": "Time limit for a network or niimath",
+       "tip": "A network that runs longer is stopped and the check falls back to the fast methods. The first run of a network downloads it. Range 60 to 3600 s.",
+       "default": "600 s",
+       "choices": null,
+       "key": "tool_timeout_s"
+      }
+     ]
+    },
+    {
+     "title": "Functional time series (BOLD)",
+     "hint": "The QC plots under a BOLD run's time course and its quality maps.",
+     "items": [
+      {
+       "label": "Leave out non-steady-state volumes",
+       "tip": "Volumes at the start that are far brighter than the rest (dummy scans the scanner kept) are left out of every measure; left in, they dominate the statistics.",
+       "default": "On",
+       "choices": null,
+       "key": "skip_nonsteady"
+      },
+      {
+       "label": "Non-steady-state above",
+       "tip": "A starting volume is non-steady-state when its mean is this many robust standard deviations above the run's median. Range 2 to 20 robust SD.",
+       "default": "5 robust SD",
+       "choices": null,
+       "key": "nonsteady_z"
+      },
+      {
+       "label": "Head radius for FD",
+       "tip": "Rotations are turned into millimetres as arcs on a sphere of this radius (Power 2012: 50 mm, about the distance from the centre of the head to the cortex). Range 30 to 100 mm.",
+       "default": "50 mm",
+       "choices": null,
+       "key": "fd_radius_mm"
+      },
+      {
+       "label": "FD worth a look above",
+       "tip": "Volumes whose framewise displacement is above this are marked (fMRIPrep's and Power 2012's default; stricter studies use 0.2 to 0.3 mm). Range 0.05 to 5 mm.",
+       "default": "0.5 mm",
+       "choices": null,
+       "key": "fd_threshold_mm"
+      },
+      {
+       "label": "Motion estimated on a grid of",
+       "tip": "Finer images are averaged down to about this voxel size before the head's motion is estimated: faster, and as accurate for whole-head motion. Range 2 to 8 mm.",
+       "default": "3.5 mm",
+       "choices": null,
+       "key": "motion_grid_mm"
+      },
+      {
+       "label": "DVARS fence",
+       "tip": "Volumes whose DVARS is above the 75th percentile plus this many interquartile ranges are marked (1.5 is the box plot's fence, FSL's default). Range 0.5 to 5 IQR.",
+       "default": "1.5 IQR",
+       "choices": null,
+       "key": "dvars_fence_iqr"
+      },
+      {
+       "label": "Outlier voxels worth a look above",
+       "tip": "Volumes with more than this share of outlier voxels are marked (afni_proc.py's censoring default). Range 0.5 to 50 %.",
+       "default": "5 %",
+       "choices": null,
+       "key": "outlier_limit_pct"
+      },
+      {
+       "label": "Slice spike above",
+       "tip": "A slice is a spike when its mean is this many robust standard deviations from its own course. Range 2 to 20 robust SD.",
+       "default": "6 robust SD",
+       "choices": null,
+       "key": "spike_z"
+      },
+      {
+       "label": "Voxels sampled",
+       "tip": "The outlier, spike and carpet plots read this many voxels of the head: more is smoother and slower. Range 1000 to 100000.",
+       "default": "8000",
+       "choices": null,
+       "key": "sample_voxels"
+      },
+      {
+       "label": "Trend removed from the maps",
+       "tip": "The standard deviation and temporal SNR maps are taken around a polynomial trend of this order: slow scanner drift is not instability (AFNI and MRIQC detrend too).",
+       "default": "Quadratic",
+       "choices": [
+        "None",
+        "Linear",
+        "Quadratic"
+       ],
+       "key": "detrend"
+      },
+      {
+       "label": "Low temporal SNR below",
+       "tip": "The temporal SNR map's summary reports the share of the head below this. Range 1 to 200.",
+       "default": "20",
+       "choices": null,
+       "key": "tsnr_low"
+      }
+     ]
+    },
+    {
+     "title": "Anatomical images",
+     "hint": "The quality check of an anatomical image (T1w, T2w, FLAIR, PDw, T2starw).",
+     "items": [
+      {
+       "label": "Working grid",
+       "tip": "Masks, registration and tissue classes are made on a grid of about this voxel size; the measures that depend on noise go back to the image's own voxels. Range 1 to 4 mm.",
+       "default": "2 mm",
+       "choices": null,
+       "key": "work_mm"
+      },
+      {
+       "label": "Defaced when the face is blank over",
+       "tip": "With no defacing in the sidecar, the image is taken as defaced when more than this share of the face region is exactly zero. A defaced image's air is not measured. Range 5 to 95 %.",
+       "default": "40 %",
+       "choices": null,
+       "key": "defaced_face_pct"
+      },
+      {
+       "label": "Skull stripped when the shell holds under",
+       "tip": "The image holds the brain only when less than this share of the shell 2 to 8 mm outside the brain holds signal (measured: 1 % stripped, 73 to 89 % intact). Range 1 to 80 %.",
+       "default": "20 %",
+       "choices": null,
+       "key": "stripped_shell_pct"
+      },
+      {
+       "label": "Air set to zero above",
+       "tip": "When more than this share of the air is exactly zero, the scanner or a tool blanked the background and no noise is left to measure. Range 5 to 95 %.",
+       "default": "50 %",
+       "choices": null,
+       "key": "zero_air_pct"
+      },
+      {
+       "label": "A slab below",
+       "tip": "A field of view thinner than this covers part of the brain on purpose: the part outside is reported as coverage, not as a cut. Range 40 to 250 mm.",
+       "default": "120 mm",
+       "choices": null,
+       "key": "slab_mm"
+      },
+      {
+       "label": "Not registered below",
+       "tip": "Thinner than this, the template is not registered at all: a whole head cannot be placed in a few centimetres of it. Range 20 to 150 mm.",
+       "default": "70 mm",
+       "choices": null,
+       "key": "no_registration_mm"
+      },
+      {
+       "label": "Registration trusted above",
+       "tip": "The registered template's brain must overlap the brain found (Dice) at least this much, or the registration is reported as uncertain. Range 0.5 to 0.99 Dice.",
+       "default": "0.8 Dice",
+       "choices": null,
+       "key": "min_registration_dice"
+      },
+      {
+       "label": "Field of view cuts the brain above",
+       "tip": "A warning when more than this share of the template's brain falls outside the image. Range 0 to 10 %.",
+       "default": "0.5 %",
+       "choices": null,
+       "key": "fov_warning_pct"
+      },
+      {
+       "label": "Field of view: error above",
+       "tip": "An error when more than this share of the brain falls outside the image. Range 0 to 30 %.",
+       "default": "3 %",
+       "choices": null,
+       "key": "fov_error_pct"
+      },
+      {
+       "label": "Partial volume below",
+       "tip": "A brain voxel counts as partial volume when no tissue class holds it with at least this probability. Range 0.5 to 0.99.",
+       "default": "0.9",
+       "choices": null,
+       "key": "partial_volume_p"
+      },
+      {
+       "label": "Structured air worth a look above",
+       "tip": "A warning when more than this share of the air above the face holds signal far above its noise (QI1). Range 0.01 to 10 %.",
+       "default": "0.5 %",
+       "choices": null,
+       "key": "air_artefact_pct"
+      },
+      {
+       "label": "Saturation worth a look above",
+       "tip": "A warning when more than this share of the head sits at the image's maximum. Range 0.01 to 10 %.",
+       "default": "0.5 %",
+       "choices": null,
+       "key": "saturation_pct"
+      }
+     ]
+    },
+    {
+     "title": "Diffusion",
+     "hint": "The quality check of a diffusion series.",
+     "items": [
+      {
+       "label": "b=0 up to",
+       "tip": "Volumes with a b-value at or below this are b=0 volumes (scanners write small values such as 5 for them). Range 0 to 200 s/mm².",
+       "default": "50 s/mm²",
+       "choices": null,
+       "key": "b0_max"
+      },
+      {
+       "label": "Tensor fitted up to",
+       "tip": "The diffusion tensor is fitted on b-values up to this: above it the signal is no longer Gaussian enough for a tensor. Range 500 to 5000 s/mm².",
+       "default": "1500 s/mm²",
+       "choices": null,
+       "key": "dti_max_b"
+      },
+      {
+       "label": "Look for flipped or swapped b-vectors",
+       "tip": "Fits the tensor with the stored table and with every flip and swap of its axes, and reports a table whose principal directions are clearly more continuous from voxel to voxel than the stored one's. Experimental; adds a few seconds.",
+       "default": "On",
+       "choices": null,
+       "key": "check_flips"
+      },
+      {
+       "label": "Another table must be more coherent by",
+       "tip": "How much more coherent a flipped or swapped table must be before it is reported. Range 0.5 to 20 %.",
+       "default": "2 %",
+       "choices": null,
+       "key": "flip_margin_pct"
+      },
+      {
+       "label": "Repeated directions within",
+       "tip": "Two directions closer than this (either sign) are reported as repeats. Range 0.5 to 10 degrees.",
+       "default": "2 degrees",
+       "choices": null,
+       "key": "duplicate_deg"
+      },
+      {
+       "label": "Head radius for displacement",
+       "tip": "Rotations are turned into millimetres as arcs on a sphere of this radius, as for framewise displacement. Range 30 to 100 mm.",
+       "default": "50 mm",
+       "choices": null,
+       "key": "fd_radius_mm"
+      },
+      {
+       "label": "Head motion worth a look above",
+       "tip": "A finding when the head moved more than this across the b=0 volumes. Range 0.1 to 10 mm.",
+       "default": "1 mm",
+       "choices": null,
+       "key": "motion_b0_mm"
+      },
+      {
+       "label": "A volume far out of place beyond",
+       "tip": "A volume this far from the first b=0, and an outlier of its shell (robust z above 5), moved during its acquisition. Range 0.5 to 10 mm.",
+       "default": "2 mm",
+       "choices": null,
+       "key": "far_mm"
+      },
+      {
+       "label": "Registration lost beyond",
+       "tip": "A volume registered further than this from the first b=0 is reported as not placed, not as moved: a head does not move that far between two volumes. Range 5 to 100 mm.",
+       "default": "30 mm",
+       "choices": null,
+       "key": "lost_mm"
+      },
+      {
+       "label": "Registration lost beyond a turn of",
+       "tip": "As above, for rotation. Range 2 to 45 degrees.",
+       "default": "15 degrees",
+       "choices": null,
+       "key": "lost_deg"
+      },
+      {
+       "label": "Eddy currents when the gradient explains",
+       "tip": "Shifts are taken as eddy currents (and out of the motion) only when the gradient direction explains at least this share of them. Range 5 to 90 %.",
+       "default": "30 %",
+       "choices": null,
+       "key": "eddy_explained_pct"
+      },
+      {
+       "label": "Dropout below",
+       "tip": "A slice is a dropout when its signal is this many robust spreads below what the tensor predicts, against the same slice in the shell's other volumes, and lost at least the share below. Range 2 to 20 robust SD.",
+       "default": "5 robust SD",
+       "choices": null,
+       "key": "dropout_z"
+      },
+      {
+       "label": "Dropout loses at least",
+       "tip": "A dropout slice is also at least this much below its prediction. Range 1 to 80 %.",
+       "default": "10 %",
+       "choices": null,
+       "key": "dropout_loss_pct"
+      },
+      {
+       "label": "Slices judged from",
+       "tip": "A slice is judged only when it holds at least this share of a typical slice's brain: the top slices' slivers read as dropouts otherwise. Range 5 to 80 %.",
+       "default": "25 %",
+       "choices": null,
+       "key": "edge_slice_pct"
+      },
+      {
+       "label": "Interleave artefact above",
+       "tip": "A volume whose odd and even slices disagree this many robust spreads beyond the rest of its shell. Range 2 to 20 robust SD.",
+       "default": "5 robust SD",
+       "choices": null,
+       "key": "interleave_z"
+      },
+      {
+       "label": "Spiking voxel above",
+       "tip": "A voxel this many robust spreads above the tensor's prediction, against the same voxel in the shell's other volumes. Range 3 to 30 robust SD.",
+       "default": "8 robust SD",
+       "choices": null,
+       "key": "spike_z"
+      },
+      {
+       "label": "Signal drift worth a look above",
+       "tip": "A warning when the b=0 signal changes by more than this over the scan. Range 0.5 to 50 %.",
+       "default": "5 %",
+       "choices": null,
+       "key": "drift_pct"
+      }
+     ]
+    },
+    {
+     "title": "MEG and EEG QC",
+     "hint": "The quick MEG and EEG quality check (``compute.meeg_qc``). Every measure is taken within ONE channel type (magnetometers, gradiometers, EEG): types measure different things in different units, so a channel is only ever compared with channels of its own type.",
+     "items": [
+      {
+       "label": "Channel types checked",
+       "tip": "The channel types QC runs on (mag, grad, eeg, ...); empty: all of them. Chosen per recording in the QC section.",
+       "default": "",
+       "choices": null,
+       "key": "types"
+      },
+      {
+       "label": "Segment length",
+       "tip": "The recording is checked in segments (epochs) of this length. Range 0.5 to 30 s.",
+       "default": "2 s",
+       "choices": null,
+       "key": "segment_s"
+      },
+      {
+       "label": "Ignore drifts below",
+       "tip": "A zero-phase high-pass filter applied before measuring: slow drifts (the environment, sweat, electrode settling) differ from sensor to sensor and would otherwise decide which channel looks noisy. 0 measures the raw signal. Range 0 to 20 Hz.",
+       "default": "1 Hz",
+       "choices": null,
+       "key": "highpass_hz"
+      },
+      {
+       "label": "Apply the recording's SSP projectors",
+       "tip": "MEG recordings usually carry projectors that remove the room's magnetic field; applied, a sensor is judged by what is left.",
+       "default": "On",
+       "choices": null,
+       "key": "apply_proj"
+      },
+      {
+       "label": "Use the standard deviation (STD)",
+       "tip": "Judge channels and segments by their standard deviation.",
+       "default": "On",
+       "choices": null,
+       "key": "use_std"
+      },
+      {
+       "label": "Use the peak-to-peak amplitude (PtP)",
+       "tip": "Judge channels and segments by their peak-to-peak range: catches jumps and pops that barely move the standard deviation.",
+       "default": "On",
+       "choices": null,
+       "key": "use_ptp"
+      },
+      {
+       "label": "Noisy channel above",
+       "tip": "A channel is NOISY when its level (log STD or log PtP) is more than this many robust standard deviations above the other channels of its type. Range 1 to 10 robust SD.",
+       "default": "3 robust SD",
+       "choices": null,
+       "key": "noisy_z"
+      },
+      {
+       "label": "Flat channel below",
+       "tip": "A channel is FLAT when its level is below this fraction of its type's median (0.01: a hundred times quieter than the rest). Range 0.001 to 0.5 of its type.",
+       "default": "0.01 of its type",
+       "choices": null,
+       "key": "flat_ratio"
+      },
+      {
+       "label": "Channels follow their type above",
+       "tip": "How well a channel correlates with the other channels of its type (98th percentile, the PREP pipeline's measure). A loud channel that follows them is picking up real fields and is not called noisy; one below this, at a normal level, is called uncorrelated. 0 judges by level alone. Range 0 to 0.99 correlation.",
+       "default": "0.6 correlation",
+       "choices": null,
+       "key": "min_correlation"
+      },
+      {
+       "label": "Line noise above",
+       "tip": "A channel has LINE NOISE when its power at the line frequency is this much above its type's typical. Needs the recording's PowerLineFrequency. Range 1 to 40 dB.",
+       "default": "10 dB",
+       "choices": null,
+       "key": "line_db"
+      },
+      {
+       "label": "Channel off in a segment beyond",
+       "tip": "In a segment, a channel is OFF when its STD or PtP there is more than this many times its own usual level, or less than its inverse. Range 1.5 to 20 x its level.",
+       "default": "4 x its level",
+       "choices": null,
+       "key": "segment_factor"
+      },
+      {
+       "label": "Segment flagged when off on",
+       "tip": "A segment is flagged when at least this share of the channels of ONE type are off in it. Range 0.01 to 1 of a type.",
+       "default": "0.2 of a type",
+       "choices": null,
+       "key": "segment_share"
+      },
+      {
+       "label": "Look for muscle",
+       "tip": "The muscle band's share of the power, z-scored over time per channel and averaged per type (after MNE's annotate_muscle_zscore). Needs a sampling rate above twice the band's top.",
+       "default": "On",
+       "choices": null,
+       "key": "muscle"
+      },
+      {
+       "label": "Muscle band from",
+       "tip": "Range 20 to 500 Hz.",
+       "default": "110 Hz",
+       "choices": null,
+       "key": "muscle_low"
+      },
+      {
+       "label": "Muscle band to",
+       "tip": "Range 30 to 1000 Hz.",
+       "default": "140 Hz",
+       "choices": null,
+       "key": "muscle_high"
+      },
+      {
+       "label": "Muscle above",
+       "tip": "A segment is flagged for muscle when its type's mean z is above this. Range 1 to 20 z.",
+       "default": "4 z",
+       "choices": null,
+       "key": "muscle_z"
+      }
+     ]
+    }
+   ],
+   "generated": true
+  },
+  {
+   "title": "Viewer",
+   "description": "How images and signals open and look in every viewer.",
+   "groups": [
+    {
+     "title": "Crosshair",
+     "hint": "",
+     "items": [
+      {
+       "label": "Colour",
+       "tip": "The crosshair on every slice and in the graph.",
+       "default": "#4FC3F7",
+       "choices": null,
+       "key": "color"
+      },
+      {
+       "label": "Thickness",
+       "tip": "Line width of the crosshair. Range 1 to 5 px.",
+       "default": "1 px",
+       "choices": null,
+       "key": "thickness"
+      },
+      {
+       "label": "Gap",
+       "tip": "Pixels left empty around the centre, so the voxel under the crosshair stays visible. Range 0 to 40 px.",
+       "default": "0 px",
+       "choices": null,
+       "key": "gap"
+      }
+     ]
+    },
+    {
+     "title": "Images",
+     "hint": "",
+     "items": [
+      {
+       "label": "Opens in",
+       "tip": "The layout a volume opens in. Automatic: the three planes, with the 3-D view where there is a GPU. Switching layout in the viewer changes this.",
+       "default": "Automatic",
+       "choices": [
+        "Automatic",
+        "One plane",
+        "Multi-planar",
+        "3-D",
+        "Planes + 3-D",
+        "Large view",
+        "Mosaic"
+       ],
+       "key": "mode"
+      },
+      {
+       "label": "Plane",
+       "tip": "The plane of the one-plane layout, and the large view's.",
+       "default": "axial",
+       "choices": [
+        "sagittal",
+        "coronal",
+        "axial"
+       ],
+       "key": "plane"
+      },
+      {
+       "label": "Gamma",
+       "tip": "Display gamma of a newly opened image: above 1 lifts the mid-tones. Range 0.1 to 10.",
+       "default": "1.25",
+       "choices": null,
+       "key": "gamma"
+      },
+      {
+       "label": "Interpolation",
+       "tip": "Linear blends neighbouring voxels; nearest neighbour shows each voxel as a square, as the data is.",
+       "default": "Linear (smooth)",
+       "choices": [
+        "Linear (smooth)",
+        "Nearest neighbour (voxels)"
+       ],
+       "key": "interpolation"
+      },
+      {
+       "label": "Colour map",
+       "tip": "The colour map a newly opened image gets.",
+       "default": "gray",
+       "choices": null,
+       "key": "colormap"
+      },
+      {
+       "label": "Orientation letters and cube",
+       "tip": "",
+       "default": "On",
+       "choices": null,
+       "key": "labels"
+      },
+      {
+       "label": "Colour bar",
+       "tip": "",
+       "default": "Off",
+       "choices": null,
+       "key": "colorbar"
+      },
+      {
+       "label": "RAS orientation",
+       "tip": "Off: each axis in the file's own storage order.",
+       "default": "On",
+       "choices": null,
+       "key": "ras"
+      },
+      {
+       "label": "Radiological convention",
+       "tip": "Mirror left and right: the patient's left on the image's right.",
+       "default": "Off",
+       "choices": null,
+       "key": "radiological"
+      },
+      {
+       "label": "Slices",
+       "tip": "Voxel: the file's own grid (exact, fast). World: the scanner's axes, resampled, so an oblique scan is upright.",
+       "default": "Voxel grid",
+       "choices": [
+        "Voxel grid",
+        "World space"
+       ],
+       "key": "space"
+      },
+      {
+       "label": "Memory for 4-D series",
+       "tip": "The most a 4-D series may hold in memory. Automatic is half of the free memory. Range 0 to 262144 MB.",
+       "default": "Automatic",
+       "choices": null,
+       "key": "memory_mb"
+      },
+      {
+       "label": "Playback speed",
+       "tip": "Range 0.5 to 60 volumes/s.",
+       "default": "8 volumes/s",
+       "choices": null,
+       "key": "fps"
+      },
+      {
+       "label": "Advanced controls open",
+       "tip": "The column beside the images with the layers, their look, the view, the layout and the 3-D controls.",
+       "default": "On",
+       "choices": null,
+       "key": "inspector"
+      }
+     ]
+    },
+    {
+     "title": "3-D",
+     "hint": "",
+     "items": [
+      {
+       "label": "Ray samples",
+       "tip": "Samples along each ray of a newly opened rendering. More shows finer detail and renders slower. Range 64 to 1024 samples.",
+       "default": "512 samples",
+       "choices": null,
+       "key": "quality"
+      }
+     ]
+    },
+    {
+     "title": "Signals",
+     "hint": "",
+     "items": [
+      {
+       "label": "Line width",
+       "tip": "Automatic: thin for many traces, 2 px for one or two. Range 0 to 8 px.",
+       "default": "Automatic",
+       "choices": null,
+       "key": "line_width"
+      },
+      {
+       "label": "Line colour",
+       "tip": "One colour for every trace; empty colours each by its channel type.",
+       "default": "",
+       "choices": null,
+       "key": "line_color"
+      },
+      {
+       "label": "Channel type colours",
+       "tip": "",
+       "default": "",
+       "choices": null,
+       "key": "type_colors"
+      },
+      {
+       "label": "Dark plot in the light theme",
+       "tip": "Draw signals on a dark canvas even when the app is light. In the dark theme the canvas is dark already.",
+       "default": "Off",
+       "choices": null,
+       "key": "dark_plot"
+      },
+      {
+       "label": "Event line width",
+       "tip": "Range 1 to 10 px.",
+       "default": "2 px",
+       "choices": null,
+       "key": "event_width"
+      },
+      {
+       "label": "Advanced controls open",
+       "tip": "The column beside the traces with the channel, time, filter, event, QC and display controls.",
+       "default": "Off",
+       "choices": null,
+       "key": "controls_open"
+      },
+      {
+       "label": "Event colour",
+       "tip": "One colour for every event; empty colours each label differently.",
+       "default": "",
+       "choices": null,
+       "key": "event_color"
+      }
+     ]
+    }
+   ],
+   "generated": true
+  },
+  {
+   "title": "Viewer shortcuts",
+   "description": "Keys and mouse gestures in the viewers.",
+   "groups": [],
+   "generated": true
+  }
+ ]
+}

@@ -1,0 +1,41 @@
+{
+ "id": "home-scan",
+ "kind": "figure",
+ "width": 1600,
+ "height": 1000,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1600": "home-scan-dark-1600-03992894.avif",
+    "3200": "home-scan-dark-3200-be5fe0b6.avif"
+   },
+   "webp": {
+    "1600": "home-scan-dark-1600-fce76055.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1600": "home-scan-light-1600-00defbc0.avif",
+    "3200": "home-scan-light-3200-f1fdaf1a.avif"
+   },
+   "webp": {
+    "1600": "home-scan-light-1600-1bd711dc.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The Converter after scanning the multimodal sample: the raw folder on the left, the structure the scan found, the table of recordings with their proposed BIDS names, and the properties of the T1w row.",
+ "window": true,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

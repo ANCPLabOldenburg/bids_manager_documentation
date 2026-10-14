@@ -1,0 +1,72 @@
+{
+ "id": "l03-after-scan",
+ "kind": "figure",
+ "width": 1600,
+ "height": 1000,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1600": "l03-after-scan-dark-1600-f603ec69.avif",
+    "3200": "l03-after-scan-dark-3200-84b283e1.avif"
+   },
+   "webp": {
+    "1600": "l03-after-scan-dark-1600-e826483e.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1600": "l03-after-scan-light-1600-1058025e.avif",
+    "3200": "l03-after-scan-light-3200-1896d74d.avif"
+   },
+   "webp": {
+    "1600": "l03-after-scan-light-1600-ef90ae3d.webp"
+   }
+  }
+ },
+ "regions": [
+  {
+   "key": "table",
+   "label": "One row per recording",
+   "x": 0.35687,
+   "y": 0.197,
+   "w": 0.64,
+   "h": 0.604,
+   "mx": 0.35812,
+   "my": 0.199
+  },
+  {
+   "key": "structure",
+   "label": "The structure the scan found",
+   "x": 0.16437,
+   "y": 0.197,
+   "w": 0.19125,
+   "h": 0.604,
+   "mx": 0.16562,
+   "my": 0.199
+  },
+  {
+   "key": "chips",
+   "label": "4 valid, 12 warnings, 0 error, 3 skipped",
+   "x": 0.38875,
+   "y": 0.064,
+   "w": 0.05375,
+   "h": 0.028,
+   "mx": 0.39,
+   "my": 0.078
+  }
+ ],
+ "alt": "The Converter after the scan: 19 rows in the table, the Structure panel's tree, and the counts in the toolbar.",
+ "window": true,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

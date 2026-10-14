@@ -1,0 +1,41 @@
+{
+ "id": "l04-bulk-dialog",
+ "kind": "figure",
+ "width": 640,
+ "height": 640,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "640": "l04-bulk-dialog-dark-640-8e7f13f2.avif",
+    "1280": "l04-bulk-dialog-dark-1280-1f1b36a6.avif"
+   },
+   "webp": {
+    "640": "l04-bulk-dialog-dark-640-723475f1.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "640": "l04-bulk-dialog-light-640-6291faba.avif",
+    "1280": "l04-bulk-dialog-light-1280-8dafe569.avif"
+   },
+   "webp": {
+    "640": "l04-bulk-dialog-light-640-21426fc9.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Bulk edit with 15 rows selected: the subject column set to 001, and the four rows it would change listed with their names now and after.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}
