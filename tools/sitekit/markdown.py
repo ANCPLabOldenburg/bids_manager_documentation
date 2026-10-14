@@ -76,15 +76,30 @@ class PageRenderer:
         deflist_plugin(md)
         for name in CALLOUTS:
             container_plugin(md, name, render=self._callout(name))
-        container_plugin(md, "step", render=self._step)
-        container_plugin(md, "details", render=self._details)
-        container_plugin(md, "os", render=self._os)
+        container_plugin(md, "step", render=self._rule(self._step))
+        container_plugin(md, "details", render=self._rule(self._details))
+        container_plugin(md, "os", render=self._rule(self._os))
         for name in OS_NAMES:
             container_plugin(md, name, render=self._os_panel(name))
-        container_plugin(md, "cards", render=self._cards)
-        container_plugin(md, "columns", render=self._columns)
-        container_plugin(md, "release", render=self._release)
+        container_plugin(md, "cards", render=self._rule(self._cards))
+        container_plugin(md, "columns", render=self._rule(self._columns))
+        container_plugin(md, "release", render=self._rule(self._release))
         return md
+
+    @staticmethod
+    def _rule(method):
+        """A render rule markdown-it can bind safely.
+
+        markdown-it binds every rule to its renderer with ``rule.__get__(renderer)``.
+        A bound method has no ``__get__`` of its own before Python 3.13, so the
+        lookup reaches the plain function underneath and binds THAT to the
+        renderer: ``self`` became markdown-it's ``RendererHTML`` and the build
+        failed on 3.12 (``no attribute 'step_no'``) while it passed on 3.14. A
+        plain function taking the renderer first behaves the same everywhere.
+        """
+        def rule(_renderer, tokens, idx, options, env):
+            return method(tokens, idx, options, env)
+        return rule
 
     def _callout(self, name: str):
         label = CALLOUTS[name]
