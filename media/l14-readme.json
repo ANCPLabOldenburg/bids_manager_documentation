@@ -1,0 +1,41 @@
+{
+ "id": "l14-readme",
+ "kind": "figure",
+ "width": 888,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "888": "l14-readme-dark-888-ae6d8358.avif",
+    "1776": "l14-readme-dark-1776-c0d91eea.avif"
+   },
+   "webp": {
+    "888": "l14-readme-dark-888-5cfa3203.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "888": "l14-readme-light-888-43997b42.avif",
+    "1776": "l14-readme-light-1776-dad738f9.avif"
+   },
+   "webp": {
+    "888": "l14-readme-light-888-578e072c.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The README in the Editor's document viewer, rendered.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

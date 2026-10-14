@@ -1,0 +1,41 @@
+{
+ "id": "l13-qc-dialog",
+ "kind": "figure",
+ "width": 1180,
+ "height": 760,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1180": "l13-qc-dialog-dark-1180-b48f3806.avif",
+    "2360": "l13-qc-dialog-dark-2360-2f141076.avif"
+   },
+   "webp": {
+    "1180": "l13-qc-dialog-dark-1180-455c1355.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1180": "l13-qc-dialog-light-1180-0bd0467b.avif",
+    "2360": "l13-qc-dialog-light-2360-c44d4fb9.avif"
+   },
+   "webp": {
+    "1180": "l13-qc-dialog-light-1180-6ff6184d.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Tools, Quality check over the whole dataset: each anatomical image with its findings.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

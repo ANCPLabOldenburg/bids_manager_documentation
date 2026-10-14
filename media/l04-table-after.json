@@ -1,0 +1,41 @@
+{
+ "id": "l04-table-after",
+ "kind": "figure",
+ "width": 1018,
+ "height": 598,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1018": "l04-table-after-dark-1018-baeb1cce.avif",
+    "2036": "l04-table-after-dark-2036-c0aa9302.avif"
+   },
+   "webp": {
+    "1018": "l04-table-after-dark-1018-e93c1b0d.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1018": "l04-table-after-light-1018-9b598957.avif",
+    "2036": "l04-table-after-light-2036-53b5722a.avif"
+   },
+   "webp": {
+    "1018": "l04-table-after-light-1018-d1604e80.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The table after the two bulk edits: every row to convert has subject 001 and session 01, and the BIDS names follow.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

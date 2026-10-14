@@ -1,0 +1,41 @@
+{
+ "id": "l06-overview-after",
+ "kind": "figure",
+ "width": 1018,
+ "height": 598,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1018": "l06-overview-after-dark-1018-2d8c312f.avif",
+    "2036": "l06-overview-after-dark-2036-bab08bea.avif"
+   },
+   "webp": {
+    "1018": "l06-overview-after-dark-1018-156505a7.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1018": "l06-overview-after-light-1018-737505dd.avif",
+    "2036": "l06-overview-after-light-2036-0ac58cd6.avif"
+   },
+   "webp": {
+    "1018": "l06-overview-after-light-1018-1c5aded8.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The Overview after one subject and one session were set on every row: 1 subject, 1 session, 15 recordings to convert, nothing worth a look.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

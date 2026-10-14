@@ -1,0 +1,41 @@
+{
+ "id": "l09-fixups",
+ "kind": "figure",
+ "width": 760,
+ "height": 820,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "760": "l09-fixups-dark-760-71712edf.avif",
+    "1520": "l09-fixups-dark-1520-9c94f863.avif"
+   },
+   "webp": {
+    "760": "l09-fixups-dark-760-7fee1393.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "760": "l09-fixups-light-760-732b6336.avif",
+    "1520": "l09-fixups-light-1520-9a52d0bb.avif"
+   },
+   "webp": {
+    "760": "l09-fixups-light-760-7988f0c5.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Fix up this dataset: readiness to share, missing companion files, the citation file, repeated metadata and unanswered fields.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

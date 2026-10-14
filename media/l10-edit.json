@@ -1,0 +1,41 @@
+{
+ "id": "l10-edit",
+ "kind": "figure",
+ "width": 828,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "828": "l10-edit-dark-828-2ac57c9b.avif",
+    "1656": "l10-edit-dark-1656-5f1cd917.avif"
+   },
+   "webp": {
+    "828": "l10-edit-dark-828-c2c28d0e.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "828": "l10-edit-light-828-5e2f55a5.avif",
+    "1656": "l10-edit-light-1656-6e7c6cf3.avif"
+   },
+   "webp": {
+    "828": "l10-edit-light-828-3b4eb177.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The task description typed into the BOLD run's sidecar: the toolbar says there is an unsaved change until Save.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

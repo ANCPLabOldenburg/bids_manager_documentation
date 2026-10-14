@@ -1,0 +1,41 @@
+{
+ "id": "l05-dicom",
+ "kind": "figure",
+ "width": 980,
+ "height": 700,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "980": "l05-dicom-dark-980-8a4f25e5.avif",
+    "1960": "l05-dicom-dark-1960-ee8e6600.avif"
+   },
+   "webp": {
+    "980": "l05-dicom-dark-980-72935528.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "980": "l05-dicom-light-980-1cb77f66.avif",
+    "1960": "l05-dicom-light-1960-dc3e280a.avif"
+   },
+   "webp": {
+    "980": "l05-dicom-light-980-91f0dfc3.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The DICOM header viewer of the T1w series: every element with its tag, and what BIDS Manager reads it for. Identifying values are hidden.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "id": "l12-physio",
+ "kind": "figure",
+ "width": 1294,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1294": "l12-physio-dark-1294-f97f5fd9.avif",
+    "2588": "l12-physio-dark-2588-740d1405.avif"
+   },
+   "webp": {
+    "1294": "l12-physio-dark-1294-77b9b0b1.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1294": "l12-physio-light-1294-aef62a28.avif",
+    "2588": "l12-physio-light-2588-24ccfecd.avif"
+   },
+   "webp": {
+    "1294": "l12-physio-light-1294-4d594577.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The respiratory recording of the BOLD run, opened with Visualize in the table viewer.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

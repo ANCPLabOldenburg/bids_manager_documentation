@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block body_class %}page-doc section-{{ section or 'none' }}{% if meta.get('kind') %} kind-{{ meta.kind }}{% endif %}{% endblock %}
+{% block main %}
+<div class="doc-layout{% if not page.toc or meta.get('toc') == False %} no-toc{% endif %}">
+  {% if nav %}
+  <aside class="sidebar" id="sidebar" aria-label="{{ nav.title }} pages">
+    <div class="sidebar-inner">
+      <p class="sidebar-title"><a href="{{ link('/' ~ nav['items'][0].url) }}">{{ nav.title }}</a></p>
+      <ol class="sidebar-list{% if nav.numbered %} is-numbered{% endif %}">
+        {% for item in nav['items'][1:] %}
+        {% if item.group %}<li class="sidebar-group" aria-hidden="true">{{ item.group }}</li>{% endif %}
+        <li{% if item.current %} class="is-current"{% endif %}>
+          <a href="{{ link('/' ~ item.url) }}"{% if item.current %} aria-current="page"{% endif %} data-progress-key="{{ item.url }}">
+            {% if nav.numbered and item.num %}<span class="sidebar-num" aria-hidden="true">{{ item.num }}</span>{% endif %}
+            <span class="sidebar-text">{{ item.title }}</span>
+            {% if nav.numbered and item.num %}<span class="progress-mark" aria-hidden="true"></span>{% endif %}
+          </a>
+        </li>
+        {% endfor %}
+      </ol>
+      {% if nav.also %}
+      <p class="sidebar-title sidebar-title--also"><a href="{{ link('/' ~ nav.also['items'][0].url) }}">{{ nav.also.title }}</a></p>
+      <ol class="sidebar-list">
+        {% for item in nav.also['items'][1:] %}
+        <li{% if item.current %} class="is-current"{% endif %}><a href="{{ link('/' ~ item.url) }}"{% if item.current %} aria-current="page"{% endif %}><span class="sidebar-text">{{ item.title }}</span></a></li>
+        {% endfor %}
+      </ol>
+      {% endif %}
+    </div>
+  </aside>
+  {% endif %}
+  <main class="doc-main" id="main" tabindex="-1">
+    <article class="doc">
+      <header class="doc-header{% if is_section %} is-section{% endif %}{% if meta.get('chapter') %} has-medallion{% endif %}">
+        {% if crumbs|length > 1 or page.url %}
+        <nav class="breadcrumb" aria-label="Breadcrumb"><ol>
+          {% for c in crumbs %}<li><a href="{{ link('/' ~ c.url) }}">{{ c.title }}</a></li>{% endfor %}
+        </ol></nav>
+        {% endif %}
+        {% if meta.get('chapter') %}<p class="doc-kicker">Learn <span>&middot;</span> Chapter {{ meta.chapter }} of 15</p>{% elif meta.get('kicker') %}<p class="doc-kicker">{{ meta.kicker }}</p>{% elif section and nav %}<p class="doc-kicker">{{ nav.title }}</p>{% endif %}
+        <h1>{% if meta.get('display_title') %}{{ meta.display_title | inline }}{% else %}{{ meta.title }}{% endif %}</h1>
+        {% if meta.get('lede') %}<p class="lede">{{ meta.lede | inline }}</p>{% endif %}
+        {% if meta.get('time') or meta.get('sample') %}
+        <dl class="doc-meta">
+          {% if meta.get('time') %}<div><dt>Time</dt><dd>{{ meta.time }}</dd></div>{% endif %}
+          {% if meta.get('sample') %}<div><dt>Sample</dt><dd>{{ meta.sample | inline }}</dd></div>{% endif %}
+          <div><dt>Version</dt><dd>{{ version }}</dd></div>
+        </dl>
+        {% endif %}
+        {% if meta.get('chapter') %}<div class="medallion" aria-hidden="true"><span>{{ '%02d' % meta.chapter }}</span></div>{% endif %}
+      </header>
+      <div class="prose">
+{{ page.html }}
+      </div>
+      {% if meta.get('chapter') %}
+      <div class="chapter-done">
+        <button type="button" class="btn btn--quiet" data-mark-done="{{ page.url }}"><svg class="icon"><use href="#i-check"/></svg><span data-done-label>Mark this chapter as done</span></button>
+        <p class="chapter-done-note">Your progress is kept in this browser only.</p>
+      </div>
+      {% endif %}
+      <footer class="doc-footer">
+        {% if prev or next %}
+        <nav class="pager" aria-label="Previous and next">
+          {% if prev %}<a class="pager-link pager-prev" href="{{ link('/' ~ prev.url) }}"><span class="pager-dir"><svg class="icon"><use href="#i-arrow-left"/></svg>Previous</span><span class="pager-title">{{ prev.nav_title }}</span></a>{% else %}<span></span>{% endif %}
+          {% if next %}<a class="pager-link pager-next" href="{{ link('/' ~ next.url) }}"><span class="pager-dir">Next<svg class="icon"><use href="#i-arrow"/></svg></span><span class="pager-title">{{ next.nav_title }}</span></a>{% endif %}
+        </nav>
+        {% endif %}
+        <div class="doc-actions">
+          <a href="{{ edit_url }}"><svg class="icon"><use href="#i-edit"/></svg>Edit this page</a>
+          <a href="{{ issue_url }}"><svg class="icon"><use href="#i-flag"/></svg>Report a problem with this page</a>
+        </div>
+      </footer>
+    </article>
+  </main>
+  {% if page.toc and meta.get('toc') != False %}
+  <aside class="toc" aria-label="On this page">
+    <div class="toc-inner">
+      <p class="toc-title">On this page</p>
+      <ol>
+        {% for level, id, text in page.toc %}
+        <li class="toc-l{{ level }}"><a href="#{{ id }}">{{ text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </aside>
+  {% endif %}
+</div>
+{% endblock %}
+{% block scripts %}{% if 'data-teach' in page.html %}<script src="{{ link('/static/js/teach.js') }}" defer></script>{% endif %}{% endblock %}

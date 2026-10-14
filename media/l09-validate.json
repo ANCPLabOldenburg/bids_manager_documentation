@@ -1,0 +1,29 @@
+{
+ "id": "l09-validate",
+ "kind": "clip",
+ "width": 1600,
+ "height": 1000,
+ "duration": 5.4,
+ "chapters": [],
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "mp4": "l09-validate-dark-ac049cbf.mp4",
+   "poster": "l09-validate-dark-poster-60f2395d.webp"
+  },
+  "light": {
+   "mp4": "l09-validate-light-bc8ba81c.mp4",
+   "poster": "l09-validate-light-poster-43a9e0a1.webp"
+  }
+ },
+ "alt": "Pressing Validate dataset in the Editor: each file in the tree gets its mark, each folder its counts, and the toolbar the totals.",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

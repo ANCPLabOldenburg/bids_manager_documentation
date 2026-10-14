@@ -1,0 +1,41 @@
+{
+ "id": "l04-columns",
+ "kind": "figure",
+ "width": 600,
+ "height": 680,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "600": "l04-columns-dark-600-8e40f547.avif",
+    "1200": "l04-columns-dark-1200-0ff94324.avif"
+   },
+   "webp": {
+    "600": "l04-columns-dark-600-76b4ca47.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "600": "l04-columns-light-600-9be77313.avif",
+    "1200": "l04-columns-light-1200-2448bec8.avif"
+   },
+   "webp": {
+    "600": "l04-columns-light-600-1466a3ac.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Manage columns: every column of the table with a note on what it holds.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

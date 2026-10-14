@@ -1,0 +1,332 @@
+{
+ "rows": [
+  {
+   "key": "include",
+   "header": "(tick)",
+   "tsv": "",
+   "editable": "Yes",
+   "shown": "Always",
+   "description": "Whether this row is converted. Untick to skip the series."
+  },
+  {
+   "key": "status",
+   "header": "(state)",
+   "tsv": "",
+   "editable": "No",
+   "shown": "Always",
+   "description": "At-a-glance state badge: ok, warning, error, skipped, non-image, or physio."
+  },
+  {
+   "key": "id",
+   "header": "subject",
+   "tsv": "participant_id",
+   "editable": "No",
+   "shown": "Always",
+   "description": "Participant this row converts under, as sub-XXX."
+  },
+  {
+   "key": "dataset",
+   "header": "dataset",
+   "tsv": "dataset",
+   "editable": "No",
+   "shown": "Yes",
+   "description": "BIDS dataset slug. Rows with different datasets become sibling BIDS roots."
+  },
+  {
+   "key": "ses",
+   "header": "session",
+   "tsv": "session",
+   "editable": "Yes",
+   "shown": "Yes",
+   "description": "Session this row converts under, as ses-XXX. Blank when the study has no sessions."
+  },
+  {
+   "key": "mod",
+   "header": "modality",
+   "tsv": "modality",
+   "editable": "No",
+   "shown": "Yes",
+   "description": "How the data was acquired: mri, eeg, meg, pet, nirs. Not the same as the datatype."
+  },
+  {
+   "key": "datatype",
+   "header": "datatype",
+   "tsv": "datatype",
+   "editable": "Yes",
+   "shown": "Yes",
+   "description": "The BIDS folder the row lands in: anat, func, dwi, fmap, eeg, meg, pet. An MRI acquisition can land in any of the first four."
+  },
+  {
+   "key": "suffix",
+   "header": "suffix",
+   "tsv": "bids_guess_suffix",
+   "editable": "Yes",
+   "shown": "Yes",
+   "description": "BIDS suffix (T1w, bold, dwi, physio, ...)."
+  },
+  {
+   "key": "task",
+   "header": "task",
+   "tsv": "task",
+   "editable": "Yes",
+   "shown": "Yes",
+   "description": "Task entity (task-XXX) for func / eeg / meg rows."
+  },
+  {
+   "key": "run",
+   "header": "run",
+   "tsv": "run",
+   "editable": "Yes",
+   "shown": "Yes",
+   "description": "Run index (run-N) when a series was repeated."
+  },
+  {
+   "key": "conf",
+   "header": "confidence",
+   "tsv": "bids_guess_confidence",
+   "editable": "No",
+   "shown": "Yes",
+   "description": "How sure the classifier is about the datatype and suffix, from 0 to 1."
+  },
+  {
+   "key": "source_folder",
+   "header": "origin",
+   "tsv": "source_folder",
+   "editable": "No",
+   "shown": "Yes",
+   "description": "Where the row came from: the folder inside the raw tree that holds its files."
+  },
+  {
+   "key": "format",
+   "header": "format",
+   "tsv": "format",
+   "editable": "No",
+   "shown": "Yes",
+   "description": "What the row was read from: DICOM, ECAT, FIF, EDF, BrainVision, EEGLAB, CTF."
+  },
+  {
+   "key": "sequence",
+   "header": "sequence",
+   "tsv": "sequence",
+   "editable": "No",
+   "shown": "Yes",
+   "description": "Scanner sequence name used for classification. Empty for formats that do not name one."
+  },
+  {
+   "key": "basename",
+   "header": "BIDS name",
+   "tsv": "bids_name",
+   "editable": "No",
+   "shown": "Yes",
+   "description": "The BIDS filename this row will be written as, without its extension. Edit the entity columns to change it."
+  },
+  {
+   "key": "sequence_kind",
+   "header": "recognised as",
+   "tsv": "sequence_kind",
+   "editable": "No",
+   "shown": "No",
+   "description": "What the classifier recognised the sequence as: T1w, bold, dwi, fieldmap, scout. MRI only."
+  },
+  {
+   "key": "backend",
+   "header": "backend",
+   "tsv": "",
+   "editable": "No",
+   "shown": "No",
+   "description": "Converter backend that will handle the row: dcm2niix, mne-bids, ecat, or bidsphysio."
+  },
+  {
+   "key": "source_file",
+   "header": "source file",
+   "tsv": "source_file",
+   "editable": "No",
+   "shown": "No",
+   "description": "Source recording path (EEG / MEG). Blank for DICOM rows."
+  },
+  {
+   "key": "n_files",
+   "header": "n_files",
+   "tsv": "n_files",
+   "editable": "No",
+   "shown": "No",
+   "description": "Number of source files in the series."
+  },
+  {
+   "key": "acq_time",
+   "header": "acq_time",
+   "tsv": "acq_time",
+   "editable": "No",
+   "shown": "No",
+   "description": "Acquisition time from the DICOM / recording header."
+  },
+  {
+   "key": "image_type",
+   "header": "image_type",
+   "tsv": "image_type",
+   "editable": "No",
+   "shown": "No",
+   "description": "DICOM ImageType (ORIGINAL / DERIVED, MAGNITUDE / PHASE, ...)."
+  },
+  {
+   "key": "study_date",
+   "header": "study_date",
+   "tsv": "study_date",
+   "editable": "No",
+   "shown": "No",
+   "description": "Study date, used to cluster longitudinal sessions."
+  },
+  {
+   "key": "StudyDescription",
+   "header": "study name",
+   "tsv": "StudyDescription",
+   "editable": "No",
+   "shown": "No",
+   "description": "DICOM StudyDescription (the study / protocol name). Read-only, MRI only. Not a BIDS entity; shown for awareness. Multiple distinct values in one scan raise a warning."
+  },
+  {
+   "key": "PatientID",
+   "header": "PatientID",
+   "tsv": "PatientID",
+   "editable": "No",
+   "shown": "No",
+   "description": "DICOM PatientID, a key part of subject identity."
+  },
+  {
+   "key": "GivenName",
+   "header": "GivenName",
+   "tsv": "GivenName",
+   "editable": "No",
+   "shown": "No",
+   "description": "Patient given name from the header."
+  },
+  {
+   "key": "FamilyName",
+   "header": "FamilyName",
+   "tsv": "FamilyName",
+   "editable": "No",
+   "shown": "No",
+   "description": "Patient family name from the header."
+  },
+  {
+   "key": "PatientSex",
+   "header": "sex",
+   "tsv": "PatientSex",
+   "editable": "Yes",
+   "shown": "No",
+   "description": "Participant sex (M/F/O). Seeded from the header; editable; written to participants.tsv."
+  },
+  {
+   "key": "PatientAge",
+   "header": "age",
+   "tsv": "PatientAge",
+   "editable": "Yes",
+   "shown": "No",
+   "description": "Participant age in years. Seeded from the header; editable; written to participants.tsv."
+  },
+  {
+   "key": "Handedness",
+   "header": "hand",
+   "tsv": "Handedness",
+   "editable": "Yes",
+   "shown": "No",
+   "description": "Participant handedness (R/L/A). Seeded from the recording header; editable."
+  },
+  {
+   "key": "n_channels",
+   "header": "n_chan",
+   "tsv": "n_channels",
+   "editable": "No",
+   "shown": "No",
+   "description": "EEG / MEG channel count."
+  },
+  {
+   "key": "sfreq",
+   "header": "sfreq",
+   "tsv": "sfreq",
+   "editable": "No",
+   "shown": "No",
+   "description": "Sampling frequency (Hz) of the recording."
+  },
+  {
+   "key": "duration_sec",
+   "header": "duration",
+   "tsv": "duration_sec",
+   "editable": "No",
+   "shown": "No",
+   "description": "Recording duration in seconds."
+  },
+  {
+   "key": "line_freq",
+   "header": "line_freq",
+   "tsv": "line_freq",
+   "editable": "Yes",
+   "shown": "No",
+   "description": "Power-line frequency (Hz) written to the sidecar. Dropdown (50 / 60); blank uses the dataset default."
+  },
+  {
+   "key": "montage",
+   "header": "montage",
+   "tsv": "montage",
+   "editable": "Yes",
+   "shown": "No",
+   "description": "EEG / MEG montage applied on conversion. Dropdown of MNE built-in montages; blank leaves positions as-is."
+  },
+  {
+   "key": "eeg_reference",
+   "header": "reference",
+   "tsv": "eeg_reference",
+   "editable": "Yes",
+   "shown": "No",
+   "description": "Per-row EEG reference electrode override (e.g. Cz). Blank uses the dataset default."
+  },
+  {
+   "key": "eeg_ground",
+   "header": "ground",
+   "tsv": "eeg_ground",
+   "editable": "Yes",
+   "shown": "No",
+   "description": "Per-row EEG ground electrode override. Blank uses the dataset default."
+  },
+  {
+   "key": "companion_files",
+   "header": "companion",
+   "tsv": "companion_files",
+   "editable": "Yes",
+   "shown": "No",
+   "description": "Already-curated companion files (events / beh / stim) linked to this row and copied into BIDS on convert. Edit via the Properties panel."
+  },
+  {
+   "key": "probe_n_nifti",
+   "header": "probe_nifti",
+   "tsv": "probe_n_nifti",
+   "editable": "No",
+   "shown": "No",
+   "description": "NIfTI files dcm2niix actually produced in a --probe-convert run."
+  },
+  {
+   "key": "probe_n_vols",
+   "header": "probe_vols",
+   "tsv": "probe_n_volumes",
+   "editable": "No",
+   "shown": "No",
+   "description": "Volumes dcm2niix actually produced in a --probe-convert run."
+  },
+  {
+   "key": "repetition_type",
+   "header": "repetition",
+   "tsv": "repetition_type",
+   "editable": "No",
+   "shown": "No",
+   "description": "Repeat classification, e.g. suspected_abort (operator restart)."
+  },
+  {
+   "key": "issues",
+   "header": "issues",
+   "tsv": "issues",
+   "editable": "No",
+   "shown": "No",
+   "description": "Scanner-detected notes: non-image series, B0 reroute, missing entity, ..."
+  }
+ ]
+}

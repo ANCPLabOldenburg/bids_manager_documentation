@@ -1,0 +1,41 @@
+{
+ "id": "l11-tree-menu",
+ "kind": "figure",
+ "width": 433,
+ "height": 1097,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "433": "l11-tree-menu-dark-433-02d0a8e1.avif",
+    "866": "l11-tree-menu-dark-866-eed0d722.avif"
+   },
+   "webp": {
+    "433": "l11-tree-menu-dark-433-09b9662f.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "433": "l11-tree-menu-light-433-67b4f4de.avif",
+    "866": "l11-tree-menu-light-866-b1fc1d30.avif"
+   },
+   "webp": {
+    "433": "l11-tree-menu-light-433-2265042d.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The BIDS tree's right-click menu on the resting EEG recording: references, rename its entities, add or remove one, take it out of its session, remove a face, delete it, and copy its path.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

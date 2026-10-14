@@ -1,0 +1,41 @@
+{
+ "id": "l13-settings-qc",
+ "kind": "figure",
+ "width": 960,
+ "height": 760,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "960": "l13-settings-qc-dark-960-2076bff8.avif",
+    "1920": "l13-settings-qc-dark-1920-147d77fa.avif"
+   },
+   "webp": {
+    "960": "l13-settings-qc-dark-960-b017c344.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "960": "l13-settings-qc-light-960-ad086c2f.avif",
+    "1920": "l13-settings-qc-light-1920-92abd8d8.avif"
+   },
+   "webp": {
+    "960": "l13-settings-qc-light-960-23243e23.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, Quality control page: when QC runs, the methods, and the thresholds of every check.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

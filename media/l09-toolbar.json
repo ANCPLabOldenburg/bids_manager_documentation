@@ -1,0 +1,41 @@
+{
+ "id": "l09-toolbar",
+ "kind": "figure",
+ "width": 1600,
+ "height": 44,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1600": "l09-toolbar-dark-1600-37d8fd42.avif",
+    "3200": "l09-toolbar-dark-3200-8be5ed41.avif"
+   },
+   "webp": {
+    "1600": "l09-toolbar-dark-1600-ac05fed6.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1600": "l09-toolbar-light-1600-d9dbcf0f.avif",
+    "3200": "l09-toolbar-light-3200-a69d3fee.avif"
+   },
+   "webp": {
+    "1600": "l09-toolbar-light-1600-8d7155b8.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The Editor's toolbar after validating the dataset: 27 files clean, 112 warnings and 1 error.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

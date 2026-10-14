@@ -1,0 +1,41 @@
+{
+ "id": "l03-raw-tree",
+ "kind": "figure",
+ "width": 244,
+ "height": 598,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "244": "l03-raw-tree-dark-244-6d4bfea5.avif",
+    "488": "l03-raw-tree-dark-488-778bb44e.avif"
+   },
+   "webp": {
+    "244": "l03-raw-tree-dark-244-f034b4d8.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "244": "l03-raw-tree-light-244-3efb9fe4.avif",
+    "488": "l03-raw-tree-light-488-520d533d.avif"
+   },
+   "webp": {
+    "244": "l03-raw-tree-light-244-9d706a62.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The raw data tree with the sample's folders: eeg, eyetracking, meg, mri, mrs and pet.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "id": "l11-coherence",
+ "kind": "figure",
+ "width": 980,
+ "height": 720,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "980": "l11-coherence-dark-980-2dd19329.avif",
+    "1960": "l11-coherence-dark-1960-3f50eaa2.avif"
+   },
+   "webp": {
+    "980": "l11-coherence-dark-980-e6c782c6.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "980": "l11-coherence-light-980-eaee4574.avif",
+    "1960": "l11-coherence-light-1960-c19e2a42.avif"
+   },
+   "webp": {
+    "980": "l11-coherence-light-980-60199faf.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Check coherence on the converted sample.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

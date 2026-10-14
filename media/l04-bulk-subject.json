@@ -1,0 +1,29 @@
+{
+ "id": "l04-bulk-subject",
+ "kind": "clip",
+ "width": 1600,
+ "height": 1000,
+ "duration": 13.18,
+ "chapters": [],
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "mp4": "l04-bulk-subject-dark-c9e7c110.mp4",
+   "poster": "l04-bulk-subject-dark-poster-e69dd85a.webp"
+  },
+  "light": {
+   "mp4": "l04-bulk-subject-light-b3717289.mp4",
+   "poster": "l04-bulk-subject-light-poster-12ea6e51.webp"
+  }
+ },
+ "alt": "Selecting the 15 rows to convert, opening Bulk edit, choosing the subject column and typing 001: the four rows that said 002, 003 and 004 now say 001.",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

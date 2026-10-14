@@ -1,0 +1,41 @@
+{
+ "id": "l03-log",
+ "kind": "figure",
+ "width": 1584,
+ "height": 160,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1584": "l03-log-dark-1584-16ef7100.avif",
+    "3168": "l03-log-dark-3168-b503a833.avif"
+   },
+   "webp": {
+    "1584": "l03-log-dark-1584-d352d1d3.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1584": "l03-log-light-1584-144ff9ab.avif",
+    "3168": "l03-log-light-3168-6783ef74.avif"
+   },
+   "webp": {
+    "1584": "l03-log-light-1584-220f113c.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The Log after the scan, with the scan's own lines.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

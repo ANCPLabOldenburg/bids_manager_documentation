@@ -1,0 +1,41 @@
+{
+ "id": "w-add-entity",
+ "kind": "figure",
+ "width": 980,
+ "height": 760,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "980": "w-add-entity-dark-980-2651e4f4.avif",
+    "1960": "w-add-entity-dark-1960-a4ac99a0.avif"
+   },
+   "webp": {
+    "980": "w-add-entity-dark-980-797cbf96.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "980": "w-add-entity-light-980-4e667301.avif",
+    "1960": "w-add-entity-light-1960-9ab4e6a4.avif"
+   },
+   "webp": {
+    "980": "w-add-entity-light-980-2122c1f5.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Add or remove an entity: acq-mb8 added to the functional runs, their sidecars and physiological recordings moving with them.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "7bb684f",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

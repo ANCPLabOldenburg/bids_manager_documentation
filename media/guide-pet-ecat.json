@@ -1,0 +1,41 @@
+{
+ "id": "guide-pet-ecat",
+ "kind": "figure",
+ "width": 1018,
+ "height": 655,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1018": "guide-pet-ecat-dark-1018-00fbfb43.avif",
+    "2036": "guide-pet-ecat-dark-2036-5910d676.avif"
+   },
+   "webp": {
+    "1018": "guide-pet-ecat-dark-1018-8a03f4cb.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1018": "guide-pet-ecat-light-1018-1750f18d.avif",
+    "2036": "guide-pet-ecat-light-2036-4cb0a9c6.avif"
+   },
+   "webp": {
+    "1018": "guide-pet-ecat-light-1018-e8659ece.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The ECAT scan of the PET sample: one row, its format ECAT, recognised from the file's contents.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

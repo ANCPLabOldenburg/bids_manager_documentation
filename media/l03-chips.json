@@ -1,0 +1,92 @@
+{
+ "id": "l03-chips",
+ "kind": "figure",
+ "width": 1166,
+ "height": 44,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1166": "l03-chips-dark-1166-9e1d0af1.avif",
+    "2332": "l03-chips-dark-2332-d0de5495.avif"
+   },
+   "webp": {
+    "1166": "l03-chips-dark-1166-c69c6ec3.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1166": "l03-chips-light-1166-6b58eef6.avif",
+    "2332": "l03-chips-light-2332-5f821be4.avif"
+   },
+   "webp": {
+    "1166": "l03-chips-light-1166-542b81fd.webp"
+   }
+  }
+ },
+ "regions": [
+  {
+   "key": "table",
+   "label": "The scan table",
+   "x": 0.16895,
+   "y": 0.11364,
+   "w": 0.18525,
+   "h": 0.77273,
+   "mx": 0.26158,
+   "my": 0.5
+  },
+  {
+   "key": "valid",
+   "label": "Valid",
+   "x": 0.53345,
+   "y": 0.18182,
+   "w": 0.07376,
+   "h": 0.63636,
+   "mx": 0.57033,
+   "my": 0.5
+  },
+  {
+   "key": "warn",
+   "label": "Warnings",
+   "x": 0.60892,
+   "y": 0.18182,
+   "w": 0.10206,
+   "h": 0.63636,
+   "mx": 0.65995,
+   "my": 0.5
+  },
+  {
+   "key": "err",
+   "label": "Errors",
+   "x": 0.71269,
+   "y": 0.18182,
+   "w": 0.07461,
+   "h": 0.63636,
+   "mx": 0.75,
+   "my": 0.5
+  },
+  {
+   "key": "skip",
+   "label": "Skipped",
+   "x": 0.78902,
+   "y": 0.18182,
+   "w": 0.09005,
+   "h": 0.63636,
+   "mx": 0.83405,
+   "my": 0.5
+  }
+ ],
+ "alt": "The toolbar after the scan: the scan table 0001__raw, Undo and Redo, and the counts 4 valid, 12 warnings, 0 error and 3 skipped.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

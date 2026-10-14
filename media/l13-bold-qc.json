@@ -1,0 +1,31 @@
+{
+ "id": "l13-bold-qc",
+ "kind": "clip",
+ "width": 1304,
+ "height": 782,
+ "duration": 5.8,
+ "chapters": [],
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "mp4": "l13-bold-qc-dark-cbf1e414.mp4",
+   "webm": "l13-bold-qc-dark-8b882a67.webm",
+   "poster": "l13-bold-qc-dark-poster-e98866bd.webp"
+  },
+  "light": {
+   "mp4": "l13-bold-qc-light-08f309f3.mp4",
+   "webm": "l13-bold-qc-light-36080b60.webm",
+   "poster": "l13-bold-qc-light-poster-9e0f9bd6.webp"
+  }
+ },
+ "alt": "The BOLD run in the Planes + 3-D layout with its QC plots under the time course: framewise displacement, DVARS, outlier voxels and the carpet plot, following the run as it plays.",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2 (OL_3844, consented)"
+ }
+}

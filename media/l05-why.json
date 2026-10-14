@@ -1,0 +1,41 @@
+{
+ "id": "l05-why",
+ "kind": "figure",
+ "width": 560,
+ "height": 564,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "560": "l05-why-dark-560-c41ec84c.avif",
+    "1120": "l05-why-dark-1120-b8ff4eb2.avif"
+   },
+   "webp": {
+    "560": "l05-why-dark-560-de74fa11.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "560": "l05-why-light-560-d08a7ed0.avif",
+    "1120": "l05-why-light-1120-7ba653a3.avif"
+   },
+   "webp": {
+    "560": "l05-why-light-560-4ee8a782.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The Properties panel of the FLAIR row, scrolled to Why this name: the evidence the classifier weighed, its confidence, and the other names it considered.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "id": "l09-tree-badges",
+ "kind": "figure",
+ "width": 320,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "320": "l09-tree-badges-dark-320-a550a246.avif",
+    "640": "l09-tree-badges-dark-640-21547148.avif"
+   },
+   "webp": {
+    "320": "l09-tree-badges-dark-320-0bd0b874.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "320": "l09-tree-badges-light-320-c3e048b5.avif",
+    "640": "l09-tree-badges-light-640-79f382a2.avif"
+   },
+   "webp": {
+    "320": "l09-tree-badges-light-320-08959db6.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The BIDS tree after validation: each file marked clean, with warnings or with errors, and each folder with its counts.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "id": "guide-adv-why",
+ "kind": "figure",
+ "width": 461,
+ "height": 621,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "461": "guide-adv-why-dark-461-aeee54db.avif",
+    "922": "guide-adv-why-dark-922-def502c7.avif"
+   },
+   "webp": {
+    "461": "guide-adv-why-dark-461-b7326a3a.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "461": "guide-adv-why-light-461-e5b2c395.avif",
+    "922": "guide-adv-why-light-922-792c6a54.avif"
+   },
+   "webp": {
+    "461": "guide-adv-why-light-461-9f72d10b.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Why this name for the series the scanner called ses-post_acq-grenm2mm_run-01_T1w: the evidence for a T1-weighted magnitude image, and the alternatives.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

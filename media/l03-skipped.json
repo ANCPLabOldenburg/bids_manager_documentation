@@ -1,0 +1,41 @@
+{
+ "id": "l03-skipped",
+ "kind": "figure",
+ "width": 560,
+ "height": 620,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "560": "l03-skipped-dark-560-cf24f71e.avif",
+    "1120": "l03-skipped-dark-1120-ee5076dc.avif"
+   },
+   "webp": {
+    "560": "l03-skipped-dark-560-e3094756.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "560": "l03-skipped-light-560-b13c67cf.avif",
+    "1120": "l03-skipped-light-1120-d246ea22.avif"
+   },
+   "webp": {
+    "560": "l03-skipped-light-560-1c4f6000.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The Skipped list: three scout reconstructions and the PhoenixZIPReport, each with the reason it is left out.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

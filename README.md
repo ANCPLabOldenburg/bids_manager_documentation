@@ -1,180 +1,76 @@
 # BIDS Manager documentation
 
-Static documentation site for
-[BIDS Manager](https://github.com/ANCPLabOldenburg/BIDS-Manager).
+The documentation site of [BIDS Manager](https://github.com/ANCPLabOldenburg/BIDS-Manager),
+published at <https://ancplaboldenburg.github.io/bids_manager_documentation/>.
 
-Hand-written HTML / CSS / JS. No build step. Mirrors the design
-pattern of the [INDoS_BrainHack](../INDoS_BrainHack/) site, retinted
-for the BIDS Manager brand. The full rebuild plan and the list of
-remaining work lives at
-`../DOCUMENTATION_PLAN.md`.
+The pages are Markdown, built into a static site by a small Python program.
+GitHub Actions builds and deploys it on every push to `main`
+(`.github/workflows/pages.yml`); the built site, `_site/`, is not committed.
 
-## Local preview
-
-The pages load `partials/header.html` and `partials/footer.html`
-via `fetch`, so a local HTTP server is required. Opening any
-`.html` directly with `file://` triggers a CORS error.
+## Build and preview
 
 ```bash
-python3 -m http.server 8000
-# open http://localhost:8000/
+python -m venv .venv && .venv/bin/pip install -r requirements.txt
+.venv/bin/python tools/build.py --serve      # build, serve on http://localhost:8765/, rebuild on change
+.venv/bin/python tools/build.py              # build into _site/ and check
+.venv/bin/python tools/build.py --release    # also fail on anything unfinished (CI uses this)
 ```
 
-## Structure
+Every build checks the site: links and anchors, figures and their files, the
+order of headings, words the style guide does not use, dashes, local paths,
+and every command and option a page names against the application's own
+argument parsers. Problems stop the build; warnings are printed.
+
+## Layout
 
 ```
-.
-├── .nojekyll                       GitHub Pages serves _underscored paths
-├── .gitignore                      .DS_Store, ._*, editor folders, *.heic
-├── .github/workflows/pages.yml     Deploys on every push to main
-├── README.md                       (this file)
-├── index.html                      Landing: hero collage + workflow animation + features
-├── intro.html                      What / why / how, interactive flowchart
-├── meet-the-gui.html               Three views + feature-video gallery (recorded GUI)
-├── installation.html               Per-OS bootstrap installer walkthrough
-├── tutorial.html                   GUI walkthrough (6 steps) + CLI reference + CLI walkthrough
-├── tutorial-mri.html               Per-dataset info pages (tree + real CLI numbers)
-├── tutorial-mri-advanced.html
-├── tutorial-meg.html
-├── tutorial-eeg.html
-├── partials/
-│   ├── header.html                 Brand + nav + theme toggle
-│   ├── footer.html                 ANCP Lab + repo / PyPI / Issues links
-│   ├── tutorial-gui-tour.html      Annotated converter / editor screenshots (marker popovers)
-│   └── tutorial-after.html         "What you just did" + next steps
-├── styles.css                      Design system + collage keyframes + feature-media
-├── script.js                       Partial includes, theme toggle, themed image / video
-│                                   swap, workflow flowchart, scene state machine,
-│                                   feature-video lazy autoplay
-└── assets/
-    ├── brand/                      logo.png, wordmark.png, app-icon-128 / 256, hero brains
-    ├── hero/                       finale-choir.mp3
-    ├── screenshots/                full converter / editor windows (dark / light)
-    ├── gui/                        Welcome / Converter / Editor full-window captures (dark / light)
-    ├── features/                   recorded feature clips (.mp4) + settings PNGs (dark / light)
-    ├── icons/workflow/             MDI6 glyphs for the intro workflow diagram
-    └── workflow/                   workflow.svg
+content/            the pages: Markdown with front matter, Jinja first, then Markdown
+  _measured/        numbers measured on the sample data, quoted by m("...") in a page
+  _styleguide/      the style guide (built, not linked from the navigation)
+templates/          the page layouts (base, home, doc, redirect, 404)
+static/             CSS, JavaScript, fonts, the home page hero, brand files
+media/              figures and clips, one record per id (media/<id>.json) and its files
+data/               reference tables read from the application (CLI, settings, columns, ...)
+site.yml            navigation, download links, redirects from the old site's addresses
+tools/build.py      the site builder; tools/sitekit holds its parts
+tools/reference/    reads the installed BIDS Manager and writes data/
+tools/capture/      renders figures and clips from the real application
+tools/hero/         precomputes the home page hero from sample data
+tools/review/       photographs built pages in headless Chrome, for review
+tools/brand/        the social card's source (render it with headless Chrome)
 ```
 
-## Design system
+## Regenerating what comes from the application
 
-CSS tokens at the top of `styles.css` mirror the BIDS Manager GUI
-palette in `bidsmgr.gui.theme_manager`, so the docs and the app feel
-like one product:
-
-| Token       | Dark      | Light     |
-|-------------|-----------|-----------|
-| `--accent`  | `#58a6ff` | `#0969da` |
-| `--purple`  | `#d2a8ff` | `#8250df` |
-| `--success` | `#3fb950` | `#1a7f37` |
-| `--warning` | `#d29922` | `#9a6700` |
-| `--error`   | `#f85149` | `#cf222e` |
-| `--teal`    | `#39c5cf` | `#1d7a8c` |
-
-Toggle dark / light via the button in the top right of every page.
-The choice persists in `localStorage` under `bidsmgr-docs-theme`.
-
-## Hero animation
-
-`index.html`'s hero is a collage of six screenshots. Each shot runs
-its own 18-second opacity cycle, staggered by 3 seconds, so 2-3 shots
-are visible at any moment and the set rotates continuously. Pure CSS
-keyframes (`@keyframes hero-pulse`); no JS interval.
-
-Each shot also carries a `data-light="..."` attribute. The theme
-toggle calls `swapThemedImages()` to flip every such image to its
-light variant. The mapping is captured on first call (`img.dataset.dark`)
-so the swap is reversible.
-
-Honors `prefers-reduced-motion`: animations stop and shots show at a
-flat 0.5 opacity collage.
-
-## Adding a page
-
-1. Copy any existing page as `<your-page>.html`.
-2. Body starts with `<div data-include="header"></div>` and ends
-   with `<div data-include="footer"></div>`. The chrome is then
-   inherited from `partials/`.
-3. Add a link in `partials/header.html` so the nav picks it up.
-
-No frameworks. No registry. The `bootDocs()` function in `script.js`
-discovers partials, theme toggle, scroll reveal, and the flowchart
-on every page automatically.
-
-## Adding a themed screenshot
-
-1. Capture dark + light versions of the GUI scene.
-2. Drop into `assets/screenshots/<scene>_dark.png` and
-   `assets/screenshots/<scene>_light.png`.
-3. Reference with:
-
-   ```html
-   <img src="assets/screenshots/<scene>_dark.png"
-        data-light="assets/screenshots/<scene>_light.png"
-        alt="...">
-   ```
-
-   `swapThemedImages()` will swap variants on theme toggle.
-
-PNG (not JPG) is the right format: JPG flattens HEIC's transparent
-window-shadow border to white, leaving a visible white margin on
-the hero. PNG preserves the alpha so the rounded macOS window
-corners blend with whatever sits behind them.
-
-If the source HEICs in `../Assets_temp/` get refreshed, re-run:
+These need the BIDS Manager environment (`pip install bids-manager` plus
+Pillow with AVIF support and ffmpeg) and the sample datasets. They isolate
+their Qt settings in a temporary folder and never touch your own.
 
 ```bash
-rm -f assets/screenshots/*.png
-for src in ../Assets_temp/*.heic; do
-  base=$(basename "$src" .heic | tr '[:upper:] ' '[:lower:]-')
-  sips -s format png -Z 1600 "$src" --out "assets/screenshots/${base}.png" >/dev/null
-done
+PY=path/to/bids-manager-env/bin/python
+$PY tools/reference/extract.py                 # data/*.json from the installed version
+$PY tools/capture/run.py --states              # the course's sample states
+$PY tools/capture/run.py --all                 # every figure and clip, light and dark
+$PY tools/capture/publish_all.py               # masters -> media/ (AVIF, WebP, records)
+$PY tools/capture/encode.py                    # clips -> media/ (MP4, WebM, posters)
+$PY tools/hero/make_hero.py                    # static/hero/
 ```
 
-## Deploy (GitHub Pages)
+Every picture exists in a light and a dark version; the page shows the one
+that matches its theme.
 
-The repo ships `.github/workflows/pages.yml`, which publishes the
-static site on every push to `main`. One-time setup in the GitHub
-repo settings:
+## Review
 
-1. Push the repo to GitHub (`git push origin main`).
-2. **Settings &rarr; Pages &rarr; Build and deployment &rarr;
-   Source = GitHub Actions**.
-
-After that, every push to `main` triggers the workflow; the site
-goes live at `https://<owner>.github.io/<repo>/` within ~60 seconds.
-
-`.nojekyll` is included so GitHub Pages serves files / folders whose
-names start with `_` correctly (Jekyll would skip them otherwise).
-
-## Feature videos
-
-`meet-the-gui.html` and Step 1 of the tutorial embed recorded GUI
-clips as dark / light pairs:
-
-```html
-<video class="feature-video" muted loop playsinline preload="none"
-       data-dark="assets/features/<clip>_dark.mp4"
-       data-light="assets/features/<clip>_light.mp4"></video>
+```bash
+.venv/bin/python tools/review/shoot.py --all --widths 375 768 1280 1920 \
+    --themes light dark --motion both --out /tmp/bm_docs_review
+.venv/bin/python tools/review/shoot.py --sheet /tmp/bm_docs_review
 ```
 
-`initFeatureVideos()` in `script.js` keeps them cheap: the source is
-set from the active theme, nothing is fetched until the clip nears the
-viewport, and an `IntersectionObserver` autoplays a clip in view and
-pauses it off-screen. Under `prefers-reduced-motion` it shows native
-controls and never autoplays. `swapFeatureVideos()` re-points each clip
-on a theme toggle (alongside `swapThemedImages()` for PNG pairs).
+## Writing
 
-## What is next
-
-The site is aligned with `bidsmgr` v1.2.2 (project-first model,
-EEG / MEG enrichment, the Editor signal viewer, the full seven-verb CLI).
-Optional follow-ups: per-page right-rail TOC, FAQ, changelog, search;
-re-encode the larger `.mp4` clips to smaller web-friendly files.
-
-## Legacy
-
-The pre-v1.1 Jupyter Book version of this site lives at
-`../bids_manager_documentation_v0_backup/` (sibling folder, full
-`.git/` preserved). Read-only reference; do not edit. Its `book/`
-content still has useful prose for the installation walkthrough.
+Plain, teaching English. No dashes as punctuation, no emojis, no selling words
+(the build lists them). Name what a reader sees in the application exactly as
+the application writes it, in bold. Numbers come from a measured run, never
+from memory. Pictures show sample data whose licence allows it, and no faces
+other than of participants who consented.

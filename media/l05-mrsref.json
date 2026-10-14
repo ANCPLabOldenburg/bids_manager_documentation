@@ -1,0 +1,41 @@
+{
+ "id": "l05-mrsref",
+ "kind": "figure",
+ "width": 430,
+ "height": 564,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "430": "l05-mrsref-dark-430-21a7e642.avif",
+    "860": "l05-mrsref-dark-860-31899e4a.avif"
+   },
+   "webp": {
+    "430": "l05-mrsref-dark-430-7a4c921e.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "430": "l05-mrsref-light-430-54d720a8.avif",
+    "860": "l05-mrsref-light-860-1397e8c0.avif"
+   },
+   "webp": {
+    "430": "l05-mrsref-light-430-fca64d17.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Properties of the spectroscopy water reference after the change: suffix mrsref, no run, and the predicted path sub-001/ses-01/mrs/sub-001_ses-01_mrsref.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "id": "l03-settings-scan",
+ "kind": "figure",
+ "width": 900,
+ "height": 700,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "900": "l03-settings-scan-dark-900-3eedc594.avif",
+    "1800": "l03-settings-scan-dark-1800-e5e64209.avif"
+   },
+   "webp": {
+    "900": "l03-settings-scan-dark-900-eecf2b9f.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "900": "l03-settings-scan-light-900-f195acd6.avif",
+    "1800": "l03-settings-scan-light-1800-0c379070.avif"
+   },
+   "webp": {
+    "900": "l03-settings-scan-light-900-342287d1.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, Scan page: parallel workers, probe conversion, converter fields, the classifier switch and the index widths.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "id": "l09-validation-file",
+ "kind": "figure",
+ "width": 540,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "540": "l09-validation-file-dark-540-00921ac4.avif",
+    "1080": "l09-validation-file-dark-1080-36531cad.avif"
+   },
+   "webp": {
+    "540": "l09-validation-file-dark-540-6a9f815e.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "540": "l09-validation-file-light-540-d82a366c.avif",
+    "1080": "l09-validation-file-light-1080-4862a83e.avif"
+   },
+   "webp": {
+    "540": "l09-validation-file-light-540-ec69f424.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The Validation panel for the BOLD sidecar: the dataset's, the folder's and the file's findings, and the schema audit.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

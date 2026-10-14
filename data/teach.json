@@ -1,0 +1,852 @@
+{
+ "version": "1.11.1",
+ "kinds": [
+  {
+   "datatype": "anat",
+   "suffix": "T1w",
+   "extension": ".nii.gz",
+   "label": "An anatomical T1-weighted image",
+   "entities": [
+    {
+     "entity": "subject",
+     "key": "sub",
+     "name": "Subject",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": true,
+     "offer": true,
+     "example": "01"
+    },
+    {
+     "entity": "session",
+     "key": "ses",
+     "name": "Session",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "pre"
+    },
+    {
+     "entity": "task",
+     "key": "task",
+     "name": "Task",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "rest"
+    },
+    {
+     "entity": "acquisition",
+     "key": "acq",
+     "name": "Acquisition",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "mprage"
+    },
+    {
+     "entity": "ceagent",
+     "key": "ce",
+     "name": "Contrast Enhancing Agent",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "gad"
+    },
+    {
+     "entity": "reconstruction",
+     "key": "rec",
+     "name": "Reconstruction",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": false,
+     "example": ""
+    },
+    {
+     "entity": "run",
+     "key": "run",
+     "name": "Run",
+     "format": "index",
+     "pattern": "[0-9]+",
+     "required": false,
+     "offer": true,
+     "example": "1"
+    },
+    {
+     "entity": "echo",
+     "key": "echo",
+     "name": "Echo",
+     "format": "index",
+     "pattern": "[0-9]+",
+     "required": false,
+     "offer": true,
+     "example": "1"
+    },
+    {
+     "entity": "part",
+     "key": "part",
+     "name": "Part",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "mag"
+    },
+    {
+     "entity": "chunk",
+     "key": "chunk",
+     "name": "Chunk",
+     "format": "index",
+     "pattern": "[0-9]+",
+     "required": false,
+     "offer": false,
+     "example": ""
+    }
+   ]
+  },
+  {
+   "datatype": "func",
+   "suffix": "bold",
+   "extension": ".nii.gz",
+   "label": "A BOLD run",
+   "entities": [
+    {
+     "entity": "subject",
+     "key": "sub",
+     "name": "Subject",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": true,
+     "offer": true,
+     "example": "01"
+    },
+    {
+     "entity": "session",
+     "key": "ses",
+     "name": "Session",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "pre"
+    },
+    {
+     "entity": "task",
+     "key": "task",
+     "name": "Task",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": true,
+     "offer": true,
+     "example": "rest"
+    },
+    {
+     "entity": "acquisition",
+     "key": "acq",
+     "name": "Acquisition",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "mprage"
+    },
+    {
+     "entity": "ceagent",
+     "key": "ce",
+     "name": "Contrast Enhancing Agent",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "gad"
+    },
+    {
+     "entity": "reconstruction",
+     "key": "rec",
+     "name": "Reconstruction",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": false,
+     "example": ""
+    },
+    {
+     "entity": "direction",
+     "key": "dir",
+     "name": "Phase-Encoding Direction",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "AP"
+    },
+    {
+     "entity": "run",
+     "key": "run",
+     "name": "Run",
+     "format": "index",
+     "pattern": "[0-9]+",
+     "required": false,
+     "offer": true,
+     "example": "1"
+    },
+    {
+     "entity": "echo",
+     "key": "echo",
+     "name": "Echo",
+     "format": "index",
+     "pattern": "[0-9]+",
+     "required": false,
+     "offer": true,
+     "example": "1"
+    },
+    {
+     "entity": "part",
+     "key": "part",
+     "name": "Part",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "mag"
+    },
+    {
+     "entity": "chunk",
+     "key": "chunk",
+     "name": "Chunk",
+     "format": "index",
+     "pattern": "[0-9]+",
+     "required": false,
+     "offer": false,
+     "example": ""
+    }
+   ]
+  },
+  {
+   "datatype": "dwi",
+   "suffix": "dwi",
+   "extension": ".nii.gz",
+   "label": "A diffusion run",
+   "entities": [
+    {
+     "entity": "subject",
+     "key": "sub",
+     "name": "Subject",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": true,
+     "offer": true,
+     "example": "01"
+    },
+    {
+     "entity": "session",
+     "key": "ses",
+     "name": "Session",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "pre"
+    },
+    {
+     "entity": "acquisition",
+     "key": "acq",
+     "name": "Acquisition",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "mprage"
+    },
+    {
+     "entity": "reconstruction",
+     "key": "rec",
+     "name": "Reconstruction",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": false,
+     "example": ""
+    },
+    {
+     "entity": "direction",
+     "key": "dir",
+     "name": "Phase-Encoding Direction",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "AP"
+    },
+    {
+     "entity": "run",
+     "key": "run",
+     "name": "Run",
+     "format": "index",
+     "pattern": "[0-9]+",
+     "required": false,
+     "offer": true,
+     "example": "1"
+    },
+    {
+     "entity": "part",
+     "key": "part",
+     "name": "Part",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "mag"
+    },
+    {
+     "entity": "chunk",
+     "key": "chunk",
+     "name": "Chunk",
+     "format": "index",
+     "pattern": "[0-9]+",
+     "required": false,
+     "offer": false,
+     "example": ""
+    }
+   ]
+  },
+  {
+   "datatype": "fmap",
+   "suffix": "epi",
+   "extension": ".nii.gz",
+   "label": "A reversed-phase fieldmap",
+   "entities": [
+    {
+     "entity": "subject",
+     "key": "sub",
+     "name": "Subject",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": true,
+     "offer": true,
+     "example": "01"
+    },
+    {
+     "entity": "session",
+     "key": "ses",
+     "name": "Session",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "pre"
+    },
+    {
+     "entity": "acquisition",
+     "key": "acq",
+     "name": "Acquisition",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "mprage"
+    },
+    {
+     "entity": "ceagent",
+     "key": "ce",
+     "name": "Contrast Enhancing Agent",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "gad"
+    },
+    {
+     "entity": "reconstruction",
+     "key": "rec",
+     "name": "Reconstruction",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": false,
+     "example": ""
+    },
+    {
+     "entity": "direction",
+     "key": "dir",
+     "name": "Phase-Encoding Direction",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "AP"
+    },
+    {
+     "entity": "run",
+     "key": "run",
+     "name": "Run",
+     "format": "index",
+     "pattern": "[0-9]+",
+     "required": false,
+     "offer": true,
+     "example": "1"
+    },
+    {
+     "entity": "part",
+     "key": "part",
+     "name": "Part",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "mag"
+    },
+    {
+     "entity": "chunk",
+     "key": "chunk",
+     "name": "Chunk",
+     "format": "index",
+     "pattern": "[0-9]+",
+     "required": false,
+     "offer": false,
+     "example": ""
+    }
+   ]
+  },
+  {
+   "datatype": "pet",
+   "suffix": "pet",
+   "extension": ".nii.gz",
+   "label": "A PET image",
+   "entities": [
+    {
+     "entity": "subject",
+     "key": "sub",
+     "name": "Subject",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": true,
+     "offer": true,
+     "example": "01"
+    },
+    {
+     "entity": "session",
+     "key": "ses",
+     "name": "Session",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "pre"
+    },
+    {
+     "entity": "task",
+     "key": "task",
+     "name": "Task",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "rest"
+    },
+    {
+     "entity": "tracer",
+     "key": "trc",
+     "name": "Tracer",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "fdg"
+    },
+    {
+     "entity": "reconstruction",
+     "key": "rec",
+     "name": "Reconstruction",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": false,
+     "example": ""
+    },
+    {
+     "entity": "run",
+     "key": "run",
+     "name": "Run",
+     "format": "index",
+     "pattern": "[0-9]+",
+     "required": false,
+     "offer": true,
+     "example": "1"
+    }
+   ]
+  },
+  {
+   "datatype": "mrs",
+   "suffix": "svs",
+   "extension": ".nii.gz",
+   "label": "A single-voxel spectrum",
+   "entities": [
+    {
+     "entity": "subject",
+     "key": "sub",
+     "name": "Subject",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": true,
+     "offer": true,
+     "example": "01"
+    },
+    {
+     "entity": "session",
+     "key": "ses",
+     "name": "Session",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "pre"
+    },
+    {
+     "entity": "task",
+     "key": "task",
+     "name": "Task",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "rest"
+    },
+    {
+     "entity": "acquisition",
+     "key": "acq",
+     "name": "Acquisition",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "mprage"
+    },
+    {
+     "entity": "nucleus",
+     "key": "nuc",
+     "name": "Nucleus",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": false,
+     "example": ""
+    },
+    {
+     "entity": "volume",
+     "key": "voi",
+     "name": "Volume of Interest",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": false,
+     "example": ""
+    },
+    {
+     "entity": "reconstruction",
+     "key": "rec",
+     "name": "Reconstruction",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": false,
+     "example": ""
+    },
+    {
+     "entity": "run",
+     "key": "run",
+     "name": "Run",
+     "format": "index",
+     "pattern": "[0-9]+",
+     "required": false,
+     "offer": true,
+     "example": "1"
+    },
+    {
+     "entity": "echo",
+     "key": "echo",
+     "name": "Echo",
+     "format": "index",
+     "pattern": "[0-9]+",
+     "required": false,
+     "offer": true,
+     "example": "1"
+    },
+    {
+     "entity": "inversion",
+     "key": "inv",
+     "name": "Inversion Time",
+     "format": "index",
+     "pattern": "[0-9]+",
+     "required": false,
+     "offer": false,
+     "example": ""
+    }
+   ]
+  },
+  {
+   "datatype": "eeg",
+   "suffix": "eeg",
+   "extension": ".edf",
+   "label": "An EEG recording",
+   "entities": [
+    {
+     "entity": "subject",
+     "key": "sub",
+     "name": "Subject",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": true,
+     "offer": true,
+     "example": "01"
+    },
+    {
+     "entity": "session",
+     "key": "ses",
+     "name": "Session",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "pre"
+    },
+    {
+     "entity": "task",
+     "key": "task",
+     "name": "Task",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": true,
+     "offer": true,
+     "example": "rest"
+    },
+    {
+     "entity": "acquisition",
+     "key": "acq",
+     "name": "Acquisition",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "mprage"
+    },
+    {
+     "entity": "run",
+     "key": "run",
+     "name": "Run",
+     "format": "index",
+     "pattern": "[0-9]+",
+     "required": false,
+     "offer": true,
+     "example": "1"
+    }
+   ]
+  },
+  {
+   "datatype": "meg",
+   "suffix": "meg",
+   "extension": ".fif",
+   "label": "An MEG recording",
+   "entities": [
+    {
+     "entity": "subject",
+     "key": "sub",
+     "name": "Subject",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": true,
+     "offer": true,
+     "example": "01"
+    },
+    {
+     "entity": "session",
+     "key": "ses",
+     "name": "Session",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "pre"
+    },
+    {
+     "entity": "task",
+     "key": "task",
+     "name": "Task",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": true,
+     "offer": true,
+     "example": "rest"
+    },
+    {
+     "entity": "acquisition",
+     "key": "acq",
+     "name": "Acquisition",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": true,
+     "example": "mprage"
+    },
+    {
+     "entity": "run",
+     "key": "run",
+     "name": "Run",
+     "format": "index",
+     "pattern": "[0-9]+",
+     "required": false,
+     "offer": true,
+     "example": "1"
+    },
+    {
+     "entity": "processing",
+     "key": "proc",
+     "name": "Processed (on device)",
+     "format": "label",
+     "pattern": "[0-9a-zA-Z+]+",
+     "required": false,
+     "offer": false,
+     "example": ""
+    },
+    {
+     "entity": "split",
+     "key": "split",
+     "name": "Split",
+     "format": "index",
+     "pattern": "[0-9]+",
+     "required": false,
+     "offer": false,
+     "example": ""
+    }
+   ]
+  }
+ ],
+ "quiz": [
+  {
+   "datatype": "anat",
+   "name": "sub-01_ses-pre_T1w.nii.gz",
+   "ok": true,
+   "problems": [],
+   "explain": "Valid: a subject, a session, and the suffix."
+  },
+  {
+   "datatype": "func",
+   "name": "sub-01_bold.nii.gz",
+   "ok": false,
+   "problems": [
+    "Required entity 'task' missing"
+   ],
+   "explain": "A BOLD run must say which task it was."
+  },
+  {
+   "datatype": "anat",
+   "name": "sub-01_run-a_T1w.nii.gz",
+   "ok": false,
+   "problems": [
+    "Entity 'run' value 'a' does not match index pattern /[0-9]+/"
+   ],
+   "explain": "run is an index: a number, not a letter."
+  },
+  {
+   "datatype": "func",
+   "name": "sub-01_run-1_task-rest_bold.nii.gz",
+   "ok": false,
+   "problems": [
+    "The entities are not in the standard's order (sub, task, run)."
+   ],
+   "explain": "Every entity is there, but task must come before run."
+  },
+  {
+   "datatype": "anat",
+   "name": "sub-01_acq-mp rage_T1w.nii.gz",
+   "ok": false,
+   "problems": [
+    "Token 'acq-mp rage' is not a valid 'key-value' BIDS entity"
+   ],
+   "explain": "A label holds letters and digits only: no space, no underscore, no hyphen."
+  },
+  {
+   "datatype": "func",
+   "name": "sub-01_task-rest_acq-mb4_bold.nii.gz",
+   "ok": true,
+   "problems": [],
+   "explain": "Valid: acq tells two kinds of BOLD acquisition apart."
+  },
+  {
+   "datatype": "eeg",
+   "name": "sub-01_task-rest_echo-1_eeg.edf",
+   "ok": false,
+   "problems": [
+    "Entity 'echo' not allowed for eeg/eeg"
+   ],
+   "explain": "An EEG recording has no echoes: echo is not allowed there."
+  },
+  {
+   "datatype": "dwi",
+   "name": "sub-01_dir-AP_dwi.nii.gz",
+   "ok": true,
+   "problems": [],
+   "explain": "Valid: dir says the phase-encoding direction."
+  }
+ ],
+ "place": [
+  {
+   "name": "sub-01_ses-pre_T1w.nii.gz",
+   "folder": [
+    "anat"
+   ]
+  },
+  {
+   "name": "sub-01_ses-pre_task-rest_bold.nii.gz",
+   "folder": [
+    "func"
+   ]
+  },
+  {
+   "name": "sub-01_ses-pre_dir-PA_epi.nii.gz",
+   "folder": [
+    "fmap"
+   ]
+  },
+  {
+   "name": "sub-01_ses-pre_dwi.bval",
+   "folder": [
+    "dwi"
+   ]
+  },
+  {
+   "name": "sub-01_ses-pre_task-rest_eeg.edf",
+   "folder": [
+    "eeg"
+   ]
+  },
+  {
+   "name": "sub-01_ses-pre_trc-FDG_pet.nii.gz",
+   "folder": [
+    "pet"
+   ]
+  },
+  {
+   "name": "sub-01_ses-pre_svs.nii.gz",
+   "folder": [
+    "mrs"
+   ]
+  }
+ ],
+ "folders": [
+  "anat",
+  "func",
+  "fmap",
+  "dwi",
+  "pet",
+  "mrs",
+  "eeg",
+  "meg",
+  "beh"
+ ]
+}

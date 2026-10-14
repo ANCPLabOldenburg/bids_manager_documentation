@@ -1,0 +1,41 @@
+{
+ "id": "l08-output-tree",
+ "kind": "figure",
+ "width": 420,
+ "height": 598,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "420": "l08-output-tree-dark-420-bf6ba110.avif",
+    "840": "l08-output-tree-dark-840-ea5086e3.avif"
+   },
+   "webp": {
+    "420": "l08-output-tree-dark-420-259cff70.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "420": "l08-output-tree-light-420-a863cbb4.avif",
+    "840": "l08-output-tree-light-840-6b7c6cd7.avif"
+   },
+   "webp": {
+    "420": "l08-output-tree-light-420-0b3fb888.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The output data tree after the conversion: the dataset's files under sub-001/ses-01, one folder per datatype.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "id": "l01-tree",
+ "kind": "figure",
+ "width": 290,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "290": "l01-tree-dark-290-cc435661.avif",
+    "580": "l01-tree-dark-580-7bd63909.avif"
+   },
+   "webp": {
+    "290": "l01-tree-dark-290-b72332c9.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "290": "l01-tree-light-290-bace680e.avif",
+    "580": "l01-tree-light-580-4b9d4aa2.avif"
+   },
+   "webp": {
+    "290": "l01-tree-light-290-9c0835ca.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The converted sample in the Editor's BIDS tree: one subject, one session, nine datatype folders, each with how many files it holds.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

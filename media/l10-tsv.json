@@ -1,0 +1,41 @@
+{
+ "id": "l10-tsv",
+ "kind": "figure",
+ "width": 828,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "828": "l10-tsv-dark-828-d66c1631.avif",
+    "1656": "l10-tsv-dark-1656-5428d39d.avif"
+   },
+   "webp": {
+    "828": "l10-tsv-dark-828-025fcd8a.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "828": "l10-tsv-light-828-1dadc2d6.avif",
+    "1656": "l10-tsv-light-1656-283ffedb.avif"
+   },
+   "webp": {
+    "828": "l10-tsv-light-828-e06e656b.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "participants.tsv in the table viewer: one row, with the columns the participants spreadsheet and the DICOM headers gave.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

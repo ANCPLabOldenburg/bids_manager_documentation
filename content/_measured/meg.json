@@ -1,0 +1,67 @@
+{
+ "scan": {
+  "rows": 23,
+  "included": 23,
+  "seconds": 2.0,
+  "subjects": [
+   "sub-001",
+   "sub-002"
+  ],
+  "sessions": [
+   "ses-1",
+   "ses-2"
+  ],
+  "chips": {
+   "valid": "23 valid",
+   "warn": "0 warnings",
+   "err": "0 error",
+   "skip": "0 skipped"
+  }
+ },
+ "names": [
+  "sub-001_ses-1_task-driving_run-1_meg",
+  "sub-001_ses-1_task-driving_run-2_meg",
+  "sub-001_ses-1_task-noise_run-1_meg",
+  "sub-001_ses-1_task-noise_run-2_meg",
+  "sub-001_ses-1_task-rest_meg",
+  "sub-001_ses-2_task-driving_run-1_meg",
+  "sub-001_ses-2_task-driving_run-2_meg",
+  "sub-001_ses-2_task-driving_run-3_meg",
+  "sub-001_ses-2_task-driving_run-4_meg",
+  "sub-001_ses-2_task-driving_run-5_meg",
+  "sub-001_ses-2_task-driving_run-6_meg",
+  "sub-001_ses-2_task-noise_run-1_meg",
+  "sub-001_ses-2_task-noise_run-2_meg",
+  "sub-001_ses-2_task-rest_meg",
+  "sub-002_task-driving_run-1_meg",
+  "sub-002_task-driving_run-2_meg",
+  "sub-002_task-driving_run-3_meg",
+  "sub-002_task-driving_run-4_meg",
+  "sub-002_task-driving_run-5_meg",
+  "sub-002_task-driving_run-6_meg",
+  "sub-002_task-noise_run-1_meg",
+  "sub-002_task-noise_run-2_meg",
+  "sub-002_task-rest_meg"
+ ],
+ "convert": {
+  "rc": 0,
+  "seconds": 5.3
+ },
+ "converted": {
+  "files": 81,
+  "validation": {
+   "ok": 33,
+   "warn": 361,
+   "err": 0
+  },
+  "todo": {
+   "inserted": 277,
+   "files": 24
+  }
+ },
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14"
+ }
+}

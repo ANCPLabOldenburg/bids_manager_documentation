@@ -1,0 +1,93 @@
+{
+ "groups": [
+  {
+   "title": "Look at the dataset",
+   "items": [
+    {
+     "label": "Dashboard",
+     "tip": "What is actually in this dataset: subjects, sessions, modalities, how much of the metadata is answered, and where the findings are."
+    },
+    {
+     "label": "Compare images...",
+     "tip": "Put two NIfTI images side by side with one set of controls: crosshair, slice, plane, 3-D camera, effects and cut plane all stay together. Any two images, not just a defacing pair."
+    },
+    {
+     "label": "Quality check...",
+     "tip": "A fast quality check of every anatomical and diffusion image: noise, contrast, artefacts, coverage, the gradient table, motion and slice dropout, one row per image, coloured where an image sits far from the others of its kind. The air is measured only in images that are not defaced."
+    }
+   ]
+  },
+  {
+   "title": "Check and repair",
+   "items": [
+    {
+     "label": "Check coherence...",
+     "tip": "Find where the dataset's files stop agreeing with each other: a scans row naming a file that is gone, a participants row for a deleted subject, a link pointing at nothing, a sidecar with no recording. Read-only until you choose a repair."
+    },
+    {
+     "label": "References (IntendedFor, Sources...)...",
+     "tip": "Which files each file points at, and whether that is right. Lists every IntendedFor, AssociatedEmptyRoom, Sources and AnatomicalImage in the dataset with its status: correct, pointing at a missing file, or disagreeing with the acquisition times. Link by ticking files, not by typing paths."
+    },
+    {
+     "label": "Fix ups...",
+     "tip": "Generate the companion files recordings are missing, write CITATION.cff, move repeated metadata up, and mark what is unanswered."
+    }
+   ]
+  },
+  {
+   "title": "Names and structure",
+   "items": [
+    {
+     "label": "Rename entity...",
+     "tip": "Rename a subject, session, task or any other entity across the whole dataset, including the references to it inside IntendedFor, the scans tables and participants.tsv. You see the full plan before anything moves."
+    },
+    {
+     "label": "Find and replace a value...",
+     "tip": "Find every file where an entity has one value and give it another, inside the whole dataset, one subject or one session. The values are listed with how many files carry each, so there is nothing to guess."
+    },
+    {
+     "label": "Index widths...",
+     "tip": "Give every index entity a consistent width, so run-1 reads as run-01 throughout. Says where the widths already disagree, which is the case worth acting on. Both spellings are valid BIDS, so this is a house style."
+    },
+    {
+     "label": "Add or remove an entity...",
+     "tip": "Give a recording an entity the schema allows it, or take an optional one away. Only what the standard permits for those files is offered, and the entity lands in the position the standard puts it in. Starts on the tree selection, or on the whole dataset when there is none."
+    },
+    {
+     "label": "Sessions...",
+     "tip": "Create a session for the selected recordings, or take them back out of the one they are in. The scans table travels to the level BIDS puts it at and every reference follows. Starts on the tree selection, or on the whole dataset when there is none."
+    }
+   ]
+  },
+  {
+   "title": "Identifiable data",
+   "items": [
+    {
+     "label": "Deface...",
+     "tip": "Remove the face from anatomical images, so the dataset can be shared without the participants being identifiable. One undoable step; you see exactly which images, and which were skipped, before anything is written."
+    },
+    {
+     "label": "Remove the skull...",
+     "tip": "Keep only the brain. Removes the face and everything else outside it, so the result is a derivative rather than raw data and is written to derivatives/. One undoable step."
+    },
+    {
+     "label": "Compare with the original...",
+     "tip": "Show a selected image before defacing and after it, side by side, with one crosshair between them. Every defacing tool tells you to check the result; this is how you do it."
+    },
+    {
+     "label": "Put the face back...",
+     "tip": "Restore defaced images from the undefaced copies kept in sourcedata/ or in the edit history. Undo only reaches the last operation; this works however many edits came afterwards."
+    }
+   ]
+  },
+  {
+   "title": "Remove",
+   "items": [
+    {
+     "label": "Delete...",
+     "tip": "Delete recordings, datatypes or sessions. The *_scans.tsv rows, the IntendedFor entries, a participants row left describing nothing and any emptied folder go with them, as one undoable step. Starts on the tree selection; the whole dataset is deliberately not one of the scopes."
+    }
+   ]
+  }
+ ]
+}

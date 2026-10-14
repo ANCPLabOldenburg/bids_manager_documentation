@@ -1,0 +1,41 @@
+{
+ "id": "l11-tools-menu",
+ "kind": "figure",
+ "width": 1440,
+ "height": 760,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1440": "l11-tools-menu-dark-1440-9c88895c.avif",
+    "2880": "l11-tools-menu-dark-2880-3e1b4765.avif"
+   },
+   "webp": {
+    "1440": "l11-tools-menu-dark-1440-fe751ad0.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1440": "l11-tools-menu-light-1440-989d0248.avif",
+    "2880": "l11-tools-menu-light-2880-bacc8e8d.avif"
+   },
+   "webp": {
+    "1440": "l11-tools-menu-light-1440-b6e06dcc.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The Editor's Tools menu: look at the dataset, check and repair, names and structure, identifiable data, remove.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

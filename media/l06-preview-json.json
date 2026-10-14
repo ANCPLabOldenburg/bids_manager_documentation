@@ -1,0 +1,41 @@
+{
+ "id": "l06-preview-json",
+ "kind": "figure",
+ "width": 558,
+ "height": 598,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "558": "l06-preview-json-dark-558-89503ce3.avif",
+    "1116": "l06-preview-json-dark-1116-4b33f443.avif"
+   },
+   "webp": {
+    "558": "l06-preview-json-dark-558-367d09aa.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "558": "l06-preview-json-light-558-3d811321.avif",
+    "1116": "l06-preview-json-light-1116-d08e23b0.avif"
+   },
+   "webp": {
+    "558": "l06-preview-json-light-558-09be9df3.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The BIDS preview with the BOLD run's sidecar selected: the file tree the conversion will write, and below it the predicted content, each value coloured by where it comes from.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "id": "l07-properties-minimal",
+ "kind": "figure",
+ "width": 355,
+ "height": 564,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "355": "l07-properties-minimal-dark-355-e04a012d.avif",
+    "710": "l07-properties-minimal-dark-710-14d66b76.avif"
+   },
+   "webp": {
+    "355": "l07-properties-minimal-dark-355-90c803c6.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "355": "l07-properties-minimal-light-355-456492e9.avif",
+    "710": "l07-properties-minimal-light-710-dd6bcdf9.avif"
+   },
+   "webp": {
+    "355": "l07-properties-minimal-light-355-42498480.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The Properties panel of the resting EEG row, scrolled to its minimal metadata: the participant, companion files, and the EEG acquisition fields.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

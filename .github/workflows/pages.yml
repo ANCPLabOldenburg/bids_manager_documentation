@@ -1,12 +1,10 @@
-# Deploys the static site at the repo root to GitHub Pages on every
-# push to ``main``. The site has no build step (vanilla HTML / CSS /
-# JS), so we just upload the working tree as the Pages artifact.
+# Builds the site with tools/build.py and deploys _site to GitHub Pages on
+# every push to main. The build refuses to run (--release) while a download
+# link in site.yml is empty or any page lacks a figure, so a half-finished
+# site is never published.
 #
-# Before this Action takes effect you must enable Pages once in the
-# repo settings:
+# Pages must be set once in the repository settings:
 #   Settings -> Pages -> Build and deployment -> Source: GitHub Actions
-#
-# After that the deploy is automatic.
 
 name: Deploy docs to GitHub Pages
 
@@ -20,7 +18,6 @@ permissions:
   pages: write
   id-token: write
 
-# Allow only one concurrent deploy; queue further runs.
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -32,13 +29,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install the build's requirements
+        run: pip install -r requirements.txt
+
+      - name: Build the site
+        run: python tools/build.py --release --analytics
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
 
   deploy:
     needs: build

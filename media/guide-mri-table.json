@@ -1,0 +1,41 @@
+{
+ "id": "guide-mri-table",
+ "kind": "figure",
+ "width": 1018,
+ "height": 655,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1018": "guide-mri-table-dark-1018-f3ab6f31.avif",
+    "2036": "guide-mri-table-dark-2036-5692c3ae.avif"
+   },
+   "webp": {
+    "1018": "guide-mri-table-dark-1018-4222f4d9.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1018": "guide-mri-table-light-1018-0596e158.avif",
+    "2036": "guide-mri-table-light-2036-9b9ca927.avif"
+   },
+   "webp": {
+    "1018": "guide-mri-table-light-1018-e08b80fe.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The Converter after scanning the MRI sample: 33 rows, the scouts and scanner reports unticked, two subjects, the first in the sessions pre and post.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

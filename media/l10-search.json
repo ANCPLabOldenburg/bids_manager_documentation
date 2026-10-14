@@ -1,0 +1,41 @@
+{
+ "id": "l10-search",
+ "kind": "figure",
+ "width": 828,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "828": "l10-search-dark-828-bb0cf161.avif",
+    "1656": "l10-search-dark-1656-82d9718a.avif"
+   },
+   "webp": {
+    "828": "l10-search-dark-828-9279aaee.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "828": "l10-search-light-828-3d3ad480.avif",
+    "1656": "l10-search-light-1656-ab0999f9.avif"
+   },
+   "webp": {
+    "828": "l10-search-light-828-36a8120d.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Searching the sidecar for Task: only the fields whose name, value or description match stay, with the count.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

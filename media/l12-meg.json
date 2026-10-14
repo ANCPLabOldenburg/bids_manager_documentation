@@ -1,0 +1,41 @@
+{
+ "id": "l12-meg",
+ "kind": "figure",
+ "width": 1294,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1294": "l12-meg-dark-1294-7e308857.avif",
+    "2588": "l12-meg-dark-2588-8de40a8c.avif"
+   },
+   "webp": {
+    "1294": "l12-meg-dark-1294-93a54938.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1294": "l12-meg-light-1294-1177fdbb.avif",
+    "2588": "l12-meg-light-2588-481d7fa6.avif"
+   },
+   "webp": {
+    "1294": "l12-meg-light-1294-8af13d93.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The resting MEG recording, its magnetometers.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

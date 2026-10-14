@@ -1,0 +1,325 @@
+{
+ "root": "multimodal_study/",
+ "tree": [
+  {
+   "k": 7,
+   "branch": "",
+   "folder": "",
+   "name": "multimodal_study/",
+   "cls": "root"
+  },
+  {
+   "k": 7,
+   "branch": "├── ",
+   "folder": "",
+   "name": "dataset_description.json",
+   "more": "participants.tsv  README",
+   "cls": "top"
+  },
+  {
+   "k": 7,
+   "branch": "└── ",
+   "folder": "",
+   "name": "sub-001/ses-01/",
+   "cls": "top"
+  },
+  {
+   "k": 0,
+   "branch": "    ├── ",
+   "folder": "anat/",
+   "name": "sub-001_ses-01_acq-tfl3p2_T1w.nii.gz",
+   "json": true,
+   "card": "anat"
+  },
+  {
+   "k": 0,
+   "branch": "    ├── ",
+   "folder": "func/",
+   "name": "sub-001_ses-01_task-rest_bold.nii.gz",
+   "json": true,
+   "card": "bold"
+  },
+  {
+   "k": 0,
+   "branch": "    │   ",
+   "folder": "",
+   "name": "sub-001_ses-01_task-rest_sbref.nii.gz",
+   "json": true
+  },
+  {
+   "k": 5,
+   "branch": "    │   ",
+   "folder": "",
+   "name": "sub-001_ses-01_task-rest_recording-ecg_physio.tsv.gz",
+   "json": true
+  },
+  {
+   "k": 0,
+   "branch": "    ├── ",
+   "folder": "fmap/",
+   "name": "sub-001_ses-01_acq-fm2_phasediff.nii.gz",
+   "json": true
+  },
+  {
+   "k": 0,
+   "branch": "    ├── ",
+   "folder": "dwi/",
+   "name": "sub-001_ses-01_acq-epb0p2_dir-AP_dwi.nii.gz",
+   "more": ".bval .bvec",
+   "json": true
+  },
+  {
+   "k": 2,
+   "branch": "    ├── ",
+   "folder": "pet/",
+   "name": "sub-001_ses-01_pet.nii.gz",
+   "json": true,
+   "card": "pet"
+  },
+  {
+   "k": 1,
+   "branch": "    ├── ",
+   "folder": "mrs/",
+   "name": "sub-001_ses-01_svs.nii.gz",
+   "json": true
+  },
+  {
+   "k": 3,
+   "branch": "    ├── ",
+   "folder": "eeg/",
+   "name": "sub-001_ses-01_task-rest_eeg.edf",
+   "more": "_channels.tsv _events.tsv",
+   "json": true,
+   "card": "eeg"
+  },
+  {
+   "k": 4,
+   "branch": "    ├── ",
+   "folder": "meg/",
+   "name": "sub-001_ses-01_task-rest_meg.fif",
+   "more": "_channels.tsv",
+   "json": true
+  },
+  {
+   "k": 6,
+   "branch": "    └── ",
+   "folder": "beh/",
+   "name": "sub-001_ses-01_task-rest_recording-eye1_physio.tsv.gz",
+   "json": true,
+   "card": "eye"
+  }
+ ],
+ "cards": {
+  "bold": {
+   "file": "sub-001_ses-01_task-rest_bold.json",
+   "rows": [
+    {
+     "key": "TaskName",
+     "value": "rest",
+     "src": "bm"
+    },
+    {
+     "key": "RepetitionTime",
+     "value": 0.85,
+     "src": "file"
+    },
+    {
+     "key": "EchoTime",
+     "value": 0.03,
+     "src": "file"
+    },
+    {
+     "key": "PhaseEncodingDirection",
+     "value": "j-",
+     "src": "file"
+    },
+    {
+     "key": "B0FieldSource",
+     "value": "fmap012",
+     "src": "bm"
+    },
+    {
+     "key": "TaskDescription",
+     "value": "Resting state with the eyes open, looking at a fixation cross.",
+     "src": "you",
+     "was": "TODO"
+    },
+    {
+     "key": "Instructions",
+     "value": "Keep your eyes on the cross and let your mind wander.",
+     "src": "you",
+     "was": "TODO"
+    },
+    {
+     "key": "CogAtlasID",
+     "value": "TODO",
+     "src": "todo"
+    }
+   ]
+  },
+  "anat": {
+   "file": "sub-001_ses-01_acq-tfl3p2_T1w.json",
+   "rows": [
+    {
+     "key": "Manufacturer",
+     "value": "Siemens",
+     "src": "file"
+    },
+    {
+     "key": "ManufacturersModelName",
+     "value": "Prisma",
+     "src": "file"
+    },
+    {
+     "key": "MagneticFieldStrength",
+     "value": 3,
+     "src": "file"
+    },
+    {
+     "key": "RepetitionTime",
+     "value": 2,
+     "src": "file"
+    },
+    {
+     "key": "InversionTime",
+     "value": 0.952,
+     "src": "file"
+    },
+    {
+     "key": "EchoTime",
+     "value": 0.00207,
+     "src": "file"
+    },
+    {
+     "key": "FlipAngle",
+     "value": 9,
+     "src": "file"
+    }
+   ]
+  },
+  "pet": {
+   "file": "sub-001_ses-01_pet.json",
+   "rows": [
+    {
+     "key": "TracerName",
+     "value": "FDG",
+     "src": "file"
+    },
+    {
+     "key": "TracerRadionuclide",
+     "value": "F18",
+     "src": "file"
+    },
+    {
+     "key": "InjectedRadioactivity",
+     "value": 75.85,
+     "src": "file"
+    },
+    {
+     "key": "InjectedMass",
+     "value": 181149988.37,
+     "src": "you"
+    },
+    {
+     "key": "SpecificRadioactivity",
+     "value": 418713.8,
+     "src": "you"
+    },
+    {
+     "key": "ModeOfAdministration",
+     "value": "infusion",
+     "src": "you"
+    },
+    {
+     "key": "TimeZero",
+     "value": "09:28:23",
+     "src": "bm"
+    },
+    {
+     "key": "FrameDuration",
+     "value": [
+      14400
+     ],
+     "src": "file"
+    }
+   ]
+  },
+  "eeg": {
+   "file": "sub-001_ses-01_task-rest_eeg.json",
+   "rows": [
+    {
+     "key": "TaskName",
+     "value": "rest",
+     "src": "bm"
+    },
+    {
+     "key": "SamplingFrequency",
+     "value": 160.0,
+     "src": "file"
+    },
+    {
+     "key": "EEGChannelCount",
+     "value": 64,
+     "src": "file"
+    },
+    {
+     "key": "RecordingDuration",
+     "value": 60.99375,
+     "src": "file"
+    },
+    {
+     "key": "CapManufacturer",
+     "value": "TODO",
+     "src": "todo"
+    }
+   ]
+  },
+  "eye": {
+   "file": "sub-001_ses-01_task-rest_recording-eye1_physio.json",
+   "rows": [
+    {
+     "key": "PhysioType",
+     "value": "eyetrack",
+     "src": "bm"
+    },
+    {
+     "key": "SamplingFrequency",
+     "value": 500.0,
+     "src": "file"
+    },
+    {
+     "key": "Manufacturer",
+     "value": "SR Research",
+     "src": "file"
+    },
+    {
+     "key": "RecordedEye",
+     "value": "left",
+     "src": "file"
+    },
+    {
+     "key": "SampleCoordinateSystem",
+     "value": "gaze-on-screen",
+     "src": "bm"
+    },
+    {
+     "key": "Columns",
+     "value": [
+      "timestamp",
+      "x_coordinate",
+      "y_coordinate",
+      "pupil_size"
+     ],
+     "src": "bm"
+    }
+   ]
+  }
+ },
+ "order": [
+  "bold",
+  "anat",
+  "pet",
+  "eeg",
+  "eye"
+ ]
+}

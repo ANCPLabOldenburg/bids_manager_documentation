@@ -1,0 +1,41 @@
+{
+ "id": "l11-sessions",
+ "kind": "figure",
+ "width": 980,
+ "height": 760,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "980": "l11-sessions-dark-980-d8cc0a1d.avif",
+    "1960": "l11-sessions-dark-1960-15ecdeca.avif"
+   },
+   "webp": {
+    "980": "l11-sessions-dark-980-64d093c6.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "980": "l11-sessions-light-980-f8e59b2e.avif",
+    "1960": "l11-sessions-light-1960-b3bd0b2e.avif"
+   },
+   "webp": {
+    "980": "l11-sessions-light-980-391aff30.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Sessions, set to remove the session: every file of ses-01 moves up to the subject's folder and loses ses-01 from its name.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

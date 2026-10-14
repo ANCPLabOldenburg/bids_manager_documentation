@@ -1,0 +1,31 @@
+{
+ "id": "l12-pet",
+ "kind": "clip",
+ "width": 1304,
+ "height": 782,
+ "duration": 5.2,
+ "chapters": [],
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "mp4": "l12-pet-dark-7f33365d.mp4",
+   "webm": "l12-pet-dark-ee5f5342.webm",
+   "poster": "l12-pet-dark-poster-1a5bdd97.webp"
+  },
+  "light": {
+   "mp4": "l12-pet-light-7012f788.mp4",
+   "webm": "l12-pet-light-abc54815.webm",
+   "poster": "l12-pet-light-poster-2034ba53.webp"
+  }
+ },
+ "alt": "The PET phantom in the Planes + 3-D layout, in the hot colour map, with a corner of the cylinder cut away at the crosshair.",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2 (PET phantom)"
+ }
+}

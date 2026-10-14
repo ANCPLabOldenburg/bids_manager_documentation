@@ -1,0 +1,41 @@
+{
+ "id": "l07-dialog",
+ "kind": "figure",
+ "width": 700,
+ "height": 820,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "700": "l07-dialog-dark-700-da42456d.avif",
+    "1400": "l07-dialog-dark-1400-a82eaa4e.avif"
+   },
+   "webp": {
+    "700": "l07-dialog-dark-700-2deccd1c.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "700": "l07-dialog-light-700-c809b8f0.avif",
+    "1400": "l07-dialog-light-1400-6b08f649.avif"
+   },
+   "webp": {
+    "700": "l07-dialog-light-700-2fe8fb5b.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The Dataset metadata dialog: dataset_description.json first, then one section per kind of file, each saying how many questions it has.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "id": "guide-eeg-bulk",
+ "kind": "figure",
+ "width": 640,
+ "height": 620,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "640": "guide-eeg-bulk-dark-640-d1ea325e.avif",
+    "1280": "guide-eeg-bulk-dark-1280-d31f1be9.avif"
+   },
+   "webp": {
+    "640": "guide-eeg-bulk-dark-640-7ba31f98.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "640": "guide-eeg-bulk-light-640-02db1f30.avif",
+    "1280": "guide-eeg-bulk-light-1280-fb0d9648.avif"
+   },
+   "webp": {
+    "640": "guide-eeg-bulk-light-640-86e087f0.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Bulk edit with the six recordings of the imagined fist task selected (runs 4, 8 and 12 of both participants): the task set to fistimagined.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

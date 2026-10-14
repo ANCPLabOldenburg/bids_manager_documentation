@@ -1,0 +1,41 @@
+{
+ "id": "l12-eeg",
+ "kind": "figure",
+ "width": 1294,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1294": "l12-eeg-dark-1294-fd2f53a9.avif",
+    "2588": "l12-eeg-dark-2588-02d6b4f0.avif"
+   },
+   "webp": {
+    "1294": "l12-eeg-dark-1294-39498575.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1294": "l12-eeg-light-1294-bdb918e3.avif",
+    "2588": "l12-eeg-light-2588-e3092b16.avif"
+   },
+   "webp": {
+    "1294": "l12-eeg-light-1294-1e5430b7.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The motor-imagery EEG in the signal viewer: 16 channels filtered from 1 to 40 Hz, with the task's events drawn over the traces.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

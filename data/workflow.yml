@@ -1,0 +1,59 @@
+# The workflow diagram: each stage, what happens there, and what runs it, per
+# kind of recording. Checked against the code in the round-2 fact check
+# (inventory/, classifier/, converter/backends/, fixups/, metadata/, editor/,
+# qc/, deface/). Kinds: mri mrs pet eeg meg physio eye.
+kinds:
+  - {id: mri, name: MRI}
+  - {id: mrs, name: MR spectroscopy}
+  - {id: pet, name: PET}
+  - {id: eeg, name: EEG}
+  - {id: meg, name: MEG}
+  - {id: physio, name: Physiology}
+  - {id: eye, name: Eye tracking}
+stages:
+  - id: scan
+    title: Scan
+    what: Reads every file's header, groups the files by participant and session, and proposes a BIDS name for each recording. Nothing is written into the raw data.
+    link: /learn/03-scanning/
+    steps:
+      - {name: pydicom, does: reads every DICOM header, kinds: [mri, mrs, pet, physio]}
+      - {name: dcm2niix, does: "proposes a name from the header strings (a sidecar only, no image)", kinds: [mri, mrs, pet]}
+      - {name: the parameter classifier, does: names each MR series from how it was acquired, kinds: [mri], own: true}
+      - {name: nibabel, does: reads an ECAT file's header, kinds: [pet]}
+      - {name: MNE-Python, does: reads each recording's header and channels, kinds: [eeg, meg]}
+      - {name: eyelinkio, does: "reads an EyeLink EDF (an ASC file is read by BIDS Manager)", kinds: [eye]}
+  - id: curate
+    title: Curate
+    what: "The table: one row per recording, every name editable, rules and bulk edits, the Overview across subjects, and the metadata no file records: templates per kind of file, dose sheets, participants."
+    link: /learn/04-scan-table/
+    steps:
+      - {name: the scan table, does: "one row per recording; every edit recorded in the project", kinds: [mri, mrs, pet, eeg, meg, physio, eye], own: true}
+      - {name: Dataset metadata, does: "templates per kind of file, the dataset description, dose sheets, participants", kinds: [mri, mrs, pet, eeg, meg, physio, eye], own: true}
+      - {name: the BIDS preview, does: every file the conversion will write, and its content, kinds: [mri, mrs, pet, eeg, meg, physio, eye], own: true}
+  - id: convert
+    title: Convert
+    what: Each recording goes to the tool built for it, in a staging folder per subject; a subject is written to the dataset only when all of it converted.
+    link: /learn/08-converting/
+    steps:
+      - {name: dcm2niix, does: DICOM to NIfTI (and NIfTI-MRS), kinds: [mri, mrs, pet]}
+      - {name: nibabel, does: ECAT images to NIfTI, kinds: [pet]}
+      - {name: PET2BIDS, does: "ECAT header fields, the PET DICOM fields dcm2niix leaves out, PMOD blood curves", kinds: [pet]}
+      - {name: MNE-BIDS, does: "EEG and MEG with their channels, events and coordinates", kinds: [eeg, meg]}
+      - {name: bidsphysio, does: the physiological log DICOM to _physio.tsv.gz, kinds: [physio]}
+      - {name: BIDS Manager, does: "eye tracking to _physio and _physioevents per eye", kinds: [eye], own: true}
+  - id: finish
+    title: Describe
+    what: "Fills what each converter leaves out: fieldmap links, identifiers removed, PET and MRS sidecars repaired, participants and scans tables, the dataset description, TODO placeholders for what is still unanswered."
+    link: /learn/07-metadata/
+    steps:
+      - {name: fix-ups, does: "fieldmap links, identifiers removed, PET and MRS headers, eye-tracking and EEG sidecars", kinds: [mri, mrs, pet, eeg, meg, physio, eye], own: true}
+      - {name: the metadata step, does: "your answers, participants.tsv, _scans.tsv, TODO placeholders", kinds: [mri, mrs, pet, eeg, meg, physio, eye], own: true}
+  - id: check
+    title: Check and edit
+    what: "Validation against the standard, the Editor's viewers and tools, a fast quality check of anatomical and diffusion images, defacing."
+    link: /learn/09-validating/
+    steps:
+      - {name: bidsval, does: "validates the dataset against the BIDS schema (kept inside BIDS Manager)", kinds: [mri, mrs, pet, eeg, meg, physio, eye], own: true}
+      - {name: the viewers, does: "images, spectra, signals, gradient tables, documents", kinds: [mri, mrs, pet, eeg, meg, physio, eye], own: true}
+      - {name: brainchop, does: brain masks and tissue classes for the quality check and skull stripping, kinds: [mri]}
+      - {name: niimath, does: "defacing, and the quality check's registration", kinds: [mri, pet]}

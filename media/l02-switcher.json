@@ -1,0 +1,41 @@
+{
+ "id": "l02-switcher",
+ "kind": "figure",
+ "width": 820,
+ "height": 260,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "820": "l02-switcher-dark-820-d478e332.avif",
+    "1640": "l02-switcher-dark-1640-6d4dfde4.avif"
+   },
+   "webp": {
+    "820": "l02-switcher-dark-820-b9398036.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "820": "l02-switcher-light-820-e1d5090d.avif",
+    "1640": "l02-switcher-light-1640-95a448dc.avif"
+   },
+   "webp": {
+    "820": "l02-switcher-light-820-1978bacc.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The project switcher's menu: the open project with its folder, and the recent projects to switch to.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

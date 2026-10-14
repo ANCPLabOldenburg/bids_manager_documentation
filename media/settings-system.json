@@ -1,0 +1,41 @@
+{
+ "id": "settings-system",
+ "kind": "figure",
+ "width": 900,
+ "height": 520,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "900": "settings-system-dark-900-7329c57c.avif",
+    "1800": "settings-system-dark-1800-ca3fa9d9.avif"
+   },
+   "webp": {
+    "900": "settings-system-dark-900-948043ec.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "900": "settings-system-light-900-8dad57b3.avif",
+    "1800": "settings-system-light-1800-1b839d45.avif"
+   },
+   "webp": {
+    "900": "settings-system-light-900-2947af72.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, System page: the processor threads and memory BIDS Manager detected on this computer.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

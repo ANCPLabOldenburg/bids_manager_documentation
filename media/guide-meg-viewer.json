@@ -1,0 +1,41 @@
+{
+ "id": "guide-meg-viewer",
+ "kind": "figure",
+ "width": 1244,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1244": "guide-meg-viewer-dark-1244-cb5e7dda.avif",
+    "2488": "guide-meg-viewer-dark-2488-67774c89.avif"
+   },
+   "webp": {
+    "1244": "guide-meg-viewer-dark-1244-135fa459.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1244": "guide-meg-viewer-light-1244-fdd70e74.avif",
+    "2488": "guide-meg-viewer-light-2488-d33e2b1d.avif"
+   },
+   "webp": {
+    "1244": "guide-meg-viewer-light-1244-ceb1315b.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The first driving run of the second session, converted: 24 of the magnetometers, filtered from 1 to 40 Hz, each scaled to itself.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

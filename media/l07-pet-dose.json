@@ -1,0 +1,41 @@
+{
+ "id": "l07-pet-dose",
+ "kind": "figure",
+ "width": 700,
+ "height": 820,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "700": "l07-pet-dose-dark-700-1d7f1a79.avif",
+    "1400": "l07-pet-dose-dark-1400-9fb36e56.avif"
+   },
+   "webp": {
+    "700": "l07-pet-dose-dark-700-7806b3aa.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "700": "l07-pet-dose-light-700-059c52b6.avif",
+    "1400": "l07-pet-dose-light-1400-bfa22231.avif"
+   },
+   "webp": {
+    "700": "l07-pet-dose-light-700-247dae3a.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The PET dose file group after importing dose_sheet.csv, and the participants spreadsheet below it.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

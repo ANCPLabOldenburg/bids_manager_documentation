@@ -1,0 +1,2175 @@
+{
+ "verbs": [
+  {
+   "prog": "bidsmgr",
+   "usage": "bidsmgr [-h] [--theme {graphite,carbon,ash,porcelain,dark,dim,original-dark,light,paper,original-light,nord,ember,forest,aubergine,monokai,sakura,sage,hc-dark,hc-light}] [--project PROJECT] [-v]",
+   "description": "Schema-driven BIDS converter / curator (GUI).",
+   "epilog": "",
+   "arguments": [
+    {
+     "flags": [
+      "-h",
+      "--help"
+     ],
+     "dest": "help",
+     "help": "Show the help and stop.",
+     "positional": false
+    },
+    {
+     "flags": [
+      "--theme"
+     ],
+     "dest": "theme",
+     "positional": false,
+     "metavar": "THEME",
+     "nargs": null,
+     "choices": [
+      "graphite",
+      "carbon",
+      "ash",
+      "porcelain",
+      "dark",
+      "dim",
+      "original-dark",
+      "light",
+      "paper",
+      "original-light",
+      "nord",
+      "ember",
+      "forest",
+      "aubergine",
+      "monokai",
+      "sakura",
+      "sage",
+      "hc-dark",
+      "hc-light"
+     ],
+     "default": null,
+     "required": false,
+     "help": "Initial color theme. If omitted, the last theme the user selected in-app is restored (default: dark on first run)."
+    },
+    {
+     "flags": [
+      "--project"
+     ],
+     "dest": "project",
+     "positional": false,
+     "metavar": "PROJECT",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Open (or create / adopt) a BIDS dataset project at this directory and land in the Converter bound to it (same as the Welcome tab's Open / Create). The output is locked to the dataset."
+    },
+    {
+     "flags": [
+      "-v",
+      "--verbose"
+     ],
+     "dest": "verbose",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": 0,
+     "required": false,
+     "help": "Increase log verbosity (-v INFO, -vv DEBUG)."
+    }
+   ]
+  },
+  {
+   "prog": "bidsmgr-create",
+   "usage": "bidsmgr-create [-h] [--name NAME] [--description DESCRIPTION] [-v] output_dir",
+   "description": "Create + scaffold a BIDS dataset workspace (or adopt an existing BIDS folder). The folder name is the dataset slug used by bidsmgr-scan / bidsmgr-convert.",
+   "epilog": "",
+   "arguments": [
+    {
+     "flags": [
+      "-h",
+      "--help"
+     ],
+     "dest": "help",
+     "help": "Show the help and stop.",
+     "positional": false
+    },
+    {
+     "flags": [],
+     "dest": "output_dir",
+     "positional": true,
+     "metavar": null,
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": true,
+     "help": "Dataset folder to create or adopt."
+    },
+    {
+     "flags": [
+      "--name"
+     ],
+     "dest": "name",
+     "positional": false,
+     "metavar": "NAME",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Human-readable dataset Name for dataset_description.json (defaults to the folder name)."
+    },
+    {
+     "flags": [
+      "--description"
+     ],
+     "dest": "description",
+     "positional": false,
+     "metavar": "DESCRIPTION",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Optional project description recorded in the project bundle."
+    },
+    {
+     "flags": [
+      "-v",
+      "--verbose"
+     ],
+     "dest": "verbose",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": 0,
+     "required": false,
+     "help": "Increase log verbosity (-v INFO)."
+    }
+   ]
+  },
+  {
+   "prog": "bidsmgr-adopt",
+   "usage": "bidsmgr-adopt [-h] [--name NAME] [--status] [-v] dataset",
+   "description": "Bring an existing BIDS dataset under BIDS Manager's management, so its edits can be tracked and reverted.",
+   "epilog": "",
+   "arguments": [
+    {
+     "flags": [
+      "-h",
+      "--help"
+     ],
+     "dest": "help",
+     "help": "Show the help and stop.",
+     "positional": false
+    },
+    {
+     "flags": [],
+     "dest": "dataset",
+     "positional": true,
+     "metavar": null,
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": true,
+     "help": "BIDS dataset folder."
+    },
+    {
+     "flags": [
+      "--name"
+     ],
+     "dest": "name",
+     "positional": false,
+     "metavar": "NAME",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Project name. Defaults to the folder name."
+    },
+    {
+     "flags": [
+      "--status"
+     ],
+     "dest": "status",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Report what has changed since adoption instead of adopting."
+    },
+    {
+     "flags": [
+      "-v",
+      "--verbose"
+     ],
+     "dest": "verbose",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": ""
+    }
+   ]
+  },
+  {
+   "prog": "bidsmgr-project",
+   "usage": "bidsmgr-project [-h] [--list] dataset",
+   "description": "Inspect a BIDS-Manager project dataset: list its versioned scans (the active one is the latest, marked *).",
+   "epilog": "",
+   "arguments": [
+    {
+     "flags": [
+      "-h",
+      "--help"
+     ],
+     "dest": "help",
+     "help": "Show the help and stop.",
+     "positional": false
+    },
+    {
+     "flags": [],
+     "dest": "dataset",
+     "positional": true,
+     "metavar": null,
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": true,
+     "help": "Project dataset folder."
+    },
+    {
+     "flags": [
+      "--list"
+     ],
+     "dest": "list",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "List scan versions (the default action)."
+    }
+   ]
+  },
+  {
+   "prog": "bidsmgr-scan",
+   "usage": "bidsmgr-scan [-h] [--project PROJECT] [--jobs JOBS] [--no-bids-guess] [--probe-convert] [--dataset DATASET] [--line-freq LINE_FREQ] [--montage MONTAGE] [--rules-file RULES_FILE] [-v] [--no-converter-preview] [--schema VERSION] [--classifier {applied,shadow,off}] [--classifier-config JSON] [--print-classifier-config] [--log-file PATH] [--no-log-file] dicom_root [output_tsv]",
+   "description": "``bidsmgr-scan``: scan DICOMs, classify, write TSV.",
+   "epilog": "",
+   "arguments": [
+    {
+     "flags": [
+      "-h",
+      "--help"
+     ],
+     "dest": "help",
+     "help": "Show the help and stop.",
+     "positional": false
+    },
+    {
+     "flags": [],
+     "dest": "dicom_root",
+     "positional": true,
+     "metavar": null,
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": true,
+     "help": "Directory containing DICOM files (any depth)"
+    },
+    {
+     "flags": [],
+     "dest": "output_tsv",
+     "positional": true,
+     "metavar": null,
+     "nargs": "?",
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Destination TSV file (omit when using --project)"
+    },
+    {
+     "flags": [
+      "--project"
+     ],
+     "dest": "project",
+     "positional": false,
+     "metavar": "PROJECT",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Scan INTO a project dataset folder (created by bidsmgr-create or the GUI; created/adopted if absent). The inventory is saved as a new versioned scan under /.bidsmgr/project/scans/ instead of a loose TSV, so it is resumable in the GUI and never overwrites an earlier scan. --dataset defaults to the project folder name."
+    },
+    {
+     "flags": [
+      "--jobs",
+      "-j"
+     ],
+     "dest": "jobs",
+     "positional": false,
+     "metavar": "JOBS",
+     "nargs": null,
+     "choices": null,
+     "default": 8,
+     "required": false,
+     "help": "Number of parallel workers used to read DICOM headers"
+    },
+    {
+     "flags": [
+      "--no-bids-guess"
+     ],
+     "dest": "no_bids_guess",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Skip the dcm2niix BidsGuess classifier and use only the legacy regex layer"
+    },
+    {
+     "flags": [
+      "--probe-convert"
+     ],
+     "dest": "probe_convert",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "After scanning, run dcm2niix on each detected sequence (one invocation per SeriesInstanceUID) into a hidden /.tmp/ staging tree, harvest the actual files produced, and remove the staging tree. Adds probe_n_files / probe_n_nifti / probe_n_volumes / probe_extensions columns to the TSV and surfaces conversion anomalies (e.g. a bold series that split into two NIfTIs because of an operator-aborted volume) in issues. The .tmp/ directory is always removed when this command returns: including on error."
+    },
+    {
+     "flags": [
+      "--dataset"
+     ],
+     "dest": "dataset",
+     "positional": false,
+     "metavar": "DATASET",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "BIDS dataset slug stamped into every row's `dataset` column. The converter writes each distinct value to //. Defaults to a slugified form of the DICOM root directory name."
+    },
+    {
+     "flags": [
+      "--line-freq"
+     ],
+     "dest": "line_freq",
+     "positional": false,
+     "metavar": "LINE_FREQ",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "EEG/MEG only: power-line frequency in Hz, stamped into every EEG/MEG row's `line_freq` column. Goes into PowerLineFrequency in the JSON sidecar (BIDS-required). Typical values: 50 (Europe/most of the world), 60 (Americas / parts of Asia). Per-row TSV value wins over this."
+    },
+    {
+     "flags": [
+      "--montage"
+     ],
+     "dest": "montage",
+     "positional": false,
+     "metavar": "MONTAGE",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "EEG/MEG only: name of an mne built-in montage (e.g. standard_1005, biosemi64, easycap-M1) stamped into every EEG/MEG row's `montage` column. The converter applies this before write_raw_bids → fills electrodes.tsv + coordsystem.json. Per-row TSV value wins."
+    },
+    {
+     "flags": [
+      "--rules-file"
+     ],
+     "dest": "rules_file",
+     "positional": false,
+     "metavar": "RULES_FILE",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Path to a JSON file with user scan rules: {\"user_hints\": [{\"patterns\": [...], \"datatype\": \"func\", \"suffix\": \"bold\", \"task\": \"rest\", \"match_mode\": \"substring\", \"force\": false}], \"scan_exclusions\": [{\"pattern\": \"calibration\", \"target\": \"sequence\", \"match_mode\": \"substring\"}]}. Same schema the GUI Settings 'Scan rules' tab persists. Hints extend the classifier; exclusions mark matching series include=0."
+    },
+    {
+     "flags": [
+      "-v",
+      "--verbose"
+     ],
+     "dest": "verbose",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": 0,
+     "required": false,
+     "help": "Increase log verbosity (-v INFO, -vv DEBUG)"
+    },
+    {
+     "flags": [
+      "--no-converter-preview"
+     ],
+     "dest": "no_converter_preview",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Do not record what the conversion will fill in by itself. By default the scan notes, per kind of file, the values dcm2niix and mne-bids produce, so the metadata form can show them instead of an empty box for a field nobody has to answer. Costs nothing extra: it reads what the scan and any probe conversion already produced."
+    },
+    {
+     "flags": [
+      "--schema"
+     ],
+     "dest": "schema",
+     "positional": false,
+     "metavar": "VERSION",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Which BIDS version to work to (for example 1.11.1). Decides which fields are declared and which entities a filename may carry. Default: the newest version shipped."
+    },
+    {
+     "flags": [
+      "--classifier"
+     ],
+     "dest": "classifier",
+     "positional": false,
+     "metavar": "CLASSIFIER",
+     "nargs": null,
+     "choices": [
+      "applied",
+      "shadow",
+      "off"
+     ],
+     "default": null,
+     "required": false,
+     "help": "Name MRI series from their acquisition parameters (applied, the default), only report what that would do (shadow), or not at all (off). Overrides the mode in --classifier-config."
+    },
+    {
+     "flags": [
+      "--classifier-config"
+     ],
+     "dest": "classifier_config",
+     "positional": false,
+     "metavar": "JSON",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "The parameter classifier's settings: thresholds, the weight of each kind of evidence, the physics ranges (--print-classifier-config writes one)."
+    },
+    {
+     "flags": [
+      "--print-classifier-config"
+     ],
+     "dest": "print_classifier_config",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Print the parameter classifier's default settings as JSON and stop."
+    },
+    {
+     "flags": [
+      "--log-file"
+     ],
+     "dest": "log_file",
+     "positional": false,
+     "metavar": "PATH",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Write this run's log here (default: /.bidsmgr/logs/, or ~/.bidsmgr/logs/ outside a dataset)."
+    },
+    {
+     "flags": [
+      "--no-log-file"
+     ],
+     "dest": "no_log_file",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Do not write a log file for this run."
+    }
+   ]
+  },
+  {
+   "prog": "bidsmgr-classify",
+   "usage": "bidsmgr-classify [-h] [--config CONFIG] [--mode {applied,shadow,off}] [--apply] [--json] [--print-config] [--print-rulebook] [inventory]",
+   "description": "Name an inventory's MRI series from their acquisition parameters again (no DICOM is read) and say why.",
+   "epilog": "",
+   "arguments": [
+    {
+     "flags": [
+      "-h",
+      "--help"
+     ],
+     "dest": "help",
+     "help": "Show the help and stop.",
+     "positional": false
+    },
+    {
+     "flags": [],
+     "dest": "inventory",
+     "positional": true,
+     "metavar": null,
+     "nargs": "?",
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "The inventory TSV"
+    },
+    {
+     "flags": [
+      "--config"
+     ],
+     "dest": "config",
+     "positional": false,
+     "metavar": "CONFIG",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "The classifier settings (JSON; --print-config writes one)"
+    },
+    {
+     "flags": [
+      "--mode"
+     ],
+     "dest": "mode",
+     "positional": false,
+     "metavar": "MODE",
+     "nargs": null,
+     "choices": [
+      "applied",
+      "shadow",
+      "off"
+     ],
+     "default": null,
+     "required": false,
+     "help": "Override the settings' mode: name the series (applied) or only report (shadow)"
+    },
+    {
+     "flags": [
+      "--apply"
+     ],
+     "dest": "apply",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Write the names and the classification columns into the inventory"
+    },
+    {
+     "flags": [
+      "--json"
+     ],
+     "dest": "json",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "The report as JSON"
+    },
+    {
+     "flags": [
+      "--print-config"
+     ],
+     "dest": "print_config",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Print the default settings as JSON and stop"
+    },
+    {
+     "flags": [
+      "--print-rulebook"
+     ],
+     "dest": "print_rulebook",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Print the evidence rules in use (with --config: with its changes) as JSON and stop"
+    }
+   ]
+  },
+  {
+   "prog": "bidsmgr-rebuild",
+   "usage": "bidsmgr-rebuild [-h] [--from {entities,columns}] [--dry-run] [-v] tsv",
+   "description": "Reconcile the inventory TSV's entities JSON column with derived display cells (bids_name, session, task, run). The entities column is the source of truth for the BIDS basename; this verb regenerates whatever the user didn't edit. Pass --from columns when you edited the cells directly.",
+   "epilog": "",
+   "arguments": [
+    {
+     "flags": [
+      "-h",
+      "--help"
+     ],
+     "dest": "help",
+     "help": "Show the help and stop.",
+     "positional": false
+    },
+    {
+     "flags": [],
+     "dest": "tsv",
+     "positional": true,
+     "metavar": null,
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": true,
+     "help": "Inventory TSV produced by `bidsmgr-scan`"
+    },
+    {
+     "flags": [
+      "--from"
+     ],
+     "dest": "direction",
+     "positional": false,
+     "metavar": "DIRECTION",
+     "nargs": null,
+     "choices": [
+      "entities",
+      "columns"
+     ],
+     "default": "entities",
+     "required": false,
+     "help": "Source of truth for this rebuild. 'entities' (default) regenerates display cells from the entities JSON. 'columns' regenerates the entities JSON from individual cells (use after editing task/run/session cells in a spreadsheet)."
+    },
+    {
+     "flags": [
+      "--dry-run"
+     ],
+     "dest": "dry_run",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Print the diff but don't write the TSV back."
+    },
+    {
+     "flags": [
+      "-v",
+      "--verbose"
+     ],
+     "dest": "verbose",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": 0,
+     "required": false,
+     "help": "Increase log verbosity (-v INFO, -vv DEBUG)"
+    }
+   ]
+  },
+  {
+   "prog": "bidsmgr-convert",
+   "usage": "bidsmgr-convert [-h] [--project PROJECT] [--version VERSION] [--dataset DATASET] [--jobs JOBS] [--overwrite] [--on-existing {skip,update,replace,error}] [--dry-run] [--dcm2niix DCM2NIIX] [--recording-meta RECORDING_META] [--pet-spreadsheet PET_SPREADSHEET] [--pet-metadata PET_METADATA] [--intended-for {uri,relative}] [--no-b0-field-identifier] [--sourcedata {none,copy,archive}] [--sourcedata-modalities LIST] [--raw-root RAW_ROOT] [--keep-residuals] [--deface] [--deface-engine {allineate,allineate-robust,allineate-afni,mindgrab,strip-atlas}] [--force-edf] [--overwrite-curation] [-v] [--schema VERSION] [--log-file PATH] [--no-log-file] [tsv] [bids_parent]",
+   "description": "Convert DICOM series listed in an inventory TSV into BIDS using dcm2niix. Each distinct `dataset` value in the TSV becomes a sibling BIDS root under .",
+   "epilog": "",
+   "arguments": [
+    {
+     "flags": [
+      "-h",
+      "--help"
+     ],
+     "dest": "help",
+     "help": "Show the help and stop.",
+     "positional": false
+    },
+    {
+     "flags": [],
+     "dest": "tsv",
+     "positional": true,
+     "metavar": null,
+     "nargs": "?",
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Inventory TSV produced by `bidsmgr-scan` (omit when using --project)"
+    },
+    {
+     "flags": [],
+     "dest": "bids_parent",
+     "positional": true,
+     "metavar": null,
+     "nargs": "?",
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Parent directory; each `dataset` value becomes a sibling BIDS root underneath. Omit when using --project (output is the project)."
+    },
+    {
+     "flags": [
+      "--project"
+     ],
+     "dest": "project",
+     "positional": false,
+     "metavar": "PROJECT",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Convert the project dataset's active (latest) scan version into its locked root. Resolves the inventory + output + recording metadata from /.bidsmgr/project, replaying the curation edits recorded in the GUI. Supersedes the positional tsv / bids_parent."
+    },
+    {
+     "flags": [
+      "--version"
+     ],
+     "dest": "version",
+     "positional": false,
+     "metavar": "VERSION",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "With --project, convert a specific scan version instead of the latest. Accepts the version id or its index (see bidsmgr-project)."
+    },
+    {
+     "flags": [
+      "--dataset"
+     ],
+     "dest": "dataset",
+     "positional": false,
+     "metavar": "DATASET",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Limit conversion to rows with this exact `dataset` value."
+    },
+    {
+     "flags": [
+      "--jobs",
+      "-j"
+     ],
+     "dest": "jobs",
+     "positional": false,
+     "metavar": "JOBS",
+     "nargs": null,
+     "choices": null,
+     "default": 8,
+     "required": false,
+     "help": "Number of dcm2niix invocations to run in parallel."
+    },
+    {
+     "flags": [
+      "--overwrite"
+     ],
+     "dest": "overwrite",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Alias for --on-existing replace: when a subject already exists, back up and replace colliding files (new sessions/datatypes still merge in)."
+    },
+    {
+     "flags": [
+      "--on-existing"
+     ],
+     "dest": "on_existing",
+     "positional": false,
+     "metavar": "ON_EXISTING",
+     "nargs": null,
+     "choices": [
+      "skip",
+      "update",
+      "replace",
+      "error"
+     ],
+     "default": null,
+     "required": false,
+     "help": "Policy when an incoming subject already exists on disk. New sessions/datatypes always merge in; this governs colliding files: 'skip' keep existing (default), 'update' replace only changed files, 'replace' back up + replace colliding files, 'error' abort the subject if anything would collide. --overwrite is an alias for replace."
+    },
+    {
+     "flags": [
+      "--dry-run"
+     ],
+     "dest": "dry_run",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Print the tasks that would be converted; write nothing."
+    },
+    {
+     "flags": [
+      "--dcm2niix"
+     ],
+     "dest": "dcm2niix",
+     "positional": false,
+     "metavar": "DCM2NIIX",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Path to a specific dcm2niix binary (defaults to bundled)."
+    },
+    {
+     "flags": [
+      "--recording-meta"
+     ],
+     "dest": "recording_meta",
+     "positional": false,
+     "metavar": "RECORDING_META",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Path to a recording-metadata JSON (EEG/MEG enrichment). Its dataset defaults supply line_freq / montage for blank inventory cells, and its richer fields fill sidecar reference / ground / filters / device / institution, retype auxiliary channels, and map event codes to labels. Optional; omitting it means no power-line frequency is invented, so PowerLineFrequency is \"n/a\" unless the recording header, an inventory cell or a template states one. Set per-row line_freq / montage in the inventory TSV columns to override per recording."
+    },
+    {
+     "flags": [
+      "--pet-spreadsheet"
+     ],
+     "dest": "pet_spreadsheet",
+     "positional": false,
+     "metavar": "PET_SPREADSHEET",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Path to a PET metadata spreadsheet (.tsv / .csv / .xlsx / .ods). One row per scan, keyed by participant label, BIDS name or source filename, with columns for tracer, dose, mass, administration and timing. Column names are matched loosely (Injected Dose, injected_radioactivity and InjectedRadioactivity all work). Values layer on top of the recording-metadata spec as per-row overrides."
+    },
+    {
+     "flags": [
+      "--pet-metadata"
+     ],
+     "dest": "pet_metadata",
+     "positional": false,
+     "metavar": "PET_METADATA",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Path to a PET metadata JSON keyed by BIDS sidecar field names (TracerName, InjectedRadioactivity, ModeOfAdministration, ...). A flat object applies to every PET run; an object keyed by sub- scopes each block to that subject. This is the shape pypet2bids accepts via --set-default-metadata-json, including its nifti_json wrapper, so a file written for that tool is read here unmodified. Keys BIDS does not define for a PET sidecar are reported and dropped, never written."
+    },
+    {
+     "flags": [
+      "--intended-for"
+     ],
+     "dest": "intended_for",
+     "positional": false,
+     "metavar": "INTENDED_FOR",
+     "nargs": null,
+     "choices": [
+      "uri",
+      "relative"
+     ],
+     "default": "uri",
+     "required": false,
+     "help": "How a fieldmap's IntendedFor names its runs: BIDS URIs (default) or paths relative to the subject (with the session). Older fMRIPrep (sdcflows 2.10 and earlier) ignores URIs; B0FieldIdentifier is read by every version."
+    },
+    {
+     "flags": [
+      "--no-b0-field-identifier"
+     ],
+     "dest": "no_b0_field_identifier",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Do not write B0FieldIdentifier / B0FieldSource next to IntendedFor."
+    },
+    {
+     "flags": [
+      "--sourcedata"
+     ],
+     "dest": "sourcedata",
+     "positional": false,
+     "metavar": "SOURCEDATA",
+     "nargs": null,
+     "choices": [
+      "none",
+      "copy",
+      "archive"
+     ],
+     "default": "none",
+     "required": false,
+     "help": "Keep each subject's source files in /sourcedata/: as they are (copy) or one .tar.gz per series (archive). Default: none. The copies are not anonymised."
+    },
+    {
+     "flags": [
+      "--sourcedata-modalities"
+     ],
+     "dest": "sourcedata_modalities",
+     "positional": false,
+     "metavar": "LIST",
+     "nargs": null,
+     "choices": null,
+     "default": "mri,pet,eeg,meg,nirs,physio,eyetrack",
+     "required": false,
+     "help": "Which source data --sourcedata keeps, comma separated, from mri, pet, eeg, meg, nirs, physio, eyetrack (default: all)."
+    },
+    {
+     "flags": [
+      "--raw-root"
+     ],
+     "dest": "raw_root",
+     "positional": false,
+     "metavar": "RAW_ROOT",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Folder the scan was run against. Used as the first candidate when resolving EEG/MEG rows' relative ``source_file`` paths. If omitted, the TSV's parent directory is tried (the GUI's default puts the TSV inside the raw root)."
+    },
+    {
+     "flags": [
+      "--keep-residuals"
+     ],
+     "dest": "keep_residuals",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Keep dcm2niix residual/secondary outputs. By default the converter drops the derived single-volume duplicates dcm2niix splits off one input series (e.g. ..._bolda alongside ..._bold, or _Eq_ / _ROI markers). These are not real acquired images and have no valid BIDS suffix. Pass this flag to keep them."
+    },
+    {
+     "flags": [
+      "--deface"
+     ],
+     "dest": "deface",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Remove the face from anatomical and PET images before the subject is committed, so the identifiable image never enters the dataset at all."
+    },
+    {
+     "flags": [
+      "--deface-engine"
+     ],
+     "dest": "deface_engine",
+     "positional": false,
+     "metavar": "DEFACE_ENGINE",
+     "nargs": null,
+     "choices": [
+      "allineate",
+      "allineate-robust",
+      "allineate-afni",
+      "mindgrab",
+      "strip-atlas"
+     ],
+     "default": "allineate",
+     "required": false,
+     "help": "which defacing engine to use (default: allineate)"
+    },
+    {
+     "flags": [
+      "--force-edf"
+     ],
+     "dest": "force_edf",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Re-encode EEG recordings to EDF on write instead of keeping the source format. Harmonises a study to one BIDS-native format, and makes a non-BIDS-native but mne-readable source (GDF, EGI, ...) convertible. MEG / NIRS are unaffected."
+    },
+    {
+     "flags": [
+      "--overwrite-curation"
+     ],
+     "dest": "overwrite_curation",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "When re-converting a subject that already exists, let the fresh conversion win outright. By default a JSON sidecar and a *_scans.tsv are merged field by field instead, so metadata curated in the Editor survives the second pass. Only has an effect together with --on-existing update / replace."
+    },
+    {
+     "flags": [
+      "-v",
+      "--verbose"
+     ],
+     "dest": "verbose",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": 0,
+     "required": false,
+     "help": "Increase log verbosity (-v INFO, -vv DEBUG)"
+    },
+    {
+     "flags": [
+      "--schema"
+     ],
+     "dest": "schema",
+     "positional": false,
+     "metavar": "VERSION",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Which BIDS version to work to (for example 1.11.1). Decides which fields are declared and which entities a filename may carry. Default: the newest version shipped."
+    },
+    {
+     "flags": [
+      "--log-file"
+     ],
+     "dest": "log_file",
+     "positional": false,
+     "metavar": "PATH",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Write this run's log here (default: /.bidsmgr/logs/, or ~/.bidsmgr/logs/ outside a dataset)."
+    },
+    {
+     "flags": [
+      "--no-log-file"
+     ],
+     "dest": "no_log_file",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Do not write a log file for this run."
+    }
+   ]
+  },
+  {
+   "prog": "bidsmgr-metadata",
+   "usage": "bidsmgr-metadata [-h] [--project PROJECT] [--version VERSION] [--dataset DATASET] [--inventory-tsv INVENTORY_TSV] [--participants PARTICIPANTS_FILE] [--phenotype PHENOTYPE_FILES] [--name NAME] [--bids-version BIDS_VERSION] [--license LICENSE] [--author AUTHORS] [--acknowledgements ACKNOWLEDGEMENTS] [--how-to-acknowledge HOW_TO_ACKNOWLEDGE] [--funding FUNDING] [--ethics-approvals ETHICS_APPROVALS] [--references-and-links REFERENCES_AND_LINKS] [--dataset-doi DATASET_DOI] [--generate-companions] [--write-citation] [--fill-todos] [--fill-scope LEVEL] [--no-report] [-v] [--schema VERSION] [--log-file PATH] [--no-log-file] [target]",
+   "description": "Generate dataset-level BIDS metadata after `bidsmgr-convert`. Pass either a single BIDS root or the parent directory used by `bidsmgr-convert`; every BIDS root underneath is processed.",
+   "epilog": "",
+   "arguments": [
+    {
+     "flags": [
+      "-h",
+      "--help"
+     ],
+     "dest": "help",
+     "help": "Show the help and stop.",
+     "positional": false
+    },
+    {
+     "flags": [],
+     "dest": "target",
+     "positional": true,
+     "metavar": null,
+     "nargs": "?",
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "BIDS root, or a parent containing one or more BIDS roots (omit when using --project)."
+    },
+    {
+     "flags": [
+      "--project"
+     ],
+     "dest": "project",
+     "positional": false,
+     "metavar": "PROJECT",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Run on a project dataset folder: the target is the project root and the inventory is resolved from its active scan version (so demographics / phenotype / participants flow through). Supersedes the positional target."
+    },
+    {
+     "flags": [
+      "--version"
+     ],
+     "dest": "version",
+     "positional": false,
+     "metavar": "VERSION",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "With --project, take the inventory from a specific scan version instead of the latest (version id or index; see bidsmgr-project)."
+    },
+    {
+     "flags": [
+      "--dataset"
+     ],
+     "dest": "dataset",
+     "positional": false,
+     "metavar": "DATASET",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "When `target` is a parent, limit to this single dataset name."
+    },
+    {
+     "flags": [
+      "--inventory-tsv"
+     ],
+     "dest": "inventory_tsv",
+     "positional": false,
+     "metavar": "INVENTORY_TSV",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Optional inventory TSV produced by `bidsmgr-scan`. Used to enrich participants.tsv with demographics; without it, demographic columns default to 'n/a'."
+    },
+    {
+     "flags": [
+      "--participants"
+     ],
+     "dest": "participants_file",
+     "positional": false,
+     "metavar": "PARTICIPANTS_FILE",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Optional participants spreadsheet (TSV/CSV/XLSX/ODS) keyed by a 'participant_id' column. Its 'age' / 'sex' / 'handedness' columns override the inventory-derived demographics in participants.tsv."
+    },
+    {
+     "flags": [
+      "--phenotype"
+     ],
+     "dest": "phenotype_files",
+     "positional": false,
+     "metavar": "PHENOTYPE_FILES",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Phenotype measure table (TSV/CSV/XLSX/ODS) keyed by 'participant_id'. Repeat for each instrument; each is written to phenotype/.tsv + .json."
+    },
+    {
+     "flags": [
+      "--name"
+     ],
+     "dest": "name",
+     "positional": false,
+     "metavar": "NAME",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Dataset Name (defaults to the BIDS root directory name)."
+    },
+    {
+     "flags": [
+      "--bids-version"
+     ],
+     "dest": "bids_version",
+     "positional": false,
+     "metavar": "BIDS_VERSION",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "BIDS version for dataset_description.json (defaults to the bundled schema's version)."
+    },
+    {
+     "flags": [
+      "--license"
+     ],
+     "dest": "license",
+     "positional": false,
+     "metavar": "LICENSE",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": ""
+    },
+    {
+     "flags": [
+      "--author"
+     ],
+     "dest": "authors",
+     "positional": false,
+     "metavar": "AUTHORS",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Repeat for each author."
+    },
+    {
+     "flags": [
+      "--acknowledgements"
+     ],
+     "dest": "acknowledgements",
+     "positional": false,
+     "metavar": "ACKNOWLEDGEMENTS",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": ""
+    },
+    {
+     "flags": [
+      "--how-to-acknowledge"
+     ],
+     "dest": "how_to_acknowledge",
+     "positional": false,
+     "metavar": "HOW_TO_ACKNOWLEDGE",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": ""
+    },
+    {
+     "flags": [
+      "--funding"
+     ],
+     "dest": "funding",
+     "positional": false,
+     "metavar": "FUNDING",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": ""
+    },
+    {
+     "flags": [
+      "--ethics-approvals"
+     ],
+     "dest": "ethics_approvals",
+     "positional": false,
+     "metavar": "ETHICS_APPROVALS",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": ""
+    },
+    {
+     "flags": [
+      "--references-and-links"
+     ],
+     "dest": "references_and_links",
+     "positional": false,
+     "metavar": "REFERENCES_AND_LINKS",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": ""
+    },
+    {
+     "flags": [
+      "--dataset-doi"
+     ],
+     "dest": "dataset_doi",
+     "positional": false,
+     "metavar": "DATASET_DOI",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": ""
+    },
+    {
+     "flags": [
+      "--generate-companions"
+     ],
+     "dest": "generate_companions",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Create the companion files recordings are missing (events.tsv, channels.tsv, JSON sidecars). What can be read from a recording is read from it; the rest is a stub whose TODO rows validation keeps reporting."
+    },
+    {
+     "flags": [
+      "--write-citation"
+     ],
+     "dest": "write_citation",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Write CITATION.cff from dataset_description.json. BIDS treats the citation file as the single source for Authors, License, HowToAcknowledge and ReferencesAndLinks, so those move out of the description."
+    },
+    {
+     "flags": [
+      "--fill-todos"
+     ],
+     "dest": "fill_todos",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Write TODO into the gaps. For every sidecar field the standard declares and the file does not carry, write a placeholder the field can legally hold (TODO, [\"TODO\"], or n/a where the field accepts it), so the gap is visible in the file and reported by validation instead of being an absence nobody notices. Existing values are NEVER overwritten. Same as --fill-scope recommended."
+    },
+    {
+     "flags": [
+      "--fill-scope"
+     ],
+     "dest": "fill_scope",
+     "positional": false,
+     "metavar": "LEVEL",
+     "nargs": null,
+     "choices": [
+      "none",
+      "required",
+      "recommended",
+      "optional"
+     ],
+     "default": null,
+     "required": false,
+     "help": "Which fields carry a TODO placeholder after this run. The scopes nest: 'required' is the floor, 'recommended' adds what analyses usually need, 'optional' adds everything else, 'none' marks nothing. Placeholders follow the scope both ways: a TODO an earlier, wider run wrote into a field outside it is taken back. Deprecated fields are never marked. A field whose type admits no honest marker (a number, a boolean, a real vocabulary) is left absent and reported, rather than given a value nobody stated. Without this flag or --fill-todos, placeholders already in the dataset are left as they are."
+    },
+    {
+     "flags": [
+      "--no-report"
+     ],
+     "dest": "write_report",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Skip writing /.bidsmgr/metadata_report.json. By default the JSON report is always written so the GUI (and CI tooling) can pick it up after the run."
+    },
+    {
+     "flags": [
+      "-v",
+      "--verbose"
+     ],
+     "dest": "verbose",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": 0,
+     "required": false,
+     "help": "Increase log verbosity (-v INFO, -vv DEBUG)"
+    },
+    {
+     "flags": [
+      "--schema"
+     ],
+     "dest": "schema",
+     "positional": false,
+     "metavar": "VERSION",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Which BIDS version to work to (for example 1.11.1). Decides which fields are declared and which entities a filename may carry. Default: the newest version shipped."
+    },
+    {
+     "flags": [
+      "--log-file"
+     ],
+     "dest": "log_file",
+     "positional": false,
+     "metavar": "PATH",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Write this run's log here (default: /.bidsmgr/logs/, or ~/.bidsmgr/logs/ outside a dataset)."
+    },
+    {
+     "flags": [
+      "--no-log-file"
+     ],
+     "dest": "no_log_file",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Do not write a log file for this run."
+    }
+   ]
+  },
+  {
+   "prog": "bidsmgr-validate",
+   "usage": "bidsmgr-validate [-h] [--dataset DATASET] [--strict] [--schema SCHEMA] [--max-rows MAX_ROWS] [--no-todo-warnings] [--strict-warn] [--no-report] [--html] [-v] [--log-file PATH] [--no-log-file] target",
+   "description": "Schema-driven BIDS validation (delegated to the bidsval engine). Runs the fast structural pass by default; add --strict for deep checks that also read NIfTI headers and file contents.",
+   "epilog": "",
+   "arguments": [
+    {
+     "flags": [
+      "-h",
+      "--help"
+     ],
+     "dest": "help",
+     "help": "Show the help and stop.",
+     "positional": false
+    },
+    {
+     "flags": [],
+     "dest": "target",
+     "positional": true,
+     "metavar": null,
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": true,
+     "help": "BIDS root, or a parent containing one or more BIDS roots."
+    },
+    {
+     "flags": [
+      "--dataset"
+     ],
+     "dest": "dataset",
+     "positional": false,
+     "metavar": "DATASET",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "When `target` is a parent, limit to this single dataset name."
+    },
+    {
+     "flags": [
+      "--strict"
+     ],
+     "dest": "strict",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Deep checks: read NIfTI headers and file contents in addition to the structural and metadata checks. More thorough (catches unreadable / malformed files), slower on large trees."
+    },
+    {
+     "flags": [
+      "--schema"
+     ],
+     "dest": "schema",
+     "positional": false,
+     "metavar": "SCHEMA",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "BIDS schema version to validate against (e.g. 1.11.1). Default: bidsval's bundled schema. bidsval ships several versions, so an older dataset can be checked against its own."
+    },
+    {
+     "flags": [
+      "--max-rows"
+     ],
+     "dest": "max_rows",
+     "positional": false,
+     "metavar": "MAX_ROWS",
+     "nargs": null,
+     "choices": null,
+     "default": 1000,
+     "required": false,
+     "help": "Maximum number of rows scanned per TSV during column / value validation (default 1000). Raise to scan more of long tables."
+    },
+    {
+     "flags": [
+      "--no-todo-warnings"
+     ],
+     "dest": "flag_todos",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Do not flag literal 'TODO' placeholder values as warnings. This BIDS Manager convention is on by default (the metadata engine writes TODO into missing recommended fields); turn it off for exact parity with the standalone bidsval engine."
+    },
+    {
+     "flags": [
+      "--strict-warn"
+     ],
+     "dest": "strict_warn",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Treat warnings as errors for the exit code. By default the command exits 1 only when there is at least one error; with this flag, any warning also fails."
+    },
+    {
+     "flags": [
+      "--no-report"
+     ],
+     "dest": "write_report",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Skip writing /.bidsmgr/validation_report.json. By default the JSON report is always written so the GUI and CI tooling can pick it up after the run."
+    },
+    {
+     "flags": [
+      "--html"
+     ],
+     "dest": "html_report",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "In addition to the JSON report, write a self-contained HTML report at /.bidsmgr/validation_report.html. Inline CSS, no external assets: safe to share or archive. Issues are colour-coded green/amber/red and grouped by scope (dataset / folder / file)."
+    },
+    {
+     "flags": [
+      "-v",
+      "--verbose"
+     ],
+     "dest": "verbose",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": 0,
+     "required": false,
+     "help": "Increase log verbosity (-v INFO, -vv DEBUG)"
+    },
+    {
+     "flags": [
+      "--log-file"
+     ],
+     "dest": "log_file",
+     "positional": false,
+     "metavar": "PATH",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Write this run's log here (default: /.bidsmgr/logs/, or ~/.bidsmgr/logs/ outside a dataset)."
+    },
+    {
+     "flags": [
+      "--no-log-file"
+     ],
+     "dest": "no_log_file",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Do not write a log file for this run."
+    }
+   ]
+  },
+  {
+   "prog": "bidsmgr-deface",
+   "usage": "bidsmgr-deface [-h] [--target PATH] [--engine {allineate,allineate-robust,allineate-afni,mindgrab,strip-atlas}] [--dry-run] [--keep-original-in-sourcedata] [-q] [--in-place] [--list-engines] [bids_root]",
+   "description": "Remove identifiable faces from anatomical images.",
+   "epilog": "",
+   "arguments": [
+    {
+     "flags": [
+      "-h",
+      "--help"
+     ],
+     "dest": "help",
+     "help": "Show the help and stop.",
+     "positional": false
+    },
+    {
+     "flags": [],
+     "dest": "bids_root",
+     "positional": true,
+     "metavar": null,
+     "nargs": "?",
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "the BIDS dataset"
+    },
+    {
+     "flags": [
+      "--target"
+     ],
+     "dest": "targets",
+     "positional": false,
+     "metavar": "PATH",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "limit to this file or folder; repeatable. Default: the dataset"
+    },
+    {
+     "flags": [
+      "--engine"
+     ],
+     "dest": "engine",
+     "positional": false,
+     "metavar": "ENGINE",
+     "nargs": null,
+     "choices": [
+      "allineate",
+      "allineate-robust",
+      "allineate-afni",
+      "mindgrab",
+      "strip-atlas"
+     ],
+     "default": "allineate",
+     "required": false,
+     "help": "which engine to use (default: allineate). The allineate engines remove the face; mindgrab and strip-atlas keep only the brain and write a derivative. See --list-engines."
+    },
+    {
+     "flags": [
+      "--dry-run"
+     ],
+     "dest": "dry_run",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "print what would be defaced and what would be skipped, and stop"
+    },
+    {
+     "flags": [
+      "--keep-original-in-sourcedata"
+     ],
+     "dest": "keep_original",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "also copy each original to sourcedata/ before defacing. Those copies still contain the face, so a dataset shared with them in place is not deidentified"
+    },
+    {
+     "flags": [
+      "-q",
+      "--quiet"
+     ],
+     "dest": "quiet",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": ""
+    },
+    {
+     "flags": [
+      "--in-place"
+     ],
+     "dest": "in_place",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "for a skull-strip engine: overwrite the original instead of writing to derivatives/. A stripped scan is not raw data, so this is not the default."
+    },
+    {
+     "flags": [
+      "--list-engines"
+     ],
+     "dest": "list_engines",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "describe the available engines and exit"
+    }
+   ]
+  },
+  {
+   "prog": "bidsmgr-qc",
+   "usage": "bidsmgr-qc [-h] [--participant-label LABEL [LABEL ...]] [--datatype {anat,dwi} [{anat,dwi} ...]] [-j JOBS] [--no-flip-check] [--fast] [--config JSON] [--print-config] [-q] [bids_root] [paths ...]",
+   "description": "Fast quality check of anatomical and diffusion images.",
+   "epilog": "",
+   "arguments": [
+    {
+     "flags": [
+      "-h",
+      "--help"
+     ],
+     "dest": "help",
+     "help": "Show the help and stop.",
+     "positional": false
+    },
+    {
+     "flags": [],
+     "dest": "bids_root",
+     "positional": true,
+     "metavar": null,
+     "nargs": "?",
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "The BIDS dataset."
+    },
+    {
+     "flags": [],
+     "dest": "paths",
+     "positional": true,
+     "metavar": null,
+     "nargs": "*",
+     "choices": null,
+     "default": null,
+     "required": true,
+     "help": "Images to check (default: every T1w, T2w, FLAIR, PDw, T2starw and dwi image)."
+    },
+    {
+     "flags": [
+      "--participant-label"
+     ],
+     "dest": "participant_label",
+     "positional": false,
+     "metavar": "LABEL",
+     "nargs": "+",
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Only these participants (with or without 'sub-')."
+    },
+    {
+     "flags": [
+      "--datatype"
+     ],
+     "dest": "datatype",
+     "positional": false,
+     "metavar": "DATATYPE",
+     "nargs": "+",
+     "choices": [
+      "anat",
+      "dwi"
+     ],
+     "default": [
+      "anat",
+      "dwi"
+     ],
+     "required": false,
+     "help": ""
+    },
+    {
+     "flags": [
+      "-j",
+      "--jobs"
+     ],
+     "dest": "jobs",
+     "positional": false,
+     "metavar": "JOBS",
+     "nargs": null,
+     "choices": null,
+     "default": 1,
+     "required": false,
+     "help": "Images checked at once."
+    },
+    {
+     "flags": [
+      "--no-flip-check"
+     ],
+     "dest": "no_flip_check",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Skip the (experimental) check for flipped or swapped b-vectors."
+    },
+    {
+     "flags": [
+      "--fast"
+     ],
+     "dest": "fast",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Approximate masks from the numpy fallback instead of mindgrab, the tissue model and niimath (seconds faster, less accurate)."
+    },
+    {
+     "flags": [
+      "--config"
+     ],
+     "dest": "config",
+     "positional": false,
+     "metavar": "JSON",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Methods and thresholds, as --print-config writes them (any field left out keeps its default)."
+    },
+    {
+     "flags": [
+      "--print-config"
+     ],
+     "dest": "print_config",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Print the configuration that would be used, as JSON, and exit."
+    },
+    {
+     "flags": [
+      "-q",
+      "--quiet"
+     ],
+     "dest": "quiet",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Print only the summary."
+    }
+   ]
+  },
+  {
+   "prog": "bidsmgr-view",
+   "usage": "bidsmgr-view [-h] [--root ROOT] [--overlay IMAGE] [--scene NAME] [--layout {single,multi,3d,combo,hero,mosaic}] [--plane {axial,coronal,sagittal}] [--colormap COLORMAP] [--window LO HI] [--frame FRAME] [--run COMMAND [KEY=VALUE ...]] [--screenshot SCREENSHOT] [--scale SCALE] [--transparent] [--size W H] [--theme THEME] [--render OUT.png] [--planes {axial,coronal,sagittal} [{axial,coronal,sagittal} ...]] [--height PX] [--crosshair] [-v] path",
+   "description": "Open an image in the BIDS Manager viewer.",
+   "epilog": "",
+   "arguments": [
+    {
+     "flags": [
+      "-h",
+      "--help"
+     ],
+     "dest": "help",
+     "help": "Show the help and stop.",
+     "positional": false
+    },
+    {
+     "flags": [],
+     "dest": "path",
+     "positional": true,
+     "metavar": null,
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": true,
+     "help": "The image to open (.nii, .nii.gz, .mgz, ...); with --scene, the dataset or any file in it."
+    },
+    {
+     "flags": [
+      "--root"
+     ],
+     "dest": "root",
+     "positional": false,
+     "metavar": "ROOT",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "The dataset root (default: found from the path)."
+    },
+    {
+     "flags": [
+      "--overlay"
+     ],
+     "dest": "overlay",
+     "positional": false,
+     "metavar": "IMAGE",
+     "nargs": null,
+     "choices": null,
+     "default": [],
+     "required": false,
+     "help": "Draw this image over it (repeatable)."
+    },
+    {
+     "flags": [
+      "--scene"
+     ],
+     "dest": "scene",
+     "positional": false,
+     "metavar": "NAME",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Open a scene saved in the dataset (its name, or its .json)."
+    },
+    {
+     "flags": [
+      "--layout"
+     ],
+     "dest": "layout",
+     "positional": false,
+     "metavar": "LAYOUT",
+     "nargs": null,
+     "choices": [
+      "single",
+      "multi",
+      "3d",
+      "combo",
+      "hero",
+      "mosaic"
+     ],
+     "default": null,
+     "required": false,
+     "help": "How to show it (default: the layout you last used)."
+    },
+    {
+     "flags": [
+      "--plane"
+     ],
+     "dest": "plane",
+     "positional": false,
+     "metavar": "PLANE",
+     "nargs": null,
+     "choices": [
+      "axial",
+      "coronal",
+      "sagittal"
+     ],
+     "default": null,
+     "required": false,
+     "help": "The plane of the single and hero layouts."
+    },
+    {
+     "flags": [
+      "--colormap"
+     ],
+     "dest": "colormap",
+     "positional": false,
+     "metavar": "COLORMAP",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Colour map name, e.g. hot, viridis."
+    },
+    {
+     "flags": [
+      "--window"
+     ],
+     "dest": "window",
+     "positional": false,
+     "metavar": "LO HI",
+     "nargs": 2,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Window in the data's own units."
+    },
+    {
+     "flags": [
+      "--frame"
+     ],
+     "dest": "frame",
+     "positional": false,
+     "metavar": "FRAME",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Volume of a 4-D series (from 0)."
+    },
+    {
+     "flags": [
+      "--run"
+     ],
+     "dest": "run",
+     "positional": false,
+     "metavar": "COMMAND KEY=VALUE",
+     "nargs": "+",
+     "choices": null,
+     "default": [],
+     "required": false,
+     "help": "Run a viewer command after opening (repeatable), e.g. --run cursor.set_voxel i=10 j=20 k=30"
+    },
+    {
+     "flags": [
+      "--screenshot"
+     ],
+     "dest": "screenshot",
+     "positional": false,
+     "metavar": "SCREENSHOT",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Write the view to this PNG and exit."
+    },
+    {
+     "flags": [
+      "--scale"
+     ],
+     "dest": "scale",
+     "positional": false,
+     "metavar": "SCALE",
+     "nargs": null,
+     "choices": null,
+     "default": 1.0,
+     "required": false,
+     "help": "Screenshot scale: 2 draws the figure at twice the window's pixels, sharp, for print (2-D views)."
+    },
+    {
+     "flags": [
+      "--transparent"
+     ],
+     "dest": "transparent",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Screenshot with a transparent background instead of the black surround."
+    },
+    {
+     "flags": [
+      "--size"
+     ],
+     "dest": "size",
+     "positional": false,
+     "metavar": "W H",
+     "nargs": 2,
+     "choices": null,
+     "default": "(1100, 760)",
+     "required": false,
+     "help": "Window size in pixels (default 1100 760)."
+    },
+    {
+     "flags": [
+      "--theme"
+     ],
+     "dest": "theme",
+     "positional": false,
+     "metavar": "THEME",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "The colour theme: dark, dim, nord, hc-dark, light, paper or hc-light (default: the one last chosen in the app)."
+    },
+    {
+     "flags": [
+      "--render"
+     ],
+     "dest": "render",
+     "positional": false,
+     "metavar": "OUT.png",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Write the 2-D planes to this PNG with no window, no Qt and no display, and exit."
+    },
+    {
+     "flags": [
+      "--planes"
+     ],
+     "dest": "planes",
+     "positional": false,
+     "metavar": "PLANES",
+     "nargs": "+",
+     "choices": [
+      "axial",
+      "coronal",
+      "sagittal"
+     ],
+     "default": null,
+     "required": false,
+     "help": "With --render: the planes, side by side (default: --plane, else axial)."
+    },
+    {
+     "flags": [
+      "--height"
+     ],
+     "dest": "height",
+     "positional": false,
+     "metavar": "PX",
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "With --render: the height of every plane in pixels (default: 2 pixels per millimetre, times --scale)."
+    },
+    {
+     "flags": [
+      "--crosshair"
+     ],
+     "dest": "crosshair",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "With --render: draw the crosshair."
+    },
+    {
+     "flags": [
+      "-v",
+      "--verbose"
+     ],
+     "dest": "verbose",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": 0,
+     "required": false,
+     "help": ""
+    }
+   ]
+  }
+ ]
+}

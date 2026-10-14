@@ -1,0 +1,122 @@
+{
+ "id": "l04-table",
+ "kind": "figure",
+ "width": 1018,
+ "height": 598,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1018": "l04-table-dark-1018-91b97270.avif",
+    "2036": "l04-table-dark-2036-240e96ac.avif"
+   },
+   "webp": {
+    "1018": "l04-table-dark-1018-85683023.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1018": "l04-table-light-1018-c81f334e.avif",
+    "2036": "l04-table-light-2036-168ef766.avif"
+   },
+   "webp": {
+    "1018": "l04-table-light-1018-8a2da57e.webp"
+   }
+  }
+ },
+ "regions": [
+  {
+   "key": "include",
+   "label": "Include",
+   "x": 0.0,
+   "y": 0.04849,
+   "w": 0.03242,
+   "h": 0.85786,
+   "mx": 0.01621,
+   "my": 0.05184
+  },
+  {
+   "key": "status",
+   "label": "State",
+   "x": 0.02652,
+   "y": 0.04849,
+   "w": 0.0334,
+   "h": 0.85786,
+   "mx": 0.04322,
+   "my": 0.05184
+  },
+  {
+   "key": "id",
+   "label": "Subject",
+   "x": 0.05403,
+   "y": 0.04849,
+   "w": 0.08448,
+   "h": 0.85786,
+   "mx": 0.09627,
+   "my": 0.05184
+  },
+  {
+   "key": "ses",
+   "label": "Session",
+   "x": 0.2112,
+   "y": 0.04849,
+   "w": 0.08448,
+   "h": 0.85786,
+   "mx": 0.25344,
+   "my": 0.05184
+  },
+  {
+   "key": "datatype",
+   "label": "Datatype",
+   "x": 0.28978,
+   "y": 0.04849,
+   "w": 0.0943,
+   "h": 0.85786,
+   "mx": 0.33694,
+   "my": 0.05184
+  },
+  {
+   "key": "suffix",
+   "label": "Suffix",
+   "x": 0.37819,
+   "y": 0.04849,
+   "w": 0.0943,
+   "h": 0.85786,
+   "mx": 0.42534,
+   "my": 0.05184
+  },
+  {
+   "key": "basename",
+   "label": "BIDS name",
+   "x": 0.4666,
+   "y": 0.04849,
+   "w": 0.32024,
+   "h": 0.85786,
+   "mx": 0.62672,
+   "my": 0.05184
+  },
+  {
+   "key": "footer",
+   "label": "Highlight aborts, Dataset metadata, Manage columns, Bulk edit",
+   "x": 0.0,
+   "y": 0.91472,
+   "w": 0.66994,
+   "h": 0.08528,
+   "mx": 0.00196,
+   "my": 0.95736
+  }
+ ],
+ "alt": "The scan table after the scan, with the T1w row selected.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

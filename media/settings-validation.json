@@ -1,0 +1,41 @@
+{
+ "id": "settings-validation",
+ "kind": "figure",
+ "width": 900,
+ "height": 520,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "900": "settings-validation-dark-900-723b95ff.avif",
+    "1800": "settings-validation-dark-1800-a18d2a90.avif"
+   },
+   "webp": {
+    "900": "settings-validation-dark-900-d45bbb71.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "900": "settings-validation-light-900-c550a60a.avif",
+    "1800": "settings-validation-light-1800-262dc042.avif"
+   },
+   "webp": {
+    "900": "settings-validation-light-900-db32460d.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, Validation page: the rows read per table, which findings the Editor shows, and TODO placeholders.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

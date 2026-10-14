@@ -1,0 +1,41 @@
+{
+ "id": "theme-menu",
+ "kind": "figure",
+ "width": 199,
+ "height": 845,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "199": "theme-menu-dark-199-d4a30684.avif",
+    "398": "theme-menu-dark-398-9ced8938.avif"
+   },
+   "webp": {
+    "199": "theme-menu-dark-199-4d27e4ce.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "199": "theme-menu-light-199-4020d8f9.avif",
+    "398": "theme-menu-light-398-3cee97b0.avif"
+   },
+   "webp": {
+    "199": "theme-menu-light-199-90201cbd.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The theme menu, opened from the sun or moon button in the header: the themes in groups, each with its colours, and the current one ticked.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

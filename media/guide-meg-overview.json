@@ -1,0 +1,41 @@
+{
+ "id": "guide-meg-overview",
+ "kind": "figure",
+ "width": 1018,
+ "height": 655,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1018": "guide-meg-overview-dark-1018-20a7245a.avif",
+    "2036": "guide-meg-overview-dark-2036-2eb511b7.avif"
+   },
+   "webp": {
+    "1018": "guide-meg-overview-dark-1018-86b98549.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1018": "guide-meg-overview-light-1018-f477e6b5.avif",
+    "2036": "guide-meg-overview-light-2036-2645e297.avif"
+   },
+   "webp": {
+    "1018": "guide-meg-overview-light-1018-ad2fd487.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The Overview of the MEG sample: two subjects, one with two sessions and one without, the empty-room recordings counted as tasks.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

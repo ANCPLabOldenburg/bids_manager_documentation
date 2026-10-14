@@ -1,0 +1,327 @@
+{
+ "themes": [
+  {
+   "id": "graphite",
+   "label": "Graphite",
+   "group": "Neutral",
+   "dark": true,
+   "partner": "porcelain",
+   "description": "Neutral dark grey with no colour cast.",
+   "swatch": [
+    "#161618",
+    "#1d1d20",
+    "#ececef",
+    "#7aa7ff",
+    "#5fd08a",
+    "#f2b84b",
+    "#f47a72"
+   ]
+  },
+  {
+   "id": "carbon",
+   "label": "Carbon",
+   "group": "Neutral",
+   "dark": true,
+   "partner": "porcelain",
+   "description": "Neutral near-black on a black canvas.",
+   "swatch": [
+    "#000000",
+    "#0e0e10",
+    "#f3f3f5",
+    "#8ab4ff",
+    "#62d896",
+    "#f5c25c",
+    "#ff7f78"
+   ]
+  },
+  {
+   "id": "ash",
+   "label": "Ash",
+   "group": "Neutral",
+   "dark": true,
+   "partner": "porcelain",
+   "description": "A lighter neutral charcoal.",
+   "swatch": [
+    "#25262a",
+    "#2c2d31",
+    "#e8e8eb",
+    "#8eb4ff",
+    "#7dd89a",
+    "#efc46e",
+    "#ff8c84"
+   ]
+  },
+  {
+   "id": "porcelain",
+   "label": "Porcelain",
+   "group": "Neutral",
+   "dark": false,
+   "partner": "graphite",
+   "description": "White cards on a pale grey canvas, no tint.",
+   "swatch": [
+    "#efeff1",
+    "#ffffff",
+    "#1b1b1f",
+    "#2563c9",
+    "#1c7a40",
+    "#8a5a00",
+    "#c1312c"
+   ]
+  },
+  {
+   "id": "dark",
+   "label": "Dark",
+   "group": "Classic",
+   "dark": true,
+   "partner": "light",
+   "description": "Near-black with a blue cast.",
+   "swatch": [
+    "#0a0e13",
+    "#11161d",
+    "#e6edf3",
+    "#58a6ff",
+    "#3fb950",
+    "#d29922",
+    "#f85149"
+   ]
+  },
+  {
+   "id": "dim",
+   "label": "Dim",
+   "group": "Classic",
+   "dark": true,
+   "partner": "paper",
+   "description": "A softer blue-grey dark for long sessions.",
+   "swatch": [
+    "#1c2128",
+    "#22272e",
+    "#cdd9e5",
+    "#6cb6ff",
+    "#6bc46d",
+    "#daaa3f",
+    "#f47067"
+   ]
+  },
+  {
+   "id": "original-dark",
+   "label": "Original dark",
+   "group": "Classic",
+   "dark": true,
+   "partner": "original-light",
+   "description": "The first dark theme, as it was before the restyle.",
+   "swatch": [
+    "#0a0e13",
+    "#11161d",
+    "#e6edf3",
+    "#58a6ff",
+    "#3fb950",
+    "#d29922",
+    "#f85149"
+   ]
+  },
+  {
+   "id": "light",
+   "label": "Light",
+   "group": "Classic",
+   "dark": false,
+   "partner": "dark",
+   "description": "White cards on a cool grey canvas.",
+   "swatch": [
+    "#f3f5f7",
+    "#ffffff",
+    "#1f2328",
+    "#0969da",
+    "#1a7f37",
+    "#946200",
+    "#cf222e"
+   ]
+  },
+  {
+   "id": "paper",
+   "label": "Paper",
+   "group": "Classic",
+   "dark": false,
+   "partner": "dim",
+   "description": "Cream cards on a warm sand canvas.",
+   "swatch": [
+    "#f2ede2",
+    "#fcfaf5",
+    "#33291f",
+    "#1d5f86",
+    "#3d6b1f",
+    "#875400",
+    "#a51d3e"
+   ]
+  },
+  {
+   "id": "original-light",
+   "label": "Original light",
+   "group": "Classic",
+   "dark": false,
+   "partner": "original-dark",
+   "description": "The first light theme: a white canvas with pale grey cards.",
+   "swatch": [
+    "#ffffff",
+    "#f6f8fa",
+    "#1f2328",
+    "#0969da",
+    "#1a7f37",
+    "#9a6700",
+    "#cf222e"
+   ]
+  },
+  {
+   "id": "nord",
+   "label": "Nord",
+   "group": "Colour",
+   "dark": true,
+   "partner": "light",
+   "description": "Cool blue-grey with frost accents.",
+   "swatch": [
+    "#272c36",
+    "#2e3440",
+    "#eceff4",
+    "#88c0d0",
+    "#8fc79a",
+    "#ebcb8b",
+    "#ec959c"
+   ]
+  },
+  {
+   "id": "ember",
+   "label": "Ember",
+   "group": "Colour",
+   "dark": true,
+   "partner": "paper",
+   "description": "Warm charcoal with an amber accent.",
+   "swatch": [
+    "#191513",
+    "#211c19",
+    "#f3ebe4",
+    "#f2a65a",
+    "#7fd39a",
+    "#e6d26a",
+    "#ff6f86"
+   ]
+  },
+  {
+   "id": "forest",
+   "label": "Forest",
+   "group": "Colour",
+   "dark": true,
+   "partner": "sage",
+   "description": "Deep green-grey with a golden accent.",
+   "swatch": [
+    "#111714",
+    "#171f1b",
+    "#e4eee7",
+    "#e8b66a",
+    "#8fd07b",
+    "#f59e5b",
+    "#ff6f91"
+   ]
+  },
+  {
+   "id": "aubergine",
+   "label": "Aubergine",
+   "group": "Colour",
+   "dark": true,
+   "partner": "sakura",
+   "description": "Deep plum with an orchid accent.",
+   "swatch": [
+    "#161119",
+    "#1e1722",
+    "#f2e9f6",
+    "#f095d0",
+    "#86d3a2",
+    "#efc570",
+    "#ff8562"
+   ]
+  },
+  {
+   "id": "monokai",
+   "label": "Monokai",
+   "group": "Colour",
+   "dark": true,
+   "partner": "paper",
+   "description": "The classic editor palette on warm olive-black.",
+   "swatch": [
+    "#1e1f1a",
+    "#272822",
+    "#f8f8f2",
+    "#66d9ef",
+    "#a6e22e",
+    "#fd971f",
+    "#ff7096"
+   ]
+  },
+  {
+   "id": "sakura",
+   "label": "Sakura",
+   "group": "Colour",
+   "dark": false,
+   "partner": "aubergine",
+   "description": "Blush cards with a plum accent.",
+   "swatch": [
+    "#f5ebef",
+    "#fffafb",
+    "#371f27",
+    "#8b3384",
+    "#2a7448",
+    "#87540a",
+    "#c0262d"
+   ]
+  },
+  {
+   "id": "sage",
+   "label": "Sage",
+   "group": "Colour",
+   "dark": false,
+   "partner": "forest",
+   "description": "Pale green-grey with a slate-blue accent.",
+   "swatch": [
+    "#eaefea",
+    "#fbfcfa",
+    "#1d2820",
+    "#2d6597",
+    "#3b7a28",
+    "#8a5c00",
+    "#b42347"
+   ]
+  },
+  {
+   "id": "hc-dark",
+   "label": "High contrast dark",
+   "group": "High contrast",
+   "dark": true,
+   "partner": "hc-light",
+   "description": "Black and white with strong borders.",
+   "swatch": [
+    "#000000",
+    "#0b0b0b",
+    "#ffffff",
+    "#5cc8ff",
+    "#5ef07a",
+    "#ffd84d",
+    "#ff8f8f"
+   ]
+  },
+  {
+   "id": "hc-light",
+   "label": "High contrast light",
+   "group": "High contrast",
+   "dark": false,
+   "partner": "hc-dark",
+   "description": "White and black with strong borders.",
+   "swatch": [
+    "#ffffff",
+    "#ffffff",
+    "#000000",
+    "#0039a6",
+    "#08521a",
+    "#6b3f00",
+    "#9e0031"
+   ]
+  }
+ ]
+}

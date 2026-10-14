@@ -1,0 +1,18 @@
+{
+ "paired_name": "sub-001_ses-01_task-rest_recording-eye1_physio",
+ "files": [
+  "sub-001_ses-01_task-rest_recording-eye1_physio.json",
+  "sub-001_ses-01_task-rest_recording-eye1_physio.tsv.gz",
+  "sub-001_ses-01_task-rest_recording-eye1_physioevents.json",
+  "sub-001_ses-01_task-rest_recording-eye1_physioevents.tsv.gz",
+  "sub-001_ses-01_task-rest_recording-eye2_physio.json",
+  "sub-001_ses-01_task-rest_recording-eye2_physio.tsv.gz",
+  "sub-001_ses-01_task-rest_recording-eye2_physioevents.json",
+  "sub-001_ses-01_task-rest_recording-eye2_physioevents.tsv.gz"
+ ],
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14"
+ }
+}

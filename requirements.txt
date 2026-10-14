@@ -1,0 +1,6 @@
+# What tools/build.py needs to build the site. The media are built on a
+# workstation with the BIDS Manager environment (tools/capture) and committed.
+Jinja2>=3.1,<4
+markdown-it-py>=3,<5
+mdit-py-plugins>=0.4,<1
+PyYAML>=6,<7

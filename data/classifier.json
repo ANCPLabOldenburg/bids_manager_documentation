@@ -1,0 +1,1536 @@
+{
+ "groups": [
+  {
+   "title": "Classification",
+   "hint": "What the classifier does with what it finds.",
+   "items": [
+    {
+     "label": "Use the acquisition parameters",
+     "tip": "Applied: the parameters name the series, with dcm2niix's guess and the series name as second opinions. Shadow: the names stay as before and the classifier only reports what it would do. Off: not run.",
+     "default": "To name the series",
+     "choices": [
+      "To name the series",
+      "Only to report",
+      "Not at all"
+     ],
+     "key": "mode"
+    },
+    {
+     "label": "Name without asking above",
+     "tip": "A name this sure (0 to 1) is used as it is. Below it, the row is named but marked to check. Range 0.5 to 0.99.",
+     "default": "0.8",
+     "choices": null,
+     "key": "apply_at"
+    },
+    {
+     "label": "Leave to the other opinions below",
+     "tip": "Below this, the classifier does not decide: dcm2niix's guess or the series name does, and the row is marked to check. Range 0.1 to 0.9.",
+     "default": "0.4",
+     "choices": null,
+     "key": "check_at"
+    }
+   ]
+  },
+  {
+   "title": "Weight of the evidence",
+   "hint": "How much each kind of evidence counts (1 is as built).",
+   "items": [
+    {
+     "label": "Acquisition parameters",
+     "tip": "Echo, repetition and inversion times, flip angle, readout, volumes, diffusion weighting: what the scanner did. Range 0 to 3.",
+     "default": "1",
+     "choices": null,
+     "key": "parameters"
+    },
+    {
+     "label": "Series name",
+     "tip": "Words in the series description and protocol name (T1, FLAIR, bold, SBRef, a ReproIn name): what the operator called it. Range 0 to 3.",
+     "default": "1",
+     "choices": null,
+     "key": "names"
+    },
+    {
+     "label": "Neighbouring series",
+     "tip": "What the series next to it are: an SBRef before its run, a reversed-phase reference beside a run, the two inversions of an MP2RAGE. Range 0 to 3.",
+     "default": "1",
+     "choices": null,
+     "key": "context"
+    }
+   ]
+  },
+  {
+   "title": "Anatomical contrasts",
+   "hint": "The ranges that tell anatomical contrasts apart.",
+   "items": [
+    {
+     "label": "T1-weighted inversion from",
+     "tip": "An inversion-recovery gradient echo (MPRAGE) inverts this long or longer before it reads. Range 0.05 to 2 s.",
+     "default": "0.3 s",
+     "choices": null,
+     "key": "t1_ti_min"
+    },
+    {
+     "label": "T1-weighted inversion up to",
+     "tip": "... and no longer than this. Range 0.5 to 3 s.",
+     "default": "1.5 s",
+     "choices": null,
+     "key": "t1_ti_max"
+    },
+    {
+     "label": "FLAIR inversion from",
+     "tip": "A spin echo inverting at least this long before it reads nulls the fluid: FLAIR. Range 1 to 4 s.",
+     "default": "1.6 s",
+     "choices": null,
+     "key": "flair_ti_min"
+    },
+    {
+     "label": "T2-weighted echo from",
+     "tip": "A spin echo with an echo time this long or longer is T2-weighted. Range 30 to 200 ms.",
+     "default": "60 ms",
+     "choices": null,
+     "key": "t2_te_min"
+    },
+    {
+     "label": "Proton density echo up to",
+     "tip": "A spin echo with a short echo time and a long repetition time is proton density weighted. Range 5 to 60 ms.",
+     "default": "30 ms",
+     "choices": null,
+     "key": "pd_te_max"
+    },
+    {
+     "label": "Long repetition time from",
+     "tip": "Repetition times this long or longer let the tissue recover (T2 and proton density weighting). Range 1 to 6 s.",
+     "default": "2 s",
+     "choices": null,
+     "key": "long_tr_min"
+    },
+    {
+     "label": "T2*-weighted echo from",
+     "tip": "A gradient echo this long or longer (and not an EPI) is T2*-weighted. Range 5 to 60 ms.",
+     "default": "15 ms",
+     "choices": null,
+     "key": "t2star_te_min"
+    },
+    {
+     "label": "MP2RAGE repetition from",
+     "tip": "An inversion-recovery 3-D gradient echo repeating this slowly or slower reads two inversions per repetition: an MP2RAGE. Faster, it is an MPRAGE (T1-weighted). Range 2 to 10 s.",
+     "default": "3.5 s",
+     "choices": null,
+     "key": "mp2rage_tr_min"
+    },
+    {
+     "label": "Turbo spin echo from",
+     "tip": "A spin echo reading this many echoes per excitation or more (its echo train) is a turbo or fast spin echo, how T2-weighted, PD-weighted and FLAIR images are made. Range 2 to 64 echoes.",
+     "default": "2 echoes",
+     "choices": null,
+     "key": "tse_etl_min"
+    },
+    {
+     "label": "High-resolution 3-D up to",
+     "tip": "A 3-D series with voxels this small or smaller in every direction is a structural image (and no localizer). Range 0.3 to 3 mm.",
+     "default": "1.3 mm",
+     "choices": null,
+     "key": "high_res_max_mm"
+    }
+   ]
+  },
+  {
+   "title": "Gradient-echo contrasts",
+   "hint": "The ranges that make a gradient echo T1-weighted, or an angiogram.",
+   "items": [
+    {
+     "label": "3-D spoiled gradient echo, repetition up to",
+     "tip": "A 3-D gradient echo repeating this fast or faster, with a small flip angle, is T1-weighted (FLASH, SPGR, a T1 VIBE). Range 5 to 200 ms.",
+     "default": "50 ms",
+     "choices": null,
+     "key": "spoiled_3d_tr_max"
+    },
+    {
+     "label": "3-D spoiled gradient echo, flip angle up to",
+     "tip": "... and a flip angle this small or smaller. Range 2 to 90 °.",
+     "default": "30 °",
+     "choices": null,
+     "key": "spoiled_3d_flip_max"
+    },
+    {
+     "label": "2-D spoiled gradient echo, echo up to",
+     "tip": "A 2-D gradient echo with an echo this short or shorter, a short repetition and a large flip angle is T1-weighted. Range 1 to 30 ms.",
+     "default": "10 ms",
+     "choices": null,
+     "key": "spoiled_2d_te_max"
+    },
+    {
+     "label": "2-D spoiled gradient echo, repetition up to",
+     "tip": "... repeating this fast or faster ... Range 0.05 to 3 s.",
+     "default": "1 s",
+     "choices": null,
+     "key": "spoiled_2d_tr_max"
+    },
+    {
+     "label": "2-D spoiled gradient echo, flip angle from",
+     "tip": "... with a flip angle this large or larger. Range 5 to 90 °.",
+     "default": "20 °",
+     "choices": null,
+     "key": "spoiled_2d_flip_min"
+    },
+    {
+     "label": "Magnetization transfer echo up to",
+     "tip": "A gradient echo with magnetization transfer and an echo this short or shorter is a T1-weighted MT image, not a T2*-weighted one. Range 2 to 30 ms.",
+     "default": "10 ms",
+     "choices": null,
+     "key": "mt_te_max"
+    },
+    {
+     "label": "Time-of-flight angiography, repetition up to",
+     "tip": "A flow-compensated 3-D gradient echo repeating this fast or faster, with a moderate flip angle, is a time-of-flight angiogram: inflowing blood is bright. Range 5 to 150 ms.",
+     "default": "50 ms",
+     "choices": null,
+     "key": "angio_tr_max"
+    },
+    {
+     "label": "Time-of-flight angiography, echo up to",
+     "tip": "... with an echo this short ... Range 1 to 20 ms.",
+     "default": "10 ms",
+     "choices": null,
+     "key": "angio_te_max"
+    },
+    {
+     "label": "Time-of-flight angiography, flip angle from",
+     "tip": "... a flip angle from ... Range 1 to 60 °.",
+     "default": "10 °",
+     "choices": null,
+     "key": "angio_flip_min"
+    },
+    {
+     "label": "Time-of-flight angiography, flip angle up to",
+     "tip": "... up to this. Range 5 to 90 °.",
+     "default": "40 °",
+     "choices": null,
+     "key": "angio_flip_max"
+    }
+   ]
+  },
+  {
+   "title": "Echoes and fieldmaps",
+   "hint": "Echo counts and fieldmaps.",
+   "items": [
+    {
+     "label": "Multi-echo from",
+     "tip": "A series read at this many echo times or more is multi-echo (MEGRE, MESE), not one contrast. Two echoes are a fieldmap's or a proton density and T2 pair. Range 2 to 12 echoes.",
+     "default": "3 echoes",
+     "choices": null,
+     "key": "multi_echo_min"
+    },
+    {
+     "label": "Fieldmap first echo up to",
+     "tip": "A two-echo gradient echo whose first echo is this short or shorter is a fieldmap's magnitude. Range 2 to 40 ms.",
+     "default": "15 ms",
+     "choices": null,
+     "key": "fieldmap_te_max"
+    }
+   ]
+  },
+  {
+   "title": "Time series and diffusion",
+   "hint": "The counts that tell time series from references and diffusion.",
+   "items": [
+    {
+     "label": "A run has at least",
+     "tip": "An EPI series with this many volumes or more is a run (BOLD); fewer is a reference or a test. Range 3 to 100 volumes.",
+     "default": "10 volumes",
+     "choices": null,
+     "key": "run_min_volumes"
+    },
+    {
+     "label": "A reference has at most",
+     "tip": "An EPI series with this many volumes or fewer, phase-encoded opposite to a run, is that run's fieldmap. Range 1 to 30 volumes.",
+     "default": "9 volumes",
+     "choices": null,
+     "key": "reference_max_volumes"
+    },
+    {
+     "label": "Diffusion weighting from",
+     "tip": "A b-value above this is diffusion weighting. Range 0 to 500 s/mm².",
+     "default": "50 s/mm²",
+     "choices": null,
+     "key": "dwi_min_b"
+    },
+    {
+     "label": "A diffusion series has at least",
+     "tip": "Distinct gradient directions in a diffusion series. Range 1 to 30 directions.",
+     "default": "3 directions",
+     "choices": null,
+     "key": "dwi_min_directions"
+    },
+    {
+     "label": "A localizer has at most",
+     "tip": "A non-EPI series with this many slices or fewer (in several orientations) is a localizer, left out. Range 1 to 20 slices.",
+     "default": "5 slices",
+     "choices": null,
+     "key": "localizer_max_slices"
+    },
+    {
+     "label": "BOLD echo from",
+     "tip": "A gradient-echo EPI time series with an echo this long or longer (and no longer than the next setting) has the T2* weighting of BOLD. Range 5 to 60 ms.",
+     "default": "15 ms",
+     "choices": null,
+     "key": "bold_te_min"
+    },
+    {
+     "label": "BOLD echo up to",
+     "tip": "... and no longer than this. Range 20 to 120 ms.",
+     "default": "60 ms",
+     "choices": null,
+     "key": "bold_te_max"
+    },
+    {
+     "label": "A BOLD run repeats at most every",
+     "tip": "A time series repeating more slowly than this is unlikely to be BOLD. Range 1 to 20 s.",
+     "default": "4 s",
+     "choices": null,
+     "key": "bold_tr_max"
+    },
+    {
+     "label": "An SBRef precedes its run by at most",
+     "tip": "A one-volume EPI is the SBRef of a run with its geometry among the next this many series. Range 1 to 10 series.",
+     "default": "3 series",
+     "choices": null,
+     "key": "sbref_lookahead"
+    }
+   ]
+  },
+  {
+   "title": "Contrast agent and perfusion",
+   "hint": "A contrast agent, and the series made with one or with labelled blood.",
+   "items": [
+    {
+     "label": "Name the contrast agent (ce-)",
+     "tip": "A series acquired after a contrast agent was injected carries BIDS's ce- entity: named after the agent in its header (ce-multihance), a fixed label, or not at all.",
+     "default": "After the agent in the header",
+     "choices": [
+      "After the agent in the header",
+      "With a fixed label",
+      "Not at all"
+     ],
+     "key": "entity"
+    },
+    {
+     "label": "Fixed label",
+     "tip": "The ce- label when the agent is not named, or always when 'With a fixed label' is chosen. Letters and digits only.",
+     "default": "gadolinium",
+     "choices": null,
+     "key": "fixed_label"
+    },
+    {
+     "label": "Also when only the series name says so",
+     "tip": "A series named post-contrast (post, +C, Gd, KM, contrast) whose header names no agent gets the ce- entity too, marked to check.",
+     "default": "On",
+     "choices": null,
+     "key": "from_names"
+    },
+    {
+     "label": "A contrast bolus series (DSC perfusion)",
+     "tip": "An EPI time series acquired during a contrast bolus measures perfusion (dynamic susceptibility contrast). BIDS 1.11 has no raw suffix for it: leave it out (keep it in sourcedata/), or name it func/cbv, BIDS's contrast-agent blood-volume series.",
+     "default": "Leave it out",
+     "choices": [
+      "Leave it out",
+      "Name it func/cbv"
+     ],
+     "key": "dsc"
+    },
+    {
+     "label": "A bolus series has at least",
+     "tip": "An EPI series with a contrast agent and this many volumes or more follows a bolus. Range 3 to 300 volumes.",
+     "default": "20 volumes",
+     "choices": null,
+     "key": "dsc_min_volumes"
+    },
+    {
+     "label": "An ASL M0 reference has at most",
+     "tip": "An unlabelled ASL readout with this many volumes or fewer is the M0 reference. Range 1 to 10 volumes.",
+     "default": "2 volumes",
+     "choices": null,
+     "key": "m0_max_volumes"
+    }
+   ]
+  }
+ ],
+ "settings": 43,
+ "rulebook_about": "What each name looks like in the acquisition parameters and in the series name. Each line is one piece of evidence: a feature, a test, a weight (positive for, negative against) and a sentence. Ranges named cfg:. come from the classifier settings. The user's edits are a delta on top of this file.",
+ "rulebook_version": 1,
+ "candidates": [
+  {
+   "name": "anat/T1w",
+   "datatype": "anat",
+   "suffix": "T1w",
+   "label": "T1-weighted",
+   "evidence": [
+    {
+     "source": "parameters",
+     "feature": "is_epi",
+     "test": "is not",
+     "weight": 0.5,
+     "why": "not an EPI readout"
+    },
+    {
+     "source": "parameters",
+     "feature": "t1_ir_gre",
+     "test": "is",
+     "weight": 3.5,
+     "why": "an inversion-recovery gradient echo (MPRAGE-like)"
+    },
+    {
+     "source": "parameters",
+     "feature": "t1_se",
+     "test": "is",
+     "weight": 3.0,
+     "why": "a spin echo with a short echo and repetition time"
+    },
+    {
+     "source": "parameters",
+     "feature": "spoiled_2d_t1",
+     "test": "is",
+     "weight": 2.5,
+     "why": "a gradient echo with a short echo, a short repetition time and a large flip angle"
+    },
+    {
+     "source": "parameters",
+     "feature": "mt_short_te",
+     "test": "is",
+     "weight": 1.0,
+     "why": "a magnetisation-transfer pulse before a short echo (MT-weighted T1, as for neuromelanin)"
+    },
+    {
+     "source": "parameters",
+     "feature": "spoiled_3d",
+     "test": "is",
+     "weight": 1.5,
+     "why": "a fast 3-D spoiled gradient echo"
+    },
+    {
+     "source": "parameters",
+     "feature": "volumes",
+     "test": "min 2",
+     "weight": -2.0,
+     "why": "more than one volume"
+    },
+    {
+     "source": "parameters",
+     "feature": "is_derived",
+     "test": "is",
+     "weight": -3.0,
+     "why": "a derived image"
+    },
+    {
+     "source": "parameters",
+     "feature": "flair_ir",
+     "test": "is",
+     "weight": -3.0,
+     "why": "a long inversion (FLAIR)"
+    },
+    {
+     "source": "parameters",
+     "feature": "mp2rage_part",
+     "test": "is",
+     "weight": -2.5,
+     "why": "one inversion of an MP2RAGE"
+    },
+    {
+     "source": "names",
+     "feature": "\\bt1\\b|\\bt1w\\b|mprage|mp rage|\\btfl|spgr|bravo|\\bt1 weighted",
+     "test": "",
+     "weight": 2.5,
+     "why": "the name says T1"
+    },
+    {
+     "source": "names",
+     "feature": "flair|\\bt2\\b|\\bt2w\\b",
+     "test": "",
+     "weight": -1.5,
+     "why": "the name says another contrast"
+    },
+    {
+     "source": "parameters",
+     "feature": "mp_gre",
+     "test": "is",
+     "weight": 1.0,
+     "why": "a magnetization-prepared 3-D gradient echo (MPRAGE)"
+    },
+    {
+     "source": "parameters",
+     "feature": "high_res_3d",
+     "test": "is",
+     "weight": 0.5,
+     "why": "a high-resolution 3-D acquisition"
+    },
+    {
+     "source": "parameters",
+     "feature": "tof_angio",
+     "test": "is",
+     "weight": -2.5,
+     "why": "a time-of-flight angiogram"
+    }
+   ]
+  },
+  {
+   "name": "anat/T2w",
+   "datatype": "anat",
+   "suffix": "T2w",
+   "label": "T2-weighted",
+   "evidence": [
+    {
+     "source": "parameters",
+     "feature": "se_long_tr_te",
+     "test": "min cfg:anatomy.t2_te_min",
+     "weight": 3.5,
+     "why": "a spin echo with a long repetition time and an echo of {value} ms"
+    },
+    {
+     "source": "parameters",
+     "feature": "is_epi",
+     "test": "is",
+     "weight": -3.0,
+     "why": "an EPI readout"
+    },
+    {
+     "source": "parameters",
+     "feature": "flair_ir",
+     "test": "is",
+     "weight": -3.5,
+     "why": "a long inversion (FLAIR)"
+    },
+    {
+     "source": "parameters",
+     "feature": "gre_only",
+     "test": "is",
+     "weight": -2.0,
+     "why": "a gradient echo, not a spin echo"
+    },
+    {
+     "source": "parameters",
+     "feature": "volumes",
+     "test": "min 2",
+     "weight": -2.0,
+     "why": "more than one volume"
+    },
+    {
+     "source": "parameters",
+     "feature": "multi_echo",
+     "test": "is",
+     "weight": -2.0,
+     "why": "read at many echo times"
+    },
+    {
+     "source": "parameters",
+     "feature": "is_derived",
+     "test": "is",
+     "weight": -3.0,
+     "why": "a derived image"
+    },
+    {
+     "source": "names",
+     "feature": "\\bt2\\b|\\bt2w\\b|\\btse\\b|t2 space|t2 tse|t2 weighted|\\bspace\\b",
+     "test": "",
+     "weight": 2.5,
+     "why": "the name says T2"
+    },
+    {
+     "source": "names",
+     "feature": "flair|\\bt1\\b|mprage|t2star|t2 star|\\bswi\\b",
+     "test": "",
+     "weight": -1.5,
+     "why": "the name says another contrast"
+    },
+    {
+     "source": "parameters",
+     "feature": "turbo_spin_echo",
+     "test": "is",
+     "weight": 0.5,
+     "why": "a turbo spin echo"
+    },
+    {
+     "source": "parameters",
+     "feature": "high_res_3d",
+     "test": "is",
+     "weight": 0.5,
+     "why": "a high-resolution 3-D acquisition"
+    }
+   ]
+  },
+  {
+   "name": "anat/FLAIR",
+   "datatype": "anat",
+   "suffix": "FLAIR",
+   "label": "FLAIR",
+   "evidence": [
+    {
+     "source": "parameters",
+     "feature": "flair_ir",
+     "test": "is",
+     "weight": 4.0,
+     "why": "an inversion long enough to null the fluid"
+    },
+    {
+     "source": "parameters",
+     "feature": "is_epi",
+     "test": "is",
+     "weight": -3.0,
+     "why": "an EPI readout"
+    },
+    {
+     "source": "parameters",
+     "feature": "volumes",
+     "test": "min 2",
+     "weight": -2.0,
+     "why": "more than one volume"
+    },
+    {
+     "source": "parameters",
+     "feature": "is_derived",
+     "test": "is",
+     "weight": -3.0,
+     "why": "a derived image"
+    },
+    {
+     "source": "names",
+     "feature": "flair|\\btirm\\b|dark fluid",
+     "test": "",
+     "weight": 3.0,
+     "why": "the name says FLAIR"
+    },
+    {
+     "source": "parameters",
+     "feature": "turbo_spin_echo",
+     "test": "is",
+     "weight": 0.5,
+     "why": "a turbo spin echo"
+    },
+    {
+     "source": "parameters",
+     "feature": "high_res_3d",
+     "test": "is",
+     "weight": 0.5,
+     "why": "a high-resolution 3-D acquisition"
+    }
+   ]
+  },
+  {
+   "name": "anat/PDw",
+   "datatype": "anat",
+   "suffix": "PDw",
+   "label": "Proton density weighted",
+   "evidence": [
+    {
+     "source": "parameters",
+     "feature": "se_long_tr_te",
+     "test": "max cfg:anatomy.pd_te_max",
+     "weight": 3.0,
+     "why": "a spin echo with a long repetition time and a short echo ({value} ms)"
+    },
+    {
+     "source": "parameters",
+     "feature": "is_epi",
+     "test": "is",
+     "weight": -3.0,
+     "why": "an EPI readout"
+    },
+    {
+     "source": "parameters",
+     "feature": "volumes",
+     "test": "min 2",
+     "weight": -2.0,
+     "why": "more than one volume"
+    },
+    {
+     "source": "names",
+     "feature": "\\bpd\\b|\\bpdw\\b|proton density",
+     "test": "",
+     "weight": 3.0,
+     "why": "the name says proton density"
+    },
+    {
+     "source": "parameters",
+     "feature": "turbo_spin_echo",
+     "test": "is",
+     "weight": 0.5,
+     "why": "a turbo spin echo"
+    }
+   ]
+  },
+  {
+   "name": "anat/T2starw",
+   "datatype": "anat",
+   "suffix": "T2starw",
+   "label": "T2*-weighted",
+   "evidence": [
+    {
+     "source": "parameters",
+     "feature": "t2star_gre",
+     "test": "is",
+     "weight": 3.0,
+     "why": "a single long gradient echo"
+    },
+    {
+     "source": "parameters",
+     "feature": "is_epi",
+     "test": "is",
+     "weight": -3.0,
+     "why": "an EPI readout"
+    },
+    {
+     "source": "parameters",
+     "feature": "volumes",
+     "test": "min 2",
+     "weight": -2.0,
+     "why": "more than one volume"
+    },
+    {
+     "source": "parameters",
+     "feature": "mt",
+     "test": "is",
+     "weight": -2.0,
+     "why": "a magnetisation-transfer pulse"
+    },
+    {
+     "source": "names",
+     "feature": "t2star|t2 star|\\bswi\\b|\\bswan\\b|\\bt2s\\b|\\bt2\\*",
+     "test": "",
+     "weight": 2.5,
+     "why": "the name says T2*"
+    }
+   ]
+  },
+  {
+   "name": "anat/MEGRE",
+   "datatype": "anat",
+   "suffix": "MEGRE",
+   "label": "Multi-echo gradient echo",
+   "evidence": [
+    {
+     "source": "parameters",
+     "feature": "megre",
+     "test": "is",
+     "weight": 3.5,
+     "why": "a gradient echo with three or more echoes"
+    },
+    {
+     "source": "parameters",
+     "feature": "is_epi",
+     "test": "is",
+     "weight": -3.0,
+     "why": "an EPI readout"
+    },
+    {
+     "source": "parameters",
+     "feature": "multi_echo",
+     "test": "is not",
+     "weight": -2.0,
+     "why": "read at one or two echo times"
+    },
+    {
+     "source": "names",
+     "feature": "megre|me gre|multi echo|multiecho|\\bqsm\\b|r2star",
+     "test": "",
+     "weight": 2.0,
+     "why": "the name says multi-echo"
+    }
+   ]
+  },
+  {
+   "name": "anat/MESE",
+   "datatype": "anat",
+   "suffix": "MESE",
+   "label": "Multi-echo spin echo",
+   "evidence": [
+    {
+     "source": "parameters",
+     "feature": "mese",
+     "test": "is",
+     "weight": 3.5,
+     "why": "a spin echo with three or more echoes"
+    },
+    {
+     "source": "parameters",
+     "feature": "is_epi",
+     "test": "is",
+     "weight": -3.0,
+     "why": "an EPI readout"
+    },
+    {
+     "source": "names",
+     "feature": "\\bmese\\b|\\bse mc\\b|t2 map|t2map|\\bcpmg\\b",
+     "test": "",
+     "weight": 2.0,
+     "why": "the name says multi-echo spin echo"
+    }
+   ]
+  },
+  {
+   "name": "anat/MP2RAGE",
+   "datatype": "anat",
+   "suffix": "MP2RAGE",
+   "label": "MP2RAGE inversion",
+   "evidence": [
+    {
+     "source": "parameters",
+     "feature": "mp2rage_part",
+     "test": "is",
+     "weight": 3.5,
+     "why": "one of two inversions read by a 3-D gradient echo"
+    },
+    {
+     "source": "parameters",
+     "feature": "is_derived",
+     "test": "is",
+     "weight": -3.0,
+     "why": "a derived image"
+    },
+    {
+     "source": "names",
+     "feature": "mp2rage|\\binv1\\b|\\binv2\\b|\\binv 1\\b|\\binv 2\\b",
+     "test": "",
+     "weight": 2.5,
+     "why": "the name says MP2RAGE"
+    }
+   ]
+  },
+  {
+   "name": "anat/UNIT1",
+   "datatype": "anat",
+   "suffix": "UNIT1",
+   "label": "MP2RAGE uniform image",
+   "evidence": [
+    {
+     "source": "parameters",
+     "feature": "uni_image",
+     "test": "is",
+     "weight": 5.0,
+     "why": "the scanner's uniform (UNI) image"
+    },
+    {
+     "source": "names",
+     "feature": "\\buni\\b|uni images|\\bunit1\\b|uni den",
+     "test": "",
+     "weight": 2.5,
+     "why": "the name says UNI"
+    }
+   ]
+  },
+  {
+   "name": "anat/T1map",
+   "datatype": "anat",
+   "suffix": "T1map",
+   "label": "T1 map",
+   "evidence": [
+    {
+     "source": "parameters",
+     "feature": "t1_map_image",
+     "test": "is",
+     "weight": 5.0,
+     "why": "the scanner's T1 map"
+    },
+    {
+     "source": "names",
+     "feature": "t1 map|t1map|t1 images",
+     "test": "",
+     "weight": 2.5,
+     "why": "the name says T1 map"
+    }
+   ]
+  },
+  {
+   "name": "anat/angio",
+   "datatype": "anat",
+   "suffix": "angio",
+   "label": "Angiography",
+   "evidence": [
+    {
+     "source": "parameters",
+     "feature": "is_epi",
+     "test": "is",
+     "weight": -3.0,
+     "why": "an EPI readout"
+    },
+    {
+     "source": "names",
+     "feature": "\\btof\\b|angio|\\bmra\\b|time of flight",
+     "test": "",
+     "weight": 3.5,
+     "why": "the name says angiography"
+    },
+    {
+     "source": "parameters",
+     "feature": "tof_angio",
+     "test": "is",
+     "weight": 4.0,
+     "why": "a flow-compensated 3-D gradient echo with a short repetition and a moderate flip angle: time of flight"
+    },
+    {
+     "source": "parameters",
+     "feature": "is_derived",
+     "test": "is",
+     "weight": -3.0,
+     "why": "computed by the scanner (a projection)"
+    }
+   ]
+  },
+  {
+   "name": "func/bold",
+   "datatype": "func",
+   "suffix": "bold",
+   "label": "BOLD run",
+   "evidence": [
+    {
+     "source": "parameters",
+     "feature": "is_epi",
+     "test": "is",
+     "weight": 2.0,
+     "why": "an EPI readout"
+    },
+    {
+     "source": "parameters",
+     "feature": "volumes",
+     "test": "min cfg:series.run_min_volumes",
+     "weight": 3.0,
+     "why": "a time series of {value} volumes"
+    },
+    {
+     "source": "parameters",
+     "feature": "volumes",
+     "test": "max cfg:series.reference_max_volumes",
+     "weight": -3.0,
+     "why": "only {value} volumes: a reference, not a run"
+    },
+    {
+     "source": "parameters",
+     "feature": "max_b",
+     "test": "min cfg:series.dwi_min_b",
+     "weight": -6.0,
+     "why": "diffusion weighting"
+    },
+    {
+     "source": "parameters",
+     "feature": "has_slice_timing",
+     "test": "is",
+     "weight": 0.5,
+     "why": "slice times recorded"
+    },
+    {
+     "source": "names",
+     "feature": "bold|fmri|\\bfunc\\b|\\btask\\b|\\brest\\b|resting|\\bep2d\\b|mbep2d|epfid",
+     "test": "",
+     "weight": 2.0,
+     "why": "the name says BOLD"
+    },
+    {
+     "source": "names",
+     "feature": "sbref",
+     "test": "",
+     "weight": -3.0,
+     "why": "the name says SBRef"
+    },
+    {
+     "source": "names",
+     "feature": "\\brev\\b|reverse|topup|\\bblip|pepolar|fieldmap|field map",
+     "test": "",
+     "weight": -1.5,
+     "why": "the name says reference"
+    },
+    {
+     "source": "names",
+     "feature": "\\bdwi\\b|\\bdti\\b|diff",
+     "test": "",
+     "weight": -3.0,
+     "why": "the name says diffusion"
+    },
+    {
+     "source": "parameters",
+     "feature": "bold_te",
+     "test": "",
+     "weight": 1.0,
+     "why": "an echo time of {value} ms, typical of BOLD"
+    },
+    {
+     "source": "parameters",
+     "feature": "epi_run_tr",
+     "test": "max cfg:series.bold_tr_max",
+     "weight": 0.5,
+     "why": "repeats every {value} s"
+    },
+    {
+     "source": "parameters",
+     "feature": "contrast_bolus",
+     "test": "is",
+     "weight": -5.0,
+     "why": "acquired during a contrast bolus"
+    },
+    {
+     "source": "parameters",
+     "feature": "asl_labelled",
+     "test": "is",
+     "weight": -5.0,
+     "why": "the protocol labels arterial blood (ASL)"
+    },
+    {
+     "source": "parameters",
+     "feature": "asl_image",
+     "test": "is",
+     "weight": -4.0,
+     "why": "the scanner marks it ASL"
+    },
+    {
+     "source": "parameters",
+     "feature": "perfusion_image",
+     "test": "is",
+     "weight": -3.0,
+     "why": "the scanner marks it PERFUSION"
+    }
+   ]
+  },
+  {
+   "name": "func/sbref",
+   "datatype": "func",
+   "suffix": "sbref",
+   "label": "Single-band reference",
+   "evidence": [
+    {
+     "source": "parameters",
+     "feature": "single_epi_volume",
+     "test": "is",
+     "weight": 1.5,
+     "why": "a single EPI volume"
+    },
+    {
+     "source": "parameters",
+     "feature": "volumes",
+     "test": "min 2",
+     "weight": -3.0,
+     "why": "more than one volume"
+    },
+    {
+     "source": "parameters",
+     "feature": "max_b",
+     "test": "min cfg:series.dwi_min_b",
+     "weight": -3.0,
+     "why": "diffusion weighting"
+    },
+    {
+     "source": "parameters",
+     "feature": "b0_only",
+     "test": "is",
+     "weight": -1.5,
+     "why": "a b=0 diffusion volume"
+    },
+    {
+     "source": "names",
+     "feature": "sbref|single band|\\bsbr\\b",
+     "test": "",
+     "weight": 4.0,
+     "why": "the name says SBRef"
+    }
+   ]
+  },
+  {
+   "name": "dwi/dwi",
+   "datatype": "dwi",
+   "suffix": "dwi",
+   "label": "Diffusion",
+   "evidence": [
+    {
+     "source": "parameters",
+     "feature": "max_b",
+     "test": "min cfg:series.dwi_min_b",
+     "weight": 4.0,
+     "why": "b-values up to {value} s/mm²"
+    },
+    {
+     "source": "parameters",
+     "feature": "n_directions",
+     "test": "min cfg:series.dwi_min_directions",
+     "weight": 2.0,
+     "why": "{value} gradient directions"
+    },
+    {
+     "source": "parameters",
+     "feature": "is_epi",
+     "test": "is",
+     "weight": 1.0,
+     "why": "an EPI readout"
+    },
+    {
+     "source": "parameters",
+     "feature": "is_derived",
+     "test": "is",
+     "weight": -3.0,
+     "why": "a derived image (a map)"
+    },
+    {
+     "source": "parameters",
+     "feature": "volumes",
+     "test": "max 1",
+     "weight": -1.0,
+     "why": "a single volume"
+    },
+    {
+     "source": "names",
+     "feature": "\\bdwi\\b|\\bdti\\b|diff|hardi|\\bdki\\b|\\bnoddi\\b",
+     "test": "",
+     "weight": 2.5,
+     "why": "the name says diffusion"
+    },
+    {
+     "source": "names",
+     "feature": "sbref",
+     "test": "",
+     "weight": -3.0,
+     "why": "the name says SBRef"
+    }
+   ]
+  },
+  {
+   "name": "dwi/sbref",
+   "datatype": "dwi",
+   "suffix": "sbref",
+   "label": "Diffusion single-band reference",
+   "evidence": [
+    {
+     "source": "parameters",
+     "feature": "single_epi_volume",
+     "test": "is",
+     "weight": 1.0,
+     "why": "a single EPI volume"
+    },
+    {
+     "source": "parameters",
+     "feature": "volumes",
+     "test": "min 2",
+     "weight": -3.0,
+     "why": "more than one volume"
+    },
+    {
+     "source": "names",
+     "feature": "sbref|single band|\\bsbr\\b",
+     "test": "",
+     "weight": 3.0,
+     "why": "the name says SBRef"
+    },
+    {
+     "source": "names",
+     "feature": "\\bdwi\\b|\\bdti\\b|diff",
+     "test": "",
+     "weight": 1.0,
+     "why": "the name says diffusion"
+    }
+   ]
+  },
+  {
+   "name": "fmap/magnitude1",
+   "datatype": "fmap",
+   "suffix": "magnitude1",
+   "label": "Fieldmap magnitude (two echoes)",
+   "evidence": [
+    {
+     "source": "parameters",
+     "feature": "fieldmap_echoes",
+     "test": "is",
+     "weight": 4.0,
+     "why": "a gradient echo read at two echo times"
+    },
+    {
+     "source": "parameters",
+     "feature": "part",
+     "test": "is",
+     "weight": 0.5,
+     "why": "a magnitude image"
+    },
+    {
+     "source": "parameters",
+     "feature": "is_epi",
+     "test": "is",
+     "weight": -3.0,
+     "why": "an EPI readout"
+    },
+    {
+     "source": "names",
+     "feature": "field ?map|\\bfmap\\b|\\bb0\\b|gre field|\\bfm\\b",
+     "test": "",
+     "weight": 2.5,
+     "why": "the name says fieldmap"
+    }
+   ]
+  },
+  {
+   "name": "fmap/magnitude",
+   "datatype": "fmap",
+   "suffix": "magnitude",
+   "label": "Fieldmap magnitude (beside a map in Hz)",
+   "evidence": [
+    {
+     "source": "parameters",
+     "feature": "fieldmap_echoes",
+     "test": "is",
+     "weight": -2.0,
+     "why": "read at two echo times: the magnitudes of a phase difference"
+    },
+    {
+     "source": "parameters",
+     "feature": "part",
+     "test": "is",
+     "weight": 0.5,
+     "why": "a magnitude image"
+    },
+    {
+     "source": "parameters",
+     "feature": "is_epi",
+     "test": "is",
+     "weight": -3.0,
+     "why": "an EPI readout"
+    },
+    {
+     "source": "names",
+     "feature": "field ?map|\\bfmap\\b|\\bb0\\b|gre field|\\bfm\\b",
+     "test": "",
+     "weight": 2.0,
+     "why": "the name says fieldmap"
+    }
+   ]
+  },
+  {
+   "name": "fmap/phasediff",
+   "datatype": "fmap",
+   "suffix": "phasediff",
+   "label": "Fieldmap phase difference",
+   "evidence": [
+    {
+     "source": "parameters",
+     "feature": "fieldmap_phase",
+     "test": "is",
+     "weight": 4.0,
+     "why": "the phase of a two-echo gradient echo"
+    },
+    {
+     "source": "parameters",
+     "feature": "is_epi",
+     "test": "is",
+     "weight": -3.0,
+     "why": "an EPI readout"
+    },
+    {
+     "source": "names",
+     "feature": "field ?map|\\bfmap\\b|\\bb0\\b|gre field|phase",
+     "test": "",
+     "weight": 2.0,
+     "why": "the name says fieldmap"
+    }
+   ]
+  },
+  {
+   "name": "fmap/fieldmap",
+   "datatype": "fmap",
+   "suffix": "fieldmap",
+   "label": "Fieldmap (Hz)",
+   "evidence": [
+    {
+     "source": "parameters",
+     "feature": "field_in_hz",
+     "test": "is",
+     "weight": 2.0,
+     "why": "a single-echo phase image of a gradient echo"
+    },
+    {
+     "source": "parameters",
+     "feature": "is_epi",
+     "test": "is",
+     "weight": -3.0,
+     "why": "an EPI readout"
+    },
+    {
+     "source": "names",
+     "feature": "b0 ?map|b0map|fieldmap hz|\\bfieldmap\\b",
+     "test": "",
+     "weight": 2.5,
+     "why": "the name says B0 map"
+    }
+   ]
+  },
+  {
+   "name": "fmap/epi",
+   "datatype": "fmap",
+   "suffix": "epi",
+   "label": "Reversed-phase EPI reference",
+   "evidence": [
+    {
+     "source": "parameters",
+     "feature": "is_epi",
+     "test": "is",
+     "weight": 2.0,
+     "why": "an EPI readout"
+    },
+    {
+     "source": "parameters",
+     "feature": "epi_volumes",
+     "test": "max cfg:series.reference_max_volumes",
+     "weight": 1.0,
+     "why": "a few volumes ({value})"
+    },
+    {
+     "source": "parameters",
+     "feature": "b0_only",
+     "test": "is",
+     "weight": 2.5,
+     "why": "only b=0 volumes: a reference for distortion correction"
+    },
+    {
+     "source": "parameters",
+     "feature": "max_b",
+     "test": "min cfg:series.dwi_min_b",
+     "weight": -2.0,
+     "why": "diffusion weighting"
+    },
+    {
+     "source": "names",
+     "feature": "\\brev\\b|reverse|topup|\\bblip|pepolar|se epi|spin echo field|\\bfmap\\b|field ?map|\\bse fmap",
+     "test": "",
+     "weight": 2.5,
+     "why": "the name says reference"
+    },
+    {
+     "source": "names",
+     "feature": "sbref",
+     "test": "",
+     "weight": -2.5,
+     "why": "the name says SBRef"
+    }
+   ]
+  },
+  {
+   "name": "perf/asl",
+   "datatype": "perf",
+   "suffix": "asl",
+   "label": "Arterial spin labelling",
+   "evidence": [
+    {
+     "source": "parameters",
+     "feature": "volumes",
+     "test": "min 2",
+     "weight": 0.5,
+     "why": "several volumes"
+    },
+    {
+     "source": "names",
+     "feature": "\\basl\\b|pcasl|pasl|\\bcasl\\b|\\bfair\\b|\\btgse\\b",
+     "test": "",
+     "weight": 4.5,
+     "why": "the name says ASL"
+    },
+    {
+     "source": "parameters",
+     "feature": "asl_labelled",
+     "test": "is",
+     "weight": 4.0,
+     "why": "the protocol labels arterial blood (pulsed or pseudo-continuous)"
+    },
+    {
+     "source": "parameters",
+     "feature": "asl_image",
+     "test": "is",
+     "weight": 3.0,
+     "why": "the scanner marks it ASL"
+    },
+    {
+     "source": "parameters",
+     "feature": "is_derived",
+     "test": "is",
+     "weight": -3.0,
+     "why": "computed by the scanner (a subtraction or CBF map)"
+    },
+    {
+     "source": "names",
+     "feature": "\\bperf\\w*",
+     "test": "",
+     "weight": 1.0,
+     "why": "the name says perfusion"
+    },
+    {
+     "source": "names",
+     "feature": "\\bm0\\b|m0scan",
+     "test": "",
+     "weight": -4.0,
+     "why": "the name says M0"
+    },
+    {
+     "source": "parameters",
+     "feature": "asl_reference",
+     "test": "is",
+     "weight": -1.5,
+     "why": "one or two volumes: an M0 reference, not label and control pairs"
+    },
+    {
+     "source": "parameters",
+     "feature": "perfusion_map",
+     "test": "is",
+     "weight": -6.0,
+     "why": "a map computed from the ASL series, not the series"
+    }
+   ]
+  },
+  {
+   "name": "perf/m0scan",
+   "datatype": "perf",
+   "suffix": "m0scan",
+   "label": "ASL M0",
+   "evidence": [
+    {
+     "source": "names",
+     "feature": "\\bm0\\b|m0scan|\\bm0 ",
+     "test": "",
+     "weight": 5.0,
+     "why": "the name says M0"
+    },
+    {
+     "source": "parameters",
+     "feature": "asl_reference",
+     "test": "is",
+     "weight": 1.5,
+     "why": "an unlabelled ASL readout of one or two volumes"
+    },
+    {
+     "source": "parameters",
+     "feature": "asl_series",
+     "test": "is",
+     "weight": -3.0,
+     "why": "labelled arterial blood over many volumes: the ASL series"
+    },
+    {
+     "source": "parameters",
+     "feature": "is_derived",
+     "test": "is",
+     "weight": -3.0,
+     "why": "computed by the scanner"
+    },
+    {
+     "source": "parameters",
+     "feature": "perfusion_map",
+     "test": "is",
+     "weight": -6.0,
+     "why": "a map computed from the ASL series, not the series"
+    }
+   ]
+  },
+  {
+   "name": "exclude/dsc",
+   "datatype": "exclude",
+   "suffix": "dsc",
+   "label": "Contrast bolus (DSC perfusion)",
+   "evidence": [
+    {
+     "source": "parameters",
+     "feature": "contrast_bolus",
+     "test": "is",
+     "weight": 5.0,
+     "why": "an EPI time series acquired during a contrast bolus"
+    },
+    {
+     "source": "parameters",
+     "feature": "perfusion_image",
+     "test": "is",
+     "weight": 2.0,
+     "why": "the scanner marks it PERFUSION"
+    },
+    {
+     "source": "parameters",
+     "feature": "is_derived",
+     "test": "is",
+     "weight": -3.0,
+     "why": "computed by the scanner (a perfusion map)"
+    },
+    {
+     "source": "names",
+     "feature": "\\bperf\\w*|\\bdsc\\b|\\bbolus\\b",
+     "test": "",
+     "weight": 1.5,
+     "why": "the name says perfusion or bolus"
+    }
+   ]
+  },
+  {
+   "name": "exclude/localizer",
+   "datatype": "exclude",
+   "suffix": "localizer",
+   "label": "Localizer (left out)",
+   "evidence": [
+    {
+     "source": "parameters",
+     "feature": "n_orientations",
+     "test": "min 2",
+     "weight": 5.0,
+     "why": "{value} slice orientations in one series"
+    },
+    {
+     "source": "parameters",
+     "feature": "few_slices",
+     "test": "is",
+     "weight": 1.0,
+     "why": "only a few slices"
+    },
+    {
+     "source": "names",
+     "feature": "localizer|localiser|\\bscout\\b|survey|aahead|aascout|\\bloc\\b|3 plane",
+     "test": "",
+     "weight": 4.0,
+     "why": "the name says localizer"
+    },
+    {
+     "source": "parameters",
+     "feature": "high_res_3d",
+     "test": "is",
+     "weight": -2.0,
+     "why": "a high-resolution 3-D series"
+    }
+   ]
+  },
+  {
+   "name": "exclude/derived",
+   "datatype": "exclude",
+   "suffix": "derived",
+   "label": "Derived or reformatted (left out)",
+   "evidence": [
+    {
+     "source": "parameters",
+     "feature": "reformat",
+     "test": "is",
+     "weight": 5.0,
+     "why": "a reformat or projection the scanner computed"
+    },
+    {
+     "source": "parameters",
+     "feature": "is_derived",
+     "test": "is",
+     "weight": 1.0,
+     "why": "a derived image"
+    },
+    {
+     "source": "names",
+     "feature": "\\bmpr\\b|\\bmip\\b|\\bmoco\\b|\\bmocoseries\\b|reformat|\\bproj",
+     "test": "",
+     "weight": 2.0,
+     "why": "the name says reformat"
+    },
+    {
+     "source": "names",
+     "feature": "\\bmask\\b|\\bmasks\\b",
+     "test": "",
+     "weight": 4.0,
+     "why": "the name says mask"
+    },
+    {
+     "source": "parameters",
+     "feature": "perfusion_map",
+     "test": "is",
+     "weight": 5.0,
+     "why": "a map the scanner computed from a perfusion series (subtraction, CBF)"
+    }
+   ]
+  }
+ ]
+}

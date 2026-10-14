@@ -1,0 +1,69 @@
+{
+ "scan": {
+  "rows": 28,
+  "included": 28,
+  "seconds": 1.3,
+  "subjects": [
+   "sub-001",
+   "sub-002"
+  ],
+  "sessions": [],
+  "chips": {
+   "valid": "28 valid",
+   "warn": "0 warnings",
+   "err": "0 error",
+   "skip": "0 skipped"
+  }
+ },
+ "names": [
+  "sub-001_task-eyesclosed_eeg",
+  "sub-001_task-eyesopen_eeg",
+  "sub-001_task-fist_run-1_eeg",
+  "sub-001_task-fist_run-2_eeg",
+  "sub-001_task-fist_run-3_eeg",
+  "sub-001_task-fistimagined_run-1_eeg",
+  "sub-001_task-fistimagined_run-2_eeg",
+  "sub-001_task-fistimagined_run-3_eeg",
+  "sub-001_task-fistsfeet_run-1_eeg",
+  "sub-001_task-fistsfeet_run-2_eeg",
+  "sub-001_task-fistsfeet_run-3_eeg",
+  "sub-001_task-fistsfeetimagined_run-1_eeg",
+  "sub-001_task-fistsfeetimagined_run-2_eeg",
+  "sub-001_task-fistsfeetimagined_run-3_eeg",
+  "sub-002_task-eyesclosed_eeg",
+  "sub-002_task-eyesopen_eeg",
+  "sub-002_task-fist_run-1_eeg",
+  "sub-002_task-fist_run-2_eeg",
+  "sub-002_task-fist_run-3_eeg",
+  "sub-002_task-fistimagined_run-1_eeg",
+  "sub-002_task-fistimagined_run-2_eeg",
+  "sub-002_task-fistimagined_run-3_eeg",
+  "sub-002_task-fistsfeet_run-1_eeg",
+  "sub-002_task-fistsfeet_run-2_eeg",
+  "sub-002_task-fistsfeet_run-3_eeg",
+  "sub-002_task-fistsfeetimagined_run-1_eeg",
+  "sub-002_task-fistsfeetimagined_run-2_eeg",
+  "sub-002_task-fistsfeetimagined_run-3_eeg"
+ ],
+ "convert": {
+  "rc": 0,
+  "seconds": 2.4
+ },
+ "converted": {
+  "files": 152,
+  "validation": {
+   "ok": 66,
+   "warn": 422,
+   "err": 0
+  },
+  "todo": {
+   "inserted": 393,
+   "files": 29
+  }
+ },
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14"
+ }
+}

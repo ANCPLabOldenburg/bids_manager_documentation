@@ -1,0 +1,41 @@
+{
+ "id": "l07-description",
+ "kind": "figure",
+ "width": 700,
+ "height": 820,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "700": "l07-description-dark-700-e35789da.avif",
+    "1400": "l07-description-dark-1400-468cdd37.avif"
+   },
+   "webp": {
+    "700": "l07-description-dark-700-a16839f4.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "700": "l07-description-light-700-9d1c7991.avif",
+    "1400": "l07-description-light-1400-ba61711e.avif"
+   },
+   "webp": {
+    "700": "l07-description-light-700-cc114b2a.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The dataset_description.json section with two authors, a licence, acknowledgements and how to acknowledge filled in.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

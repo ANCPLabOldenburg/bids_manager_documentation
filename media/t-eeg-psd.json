@@ -1,0 +1,41 @@
+{
+ "id": "t-eeg-psd",
+ "kind": "figure",
+ "width": 1280,
+ "height": 760,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1280": "t-eeg-psd-dark-1280-20ed4e00.avif",
+    "2560": "t-eeg-psd-dark-2560-030a80f9.avif"
+   },
+   "webp": {
+    "1280": "t-eeg-psd-dark-1280-72c4a4fb.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1280": "t-eeg-psd-light-1280-40376679.avif",
+    "2560": "t-eeg-psd-light-2560-773fda17.avif"
+   },
+   "webp": {
+    "1280": "t-eeg-psd-light-1280-da325fda.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The power spectrum of the EEG recording: each channel's spectrum, with a crosshair that reads out frequency and power.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "7bb684f",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

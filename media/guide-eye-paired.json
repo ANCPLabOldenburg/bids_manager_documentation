@@ -1,0 +1,41 @@
+{
+ "id": "guide-eye-paired",
+ "kind": "figure",
+ "width": 1018,
+ "height": 655,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1018": "guide-eye-paired-dark-1018-472b6e48.avif",
+    "2036": "guide-eye-paired-dark-2036-04dce84b.avif"
+   },
+   "webp": {
+    "1018": "guide-eye-paired-dark-1018-b0031c0a.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1018": "guide-eye-paired-light-1018-e9c35351.avif",
+    "2036": "guide-eye-paired-light-2036-86b8c853.avif"
+   },
+   "webp": {
+    "1018": "guide-eye-paired-light-1018-61435da0.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The table after pairing the eye-tracking row with the resting BOLD run: the row now lands in func, named after the run.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

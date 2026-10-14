@@ -1,0 +1,1998 @@
+{
+ "actions": [
+  {
+   "id": "view.axial",
+   "title": "Axial view",
+   "label": "Axial",
+   "category": "Views",
+   "help": "",
+   "keys_mac": [
+    "A"
+   ],
+   "keys_other": [
+    "A"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "view.sagittal",
+   "title": "Sagittal view",
+   "label": "Sagittal",
+   "category": "Views",
+   "help": "",
+   "keys_mac": [
+    "S"
+   ],
+   "keys_other": [
+    "S"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "view.coronal",
+   "title": "Coronal view",
+   "label": "Coronal",
+   "category": "Views",
+   "help": "",
+   "keys_mac": [
+    "C"
+   ],
+   "keys_other": [
+    "C"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "view.multi",
+   "title": "Multi-planar view (three planes)",
+   "label": "Multi-planar",
+   "category": "Views",
+   "help": "Sagittal, coronal and axial slices through the crosshair, side by side (multi-planar reconstruction, MPR)",
+   "keys_mac": [
+    "M"
+   ],
+   "keys_other": [
+    "M"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "view.3d",
+   "title": "3-D volume rendering",
+   "label": "3-D",
+   "category": "Views",
+   "help": "The whole volume ray-cast on the graphics card: surfaces, projections, clip planes",
+   "keys_mac": [
+    "D"
+   ],
+   "keys_other": [
+    "D"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "view.combo",
+   "title": "Multi-planar view with 3-D rendering",
+   "label": "Planes + 3-D",
+   "category": "Views",
+   "help": "The three slices and the 3-D rendering together, one crosshair",
+   "keys_mac": [
+    "P"
+   ],
+   "keys_other": [
+    "P"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "view.hero",
+   "title": "One large view, the others beside it",
+   "label": "Large view",
+   "category": "Views",
+   "help": "The chosen plane (or the 3-D) drawn large, the rest small beside it; drag the gap to resize",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "view.mosaic",
+   "title": "Mosaic of many slices (lightbox)",
+   "label": "Mosaic",
+   "category": "Views",
+   "help": "Many slices of one plane in a grid, for a quick look through the volume or a figure",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "view.graph",
+   "title": "Time-course graph",
+   "label": "Time course",
+   "category": "Views",
+   "help": "The signal over time at the crosshair (4-D images), with the run's events, physiology and quality rows when asked",
+   "keys_mac": [
+    "G"
+   ],
+   "keys_other": [
+    "G"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "graph.beside",
+   "title": "Time course beside the views",
+   "label": "Beside",
+   "category": "Views",
+   "help": "Put the time-course panel to the right of the views instead of under them (a long run reads better wide, a tall one beside)",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "graph.maximize",
+   "title": "Maximise the time course",
+   "label": "Maximise",
+   "category": "Views",
+   "help": "Give the time-course panel the whole viewer (its QC plots and physiology too); again to bring the views back",
+   "keys_mac": [
+    "⌘G"
+   ],
+   "keys_other": [
+    "Ctrl+G"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "graph.detach",
+   "title": "Time course in its own window",
+   "label": "Own window",
+   "category": "Views",
+   "help": "Move the time-course panel to a window of its own (a second screen, say); closing that window puts it back",
+   "keys_mac": [
+    "⇧⌘G"
+   ],
+   "keys_other": [
+    "Ctrl+Shift+G"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "view.labels",
+   "title": "Orientation labels and cube",
+   "label": "Orientation labels",
+   "category": "Display",
+   "help": "Letters at the edges of every slice (R/L, A/P, S/I) and the orientation cube in 3-D",
+   "keys_mac": [
+    "O"
+   ],
+   "keys_other": [
+    "O"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "view.ras",
+   "title": "RAS orientation",
+   "label": "RAS",
+   "category": "Display",
+   "help": "Draw every image Right, Anterior, Superior up the axes, whatever order its file stores the voxels in. Off: the file's own storage order",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "view.radiological",
+   "title": "Radiological convention",
+   "label": "Radiological",
+   "category": "Display",
+   "help": "Mirror left and right, as radiologists read images: the patient's left on the screen's right. Off: neurological convention",
+   "keys_mac": [
+    "L"
+   ],
+   "keys_other": [
+    "L"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "view.world",
+   "title": "World space",
+   "label": "World space",
+   "category": "Display",
+   "help": "Resample slices onto the scanner's axes, so an oblique acquisition is drawn upright. Off: slices of the image's own voxel grid",
+   "keys_mac": [
+    "W"
+   ],
+   "keys_other": [
+    "W"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "view.colorbar",
+   "title": "Colour bar",
+   "label": "Colour bar",
+   "category": "Display",
+   "help": "A colour bar under the image for every scalar layer, with its window, units and threshold",
+   "keys_mac": [
+    "B"
+   ],
+   "keys_other": [
+    "B"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "view.crosshair",
+   "title": "Crosshair",
+   "label": "Crosshair",
+   "category": "Display",
+   "help": "The crosshair on every slice and in 3-D (its colour and width in Slice views)",
+   "keys_mac": [
+    "X"
+   ],
+   "keys_other": [
+    "X"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "view.reset",
+   "title": "Reset zoom and pan",
+   "label": "Reset zoom",
+   "category": "Display",
+   "help": "",
+   "keys_mac": [
+    "R"
+   ],
+   "keys_other": [
+    "R"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "slice.next",
+   "title": "Next slice",
+   "label": "Next slice",
+   "category": "Navigate",
+   "help": "",
+   "keys_mac": [
+    "↑"
+   ],
+   "keys_other": [
+    "Up"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "slice.prev",
+   "title": "Previous slice",
+   "label": "Previous slice",
+   "category": "Navigate",
+   "help": "",
+   "keys_mac": [
+    "↓"
+   ],
+   "keys_other": [
+    "Down"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "slice.next10",
+   "title": "Ten slices forward",
+   "label": "Ten slices forward",
+   "category": "Navigate",
+   "help": "",
+   "keys_mac": [
+    "Page Up"
+   ],
+   "keys_other": [
+    "PgUp"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "slice.prev10",
+   "title": "Ten slices back",
+   "label": "Ten slices back",
+   "category": "Navigate",
+   "help": "",
+   "keys_mac": [
+    "Page Down"
+   ],
+   "keys_other": [
+    "PgDown"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "frame.next",
+   "title": "Next volume",
+   "label": "Next volume",
+   "category": "Navigate",
+   "help": "",
+   "keys_mac": [
+    "→"
+   ],
+   "keys_other": [
+    "Right"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "frame.prev",
+   "title": "Previous volume",
+   "label": "Previous volume",
+   "category": "Navigate",
+   "help": "",
+   "keys_mac": [
+    "←"
+   ],
+   "keys_other": [
+    "Left"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "frame.first",
+   "title": "First volume",
+   "label": "First volume",
+   "category": "Navigate",
+   "help": "",
+   "keys_mac": [
+    "⇧←"
+   ],
+   "keys_other": [
+    "Shift+Left"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "frame.last",
+   "title": "Last volume",
+   "label": "Last volume",
+   "category": "Navigate",
+   "help": "",
+   "keys_mac": [
+    "⇧→"
+   ],
+   "keys_other": [
+    "Shift+Right"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "frame.same_shell",
+   "title": "Next volume of this shell",
+   "label": "Next volume of this shell",
+   "category": "Diffusion",
+   "help": "Step through every volume of the shell on screen: how a bad direction is found",
+   "keys_mac": [
+    "]"
+   ],
+   "keys_other": [
+    "]"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "frame.same_shell_prev",
+   "title": "Previous volume of this shell",
+   "label": "Previous volume of this shell",
+   "category": "Diffusion",
+   "help": "",
+   "keys_mac": [
+    "["
+   ],
+   "keys_other": [
+    "["
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "frame.shell",
+   "title": "Next shell",
+   "label": "Next shell",
+   "category": "Diffusion",
+   "help": "The first volume of the next b-value",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "frame.shell_prev",
+   "title": "Previous shell",
+   "label": "Previous shell",
+   "category": "Diffusion",
+   "help": "",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "nav.run_next",
+   "title": "Next run",
+   "label": "Next run",
+   "category": "Dataset",
+   "help": "The same image of the next run, crosshair where it was",
+   "keys_mac": [
+    "⌥→"
+   ],
+   "keys_other": [
+    "Alt+Right"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "nav.run_prev",
+   "title": "Previous run",
+   "label": "Previous run",
+   "category": "Dataset",
+   "help": "",
+   "keys_mac": [
+    "⌥←"
+   ],
+   "keys_other": [
+    "Alt+Left"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "nav.echo_next",
+   "title": "Next echo",
+   "label": "Next echo",
+   "category": "Dataset",
+   "help": "",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "nav.echo_prev",
+   "title": "Previous echo",
+   "label": "Previous echo",
+   "category": "Dataset",
+   "help": "",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "nav.ses_next",
+   "title": "Next session",
+   "label": "Next session",
+   "category": "Dataset",
+   "help": "",
+   "keys_mac": [
+    "⌥ Page Down"
+   ],
+   "keys_other": [
+    "Alt+PgDown"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "nav.ses_prev",
+   "title": "Previous session",
+   "label": "Previous session",
+   "category": "Dataset",
+   "help": "",
+   "keys_mac": [
+    "⌥ Page Up"
+   ],
+   "keys_other": [
+    "Alt+PgUp"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "nav.sub_next",
+   "title": "Next subject",
+   "label": "Next subject",
+   "category": "Dataset",
+   "help": "The same image of the next subject",
+   "keys_mac": [
+    "⌥↓"
+   ],
+   "keys_other": [
+    "Alt+Down"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "nav.sub_prev",
+   "title": "Previous subject",
+   "label": "Previous subject",
+   "category": "Dataset",
+   "help": "",
+   "keys_mac": [
+    "⌥↑"
+   ],
+   "keys_other": [
+    "Alt+Up"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "deface.preview",
+   "title": "Preview defacing",
+   "label": "Preview defacing",
+   "category": "Layers",
+   "help": "What the defacing engine would blank, drawn in red over the image. Nothing is changed",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "frame.play",
+   "title": "Play the series",
+   "label": "Play",
+   "category": "Navigate",
+   "help": "",
+   "keys_mac": [
+    "Space"
+   ],
+   "keys_other": [
+    "Space"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "cursor.center",
+   "title": "Centre the crosshair",
+   "label": "Centre the crosshair",
+   "category": "Navigate",
+   "help": "",
+   "keys_mac": [
+    "Home"
+   ],
+   "keys_other": [
+    "Home"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "window.robust",
+   "title": "Window to the robust range",
+   "label": "Auto",
+   "category": "Contrast",
+   "help": "The display range from the 1st to the 99th percentile of this volume",
+   "keys_mac": [
+    "F"
+   ],
+   "keys_other": [
+    "F"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "window.series",
+   "title": "Window for the whole series",
+   "label": "Window for the whole series",
+   "category": "Contrast",
+   "help": "One display range for every volume of the series, so playing it does not flicker",
+   "keys_mac": [
+    "⇧F"
+   ],
+   "keys_other": [
+    "Shift+F"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "window.full",
+   "title": "Window to the full range",
+   "label": "Full",
+   "category": "Contrast",
+   "help": "The display range from the smallest to the largest value",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "window.invert",
+   "title": "Invert the colour map",
+   "label": "Invert the colour map",
+   "category": "Contrast",
+   "help": "",
+   "keys_mac": [
+    "I"
+   ],
+   "keys_other": [
+    "I"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "view.nearest",
+   "title": "Nearest-neighbour interpolation",
+   "label": "Nearest neighbour",
+   "category": "Display",
+   "help": "Draw each voxel as a square, as the data is, instead of smoothing between voxels",
+   "keys_mac": [
+    "N"
+   ],
+   "keys_other": [
+    "N"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "clip.toggle",
+   "title": "Clip plane on or off",
+   "label": "Clip plane on or off",
+   "category": "3-D slicer",
+   "help": "",
+   "keys_mac": [
+    "⇧Z"
+   ],
+   "keys_other": [
+    "Shift+Z"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "clip.axial",
+   "title": "Axial cut",
+   "label": "Axial cut",
+   "category": "3-D slicer",
+   "help": "",
+   "keys_mac": [
+    "⇧A"
+   ],
+   "keys_other": [
+    "Shift+A"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "clip.sagittal",
+   "title": "Sagittal cut",
+   "label": "Sagittal cut",
+   "category": "3-D slicer",
+   "help": "",
+   "keys_mac": [
+    "⇧S"
+   ],
+   "keys_other": [
+    "Shift+S"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "clip.coronal",
+   "title": "Coronal cut",
+   "label": "Coronal cut",
+   "category": "3-D slicer",
+   "help": "",
+   "keys_mac": [
+    "⇧C"
+   ],
+   "keys_other": [
+    "Shift+C"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "clip.invert",
+   "title": "Cut from the other side",
+   "label": "Cut from the other side",
+   "category": "3-D slicer",
+   "help": "",
+   "keys_mac": [
+    "⇧X"
+   ],
+   "keys_other": [
+    "Shift+X"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "clip.at_cursor",
+   "title": "Cut through the crosshair",
+   "label": "Cut through the crosshair",
+   "category": "3-D slicer",
+   "help": "Every clip plane passes through the crosshair: the cut faces are the slices the 2-D views show, and follow them",
+   "keys_mac": [
+    "⇧T"
+   ],
+   "keys_other": [
+    "Shift+T"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "clip.corner",
+   "title": "Corner cut at the crosshair",
+   "label": "Corner cut at the crosshair",
+   "category": "3-D slicer",
+   "help": "Cut out the corner facing you, at the crosshair: the three slices in 3-D",
+   "keys_mac": [
+    "⇧O"
+   ],
+   "keys_other": [
+    "Shift+O"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "render.reset_view",
+   "title": "Reset the 3-D camera",
+   "label": "Reset the 3-D camera",
+   "category": "3-D",
+   "help": "",
+   "keys_mac": [
+    "⇧R"
+   ],
+   "keys_other": [
+    "Shift+R"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "render.left",
+   "title": "Look from the left",
+   "label": "Look from the left",
+   "category": "3-D",
+   "help": "",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "render.right",
+   "title": "Look from the right",
+   "label": "Look from the right",
+   "category": "3-D",
+   "help": "",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "render.front",
+   "title": "Look from the front",
+   "label": "Look from the front",
+   "category": "3-D",
+   "help": "",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "render.top",
+   "title": "Look from the top",
+   "label": "Look from the top",
+   "category": "3-D",
+   "help": "",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "header.show",
+   "title": "Header and sidecar...",
+   "label": "Header",
+   "category": "Layers",
+   "help": "The image's header beside its sidecar, every disagreement said: repetition time, slice timing, b-values, units, orientation",
+   "keys_mac": [
+    "H"
+   ],
+   "keys_other": [
+    "H"
+   ],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "overlay.add",
+   "title": "Add an overlay...",
+   "label": "Add overlay",
+   "category": "Layers",
+   "help": "Draw another image over this one: a statistical map, an atlas, a mask, another contrast. Its look follows from what it holds.",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "qc.check",
+   "title": "Check image quality",
+   "label": "Check quality",
+   "category": "QC",
+   "help": "The fast quality check of an anatomical or diffusion image: noise, contrast, artefacts, tissues, coverage, the gradient table, motion and slice dropout, each finding with its evidence over the image. The air is measured only in images that are not defaced.",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "qc.below",
+   "title": "Quality panel below the views",
+   "label": "Below",
+   "category": "QC",
+   "help": "Put the quality panel under the views and the time course instead of beside them",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "qc.maximize",
+   "title": "Maximise the quality panel",
+   "label": "Maximise",
+   "category": "QC",
+   "help": "Give the quality panel the room of the views (below: of the views and the time course); again to bring them back",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "qc.detach",
+   "title": "Quality panel in its own window",
+   "label": "Own window",
+   "category": "QC",
+   "help": "Move the quality panel to a window of its own; closing that window puts it back",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "qc.noise",
+   "title": "Show the noise",
+   "label": "Show the noise",
+   "category": "QC",
+   "help": "The image windowed to its air, in colour: ghosts, ringing, motion and wrap-around show as structure where there should be noise. Again to put the look back.",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "qc.mean",
+   "title": "Mean image of the series",
+   "label": "Mean image",
+   "category": "QC",
+   "help": "Computed when chosen: the mean over every volume, as an overlay",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "qc.sd",
+   "title": "Standard deviation map",
+   "label": "Standard deviation",
+   "category": "QC",
+   "help": "Computed when chosen: where the signal moves over time (motion at the edges, vessels, ghosts), as an overlay",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "qc.tsnr",
+   "title": "Temporal SNR map",
+   "label": "Temporal SNR",
+   "category": "QC",
+   "help": "Computed when chosen: each voxel's mean over its standard deviation after removing slow drifts, as an overlay with a colour bar and how to read it",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "view.inspector",
+   "title": "Advanced controls",
+   "label": "Advanced controls",
+   "category": "Views",
+   "help": "Every control, grouped by purpose: for images the layers and their look, the view, the layout and the 3-D; for signals the channels, time, filters, events, QC and display; for spectra what is shown, the processing, the reference marks and QC",
+   "keys_mac": [
+    "⌘I"
+   ],
+   "keys_other": [
+    "Ctrl+I"
+   ],
+   "kinds": [
+    "signal",
+    "spectrum",
+    "volume"
+   ]
+  },
+  {
+   "id": "time.next",
+   "title": "Next page of time",
+   "label": "Next page of time",
+   "category": "Signals",
+   "help": "",
+   "keys_mac": [
+    "→"
+   ],
+   "keys_other": [
+    "Right"
+   ],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "time.prev",
+   "title": "Previous page of time",
+   "label": "Previous page of time",
+   "category": "Signals",
+   "help": "",
+   "keys_mac": [
+    "←"
+   ],
+   "keys_other": [
+    "Left"
+   ],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "time.start",
+   "title": "Start of the recording",
+   "label": "|<",
+   "category": "Signals",
+   "help": "",
+   "keys_mac": [
+    "⇧←"
+   ],
+   "keys_other": [
+    "Shift+Left"
+   ],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "time.end",
+   "title": "End of the recording",
+   "label": ">|",
+   "category": "Signals",
+   "help": "",
+   "keys_mac": [
+    "⇧→"
+   ],
+   "keys_other": [
+    "Shift+Right"
+   ],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "time.zoom_in",
+   "title": "Shorter time window",
+   "label": "Shorter time window",
+   "category": "Signals",
+   "help": "",
+   "keys_mac": [
+    "="
+   ],
+   "keys_other": [
+    "="
+   ],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "time.zoom_out",
+   "title": "Longer time window",
+   "label": "Longer time window",
+   "category": "Signals",
+   "help": "",
+   "keys_mac": [
+    "-"
+   ],
+   "keys_other": [
+    "-"
+   ],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "time.fit",
+   "title": "Fit the whole recording",
+   "label": "Fit all",
+   "category": "Signals",
+   "help": "Put the whole recording in the window at once",
+   "keys_mac": [
+    "F"
+   ],
+   "keys_other": [
+    "F"
+   ],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "channels.next",
+   "title": "Next channel",
+   "label": "Next channel",
+   "category": "Signals",
+   "help": "",
+   "keys_mac": [
+    "↓"
+   ],
+   "keys_other": [
+    "Down"
+   ],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "channels.prev",
+   "title": "Previous channel",
+   "label": "Previous channel",
+   "category": "Signals",
+   "help": "",
+   "keys_mac": [
+    "↑"
+   ],
+   "keys_other": [
+    "Up"
+   ],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "channels.page_next",
+   "title": "Next page of channels",
+   "label": "Next page of channels",
+   "category": "Signals",
+   "help": "",
+   "keys_mac": [
+    "Page Down"
+   ],
+   "keys_other": [
+    "PgDown"
+   ],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "channels.page_prev",
+   "title": "Previous page of channels",
+   "label": "Previous page of channels",
+   "category": "Signals",
+   "help": "",
+   "keys_mac": [
+    "Page Up"
+   ],
+   "keys_other": [
+    "PgUp"
+   ],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "traces.bigger",
+   "title": "Larger amplitude",
+   "label": "Larger amplitude",
+   "category": "Signals",
+   "help": "",
+   "keys_mac": [
+    "]"
+   ],
+   "keys_other": [
+    "]"
+   ],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "traces.smaller",
+   "title": "Smaller amplitude",
+   "label": "Smaller amplitude",
+   "category": "Signals",
+   "help": "",
+   "keys_mac": [
+    "["
+   ],
+   "keys_other": [
+    "["
+   ],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "traces.normalize",
+   "title": "Normalise each channel",
+   "label": "Normalise",
+   "category": "Signals",
+   "help": "Each channel scaled to its own range, so none overlaps; off, channels of one type share a scale",
+   "keys_mac": [
+    "N"
+   ],
+   "keys_other": [
+    "N"
+   ],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "traces.butterfly",
+   "title": "Butterfly: every channel of a type in one band",
+   "label": "Butterfly",
+   "category": "Signals",
+   "help": "Overlay the channels of each type, to see what they share",
+   "keys_mac": [
+    "B"
+   ],
+   "keys_other": [
+    "B"
+   ],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "traces.clip",
+   "title": "Clip traces to their band",
+   "label": "Clip traces",
+   "category": "Signals",
+   "help": "Cut a trace off at one and a half bands, so an artefact cannot paint over its neighbours",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "traces.dc",
+   "title": "Remove each channel's mean",
+   "label": "Remove DC",
+   "category": "Signals",
+   "help": "Centre each trace in its band (the mean over the window taken out)",
+   "keys_mac": [
+    "D"
+   ],
+   "keys_other": [
+    "D"
+   ],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "traces.page_scale",
+   "title": "Scale each page to itself",
+   "label": "Scale per page",
+   "category": "Signals",
+   "help": "Off: one amplitude per channel type for the whole recording, so a quiet page and a noisy one compare. On: each page fills its bands.",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "traces.quality",
+   "title": "Quality control (QC)",
+   "label": "QC",
+   "category": "Signals",
+   "help": "A quick check before a full pipeline, computed when switched on and type by type (magnetometers, gradiometers and EEG are never mixed): channels that are noisy, flat, uncorrelated or carry line noise, by STD and peak-to-peak; and the segments where a type's channels go off or muscle shows. Its parameters are in the advanced controls",
+   "keys_mac": [
+    "Q"
+   ],
+   "keys_other": [
+    "Q"
+   ],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "annotate.toggle",
+   "title": "Annotation mode",
+   "label": "Annotate",
+   "category": "Annotation",
+   "help": "Mark bad segments: drag across the traces to mark one, drag its edges to adjust it, right-click it to relabel or delete it. Channel names mark channels bad in any mode.",
+   "keys_mac": [
+    "A"
+   ],
+   "keys_other": [
+    "A"
+   ],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "annotate.delete",
+   "title": "Delete the selected bad segment",
+   "label": "Delete segment",
+   "category": "Annotation",
+   "help": "Click a segment to select it (it is drawn stronger), then Delete",
+   "keys_mac": [
+    "⌦",
+    "⌫"
+   ],
+   "keys_other": [
+    "Delete",
+    "Backspace"
+   ],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "review.save",
+   "title": "Save the bad channels and segments to the dataset",
+   "label": "Save to dataset",
+   "category": "Annotation",
+   "help": "Bad channels into the status column of _channels.tsv, bad segments as BAD_ rows of the run's _events.tsv (how mne-bids reads them back as annotations); one step in the Editor's history, so it can be undone",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "traces.reset",
+   "title": "Reset the view",
+   "label": "Reset view",
+   "category": "Signals",
+   "help": "Back to the opening window, scale, channels and no filter",
+   "keys_mac": [
+    "R"
+   ],
+   "keys_other": [
+    "R"
+   ],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "traces.reset_filters",
+   "title": "Remove the filters",
+   "label": "No filter",
+   "category": "Signals",
+   "help": "Back to the unfiltered signal",
+   "keys_mac": [
+    "⇧R"
+   ],
+   "keys_other": [
+    "Shift+R"
+   ],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "events.toggle",
+   "title": "Show events",
+   "label": "Events",
+   "category": "Signals",
+   "help": "Event markers from the run's events.tsv, or the stim channel's triggers; turning them on jumps to the first when none is in view",
+   "keys_mac": [
+    "E"
+   ],
+   "keys_other": [
+    "E"
+   ],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "traces.psd",
+   "title": "Power spectrum",
+   "label": "PSD",
+   "category": "Signals",
+   "help": "Power spectral density (Welch) of the channels shown, of the raw or the filtered signal",
+   "keys_mac": [
+    "P"
+   ],
+   "keys_other": [
+    "P"
+   ],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "traces.line",
+   "title": "Line thickness and colours",
+   "label": "Line style",
+   "category": "Signals",
+   "help": "Trace width, and one colour or a colour per channel type",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "signal",
+    "spectrum"
+   ]
+  },
+  {
+   "id": "traces.together",
+   "title": "Every physio file of this run",
+   "label": "All of this run",
+   "category": "Signals",
+   "help": "The cardiac trace, the belt and the trigger of one run on one clock: resampled onto the fastest grid, each at its own start time",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "view.zen",
+   "title": "Zen mode: only the traces",
+   "label": "Zen",
+   "category": "Signals",
+   "help": "Hide the toolbars and the overview and leave the traces the whole pane; Z again brings them back",
+   "keys_mac": [
+    "Z"
+   ],
+   "keys_other": [
+    "Z"
+   ],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "signal.close",
+   "title": "Close the signal",
+   "label": "Close",
+   "category": "Signals",
+   "help": "Drop the signal and go back to the metadata",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "signal"
+   ]
+  },
+  {
+   "id": "spectrum.fid",
+   "title": "Show the FID",
+   "label": "FID",
+   "category": "Spectrum",
+   "help": "The time-domain signal the scanner measured, against seconds",
+   "keys_mac": [
+    "T"
+   ],
+   "keys_other": [
+    "T"
+   ],
+   "kinds": [
+    "spectrum"
+   ]
+  },
+  {
+   "id": "spectrum.metabolites",
+   "title": "Metabolite positions",
+   "label": "Metabolites",
+   "category": "Spectrum",
+   "help": "Labelled lines where the main metabolites resonate: NAA 2.01, creatine 3.03, choline 3.22, myo-inositol 3.56 ppm, and others",
+   "keys_mac": [
+    "L"
+   ],
+   "keys_other": [
+    "L"
+   ],
+   "kinds": [
+    "spectrum"
+   ]
+  },
+  {
+   "id": "spectrum.window",
+   "title": "Standard window (0.2 to 4.2 ppm)",
+   "label": "0.2 to 4.2 ppm",
+   "category": "Spectrum",
+   "help": "Frame the band where the proton metabolites are read",
+   "keys_mac": [
+    "W"
+   ],
+   "keys_other": [
+    "W"
+   ],
+   "kinds": [
+    "spectrum"
+   ]
+  },
+  {
+   "id": "spectrum.reference",
+   "title": "Overlay the water reference",
+   "label": "Water reference",
+   "category": "Spectrum",
+   "help": "The unsuppressed water acquisition of the same voxel (_mrsref), over the spectrum: its line width and frequency are the reference for quality",
+   "keys_mac": [
+    "O"
+   ],
+   "keys_other": [
+    "O"
+   ],
+   "kinds": [
+    "spectrum"
+   ]
+  },
+  {
+   "id": "spectrum.anatomy",
+   "title": "Show the voxel on the anatomy",
+   "label": "On anatomy",
+   "category": "Spectrum",
+   "help": "Where the spectrum was measured: the voxel outlined on this subject's anatomical image",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "spectrum"
+   ]
+  },
+  {
+   "id": "spectrum.fit",
+   "title": "Fit the whole band",
+   "label": "Fit all",
+   "category": "Spectrum",
+   "help": "Show the whole frequency range at a height that fits it",
+   "keys_mac": [
+    "F"
+   ],
+   "keys_other": [
+    "F"
+   ],
+   "kinds": [
+    "spectrum"
+   ]
+  },
+  {
+   "id": "spectrum.reset",
+   "title": "Reset the view",
+   "label": "Reset view",
+   "category": "Spectrum",
+   "help": "",
+   "keys_mac": [
+    "R"
+   ],
+   "keys_other": [
+    "R"
+   ],
+   "kinds": [
+    "spectrum"
+   ]
+  },
+  {
+   "id": "spectrum.reset_processing",
+   "title": "Reset the processing",
+   "label": "Reset the processing",
+   "category": "Spectrum",
+   "help": "",
+   "keys_mac": [
+    "⇧R"
+   ],
+   "keys_other": [
+    "Shift+R"
+   ],
+   "kinds": [
+    "spectrum"
+   ]
+  },
+  {
+   "id": "spectrum.auto_phase",
+   "title": "Phase automatically",
+   "label": "Auto phase",
+   "category": "Spectrum",
+   "help": "The zero-order phase that makes NAA, creatine and choline upright",
+   "keys_mac": [
+    "P"
+   ],
+   "keys_other": [
+    "P"
+   ],
+   "kinds": [
+    "spectrum"
+   ]
+  },
+  {
+   "id": "spectrum.water",
+   "title": "Fit the height without the water",
+   "label": "Ignore water",
+   "category": "Spectrum",
+   "help": "Leave the residual water band (4.4 to 5.0 ppm) out of the height, so a water peak cannot flatten the metabolites; it then runs off the top",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "spectrum"
+   ]
+  },
+  {
+   "id": "spectrum.gain_up",
+   "title": "Vertical zoom in (look under the peaks)",
+   "label": "Vertical zoom in (look under the peaks)",
+   "category": "Spectrum",
+   "help": "",
+   "keys_mac": [
+    "]"
+   ],
+   "keys_other": [
+    "]"
+   ],
+   "kinds": [
+    "spectrum"
+   ]
+  },
+  {
+   "id": "spectrum.gain_down",
+   "title": "Vertical zoom out",
+   "label": "Vertical zoom out",
+   "category": "Spectrum",
+   "help": "",
+   "keys_mac": [
+    "["
+   ],
+   "keys_other": [
+    "["
+   ],
+   "kinds": [
+    "spectrum"
+   ]
+  },
+  {
+   "id": "scene.save",
+   "title": "Save a scene in this dataset...",
+   "label": "Save a scene in this dataset...",
+   "category": "Views",
+   "help": "THIS image with its overlays in their looks, the crosshair and the layout, saved in the dataset (.bidsmgr/viz/scenes) to open again or share with someone who has the dataset",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "view.mosaic_figure",
+   "title": "Save a mosaic figure...",
+   "label": "Save a mosaic figure...",
+   "category": "Views",
+   "help": "The mosaic (built in Controls > Mosaic) as a PNG at screen, print or poster resolution",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "view.command_line",
+   "title": "Show the command line...",
+   "label": "Show the command line...",
+   "category": "Views",
+   "help": "The bidsmgr-view call (or Python) that reproduces this view: to open it again, or render it to a PNG with no window",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "views.save",
+   "title": "Save the look as a preset...",
+   "label": "Save preset",
+   "category": "Views",
+   "help": "How the viewer looks and is arranged (layout, display, time course, 3-D look) under a name, to apply to ANY image later from Save > Apply a preset. Without saving, the viewer already keeps the look you leave it in",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "volume"
+   ]
+  },
+  {
+   "id": "edit.undo",
+   "title": "Undo a display change",
+   "label": "Undo a display change",
+   "category": "General",
+   "help": "",
+   "keys_mac": [
+    "⌘Z"
+   ],
+   "keys_other": [
+    "Ctrl+Z"
+   ],
+   "kinds": [
+    "signal",
+    "spectrum",
+    "volume"
+   ]
+  },
+  {
+   "id": "edit.redo",
+   "title": "Redo a display change",
+   "label": "Redo a display change",
+   "category": "General",
+   "help": "",
+   "keys_mac": [
+    "⇧⌘Z"
+   ],
+   "keys_other": [
+    "Ctrl+Shift+Z"
+   ],
+   "kinds": [
+    "signal",
+    "spectrum",
+    "volume"
+   ]
+  },
+  {
+   "id": "export.screenshot",
+   "title": "Save a screenshot...",
+   "label": "Screenshot",
+   "category": "General",
+   "help": "",
+   "keys_mac": [
+    "⇧⌘S"
+   ],
+   "keys_other": [
+    "Ctrl+Shift+S"
+   ],
+   "kinds": [
+    "signal",
+    "spectrum",
+    "volume"
+   ]
+  },
+  {
+   "id": "view.restore_defaults",
+   "title": "Restore every viewer default...",
+   "label": "Restore every viewer default...",
+   "category": "General",
+   "help": "Every viewer back as installed: layouts, display and 3-D look, clip planes, trace and spectrum options, panel sizes. Shortcuts and saved presets are kept",
+   "keys_mac": [],
+   "keys_other": [],
+   "kinds": [
+    "signal",
+    "spectrum",
+    "volume"
+   ]
+  },
+  {
+   "id": "help.shortcuts",
+   "title": "Keyboard and mouse shortcuts",
+   "label": "Shortcuts",
+   "category": "General",
+   "help": "",
+   "keys_mac": [
+    "F1"
+   ],
+   "keys_other": [
+    "F1"
+   ],
+   "kinds": [
+    "signal",
+    "spectrum",
+    "volume"
+   ]
+  },
+  {
+   "id": "help.palette",
+   "title": "Find an action",
+   "label": "Find an action",
+   "category": "General",
+   "help": "",
+   "keys_mac": [
+    "⇧⌘P"
+   ],
+   "keys_other": [
+    "Ctrl+Shift+P"
+   ],
+   "kinds": [
+    "signal",
+    "spectrum",
+    "volume"
+   ]
+  }
+ ],
+ "gestures": {
+  "slice": [
+   {
+    "gesture": "left",
+    "mac": "Click / drag",
+    "other": "Click / drag",
+    "tool": "crosshair",
+    "does": "Move the crosshair"
+   },
+   {
+    "gesture": "right",
+    "mac": "Right-drag",
+    "other": "Right-drag",
+    "tool": "window",
+    "does": "Window level and width"
+   },
+   {
+    "gesture": "middle",
+    "mac": "Middle-drag",
+    "other": "Middle-drag",
+    "tool": "pan",
+    "does": "Pan (when zoomed)"
+   },
+   {
+    "gesture": "shift+left",
+    "mac": "⇧ + Click / drag",
+    "other": "Shift + Click / drag",
+    "tool": "window_box",
+    "does": "Fit the window to a box"
+   },
+   {
+    "gesture": "ctrl+left",
+    "mac": "⌘ + Click / drag",
+    "other": "Ctrl + Click / drag",
+    "tool": "pan",
+    "does": "Pan (when zoomed)"
+   },
+   {
+    "gesture": "wheel",
+    "mac": "Scroll",
+    "other": "Scroll",
+    "tool": "slice",
+    "does": "Step through slices"
+   },
+   {
+    "gesture": "shift+wheel",
+    "mac": "⇧ + Scroll",
+    "other": "Shift + Scroll",
+    "tool": "frame",
+    "does": "Step through volumes (4-D)"
+   },
+   {
+    "gesture": "ctrl+wheel",
+    "mac": "⌘ + Scroll",
+    "other": "Ctrl + Scroll",
+    "tool": "zoom",
+    "does": "Zoom"
+   },
+   {
+    "gesture": "hwheel",
+    "mac": "Horizontal scroll",
+    "other": "Horizontal scroll",
+    "tool": "frame",
+    "does": "Step through volumes (4-D)"
+   },
+   {
+    "gesture": "h+wheel",
+    "mac": "Hold H + Scroll",
+    "other": "Hold H + Scroll",
+    "tool": "frame",
+    "does": "Step through volumes (4-D)"
+   }
+  ],
+  "render": [
+   {
+    "gesture": "left",
+    "mac": "Click / drag",
+    "other": "Click / drag",
+    "tool": "orbit",
+    "does": "Rotate (a click without a drag moves the crosshair)"
+   },
+   {
+    "gesture": "right",
+    "mac": "Right-drag",
+    "other": "Right-drag",
+    "tool": "pan",
+    "does": "Pan"
+   },
+   {
+    "gesture": "middle",
+    "mac": "Middle-drag",
+    "other": "Middle-drag",
+    "tool": "pan",
+    "does": "Pan"
+   },
+   {
+    "gesture": "shift+left",
+    "mac": "⇧ + Click / drag",
+    "other": "Shift + Click / drag",
+    "tool": "clip_tilt",
+    "does": "Tilt the clip plane (when on)"
+   },
+   {
+    "gesture": "wheel",
+    "mac": "Scroll",
+    "other": "Scroll",
+    "tool": "zoom",
+    "does": "Zoom"
+   },
+   {
+    "gesture": "shift+wheel",
+    "mac": "⇧ + Scroll",
+    "other": "Shift + Scroll",
+    "tool": "clip_push",
+    "does": "Move the clip plane (when on)"
+   },
+   {
+    "gesture": "hwheel",
+    "mac": "Horizontal scroll",
+    "other": "Horizontal scroll",
+    "tool": "clip_push",
+    "does": "Move the clip plane (when on)"
+   }
+  ],
+  "traces": [
+   {
+    "gesture": "left",
+    "mac": "Click / drag",
+    "other": "Click / drag",
+    "tool": "scrub",
+    "does": "Drag the recording along"
+   },
+   {
+    "gesture": "wheel",
+    "mac": "Scroll",
+    "other": "Scroll",
+    "tool": "channels",
+    "does": "Scroll through channels"
+   },
+   {
+    "gesture": "shift+wheel",
+    "mac": "⇧ + Scroll",
+    "other": "Shift + Scroll",
+    "tool": "time",
+    "does": "Scroll through time"
+   },
+   {
+    "gesture": "ctrl+wheel",
+    "mac": "⌘ + Scroll",
+    "other": "Ctrl + Scroll",
+    "tool": "zoom_time",
+    "does": "Zoom time"
+   },
+   {
+    "gesture": "alt+wheel",
+    "mac": "⌥ + Scroll",
+    "other": "Alt + Scroll",
+    "tool": "scale",
+    "does": "Change the amplitude"
+   },
+   {
+    "gesture": "hwheel",
+    "mac": "Horizontal scroll",
+    "other": "Horizontal scroll",
+    "tool": "time",
+    "does": "Scroll through time"
+   }
+  ]
+ }
+}

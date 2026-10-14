@@ -1,0 +1,41 @@
+{
+ "id": "home-editor",
+ "kind": "figure",
+ "width": 1600,
+ "height": 1000,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1600": "home-editor-dark-1600-e71c0e26.avif",
+    "3200": "home-editor-dark-3200-67735269.avif"
+   },
+   "webp": {
+    "1600": "home-editor-dark-1600-de9db01f.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1600": "home-editor-light-1600-1079d867.avif",
+    "3200": "home-editor-light-3200-7e3af531.avif"
+   },
+   "webp": {
+    "1600": "home-editor-light-1600-e7b1bfa5.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The Editor on the converted sample: the BIDS tree with its validation marks, the BOLD run in the Planes + 3-D layout with its time course and physiological recordings, and the Validation panel.",
+ "window": true,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2 (OL_3844, consented)"
+ }
+}

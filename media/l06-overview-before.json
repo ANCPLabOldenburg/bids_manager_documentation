@@ -1,0 +1,41 @@
+{
+ "id": "l06-overview-before",
+ "kind": "figure",
+ "width": 1018,
+ "height": 598,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1018": "l06-overview-before-dark-1018-05923172.avif",
+    "2036": "l06-overview-before-dark-2036-6ab7463d.avif"
+   },
+   "webp": {
+    "1018": "l06-overview-before-dark-1018-c2f4eb9c.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1018": "l06-overview-before-light-1018-f43acf13.avif",
+    "2036": "l06-overview-before-light-2036-ed30e46e.avif"
+   },
+   "webp": {
+    "1018": "l06-overview-before-light-1018-19314dee.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The Overview after the scan: 4 subjects, 3 sessions, 15 recordings to convert, and one finding: three subjects have no session while the other one has three.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

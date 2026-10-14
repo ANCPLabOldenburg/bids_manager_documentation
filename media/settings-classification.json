@@ -1,0 +1,41 @@
+{
+ "id": "settings-classification",
+ "kind": "figure",
+ "width": 900,
+ "height": 760,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "900": "settings-classification-dark-900-02c777dc.avif",
+    "1800": "settings-classification-dark-1800-98496a83.avif"
+   },
+   "webp": {
+    "900": "settings-classification-dark-900-84e4658b.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "900": "settings-classification-light-900-9f7aab51.avif",
+    "1800": "settings-classification-light-1800-ca3e56b1.avif"
+   },
+   "webp": {
+    "900": "settings-classification-light-900-d60035e5.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, Classification page: how the parameter classifier names MRI series, the weight of each kind of evidence, and the first of its thresholds.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

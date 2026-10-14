@@ -1,0 +1,41 @@
+{
+ "id": "w-bulk-remove",
+ "kind": "figure",
+ "width": 680,
+ "height": 700,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "680": "w-bulk-remove-dark-680-d128f31d.avif",
+    "1360": "w-bulk-remove-dark-1360-b0484e3b.avif"
+   },
+   "webp": {
+    "680": "w-bulk-remove-dark-680-77da17b6.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "680": "w-bulk-remove-light-680-41462904.avif",
+    "1360": "w-bulk-remove-light-1360-6629a16c.avif"
+   },
+   "webp": {
+    "680": "w-bulk-remove-light-680-2b236365.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Bulk edit on the MRI rows: Remove this entity from the rows that have it, for the acquisition label. The list shows each name now and after; rows without the label are left alone.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "7bb684f",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

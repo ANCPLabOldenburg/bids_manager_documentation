@@ -1,0 +1,82 @@
+{
+ "id": "l02-after-create",
+ "kind": "figure",
+ "width": 1440,
+ "height": 900,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1440": "l02-after-create-dark-1440-e41421ad.avif",
+    "2880": "l02-after-create-dark-2880-883f1992.avif"
+   },
+   "webp": {
+    "1440": "l02-after-create-dark-1440-9c8936bd.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1440": "l02-after-create-light-1440-1a6079d3.avif",
+    "2880": "l02-after-create-light-2880-cb190d09.avif"
+   },
+   "webp": {
+    "1440": "l02-after-create-light-1440-d0e77e97.webp"
+   }
+  }
+ },
+ "regions": [
+  {
+   "key": "switcher",
+   "label": "The project switcher",
+   "x": 0.39931,
+   "y": 0.00667,
+   "w": 0.14028,
+   "h": 0.04778,
+   "mx": 0.46944,
+   "my": 0.03056
+  },
+  {
+   "key": "output",
+   "label": "BIDS output: the project folder",
+   "x": 0.0,
+   "y": 0.16111,
+   "w": 1.0,
+   "h": 0.06,
+   "mx": 0.00139,
+   "my": 0.19111
+  },
+  {
+   "key": "tree",
+   "label": "The new dataset's files",
+   "x": 0.02153,
+   "y": 0.55,
+   "w": 0.15417,
+   "h": 0.22667,
+   "mx": 0.02292,
+   "my": 0.55222
+  },
+  {
+   "key": "raw",
+   "label": "Raw input: not chosen yet",
+   "x": 0.0,
+   "y": 0.10778,
+   "w": 1.0,
+   "h": 0.06,
+   "mx": 0.00139,
+   "my": 0.13778
+  }
+ ],
+ "alt": "The Converter right after the project was created: the project's name in the header, the BIDS output locked to /tmp/studies/multimodal_study, and the output tree with the files a new dataset starts with.",
+ "window": true,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

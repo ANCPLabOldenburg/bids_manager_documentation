@@ -1,0 +1,41 @@
+{
+ "id": "l10-sidecar-bids",
+ "kind": "figure",
+ "width": 828,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "828": "l10-sidecar-bids-dark-828-6bffa6f2.avif",
+    "1656": "l10-sidecar-bids-dark-1656-785809d2.avif"
+   },
+   "webp": {
+    "828": "l10-sidecar-bids-dark-828-5bbabe45.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "828": "l10-sidecar-bids-light-828-6a4df00e.avif",
+    "1656": "l10-sidecar-bids-light-1656-142c73ad.avif"
+   },
+   "webp": {
+    "828": "l10-sidecar-bids-light-828-93083546.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The BOLD run's sidecar in the BIDS view: its fields grouped by level, each with the standard's description, findings marked.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

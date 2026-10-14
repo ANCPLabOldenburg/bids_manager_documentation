@@ -1,0 +1,41 @@
+{
+ "id": "l05-properties",
+ "kind": "figure",
+ "width": 430,
+ "height": 564,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "430": "l05-properties-dark-430-e75d4a06.avif",
+    "860": "l05-properties-dark-860-44183e98.avif"
+   },
+   "webp": {
+    "430": "l05-properties-dark-430-52a3ddb9.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "430": "l05-properties-light-430-e65887ad.avif",
+    "860": "l05-properties-light-860-07867349.avif"
+   },
+   "webp": {
+    "430": "l05-properties-light-430-77b02130.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The Properties panel of the T1w row: datatype and suffix, the entities the standard allows for it, and the entity values that build its name.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-13",
+  "sample": "multimodal v2"
+ }
+}

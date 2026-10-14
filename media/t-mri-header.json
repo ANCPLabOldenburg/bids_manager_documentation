@@ -1,0 +1,41 @@
+{
+ "id": "t-mri-header",
+ "kind": "figure",
+ "width": 1294,
+ "height": 782,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1294": "t-mri-header-dark-1294-66c4c840.avif",
+    "2588": "t-mri-header-dark-2588-90373144.avif"
+   },
+   "webp": {
+    "1294": "t-mri-header-dark-1294-cb27d48c.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1294": "t-mri-header-light-1294-d1ae9e1b.avif",
+    "2588": "t-mri-header-light-2588-9d238e13.avif"
+   },
+   "webp": {
+    "1294": "t-mri-header-light-1294-b422e9e3.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The header inspector: the NIfTI header beside the sidecar, field against field.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "7bb684f",
+  "date": "2026-10-14",
+  "sample": "multimodal v2 (OL_3844, consented)"
+ }
+}

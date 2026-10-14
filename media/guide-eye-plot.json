@@ -1,0 +1,41 @@
+{
+ "id": "guide-eye-plot",
+ "kind": "figure",
+ "width": 1224,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1224": "guide-eye-plot-dark-1224-201710dd.avif",
+    "2448": "guide-eye-plot-dark-2448-f12f6be0.avif"
+   },
+   "webp": {
+    "1224": "guide-eye-plot-dark-1224-3900de7e.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1224": "guide-eye-plot-light-1224-7b91c395.avif",
+    "2448": "guide-eye-plot-light-2448-6187f1d3.avif"
+   },
+   "webp": {
+    "1224": "guide-eye-plot-light-1224-9d81a4de.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The first eye's recording of the sample, converted and drawn with Visualize: gaze position and pupil size on one time axis.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

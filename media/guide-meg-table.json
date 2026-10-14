@@ -1,0 +1,41 @@
+{
+ "id": "guide-meg-table",
+ "kind": "figure",
+ "width": 1018,
+ "height": 655,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1018": "guide-meg-table-dark-1018-e6db56e7.avif",
+    "2036": "guide-meg-table-dark-2036-a212a8cf.avif"
+   },
+   "webp": {
+    "1018": "guide-meg-table-dark-1018-e93a68c1.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1018": "guide-meg-table-light-1018-6bbc817e.avif",
+    "2036": "guide-meg-table-light-2036-bfd10f87.avif"
+   },
+   "webp": {
+    "1018": "guide-meg-table-light-1018-f48d2415.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The MEG sample after the scan: 23 recordings of two participants, the first in two sessions found from the dates of its folders, each recording's task and run read from its file name.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

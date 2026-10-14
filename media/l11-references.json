@@ -1,0 +1,41 @@
+{
+ "id": "l11-references",
+ "kind": "figure",
+ "width": 1100,
+ "height": 720,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1100": "l11-references-dark-1100-848e6f70.avif",
+    "2200": "l11-references-dark-2200-74aef243.avif"
+   },
+   "webp": {
+    "1100": "l11-references-dark-1100-082ddf92.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1100": "l11-references-light-1100-a5750507.avif",
+    "2200": "l11-references-light-2200-e9a78ab6.avif"
+   },
+   "webp": {
+    "1100": "l11-references-light-1100-e29ad2af.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "References between files: the fieldmap and the run its IntendedFor names.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14",
+  "sample": "multimodal v2"
+ }
+}

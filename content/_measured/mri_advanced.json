@@ -1,0 +1,50 @@
+{
+ "scan": {
+  "rows": 51,
+  "included": 31,
+  "seconds": 47.3,
+  "subjects": [
+   "sub-001",
+   "sub-002"
+  ],
+  "sessions": [
+   "ses-post",
+   "ses-pre"
+  ],
+  "chips": {
+   "valid": "32 valid",
+   "warn": "3 warnings",
+   "err": "0 error",
+   "skip": "16 skipped"
+  }
+ },
+ "left_out": [
+  "AAHead_Scout_64ch-head-coil",
+  "AAHead_Scout_64ch-head-coil_MPR_cor",
+  "AAHead_Scout_64ch-head-coil_MPR_sag",
+  "AAHead_Scout_64ch-head-coil_MPR_tra",
+  "PhoenixZIPReport",
+  "ses-pre_dir-ap_dwi_TENSOR"
+ ],
+ "convert": {
+  "rc": 0,
+  "seconds": 23.9
+ },
+ "converted": {
+  "files": 111,
+  "validation": {
+   "ok": 30,
+   "warn": 108,
+   "err": 0
+  },
+  "todo": {
+   "inserted": 31,
+   "files": 9
+  }
+ },
+ "source": {
+  "bids_manager": "1.5.0",
+  "commit": "373b09d",
+  "date": "2026-10-14"
+ }
+}
