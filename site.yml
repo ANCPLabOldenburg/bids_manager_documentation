@@ -19,7 +19,8 @@ analytics: https://bids-manager.goatcounter.com/count
 # Every download in one place. A sample whose zip has no public link yet has
 # an empty url: the pages then describe it without a download button, and the
 # build lists it under "missing downloads". `build.py --release` refuses to
-# build while any is missing.
+# build while any is missing, unless the entry says `coming_soon: true`: then
+# the page says the download is coming soon and the release build goes ahead.
 downloads:
   installers:
     url: https://github.com/ANCPLabOldenburg/BIDS-Manager/raw/main/Installers/Installers.zip
@@ -56,8 +57,10 @@ downloads:
     unpacked: 603 MB
     goatcounter: download-dataset-mri
   mri_advanced:
-    # Not uploaded yet (the old share is gone, 404); the link comes later.
+    # Being uploaded (the old share is gone, 404). Put the public link in url
+    # and remove coming_soon when it is there.
     url: ""
+    coming_soon: true
     file: MRI_sample_data_neuroimging_unit_oldenburg_1.zip
     size: 4.7 GB
     unpacked: 8.0 GB

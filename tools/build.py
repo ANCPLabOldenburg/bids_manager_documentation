@@ -255,6 +255,12 @@ class Site:
             if d is None:
                 self.problems.append(f"{page.url}: unknown download {key!r}")
                 return ""
+            if not d.get("url") and d.get("coming_soon"):
+                # Announced, not forgotten: said on the page, noted in the
+                # build, and NOT a reason for a release build to refuse.
+                self.warnings.append(f"download coming soon: {key} ({d.get('file')}) on /{page.url}")
+                return (f'<span class="btn btn--{style} btn--pending" aria-disabled="true">'
+                        f'{label}: coming soon</span>')
             if not d.get("url"):
                 self.warnings.append(f"missing download link: {key} ({d.get('file')}) on /{page.url}")
                 # Visible in a working build, so a review sees what is missing;
