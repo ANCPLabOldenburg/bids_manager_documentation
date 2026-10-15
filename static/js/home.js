@@ -5,8 +5,8 @@
  * and the sidecars beside the recordings fill in, field by field, each value
  * marked with where it came from.
  *
- * With effects off (the header's switch, or the system's reduced-motion
- * setting) the hero is one still frame and nothing moves; the dataset is shown
+ * With effects off (the header's switch; on by default) the hero is one
+ * still frame and nothing moves; the dataset is shown
  * below it, already filled in. Without WebGL 2 the page keeps the drawn still.
  * Every frame starts from a cleared canvas: a fading trail (the background
  * painted over the last frame at partial opacity) never reaches the background

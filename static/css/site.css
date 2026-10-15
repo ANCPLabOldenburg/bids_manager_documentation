@@ -808,10 +808,14 @@ li .fig--wide, .callout .fig--wide, details .fig--wide { width: 100%; }
 }
 
 /* ------------------------------------------------------- reduced motion */
+/* Effects are on by default and the header's switch is the one control: a
+   system asking for less motion shortens the page's animations only when the
+   reader has switched Effects off, or when no script runs (no switch then). */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important;
+  html:not(.js) *, html:not(.js) *::before, html:not(.js) *::after,
+  [data-fx="off"] *, [data-fx="off"] *::before, [data-fx="off"] *::after {
+    animation-duration: 1ms !important; animation-iteration-count: 1 !important;
     transition-duration: 1ms !important; scroll-behavior: auto !important; }
-  .js .reveal { opacity: 1; transform: none; }
 }
 [data-motion="reduce"] *, [data-motion="reduce"] *::before, [data-motion="reduce"] *::after {
   animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }

@@ -40,11 +40,11 @@
     : /Linux|X11|CrOS|Android/.test(ua) ? 'linux' : 'unknown');
   var reduce = new URLSearchParams(location.search).get('motion') === 'reduce';
   if (reduce) d.setAttribute('data-motion', 'reduce');
-  /* Effects: on unless the reader asked the system for less motion, or
-     switched them off here. */
+  /* Effects: on by default for everyone; the Effects switch in the header
+     turns them off, and the choice is remembered. */
   var fx = null;
   try { fx = localStorage.getItem('bm-fx'); } catch (e) {}
-  if (reduce || (!fx && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) fx = 'off';
+  if (reduce) fx = 'off';
   var fxq = new URLSearchParams(location.search).get('fx');
   if (fxq === 'on' || fxq === 'off') fx = fxq;
   d.setAttribute('data-fx', fx === 'off' ? 'off' : 'on');
