@@ -1,12 +1,12 @@
 /* BIDS Manager documentation: behaviour.
  * Everything here is an enhancement: every page reads complete without it,
- * and with reduced motion nothing moves. */
+ * and with Effects off nothing moves. */
 (function () {
   'use strict';
   var doc = document.documentElement;
   var root = document.body.getAttribute('data-root') || './';
-  /* Motion is on only with effects on: off by default under the system's
-     reduced-motion setting, and switchable in the header. */
+  /* Motion is on only with effects on: on by default, switched off in the
+     header (remembered), or by ?motion=reduce. */
   var reduce = function () {
     return doc.getAttribute('data-fx') === 'off' || doc.getAttribute('data-motion') === 'reduce';
   };

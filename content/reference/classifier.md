@@ -12,6 +12,12 @@ On 256 series checked by hand, from scanners of several vendors, it named 99.2 %
 
 It names MR images only. Spectroscopy, PET and CT keep the names the other steps give them, and it never replaces a name in a datatype its rules do not cover.
 
+## Where the idea comes from
+
+Naming MRI series from their acquisition parameters is not new: dcm2niix's guess and earlier tools do it too. Part of the inspiration for BIDS Manager's classifier came from **SWIFTCAT**, a tool that converts mostly anatomical MRI to BIDS from acquisition parameters, developed by Marta Loureiro, Rita G. Nunes and Rita Reis Nunes (Evolutionary Systems and Biomedical Engineering Lab, LaSEEB, University of Lisbon) and Patricia Clement (Department of Medical Imaging, Ghent University Hospital, UZ Gent).
+
+BIDS Manager's classifier is its own early implementation of this idea. It works well overall, and every name it gives can be checked and changed ([Seeing why](/reference/classifier/#seeing-why)). The SWIFTCAT team is putting a lot of effort into improving the approach for MRI, testing it on clinical and heterogeneous data. SWIFTCAT is not public yet: stay tuned for its release, which could also be plugged into BIDS Manager as a classification algorithm.
+
 ## How a series is named
 
 1. **Each series is scored alone.** The scan reads the series' acquisition parameters from its DICOM header (echo, repetition and inversion times, flip angle, readout, number of volumes, b-values, phase encoding, a contrast agent, the ASL protocol, and the vendor's private fields where they say more). Each piece of evidence for or against a name adds its weight to that name's score, and the scores become a confidence between 0 and 1.

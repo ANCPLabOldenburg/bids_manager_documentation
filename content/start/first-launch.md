@@ -28,7 +28,7 @@ The **status bar** at the bottom says what BIDS Manager is doing, and holds the 
 
 | View | What it is for |
 |---|---|
-| **Home** | Create a dataset, open one, reopen a recent project. Links to the documentation and to sample datasets (for the course, take the multimodal sample from [Sample data](/start/sample-data/)). |
+| **Home** | Create a dataset, open one, reopen a recent project. Links to the documentation, a menu of sample datasets (for the course, take the multimodal sample from [Sample data](/start/sample-data/)), and **What's new**: the announcement this release showed when it first opened, and the update notes. |
 | **Converter** | Scan raw data, curate the scan table of what was found, set the metadata no file records, and convert. |
 | **Editor** | Validate the converted dataset, edit its sidecars and tables, change its shape, view every file and check the image quality. |
 

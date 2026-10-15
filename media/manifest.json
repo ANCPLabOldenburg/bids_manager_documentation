@@ -67,31 +67,31 @@
    "files": {
     "dark": {
      "avif": {
-      "1440": "window-home-dark-1440-c1cfd6a1.avif",
-      "2880": "window-home-dark-2880-7fd85bb4.avif"
+      "1440": "window-home-dark-1440-401378da.avif",
+      "2880": "window-home-dark-2880-e2f1267e.avif"
      },
      "webp": {
-      "1440": "window-home-dark-1440-1de52585.webp"
+      "1440": "window-home-dark-1440-ff8b8371.webp"
      }
     },
     "light": {
      "avif": {
-      "1440": "window-home-light-1440-2b887f6a.avif",
-      "2880": "window-home-light-2880-906d5bc2.avif"
+      "1440": "window-home-light-1440-01670299.avif",
+      "2880": "window-home-light-2880-89fc3495.avif"
      },
      "webp": {
-      "1440": "window-home-light-1440-4b7fba42.webp"
+      "1440": "window-home-light-1440-e47b045b.webp"
      }
     }
    },
-   "bytes": 300525,
+   "bytes": 310754,
    "source": {
     "bids_manager": "1.5.0",
-    "commit": "373b09d",
-    "date": "2026-10-13",
+    "commit": "7bb684f+changes",
+    "date": "2026-10-15",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-14"
+   "published": "2026-10-15"
   },
   "l03-scan": {
    "kind": "clip",

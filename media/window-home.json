@@ -11,20 +11,20 @@
  "files": {
   "dark": {
    "avif": {
-    "1440": "window-home-dark-1440-c1cfd6a1.avif",
-    "2880": "window-home-dark-2880-7fd85bb4.avif"
+    "1440": "window-home-dark-1440-401378da.avif",
+    "2880": "window-home-dark-2880-e2f1267e.avif"
    },
    "webp": {
-    "1440": "window-home-dark-1440-1de52585.webp"
+    "1440": "window-home-dark-1440-ff8b8371.webp"
    }
   },
   "light": {
    "avif": {
-    "1440": "window-home-light-1440-2b887f6a.avif",
-    "2880": "window-home-light-2880-906d5bc2.avif"
+    "1440": "window-home-light-1440-01670299.avif",
+    "2880": "window-home-light-2880-89fc3495.avif"
    },
    "webp": {
-    "1440": "window-home-light-1440-4b7fba42.webp"
+    "1440": "window-home-light-1440-e47b045b.webp"
    }
   }
  },
@@ -70,12 +70,32 @@
    "my": 0.17889
   },
   {
+   "key": "samples",
+   "label": "Download a sample dataset",
+   "x": 0.15278,
+   "y": 0.67778,
+   "w": 0.14722,
+   "h": 0.03778,
+   "mx": 0.22639,
+   "my": 0.69667
+  },
+  {
+   "key": "news",
+   "label": "What's new: this release, and the update notes",
+   "x": 0.13681,
+   "y": 0.78,
+   "w": 0.35556,
+   "h": 0.18222,
+   "mx": 0.13819,
+   "my": 0.78222
+  },
+  {
    "key": "recent",
    "label": "Recent projects",
    "x": 0.50069,
    "y": 0.37222,
    "w": 0.35486,
-   "h": 0.62778,
+   "h": 0.59,
    "mx": 0.50208,
    "my": 0.37444
   },
@@ -110,13 +130,13 @@
    "my": 0.97
   }
  ],
- "alt": "BIDS Manager's GUI on first launch, showing the Home view: a card to create a dataset, a card to open one, links to get started, and the list of recent projects.",
+ "alt": "BIDS Manager's GUI on first launch, showing the Home view: a card to create a dataset, a card to open one, links to get started with a menu of sample datasets, What's new, and the list of recent projects.",
  "window": true,
  "title": "BIDS-Manager",
  "source": {
   "bids_manager": "1.5.0",
-  "commit": "373b09d",
-  "date": "2026-10-13",
+  "commit": "7bb684f+changes",
+  "date": "2026-10-15",
   "sample": "multimodal v2"
  }
 }

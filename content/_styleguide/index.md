@@ -34,7 +34,7 @@ Three typefaces: Instrument Serif for titles, numerals and the large quiet words
 
 The pastels are the same in both themes. They fill, mark and underline; they never carry text, except dark ink on a pastel chip (contrast 8.5:1 or more on every pastel). Text is ink in both themes. The paper's grain is one layer fixed to the browser window, over everything, that never takes a click.
 
-The interactive pieces, each usable with the keyboard, complete without JavaScript and still under reduced motion: the series judged three ways ([How names are decided](/concepts/how-names-are-decided/)), the four exercises of [BIDS in ten minutes](/learn/01-bids/), the workflow ([home](/#underneath)), the installer's steps ([Install](/start/install/)), and the comparison on [About](/about/).
+The interactive pieces, each usable with the keyboard, complete without JavaScript and still with Effects off: the series judged three ways ([How names are decided](/concepts/how-names-are-decided/)), the four exercises of [BIDS in ten minutes](/learn/01-bids/), the workflow ([home](/#underneath)), the installer's steps ([Install](/start/install/)), and the comparison on [About](/about/).
 
 <p class="kicker">A kicker, in mono between two diamonds</p>
 
