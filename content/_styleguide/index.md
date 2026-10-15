@@ -9,7 +9,7 @@ sample: The multimodal sample
 
 ## Identity
 
-The site is printed matter. By day: grey, granular paper, ink, a dark brown for marks and an emerald for links and actions. By night: greyish-black paper with the same grain, light ink, a lighter brown and a lighter emerald. Both themes give each colour the same role and the same hue family, each step checked for contrast on its own paper.
+The site is printed matter. By day: warm, granular paper and dark ink. By night: greyish-black paper with the same grain and light ink. Mint marks actions, links, numerals and separators in both themes; on light paper only, the hero's forms and the outlined numerals take deeper versions of the same hues.
 
 <div class="sg-swatches">
 <span style="background:var(--bg)">bg</span>
@@ -17,17 +17,17 @@ The site is printed matter. By day: grey, granular paper, ink, a dark brown for 
 <span style="background:var(--bg-sunk)">sunk</span>
 <span style="background:var(--ink);color:var(--bg)">ink</span>
 <span style="background:var(--ink-2);color:var(--bg)">ink 2</span>
-<span style="background:var(--accent);color:var(--bg)">accent</span>
+<span style="background:var(--accent);color:var(--on-pastel)">accent</span>
 </div>
 
 <div class="sg-swatches">
-<span style="background:var(--k-mri);color:var(--bg)">MRI</span>
-<span style="background:var(--k-mrs);color:var(--bg)">MRS</span>
-<span style="background:var(--k-pet);color:var(--bg)">PET</span>
-<span style="background:var(--k-eeg);color:var(--bg)">EEG</span>
-<span style="background:var(--k-meg);color:var(--bg)">MEG</span>
-<span style="background:var(--k-physio);color:var(--bg)">physio</span>
-<span style="background:var(--k-eye);color:var(--bg)">eye</span>
+<span style="background:var(--k-mri);color:var(--on-pastel)">MRI</span>
+<span style="background:var(--k-mrs);color:var(--on-pastel)">MRS</span>
+<span style="background:var(--k-pet);color:var(--on-pastel)">PET</span>
+<span style="background:var(--k-eeg);color:var(--on-pastel)">EEG</span>
+<span style="background:var(--k-meg);color:var(--on-pastel)">MEG</span>
+<span style="background:var(--k-physio);color:var(--on-pastel)">physio</span>
+<span style="background:var(--k-eye);color:var(--on-pastel)">eye</span>
 </div>
 
 Three typefaces: Instrument Serif for titles, numerals and the large quiet words; Inter for reading; JetBrains Mono for file names, kickers and labels.
