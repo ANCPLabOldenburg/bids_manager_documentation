@@ -7,18 +7,26 @@ from harness import Region, Shot
 
 
 def home_window():
+    from PyQt6.QtWidgets import QLabel
+
     """The window on its first launch: the Home view, nothing open yet."""
     win = H.main_window("welcome")
     w = win.welcome
     H.take(Shot(
         "window-home", "BIDS Manager's GUI on first launch, showing the Home view: a card to "
-        "create a dataset, a card to open one, links to get started, and the list of recent projects.",
+        "create a dataset, a card to open one, links to get started with a menu of sample "
+        "datasets, What's new, and the list of recent projects.",
         win, window=True,
         regions=[
             Region("header", "The header: the views, the project, Settings and the theme", win._header, anchor="tl"),
             Region("views", "Home, Converter and Editor", H.find(win._header, name="nav-track")),
             Region("create", "Create a new dataset", H.ancestor(w._create_btn, "welcome-card"), anchor="tl"),
             Region("open", "Open an existing dataset", H.ancestor(w._open_btn, "welcome-card"), anchor="tl"),
+            Region("samples", "Download a sample dataset", w._samples_button),
+            Region("news", "What's new: this release, and the update notes",
+                   H.ancestor(next(l for l in w.findChildren(QLabel)
+                                   if l.property("link_url") == "#whats-new"), "welcome-card"),
+                   anchor="tl"),
             Region("recent", "Recent projects", H.ancestor(w._recent, "welcome-card"), anchor="tl"),
             Region("settings", "Settings", win._header._settings_btn),
             Region("theme", "Theme", win._header._theme_btn),

@@ -57,10 +57,7 @@ downloads:
     unpacked: 603 MB
     goatcounter: download-dataset-mri
   mri_advanced:
-    # Being uploaded (the old share is gone, 404). Put the public link in url
-    # and remove coming_soon when it is there.
-    url: ""
-    coming_soon: true
+    url: https://cloud.uol.de/s/KdFzsDtLA9ijNAb/download
     file: MRI_sample_data_neuroimging_unit_oldenburg_1.zip
     size: 4.7 GB
     unpacked: 8.0 GB

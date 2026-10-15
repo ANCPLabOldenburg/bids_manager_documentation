@@ -21,6 +21,12 @@ The sample below is real: three series of the advanced MRI sample, each judged b
 
 The first is the case this page is about: the operator called it `T2w`, the parameters show a FLAIR, and a converter that trusted the name would have written a FLAIR under a T2w name. In the second, dcm2niix's guess is the one that is wrong, and the parameters agree with the operator. In the third, everything agrees.
 
+## Where the idea comes from
+
+Naming MRI series from their acquisition parameters is not new: dcm2niix's guess and earlier tools do it too. Part of the inspiration for BIDS Manager's classifier came from **SWIFTCAT**, a tool that converts mostly anatomical MRI to BIDS from acquisition parameters, developed by Marta Loureiro, Rita G. Nunes and Rita Reis Nunes (Evolutionary Systems and Biomedical Engineering Lab, LaSEEB, University of Lisbon) and Patricia Clement (Department of Medical Imaging, Ghent University Hospital, UZ Gent).
+
+BIDS Manager's classifier is its own early implementation of this idea. It works well overall, and every name it gives can be checked and changed ([Seeing why](/reference/classifier/#seeing-why)). The SWIFTCAT team is putting a lot of effort into improving the approach for MRI, testing it on clinical and heterogeneous data. SWIFTCAT is not public yet: stay tuned for its release, which could also be plugged into BIDS Manager as a classification algorithm.
+
 ## The chain, in the order it runs
 
 For each DICOM series of an MRI, the scan runs these steps. A later step replaces an earlier name only where it says so.

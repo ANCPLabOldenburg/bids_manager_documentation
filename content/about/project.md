@@ -37,6 +37,8 @@ It uses the network for a few things, and sends nothing about your data with any
 
 With thanks to Jorge Bosch-Bayard, Erdal Karaca, Pablo Alexis Olguín Baxman, Amirhussein Abdolalizadeh Saleh, Tina Schmitt, Andreas Spiegler and Shari Hiltner.
 
+The parameter classifier owes part of its inspiration to the SWIFTCAT team: Marta Loureiro, Rita G. Nunes and Rita Reis Nunes (LaSEEB, University of Lisbon) and Patricia Clement (Department of Medical Imaging, UZ Gent), who are developing SWIFTCAT, a tool that converts MRI to BIDS from acquisition parameters, and are testing it on clinical and heterogeneous data. BIDS Manager's classifier is an early implementation of the idea ([where the idea comes from](/concepts/how-names-are-decided/#where-the-idea-comes-from)).
+
 ## Licence and source
 
 BIDS Manager is released under the [MIT licence]({{ site.repo }}/blob/main/LICENSE). The source code is on [GitHub]({{ site.repo }}), and the package on [PyPI]({{ site.pypi }}). The engines it installs keep their own licences. To cite it, see [Citing](/help/citing/); to report a problem or ask for a feature, see [Reporting](/help/reporting/).
