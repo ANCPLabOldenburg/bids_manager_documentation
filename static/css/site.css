@@ -82,6 +82,8 @@
   --accent-ink: #15130f;
   --label-ink: #4a463f;
   --code-bg: #ddd5c4;
+  --code-inline-bg: var(--bg-sunk);
+  --code-inline-line: var(--line-soft);
   --shadow-sm: 0 1px 2px rgba(21, 19, 15, 0.06);
   --shadow: 0 1px 2px rgba(21, 19, 15, 0.05), 0 12px 32px -14px rgba(21, 19, 15, 0.20);
   --shadow-lg: 0 2px 4px rgba(21, 19, 15, 0.05), 0 26px 64px -18px rgba(21, 19, 15, 0.30);
@@ -117,6 +119,8 @@
   --accent-ink: #efebe2;
   --label-ink: #b5afa2;
   --code-bg: #1d1d19;
+  --code-inline-bg: #22221e;
+  --code-inline-line: #2e2e29;
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45);
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 14px 36px -12px rgba(0, 0, 0, 0.7);
   --shadow-lg: 0 2px 4px rgba(0, 0, 0, 0.35), 0 30px 70px -18px rgba(0, 0, 0, 0.8);
@@ -315,15 +319,17 @@ h2:hover .h-anchor, h3:hover .h-anchor, .h-anchor:focus-visible { opacity: 1; }
 .prose dd { margin: 4px 0 0; color: var(--ink-2); }
 
 code, kbd, pre { font-family: var(--mono); }
-.prose :not(pre) > code, .lede code, figcaption code, td code, .card code, .callout code {
-  font-size: 0.86em; background: var(--bg-sunk); border: 1px solid var(--line-soft);
+/* Inline code. :where() keeps these rules at zero specificity, so any
+   component's own rule for its code wins (a code on a pastel chip takes the
+   chip's ink), in both themes; the colours are the theme's tokens. */
+:where(.prose :not(pre) > code, .lede code, figcaption code, td code, .card code, .callout code) {
+  font-size: 0.86em; background: var(--code-inline-bg); border: 1px solid var(--code-inline-line);
   padding: 0.08em 0.38em; border-radius: 5px; color: var(--ink);
   font-variant-ligatures: none; white-space: nowrap;
 }
 /* A long path may break, but only after a slash or an underscore (the build
    marks those places), never inside a label. */
-.prose :not(pre) > code.long, td code.long, figcaption code.long { white-space: normal; }
-[data-theme="dark"] .prose :not(pre) > code, [data-theme="dark"] td code { background: #202024; border-color: #2a2a2f; }
+:where(.prose :not(pre) > code.long, td code.long, figcaption code.long) { white-space: normal; }
 kbd, .key { font-family: var(--font); font-size: 0.8em; font-weight: 500; display: inline-block; min-width: 1.7em;
   text-align: center; padding: 0.12em 0.48em; line-height: 1.45; color: var(--ink); background: var(--bg-elev);
   border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 6px; white-space: nowrap; }
@@ -574,8 +580,8 @@ li .fig--wide, .callout .fig--wide, details .fig--wide { width: 100%; }
 .btn svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .btn--pending { opacity: 0.55; border-style: dashed; cursor: not-allowed; }
 .btn--primary { background: var(--accent); color: var(--on-accent) !important; }
-.btn--primary:hover { background: var(--accent-ink); }
-[data-theme="dark"] .btn--primary:hover { background: var(--accent-ink); }
+/* a deeper mint on hover, never the ink: the label is ink too */
+.btn--primary:hover { background: color-mix(in srgb, var(--accent) 90%, var(--on-accent)); }
 .btn--secondary { border: 1px solid var(--line); background: var(--bg-elev); color: var(--ink) !important; }
 .btn--secondary:hover { border-color: var(--ink-3); }
 .btn--quiet { height: 36px; padding: 0 14px; border: 1px solid var(--line); color: var(--ink-2) !important; font-weight: 500; }
@@ -588,7 +594,8 @@ li .fig--wide, .callout .fig--wide, details .fig--wide { width: 100%; }
 /* --------------------------------------------------------- doc footer */
 .chapter-done { margin-top: 56px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 .chapter-done .btn .icon { width: 17px; height: 17px; }
-.chapter-done .btn.is-done { color: var(--success) !important; border-color: color-mix(in srgb, var(--success) 40%, var(--line)); }
+/* done: a pastel chip, so its text is the chip's dark ink, in both themes */
+.chapter-done .btn.is-done, .chapter-done .btn.is-done:hover { background: var(--success); color: var(--on-pastel) !important; border-color: transparent; }
 .chapter-done-note { margin: 0; font-size: var(--fs-13); color: var(--ink-3); }
 .doc-footer { margin-top: 56px; }
 .pager { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -1036,7 +1043,7 @@ li .fig--wide, .callout .fig--wide, details .fig--wide { width: 100%; }
 .judge-tabs button { padding: 6px 12px; border-radius: var(--r); color: var(--ink-3); font-size: var(--fs-13); }
 .judge-tabs button:hover { color: var(--ink); background: var(--bg-hover); }
 .judge-tabs button[aria-selected="true"] { background: var(--bg-elev); color: var(--ink); box-shadow: var(--shadow-sm); outline: 1px solid var(--line-soft); }
-.judge-tabs code { background: none; padding: 0; font-size: 0.92em; }
+.judge-tabs code { background: none; border: 0; padding: 0; font-size: 0.92em; }
 .judge-panel { padding: 22px 24px 26px; }
 .js .judge-panel[data-hidden] { display: none; }
 .judge-series { margin: 0 0 18px !important; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
@@ -1055,7 +1062,7 @@ li .fig--wide, .callout .fig--wide, details .fig--wide { width: 100%; }
 .verdict.is-wrong { background: var(--error); }
 .verdict.is-wrong::before { content: "✕"; }
 .verdict.is-final { background: var(--accent); }
-.verdict.is-final code { background: none; padding: 0; color: inherit; }
+.verdict code { background: none; border: 0; padding: 0; color: inherit; }
 .judge-params { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 2px 14px; margin: 0 0 12px; font-size: 0.88rem; align-items: baseline; }
 .judge-params dt, .judge-params dd { margin: 0 !important; }
 .judge-params dt { color: var(--ink-3); }
@@ -1091,7 +1098,7 @@ li .fig--wide, .callout .fig--wide, details .fig--wide { width: 100%; }
 .tb-ents { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 6px 14px; margin-bottom: 16px; }
 .tb-ent { display: grid; grid-template-columns: auto auto minmax(0, 1fr); grid-template-rows: auto auto; align-items: center; column-gap: 6px; font-size: 0.9rem; }
 .tb-ent input[type=checkbox] { grid-row: 1; accent-color: var(--accent); }
-.tb-key { grid-row: 1; background: none !important; padding: 0 !important; color: var(--ink-2); }
+.tb-key { grid-row: 1; background: none; border: 0; padding: 0; color: var(--ink-2); }
 .tb-val { grid-row: 1; width: 100%; min-width: 0; padding: 4px 8px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--bg); color: var(--ink);
   font-family: var(--mono); font-size: 13px; }
 .tb-val:focus { outline: 2px solid var(--accent-line); outline-offset: 1px; }
@@ -1101,8 +1108,9 @@ li .fig--wide, .callout .fig--wide, details .fig--wide { width: 100%; }
 .tb-path { margin: 0 0 4px !important; font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
 .tb-name { margin: 0 !important; font-family: var(--mono); font-size: clamp(14px, 1.8vw, 18px); line-height: 1.5; overflow-wrap: anywhere; }
 .tb-tok { border-bottom: 3px solid var(--accent); }
-.tb-tok.is-bad { border-bottom-color: var(--error); background: color-mix(in srgb, var(--error) 30%, transparent); }
+.tb-tok.is-bad { border-bottom-color: var(--error); background: color-mix(in srgb, var(--error) 24%, transparent); }
 .tb-tk { color: var(--ink-3); }
+.tb-tok.is-bad .tb-tk { color: var(--ink-2); }   /* ink-3 is too faint on the red wash in dark */
 .tb-sep { color: var(--ink-3); }
 .tb-suffix { color: var(--ink); font-weight: 600; }
 .tb-ext { color: var(--ink-3); }
