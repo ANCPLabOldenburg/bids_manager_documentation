@@ -1,0 +1,41 @@
+{
+ "id": "g-names-merged",
+ "kind": "figure",
+ "width": 320,
+ "height": 330,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "320": "g-names-merged-dark-320-0c9771c2.avif",
+    "640": "g-names-merged-dark-640-a717efa3.avif"
+   },
+   "webp": {
+    "320": "g-names-merged-dark-320-610f6182.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "320": "g-names-merged-light-320-db306717.avif",
+    "640": "g-names-merged-light-640-18cde432.avif"
+   },
+   "webp": {
+    "320": "g-names-merged-light-320-ff69714a.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "After the merge: one subject with three sessions, pre, post and followup.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
+  "sample": "MRI sample 1"
+ }
+}

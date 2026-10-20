@@ -11,20 +11,20 @@
  "files": {
   "dark": {
    "avif": {
-    "900": "w-index-widths-dark-900-435ea60b.avif",
-    "1800": "w-index-widths-dark-1800-b0148802.avif"
+    "900": "w-index-widths-dark-900-bb794e06.avif",
+    "1800": "w-index-widths-dark-1800-3abdc526.avif"
    },
    "webp": {
-    "900": "w-index-widths-dark-900-69eb1815.webp"
+    "900": "w-index-widths-dark-900-7090258b.webp"
    }
   },
   "light": {
    "avif": {
-    "900": "w-index-widths-light-900-c0fe7127.avif",
-    "1800": "w-index-widths-light-1800-4de76ad6.avif"
+    "900": "w-index-widths-light-900-f023bda0.avif",
+    "1800": "w-index-widths-light-1800-8942d73e.avif"
    },
    "webp": {
-    "900": "w-index-widths-light-900-bc58621f.webp"
+    "900": "w-index-widths-light-900-04b83862.webp"
    }
   }
  },
@@ -33,9 +33,9 @@
  "window": false,
  "title": "BIDS-Manager",
  "source": {
-  "bids_manager": "1.5.0",
-  "commit": "7bb684f",
-  "date": "2026-10-14",
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
   "sample": "MRI sample (Oldenburg 1)"
  }
 }

@@ -2,7 +2,7 @@
  "id": "t-mri-effects",
  "kind": "clip",
  "width": 1304,
- "height": 782,
+ "height": 814,
  "duration": 12.8,
  "chapters": [
   {
@@ -52,21 +52,21 @@
  ],
  "files": {
   "dark": {
-   "mp4": "t-mri-effects-dark-b15c2929.mp4",
-   "webm": "t-mri-effects-dark-5e34f104.webm",
-   "poster": "t-mri-effects-dark-poster-ce2ce871.webp"
+   "mp4": "t-mri-effects-dark-33374bc8.mp4",
+   "webm": "t-mri-effects-dark-51cd97e3.webm",
+   "poster": "t-mri-effects-dark-poster-8ea62222.webp"
   },
   "light": {
-   "mp4": "t-mri-effects-light-b41163a3.mp4",
-   "webm": "t-mri-effects-light-642d5a61.webm",
-   "poster": "t-mri-effects-light-poster-4750942e.webp"
+   "mp4": "t-mri-effects-light-a29ba1a3.mp4",
+   "webm": "t-mri-effects-light-6357f2aa.webm",
+   "poster": "t-mri-effects-light-poster-9abeab0f.webp"
   }
  },
  "alt": "The 3-D effects on the T1w in Planes + 3-D, one after the other, with the corner cut at the crosshair.",
  "source": {
-  "bids_manager": "1.5.0",
-  "commit": "7bb684f",
-  "date": "2026-10-14",
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
   "sample": "multimodal v2 (OL_3844, consented)"
  }
 }

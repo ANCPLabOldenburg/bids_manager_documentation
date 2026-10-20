@@ -1,0 +1,41 @@
+{
+ "id": "l03-leave-out",
+ "kind": "figure",
+ "width": 1040,
+ "height": 780,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1040": "l03-leave-out-dark-1040-ad59aa27.avif",
+    "2080": "l03-leave-out-dark-2080-f0f943e8.avif"
+   },
+   "webp": {
+    "1040": "l03-leave-out-dark-1040-1576f4c5.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1040": "l03-leave-out-light-1040-386044d7.avif",
+    "2080": "l03-leave-out-light-2080-578d221f.avif"
+   },
+   "webp": {
+    "1040": "l03-leave-out-light-1040-461d288c.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, Scan page: Leave out of proposed names, with Acquisition (acq-) ticked: the next scan proposes names without it wherever the standard allows.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
+  "sample": "multimodal v2"
+ }
+}

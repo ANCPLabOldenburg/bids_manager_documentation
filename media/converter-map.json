@@ -11,20 +11,20 @@
  "files": {
   "dark": {
    "avif": {
-    "1600": "converter-map-dark-1600-09834d01.avif",
-    "3200": "converter-map-dark-3200-d8fc3a57.avif"
+    "1600": "converter-map-dark-1600-3d61d02f.avif",
+    "3200": "converter-map-dark-3200-a49c6086.avif"
    },
    "webp": {
-    "1600": "converter-map-dark-1600-3a7cc312.webp"
+    "1600": "converter-map-dark-1600-604a55db.webp"
    }
   },
   "light": {
    "avif": {
-    "1600": "converter-map-light-1600-af56b785.avif",
-    "3200": "converter-map-light-3200-a8a19803.avif"
+    "1600": "converter-map-light-1600-91c092aa.avif",
+    "3200": "converter-map-light-3200-9808be92.avif"
    },
    "webp": {
-    "1600": "converter-map-light-1600-0f1d18e0.webp"
+    "1600": "converter-map-light-1600-8c75c43a.webp"
    }
   }
  },
@@ -114,9 +114,9 @@
  "window": true,
  "title": "BIDS-Manager",
  "source": {
-  "bids_manager": "1.5.0",
-  "commit": "373b09d",
-  "date": "2026-10-13",
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
   "sample": "multimodal v2"
  }
 }

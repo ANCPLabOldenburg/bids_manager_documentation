@@ -54,6 +54,13 @@ The settings of the parameter classifier: what it does with what it finds, and e
 
 {{ ref.settings("Convert") }}
 
+Two controls of the post-convert chain sit on the line of the box above them:
+
+| Setting | What it does | Default |
+|---|---|---|
+| **In which fields** | Under **Write TODO into missing fields**: **Required fields only**, **Required and recommended fields**, or **Every declared field, including optional** ([Metadata levels and TODO placeholders](/concepts/metadata-levels/)) | Required and recommended fields |
+| **Anonymise the metadata, last** | **Off**, **Recommended** or **Strict**: anonymises the dataset after everything else the conversion writes ([Anonymising metadata](/guides/anonymising/)) | Off |
+
 ## Validation
 
 {{ figure("settings-validation", "Settings, Validation page.") }}

@@ -1,0 +1,41 @@
+{
+ "id": "g-ignore-list",
+ "kind": "figure",
+ "width": 888,
+ "height": 1114,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "888": "g-ignore-list-dark-888-88989482.avif",
+    "1776": "g-ignore-list-dark-1776-af34daec.avif"
+   },
+   "webp": {
+    "888": "g-ignore-list-dark-888-f17de7c0.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "888": "g-ignore-list-light-888-0d58af5b.avif",
+    "1776": "g-ignore-list-light-1776-2e79697e.avif"
+   },
+   "webp": {
+    "888": "g-ignore-list-light-888-d0633c8d.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The ignore list: each line of .bidsignore with how many files it hides, and every file of the dataset, ignored or validated.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
+  "sample": "MRI sample 1"
+ }
+}

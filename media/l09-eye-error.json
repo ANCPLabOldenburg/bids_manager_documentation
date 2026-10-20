@@ -1,0 +1,41 @@
+{
+ "id": "l09-eye-error",
+ "kind": "figure",
+ "width": 1326,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1326": "l09-eye-error-dark-1326-f68dfd48.avif",
+    "2652": "l09-eye-error-dark-2652-e9bffc12.avif"
+   },
+   "webp": {
+    "1326": "l09-eye-error-dark-1326-84c6cd5b.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1326": "l09-eye-error-light-1326-3418b8c3.avif",
+    "2652": "l09-eye-error-light-2652-b74859b6.avif"
+   },
+   "webp": {
+    "1326": "l09-eye-error-light-1326-73fd4970.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The first eye's recording, its gaze and pupil size plotted, and its error: the events file of the run it was recorded during must say how the stimuli were shown on the screen.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
+  "sample": "multimodal v2"
+ }
+}

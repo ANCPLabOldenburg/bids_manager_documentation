@@ -1,0 +1,41 @@
+{
+ "id": "g-anon-menu",
+ "kind": "figure",
+ "width": 481,
+ "height": 771,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "481": "g-anon-menu-dark-481-48e46a1b.avif",
+    "962": "g-anon-menu-dark-962-1a558dd9.avif"
+   },
+   "webp": {
+    "481": "g-anon-menu-dark-481-e7e84106.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "481": "g-anon-menu-light-481-3fd7d324.avif",
+    "962": "g-anon-menu-light-962-4cd47f4a.avif"
+   },
+   "webp": {
+    "481": "g-anon-menu-light-481-aee8becf.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The BIDS tree's right-click on a subject: under Identifiable data, Anonymise metadata..., for this subject only.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
+  "sample": "multimodal v2"
+ }
+}

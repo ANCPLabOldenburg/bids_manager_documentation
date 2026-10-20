@@ -8,23 +8,17 @@ Found something not listed here? [Report it](/help/reporting/).
 
 ## In the converted dataset
 
-### The PET row of a scans table has a time without a date
-
-**What you see.** Validation reports one error in the session's `_scans.tsv`: the PET row's `acq_time` is a time such as `09:28:23.000000`, without a date. It happens with scanners whose PET header records an acquisition time but no acquisition date (the multimodal and PET samples' GE Advance).
-
-**What to do.** Open the scans table in the Editor and type the date in front of the time, from the study date (`2009-10-02T09:28:23` on the samples), or `n/a`. [Validating in the Editor](/learn/09-validating/#fix-the-error) shows it step by step.
-
 ### participants.tsv holds names and patient IDs
 
-**What you see.** After a conversion from the GUI, `participants.tsv` has the columns `given_name`, `family_name` and `patient_id`, copied from the DICOM headers. The sidecars and spectroscopy headers have had these removed; the scan tables in `.bidsmgr/`, and a `sourcedata/` copy if you keep one, still hold them.
+**What you see.** After the metadata step (a conversion from the GUI, or `bidsmgr-metadata`), `participants.tsv` has the columns `given_name`, `family_name` and `patient_id`, copied from the DICOM headers. A converted MEG recording also keeps the participant's name and birthday, and the experimenter, in its header. Running the metadata step again after anonymising puts the three columns back.
 
-**What to do.** Delete the three columns (and their entries in `participants.json`) before sharing, as in [Sharing a dataset](/learn/14-sharing/#what-is-left-participants-tsv).
+**What to do.** Anonymise after the last metadata run: **Tools** > **Anonymise metadata...** removes the columns, their entries in `participants.json` and the names in recording headers ([Anonymising metadata](/guides/anonymising/)). Or turn on **Settings** > **Convert** > **Anonymise the metadata, last**, so every conversion ends with it. `.bidsmgr/` (scan tables, and the copies kept for Undo) and a `sourcedata/` copy are never changed: do not share them.
 
 ### A dose sheet's `none` is read as empty
 
-**What you see.** A PET dose sheet that gives `none` for `ReconMethodParameterLabels` and `ReconMethodParameterUnits` (what BIDS asks for when a reconstruction has no parameters) does not fill them: the import says it took fewer fields than the sheet has, and the sidecar gets a TODO placeholder, or nothing if placeholders are off.
+**What you see.** A PET dose sheet that gives `none` for `ReconMethodParameterLabels` and `ReconMethodParameterUnits` (what BIDS asks for when a reconstruction has no parameters) does not fill them: the import takes fewer fields than the sheet has (7 of 9 on the samples), `ReconMethodParameterLabels` gets a TODO placeholder, and validation reports an error because `ReconMethodParameterUnits` is missing.
 
-**What to do.** After converting, set both fields to `["none"]` in the PET sidecar ([Editing metadata](/learn/10-editing-metadata/)).
+**What to do.** After converting, set both fields to `["none"]` in the PET sidecar: [Validating in the Editor](/learn/09-validating/#fix-the-errors) does it with the finding's **Fix** button.
 
 ### EEG and MEG names lose `acq` and `rec`, and `run-01` becomes `run-1`
 
@@ -44,25 +38,22 @@ Found something not listed here? [Report it](/help/reporting/).
 
 **What to do.** Check the Overview before converting: it lists them. Name them in the table, or untick them.
 
+### Fix ups proposes events files eye tracking may not have
+
+**What you see.** **Generate missing companion files** (in **Settings** > **Convert**, off by default, and in **Tools** > **Fix ups...**, ticked) proposes one events file per eye, `..._recording-eye1_events.tsv` and `..._recording-eye2_events.tsv`. The standard does not allow `recording` on an events file, so validation reports both.
+
+**What to do.** Untick them, or delete them. What eye tracking does need is the run's own events file in `beh/` with the screen described in its sidecar: [Validating in the Editor](/learn/09-validating/#fix-the-errors) writes it.
+
+### The eye-tracking error shows its template
+
+The validation message for an eye-tracking recording whose events file lacks `StimulusPresentation` reads "... the events file associated with {path} ({associations.events.path}) must have ...", with the braces unfilled. The file it is about is the one the finding is listed under.
+
 ### Smaller things in the output
 
-- An eye tracker's physiological events get an `events.tsv` stub from **Generate missing companion files**; delete it.
-- Scans tables list the `.bval` and `.bvec` files of a diffusion run as well as its image; delete those rows if a tool complains.
 - `dataset_description.json` > `GeneratedBy` > `Container` > `Tag` holds dcm2niix's usage line rather than a version.
+- A scans table written by 1.5.0 keeps a PET time without a date, because existing values are kept; type the date in front of it, or `n/a`.
 
 ## In the Editor
-
-### An operation cannot be undone from the GUI
-
-**What you see.** The Editor records every operation (a rename, a restructure, a deletion, a fix applied to many files, a saved file) with the files as they were, and several of its dialogs say the change can be undone. **Undo** in the toolbar, however, only steps back through the edits of the sidecar or table that is open. A defacing can be taken back with **Tools** > **Put the face back...**; other operations cannot be undone from the GUI.
-
-**What to do.** Read each tool's preview before applying it. To restore a file by hand, find the operation in `.bidsmgr/editor/operations.log` and copy the file back from `.bidsmgr/editor/originals/<operation>/` ([The project folder and undo](/concepts/project-folder/)).
-
-### Check coherence offers to delete a MEG coordinate file
-
-**What you see.** **Check coherence** lists the `..._coordsystem.json` of a MEG or EEG recording as a sidecar with no recording, ticked for deletion. It is a required file of a MEG dataset.
-
-**What to do.** Untick it before clicking **Repair**.
 
 ### The Whole dataset view never shows its summary
 
@@ -96,15 +87,15 @@ When subjects fail, the message at the end of a conversion says "1 subject(s) fa
 
 ### The HTML validation report is in `.bidsmgr/`
 
-**Settings** > **Convert** says the HTML report is written beside the dataset; it is written to `.bidsmgr/validation_report.html` inside it.
+The tooltip of **Settings** > **Convert** > **Write an HTML validation report** says it is written beside the dataset; it is written to `.bidsmgr/validation_report.html` inside it.
 
 ### At a large font size in a small window
 
 At font scale **Comfortable (1.15x)** or larger, in a window narrower than about 1600 pixels, the Converter's panels reach their minimum widths and **Properties** cuts its fields short; some message boxes cut their buttons' text. Fold the side panels you are not using, make the window wider, or use a smaller font scale.
 
-### The image viewer's shortcut list misses three keys
+### The image viewer's shortcut list misses two keys
 
-The list under the keyboard icon (or {{ key("F1") }}) of the image and spectrum viewers does not show **Advanced controls** ({{ key("Ctrl+I") }}), **Save a screenshot...** ({{ key("Ctrl+Shift+S") }}) and **Restore every viewer default...**, which work. [Viewers](/reference/viewers/) lists every key.
+The list under the keyboard icon (or {{ key("F1") }}) of the image and spectrum viewers does not show **Advanced controls** ({{ key("Ctrl+I") }}) and **Save a screenshot...** ({{ key("Ctrl+Shift+S") }}), which work. [Viewers](/reference/viewers/) lists every key.
 
 ## On some systems
 
@@ -114,4 +105,4 @@ niimath has no package for Python 3.14 yet. BIDS Manager installs and runs; **De
 
 ### Windows: EyeLink files need a Microsoft runtime
 
-Reading EyeLink `.edf` files directly needs the Microsoft Visual C++ 2008 runtime. The Windows installer adds it; with pip, uv or conda, install it yourself ([Install](/start/install/)). Without it, an `.asc` export of the recording (SR Research's `edf2asc`) is read instead.
+Reading EyeLink `.edf` files directly needs the Microsoft Visual C++ 2008 runtime, which installing needs an administrator. The Windows installer checks and says so at its end; it does not install it. Without it, an `.asc` export of the recording (SR Research's `edf2asc`, or EyeLink Data Viewer) is read instead. The same fallback applies on ARM64 Linux, where the EDF reader is not available.

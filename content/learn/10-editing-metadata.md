@@ -1,7 +1,7 @@
 ---
 title: Editing metadata
 chapter: 10
-lede: Edit a sidecar as a form that knows the standard, or as the plain tree of keys the file holds; search it; edit a table; and undo. The course answers two of the sample's TODO placeholders and the two PET fields the dose sheet could not fill.
+lede: Edit a sidecar as a form that knows the standard, or as the plain tree of keys the file holds; search it; edit a table; and undo. The course answers two of the sample's TODO placeholders, the task description and the instructions of the resting run.
 time: 15 minutes
 sample: Multimodal sample v2
 ---
@@ -51,12 +51,8 @@ Answer **Instructions** the same way (the course uses `Keep your eyes on the cro
 By default, an edit waits for **Save**. **Settings** > **Display** > **Editor saving** saves each field as you leave it instead; every save is still recorded in the project's history.
 :::
 
-## Fill the two PET fields
-
-The dose sheet's `none` did not reach two PET fields (chapter 7), so the conversion wrote `["TODO"]` into them. Select `sub-001_ses-01_pet.json` in `pet`, and in **ReconMethodParameterLabels** and **ReconMethodParameterUnits** replace the `TODO` entry with `none`. Both are arrays: each entry has its own line, and **Add entry** adds a line. Click **Save**.
-
 ::: check
-Click **Validate dataset**. The dataset still has 0 errors, and {{ m("edited.validation.warn") }} warnings instead of {{ m("fixed.validation.warn") }}.
+Click **Validate dataset**. The dataset still has 0 errors, and {{ m("edited.validation.warn") }} warnings instead of {{ m("fixed.validation.warn") }}: two placeholders fewer.
 :::
 
 ## Apply a field to other files
@@ -74,18 +70,18 @@ Select `participants.tsv` at the top of the tree. The Viewer shows it as a table
 
 Double-click a cell to edit it; **+ Add row**, **− Delete row**, **+ Add column** and **− Delete column** change its shape. Changes wait for **Save**, as in the form. A very long table opens read-only after its first rows, and says so.
 
-The sample's `participants.tsv` holds three columns that identify the participant: `given_name`, `family_name` and `patient_id`, copied from the DICOM header. Chapter 14 deletes them before the dataset is shared.
+The sample's `participants.tsv` holds three columns that identify the participant: `given_name`, `family_name` and `patient_id`, copied from the DICOM header. Chapter 14 removes them, with everything else that identifies, before the dataset is shared.
 
 A table whose sidecar gives a sampling frequency, such as a physiological recording (`_physio.tsv.gz`), has a **Visualize** button that opens it in the signal viewer (chapter 12).
 
 ## Undo and redo
 
-**Undo** and **Redo** in the toolbar step through your edits of the sidecar or table that is open, saved or not. While you type in a field, {{ key("Ctrl+Z") }} undoes the typing in that field only. To take back a saved change, undo it and click **Save** again. The steps are forgotten when you open another file.
+**Undo** and **Redo** in the toolbar ({{ key("Ctrl+Z") }}, {{ key("Ctrl+Shift+Z") }}) first step through the edits of the sidecar or table that is open and not saved yet. While you type in a field, {{ key("Ctrl+Z") }} undoes the typing in that field only.
 
-Every save of a sidecar, or of a README or other text file, is also recorded in the project's history, with the file as it was before; saving a table is not, so keep a copy of a `.tsv` before large changes. [The project folder and undo](/concepts/project-folder/) explains what that history holds.
+Every save, of a sidecar, a table, a README or another text file, is a step of the project's history, with the file as it was before. Once nothing is left unsaved, **Undo** takes back the last saved step and writes the file as it was; right-click **Undo** for every step, newest first ([Undo, redo and the history](/guides/history/)).
 
 ::: recap
 - The BOLD run's sidecar has a task description and instructions.
-- The PET sidecar's reconstruction parameters say `none`.
+- Both saves are steps of the project's history, which **Undo** walks back.
 - Next, the tools that change file names and folders: [Changing a dataset's shape](/learn/11-dataset-shape/).
 :::

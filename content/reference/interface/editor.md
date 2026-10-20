@@ -12,11 +12,11 @@ description: The parts of the BIDS Manager Editor: toolbar, path bar, BIDS tree,
 | Control | What it does |
 |---|---|
 | **Open folder…** | Opens any folder: a BIDS dataset as a project or to view only, anything else to view only ([The project folder and undo](/concepts/project-folder/)). |
-| **Undo**, **Redo** | Your edits of the sidecar or table that is open. |
+| **Undo**, **Redo** | First the unsaved edits of the sidecar or table that is open, then the dataset's history: every tool applied and every file saved, one step each. Right-click either for the list of steps, newest first ([Undo, redo and the history](/guides/history/)). |
 | **Validate file**, **Validate folder**, **Validate dataset** | Checks the file selected in the tree, every file under the folder selected in the tree, or the whole dataset, against the standard. |
-| **Deep checks** | When on, **Validate dataset** also opens every NIfTI image's header to catch broken files: slower. It does not change **Validate file** or **Validate folder**. |
+| **Deep checks** | On by default. Validation also reads every NIfTI image's header and every table, to catch broken files and headers that disagree with their sidecar: slower. **Validate file** and **Validate folder** follow it too. |
 | **Tools** | The Editor's tools, grouped by purpose ([Editor tools](/reference/editor-tools/)). |
-| The counts | Valid files, warnings and errors of the last validation. |
+| The counts | Valid files, warnings and errors of the last validation. Click one for its findings, grouped by kind, with a search. |
 
 ## The path bar
 
@@ -24,7 +24,7 @@ The folder that is open, and how: **project**, **dataset** or **view only**, wit
 
 ## The BIDS tree
 
-The dataset's folders and files, each with the result of the last validation (a tick, or the count of findings in its colour). Folders say how many files they hold. Right-click for what you can do to the files under the pointer: rename, add or remove an entity, sessions, delete, deface, compare two images. Hidden files are shown with **Settings** > **Display** > **Editor tree**.
+The dataset's folders and files, each with the result of the last validation (a tick, or the count of findings in its colour). Folders say how many files they hold. Files left out of validation by `.bidsignore` are drawn dimmed and in italics. Right-click for what you can do to the files under the pointer, in the same groups as the Tools menu: references, **Ignore in validation** and **Stop ignoring**, rename, add or remove an entity, sessions, deface, **Anonymise metadata...**, delete (empty folders too), compare two images. Hidden files are shown with **Settings** > **Display** > **Editor tree**.
 
 ## The viewer
 

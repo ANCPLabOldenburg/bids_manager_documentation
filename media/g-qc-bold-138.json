@@ -1,0 +1,41 @@
+{
+ "id": "g-qc-bold-138",
+ "kind": "figure",
+ "width": 1294,
+ "height": 1274,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1294": "g-qc-bold-138-dark-1294-ff05814d.avif",
+    "2588": "g-qc-bold-138-dark-2588-1c57afa5.avif"
+   },
+   "webp": {
+    "1294": "g-qc-bold-138-dark-1294-76472c7d.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1294": "g-qc-bold-138-light-1294-ad052ef0.avif",
+    "2588": "g-qc-bold-138-light-2588-1e27a4d0.avif"
+   },
+   "webp": {
+    "1294": "g-qc-bold-138-light-1294-4b766fa2.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Zoomed to volumes 100 to 200, at volume 138, three volumes before the movement: the planes are clean and every plot is at its baseline.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
+  "sample": "BOLD run with motion (Oldenburg)"
+ }
+}

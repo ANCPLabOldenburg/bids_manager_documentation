@@ -58,17 +58,15 @@ More in [Converting](/learn/08-converting/).
 :::
 
 ::: step Validate in the Editor
-Click **Editor** in the header, then **Validate dataset** in its toolbar. The dataset has {{ m("quick_start.files") }} files; the Editor reports {{ m("quick_start.validation.ok") }} files valid, {{ m("quick_start.validation.warn") }} warnings and {{ m("quick_start.validation.err") }} error.
+Click **Editor** in the header, then **Validate dataset** in its toolbar. The dataset has {{ m("quick_start.files") }} files; the Editor reports {{ m("quick_start.validation.ok") }} files valid, {{ m("quick_start.validation.warn") }} warnings and {{ m("quick_start.validation.err") }} errors.
 
-The warnings are placeholders for what no file records (authors, task descriptions, the institution), each marked `TODO` in its file. The error is in BIDS Manager's own output: the PET row of the session's `_scans.tsv` has an acquisition time without a date.
+The warnings are placeholders for what the raw files don't capture (authors, task descriptions, the institution), each marked `TODO` in its file. The errors are three answers only you can give: the PET sidecar must say that its reconstruction had no parameters, and each eye's recording needs the screen the stimuli were shown on.
 
 More in [Validating in the Editor](/learn/09-validating/).
 :::
 
-::: step Fix the error
-Select `sub-001_ses-01_scans.tsv` in the tree, double-click the PET row's `acq_time` cell (the last row), type `2009-10-02T09:28:23`, press {{ key("Enter") }} and click **Save** above the table. **Validate dataset** again: no errors.
-
-How the course does it, with the reason for the date: [Validating in the Editor](/learn/09-validating/).
+::: step Fix the errors
+Select `sub-001_ses-01_pet.json` in `pet`, click **Fix** on its error in the Validation panel, type `none` into `ReconMethodParameterUnits`, replace the `TODO` of `ReconMethodParameterLabels` with `none`, and click **Save**. For the eye tracker, write the run's events file and its screen description into `beh/`, as [Validating in the Editor](/learn/09-validating/#the-eye-trackers-screen) shows. **Validate dataset** again: no errors.
 :::
 
 ## What you have

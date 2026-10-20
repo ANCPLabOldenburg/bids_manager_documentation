@@ -35,11 +35,17 @@ Images of different sizes can be compared: the crosshair follows the position in
 
 *{{ ref.tool_tip("Check coherence...") }}*
 
-{{ figure("l11-coherence", "Check coherence on the course's sample.") }}
+{{ figure("g-coherence", "Check coherence after files were changed outside BIDS Manager: four problems by kind, the safe repairs ticked.") }}
 
-::: warning
-In {{ version }}, Check coherence lists a MEG recording's `coordsystem.json` as a sidecar without a recording, ticked for deletion. Untick it ([Known issues](/help/known-issues/)).
-:::
+Runs on its own thread as soon as it opens; **Check again** runs it once more. Findings are grouped by kind; a repair that loses nothing comes ticked, one that overwrites a value comes unticked, and a finding with no repair is listed with the reason. **Select safe ones**, **Select all** and **Select none** set the ticks; **Repair** applies the ticked ones as one step. Every kind it finds, with cases: [Keeping a dataset consistent](/guides/consistency/#check-coherence).
+
+### Scans and sessions tables...
+
+*{{ ref.tool_tip("Scans and sessions tables...") }}*
+
+{{ figure("g-tables", "Scans and sessions tables: the tables to write, with the rows each gains, keeps or loses.") }}
+
+**Scans tables, one per session** and **Sessions tables, one per subject with sessions** choose what to write; **Write N tables** writes the ticked ones as one step. `acq_time` comes from the sidecar's `AcquisitionDateTime`, else from the date and time the scan read, else `n/a`. Rows, columns and values already there are kept. The same tables are written after every conversion while **Settings** > **Convert** > **Write scans and sessions tables** is on, and by `bidsmgr-metadata --tables-only`.
 
 ### References (IntendedFor, Sources...)...
 
@@ -53,9 +59,17 @@ In {{ version }}, Check coherence lists a MEG recording's `coordsystem.json` as 
 
 {{ figure("l09-fixups", "Fix ups.") }}
 
+### Ignored files...
+
+*{{ ref.tool_tip("Ignored files...") }}*
+
+{{ figure("g-ignore-list", "The ignore list: each line of .bidsignore with what it hides, and the dataset's files.") }}
+
+Opens `.bidsignore` in the viewer as a list: each line with how many files it hides (click one to see them), **Remove line** ({{ key("Delete") }}), and a field to add a pattern, with the files it would hide shown while you type. On the right every file of the dataset, filtered by **Find a file** and **All**, **Ignored** or **Validated**, with **Ignore** and **Stop ignoring** for a selection. The tree's right-click offers **Ignore in validation** and **Stop ignoring** on what was clicked. How the patterns work, and cases: [Leaving files out of validation](/guides/ignoring-files/).
+
 ## Names and structure
 
-Each of these follows the scans tables, `IntendedFor` and the other fields that name files. **Rename entity...**, **Index widths...**, and **Find and replace a value...** across the whole dataset also update the participants and sessions tables, and `TaskName` where it was derived from the task label.
+Each of these follows the scans tables, `IntendedFor` and the other fields that name files. Cases for each, from merging two subjects to putting a dataset into sessions: [Fixing names and structure](/guides/names-and-structure/). **Rename entity...**, **Index widths...**, and **Find and replace a value...** across the whole dataset also update the participants and sessions tables, and `TaskName` where it was derived from the task label.
 
 ### Rename entity...
 
@@ -105,6 +119,14 @@ Restores defaced images from the copies kept in the project's `.bidsmgr/` folder
 
 More on all four: [Defacing and skull stripping](/guides/defacing/).
 
+### Anonymise metadata...
+
+*{{ ref.tool_tip("Anonymise metadata...") }}*
+
+{{ figure("g-anon-dialog", "Anonymise metadata: what by purpose, where, and every change before it is written.") }}
+
+**What**: **Recommended**, **Strict** or **Custom**, and eight categories grouped by purpose (Names and IDs, Ages, Dates and times, The site, Devices, DICOM UIDs, Traces of the conversion, Photographs), each with its options and how many changes it makes. **Where**: the dataset's files at the top, and each subject and session, with **Find a subject**, **All** and **None**. **What changes**: the counts, and the changes **By kind**, **By file**, **To read by hand** and **Not changed here**; a file can be left out of the run with {{ key("Space") }} or its right-click. **Then delete the copies the Editor keeps for Undo** removes the identifiable originals once it is done. **Anonymise N files** writes it as one step. Opened from the tree's right-click, it starts on what was clicked. Every category and case: [Anonymising metadata](/guides/anonymising/).
+
 ## Remove
 
 ### Delete...
@@ -112,3 +134,5 @@ More on all four: [Defacing and skull stripping](/guides/defacing/).
 Deletes recordings, datatypes or sessions, and with them the `*_scans.tsv` rows, the `IntendedFor` entries, the participants row of a subject left with no data, and any folder left empty, in one operation. It starts on the tree selection; the whole dataset is deliberately not one of its scopes. A copy of every deleted file is kept in the project's `.bidsmgr/` folder.
 
 {{ figure("l11-delete", "Delete, for the eye-tracking folder.") }}
+
+An empty folder can be deleted the same way, from the tree's right-click.

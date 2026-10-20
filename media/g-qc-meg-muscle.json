@@ -1,0 +1,41 @@
+{
+ "id": "g-qc-meg-muscle",
+ "kind": "figure",
+ "width": 1594,
+ "height": 1054,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1594": "g-qc-meg-muscle-dark-1594-07b8c2df.avif",
+    "3188": "g-qc-meg-muscle-dark-3188-5d10b883.avif"
+   },
+   "webp": {
+    "1594": "g-qc-meg-muscle-dark-1594-e475982f.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1594": "g-qc-meg-muscle-light-1594-53f853cb.avif",
+    "3188": "g-qc-meg-muscle-light-3188-162ff80d.avif"
+   },
+   "webp": {
+    "1594": "g-qc-meg-muscle-light-1594-abd9c15c.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Back to 4, and Muscle above lowered from 4 to 3: the stretches at 270 and 280 s are flagged as muscle, and marked in red.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
+  "sample": "MOUS sub-A2004 (Donders Institute)"
+ }
+}

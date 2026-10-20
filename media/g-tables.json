@@ -1,0 +1,41 @@
+{
+ "id": "g-tables",
+ "kind": "figure",
+ "width": 1100,
+ "height": 640,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1100": "g-tables-dark-1100-313a8f03.avif",
+    "2200": "g-tables-dark-2200-b55142df.avif"
+   },
+   "webp": {
+    "1100": "g-tables-dark-1100-cbccd7de.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1100": "g-tables-light-1100-e598c721.avif",
+    "2200": "g-tables-light-2200-4b7f5674.avif"
+   },
+   "webp": {
+    "1100": "g-tables-light-1100-8b04891a.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Scans and sessions tables: every table the dataset should have, with the rows it would add, keep or remove, before anything is written.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
+  "sample": "multimodal v2"
+ }
+}

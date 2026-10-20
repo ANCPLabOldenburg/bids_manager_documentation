@@ -16,7 +16,7 @@ description: Install BIDS Manager, open it, download a sample dataset and conver
 
 | | |
 |---|---|
-| **Computer** | A Mac with Apple silicon or an Intel processor, a Windows 10 or 11 PC, or a Linux PC |
+| **Computer** | A Mac with Apple silicon or an Intel processor, a Windows 10 or 11 PC (Windows 11 on ARM too), or a Linux PC on x86_64 or ARM64 ([which are tested](/start/install/#systems)) |
 | **Python** | None, with the installers. With pip, uv or conda: Python 3.10 to 3.14 |
 | **Disk** | About 2 GB for BIDS Manager, plus room for your raw data and for the dataset it writes |
 | **Memory** | 8 GB is enough for the samples; long MEG recordings and large DICOM folders use more |

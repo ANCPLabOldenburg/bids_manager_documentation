@@ -33,16 +33,16 @@ Work through the chapters in order. Each one says at the top what state it expec
 ### Part 2. Converting
 
 ::: cards 2
-- [**7. Metadata you provide** What no file records: authors, licence, task descriptions, PET doses, participants.](/learn/07-metadata/)
+- [**7. Metadata you provide** What the raw files don't capture: authors, licence, task descriptions, PET doses, participants.](/learn/07-metadata/)
 - [**8. Converting** Choose the conversion settings, run it, and read what it did.](/learn/08-converting/)
 :::
 
 ### Part 3. Working on the dataset
 
 ::: cards 2
-- [**9. Validating in the Editor** Check the dataset against the standard and go to each finding.](/learn/09-validating/)
-- [**10. Editing metadata** Edit sidecars and tables, search them, and undo.](/learn/10-editing-metadata/)
-- [**11. Changing a dataset's shape** Rename entities, add or remove them, create sessions, delete, and keep every reference right.](/learn/11-dataset-shape/)
+- [**9. Validating in the Editor** Check the dataset against the standard, go to each finding, and answer the three errors.](/learn/09-validating/)
+- [**10. Editing metadata** Edit sidecars and tables, search them, and undo a saved change.](/learn/10-editing-metadata/)
+- [**11. Changing a dataset's shape** Rename entities, add or remove them, create sessions, delete, check coherence, and walk the history back.](/learn/11-dataset-shape/)
 - [**12. Viewing data** Images, time courses, signals and spectra in the viewers.](/learn/12-viewing-data/)
 - [**13. Checking image quality** The fast quality check of anatomical, diffusion and functional images, and of MEG and EEG.](/learn/13-image-quality/)
 :::
@@ -50,10 +50,10 @@ Work through the chapters in order. Each one says at the top what state it expec
 ### Part 4. Finishing
 
 ::: cards 2
-- [**14. Sharing a dataset** Remove what identifies a person, write the README and the citation, and check readiness.](/learn/14-sharing/)
+- [**14. Sharing a dataset** Anonymise the metadata, remove faces, write the README and the citation, and check readiness.](/learn/14-sharing/)
 - [**15. The command line** The same workflow with the `bidsmgr` commands, for scripts and servers.](/learn/15-command-line/)
 :::
 
 ## When you want the reason, not the step
 
-The chapters say what to do and what to check. Where a step depends on an idea worth understanding on its own, they link to a page under [Concepts](/concepts/): how names are decided, how fieldmaps are linked to the runs they correct, where metadata values come from, and what the project folder records. Every control the chapters mention is also listed in the [Reference](/reference/).
+The chapters say what to do and what to check, on one sample. Each tool's other uses, in real cases on other samples, are in the [Guides](/guides/): fixing names and structure, keeping a dataset consistent, leaving files out of validation, anonymising, the history, and reading the quality checks. Where a step depends on an idea worth understanding on its own, they link to a page under [Concepts](/concepts/): how names are decided, how fieldmaps are linked to the runs they correct, where metadata values come from, and what the project folder records. Every control the chapters mention is also listed in the [Reference](/reference/).

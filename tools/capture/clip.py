@@ -83,6 +83,11 @@ class Clip:
         img = H.grab(shot)
         x, y, w, h = self.crop
         s = H.SCALE
+        ratio = img.devicePixelRatio() or s
+        if abs(ratio - s) > 0.01:
+            # Cropped as if it were SCALE, a 1x grab lands in the corner of a
+            # black frame: refuse it rather than encode it.
+            raise H.ShotFailed(f"{self.id}: grabbed at {ratio:g}x, not {s}x")
         self.base = img.copy(x * s, y * s, w * s, h * s)
         self.base.setDevicePixelRatio(s)
 

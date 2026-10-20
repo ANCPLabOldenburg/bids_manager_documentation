@@ -11,11 +11,11 @@
  "files": {
   "dark": {
    "avif": {
-    "700": "guide-eeg-meta-dark-700-0e6787f8.avif",
-    "1400": "guide-eeg-meta-dark-1400-eb3eb56f.avif"
+    "700": "guide-eeg-meta-dark-700-77ed43a0.avif",
+    "1400": "guide-eeg-meta-dark-1400-3c809648.avif"
    },
    "webp": {
-    "700": "guide-eeg-meta-dark-700-c2df236d.webp"
+    "700": "guide-eeg-meta-dark-700-4ae98c31.webp"
    }
   },
   "light": {
@@ -33,9 +33,9 @@
  "window": false,
  "title": "BIDS-Manager",
  "source": {
-  "bids_manager": "1.5.0",
-  "commit": "373b09d",
-  "date": "2026-10-14",
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
   "sample": "multimodal v2"
  }
 }

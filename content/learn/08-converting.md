@@ -30,7 +30,10 @@ Further down, **Source data** and the **Post-convert chain**:
 {{ figure("l08-settings-chain", "Settings, Convert page: source data and what runs after the conversion.") }}
 
 - **Keep in sourcedata/** copies each subject's raw files into the dataset's `sourcedata/` folder, as they are or as one archive per series. Off by default: DICOM headers carry names and birth dates, so a dataset with `sourcedata/` is not ready to share.
-- The **Post-convert chain** runs after every conversion: **Generate metadata** (`participants.tsv`, the `_scans.tsv` tables, the fields the standard requires that can be derived, and the TODO placeholders of chapter 7), then **Validate the dataset** with **Deep checks (slower)** and **Write an HTML validation report**, and optionally **Check image quality**.
+- The **Post-convert chain** runs after every conversion:
+  - **Generate metadata**: `participants.tsv`, `CHANGES`, the fields the standard requires that can be derived. Under it, **Write scans and sessions tables** (a `_scans.tsv` per session listing every recording with when it was acquired, a `_sessions.tsv` per subject with sessions), **Write TODO into missing fields** (the placeholders of chapter 7, **In which fields** chooses how far they go), and, off by default, **Generate missing companion files** and **Write CITATION.cff from the dataset description**.
+  - **Anonymise the metadata, last**: **Off** by default; **Recommended** or **Strict** anonymise the dataset after everything else has been written ([Anonymising metadata](/guides/anonymising/)).
+  - **Validate the dataset**, with **Deep checks (slower)** and **Write an HTML validation report**, and optionally **Check image quality**.
 
 Click **Save** if you changed anything, or **Cancel**.
 
@@ -93,7 +96,7 @@ The conversion log in `.bidsmgr/logs/` has the details. For the sample, it shows
 - wrote the PET fields the DICOM header holds but dcm2niix does not copy, and the dose sheet's fields;
 - removed seven identifying fields (the participant's name, ID, birth date, age, sex, size and weight) from every MRI sidecar, and six from the header inside each spectroscopy file.
 
-The metadata step then wrote `participants.tsv` from the participants spreadsheet, the session's `_scans.tsv`, `CHANGES`, and {{ m("todo.inserted") }} TODO placeholders across {{ m("todo.files") }} files.
+The metadata step then wrote `participants.tsv` from the participants spreadsheet, the session's `_scans.tsv` (one row per recording, each with its acquisition date and time), the subject's `_sessions.tsv`, `CHANGES`, and {{ m("todo.inserted") }} TODO placeholders across {{ m("todo.files") }} files.
 
 ::: different
 - **Conversion finished with errors.** A subject failed; the others were written. Open `.bidsmgr/errors/` in the project for the subject's log.

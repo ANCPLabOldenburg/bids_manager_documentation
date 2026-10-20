@@ -11,31 +11,31 @@
  "files": {
   "dark": {
    "avif": {
-    "1326": "l09-error-dark-1326-f912e73b.avif",
-    "2652": "l09-error-dark-2652-6ba3a3bb.avif"
+    "1326": "l09-error-dark-1326-a83d7492.avif",
+    "2652": "l09-error-dark-2652-ce7b963e.avif"
    },
    "webp": {
-    "1326": "l09-error-dark-1326-566eaf3d.webp"
+    "1326": "l09-error-dark-1326-6f5c7af8.webp"
    }
   },
   "light": {
    "avif": {
-    "1326": "l09-error-light-1326-143749b7.avif",
-    "2652": "l09-error-light-2652-bc7bc25f.avif"
+    "1326": "l09-error-light-1326-9abcd89d.avif",
+    "2652": "l09-error-light-2652-86cacff7.avif"
    },
    "webp": {
-    "1326": "l09-error-light-1326-1068e547.webp"
+    "1326": "l09-error-light-1326-2e894178.webp"
    }
   }
  },
  "regions": [],
- "alt": "The session's scans table with the PET row's acquisition time marked, and the error in the Validation panel.",
+ "alt": "The PET sidecar with ReconMethodParameterUnits marked, and its error in the Validation panel: a field the standard requires and no TODO can stand in for.",
  "window": false,
  "title": "BIDS-Manager",
  "source": {
-  "bids_manager": "1.5.0",
-  "commit": "373b09d",
-  "date": "2026-10-14",
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
   "sample": "multimodal v2"
  }
 }

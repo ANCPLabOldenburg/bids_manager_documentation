@@ -81,7 +81,7 @@ Opening an existing dataset is covered in detail in the guide [Adopting an exist
 
 ## Undo in a project
 
-Every change you make in the Converter's table is recorded in the project, so **Undo** ({{ key("Ctrl+Z") }}) takes back table edits one at a time, also after closing and reopening BIDS Manager, back to the last conversion; **Redo** ({{ key("Ctrl+Shift+Z") }}) works until you close BIDS Manager or make a new edit. The Editor records every change it makes to the dataset's files, with the files as they were; the GUI cannot undo those changes, only the edits in the open sidecar or table before they are saved. [The project folder and undo](/concepts/project-folder/) explains what is kept and for how long.
+Every change you make in the Converter's table is recorded in the project, so **Undo** ({{ key("Ctrl+Z") }}) takes back table edits one at a time, also after closing and reopening BIDS Manager, back to the last conversion; **Redo** ({{ key("Ctrl+Shift+Z") }}) works until you close BIDS Manager or make a new edit. The Editor records every change it makes to the dataset's files, with the files as they were, and its **Undo** and **Redo** walk that history, one step at a time or several at once. [The project folder and undo](/concepts/project-folder/) explains what is kept and for how long.
 
 ::: recap
 - The project `multimodal_study` exists, with `dataset_description.json`, `README`, `.bidsignore` and `.bidsmgr/`.

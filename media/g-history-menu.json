@@ -1,0 +1,41 @@
+{
+ "id": "g-history-menu",
+ "kind": "figure",
+ "width": 625,
+ "height": 232,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "625": "g-history-menu-dark-625-9b9012b4.avif",
+    "1250": "g-history-menu-dark-1250-0e48b215.avif"
+   },
+   "webp": {
+    "625": "g-history-menu-dark-625-b36daae5.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "625": "g-history-menu-light-625-4d90c89a.avif",
+    "1250": "g-history-menu-light-1250-20359f82.avif"
+   },
+   "webp": {
+    "625": "g-history-menu-light-625-9566565b.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Right-click on Undo: the dataset's history, newest first, each step with when it was made: the two sidecars edited in chapters 9 and 10, then a task renamed, a folder of notes ignored and the anonymisation.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
+  "sample": "multimodal v2"
+ }
+}

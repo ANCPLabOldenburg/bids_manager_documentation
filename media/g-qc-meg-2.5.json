@@ -1,0 +1,41 @@
+{
+ "id": "g-qc-meg-2.5",
+ "kind": "figure",
+ "width": 1594,
+ "height": 1054,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1594": "g-qc-meg-2.5-dark-1594-659c44ab.avif",
+    "3188": "g-qc-meg-2.5-dark-3188-0e6fe51e.avif"
+   },
+   "webp": {
+    "1594": "g-qc-meg-2.5-dark-1594-76ad8425.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1594": "g-qc-meg-2.5-light-1594-0ece6c23.avif",
+    "3188": "g-qc-meg-2.5-light-3188-2e3b26d8.avif"
+   },
+   "webp": {
+    "1594": "g-qc-meg-2.5-light-1594-cd8155f6.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The same stretch with Channel off in a segment beyond lowered to 2.5: 44 % of the magnetometers are off at 270 s, the segments from 270 to 274 s are flagged, and Mark flagged segments bad lays them over the traces in red.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
+  "sample": "MOUS sub-A2004 (Donders Institute)"
+ }
+}

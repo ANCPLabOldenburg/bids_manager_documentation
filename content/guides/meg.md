@@ -2,6 +2,7 @@
 title: Converting MEG
 display_title: Converting *MEG*
 kicker: Guides
+group: Kinds of data
 lede: Convert Elekta Neuromag recordings of two participants: sessions found from dated folders, a task with several runs, rest, and the empty-room recordings that go with them.
 description: Convert MEG recordings to BIDS with BIDS Manager, on the Elekta Neuromag sample.
 time: 20 minutes

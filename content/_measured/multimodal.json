@@ -1,8 +1,8 @@
 {
  "source": {
-  "bids_manager": "1.5.0",
-  "commit": "373b09d",
-  "date": "2026-10-13"
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20"
  },
  "scan": {
   "rows": 19,
@@ -53,13 +53,17 @@
   "rc": 0
  },
  "converted": {
+  "todo": {
+   "inserted": 63,
+   "files": 7
+  },
   "rows": 19,
   "included": 15,
-  "files": 65,
+  "files": 66,
   "validation": {
-   "ok": 27,
-   "warn": 112,
-   "err": 1
+   "ok": 26,
+   "warn": 114,
+   "err": 3
   }
  },
  "todo": {
@@ -68,40 +72,41 @@
  },
  "fixed": {
   "validation": {
-   "ok": 28,
-   "warn": 112,
+   "ok": 29,
+   "warn": 121,
    "err": 0
   }
  },
  "edited": {
   "validation": {
-   "ok": 28,
-   "warn": 110,
+   "ok": 29,
+   "warn": 119,
    "err": 0
   }
  },
  "cli": {
-  "project_convert_files": 65,
+  "project_convert_files": 66,
   "project_validation": {
-   "ok": 27,
-   "warn": 112,
-   "err": 1
-  },
-  "without_fill_todos": {
    "ok": 26,
-   "warn": 116,
+   "warn": 114,
    "err": 3
   },
-  "todo_inserted": 69,
-  "convert_seconds": 5.3
+  "without_fill_todos": {
+   "ok": 25,
+   "warn": 117,
+   "err": 4
+  },
+  "todo_inserted": 63,
+  "todo_files": 7,
+  "convert_seconds": 5.1
  },
  "quick_start": {
   "rc": 0,
-  "files": 65,
+  "files": 66,
   "validation": {
-   "ok": 27,
-   "warn": 114,
-   "err": 1
+   "ok": 26,
+   "warn": 116,
+   "err": 3
   },
   "names": [
    "sub-001_ses-01_acq-fm2_magnitude1",
@@ -120,7 +125,7 @@
    "sub-001_ses-01_task-rest_meg",
    "sub-001_ses-01_task-rest_recording-eye1_physio"
   ],
-  "seconds": 15.6,
+  "seconds": 14.1,
   "errors": []
  }
 }

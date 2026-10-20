@@ -1,0 +1,41 @@
+{
+ "id": "g-anon-review",
+ "kind": "figure",
+ "width": 1320,
+ "height": 900,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1320": "g-anon-review-dark-1320-bcffc410.avif",
+    "2640": "g-anon-review-dark-2640-c2eaab2e.avif"
+   },
+   "webp": {
+    "1320": "g-anon-review-dark-1320-9b7bdcbf.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1320": "g-anon-review-light-1320-a84b265c.avif",
+    "2640": "g-anon-review-light-2640-a435eed7.avif"
+   },
+   "webp": {
+    "1320": "g-anon-review-light-1320-cb089523.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "To read by hand: free text that may name someone, such as a protocol or study description, listed once per value with the files it is in. Nothing here is changed.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
+  "sample": "multimodal v2"
+ }
+}

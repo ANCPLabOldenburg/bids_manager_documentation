@@ -1,0 +1,41 @@
+{
+ "id": "g-anon-scope",
+ "kind": "figure",
+ "width": 1320,
+ "height": 900,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1320": "g-anon-scope-dark-1320-9249e62a.avif",
+    "2640": "g-anon-scope-dark-2640-cbbe86d9.avif"
+   },
+   "webp": {
+    "1320": "g-anon-scope-dark-1320-8c0cffaf.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1320": "g-anon-scope-light-1320-613ce8f0.avif",
+    "2640": "g-anon-scope-light-2640-054bb4e2.avif"
+   },
+   "webp": {
+    "1320": "g-anon-scope-light-1320-e6fe8c25.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Where, on a dataset of two subjects: only the second session of sub-001, and its row of the dataset's files. The first session can be anonymised later with the same shift of dates.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
+  "sample": "MRI sample 1"
+ }
+}

@@ -2,6 +2,7 @@
 title: Converting MRI
 display_title: Converting *MRI*
 kicker: Guides
+group: Kinds of data
 lede: Convert a small Siemens study with two participants, one of them scanned twice, with fieldmaps, functional runs and their physiological logs, diffusion, and the series a scanner adds that are not data.
 description: Convert a Siemens MRI study to BIDS with BIDS Manager, on the MRI sample dataset.
 time: 25 minutes

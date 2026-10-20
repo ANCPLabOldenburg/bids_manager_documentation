@@ -21,15 +21,11 @@ Each scan of a raw folder into a project is saved as a **scan table**: the table
 | Where | What Undo takes back | How far |
 |---|---|---|
 | The Converter's table | an edit: a cell, a bulk edit, an include, new subject numbers | every edit since the scan table was last converted, also after closing and reopening; Redo until BIDS Manager closes |
-| The Editor's sidecar and table viewers | an edit of the file that is open, saved or not; in the sidecar viewer, undoing a saved change also writes the file back; in the table viewer, click **Save** again | while the file is open |
+| The Editor | first the unsaved edits of the sidecar or table that is open; then the dataset's history, one step at a time: every tool applied and every file saved | the whole history, also after closing and reopening |
 
-**Undo** and **Redo** are in each view's toolbar. In the Converter they are also on {{ key("Ctrl+Z") }} and {{ key("Ctrl+Shift+Z") }}; in the Editor, use the buttons.
+**Undo** and **Redo** are in each view's toolbar, and on {{ key("Ctrl+Z") }} and {{ key("Ctrl+Shift+Z") }}. In the Editor, right-click either for the list of steps, newest first, to go back or forward several at once ([Undo, redo and the history](/guides/history/)).
 
-Beyond that, every change an Editor tool makes, and every saved sidecar or text file, is an **operation** recorded in the project: a rename, a restructure, a deletion, a defacing, a fix applied to many files. Before an operation rewrites or deletes a file, its original is copied into `.bidsmgr/editor/originals/`; a renamed file is not copied, its old path is in the log. Saving in the table viewer writes the file directly and is not recorded. every write is atomic, and a failure part way rolls the whole operation back, so a file is never left half-written. `.bidsmgr/editor/operations.log` lists the operations, newest last, with the files each one touched.
-
-::: note
-In {{ version }}, the GUI has no command to undo a whole operation. A defacing is taken back with **Tools** > **Put the face back...**; for anything else, a rewritten or deleted file as it was is in `.bidsmgr/editor/originals/<operation>/`, under the operation's identifier in `operations.log`, and can be copied back by hand (a renamed file can be renamed back, from the old path in the log). See [Known issues](/help/known-issues/).
-:::
+Every change an Editor tool makes, and every saved sidecar, table or text file, is one **step** recorded in the project: a rename, a restructure, a deletion, an anonymisation, a defacing, an ignore, a fix applied to many files. Before a step rewrites or deletes a file, its original is copied into `.bidsmgr/editor/originals/`; a renamed file is not copied, its old path is in the log, and a folder the step created or removed is recorded too, so undoing it leaves no empty folder behind. Every write is atomic, and a failure part way rolls the whole step back, so a file is never left half-written. `.bidsmgr/editor/operations.log` lists the steps, newest last, with the files each one touched; `redo.log` the ones undone. A new step clears what was left to redo.
 
 A conversion is not undone either: it writes many files from scratch. To convert again, change the table and run the conversion again, with **Existing subjects** (**Settings** > **Convert**) set to update or replace what changed.
 

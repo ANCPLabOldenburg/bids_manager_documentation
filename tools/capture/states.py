@@ -206,27 +206,55 @@ def _editor_on(win):
 
 
 def _validate(ed, root):
+    """As Validate dataset does: with Deep checks as the toolbar has them
+    (on by default since 1.5.1)."""
     from bidsmgr.editor import validate as run_validate
     schema, max_rows, todos = ed._validation_engine_opts()
-    rep = run_validate(Path(root), strict=False, schema=schema, max_rows=max_rows, flag_todos=todos)
+    rep = run_validate(Path(root), strict=ed._strict_btn.isChecked(), schema=schema,
+                       max_rows=max_rows, flag_todos=todos)
     ed._on_report_ready(rep, Path(root))
     H.pump(settle=30)
     return rep
 
 
-def fix_scans(win, root) -> None:
-    """Chapter 9: the PET row's acq_time gets its date, in the table viewer."""
+#: The eye tracker's screen, as chapter 9 describes it: the events file of the
+#: resting run in beh/, whose sidecar says how the stimuli were shown. The
+#: standard asks for these four fields for gaze recorded on a screen.
+SCREEN = {
+    "StimulusPresentation": {
+        "ScreenDistance": 0.6,
+        "ScreenOrigin": ["top", "left"],
+        "ScreenResolution": [1920, 1080],
+        "ScreenSize": [0.53, 0.3],
+    }
+}
+EYE_EVENTS = "onset\tduration\ttrial_type\n0\t199.6\trest\n"
+
+
+def fix_errors(win, root) -> None:
+    """Chapter 9: the PET sidecar's reconstruction fields, answered in the
+    form (filtered back projection has no parameters: "none"), and the eye
+    tracker's screen, written as the task's events file in beh/ (files the
+    reader writes in a text editor: BIDS Manager cannot know the screen)."""
+    import json as _json
+
     ed = _editor_on(win)
-    ed.select_file_in_tree(Path(root) / "sub-001/ses-01/sub-001_ses-01_scans.tsv")
-    tv = ed._tsv_viewer
-    H.pump(lambda: getattr(tv, "_loader", None) is None and tv._model.rowCount() > 0, timeout=30, settle=30)
-    m = tv._model
-    for r in range(m.rowCount()):
-        if str(m.data(m.index(r, 0))).startswith("pet/"):
-            m.setData(m.index(r, 1), "2009-10-02T09:28:23")
-    H.pump(settle=10)
-    tv.save()
+    form = ed._sidecar_form
+    ed.select_file_in_tree(Path(root) / "sub-001/ses-01/pet/sub-001_ses-01_pet.json")
+    H.pump(settle=40)
+    form._apply_view_mode("bids", persist=False)
+    H.pump(settle=20)
+    for key in ("ReconMethodParameterLabels", "ReconMethodParameterUnits"):
+        _set_field(form, key, ["none"])
+    form.save()
     H.pump(settle=30)
+    data = _json.loads((Path(root) / "sub-001/ses-01/pet/sub-001_ses-01_pet.json").read_text())
+    if data.get("ReconMethodParameterUnits") != ["none"]:
+        raise H.ShotFailed(f"PET edit did not land: {data.get('ReconMethodParameterUnits')!r}")
+    beh = H.STUDIES_REAL / Path(root).name / "sub-001/ses-01/beh"
+    (beh / "sub-001_ses-01_task-rest_events.tsv").write_text(EYE_EVENTS)
+    (beh / "sub-001_ses-01_task-rest_events.json").write_text(_json.dumps(SCREEN, indent=4) + "\n")
+    H.pump(settle=40)
 
 
 def _set_field(form, key: str, value) -> None:
@@ -256,7 +284,7 @@ TASK = {
 
 
 def edit_metadata(win, root) -> None:
-    """Chapter 10: a task description in the BOLD sidecar, and the PET fields the dose sheet's none left."""
+    """Chapter 10: a task description in the BOLD sidecar."""
     ed = _editor_on(win)
     form = ed._sidecar_form
     ed.select_file_in_tree(Path(root) / "sub-001/ses-01/func/sub-001_ses-01_task-rest_bold.json")
@@ -265,21 +293,6 @@ def edit_metadata(win, root) -> None:
         _set_field(form, k, v)
     form.save()
     H.pump(settle=30)
-    ed.select_file_in_tree(Path(root) / "sub-001/ses-01/pet/sub-001_ses-01_pet.json")
-    H.pump(settle=40)
-    form._apply_view_mode("tree", persist=False)
-    H.pump(settle=20)
-    import json as _json
-    p = Path(root) / "sub-001/ses-01/pet/sub-001_ses-01_pet.json"
-    form._apply_view_mode("bids", persist=False)
-    H.pump(settle=20)
-    for key in ("ReconMethodParameterLabels", "ReconMethodParameterUnits"):
-        _set_field(form, key, ["none"])
-    form.save()
-    H.pump(settle=30)
-    data = _json.loads(p.read_text())
-    if data.get("ReconMethodParameterLabels") != ["none"]:
-        raise H.ShotFailed(f"PET edit did not land: {data.get('ReconMethodParameterLabels')!r}")
 
 
 def build_after(theme: str = "dark") -> None:
@@ -289,7 +302,7 @@ def build_after(theme: str = "dark") -> None:
     root = H.restore("converted")
     win = H.main_window("welcome")
     H.open_project(win, root, "editor")
-    fix_scans(win, root)
+    fix_errors(win, root)
     rep = _validate(win.editor, root)
     record["fixed"] = {"validation": dict(rep.counts)}
     H.snapshot("fixed")

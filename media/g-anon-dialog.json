@@ -1,0 +1,41 @@
+{
+ "id": "g-anon-dialog",
+ "kind": "figure",
+ "width": 1320,
+ "height": 900,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1320": "g-anon-dialog-dark-1320-16dca04c.avif",
+    "2640": "g-anon-dialog-dark-2640-5adacc78.avif"
+   },
+   "webp": {
+    "1320": "g-anon-dialog-dark-1320-c07d646f.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1320": "g-anon-dialog-light-1320-f021a40f.avif",
+    "2640": "g-anon-dialog-light-2640-b4bfbad2.avif"
+   },
+   "webp": {
+    "1320": "g-anon-dialog-light-1320-1fa19783.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Anonymise metadata on the course's sample: Recommended, the whole dataset, and every change by kind before anything is written.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
+  "sample": "multimodal v2"
+ }
+}

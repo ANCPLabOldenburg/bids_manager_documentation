@@ -2,6 +2,7 @@
 title: Converting EEG
 display_title: Converting *EEG*
 kicker: Guides
+group: Kinds of data
 lede: Convert 28 EDF recordings whose file names say nothing about the task. The real work is the information only you have: which task each run was, what the event codes mean, and how the recording was made.
 description: Convert EEG recordings to BIDS with BIDS Manager, on the PhysioNet motor imagery sample.
 time: 25 minutes

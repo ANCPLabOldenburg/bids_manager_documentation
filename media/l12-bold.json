@@ -2,7 +2,7 @@
  "id": "l12-bold",
  "kind": "clip",
  "width": 1304,
- "height": 782,
+ "height": 814,
  "duration": 7.8,
  "chapters": [
   {
@@ -16,21 +16,21 @@
  ],
  "files": {
   "dark": {
-   "mp4": "l12-bold-dark-e07259a9.mp4",
-   "webm": "l12-bold-dark-de7251d5.webm",
-   "poster": "l12-bold-dark-poster-4132ef7e.webp"
+   "mp4": "l12-bold-dark-be3b2b55.mp4",
+   "webm": "l12-bold-dark-0be0001f.webm",
+   "poster": "l12-bold-dark-poster-d2669a69.webp"
   },
   "light": {
-   "mp4": "l12-bold-light-12bd1c29.mp4",
-   "webm": "l12-bold-light-cc6e5805.webm",
-   "poster": "l12-bold-light-poster-8d41ba2b.webp"
+   "mp4": "l12-bold-light-0c5bcdf1.mp4",
+   "webm": "l12-bold-light-707b086d.webm",
+   "poster": "l12-bold-light-poster-1e14f103.webp"
   }
  },
  "alt": "The BOLD run in the Planes + 3-D layout with its time course and physiological recordings beneath: the run plays volume by volume while the rendering turns.",
  "source": {
-  "bids_manager": "1.5.0",
-  "commit": "373b09d",
-  "date": "2026-10-14",
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
   "sample": "multimodal v2 (OL_3844, consented)"
  }
 }

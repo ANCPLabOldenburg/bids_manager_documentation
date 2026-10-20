@@ -79,6 +79,7 @@ VERBS = [
     ("bidsmgr-metadata", "bidsmgr.cli.metadata", ""),
     ("bidsmgr-validate", "bidsmgr.cli.validate", ""),
     ("bidsmgr-deface", "bidsmgr.cli.deface", ""),
+    ("bidsmgr-anonymise", "bidsmgr.cli.anonymise", ""),
     ("bidsmgr-qc", "bidsmgr.cli.qc", ""),
     ("bidsmgr-view", "bidsmgr.cli.view", ""),
 ]
@@ -537,8 +538,8 @@ def main() -> int:
     global _TM
     _TM = _tm
     v = version()
-    if v["version"] != "1.5.0":
-        raise SystemExit(f"BIDS Manager reports {v['version']}, not 1.5.0: stopping")
+    if v["version"] != "1.5.1":
+        raise SystemExit(f"BIDS Manager reports {v['version']}, not 1.5.1: stopping")
     write("version", v)
     write("cli", cli())
     write("settings", settings(app))

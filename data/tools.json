@@ -25,12 +25,20 @@
      "tip": "Find where the dataset's files stop agreeing with each other: a scans row naming a file that is gone, a participants row for a deleted subject, a link pointing at nothing, a sidecar with no recording. Read-only until you choose a repair."
     },
     {
+     "label": "Scans and sessions tables...",
+     "tip": "Write the *_scans.tsv of each session (every recording, with when it was acquired) and the *_sessions.tsv of each subject with sessions. For a dataset that has none, or whose tables have fallen behind. Tables already there are kept and only added to. Shown before anything is written; one Undo."
+    },
+    {
      "label": "References (IntendedFor, Sources...)...",
      "tip": "Which files each file points at, and whether that is right. Lists every IntendedFor, AssociatedEmptyRoom, Sources and AnatomicalImage in the dataset with its status: correct, pointing at a missing file, or disagreeing with the acquisition times. Link by ticking files, not by typing paths."
     },
     {
      "label": "Fix ups...",
      "tip": "Generate the companion files recordings are missing, write CITATION.cff, move repeated metadata up, and mark what is unanswered."
+    },
+    {
+     "label": "Ignored files...",
+     "tip": "What validation leaves out (.bidsignore): every pattern with the files it hides, and the dataset's files to pick from. Right-click a file or folder in the tree to ignore it, or to stop."
     }
    ]
   },
@@ -77,6 +85,10 @@
     {
      "label": "Put the face back...",
      "tip": "Restore defaced images from the undefaced copies kept in sourcedata/ or in the edit history. Undo only reaches the last operation; this works however many edits came afterwards."
+    },
+    {
+     "label": "Anonymise metadata...",
+     "tip": "Remove what identifies a participant from the metadata of every kind of file: dates shifted per participant, names and IDs removed, UIDs pseudonymised, recording headers and photos cleaned. Every change is shown first; one Undo."
     }
    ]
   },

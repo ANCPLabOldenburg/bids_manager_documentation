@@ -23,9 +23,9 @@ Click **Tools** in the Editor's toolbar.
 | Group | Tools |
 |---|---|
 | Look at the dataset | **Dashboard**, **Compare images...**, **Quality check...** |
-| Check and repair | **Check coherence...**, **References (IntendedFor, Sources...)...**, **Fix ups...** |
+| Check and repair | **Check coherence...**, **Scans and sessions tables...**, **References (IntendedFor, Sources...)...**, **Fix ups...**, **Ignored files...** |
 | Names and structure | **Rename entity...**, **Find and replace a value...**, **Index widths...**, **Add or remove an entity...**, **Sessions...** |
-| Identifiable data | **Deface...**, **Remove the skull...**, **Compare with the original...**, **Put the face back...** |
+| Identifiable data | **Deface...**, **Remove the skull...**, **Compare with the original...**, **Put the face back...**, **Anonymise metadata...** |
 | Remove | **Delete...** |
 
 The same actions, for the file or folder you click, are in the BIDS tree's right-click menu:
@@ -59,7 +59,7 @@ Choose **Tools** > **Sessions...** and set **Action:** to **Remove the session**
 
 {{ figure("l11-sessions", "Removing the session: every file of ses-01 moves up to the subject's folder.") }}
 
-All 58 files of `ses-01` move to `sub-001/` and lose `ses-01` from their names, and 23 references in 5 files follow. **Create a session** does the opposite, for files without one.
+All 60 files of `ses-01` move to `sub-001/` and lose `ses-01` from their names, and 21 references in 5 files follow: the scans table's rows, `IntendedFor` and the sessions table. **Create a session** does the opposite, for files without one.
 :::
 
 ::: step Close it
@@ -74,7 +74,7 @@ Click **Cancel**.
 
 {{ figure("l11-delete", "Delete, for the eye-tracking folder: the files and what is repaired with them.") }}
 
-Delete asks for confirmation before it removes anything, and keeps a copy of every file it removes in the project's history.
+Delete asks for confirmation before it removes anything, and keeps a copy of every file it removes in the project's history. A folder left empty, by a move outside BIDS Manager for example, can be deleted the same way.
 
 ## References
 
@@ -86,20 +86,22 @@ Delete asks for confirmation before it removes anything, and keeps a copy of eve
 
 ## Check coherence
 
-**Check coherence...** looks for what is valid BIDS and still wrong: a scans row naming a file that is gone, a participants row for a deleted subject, a link pointing at nothing, an index written at two widths, a value spelled two ways, a `TaskName` that does not match its task, an `IntendedFor` that disagrees with the acquisition times.
+**Check coherence...** looks for what is valid BIDS and still wrong: a scans row naming a file that is gone, a recording with no scans row, a missing sessions table, a participants row for a deleted subject, a link pointing at nothing, an index written at two widths, a value spelled two ways, a `TaskName` that does not match its task, an `IntendedFor` that disagrees with the acquisition times. It is what to run after files were renamed or deleted outside BIDS Manager.
 
-{{ figure("l11-coherence", "Check coherence on the sample.") }}
+{{ figure("l11-coherence", "Check coherence on the edited sample: one recording without a scans row.") }}
 
-::: warning
-On the sample it reports one finding, **sidecar has no recording**, for `meg/sub-001_ses-01_coordsystem.json`, and offers to delete it. That file is not a recording's sidecar: it describes the MEG sensor coordinates and belongs in the dataset. Untick it, and do not repair it. See [Known issues](/help/known-issues/).
-:::
-
-Nothing is changed until you click **Repair**, and each finding shows its exact change when selected.
+On the sample, after chapter 9 wrote the eye tracker's events file by hand, it finds one thing: that file has no row in the session's scans table, and the repair, ticked because it loses nothing, adds it. Nothing is changed until you click **Repair**, and each finding shows its exact change when selected. A dataset with problems of every kind, and what each repair does, is in [Keeping a dataset consistent](/guides/consistency/).
 
 ## Two more
 
 - **Find and replace a value...** replaces one entity value everywhere it appears, within the whole dataset, a subject or a session.
 - **Index widths...** gives every index the same width: `run-1` and `run-01` are both valid, but a dataset should use one.
+
+## Undo, and the history
+
+Every tool above, applied, is one step of the project's history, and so is every sidecar or table you save. **Undo** in the toolbar ({{ key("Ctrl+Z") }}) takes back the last step, files, references and folders together; **Redo** ({{ key("Ctrl+Shift+Z") }}) makes it again. Right-click either for the list of steps, newest first, and go back several at once ([Undo, redo and the history](/guides/history/)).
+
+Each tool, in several real cases (one participant converted as two subjects, a label forgotten, a dataset put into sessions afterwards): [Fixing names and structure](/guides/names-and-structure/).
 
 ::: recap
 - You have seen what every structure tool would do to the sample, and closed each with **Cancel**.

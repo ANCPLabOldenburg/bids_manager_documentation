@@ -25,20 +25,20 @@
  "files": {
   "dark": {
    "mp4": "t-mrs-dark-24315b5f.mp4",
-   "webm": "t-mrs-dark-787c7028.webm",
+   "webm": "t-mrs-dark-3e922b17.webm",
    "poster": "t-mrs-dark-poster-593a2d73.webp"
   },
   "light": {
    "mp4": "t-mrs-light-d1b98d26.mp4",
-   "webm": "t-mrs-light-93be13dd.webm",
+   "webm": "t-mrs-light-247eb870.webm",
    "poster": "t-mrs-light-poster-cdb250d9.webp"
   }
  },
  "alt": "The spectroscopy file in the spectrum viewer: the zero-order phase turned by hand and set back with Auto phase, line broadening raised, and the FID.",
  "source": {
-  "bids_manager": "1.5.0",
-  "commit": "7bb684f",
-  "date": "2026-10-14",
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
   "sample": "multimodal v2"
  }
 }
