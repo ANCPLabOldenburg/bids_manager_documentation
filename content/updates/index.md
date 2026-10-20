@@ -8,6 +8,61 @@ To upgrade, use **Check updates** in BIDS Manager's status bar, run the installe
 
 <p class="rel-legend"><span class="rel-kind k-new">New</span> <span class="rel-kind k-fix">Fixed</span> <span class="rel-kind k-note">Changed</span></p>
 
+::: release 1.5.1 | October 2026 | v151
+
+Anonymisation chosen by purpose and by subject, scans and sessions tables for every kind of recording, granular control over what validation leaves out, an Undo and Redo that walk the whole history, and installers that need no administrator rights. Validation also checks more than before, so read **Before you upgrade** at the end of this card.
+
+<p class="rel-kind k-new">New</p>
+
+- **Anonymise metadata.** **Tools** > **Anonymise metadata...** in the Editor removes what identifies a participant from the dataset's metadata, in every kind of file: sidecars, tables, recording headers, photographs. You choose what by purpose (names and IDs, ages, dates and times, the site, devices, DICOM UIDs, traces of the conversion, photographs) and where (the files at the top, subjects, sessions), and every change is listed before anything is written. Dates are shifted, not removed: every date of a participant moves back by one number of whole weeks, so intervals and weekdays are kept. The recorded data are never changed, and the whole run is one step you can undo and redo. Also after every conversion (**Settings** > **Convert**, **Anonymise the metadata, last:**) and from a terminal (`bidsmgr-anonymise`). See [Anonymising metadata](/guides/anonymising/).
+
+{{ figure("g-anon-dialog", "Anonymise metadata: what to remove by purpose, where, and every change it would make.", number=False) }}
+
+- **Scans and sessions tables for every recording.** A session's `_scans.tsv` now lists every file the standard counts as a recording, whatever its datatype and whether BIDS Manager converted it: behaviour, eye tracking and fNIRS included. Each subject with sessions gets a `_sessions.tsv` with when each session began. **Tools** > **Scans and sessions tables...** writes them for a dataset that has none or whose tables have fallen behind, without touching the rows and columns already there. On by default after a conversion (**Write scans and sessions tables**). See [Keeping a dataset consistent](/guides/consistency/).
+- **Leaving files out of validation, file by file.** Right-click a file or folder in the BIDS tree, **Ignore in validation**, and choose how widely: this file, with its sidecar, its folder, the same name in every subject, or every file of an extension the standard does not use, each with the number of files it hides. **Stop ignoring** brings back any selection in one step. Ignored files are dimmed in the tree, and **Tools** > **Ignored files...** lists every line of `.bidsignore` with what it hides. See [Leaving files out of validation](/guides/ignoring-files/).
+
+{{ figure("g-ignore-menu", "Ignore in validation, on one file: each way to ignore it, with how many files it would hide.", number=False) }}
+
+- **Undo and Redo walk the whole history.** Right-click **Undo** or **Redo** to list the steps, newest first, and go back or forward several at once. An undo removes the folders the step created and puts back the ones it removed. See [Undo, redo and the history](/guides/history/).
+
+{{ figure("g-history-menu", "Right-clicking Undo: the steps of the history, newest first.", number=False) }}
+
+- **Leave entities out of proposed names.** **Settings** > **Scan**, **Leave out of proposed names**: tick an entity such as `acq-` and the scan stops adding it, except where the standard requires it or where it is what tells two recordings apart. A scan table already open is offered the change as one step (`bidsmgr-scan --drop-entity`).
+- **Check coherence** says what the **Scans and sessions tables** tool would add, groups its findings by kind, pairs a file renamed outside BIDS Manager with the row that still names the old file, and ticks only the repairs that lose nothing. See [Keeping a dataset consistent](/guides/consistency/).
+
+{{ figure("g-coherence", "Check coherence after a T1w was renamed in the file manager: the row paired with the new name, a missing scans row and sessions table, and a TaskName to review.", number=False) }}
+
+- **Empty folders can be deleted** from the BIDS tree's right-click menu.
+- **Installers 2.0**, built on uv: no administrator rights, everything in one folder in your home, and more systems than before: Intel Macs as well as Apple silicon, Linux on ARM64 as well as x86_64, Windows 11 on ARM as well as x64. Intel Macs were checked through Rosetta, and Linux and Windows on ARM are not tested yet ([Install](/start/install/#systems)). Running the installer again updates; its menu also uninstalls. **Check updates** uses the installer's own tools, and moves to a newer Python when a release needs one.
+
+<p class="rel-kind k-fix">Fixed</p>
+
+- **The preview stays in front on macOS.** Clicking anything inside the preview window (the shortcuts list, the quality check) sent it behind the main window.
+- **Undo leaves no empty folder.** Undoing a subject's rename or merge left an empty `sub-` folder behind.
+- **A series' time is its first image's.** The scan kept the acquisition time of whichever file it read first, a minute late on a long diffusion run; it now keeps the earliest, as the converter does.
+- **The PET row of a scans table has its date.** The time without a date listed under 1.5.0's known issues is gone.
+- **Missing samples of a physiological recording are written `n/a`**, the standard's word for them, instead of `nan`, which validation read as a value of the wrong type. The viewers read both as a gap.
+- **A trace's colour can go back to its channel type.** With one channel type in a recording, a colour once chosen in **Line style** could not be undone.
+- **Validate file and Validate folder follow Deep checks.** They checked headers only in the dataset-wide validation.
+- **Skull stripping from the Mac app.** With the 2.0.0 and 2.0.1 installers, the app started under Rosetta, and skull stripping failed. The app now starts natively.
+
+<p class="rel-kind k-note">Changed</p>
+
+- **Deep checks** is on by default.
+- **Validation checks more:** the format of values (times, URIs, `bids::` links), coordinate system files, compressed tables against their sidecar's columns, and eye tracking's screen description; a `bids::` link that points at nothing is reported. It no longer reports a dataset-level `dwi.bval` as misplaced, nor raw-data fields as missing in a derivatives dataset. A thousand files in one folder validate in 18 seconds rather than 65.
+- **Long lists stay fast.** The lists of errors, warnings and valid files are drawn as one list with a search: 287,000 findings on 21,663 files open in under a fifth of a second.
+- **No placeholder where a field's format forbids one.** A time, a URI or a list of units cannot hold `TODO`; such a field is left out, and validation reports it as missing if the standard requires it.
+- **Fix ups' metadata step** is one step of the history.
+- The full-colour app icon is the default header logo.
+- Once a day at most, BIDS Manager asks for a star on GitHub. **Star on GitHub** ends the requests for good; a switch in the dialog and in **Settings** > **Display** turns them off.
+
+<p class="rel-kind k-note">Before you upgrade</p>
+
+- **Validation may find errors it did not before**, in a dataset that was clean in 1.5.0: eye tracking without its screen description, and required fields a placeholder used to fill. The BIDS project's own validator (bids-validator) reported them already. [Validating in the Editor](/learn/09-validating/) shows how to answer both.
+- **Running the metadata step again adds rows and tables**: scans rows for recordings it did not list before, and sessions tables. Rows and columns you added are kept.
+
+:::
+
 ::: release 1.5.0 | October 2026 | v150 | Major release
 
 One viewer for every kind of image and recording, a quality check of every anatomical and diffusion image, MRI series named from how they were acquired, and a preview of the dataset before it is written. Some of these change what a conversion writes, so read **Before you upgrade** at the end of this card.

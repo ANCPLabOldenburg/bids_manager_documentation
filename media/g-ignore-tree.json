@@ -1,0 +1,41 @@
+{
+ "id": "g-ignore-tree",
+ "kind": "figure",
+ "width": 430,
+ "height": 1114,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "430": "g-ignore-tree-dark-430-8150ed54.avif",
+    "860": "g-ignore-tree-dark-860-2725bcb7.avif"
+   },
+   "webp": {
+    "430": "g-ignore-tree-dark-430-44da7a40.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "430": "g-ignore-tree-light-430-3ae317e8.avif",
+    "860": "g-ignore-tree-light-860-e5336435.avif"
+   },
+   "webp": {
+    "430": "g-ignore-tree-light-430-2d9319f9.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The tree after three lines in .bidsignore: the notes, the physiological logs and the notes folder are drawn dimmed and in italics, and validation no longer reports them.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
+  "sample": "MRI sample 1"
+ }
+}

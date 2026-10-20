@@ -26,6 +26,7 @@ sample: Multimodal sample v2
 | `bidsmgr-metadata` | Writes the dataset's metadata and TODO placeholders | the post-convert chain |
 | `bidsmgr-validate` | Validates a dataset | Validate dataset |
 | `bidsmgr-deface` | Removes faces, or keeps the brain only | Tools > Deface |
+| `bidsmgr-anonymise` | Anonymises the metadata | Tools > Anonymise metadata |
 | `bidsmgr-qc` | Runs the quality check | Tools > Quality check |
 | `bidsmgr-view` | Opens an image in the viewer, or renders it to a file | the viewer |
 
@@ -55,22 +56,22 @@ The conversion replays the edits recorded in the project (one subject, one sessi
 ::: step Write the metadata
 ```console
 $ bidsmgr-metadata --project /tmp/studies/multimodal_study --fill-todos
-  TODO placeholders inserted: 69 fields across 8 files
+  TODO placeholders inserted: 63 fields across 7 files
 ```
-`--fill-todos` writes the TODO placeholders the GUI's default post-convert chain writes; `--fill-scope required|recommended|optional` chooses how far they go.
+`--fill-todos` writes the TODO placeholders the GUI's default post-convert chain writes; `--fill-scope required|recommended|optional` chooses how far they go. The step also writes the scans and sessions tables (`--no-tables` leaves them out), and `--anonymise recommended` or `strict` anonymises the dataset last, as **Settings** > **Convert** does in the GUI.
 :::
 
 ::: step Validate
 ```console
 $ bidsmgr-validate /tmp/studies/multimodal_study --strict --html
 === /tmp/studies/multimodal_study ===
-  severity: ERR  (ok=27 warn=112 err=1)
+  severity: ERR  (ok=26 warn=114 err=3)
 ```
-`--strict` runs the deep checks and `--html` writes `validation_report.html` into the project's `.bidsmgr/` folder. The result is the GUI's, file for file: the same {{ m("cli.project_convert_files") }} files, the same one error (chapter 9 fixes it).
+`--strict` runs the deep checks and `--html` writes `validation_report.html` into the project's `.bidsmgr/` folder. The result is the GUI's, file for file: the same {{ m("cli.project_convert_files") }} files, the same three errors (chapter 9 fixes them).
 :::
 
 ::: note
-Without `--fill-todos`, the same dataset reports 3 errors instead of 1: the two PET fields the dose sheet's `none` did not fill are then missing rather than holding a TODO. A TODO in a required field is still a field to fill.
+Without `--fill-todos`, the same dataset reports {{ m("cli.without_fill_todos.err") }} errors instead of 3: the PET's `ReconMethodParameterLabels` is then missing rather than holding a TODO. A TODO in a required field is still a field to fill.
 :::
 
 ## From raw data to BIDS in a script
@@ -81,13 +82,14 @@ For a study you convert the same way every time, the whole workflow can run with
 $ bidsmgr-create /data/bids/my_study --name "My study"
 $ bidsmgr-scan /data/raw/my_study --project /data/bids/my_study -j 8
 $ bidsmgr-convert --project /data/bids/my_study -j 8 --pet-spreadsheet dose_sheet.csv
-$ bidsmgr-metadata --project /data/bids/my_study --participants participants.csv --fill-todos
+$ bidsmgr-metadata --project /data/bids/my_study --participants participants.csv --fill-todos --anonymise recommended
 $ bidsmgr-validate /data/bids/my_study --strict --html
 ```
 
-What the GUI lets you do between the scan and the conversion (reconcile subjects, rename a task, leave a series out), a script does in `inventory.tsv`. Two ways:
+What the GUI lets you do between the scan and the conversion (reconcile subjects, rename a task, leave a series out), a script does with rules and in `inventory.tsv`. Three ways:
 
 - **Scan rules** in a JSON file (`bidsmgr-scan --rules-file rules.json`): leave out series by name and give your own names to series, applied at every scan. **Settings** > **Scan rules** keeps rules of the same form in BIDS Manager's own settings, but cannot save them to a file; write the JSON by hand (`bidsmgr-scan --help` shows its form).
+- **Leave entities out of every name** with `bidsmgr-scan --drop-entity acq` (the same as **Settings** > **Scan** > **Leave out of proposed names**).
 - **Edit `inventory.tsv`**, a tab-separated table, then run `bidsmgr-rebuild` to rebuild the names. The `entities` column holds every row's entities as JSON and is what the names are built from: edit it, and run `bidsmgr-rebuild inventory.tsv` (the default, `--from entities`).
 
 ::: warning
@@ -105,7 +107,7 @@ $ bidsmgr-metadata /data/bids/my_study --fill-todos
 $ bidsmgr-validate /data/bids/my_study
 ```
 
-The dataset folder is named after the raw folder (in lower case) unless `bidsmgr-scan --dataset` names it. Without a project, nothing records your edits and there are no scan versions; for anything you will come back to, use a project.
+The dataset folder is named after the raw folder (in lower case) unless `bidsmgr-scan --dataset` names it. For a dataset converted elsewhere, `bidsmgr-metadata <dataset> --tables-only` writes its scans and sessions tables and nothing else. Without a project, nothing records your edits and there are no scan versions; for anything you will come back to, use a project.
 
 ## Viewing and checking from the command line
 

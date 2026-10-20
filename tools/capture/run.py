@@ -28,7 +28,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
 GROUP_MODULES = ["shots_start", "shots_converter", "shots_metadata", "shots_editor", "shots_viewers",
-                 "shots_guides", "shots_reference", "shots_home", "clips", "clips_viewers", "clips_tour"]
+                 "shots_guides", "shots_tools", "shots_qc", "shots_reference", "shots_home", "clips", "clips_viewers", "clips_tour"]
 
 
 def groups() -> dict:

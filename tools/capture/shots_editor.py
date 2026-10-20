@@ -25,7 +25,9 @@ def _editor(state: str = "converted", validate: bool = True, size=SIZE):
     if validate:
         from bidsmgr.editor import validate as run_validate
         schema, max_rows, todos = ed._validation_engine_opts()
-        report = run_validate(root, strict=False, schema=schema, max_rows=max_rows, flag_todos=todos)
+        # As Validate dataset does, Deep checks as the toolbar has them (on).
+        report = run_validate(root, strict=ed._strict_btn.isChecked(), schema=schema,
+                              max_rows=max_rows, flag_todos=todos)
         ed._on_report_ready(report, root)
         H.pump(settle=40)
     return win, ed, root, report
@@ -117,21 +119,31 @@ def validating():
                 "once, with the number of files it fired on.", win, crop_to=ed._validation_frame))
     H.button(vp, "This file").click()
     H.pump(settle=20)
-    # The one error: the PET row of the scans table.
-    _select(ed, root, f"{SUB}/sub-001_ses-01_scans.tsv", wait=1.2)
-    H.pump(lambda: not getattr(ed._tsv_viewer, "_loader", None), timeout=20, settle=30)
-    try:
-        ed._on_highlight_all_requested()
-    except Exception:  # noqa: BLE001
-        pass
-    H.wait(0.6)
-    H.pump(settle=40)
+    # The errors: the PET sidecar's reconstruction units, then the eye tracker's screen.
     _splitter_sizes(ed, [250, 820, 510])
+    _select(ed, root, f"{SUB}/pet/sub-001_ses-01_pet.json", wait=1.0)
+    ed._sidecar_form.focus_field("ReconMethodParameterUnits")
+    H.pump(settle=30)
     x, y, w, h = H._rect_in(ed._center_frame, win)
     x2, y2, w2, h2 = H._rect_in(ed._validation_frame, win)
-    H.take(Shot("l09-error", "The session's scans table with the PET row's acquisition time marked, and the "
-                "error in the Validation panel.", win, crop=(x, y, x2 + w2 - x, h),
-                allow_elided=("QTableView",)))
+    H.take(Shot("l09-error", "The PET sidecar with ReconMethodParameterUnits marked, and its error in the "
+                "Validation panel: a field the standard requires and no TODO can stand in for.", win,
+                crop=(x, y, x2 + w2 - x, h), allow_elided=("QTableView",)))
+    _splitter_sizes(ed, [250, 680, 650])
+    _select(ed, root, f"{SUB}/beh/sub-001_ses-01_task-rest_recording-eye1_physio.tsv.gz", wait=1.0)
+    tv = ed._tsv_viewer
+    H.pump(lambda: getattr(tv, "_loader", None) is None, timeout=30, settle=30)
+    # The recording as a recording (the table shows its first row as a header).
+    H.button(tv, "Visualize").click()
+    H.pump(settle=40)
+    H.wait(2.5)
+    H.pump(settle=40)
+    x, y, w, h = H._rect_in(ed._center_frame, win)
+    x2, y2, w2, h2 = H._rect_in(ed._validation_frame, win)
+    H.take(Shot("l09-eye-error", "The first eye's recording, its gaze and pupil size plotted, and its error: "
+                "the events file of the run it was recorded during must say how the stimuli were shown on "
+                "the screen.", win,
+                crop=(x, y, x2 + w2 - x, h), allow_elided=("QTableView", "QTreeWidget")))
 
 
 def fixups():
@@ -184,8 +196,10 @@ def tools_menu():
     ed._tools_menu.popup(btn.mapToGlobal(QPoint(0, btn.height() + 2)))
     H.pump(settle=40)
     x, y, w, h = H._rect_in(btn, win)
+    mx, my, mw, mh = H._global_rect_in(ed._tools_menu, win)
     H.take(Shot("l11-tools-menu", "The Editor's Tools menu: look at the dataset, check and repair, names and "
-                "structure, identifiable data, remove.", win, crop=(0, 0, min(1440, x + 640), 760),
+                "structure, identifiable data, remove.", win,
+                crop=(0, 0, min(win.width(), max(x + 640, mx + mw + 24)), min(win.height(), my + mh + 16)),
                 popups=[ed._tools_menu], allow_elided=("QTreeWidget",)))
     ed._tools_menu.hide()
 
@@ -267,7 +281,11 @@ def shape_dialogs():
     _close(d)
     from bidsmgr.gui.coherence_dialog import CoherenceDialog
     d = _show(CoherenceDialog(root, ed), (980, 720))
-    H.take(Shot("l11-coherence", "Check coherence on the converted sample.", d, allow_elided=("QTreeWidget",)))
+    H.pump(lambda: not d.checking(), timeout=120, settle=40)
+    H.wait(0.4)
+    H.pump(settle=30)
+    H.take(Shot("l11-coherence", "Check coherence on the edited sample: the events file written by hand in chapter 9 has no row in the scans table.", d,
+                allow_elided=("QTreeWidget",)))
     _close(d)
 
 

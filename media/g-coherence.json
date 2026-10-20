@@ -1,0 +1,41 @@
+{
+ "id": "g-coherence",
+ "kind": "figure",
+ "width": 1100,
+ "height": 820,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1100": "g-coherence-dark-1100-53fccf17.avif",
+    "2200": "g-coherence-dark-2200-2588b062.avif"
+   },
+   "webp": {
+    "1100": "g-coherence-dark-1100-3121be74.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1100": "g-coherence-light-1100-9406741a.avif",
+    "2200": "g-coherence-light-2200-6ab1667f.avif"
+   },
+   "webp": {
+    "1100": "g-coherence-light-1100-8207e4b1.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Check coherence after the T1w was renamed in the file manager, the sessions table deleted and a TaskName typed by hand: four problems, what would repair each, and the three safe repairs ticked.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
+  "sample": "multimodal v2"
+ }
+}

@@ -11,19 +11,19 @@
  ],
  "files": {
   "dark": {
-   "mp4": "l09-validate-dark-ac049cbf.mp4",
-   "poster": "l09-validate-dark-poster-60f2395d.webp"
+   "mp4": "l09-validate-dark-d9534d5a.mp4",
+   "poster": "l09-validate-dark-poster-daae7619.webp"
   },
   "light": {
-   "mp4": "l09-validate-light-bc8ba81c.mp4",
-   "poster": "l09-validate-light-poster-43a9e0a1.webp"
+   "mp4": "l09-validate-light-b45180be.mp4",
+   "poster": "l09-validate-light-poster-5261b32d.webp"
   }
  },
  "alt": "Pressing Validate dataset in the Editor: each file in the tree gets its mark, each folder its counts, and the toolbar the totals.",
  "source": {
-  "bids_manager": "1.5.0",
-  "commit": "373b09d",
-  "date": "2026-10-14",
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
   "sample": "multimodal v2"
  }
 }

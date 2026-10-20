@@ -42,7 +42,7 @@ Most answers start with the log. The Converter's **Log** shows the current run; 
 
 | What you see | What to do |
 |---|---|
-| Over a hundred warnings | Most are TODO placeholders for what no file records ([Metadata levels and TODO placeholders](/concepts/metadata-levels/)). Filter by errors first. |
+| Over a hundred warnings | Most are TODO placeholders for what the raw files don't capture ([Metadata levels and TODO placeholders](/concepts/metadata-levels/)). Filter by errors first. |
 | A finding about a field I cannot see in the file | Findings about a recording's metadata are about its sidecar; **Fix** opens the sidecar at the field. |
 | The tree does not show `.bidsignore` or `.bidsmgr` | Hidden files are hidden by default: **Settings** > **Display** > **Editor tree**. |
 | The viewers are read only and the tools are off | The folder is open to view only. Open it as a project to edit it. |

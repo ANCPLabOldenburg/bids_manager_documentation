@@ -1,0 +1,41 @@
+{
+ "id": "g-names-session",
+ "kind": "figure",
+ "width": 1000,
+ "height": 780,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1000": "g-names-session-dark-1000-265ac08e.avif",
+    "2000": "g-names-session-dark-2000-d47e81e2.avif"
+   },
+   "webp": {
+    "1000": "g-names-session-dark-1000-d013f0d2.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1000": "g-names-session-light-1000-28a76d92.avif",
+    "2000": "g-names-session-light-2000-b1341210.avif"
+   },
+   "webp": {
+    "1000": "g-names-session-light-1000-b6670e49.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Sessions, Create a session, for sub-002: every file moves into ses-followup and takes the label in its name; the scans table follows.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
+  "sample": "MRI sample 1"
+ }
+}

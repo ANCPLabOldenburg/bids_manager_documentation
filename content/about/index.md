@@ -27,7 +27,7 @@ What a converter cannot do is know what is not in the files, or notice what is w
 
 **Work that is never finished.** Participants arrive over months. A table is curated, then a new batch comes in. A sidecar is corrected after a reviewer asks. Without a record of what was done, every round starts from the beginning, and nobody can say afterwards what changed.
 
-## Metadata annotation: answering what no file says
+## Metadata annotation: describing what the raw files don't capture
 
 A BIDS dataset is more than its images and recordings: every one of them carries a sidecar, and the standard says which of its fields are required, recommended or optional, for each kind of file. A converter fills the fields it can read from the raw data. The rest, often the ones that matter most to whoever reuses the data, someone has to write: what the participant was asked to do, how the EEG was referenced, how much tracer was injected, who made the dataset and under what licence.
 
@@ -50,7 +50,7 @@ Curation is everything between the raw folder and a dataset you would hand to so
 |---|---|
 | See every recording before anything is written | The **scan table**: one row per recording, with the subject, session, task and BIDS name proposed for it, and the reason for each name. |
 | Reconcile what the sources disagree about | Editing the table, **Bulk edit** for many rows at once, new subject numbers for a second batch, and the **Overview**, which compares subjects and points out what differs between them. |
-| Give the facts no file records | **Dataset metadata**: the dataset description, a template for each kind of file, a value for one recording in **Properties**; dose sheets and participant spreadsheets imported as they are. |
+| Give the facts the raw files don't capture | **Dataset metadata**: the dataset description, a template for each kind of file, a value for one recording in **Properties**; dose sheets and participant spreadsheets imported as they are. |
 | See what is still unanswered | **TODO placeholders** in the fields the standard asks for that nobody answered, wherever a field can hold one, counted by validation until they are replaced. |
 | See the dataset before it is written | The **BIDS preview**: every file the conversion will write, and each value in it coloured by where it comes from. |
 | Check the result | **Validation** against the standard, each finding shown in the file and field it is about; the **quality check** of every anatomical and diffusion image. |

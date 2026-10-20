@@ -11,31 +11,31 @@
  "files": {
   "dark": {
    "avif": {
-    "980": "l11-coherence-dark-980-2dd19329.avif",
-    "1960": "l11-coherence-dark-1960-3f50eaa2.avif"
+    "980": "l11-coherence-dark-980-ca51f355.avif",
+    "1960": "l11-coherence-dark-1960-a8ffd7a4.avif"
    },
    "webp": {
-    "980": "l11-coherence-dark-980-e6c782c6.webp"
+    "980": "l11-coherence-dark-980-03c5c08d.webp"
    }
   },
   "light": {
    "avif": {
-    "980": "l11-coherence-light-980-eaee4574.avif",
-    "1960": "l11-coherence-light-1960-c19e2a42.avif"
+    "980": "l11-coherence-light-980-ace31261.avif",
+    "1960": "l11-coherence-light-1960-9c97800f.avif"
    },
    "webp": {
-    "980": "l11-coherence-light-980-60199faf.webp"
+    "980": "l11-coherence-light-980-7c7f6e31.webp"
    }
   }
  },
  "regions": [],
- "alt": "Check coherence on the converted sample.",
+ "alt": "Check coherence on the edited sample: the events file written by hand in chapter 9 has no row in the scans table.",
  "window": false,
  "title": "BIDS-Manager",
  "source": {
-  "bids_manager": "1.5.0",
-  "commit": "373b09d",
-  "date": "2026-10-14",
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
   "sample": "multimodal v2"
  }
 }

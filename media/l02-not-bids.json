@@ -1,0 +1,41 @@
+{
+ "id": "l02-not-bids",
+ "kind": "figure",
+ "width": 453,
+ "height": 223,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "453": "l02-not-bids-dark-453-386c93a9.avif",
+    "906": "l02-not-bids-dark-906-abac886a.avif"
+   },
+   "webp": {
+    "453": "l02-not-bids-dark-453-27b65098.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "453": "l02-not-bids-light-453-413edffe.avif",
+    "906": "l02-not-bids-light-906-3987247a.avif"
+   },
+   "webp": {
+    "453": "l02-not-bids-light-453-a0a221ac.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The question Home asks when the folder you open is not a BIDS dataset: view it in the Editor, or make it a project.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
+  "sample": "multimodal v2"
+ }
+}

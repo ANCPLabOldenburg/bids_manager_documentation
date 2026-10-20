@@ -256,7 +256,7 @@
   },
   {
    "prog": "bidsmgr-scan",
-   "usage": "bidsmgr-scan [-h] [--project PROJECT] [--jobs JOBS] [--no-bids-guess] [--probe-convert] [--dataset DATASET] [--line-freq LINE_FREQ] [--montage MONTAGE] [--rules-file RULES_FILE] [-v] [--no-converter-preview] [--schema VERSION] [--classifier {applied,shadow,off}] [--classifier-config JSON] [--print-classifier-config] [--log-file PATH] [--no-log-file] dicom_root [output_tsv]",
+   "usage": "bidsmgr-scan [-h] [--project PROJECT] [--jobs JOBS] [--no-bids-guess] [--probe-convert] [--dataset DATASET] [--line-freq LINE_FREQ] [--montage MONTAGE] [--rules-file RULES_FILE] [--drop-entity ENTITY] [-v] [--no-converter-preview] [--schema VERSION] [--classifier {applied,shadow,off}] [--classifier-config JSON] [--print-classifier-config] [--log-file PATH] [--no-log-file] dicom_root [output_tsv]",
    "description": "``bidsmgr-scan``: scan DICOMs, classify, write TSV.",
    "epilog": "",
    "arguments": [
@@ -395,6 +395,19 @@
      "default": null,
      "required": false,
      "help": "Path to a JSON file with user scan rules: {\"user_hints\": [{\"patterns\": [...], \"datatype\": \"func\", \"suffix\": \"bold\", \"task\": \"rest\", \"match_mode\": \"substring\", \"force\": false}], \"scan_exclusions\": [{\"pattern\": \"calibration\", \"target\": \"sequence\", \"match_mode\": \"substring\"}]}. Same schema the GUI Settings 'Scan rules' tab persists. Hints extend the classifier; exclusions mark matching series include=0."
+    },
+    {
+     "flags": [
+      "--drop-entity"
+     ],
+     "dest": "drop_entity",
+     "positional": false,
+     "metavar": "ENTITY",
+     "nargs": null,
+     "choices": null,
+     "default": [],
+     "required": false,
+     "help": "Leave ENTITY (a short key such as acq or run) out of the proposed names. Kept where the standard requires it, and where it is what tells two recordings apart, so no name is lost. Repeat it, or give several separated by commas: --drop-entity acq,rec."
     },
     {
      "flags": [
@@ -690,7 +703,7 @@
   },
   {
    "prog": "bidsmgr-convert",
-   "usage": "bidsmgr-convert [-h] [--project PROJECT] [--version VERSION] [--dataset DATASET] [--jobs JOBS] [--overwrite] [--on-existing {skip,update,replace,error}] [--dry-run] [--dcm2niix DCM2NIIX] [--recording-meta RECORDING_META] [--pet-spreadsheet PET_SPREADSHEET] [--pet-metadata PET_METADATA] [--intended-for {uri,relative}] [--no-b0-field-identifier] [--sourcedata {none,copy,archive}] [--sourcedata-modalities LIST] [--raw-root RAW_ROOT] [--keep-residuals] [--deface] [--deface-engine {allineate,allineate-robust,allineate-afni,mindgrab,strip-atlas}] [--force-edf] [--overwrite-curation] [-v] [--schema VERSION] [--log-file PATH] [--no-log-file] [tsv] [bids_parent]",
+   "usage": "bidsmgr-convert [-h] [--project PROJECT] [--version VERSION] [--dataset DATASET] [--jobs JOBS] [--overwrite] [--on-existing {skip,update,replace,error}] [--dry-run] [--dcm2niix DCM2NIIX] [--recording-meta RECORDING_META] [--pet-spreadsheet PET_SPREADSHEET] [--pet-metadata PET_METADATA] [--intended-for {uri,relative}] [--no-b0-field-identifier] [--sourcedata {none,copy,archive}] [--sourcedata-modalities LIST] [--raw-root RAW_ROOT] [--keep-residuals] [--deface] [--deface-engine {allineate,allineate-robust,allineate-afni,mindgrab,strip-atlas}] [--force-edf] [--overwrite-curation] [-v] [--schema VERSION] [--anonymise {off,recommended,strict}] [--log-file PATH] [--no-log-file] [tsv] [bids_parent]",
    "description": "Convert DICOM series listed in an inventory TSV into BIDS using dcm2niix. Each distinct `dataset` value in the TSV becomes a sibling BIDS root under .",
    "epilog": "",
    "arguments": [
@@ -1046,6 +1059,23 @@
     },
     {
      "flags": [
+      "--anonymise"
+     ],
+     "dest": "anonymise",
+     "positional": false,
+     "metavar": "ANONYMISE",
+     "nargs": null,
+     "choices": [
+      "off",
+      "recommended",
+      "strict"
+     ],
+     "default": "off",
+     "required": false,
+     "help": "Anonymise each converted dataset's metadata when the conversion is done (see bidsmgr-anonymise). If you run bidsmgr-metadata afterwards, give it --anonymise instead: it writes participants.tsv, which comes after."
+    },
+    {
+     "flags": [
       "--log-file"
      ],
      "dest": "log_file",
@@ -1074,7 +1104,7 @@
   },
   {
    "prog": "bidsmgr-metadata",
-   "usage": "bidsmgr-metadata [-h] [--project PROJECT] [--version VERSION] [--dataset DATASET] [--inventory-tsv INVENTORY_TSV] [--participants PARTICIPANTS_FILE] [--phenotype PHENOTYPE_FILES] [--name NAME] [--bids-version BIDS_VERSION] [--license LICENSE] [--author AUTHORS] [--acknowledgements ACKNOWLEDGEMENTS] [--how-to-acknowledge HOW_TO_ACKNOWLEDGE] [--funding FUNDING] [--ethics-approvals ETHICS_APPROVALS] [--references-and-links REFERENCES_AND_LINKS] [--dataset-doi DATASET_DOI] [--generate-companions] [--write-citation] [--fill-todos] [--fill-scope LEVEL] [--no-report] [-v] [--schema VERSION] [--log-file PATH] [--no-log-file] [target]",
+   "usage": "bidsmgr-metadata [-h] [--project PROJECT] [--version VERSION] [--dataset DATASET] [--inventory-tsv INVENTORY_TSV] [--participants PARTICIPANTS_FILE] [--phenotype PHENOTYPE_FILES] [--name NAME] [--bids-version BIDS_VERSION] [--license LICENSE] [--author AUTHORS] [--acknowledgements ACKNOWLEDGEMENTS] [--how-to-acknowledge HOW_TO_ACKNOWLEDGE] [--funding FUNDING] [--ethics-approvals ETHICS_APPROVALS] [--references-and-links REFERENCES_AND_LINKS] [--dataset-doi DATASET_DOI] [--generate-companions] [--write-citation] [--fill-todos] [--fill-scope LEVEL] [--no-report] [--no-tables | --tables-only] [--anonymise {off,recommended,strict}] [-v] [--schema VERSION] [--log-file PATH] [--no-log-file] [target]",
    "description": "Generate dataset-level BIDS metadata after `bidsmgr-convert`. Pass either a single BIDS root or the parent directory used by `bidsmgr-convert`; every BIDS root underneath is processed.",
    "epilog": "",
    "arguments": [
@@ -1375,6 +1405,49 @@
      "default": null,
      "required": false,
      "help": "Skip writing /.bidsmgr/metadata_report.json. By default the JSON report is always written so the GUI (and CI tooling) can pick it up after the run."
+    },
+    {
+     "flags": [
+      "--no-tables"
+     ],
+     "dest": "tables",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Do not write the *_scans.tsv and *_sessions.tsv tables (both are optional in the standard). By default they are written, and tables already there are kept and only added to."
+    },
+    {
+     "flags": [
+      "--tables-only"
+     ],
+     "dest": "tables_only",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Write the *_scans.tsv and *_sessions.tsv tables and nothing else: for a dataset converted elsewhere. Every recording the standard defines gets a row; rows, columns and values already there stay."
+    },
+    {
+     "flags": [
+      "--anonymise"
+     ],
+     "dest": "anonymise",
+     "positional": false,
+     "metavar": "ANONYMISE",
+     "nargs": null,
+     "choices": [
+      "off",
+      "recommended",
+      "strict"
+     ],
+     "default": "off",
+     "required": false,
+     "help": "Anonymise the metadata last (dates shifted per participant into 1902-1925, names and IDs removed, UIDs pseudonymised; strict also sets times to midnight). See bidsmgr-anonymise."
     },
     {
      "flags": [
@@ -1726,6 +1799,137 @@
      "default": null,
      "required": false,
      "help": "describe the available engines and exit"
+    }
+   ]
+  },
+  {
+   "prog": "bidsmgr-anonymise",
+   "usage": "bidsmgr-anonymise [-h] [--preset {recommended,strict}] [--keep CATEGORY [CATEGORY ...]] [--participant-label LABEL [LABEL ...]] [--session LABEL [LABEL ...]] [--skip-dataset-files] [--dry-run] [--json] bids_root",
+   "description": "Anonymise a BIDS dataset's metadata: dates shifted per participant into 1902-1925 (intervals and weekdays kept), names, IDs and birth dates removed, UIDs and devices pseudonymised, ages capped at 89, gzip headers and photo metadata cleaned. Recordings' data are never changed.",
+   "epilog": "",
+   "arguments": [
+    {
+     "flags": [
+      "-h",
+      "--help"
+     ],
+     "dest": "help",
+     "help": "Show the help and stop.",
+     "positional": false
+    },
+    {
+     "flags": [],
+     "dest": "bids_root",
+     "positional": true,
+     "metavar": null,
+     "nargs": null,
+     "choices": null,
+     "default": null,
+     "required": true,
+     "help": "The dataset (its root folder)."
+    },
+    {
+     "flags": [
+      "--preset"
+     ],
+     "dest": "preset",
+     "positional": false,
+     "metavar": "PRESET",
+     "nargs": null,
+     "choices": [
+      "recommended",
+      "strict"
+     ],
+     "default": "recommended",
+     "required": false,
+     "help": "recommended (default) keeps times of day and the site name; strict sets times to midnight, removes the site and bins ages."
+    },
+    {
+     "flags": [
+      "--keep"
+     ],
+     "dest": "keep",
+     "positional": false,
+     "metavar": "CATEGORY",
+     "nargs": "+",
+     "choices": [
+      "identity",
+      "ages",
+      "dates",
+      "site",
+      "devices",
+      "uids",
+      "traces",
+      "photos"
+     ],
+     "default": "()",
+     "required": false,
+     "help": "Categories to leave alone: identity (names and ids); ages (ages); dates (dates and times); site (the site); devices (devices); uids (dicom uids); traces (traces of the conversion); photos (photographs)."
+    },
+    {
+     "flags": [
+      "--participant-label"
+     ],
+     "dest": "participant_label",
+     "positional": false,
+     "metavar": "LABEL",
+     "nargs": "+",
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Only these participants (sub- prefix optional)."
+    },
+    {
+     "flags": [
+      "--session"
+     ],
+     "dest": "session",
+     "positional": false,
+     "metavar": "LABEL",
+     "nargs": "+",
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Only these sessions of the chosen participants (ses- prefix optional). Their dates move as the rest of the participant's will, so anonymising the others later keeps the intervals."
+    },
+    {
+     "flags": [
+      "--skip-dataset-files"
+     ],
+     "dest": "skip_dataset_files",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Leave the files at the top (participants.tsv and the like) alone."
+    },
+    {
+     "flags": [
+      "--dry-run"
+     ],
+     "dest": "dry_run",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "List every change, the values to review by hand and what cannot be changed. Nothing in the dataset is written; the date offsets chosen are remembered in .bidsmgr/, so the real run makes exactly the changes listed."
+    },
+    {
+     "flags": [
+      "--json"
+     ],
+     "dest": "json",
+     "positional": false,
+     "metavar": null,
+     "nargs": 0,
+     "choices": null,
+     "default": null,
+     "required": false,
+     "help": "Print the plan as JSON (with --dry-run, for a script)."
     }
    ]
   },

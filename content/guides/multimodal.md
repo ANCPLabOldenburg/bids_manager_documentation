@@ -2,6 +2,7 @@
 title: Several kinds of data at once
 display_title: Several kinds of data *at once*
 kicker: Guides
+group: Kinds of data
 lede: Convert one participant's MRI, MR spectroscopy, PET, EEG, MEG and eye tracking in one project. What is particular to a study with several modalities, and where the course covers each step.
 description: Convert a multimodal study (MRI, spectroscopy, PET, EEG, MEG, eye tracking) to one BIDS dataset with BIDS Manager.
 time: 10 minutes to read, the course to do

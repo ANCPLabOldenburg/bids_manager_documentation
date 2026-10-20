@@ -10,10 +10,11 @@ description: Every file and folder BIDS Manager writes into a dataset and its .b
 |---|---|---|
 | `dataset_description.json` | creating the project; the conversion; the metadata step | The dataset's name, BIDS version, authors, licence, and what generated it. |
 | `README`, `CHANGES` | creating the project (README); the metadata step (both) | A starting README to replace with a description of the dataset, and a change log. |
-| `.bidsignore` | creating the project | Tells validators to ignore `.bidsmgr/` and the conversion's scratch folder. |
+| `.bidsignore` | creating the project; the Editor's ignore list | Tells validators to ignore `.bidsmgr/` and the conversion's scratch folder, and the files you leave out of validation ([Leaving files out of validation](/guides/ignoring-files/)). |
 | `participants.tsv`, `participants.json` | the metadata step | One row per subject, and the description of each column. |
 | `sub-<label>/[ses-<label>/]<datatype>/` | the conversion | The recordings, each with its sidecar and companion files. |
-| `sub-<label>/[ses-<label>/]sub-<label>[_ses-<label>]_scans.tsv` | the metadata step | Each recording of the session with its acquisition time. |
+| `sub-<label>/[ses-<label>/]sub-<label>[_ses-<label>]_scans.tsv` | the metadata step; **Tools** > **Scans and sessions tables...** | Each recording of the session, of every datatype the standard defines, with its acquisition date and time (`n/a` when not known). |
+| `sub-<label>/sub-<label>_sessions.tsv` | the same, for a subject with sessions | Each session of the subject with when it began. |
 | `task-<label>_bold.json` and other sidecars at the top | **Tools** > **Fix ups...** > **Move shared fields up** | Sidecars shared by many files ([inheritance](/concepts/inheritance/)). |
 | `phenotype/` | the metadata step, with a phenotype spreadsheet | Questionnaires and measures, one table per instrument. |
 | `CITATION.cff` | **Tools** > **Fix ups...**; `bidsmgr-metadata --write-citation`; the post-conversion setting | How to cite the dataset, from its description. Optional. |
@@ -30,6 +31,7 @@ BIDS Manager's own folder in the dataset. It is listed in `.bidsignore`, so vali
 ├── project/
 │   ├── meta.json                  the project: name, BIDS Manager and BIDS versions, creation time
 │   ├── events.jsonl               what happened to the project, one event per line
+│   ├── anonymise.json             the date shift of each participant and the secret behind the pseudonyms
 │   └── scans/
 │       └── 0001__raw/             one scan table
 │           ├── inventory.tsv      the scan table, as last saved
@@ -38,8 +40,9 @@ BIDS Manager's own folder in the dataset. It is listed in `.bidsignore`, so vali
 │           ├── version.json       where the raw data was, and the table's state
 │           └── ...                the scan's caches (series files, features)
 ├── editor/
-│   ├── operations.log             every change made in the Editor, one per line
-│   └── originals/                 the files as they were before each change
+│   ├── operations.log             every change made in the Editor, one step per line
+│   ├── redo.log                   the steps undone, for Redo
+│   └── originals/                 the files as they were before each step
 ├── logs/                          one log per scan, conversion, metadata step and validation
 ├── provenance/                    per subject: what the conversion did, with which tools
 ├── errors/                        per subject, when its conversion failed: the reason

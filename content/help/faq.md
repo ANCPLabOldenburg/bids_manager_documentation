@@ -48,11 +48,23 @@ No data, ever. See [About](/about/project/#your-data-stays-on-your-computer).
 
 ### How do I take back a change?
 
-In the Converter, **Undo**. In the Editor, see [The project folder and undo](/concepts/project-folder/).
+**Undo** ({{ key("Ctrl+Z") }}), in either view. In the Editor it walks the dataset's whole history: right-click it for the list of steps, and go back several at once ([Undo, redo and the history](/guides/history/)).
 
 ### What does a TODO in my dataset mean?
 
 A field the standard asks for that no file answered. Replace it with the real value, or take the placeholders back ([Metadata levels and TODO placeholders](/concepts/metadata-levels/)).
+
+### How do I remove names and dates before sharing?
+
+**Tools** > **Anonymise metadata...** in the Editor: names and IDs, dates (moved back with their intervals kept), the site, device serial numbers, DICOM UIDs and the traces a conversion leaves, chosen by purpose and by subject or session, every change listed first ([Anonymising metadata](/guides/anonymising/)). Faces are removed with **Deface...** ([Defacing and skull stripping](/guides/defacing/)).
+
+### Validation reports my notes and logs as not part of the dataset. What do I do?
+
+Leave them out of validation: right-click them in the tree, **Ignore in validation**, and choose how widely ([Leaving files out of validation](/guides/ignoring-files/)). Code and stimuli belong in `code/` and `stimuli/`, which are never validated.
+
+### Do I need administrator rights to install it?
+
+No. The installers put everything in one folder of your home directory ([Install](/start/install/)).
 
 ### Will fMRIPrep use my fieldmaps?
 

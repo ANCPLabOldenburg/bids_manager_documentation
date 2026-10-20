@@ -2,6 +2,7 @@
 title: Advanced MRI
 display_title: Advanced *MRI*
 kicker: Guides
+group: Kinds of data
 lede: A larger Siemens study with the series that need care: what the scan leaves out and why, maps the scanner computes from a diffusion run, a sequence named one thing and acquired as another, and spectroscopy with its water reference.
 description: Convert a Siemens MRI study with diffusion maps, spectroscopy and unusual sequences to BIDS with BIDS Manager.
 time: 30 minutes

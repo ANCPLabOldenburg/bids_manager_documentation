@@ -2,6 +2,7 @@
 title: Viewing every kind of data
 display_title: Viewing every kind of *data*
 kicker: Guides
+group: Viewing and quality
 lede: The Editor's viewer, option by option, for each kind of file a BIDS dataset holds: images, PET, diffusion gradients, spectra, EEG and MEG, physiological and eye-tracking recordings, documents. Every picture is BIDS Manager on the course's converted sample.
 description: Every option of BIDS Manager's viewers, for MRI, PET, MR spectroscopy, EEG, MEG, physiology, eye tracking and documents.
 time: 25 minutes
@@ -121,7 +122,9 @@ An EEG or MEG recording opens on a card with its header (channels, sampling rate
 
 **QC** checks the recording channel by channel and segment by segment, against the other channels of the same type, and lays its findings beside the traces; each finding can be marked bad from there ([Checking image quality](/learn/13-image-quality/#meg-and-eeg)).
 
-{{ figure("l13-meeg-qc", "The MEG recording's quality check beside its traces.") }}
+{{ clip("g-qc-meg-threshold", "The quality check of a resting MEG recording of the MOUS dataset: a threshold lowered, the burst at 270 s flagged and marked bad in red; the plots sit beside the traces.") }}
+
+How to read each plot, and how the thresholds change what is flagged: [Reading the quality checks](/guides/quality-control/#artefacts-in-an-meg-recording).
 
 ## Physiological recordings
 

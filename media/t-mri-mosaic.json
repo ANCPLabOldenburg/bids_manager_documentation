@@ -2,7 +2,7 @@
  "id": "t-mri-mosaic",
  "kind": "figure",
  "width": 1294,
- "height": 782,
+ "height": 814,
  "scale": 2,
  "themes": [
   "dark",
@@ -11,20 +11,20 @@
  "files": {
   "dark": {
    "avif": {
-    "1294": "t-mri-mosaic-dark-1294-b8ef76a3.avif",
-    "2588": "t-mri-mosaic-dark-2588-e30c06a0.avif"
+    "1294": "t-mri-mosaic-dark-1294-c5f0a0fd.avif",
+    "2588": "t-mri-mosaic-dark-2588-10148cca.avif"
    },
    "webp": {
-    "1294": "t-mri-mosaic-dark-1294-2bcec7b0.webp"
+    "1294": "t-mri-mosaic-dark-1294-0f57e59c.webp"
    }
   },
   "light": {
    "avif": {
-    "1294": "t-mri-mosaic-light-1294-7496e29a.avif",
-    "2588": "t-mri-mosaic-light-2588-7cc3cbdc.avif"
+    "1294": "t-mri-mosaic-light-1294-3675ca40.avif",
+    "2588": "t-mri-mosaic-light-2588-afe67b6b.avif"
    },
    "webp": {
-    "1294": "t-mri-mosaic-light-1294-7afd571a.webp"
+    "1294": "t-mri-mosaic-light-1294-1c96b65b.webp"
    }
   }
  },
@@ -33,9 +33,9 @@
  "window": false,
  "title": "BIDS-Manager",
  "source": {
-  "bids_manager": "1.5.0",
-  "commit": "7bb684f",
-  "date": "2026-10-14",
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
   "sample": "multimodal v2 (OL_3844, consented)"
  }
 }

@@ -11,20 +11,20 @@
  "files": {
   "dark": {
    "avif": {
-    "1440": "window-home-dark-1440-401378da.avif",
-    "2880": "window-home-dark-2880-e2f1267e.avif"
+    "1440": "window-home-dark-1440-cc878e65.avif",
+    "2880": "window-home-dark-2880-5dd76949.avif"
    },
    "webp": {
-    "1440": "window-home-dark-1440-ff8b8371.webp"
+    "1440": "window-home-dark-1440-02134ae4.webp"
    }
   },
   "light": {
    "avif": {
-    "1440": "window-home-light-1440-01670299.avif",
-    "2880": "window-home-light-2880-89fc3495.avif"
+    "1440": "window-home-light-1440-9cf3790a.avif",
+    "2880": "window-home-light-2880-0777b8a3.avif"
    },
    "webp": {
-    "1440": "window-home-light-1440-e47b045b.webp"
+    "1440": "window-home-light-1440-e5a8851d.webp"
    }
   }
  },
@@ -73,21 +73,21 @@
    "key": "samples",
    "label": "Download a sample dataset",
    "x": 0.15278,
-   "y": 0.67778,
+   "y": 0.69333,
    "w": 0.14722,
    "h": 0.03778,
    "mx": 0.22639,
-   "my": 0.69667
+   "my": 0.71222
   },
   {
    "key": "news",
    "label": "What's new: this release, and the update notes",
    "x": 0.13681,
-   "y": 0.78,
+   "y": 0.79556,
    "w": 0.35556,
    "h": 0.18222,
    "mx": 0.13819,
-   "my": 0.78222
+   "my": 0.79778
   },
   {
    "key": "recent",
@@ -95,7 +95,7 @@
    "x": 0.50069,
    "y": 0.37222,
    "w": 0.35486,
-   "h": 0.59,
+   "h": 0.60556,
    "mx": 0.50208,
    "my": 0.37444
   },
@@ -134,9 +134,9 @@
  "window": true,
  "title": "BIDS-Manager",
  "source": {
-  "bids_manager": "1.5.0",
-  "commit": "7bb684f+changes",
-  "date": "2026-10-15",
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
   "sample": "multimodal v2"
  }
 }

@@ -1,0 +1,41 @@
+{
+ "id": "l12-3d",
+ "kind": "figure",
+ "width": 1294,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1294": "l12-3d-dark-1294-76c6b9a7.avif",
+    "2588": "l12-3d-dark-2588-bfaa32a8.avif"
+   },
+   "webp": {
+    "1294": "l12-3d-dark-1294-dd13571b.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1294": "l12-3d-light-1294-7b751154.avif",
+    "2588": "l12-3d-light-2588-3b3df4d5.avif"
+   },
+   "webp": {
+    "1294": "l12-3d-light-1294-da1b50ab.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The T1w in the Planes + 3-D layout: the three planes beside a rendering of the head with its back corner cut away at the crosshair.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
+  "sample": "multimodal v2 (OL_3844, consented)"
+ }
+}

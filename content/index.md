@@ -4,7 +4,7 @@ template: home
 description: BIDS Manager converts and curates MRI, MR spectroscopy, PET, EEG, MEG, physiological and eye-tracking recordings into a BIDS dataset, then validates, views, checks and edits it.
 hero_kicker: BIDS Manager
 hero_title: From raw recordings to a *curated* BIDS dataset
-hero_lede: BIDS Manager reads your raw MRI, PET, MR spectroscopy, EEG, MEG, physiological and eye-tracking recordings, names each one by the BIDS standard, helps you describe what no file records, and stays with you after the conversion, in its GUI or from the command line.
+hero_lede: BIDS Manager reads your raw MRI, PET, MR spectroscopy, EEG, MEG, physiological and eye-tracking recordings, names each one by the BIDS standard, helps you describe what the raw files don't capture, and stays with you after the conversion, in its GUI or from the command line.
 hero_lede_short: Reads your raw recordings, names each one by the BIDS standard, helps you describe them, and stays with you after the conversion.
 ---
 
@@ -40,7 +40,7 @@ hero_lede_short: Reads your raw recordings, names each one by the BIDS standard,
 <ol class="flow-steps">
 <li class="flow-step is-active" data-flow-step="0"><span class="flow-num">1</span><h3>Scan the raw data</h3><p>Point BIDS Manager at a folder of DICOM series, EEG, MEG and eye-tracking files. It reads every header, groups the files by participant and session, and proposes a BIDS name for each recording.</p><a href="/learn/03-scanning/">Scanning raw data</a></li>
 <li class="flow-step" data-flow-step="1"><span class="flow-num">2</span><h3>Curate in the table</h3><p>Each recording is a row. Correct a subject, a session or a task, leave a series out, and compare subjects in the Overview before anything is written.</p><a href="/learn/04-scan-table/">The scan table</a></li>
-<li class="flow-step" data-flow-step="2"><span class="flow-num">3</span><h3>Describe and convert</h3><p>Give the metadata no file records, see the dataset in the BIDS preview, then convert: images, recordings and tables under their BIDS names, with the links between fieldmaps and the runs they correct.</p><a href="/learn/07-metadata/">Metadata you provide</a></li>
+<li class="flow-step" data-flow-step="2"><span class="flow-num">3</span><h3>Describe and convert</h3><p>Give the metadata the raw files don't capture, see the dataset in the BIDS preview, then convert: images, recordings and tables under their BIDS names, with the links between fieldmaps and the runs they correct.</p><a href="/learn/07-metadata/">Metadata you provide</a></li>
 <li class="flow-step" data-flow-step="3"><span class="flow-num">4</span><h3>Check and edit in the Editor</h3><p>Validate the dataset against the BIDS standard, go to each finding, edit sidecars and tables, view images and signals, and run a fast quality check.</p><a href="/learn/09-validating/">Validating in the Editor</a></li>
 </ol>
 <div class="flow-view">
@@ -107,7 +107,7 @@ hero_lede_short: Reads your raw recordings, names each one by the BIDS standard,
 <div>
 <p class="home-kicker">Why it exists</p>
 <h2 id="curation">Curation, not only <em>conversion</em></h2>
-<p class="section-lede">A converter turns files into files. A dataset others can use also needs the facts no file records, names that agree across sources, no identifiers left behind, and a way to check all of it.</p>
+<p class="section-lede">A converter turns files into files. A dataset others can use also needs the facts the raw files don't capture, names that agree across sources, no identifiers left behind, and a way to check all of it.</p>
 </div>
 <p class="margin-note"><b>Read more</b><a href="/about/">Why BIDS Manager exists</a>, and what curation means in practice.</p>
 </div>

@@ -1,8 +1,8 @@
 {
  "id": "l03-settings-rules",
  "kind": "figure",
- "width": 900,
- "height": 700,
+ "width": 1040,
+ "height": 760,
  "scale": 2,
  "themes": [
   "dark",
@@ -11,20 +11,20 @@
  "files": {
   "dark": {
    "avif": {
-    "900": "l03-settings-rules-dark-900-a7338f3b.avif",
-    "1800": "l03-settings-rules-dark-1800-9ff54f58.avif"
+    "1040": "l03-settings-rules-dark-1040-6081d7fc.avif",
+    "2080": "l03-settings-rules-dark-2080-a204c28b.avif"
    },
    "webp": {
-    "900": "l03-settings-rules-dark-900-3603fc63.webp"
+    "1040": "l03-settings-rules-dark-1040-d889716b.webp"
    }
   },
   "light": {
    "avif": {
-    "900": "l03-settings-rules-light-900-037be9d1.avif",
-    "1800": "l03-settings-rules-light-1800-7c072b1c.avif"
+    "1040": "l03-settings-rules-light-1040-3e1835af.avif",
+    "2080": "l03-settings-rules-light-2080-59d8cbea.avif"
    },
    "webp": {
-    "900": "l03-settings-rules-light-900-01371572.webp"
+    "1040": "l03-settings-rules-light-1040-9d2b4308.webp"
    }
   }
  },
@@ -33,9 +33,9 @@
  "window": false,
  "title": "BIDS-Manager",
  "source": {
-  "bids_manager": "1.5.0",
-  "commit": "373b09d",
-  "date": "2026-10-13",
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
   "sample": "multimodal v2"
  }
 }

@@ -2,6 +2,7 @@
 title: Converting PET
 display_title: Converting *PET*
 kicker: Guides
+group: Kinds of data
 lede: Convert an FDG scan with the facts no scanner records: the dose sheet, the blood curves drawn during the scan, and the conditions of the blood sampling. Then the same for a scan in the ECAT format.
 description: Convert PET DICOM and ECAT scans with their dose and blood data to BIDS with BIDS Manager, on the PET sample.
 time: 25 minutes
@@ -79,7 +80,7 @@ Click **Run conversion**. The PET image, its sidecar and the blood table are wri
 | Error | What to do |
 |---|---|
 | The blood sidecar has no **DispersionCorrected** | Say whether the blood data were corrected for dispersion (`true` or `false`) in `sub-001_recording-manual_blood.json`. A yes-or-no field never gets a TODO placeholder: it has to be answered. |
-| The subject's `_scans.tsv` has a time without a date | This GE header records no acquisition date. Type the date in front of the time, or `n/a` ([Validating in the Editor](/learn/09-validating/#fix-the-error)). |
+| The PET sidecar has no **ReconMethodParameterUnits** | The phantom was reconstructed by filtered back projection, which has no parameters: set `ReconMethodParameterUnits` and `ReconMethodParameterLabels` to `["none"]` in `sub-001_pet.json`. The dose sheet says `none`, which this version does not read ([Validating in the Editor](/learn/09-validating/#fix-the-errors) does it with **Fix**). |
 
 The warnings are TODO placeholders and recommended fields: the tubing, the withdrawal rate, the institution.
 :::

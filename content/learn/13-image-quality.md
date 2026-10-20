@@ -53,6 +53,12 @@ Select the BOLD run, turn on **Time course**, and tick **QC** in its header. **P
 
 **QC** in the viewer's toolbar also offers maps of the whole run: **Temporal SNR**, **Standard deviation** and **Mean image**.
 
+The sample's resting run is short and still: every plot stays near its baseline. On a run where the participant moved, the plots and the image tell the same story at the same volume:
+
+{{ figure("g-qc-bold-141", "Another study's BOLD run at the volume where the head moved: the slices out of line, and a spike in every plot under the time course.") }}
+
+How to read each plot on that run, tell motion between volumes from motion during one, and choose a threshold: [Reading the quality checks](/guides/quality-control/).
+
 ## Check every image at once
 
 **Tools** > **Quality check...** checks every anatomical and diffusion image of the dataset and lists them with their findings and main measures. Click **Check**; **At once** sets how many images are checked in parallel.
@@ -65,7 +71,9 @@ Double-click an image to open it in the viewer with its full report. The results
 
 In the signal viewer, **QC** checks the recording channel by channel, per segment: channels much noisier or flatter than the others of their type, line noise, segments where many channels jump, and muscle activity. **Plots** chooses what is drawn beside the traces; **Mark as bad** turns a finding into a bad channel or segment, which **Save to dataset** writes.
 
-{{ figure("l13-meeg-qc", "The quality check of the resting MEG recording.") }}
+{{ figure("g-qc-meg-2.5", "The quality check of a resting MEG recording of the MOUS dataset, its plots beside the traces: a burst at 270 s flagged and marked bad, in red across the traces.") }}
+
+What is flagged depends on the check's thresholds, which **Settings...** in the QC bar opens. On that recording, the burst at 270 s is not flagged with the defaults and is with **Channel off in a segment beyond** lowered from 4 to 2.5: [Reading the quality checks](/guides/quality-control/#artefacts-in-an-meg-recording) goes through it. The course's own MEG recording is 30 seconds of a cropped sample, too short for the check to show much.
 
 ## Settings
 

@@ -2,7 +2,7 @@
  "scan": {
   "rows": 23,
   "included": 23,
-  "seconds": 2.0,
+  "seconds": 2.4,
   "subjects": [
    "sub-001",
    "sub-002"
@@ -45,23 +45,23 @@
  ],
  "convert": {
   "rc": 0,
-  "seconds": 5.3
+  "seconds": 5.6
  },
  "converted": {
-  "files": 81,
+  "files": 82,
   "validation": {
-   "ok": 33,
+   "ok": 34,
    "warn": 361,
    "err": 0
   },
   "todo": {
-   "inserted": 277,
-   "files": 24
+   "inserted": 276,
+   "files": 23
   }
  },
  "source": {
-  "bids_manager": "1.5.0",
-  "commit": "373b09d",
-  "date": "2026-10-14"
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20"
  }
 }

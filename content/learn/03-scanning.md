@@ -117,6 +117,9 @@ If the raw folder moves after a scan, the **Raw input** bar says **Moved** and o
 - **Parallel workers (-j)**: how many files are read at once. Raise it on a large study; it is capped at your computer's thread count.
 - **Probe** (on by default): runs dcm2niix on each MRI and PET series during the scan, so the proposed names know how many files each series really produces. It costs time on large studies; turn it off if a scan is too slow.
 - **Index width in proposed names**: whether run numbers and other indexes are proposed as `run-1` or `run-01`.
+- **Leave out of proposed names**: entities you never want in a name. Tick **Acquisition** (`acq-`) and the next scan proposes `sub-001_ses-01_T1w` rather than `sub-001_ses-01_acq-tfl3p2_T1w`. On the sample, that takes `acq` off five rows. An entity is kept where the standard requires it, and where it is what tells two recordings apart, so no recording overwrites another: ticking **Run** (`run-`) leaves the sample's two spectroscopy series their `run-1` and `run-2`, and takes `run` off any recording that is alone. A scan table already open is offered the change, as one step you can undo.
+
+{{ figure("l03-leave-out", "Settings, Scan page: Leave out of proposed names, with Acquisition ticked.") }}
 
 **Scan rules** lets you leave out series by name (a calibration series your site always runs) and give your own naming hints for series the classifier cannot name.
 

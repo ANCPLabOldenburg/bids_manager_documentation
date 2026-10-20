@@ -1,0 +1,41 @@
+{
+ "id": "g-anon-strict",
+ "kind": "figure",
+ "width": 1320,
+ "height": 900,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1320": "g-anon-strict-dark-1320-8fa8af83.avif",
+    "2640": "g-anon-strict-dark-2640-5a19ebf7.avif"
+   },
+   "webp": {
+    "1320": "g-anon-strict-dark-1320-7543b75d.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1320": "g-anon-strict-light-1320-45fb2032.avif",
+    "2640": "g-anon-strict-light-2640-aec66561.avif"
+   },
+   "webp": {
+    "1320": "g-anon-strict-light-1320-5f0c8878.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Strict: times of day set to midnight, the site's name removed too, and ages in five-year bins.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
+  "sample": "multimodal v2"
+ }
+}

@@ -217,7 +217,7 @@ def scan_settings():
     from bidsmgr.gui.app_settings import AppSettings
     from bidsmgr.gui.settings_dialog import SettingsDialog
     d = SettingsDialog(AppSettings.load(), win)
-    d.resize(900, 700)
+    d.resize(1040, 760)
     d.show_page("Scan")
     _dialog(d)
     H.take(Shot("l03-settings-scan", "Settings, Scan page: parallel workers, probe conversion, converter "

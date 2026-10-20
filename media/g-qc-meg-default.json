@@ -1,0 +1,41 @@
+{
+ "id": "g-qc-meg-default",
+ "kind": "figure",
+ "width": 1594,
+ "height": 1054,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1594": "g-qc-meg-default-dark-1594-b4f5ee42.avif",
+    "3188": "g-qc-meg-default-dark-3188-42c8211a.avif"
+   },
+   "webp": {
+    "1594": "g-qc-meg-default-dark-1594-aed9eb3a.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1594": "g-qc-meg-default-light-1594-98cc4440.avif",
+    "3188": "g-qc-meg-default-light-3188-a755bef8.avif"
+   },
+   "webp": {
+    "1594": "g-qc-meg-default-light-1594-c3f64573.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The resting MEG of one MOUS participant, magnetometers 258 to 288 s, with the QC plots beside the traces and QC at its defaults: a channel is off in a segment beyond 4 times its usual level, and a segment is flagged when 20 % of a type are off. At most 11 % are off at 270 s: nothing is flagged.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
+  "sample": "MOUS sub-A2004 (Donders Institute)"
+ }
+}

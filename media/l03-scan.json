@@ -3,7 +3,7 @@
  "kind": "clip",
  "width": 1600,
  "height": 1000,
- "duration": 7.27,
+ "duration": 6.97,
  "chapters": [],
  "themes": [
   "dark",
@@ -11,19 +11,19 @@
  ],
  "files": {
   "dark": {
-   "mp4": "l03-scan-dark-7e430080.mp4",
-   "poster": "l03-scan-dark-poster-3f9cba97.webp"
+   "mp4": "l03-scan-dark-b8bfee4b.mp4",
+   "poster": "l03-scan-dark-poster-67ade37e.webp"
   },
   "light": {
-   "mp4": "l03-scan-light-87cfab4a.mp4",
-   "poster": "l03-scan-light-poster-9b928800.webp"
+   "mp4": "l03-scan-light-cd4d1d17.mp4",
+   "poster": "l03-scan-light-poster-2018b7f8.webp"
   }
  },
  "alt": "Pressing Scan in the Converter: the spinner turns while the headers are read, then the table fills with 19 rows and the counts appear in the toolbar.",
  "source": {
-  "bids_manager": "1.5.0",
-  "commit": "373b09d",
-  "date": "2026-10-13",
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
   "sample": "multimodal v2"
  }
 }

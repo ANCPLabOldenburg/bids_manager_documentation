@@ -8,7 +8,7 @@ description: >-
   eye-tracking recordings into a BIDS dataset, then validate, view, check and
   edit it.
 base_url: https://ancplaboldenburg.github.io/bids_manager_documentation/
-version: "1.5.0"
+version: "1.5.1"
 release_date: "October 2026"
 repo: https://github.com/ANCPLabOldenburg/BIDS-Manager
 docs_repo: https://github.com/ANCPLabOldenburg/bids_manager_documentation
@@ -119,9 +119,15 @@ sections:
       - guides/meg/
       - guides/eye-tracking/
       - guides/multimodal/
-      - guides/defacing/
       - guides/adopting-a-dataset/
+      - guides/names-and-structure/
+      - guides/consistency/
+      - guides/ignoring-files/
+      - guides/anonymising/
+      - guides/defacing/
+      - guides/history/
       - guides/viewing/
+      - guides/quality-control/
       - guides/worked-examples/
   reference:
     title: Reference

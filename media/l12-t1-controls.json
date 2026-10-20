@@ -2,7 +2,7 @@
  "id": "l12-t1-controls",
  "kind": "clip",
  "width": 1304,
- "height": 782,
+ "height": 814,
  "duration": 5.3,
  "chapters": [],
  "themes": [
@@ -11,21 +11,21 @@
  ],
  "files": {
   "dark": {
-   "mp4": "l12-t1-controls-dark-b5508312.mp4",
-   "webm": "l12-t1-controls-dark-6130f228.webm",
-   "poster": "l12-t1-controls-dark-poster-c5a5e440.webp"
+   "mp4": "l12-t1-controls-dark-df7509dd.mp4",
+   "webm": "l12-t1-controls-dark-3d822459.webm",
+   "poster": "l12-t1-controls-dark-poster-10d48ee9.webp"
   },
   "light": {
-   "mp4": "l12-t1-controls-light-c9ce278c.mp4",
-   "webm": "l12-t1-controls-light-fd6c9392.webm",
-   "poster": "l12-t1-controls-light-poster-d42a28f9.webp"
+   "mp4": "l12-t1-controls-light-c587d4e9.mp4",
+   "webm": "l12-t1-controls-light-9cf5b12a.webm",
+   "poster": "l12-t1-controls-light-poster-fe1f6a22.webp"
   }
  },
  "alt": "The T1w with Advanced controls open beside the Planes + 3-D layout: changing the colour map and the window changes the planes and the rendering together.",
  "source": {
-  "bids_manager": "1.5.0",
-  "commit": "373b09d",
-  "date": "2026-10-14",
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
   "sample": "multimodal v2 (OL_3844, consented)"
  }
 }

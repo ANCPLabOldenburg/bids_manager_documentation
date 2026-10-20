@@ -178,56 +178,68 @@ GROUPS.update({"clip-l09-validate": validate_clip})
 
 
 def fix_clip():
-    """Chapter 9: open the scans table, correct the PET time, save, validate again."""
+    """Chapter 9: the PET error from its finding: Fix, the entries, Save, validate again."""
     import shots_editor as SE
-    win, ed, root, _rep = SE._editor("converted")
-    SE._expand(ed, 2)
-    SE._splitter_sizes(ed, [300, 760, 520])
     from pathlib import Path
-    target = Path(root) / "sub-001/ses-01/sub-001_ses-01_scans.tsv"
-    from PyQt6.QtWidgets import QTreeWidget
-    tree = ed._tree_pane.findChild(QTreeWidget)
-    c = Clip("l09-fix", win, alt="Opening the scans table, typing the PET row's date and time, saving, and "
-             "validating again: the error count goes to 0.", start=(700, 700))
-    c.hold(0.5)
-    ed.select_file_in_tree(target)
-    H.pump(settle=5)
-    item = tree.currentItem()
-    rect = tree.visualItemRect(item)
     from PyQt6.QtCore import QPoint
+    from PyQt6.QtWidgets import QLineEdit, QPushButton, QTreeWidget
+
+    from bidsmgr.gui.widgets.val_message import ValMessage
+
+    win, ed, root, _rep = SE._editor("converted")
+    SE._expand(ed, 3)
+    SE._splitter_sizes(ed, [280, 800, 520])
+    pet = Path(root) / "sub-001/ses-01/pet/sub-001_ses-01_pet.json"
+    tree = ed._tree_pane.findChild(QTreeWidget)
+    ed.select_file_in_tree(pet)
+    H.pump(settle=10)
+    rect = tree.visualItemRect(tree.currentItem())
     pt = tree.viewport().mapTo(win, rect.center())
     ed.select_file_in_tree(Path(root) / "README")
-    H.pump(settle=10)
-    c.refresh()
-    c.click((pt.x(), pt.y()), lambda: ed.select_file_in_tree(target))
-    tv = ed._tsv_viewer
-    c.wait_until(lambda: getattr(tv, "_loader", None) is None and tv._model.rowCount() > 0, timeout=30, every=0.1)
-    m = tv._model
-    row = next(r for r in range(m.rowCount()) if str(m.data(m.index(r, 0))).startswith("pet/"))
-    table = tv._table
-    table.scrollTo(m.index(row, 1))
     H.pump(settle=20)
-    cell = table.visualRect(m.index(row, 1))
-    cp = table.viewport().mapTo(win, cell.center())
-    holder = {}
+    c = Clip("l09-fix", win, alt="Selecting the PET sidecar, clicking Fix on its error, adding none as the "
+             "reconstruction parameters' unit and label, saving, and validating again: one error less, "
+             "the two left are the eye tracker's.", start=(700, 700))
+    c.hold(0.5)
+    c.click((pt.x(), pt.y()), lambda: ed.select_file_in_tree(pet))
+    H.wait(0.6)
+    c.hold(0.6)
+    vp = ed._validation_pane
+    card = next(m for m in vp.findChildren(ValMessage)
+                if m.isVisible() and m._field_name == "ReconMethodParameterUnits")
+    fix = next(b for b in card.findChildren(QPushButton) if b.objectName() == "val-fix")
+    c.click(fix, fix.click, move=0.9)
+    H.wait(0.4)
+    c.hold(0.6)
+    form = ed._sidecar_form
 
-    def start_edit():
-        idx = m.index(row, 1)
-        table.setCurrentIndex(idx)
-        table.edit(idx)
-        H.pump(settle=10)
-        holder["ed"] = table.focusWidget() or table.indexWidget(idx)
-    c.click((cp.x(), cp.y()), start_edit, move=0.8)
-    edit = holder.get("ed")
-    from PyQt6.QtWidgets import QLineEdit
-    if isinstance(edit, QLineEdit):
-        edit.selectAll()
-        c.type(edit, "2009-10-02T09:28:23", cps=16, clear=True)
-        c.do(lambda: (table.commitData(edit), table.closeEditor(edit, __import__('PyQt6.QtWidgets', fromlist=['QAbstractItemDelegate']).QAbstractItemDelegate.EndEditHint.NoHint)), settle=0.3)
-    else:
-        c.do(lambda: m.setData(m.index(row, 1), "2009-10-02T09:28:23"), settle=0.3)
-    save = H.button(tv, "Save")
-    c.click(save, tv.save)
+    def row_for(key):
+        return next(r for r in form._rows if (r.key() if callable(r.key) else r.key) == key)
+
+    def list_entry(key, add: bool):
+        row = row_for(key)
+        w = row.editor() if callable(row.editor) else row.editor
+        edits = [e for e in w.findChildren(QLineEdit) if e.isVisible()]
+        empty = [e for e in edits if not e.text().strip()]
+        if add and not empty:
+            btn = next(b for b in w.findChildren(QPushButton) if b.text().strip() == "Add entry")
+            c.click(btn, btn.click, move=0.6)
+            edits = [e for e in w.findChildren(QLineEdit) if e.isVisible()]
+            empty = [e for e in edits if not e.text().strip()]
+        edit = empty[0] if empty else edits[-1]
+        c.click(edit, lambda: (edit.setFocus(), edit.selectAll()), move=0.5)
+        c.type(edit, "none", cps=10, clear=True)
+        c.do(row._on_schema_committed, settle=0.2)
+
+    list_entry("ReconMethodParameterUnits", add=True)
+    c.hold(0.4)
+    form.focus_field("ReconMethodParameterLabels")
+    H.pump(settle=20)
+    c.hold(0.4)
+    list_entry("ReconMethodParameterLabels", add=False)
+    c.hold(0.5)
+    save = H.button(form, "Save")
+    c.click(save, form.save)
     c.hold(0.6)
     btn = H.button(ed, "Validate dataset")
     c.click(btn, btn.click)

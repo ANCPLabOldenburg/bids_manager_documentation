@@ -3,7 +3,7 @@
  "kind": "clip",
  "width": 1600,
  "height": 1000,
- "duration": 10.02,
+ "duration": 14.13,
  "chapters": [],
  "themes": [
   "dark",
@@ -11,19 +11,19 @@
  ],
  "files": {
   "dark": {
-   "mp4": "l09-fix-dark-552ac8fd.mp4",
-   "poster": "l09-fix-dark-poster-6f3d7b97.webp"
+   "mp4": "l09-fix-dark-1ee1e8a2.mp4",
+   "poster": "l09-fix-dark-poster-e6cca9c8.webp"
   },
   "light": {
-   "mp4": "l09-fix-light-cf9f10a8.mp4",
-   "poster": "l09-fix-light-poster-be7151c7.webp"
+   "mp4": "l09-fix-light-6cfa9b1b.mp4",
+   "poster": "l09-fix-light-poster-7ffe4659.webp"
   }
  },
- "alt": "Opening the scans table, typing the PET row's date and time, saving, and validating again: the error count goes to 0.",
+ "alt": "Selecting the PET sidecar, clicking Fix on its error, adding none as the reconstruction parameters' unit and label, saving, and validating again: one error less, the two left are the eye tracker's.",
  "source": {
-  "bids_manager": "1.5.0",
-  "commit": "373b09d",
-  "date": "2026-10-14",
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
   "sample": "multimodal v2"
  }
 }

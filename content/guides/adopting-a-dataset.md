@@ -2,6 +2,7 @@
 title: Adopting an existing BIDS dataset
 display_title: Adopting an *existing* dataset
 kicker: Guides
+group: Curating a dataset
 lede: Open a BIDS dataset converted elsewhere, with another tool or by a colleague: look at it without changing anything, or make it a project so you can validate, edit and correct it with everything BIDS Manager records.
 description: Open an existing BIDS dataset in BIDS Manager, view it or adopt it as a project.
 time: 10 minutes

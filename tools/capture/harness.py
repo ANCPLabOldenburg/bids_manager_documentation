@@ -41,14 +41,34 @@ if not NATIVE:
                         '"logicalDpi": 96, "logicalBaseDpi": 96, "dpr": 1}]}')
     os.environ.setdefault("QT_QPA_PLATFORM", f"offscreen:configfile={_cfg}")
 SCALE = int(os.environ.get("BM_CAPTURE_SCALE", "2"))
-# On the native platform the screen brings its own device pixel ratio (2 on
-# this Mac's display); the pictures are brought to SCALE after the grab.
-os.environ["QT_SCALE_FACTOR"] = "1" if NATIVE else str(SCALE)
+
+
+def _native_screen_ratio() -> float:
+    """The main screen's device pixel ratio, asked of Qt in a process of its
+    own (this one must not create its application before the scale is set)."""
+    import subprocess
+    code = ("from PyQt6.QtGui import QGuiApplication; a = QGuiApplication([]); "
+            "print(a.primaryScreen().devicePixelRatio())")
+    env = {k: v for k, v in os.environ.items() if k != "QT_SCALE_FACTOR"}
+    out = subprocess.run([sys.executable, "-I", "-c", code], capture_output=True, text=True,
+                         env=env, timeout=60)
+    try:
+        return float(out.stdout.strip().splitlines()[-1])
+    except (ValueError, IndexError):
+        raise SystemExit(f"could not read the screen's pixel ratio: {out.stderr.strip()[-300:]}")
+
+
+# On the native platform the screen brings its own device pixel ratio: 2 on
+# the Mac's own display, 1 on an external monitor such as a 1920 x 1200 one.
+# Qt is scaled so the pictures are drawn at SCALE either way; grabbed at the
+# screen's own ratio on a 1x monitor, every GPU clip came out half size in
+# the corner of a black frame (2026-10-20).
+os.environ["QT_SCALE_FACTOR"] = (f"{SCALE / _native_screen_ratio():g}" if NATIVE else str(SCALE))
 os.environ["BIDSMGR_NO_UPDATE_CHECK"] = "1"
 
 FONT_SCALE = 1.15
 WINDOW = (1440, 900)
-EXPECTED_VERSION = "1.5.0"
+EXPECTED_VERSION = "1.5.1"
 
 WORK = Path("/private/tmp/bm_docs")
 STUDIES_REAL = WORK / "studies"
@@ -585,6 +605,9 @@ def take(shot: Shot) -> dict:
     img = grab(shot)
     x, y, w, h = crop
     ratio = img.devicePixelRatio() or SCALE
+    if ratio < SCALE - 0.01:
+        raise ShotFailed(f"{shot.id}: grabbed at {ratio:g}x, below the {SCALE}x the site needs; "
+                         "upscaled, the picture would be blurred")
     img = img.copy(round(x * ratio), round(y * ratio), round(w * ratio), round(h * ratio))
     if abs(ratio - SCALE) > 0.01:
         from PyQt6.QtCore import Qt

@@ -144,6 +144,19 @@ $ bidsmgr-deface /data/bids/my_study
 
 {{ ref.cli("bidsmgr-deface") }}
 
+## bidsmgr-anonymise {#bidsmgr-anonymise}
+
+Anonymises a dataset's metadata, as **Tools** > **Anonymise metadata...** does ([Anonymising metadata](/guides/anonymising/)). `--dry-run` lists every change and writes nothing.
+
+```console
+$ bidsmgr-anonymise /data/bids/my_study --dry-run
+$ bidsmgr-anonymise /data/bids/my_study --preset strict --keep dates
+```
+
+{{ ref.usage("bidsmgr-anonymise") }}
+
+{{ ref.cli("bidsmgr-anonymise") }}
+
 ## bidsmgr-qc {#bidsmgr-qc}
 
 Runs the fast quality check of anatomical and diffusion images and writes the results to `derivatives/bidsmgr-qc/`.

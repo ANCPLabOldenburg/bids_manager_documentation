@@ -45,7 +45,7 @@ Three views of what the scan found, chosen by the icons in its title; the panel 
 | Button | What it does |
 |---|---|
 | **Highlight aborts** | Marks rows that look like aborted, repeated runs. |
-| **Dataset metadata…** | The metadata no file records ([Metadata you provide](/learn/07-metadata/)). |
+| **Dataset metadata…** | The metadata the raw files don't capture ([Metadata you provide](/learn/07-metadata/)). |
 | **Manage columns…** | Shows and hides the columns, with a note on what each holds. Drag a column's header to move it. |
 | **Bulk edit…** | One value for one column across the selected rows. |
 

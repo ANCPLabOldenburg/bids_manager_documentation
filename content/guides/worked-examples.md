@@ -2,7 +2,8 @@
 title: Worked examples
 display_title: Worked *examples*
 kicker: Guides
-lede: Short recipes for what comes up in real studies, each with the tool that does it and what to check afterwards. The table, Properties and bulk edit before converting; scan rules and templates for what repeats from study to study; the Editor's tools for a dataset that already exists.
+group: Recipes
+lede: Short recipes for what comes up in real studies, each with the tool that does it and what to check afterwards: the table, Properties and bulk edit before converting, and scan rules and templates for what repeats from study to study. The Editor's tools have guides of their own.
 description: Practical recipes for BIDS Manager: bulk edits, scan rules, metadata templates and the Editor's tools.
 time: 20 minutes
 ---
@@ -84,50 +85,20 @@ For scripts, the same rules are a JSON file that `bidsmgr-scan --rules-file rule
 
 ## After converting: the Editor's tools
 
-### Fix one wrong value everywhere
+The Editor's tools have their own guides, each made of cases like these:
 
-**The situation.** An acquisition label was spelled one way in the first batch and another way later, and the dataset now has both.
-
-**What to do.** **Tools** > **Find and replace a value...**: choose the entity and the value to replace, type the new one, and read the preview of every file and reference that changes. One operation, recorded in the project.
-
-{{ figure("w-find-replace", "Find and replace an entity value: acq-tfl3p2 becomes acq-mprage, with the scans row that follows.") }}
-
-### Write indices with the same width
-
-**The situation.** Some runs are written `run-1`, others `run-01`, because they came from different tools.
-
-**What to do.** **Tools** > **Index widths...** shows, for each index entity, the widths in use, and writes them all with the width you choose; files, scans rows and references move together.
-
-{{ figure("w-index-widths", "Index widths on the advanced MRI sample: every run written with two digits.") }}
-
-### Add an entity you forgot
-
-**The situation.** Two kinds of functional run were converted without the `acq` label that tells them apart.
-
-**What to do.** Select their folder in the tree, then **Tools** > **Add or remove an entity...**: choose **Add or change an entity**, the entity and its value. The standard decides where it goes in each name; sidecars and companion files travel with their recording.
-
-{{ figure("w-add-entity", "Add or remove an entity: acq-mb8 added to the functional runs.") }}
-
-### Put a dataset into sessions afterwards
-
-**The situation.** A study converted without sessions gains a second visit.
-
-**What to do.** **Tools** > **Sessions...** with **Create a session**: every file of the chosen subjects moves into a `ses-` folder and takes the label in its name, and the scans tables move with them ([Changing a dataset's shape](/learn/11-dataset-shape/)).
-
-{{ figure("l11-sessions", "Sessions, set to remove the session; creating one is the same dialog.") }}
-
-### Check what points at what
-
-**The situation.** You need to know which runs a fieldmap corrects, or whether anything still names a file you are about to delete.
-
-**What to do.** **Tools** > **References** lists, for a file, every file that names it and every file it names: `IntendedFor`, the scans tables, and the other fields that hold a path.
-
-{{ figure("l11-references", "References between files: a fieldmap and the run its IntendedFor names.") }}
+| The situation | Guide |
+|---|---|
+| One acquisition label spelled two ways; runs written `run-1` and `run-01`; a label forgotten; a dataset to put into sessions; one participant converted as two subjects | [Fixing names and structure](/guides/names-and-structure/) |
+| Files renamed outside BIDS Manager; scans tables missing; a fieldmap pointing at the wrong runs; before sharing | [Keeping a dataset consistent](/guides/consistency/) |
+| Notes, logs and documents reported as not part of the dataset | [Leaving files out of validation](/guides/ignoring-files/) |
+| Names, dates and devices to remove before sharing | [Anonymising metadata](/guides/anonymising/) |
+| A change to take back | [Undo, redo and the history](/guides/history/) |
 
 ### Find every placeholder still to answer
 
 **The situation.** Before sharing, every TODO must be gone.
 
-**What to do.** **Validate dataset** counts them among the warnings, one finding per field, each with **Set a real value**; in a sidecar, the search box finds `TODO` in every field at once ([Editing metadata](/learn/10-editing-metadata/)).
+**What to do.** **Validate dataset** counts them among the warnings, one finding per field, each with **Set a real value**; in a sidecar, the search box finds `TODO` in every field at once ([Editing metadata](/learn/10-editing-metadata/)). **Tools** > **Fix ups...** > **Ready to share** says how many fields still hold one.
 
 {{ figure("l10-search", "Searching a sidecar: only the fields that match stay.") }}

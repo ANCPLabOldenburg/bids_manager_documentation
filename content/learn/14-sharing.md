@@ -20,27 +20,35 @@ Choose **Tools** > **Dashboard**. It summarises the dataset: subjects, sessions,
 
 ### What the conversion removed
 
-The conversion removes the participant's name, ID, birth date, age, sex, size and weight from every MRI and PET sidecar, and from the header stored inside each spectroscopy file (chapter 8). It keeps the scanner's identifiers (series UIDs) for provenance, and keeps the institution's name and address, which describe the site rather than the person.
+The conversion removes the participant's name, ID, birth date, age, sex, size and weight from every MRI and PET sidecar, and from the header stored inside each spectroscopy file (chapter 8). It keeps the scanner's identifiers (series UIDs) for provenance, and the institution's name and address, which describe the site rather than the person; anonymising, below, replaces those too.
 
-### What is left: participants.tsv
+### What is left, and anonymising it
 
-The sample's `participants.tsv` has three columns copied from the DICOM header: `given_name`, `family_name` and `patient_id`. Here they hold the scanner's pseudonyms (`XX00XX00`, `OL_3844`), but in a real study they would hold names. Remove them.
-
-::: step Open participants.tsv
-Select `participants.tsv` at the top of the BIDS tree.
+What the conversion keeps can still point at a person. The sample's `participants.tsv` has three columns copied from the DICOM header, `given_name`, `family_name` and `patient_id`; here they hold the scanner's pseudonyms (`XX00XX00`, `OL_3844`), in a real study they would hold names.
 
 {{ figure("l14-participants", "participants.tsv, with the given_name column selected.") }}
+
+Beyond names, the dates of the scans, the scanner's serial number, the site's address, the DICOM UIDs and the time stamps inside compressed files all narrow down who was scanned, where and when. **Anonymise metadata** removes them in one step.
+
+::: step Open Anonymise metadata
+Choose **Tools** > **Anonymise metadata...**. **What** is set to **Recommended**: names and IDs removed, dates moved back by whole weeks so their intervals stay, the site's address, device serial numbers and UIDs replaced, traces of the conversion cleaned. **Where** is the whole dataset.
+
+{{ figure("g-anon-dialog", "Anonymise metadata on the sample: 128 changes in 32 files, listed by kind before anything is written.") }}
 :::
 
-::: step Delete the three columns
-Click a cell of `given_name` and click **− Delete column**. Do the same for `family_name` and `patient_id`. Click **Save**.
+::: step Read what changes
+**What changes** lists every change with the value before and after. Open **To read by hand**: protocol names and series descriptions are free text a rule cannot judge; on the sample they name sequences, not people. In your own study, open the files that name someone and edit them.
 :::
 
-::: step Check participants.json
-Select `participants.json` and, in the **Tree view**, delete the entries for the three columns if it has any (**− Delete field**). Click **Save**.
+::: step Anonymise
+Click **Anonymise 32 files** and confirm. The three columns of `participants.tsv` and their entries in `participants.json` are gone, every acquisition date has moved into 1902 to 1925, and each sidecar records what was done in `DeidentificationMethod`. It is one step: **Undo** takes it back.
 :::
 
-The reason this happens, and what else to look for in a dataset of your own (free text in sidecars, dates, file names made from names), is in [Identifiers and privacy](/concepts/identifiers-and-privacy/). See also [Known issues](/help/known-issues/).
+::: step Validate
+Click **Validate dataset**: anonymising leaves the dataset valid, with the same 0 errors.
+:::
+
+Every category, the options of each, scopes of one subject or one session, and the command line are in [Anonymising metadata](/guides/anonymising/). Why each kind of value identifies, and what else to look for in a dataset of your own (free text, file names made from names), is in [Identifiers and privacy](/concepts/identifiers-and-privacy/).
 
 ### Faces
 
@@ -82,6 +90,10 @@ Select `README` at the top of the tree. The new project's README says only that 
 
 Click **Validate dataset**, with **Deep checks** on. A dataset to share should have no errors. Read the remaining warnings: most will be TODO placeholders in fields nobody can answer for this data; replace each with a real value if you know it. To take placeholders back, choose a narrower scope under **Unanswered metadata** in **Tools** > **Fix ups...** and click **Write TODOs**: placeholders outside the scope are removed, and values you wrote are never touched.
 
+## Share the dataset, not the project
+
+The project's `.bidsmgr/` folder holds the scan tables (with the names the scanner recorded), the history's copies of every file before it was changed (the originals of what you anonymised and defaced, faces included) and the logs. Share the dataset without it, and without `sourcedata/` if you kept one. **Anonymise metadata** can also delete the history's copies once it is done (**Then delete the copies the Editor keeps for Undo**); nothing before can be undone afterwards.
+
 ## What leaves your computer
 
 Nothing, unless you send it. BIDS Manager uses the network for these things only, and sends nothing about your data with any of them:
@@ -92,7 +104,7 @@ Nothing, unless you send it. BIDS Manager uses the network for these things only
 - on Linux, if the system lacks the `libxcb-cursor0` library Qt needs, start-up downloads it with `apt-get download` into `~/.cache/bidsmgr/`.
 
 ::: recap
-- `participants.tsv` holds no names or IDs.
+- The metadata is anonymised: no names or IDs, dates moved back with their intervals kept, devices and UIDs replaced.
 - The anatomical images are defaced, and the originals are in the project's history.
 - The dataset has a README and a citation file, and validates without errors.
 - Next, do all of this from the command line: [The command line](/learn/15-command-line/).

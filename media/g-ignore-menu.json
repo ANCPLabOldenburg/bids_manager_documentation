@@ -1,0 +1,41 @@
+{
+ "id": "g-ignore-menu",
+ "kind": "figure",
+ "width": 837,
+ "height": 1056,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "837": "g-ignore-menu-dark-837-659ff0de.avif",
+    "1674": "g-ignore-menu-dark-1674-ba6a7ecb.avif"
+   },
+   "webp": {
+    "837": "g-ignore-menu-dark-837-2466a4c9.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "837": "g-ignore-menu-light-837-c5e51689.avif",
+    "1674": "g-ignore-menu-light-1674-ba05c3eb.avif"
+   },
+   "webp": {
+    "837": "g-ignore-menu-light-837-398828ce.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Right-click on one session's notes: Ignore in validation offers this file, its folder, or the same name in every subject and session, each with how many files it covers.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
+  "sample": "MRI sample 1"
+ }
+}

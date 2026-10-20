@@ -1,0 +1,41 @@
+{
+ "id": "g-qc-bold-run",
+ "kind": "figure",
+ "width": 1294,
+ "height": 1274,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1294": "g-qc-bold-run-dark-1294-19807202.avif",
+    "2588": "g-qc-bold-run-dark-2588-ef58258f.avif"
+   },
+   "webp": {
+    "1294": "g-qc-bold-run-dark-1294-fb711197.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1294": "g-qc-bold-run-light-1294-3171e652.avif",
+    "2588": "g-qc-bold-run-light-2588-cd416921.avif"
+   },
+   "webp": {
+    "1294": "g-qc-bold-run-light-1294-86921eb0.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "A BOLD run of 1,224 volumes with head motion, at volume 141: the planes show the slices of that volume out of line with each other, and the plots under the time course show the same moment as a spike in framewise displacement, DVARS and slice spikes, and a band in the carpet.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
+  "sample": "BOLD run with motion (Oldenburg)"
+ }
+}

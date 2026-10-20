@@ -220,30 +220,6 @@ def quality_bold():
                 "DVARS, outlier voxels and the carpet plot, aligned in time.", win, crop_to=ed._center_frame))
 
 
-def quality_meeg():
-    win, ed, root, _ = SE._editor("edited")
-    SE._expand(ed, 3)
-    _viewer_room(ed)
-    v = ed._signal_viewer
-    ed.select_file_in_tree(Path(root) / MEG)
-    H.pump(lambda: v.page() == "content", timeout=60, settle=30)
-    p = v.presenter
-    p.load_signal()
-    H.pump(lambda: p.pages.currentWidget() is p.traces_page, timeout=180, settle=40)
-    v.run("traces.type", ch_type="mag")
-    v.run("traces.count", n=24)
-    v.qstore.flush()
-    H.pump(settle=20)
-    v.trigger("traces.quality")
-    H.pump(lambda: p.quality_result() is not None, timeout=300, settle=40)
-    v.run("traces.qc_view", metrics=["std", "ptp"], types=["mag"])
-    v.qstore.flush()
-    H.wait(1.2)
-    H.pump(settle=40)
-    H.take(Shot("l13-meeg-qc", "The MEG recording's quality check: each channel's level against its type, "
-                "per segment, beside the traces.", win, crop_to=ed._center_frame))
-
-
 def quality_dataset():
     win, ed, root, _ = SE._editor("edited")
     from bidsmgr.gui.quality_check_dialog import QualityCheckDialog
@@ -277,7 +253,6 @@ def quality_settings():
 GROUPS.update({
     "l13-qc-t1": quality_t1,
     "l13-qc-bold": quality_bold,
-    "l13-qc-meeg": quality_meeg,
     "l13-qc-dataset": quality_dataset,
     "l13-qc-settings": quality_settings,
 })

@@ -1,0 +1,41 @@
+{
+ "id": "g-names-merge",
+ "kind": "figure",
+ "width": 1000,
+ "height": 800,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1000": "g-names-merge-dark-1000-ad3d48b2.avif",
+    "2000": "g-names-merge-dark-2000-227ca571.avif"
+   },
+   "webp": {
+    "1000": "g-names-merge-dark-1000-309b9ebe.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1000": "g-names-merge-light-1000-8046b8dd.avif",
+    "2000": "g-names-merge-light-2000-b4ae14b6.avif"
+   },
+   "webp": {
+    "1000": "g-names-merge-light-1000-ab5abb0d.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Rename subject sub-002 to sub-001, which exists: Merge them into one subject moves the follow-up session under sub-001 and folds the two participants rows into one.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.1",
+  "commit": "4f07b3e",
+  "date": "2026-10-20",
+  "sample": "MRI sample 1"
+ }
+}
