@@ -183,6 +183,17 @@
        "default": "Off",
        "choices": null,
        "control": "Skip dcm2niix's BidsGuess classifier"
+      },
+      {
+       "label": "Subject labels",
+       "tip": "What each DICOM subject is called. Numbers (sub-001, sub-002, ...) by default; or the patient ID, given name or family name from the DICOM header, curated into a BIDS label: letters and digits only, accents and spaces removed (OL_0001 becomes sub-OL0001). A subject whose field is empty or anonymised (ANONYMOUS, DE-IDENTIFIED) is numbered; two subjects whose values become the same label are kept apart with a number. Which series belong to one subject is decided as before.",
+       "default": "Numbers (sub-001, sub-002, ...)",
+       "choices": [
+        "Numbers (sub-001, sub-002, ...)",
+        "Patient ID",
+        "Given name",
+        "Family name"
+       ]
       }
      ]
     },
@@ -312,6 +323,90 @@
       {
        "label": "Chunk",
        "tip": "Chunk (chunk-) The `chunk-` key/value pair is used to distinguish between images of the same physical sample with different fields of view acquired in the same imaging experiment. This entity applies to collections of 2D images, 3D volumes or 4D volume series (for example, diffusion weighted images), and ma",
+       "default": "Off",
+       "choices": null
+      }
+     ]
+    },
+    {
+     "title": "Entities the sequence name decides",
+     "hint": "When the operator wrote one of these into the series description or the protocol name, as in func_task-nback_acq-mb4_run-02, its value wins over the one BIDS Manager estimates. Only a value valid for the entity is taken, and only where the standard allows the entity for the recording; an entity the name does not mention keeps the estimate. Applies from the next scan.",
+     "items": [
+      {
+       "label": "Task",
+       "tip": "Task (task-): the sequence name's value wins. A set of structured activities performed by the participant. Tasks are usually accompanied by stimuli and responses, and can greatly vary in complexity. In the context of brain scanning, a task is always tied to one data acquisition. Therefore, even if during one acquisition the subject performed m",
+       "default": "Off",
+       "choices": null
+      },
+      {
+       "label": "Acquisition",
+       "tip": "Acquisition (acq-): the sequence name's value wins. The `acq-` entity corresponds to a custom label the user MAY use to distinguish a different set of parameters used for acquiring the same modality. For example, this should be used when a study includes two T1w images - one full brain low resolution and one restricted field of view but high",
+       "default": "Off",
+       "choices": null
+      },
+      {
+       "label": "Contrast Enhancing Agent",
+       "tip": "Contrast Enhancing Agent (ce-): the sequence name's value wins. The `ce-` entity can be used to distinguish sequences using different contrast enhanced images. The label is the name of the contrast agent. This entity represents the `\"ContrastBolusIngredient\"` metadata field. Therefore, if the `ce-` entity is present in a filename, `\"ContrastBolusI",
+       "default": "Off",
+       "choices": null
+      },
+      {
+       "label": "Reconstruction",
+       "tip": "Reconstruction (rec-): the sequence name's value wins. The `rec-` entity can be used to distinguish different reconstruction algorithms (for example, `MoCo` for the ones using motion correction).",
+       "default": "Off",
+       "choices": null
+      },
+      {
+       "label": "Phase-Encoding Direction",
+       "tip": "Phase-Encoding Direction (dir-): the sequence name's value wins. The `dir-` entity can be set to an arbitrary legitimate label (for example, `dir-LR` or `dir-AP`) to distinguish different phase-encoding directions. This entity represents the `\"PhaseEncodingDirection\"` metadata field. Therefore, if the `dir-` entity is present in a filename, `\"Phase",
+       "default": "Off",
+       "choices": null
+      },
+      {
+       "label": "Run",
+       "tip": "Run (run-): the sequence name's value wins. The `run-` entity is used to distinguish separate data acquisitions with the same acquisition parameters and (other) entities. If several data acquisitions (for example, MRI scans or EEG recordings) with the same acquisition parameters are acquired in the same session, they MUST be indexed w",
+       "default": "Off",
+       "choices": null
+      },
+      {
+       "label": "Echo",
+       "tip": "Echo (echo-): the sequence name's value wins. If files belonging to an entity-linked file collection are acquired at different echo times, the `echo-` entity MUST be used to distinguish individual files. This entity represents the `\"EchoTime\"` metadata field. Therefore, if the `echo-` entity is present in a filename, `\"EchoTime\"`",
+       "default": "Off",
+       "choices": null
+      },
+      {
+       "label": "Part",
+       "tip": "Part (part-): the sequence name's value wins. This entity is used to indicate which component of the complex representation of the MRI signal is represented in voxel data. The `part-` entity is associated with the DICOM Tag `0008, 9208`. Allowed label values for this entity are `phase`, `mag`, `real` and `imag`, which are typically used",
+       "default": "Off",
+       "choices": null
+      },
+      {
+       "label": "Inversion Time",
+       "tip": "Inversion Time (inv-): the sequence name's value wins. If files belonging to an entity-linked file collection are acquired at different inversion times, the `inv-` entity MUST be used to distinguish individual files. This entity represents the `\"InversionTime\"` metadata field. Therefore, if the `inv-` entity is present in a filename, `\"In",
+       "default": "Off",
+       "choices": null
+      },
+      {
+       "label": "Magnetization Transfer",
+       "tip": "Magnetization Transfer (mt-): the sequence name's value wins. If files belonging to an entity-linked file collection are acquired at different magnetization transfer (MT) states, the `_mt-` entity MUST be used to distinguish individual files. This entity represents the `\"MTState\"` metadata field. Therefore, if the `mt-` entity is present in a fi",
+       "default": "Off",
+       "choices": null
+      },
+      {
+       "label": "Flip Angle",
+       "tip": "Flip Angle (flip-): the sequence name's value wins. If files belonging to an entity-linked file collection are acquired at different flip angles, the `_flip-` entity pair MUST be used to distinguish individual files. This entity represents the `\"FlipAngle\"` metadata field. Therefore, if the `flip-` entity is present in a filename, `\"Fl",
+       "default": "Off",
+       "choices": null
+      },
+      {
+       "label": "Corresponding Modality",
+       "tip": "Corresponding Modality (mod-): the sequence name's value wins. The `mod-` entity corresponds to modality label for defacing masks, for example, T1w, inplaneT1, referenced by a defacemask image. For example, `sub-01_mod-T1w_defacemask.nii.gz`.",
+       "default": "Off",
+       "choices": null
+      },
+      {
+       "label": "Tracer",
+       "tip": "Tracer (trc-): the sequence name's value wins. The `trc-` entity can be used to distinguish sequences using different tracers. This entity represents the `\"TracerName\"` metadata field. Therefore, if the `trc-` entity is present in a filename, `\"TracerName\"` MUST be defined in the associated metadata. Please note that the ``",
        "default": "Off",
        "choices": null
       }
@@ -785,6 +880,28 @@
        "default": "Off",
        "choices": null,
        "control": "Re-encode EEG to EDF"
+      },
+      {
+       "label": "Dummy volumes",
+       "tip": "Remove the first volumes (dummy scans, before the signal is steady) of every functional run, at conversion. The run's sidecar records it (NumberOfVolumesDiscardedByUser), its events move with the new first volume and its physiology starts there too. A number in a run's 'drop volumes' cell in the scan table wins for that run, 0 included.",
+       "default": "None",
+       "choices": null
+      },
+      {
+       "label": "Physiology",
+       "tip": "How a Siemens physiological log is written. BIDS asks one sampling frequency per table, and the channels are recorded at different rates (ECG 400 Hz, pulse 200 Hz, respiration 50 Hz). So: a table per rate, exactly as measured; or one table at the fastest rate, the slower channels either interpolated between their samples, or kept as recorded, each sample in the row of its own time and n/a in the rows between (nothing computed). The sidecar says which. All are valid BIDS; every ECG lead is its own column and the scanner trigger is the last column of every table.",
+       "default": "One table per sampling rate, as recorded",
+       "choices": [
+        "One table per sampling rate, as recorded",
+        "One table for the run, slower channels interpolated",
+        "One table for the run, every sample as recorded"
+       ]
+      },
+      {
+       "label": "Crop to the run (start at its first volume)",
+       "tip": "Keep only the samples recorded while the run was acquired: from its first volume (after any dummy volumes removed) to the end of its last, so the tables start with the run (StartTime 0). Off: the whole recording, with StartTime saying where the run starts.",
+       "default": "Off",
+       "choices": null
       },
       {
        "label": "Deface",

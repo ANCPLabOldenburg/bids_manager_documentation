@@ -1,0 +1,41 @@
+{
+ "id": "g-sidecars-dialog",
+ "kind": "figure",
+ "width": 1500,
+ "height": 900,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1500": "g-sidecars-dialog-dark-1500-f918c7c7.avif",
+    "3000": "g-sidecars-dialog-dark-3000-fb78d668.avif"
+   },
+   "webp": {
+    "1500": "g-sidecars-dialog-dark-1500-0de641b1.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1500": "g-sidecars-dialog-light-1500-0bd51011.avif",
+    "3000": "g-sidecars-dialog-light-3000-ee80856a.avif"
+   },
+   "webp": {
+    "1500": "g-sidecars-dialog-light-1500-4e63fae9.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Sidecars from the recordings for the BOLD run: read from the data it was converted from, every field with where it was read, and what is left to the sidecars above it.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.2",
+  "commit": "bd70a80+changes",
+  "date": "2026-10-23",
+  "sample": "multimodal v2"
+ }
+}

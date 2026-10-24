@@ -64,9 +64,9 @@ The MEG recording opens the same way; choose the channel type in the advanced co
 
 ## Physiological recordings
 
-A `_physio.tsv.gz` file is a table, so it opens in the table viewer. Because its sidecar gives a sampling frequency, the table viewer has a **Visualize** button that draws it in the signal viewer: the respiratory, cardiac, ECG and trigger recordings of the BOLD run, each placed at its own start time on one time axis, resampled to the fastest rate among them.
+A `_physio.tsv.gz` file is a table, so it opens in the table viewer. Because its sidecar gives a sampling frequency, the table viewer has a **Visualize** button that draws it in the signal viewer, with the run's other physiological tables: here the ECG table's four leads and trigger, then the pulse and the breathing, each with its own trigger, placed at their start times on one time axis and resampled to the fastest rate among them. The time axis starts before 0: the log began 6.9 s before the run's first volume, where the triggers start (**Crop to the run** in chapter 8 would start it at 0).
 
-{{ figure("l12-physio", "The BOLD run's physiological recordings, with Visualize.") }}
+{{ figure("l12-physio", "The BOLD run's ECG table, with Visualize: four leads, the pulse and the breathing, each with the scanner trigger.") }}
 
 ## Spectroscopy
 

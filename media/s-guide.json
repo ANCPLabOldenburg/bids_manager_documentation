@@ -1,0 +1,46 @@
+{
+ "id": "s-guide",
+ "kind": "clip",
+ "width": 1600,
+ "height": 1000,
+ "duration": 17.1,
+ "chapters": [
+  {
+   "t": 0.6,
+   "title": "Switch it on"
+  },
+  {
+   "t": 4.13,
+   "title": "Choose a task"
+  },
+  {
+   "t": 8.27,
+   "title": "Do what it says"
+  },
+  {
+   "t": 12.73,
+   "title": "Next"
+  }
+ ],
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "mp4": "s-guide-dark-cef5f687.mp4",
+   "poster": "s-guide-dark-poster-a33e2a97.webp"
+  },
+  "light": {
+   "mp4": "s-guide-light-1fd80026.mp4",
+   "poster": "s-guide-light-poster-2c01bbcb.webp"
+  }
+ },
+ "alt": "Switching the Guide on in the Converter: it asks what to do; choosing Check and edit the table rings the table; a click on a row moves the card to Properties; Next moves it to Structure.",
+ "source": {
+  "bids_manager": "1.5.2",
+  "commit": "bd70a80+changes",
+  "date": "2026-10-23",
+  "sample": "multimodal v2"
+ }
+}

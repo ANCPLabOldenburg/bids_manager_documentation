@@ -2,7 +2,7 @@
  "scan": {
   "rows": 23,
   "included": 23,
-  "seconds": 2.4,
+  "seconds": 2.1,
   "subjects": [
    "sub-001",
    "sub-002"
@@ -60,8 +60,8 @@
   }
  },
  "source": {
-  "bids_manager": "1.5.1",
-  "commit": "4f07b3e",
-  "date": "2026-10-20"
+  "bids_manager": "1.5.2",
+  "commit": "bd70a80+changes",
+  "date": "2026-10-23"
  }
 }

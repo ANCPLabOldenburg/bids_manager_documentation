@@ -327,6 +327,14 @@
    "editable": "No",
    "shown": "No",
    "description": "Scanner-detected notes: non-image series, B0 reroute, missing entity, ..."
+  },
+  {
+   "key": "drop_volumes",
+   "header": "drop volumes",
+   "tsv": "drop_volumes",
+   "editable": "Yes",
+   "shown": "No",
+   "description": "Functional runs: how many volumes to remove from the start at conversion (dummy scans). Empty: the default in Settings > Convert; 0: none."
   }
  ]
 }

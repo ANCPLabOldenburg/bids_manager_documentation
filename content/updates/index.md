@@ -8,6 +8,49 @@ To upgrade, use **Check updates** in BIDS Manager's status bar, run the installe
 
 <p class="rel-legend"><span class="rel-kind k-new">New</span> <span class="rel-kind k-fix">Fixed</span> <span class="rel-kind k-note">Changed</span></p>
 
+::: release 1.5.2 | October 2026 | v152
+
+A guide that shows the way, sidecars written again from the recordings, physiology read from Siemens CMRR logs with every lead apart, dummy volumes, subject labels and entities taken from the scanner, and skull stripping for derivatives. The first time 1.5.2 opens, a new **What's new** window plays a short animation of each feature of 1.5.1 and 1.5.2, only those of the releases you did not have, and then the 1.5.0 news if you come from an earlier version; Home's **What's new** menu opens the news of any release.
+
+{{ clip("u-whats-new", "The What's new window of 1.5.2: the guide, the physiology of a CMRR log, then Sidecars written from the recordings, picked from the list.") }}
+
+<p class="rel-kind k-new">New</p>
+
+- **The guide.** Switch **Guide** on in the header, beside **Settings**. In each view it asks what you would like to do, then rings the control to use and says what to do there, with **All tasks**, **Previous** and **Next**. A step moves on when you do what it asks. Off until you switch it on. See [First launch](/start/first-launch/#let-the-guide-show-you).
+
+{{ figure("guide-step", "Check and edit the table, step 1 of 4: the table ringed, and what to do there.", number=False) }}
+
+- **Sidecars from the recordings.** A sidecar lost or never written is written again from what is still there: the data it was converted from (converted again in a temporary folder), the file's own header, your answers and the sidecars that link to it, never over a value a sidecar holds. Every field is shown with where it was read; the values follow the BIDS version chosen in **Settings** > **Validation**; any image or recording BIDS Manager reads gets one, named the BIDS way or not. **Also add to existing** completes the sidecars you have. **Tools** > **Check and repair** > **Write sidecars from the recordings...**, the tree's right-click, and `bidsmgr-sidecars`. See [Writing sidecars from the recordings](/guides/sidecars/).
+
+{{ figure("g-sidecars-dialog", "Sidecars from the recordings for a BOLD run whose sidecar was deleted: every field with where it was read.", number=False) }}
+
+- **Physiology from Siemens CMRR logs, written three ways.** Every ECG lead is its own column, and the scanner trigger is 1 at the start of every volume, the last column of every table. **Settings** > **Convert** > **Physiology** writes one table per sampling rate (the default), or one table for the run with the slower channels interpolated or kept as recorded (`n/a` between their samples); all are valid BIDS. **Crop to the run** keeps the samples recorded during the run (`--physio-layout`, `--physio-align`). See [Converting](/learn/08-converting/#check-the-conversion-settings).
+
+{{ figure("l12-physio", "The BOLD run's ECG table with Visualize: four leads, then the pulse and the breathing, each with the scanner trigger.", number=False) }}
+
+- **Dummy volumes.** **Settings** > **Convert** > **Dummy volumes** leaves the first volumes of every functional run out at conversion, and a run's own number in **Properties** wins. The sidecar records it (`NumberOfVolumesDiscardedByUser`), the events move with the new first volume and the physiology starts there too (`--drop-volumes`, the scan table's `drop_volumes` column).
+- **Subject labels from the scanner.** **Settings** > **Scan** > **Subject labels**: numbers by default, or the patient ID, given name or family name from the DICOM header, made into a valid label (`OL_3844` becomes `sub-OL3844`). Which series belong to one participant is decided as before (`--subject-from`).
+- **Entities the sequence name decides.** Tick an entity in **Settings** > **Scan**, such as `acq-`, and a value the operator typed into the series description or protocol name wins over the estimate, where it is valid (`--name-entity`). See [Scanning](/learn/03-scanning/#settings-that-change-a-scan).
+- **Defacing and skull stripping in derivatives.** **Include derivatives** offers a pipeline's images too; a stripped one goes to `derivatives/bidsmgr-skullstrip/` with its description plus `brain` (`desc-preproc` becomes `desc-preprocbrain`), and masks and segmentations are left alone (`bidsmgr-deface --include-derivatives`). See [Defacing and skull stripping](/guides/defacing/#images-in-derivatives).
+
+<p class="rel-kind k-fix">Fixed</p>
+
+- **The four ECG leads of a CMRR log are four columns.** They were written as one column four times too long, the leads interleaved, and the trigger was a constant 1, a flat line.
+- **Acquisition values land in the recording's sidecar only.** With dataset or datatype values in the recording metadata file, `bidsmgr-metadata` wrote fields such as `Manufacturer`, `EEGReference` and `InstitutionName` into every sidecar beside an EEG or MEG recording: its events, channels, electrodes and coordinate system, and the physiology and eye-tracking sidecars. The GUI's **Dataset metadata** was not affected ([issue 187](https://github.com/ANCPLabOldenburg/BIDS-Manager/issues/187)).
+- **Network shares on Windows.** Data or a project on a network drive converts: files are copied where Windows will not follow a link on a share, mapped drives are kept as you wrote them, a timeout stays the problem of the one series it hit, and a drive that is not connected says so.
+
+<p class="rel-kind k-note">Changed</p>
+
+- **A physiological log is one table per sampling rate** by default: `_recording-ecg_`, `_recording-cardiac_` and `_recording-respiratory_physio.tsv.gz`, each with the trigger last. 1.5.1 wrote one table per signal, the trigger on its own.
+- The scan table has one more column, `drop_volumes` (67 in all).
+- **What's new knows where you come from.** It shows the news of every release since the version that last ran, one after the other, and keeps each release's news in a menu, in the window and on Home.
+
+<p class="rel-kind k-note">Before you upgrade</p>
+
+- **Physiology converted before 1.5.2** has the ECG leads merged and a flat trigger. To write it again, delete the run's `_physio` files in the Editor (right-click, **Delete this recording...**), then run the conversion again: with **Existing subjects** on **Skip**, the default, only what is missing is written ([Converting](/learn/08-converting/#check-the-conversion-settings)).
+
+:::
+
 ::: release 1.5.1 | October 2026 | v151
 
 Anonymisation chosen by purpose and by subject, scans and sessions tables for every kind of recording, granular control over what validation leaves out, an Undo and Redo that walk the whole history, and installers that need no administrator rights. Validation also checks more than before, so read **Before you upgrade** at the end of this card.

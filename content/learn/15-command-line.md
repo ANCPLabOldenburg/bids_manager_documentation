@@ -56,7 +56,7 @@ The conversion replays the edits recorded in the project (one subject, one sessi
 ::: step Write the metadata
 ```console
 $ bidsmgr-metadata --project /tmp/studies/multimodal_study --fill-todos
-  TODO placeholders inserted: 63 fields across 7 files
+  TODO placeholders inserted: {{ m("cli.todo_inserted") }} fields across {{ m("cli.todo_files") }} files
 ```
 `--fill-todos` writes the TODO placeholders the GUI's default post-convert chain writes; `--fill-scope required|recommended|optional` chooses how far they go. The step also writes the scans and sessions tables (`--no-tables` leaves them out), and `--anonymise recommended` or `strict` anonymises the dataset last, as **Settings** > **Convert** does in the GUI.
 :::
@@ -65,7 +65,7 @@ $ bidsmgr-metadata --project /tmp/studies/multimodal_study --fill-todos
 ```console
 $ bidsmgr-validate /tmp/studies/multimodal_study --strict --html
 === /tmp/studies/multimodal_study ===
-  severity: ERR  (ok=26 warn=114 err=3)
+  severity: ERR  (ok={{ m("cli.project_validation.ok") }} warn={{ m("cli.project_validation.warn") }} err={{ m("cli.project_validation.err") }})
 ```
 `--strict` runs the deep checks and `--html` writes `validation_report.html` into the project's `.bidsmgr/` folder. The result is the GUI's, file for file: the same {{ m("cli.project_convert_files") }} files, the same three errors (chapter 9 fixes them).
 :::

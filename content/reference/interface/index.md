@@ -16,6 +16,7 @@ description: The parts of BIDS Manager's GUI: header, views, status bar.
 | The logo | Opens **About**: the version, the lab, the authors and the acknowledgements. |
 | **Home**, **Converter**, **Editor** | The three views. BIDS Manager opens on Home; with a project open it returns to the Converter or the Editor, whichever you used last. |
 | The project switcher | The open project's name. Click it for its folder, the recent projects, and **Open or create another… (Home)**. |
+| **Guide** | Switches the guide on or off: in each view it asks what you would like to do, then rings the control to use and says what to do there ([First launch](/start/first-launch/#let-the-guide-show-you)). Off until you switch it on, and remembered. |
 | The gear | **Settings** ([Settings](/reference/settings/)). |
 | The sun or the moon | The theme menu ([First launch](/start/first-launch/#choose-a-theme)). |
 

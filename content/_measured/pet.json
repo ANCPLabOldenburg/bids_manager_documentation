@@ -31,15 +31,15 @@
   }
  },
  "source": {
-  "bids_manager": "1.5.1",
-  "commit": "4f07b3e",
-  "date": "2026-10-20"
+  "bids_manager": "1.5.2",
+  "commit": "bd70a80+changes",
+  "date": "2026-10-23"
  },
  "ecat": {
   "scan": {
    "rows": 1,
    "included": 1,
-   "seconds": 0.0,
+   "seconds": 0.1,
    "subjects": [
     "sub-001"
    ],
@@ -53,7 +53,7 @@
   },
   "convert": {
    "rc": 0,
-   "seconds": 0.9
+   "seconds": 1.0
   },
   "converted": {
    "files": 9,

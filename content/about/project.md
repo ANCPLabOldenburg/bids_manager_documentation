@@ -16,7 +16,7 @@ Converting a file format is a solved problem, and BIDS Manager does not solve it
 | [MNE-BIDS](https://mne.tools/mne-bids/) | EEG and MEG |
 | [nibabel](https://nipy.org/nibabel/) | PET ECAT images to NIfTI, and reading NIfTI for the viewers and the quality check |
 | [PET2BIDS](https://github.com/openneuropet/PET2BIDS) | ECAT headers, the PET DICOM fields dcm2niix leaves out, and PMOD blood data |
-| [bidsphysio](https://github.com/cbinyu/bidsphysio) | the physiological recordings Siemens scanners store with an MRI run |
+| [bidsphysio](https://github.com/cbinyu/bidsphysio) | labelling the tables of a physiological recording (since 1.5.2, BIDS Manager reads the Siemens logs themselves) |
 | [eyelinkio](https://github.com/scott-huberty/eyelinkio) | reading EyeLink EDF recordings (BIDS Manager writes the BIDS files, and reads ASC itself) |
 | [niimath](https://github.com/rordenlab/niimath) | defacing, skull stripping, and the quality check's registration |
 | [brainchop](https://github.com/neuroneural/brainchop-cli) | brain masks and tissue classes, for skull stripping and the quality check |

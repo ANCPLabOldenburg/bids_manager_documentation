@@ -162,6 +162,16 @@ def _dialog(dlg, size=None, near=None):
     return dlg
 
 
+
+def _scroll_to_widget(dlg, widget, pad: int = 8) -> None:
+    """Scroll the settings page holding ``widget`` so it sits near the top."""
+    from PyQt6.QtWidgets import QScrollArea
+    area = next(a for a in dlg.findChildren(QScrollArea)
+                if a.isVisible() and a.widget() is not None and a.widget().isAncestorOf(widget))
+    top = widget.mapTo(area.widget(), widget.rect().topLeft()).y()
+    area.verticalScrollBar().setValue(max(0, top - pad))
+    H.pump(settle=20)
+
 # ------------------------------------------------------- chapter 3: scanning
 def scanning():
     win, conv = _converter("project")
@@ -222,6 +232,38 @@ def scan_settings():
     _dialog(d)
     H.take(Shot("l03-settings-scan", "Settings, Scan page: parallel workers, probe conversion, converter "
                 "fields, the classifier switch and the index widths.", d))
+    # 1.5.2: where subject labels come from, and the entities the sequence name decides.
+    from harness import Region
+    from PyQt6.QtWidgets import QGroupBox
+    combo = d._scan_subject_from
+    defaults = next(b for b in d.findChildren(QGroupBox) if b.isAncestorOf(combo))
+    # Only this box is in the picture: the boxes under it are hidden while the
+    # list is open, so the list does not sit on half-cut lines of their text.
+    below = [b for b in d.findChildren(QGroupBox)
+             if b is not defaults and b.isVisible() and b.parentWidget() is defaults.parentWidget()
+             and b.y() > defaults.y()]
+    for b in below:
+        b.hide()
+    H.pump(settle=20)
+    combo.showPopup()
+    H.pump(settle=40)
+    popup = combo.view().window()
+    x, y, w, h = H._rect_in(defaults, d)
+    px, py, pw, ph = H._global_rect_in(popup, d)
+    bottom = py + ph + 8
+    top = y - 2
+    H.take(Shot("l03-settings-subjects", "Settings, Scan page, Subject labels opened: numbers by default, or "
+                "the patient ID, the given name or the family name from the DICOM header.", d,
+                crop=(x - 12, top, w + 24, bottom - top), popups=[popup]))
+    combo.hidePopup()
+    for b in below:
+        b.show()
+    H.pump(settle=20)
+    box = next(b for b in d.findChildren(QGroupBox) if b.isAncestorOf(d._name_entities["acq"]))
+    _scroll_to_widget(d, box, pad=40)
+    H.take(Shot("l03-settings-name-entities", "Settings, Scan page, at the bottom: the entities whose value "
+                "the sequence name decides when the operator wrote it there, such as acq- or run-.", d,
+                crop_to=box, margin=12))
     d.show_page("Scan rules")
     H.pump(settle=20)
     H.take(Shot("l03-settings-rules", "Settings, Scan rules page: series to leave out, your own naming "
@@ -527,6 +569,34 @@ def metadata_properties():
                 win, crop_to=conv._properties_frame))
 
 
+def dummy_volumes():
+    """Chapter 7: a functional run's own number of dummy volumes, in Properties."""
+    win, conv = _converter("described")
+    layout(conv, props=380)
+    bold = _row(conv, bids_name="sub-001_ses-01_task-rest_bold")
+    # This run's own number, as typed in the field: its section opens with it.
+    conv.model().set_drop_volumes(bold, 4)
+    _properties(conv, bold)
+    p = conv._properties
+    spin = p.dummy_volumes_spin
+    from bidsmgr.gui.widgets.template_form import CollapsibleSection
+    from PyQt6.QtWidgets import QScrollArea
+    box = H.ancestor_of_type(spin, CollapsibleSection) if hasattr(H, "ancestor_of_type") else None
+    if box is None:
+        box = spin
+        while box is not None and not isinstance(box, CollapsibleSection):
+            box = box.parentWidget()
+    area = p.findChild(QScrollArea)
+    top = box.mapTo(area.widget(), box.rect().topLeft()).y()
+    area.verticalScrollBar().setValue(max(0, top - 52))
+    H.pump(settle=20)
+    from harness import Region
+    H.take(Shot("l07-dummy-volumes", "The Properties panel of the BOLD run, at Dummy volumes: 4 for this "
+                "run, where Default would take the number in Settings.",
+                win, crop_to=conv._properties_frame,
+                regions=[Region("dummy", "This run's dummy volumes", spin, anchor="r")]))
+
+
 # ------------------------------------------------- chapter 8: converting
 def converting_settings():
     win, conv = _converter("described")
@@ -546,6 +616,15 @@ def converting_settings():
     H.pump(settle=20)
     H.take(Shot("l08-settings-chain", "Settings, Convert page, further down: source data and the "
                 "post-convert chain that runs after every conversion.", d))
+    # 1.5.2: dummy volumes, and how a physiological log is written.
+    from harness import Region
+    _scroll_to_widget(d, d._convert_drop_volumes, pad=110)
+    H.take(Shot("l08-settings-physio", "Settings, Convert page: Dummy volumes to leave out at the start of "
+                "every functional run, how a physiological log is written, and cropping it to the run.", d,
+                regions=[Region("dummy", "Dummy volumes", d._convert_drop_volumes),
+                         Region("physio", "One table per rate, or one table for the run",
+                                d._convert_physio_layout),
+                         Region("crop", "Crop to the run", d._convert_physio_align)]))
     d.close()
 
 
@@ -570,6 +649,7 @@ def converted():
 GROUPS.update({
     "l07-metadata": metadata,
     "l07-properties": metadata_properties,
+    "l07-dummy": dummy_volumes,
     "l08-settings": converting_settings,
     "l08-converted": converted,
 })

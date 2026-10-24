@@ -68,7 +68,7 @@ os.environ["BIDSMGR_NO_UPDATE_CHECK"] = "1"
 
 FONT_SCALE = 1.15
 WINDOW = (1440, 900)
-EXPECTED_VERSION = "1.5.1"
+EXPECTED_VERSION = "1.5.2"
 
 WORK = Path("/private/tmp/bm_docs")
 STUDIES_REAL = WORK / "studies"

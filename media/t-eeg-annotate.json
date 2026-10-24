@@ -34,9 +34,9 @@
  },
  "alt": "Annotate on the EEG: a channel clicked bad, and a stretch of time marked as a bad segment, ready for Save to dataset.",
  "source": {
-  "bids_manager": "1.5.1",
-  "commit": "4f07b3e",
-  "date": "2026-10-20",
+  "bids_manager": "1.5.2",
+  "commit": "bd70a80+changes",
+  "date": "2026-10-23",
   "sample": "multimodal v2 (PhysioNet EEG, ODC-By 1.0)"
  }
 }

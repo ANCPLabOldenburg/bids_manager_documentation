@@ -11,20 +11,20 @@
  "files": {
   "dark": {
    "avif": {
-    "1440": "header-dark-1440-f2cb1320.avif",
-    "2880": "header-dark-2880-e0fe5490.avif"
+    "1440": "header-dark-1440-a15c74dd.avif",
+    "2880": "header-dark-2880-866c8474.avif"
    },
    "webp": {
-    "1440": "header-dark-1440-79a846c3.webp"
+    "1440": "header-dark-1440-63292280.webp"
    }
   },
   "light": {
    "avif": {
-    "1440": "header-light-1440-31dc0b5b.avif",
-    "2880": "header-light-2880-beb54a7e.avif"
+    "1440": "header-light-1440-0daeb3b9.avif",
+    "2880": "header-light-2880-f2a34158.avif"
    },
    "webp": {
-    "1440": "header-light-1440-089d6b87.webp"
+    "1440": "header-light-1440-7eeec709.webp"
    }
   }
  },
@@ -60,6 +60,16 @@
    "my": 0.49107
   },
   {
+   "key": "guide",
+   "label": "The guide: shows the next step",
+   "x": 0.86042,
+   "y": 0.16071,
+   "w": 0.07222,
+   "h": 0.67857,
+   "mx": 0.89653,
+   "my": 0.5
+  },
+  {
    "key": "settings",
    "label": "Settings",
    "x": 0.93681,
@@ -80,13 +90,13 @@
    "my": 0.5
   }
  ],
- "alt": "The header of the GUI with a project open: the logo, the Home, Converter and Editor views, the project switcher, Settings and the theme menu.",
+ "alt": "The header of the GUI with a project open: the logo, the Home, Converter and Editor views, the project switcher, the Guide switch, Settings and the theme menu.",
  "window": false,
  "title": "BIDS-Manager",
  "source": {
-  "bids_manager": "1.5.1",
-  "commit": "4f07b3e",
-  "date": "2026-10-20",
+  "bids_manager": "1.5.2",
+  "commit": "bd70a80+changes",
+  "date": "2026-10-23",
   "sample": "multimodal v2"
  }
 }

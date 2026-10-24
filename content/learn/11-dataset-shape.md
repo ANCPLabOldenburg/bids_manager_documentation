@@ -23,7 +23,7 @@ Click **Tools** in the Editor's toolbar.
 | Group | Tools |
 |---|---|
 | Look at the dataset | **Dashboard**, **Compare images...**, **Quality check...** |
-| Check and repair | **Check coherence...**, **Scans and sessions tables...**, **References (IntendedFor, Sources...)...**, **Fix ups...**, **Ignored files...** |
+| Check and repair | **Check coherence...**, **Scans and sessions tables...**, **Write sidecars from the recordings...**, **References (IntendedFor, Sources...)...**, **Fix ups...**, **Ignored files...** |
 | Names and structure | **Rename entity...**, **Find and replace a value...**, **Index widths...**, **Add or remove an entity...**, **Sessions...** |
 | Identifiable data | **Deface...**, **Remove the skull...**, **Compare with the original...**, **Put the face back...**, **Anonymise metadata...** |
 | Remove | **Delete...** |
@@ -92,8 +92,9 @@ Delete asks for confirmation before it removes anything, and keeps a copy of eve
 
 On the sample, after chapter 9 wrote the eye tracker's events file by hand, it finds one thing: that file has no row in the session's scans table, and the repair, ticked because it loses nothing, adds it. Nothing is changed until you click **Repair**, and each finding shows its exact change when selected. A dataset with problems of every kind, and what each repair does, is in [Keeping a dataset consistent](/guides/consistency/).
 
-## Two more
+## Three more
 
+- **Write sidecars from the recordings...** writes a sidecar that was lost, or adds what one lacks, from the data the recording was converted from, its header, your answers and the sidecars that link to it, never over a value already there. On the sample every sidecar is complete; [Writing sidecars from the recordings](/guides/sidecars/) deletes one and writes it again.
 - **Find and replace a value...** replaces one entity value everywhere it appears, within the whole dataset, a subject or a session.
 - **Index widths...** gives every index the same width: `run-1` and `run-01` are both valid, but a dataset should use one.
 

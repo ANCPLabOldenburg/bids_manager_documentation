@@ -11,21 +11,21 @@
  ],
  "files": {
   "dark": {
-   "mp4": "l13-qc-panel-dark-fb486464.mp4",
-   "webm": "l13-qc-panel-dark-b535c90d.webm",
-   "poster": "l13-qc-panel-dark-poster-d3c31f2a.webp"
+   "mp4": "l13-qc-panel-dark-084a976e.mp4",
+   "webm": "l13-qc-panel-dark-49562050.webm",
+   "poster": "l13-qc-panel-dark-poster-0f855f57.webp"
   },
   "light": {
-   "mp4": "l13-qc-panel-light-706ef707.mp4",
-   "webm": "l13-qc-panel-light-a8ae4edf.webm",
-   "poster": "l13-qc-panel-light-poster-0b01e986.webp"
+   "mp4": "l13-qc-panel-light-10a14545.mp4",
+   "webm": "l13-qc-panel-light-2f33bbac.webm",
+   "poster": "l13-qc-panel-light-poster-85187ecf.webp"
   }
  },
  "alt": "The quality check of the T1w docked beside the Planes + 3-D layout: ticking the grey matter, the white matter and the face region lays each over the planes and the rendering.",
  "source": {
-  "bids_manager": "1.5.1",
-  "commit": "4f07b3e",
-  "date": "2026-10-20",
+  "bids_manager": "1.5.2",
+  "commit": "bd70a80+changes",
+  "date": "2026-10-23",
   "sample": "multimodal v2 (OL_3844, consented)"
  }
 }

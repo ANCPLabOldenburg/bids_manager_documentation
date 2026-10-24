@@ -12,20 +12,20 @@
  "files": {
   "dark": {
    "mp4": "l14-deface-compare-dark-fb89f47e.mp4",
-   "webm": "l14-deface-compare-dark-6c248dcc.webm",
+   "webm": "l14-deface-compare-dark-1c7fced2.webm",
    "poster": "l14-deface-compare-dark-poster-6a551425.webp"
   },
   "light": {
    "mp4": "l14-deface-compare-light-07d77f32.mp4",
-   "webm": "l14-deface-compare-light-5140286d.webm",
+   "webm": "l14-deface-compare-light-94f207ec.webm",
    "poster": "l14-deface-compare-light-poster-e189fb0c.webp"
   }
  },
  "alt": "The T1w before and after defacing, in the Planes + 3-D layout, turning: the face is gone from the defaced image, the brain is not.",
  "source": {
-  "bids_manager": "1.5.1",
-  "commit": "4f07b3e",
-  "date": "2026-10-20",
+  "bids_manager": "1.5.2",
+  "commit": "bd70a80+changes",
+  "date": "2026-10-23",
   "sample": "multimodal v2 (OL_3844, consented)"
  }
 }

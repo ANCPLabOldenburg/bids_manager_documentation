@@ -427,6 +427,106 @@ def names():
                 win, crop=(x, y, w, 330), allow_elided=("QTreeWidget",), sample="MRI sample 1"))
 
 
+
+# ------------------------------------------------- sidecars from the recordings
+BOLD = f"{SUB}/func/sub-001_ses-01_task-rest_bold.nii.gz"
+
+
+def _sidecars_layout(d) -> None:
+    """The settings column as wide as its text needs at the 1.15 font
+    scale: dragged wider, as a reader would."""
+    from bidsmgr.gui.widgets.splitter import Splitter
+    outer = [sp for sp in d.findChildren(Splitter) if sp.parentWidget() is not None]
+    outer.sort(key=lambda sp: -sp.width())
+    sp = outer[0]
+    total = sum(sp.sizes())
+    sp.setSizes([470, total - 470])
+    H.pump(settle=30)
+
+
+def sidecars():
+    """The BOLD run's sidecar deleted by accident, written again from the
+    data it was converted from: the tree's entry and the dialog."""
+    root = H.restore("edited")
+    real = H.STUDIES_REAL / "multimodal_study"
+    (real / BOLD.replace(".nii.gz", ".json")).unlink()
+    # Taller than the Editor's usual window, so the whole right-click menu fits.
+    win = H.main_window("welcome", (SE.SIZE[0], 1240))
+    H.open_project(win, root, "editor")
+    ed = win.editor
+    H.pump(settle=40)
+    SE._expand(ed, 3)
+
+    def take_menu(w, menu, sub):
+        H.take(Shot("g-sidecars-menu", "The BIDS tree's right-click on the BOLD run, whose sidecar is missing: "
+                    "Write its sidecar from the recording...", w, crop=_menu_crop(w, [menu]),
+                    popups=[menu], allow_elided=("QTreeWidget",)))
+    _context_menu(ed, [Path(root) / BOLD], take_menu)
+    from bidsmgr.gui.sidecars_dialog import SidecarsDialog
+    d = SE._show(SidecarsDialog(root, [Path(root) / BOLD], ed), (1500, 900))
+    _sidecars_layout(d)
+    H.pump(lambda: not d._planning and d.plan() is not None, timeout=180, settle=40)
+    H.wait(0.6)
+    H.pump(settle=30)
+    H.take(Shot("g-sidecars-dialog", "Sidecars from the recordings for the BOLD run: read from the data it was "
+                "converted from, every field with where it was read, and what is left to the sidecars above "
+                "it.", d, allow_elided=("QTreeWidget", "QTreeView", "QListView", "FieldList")))
+    SE._close(d)
+    # The whole dataset, every sidecar there: Also add to existing.
+    d = SE._show(SidecarsDialog(root, None, ed, complete=True), (1500, 900))
+    _sidecars_layout(d)
+    H.pump(lambda: not d._planning and d.plan() is not None, timeout=300, settle=40)
+    H.wait(0.6)
+    H.pump(settle=30)
+    H.take(Shot("g-sidecars-complete", "The whole dataset with Also add to existing: every other sidecar "
+                "already holds what its recording says (none to add), and the BOLD run's, deleted, is new.", d,
+                allow_elided=("QTreeWidget", "QTreeView", "QListView", "FieldList")))
+    SE._close(d)
+
+
+# ------------------------------------------- defacing and skull stripping derivatives
+DERIV_T1 = "derivatives/fmriprep/sub-001/ses-01/anat/sub-001_ses-01_acq-tfl3p2_desc-preproc_T1w.nii.gz"
+
+
+def deface_derivatives():
+    """A pipeline's preprocessed T1w in derivatives/: offered to Remove the
+    skull with Include derivatives, and where the result goes."""
+    import shutil
+    root = H.restore("edited")
+    real = H.STUDIES_REAL / "multimodal_study"
+    pipe = real / "derivatives" / "fmriprep"
+    (pipe / Path(DERIV_T1).parent.relative_to("derivatives/fmriprep")).mkdir(parents=True, exist_ok=True)
+    (pipe / "dataset_description.json").write_text(json.dumps({
+        "Name": "fMRIPrep outputs", "BIDSVersion": "1.10.0", "DatasetType": "derivative",
+        "GeneratedBy": [{"Name": "fMRIPrep", "Version": "24.1.1"}]}, indent=2))
+    src = real / "sub-001/ses-01/anat/sub-001_ses-01_acq-tfl3p2_T1w.nii.gz"
+    shutil.copyfile(src, real / DERIV_T1)
+    win = H.main_window("welcome", SE.SIZE)
+    H.open_project(win, root, "editor")
+    ed = win.editor
+    H.pump(settle=40)
+    from bidsmgr.deface.engines import KIND_STRIP
+    from bidsmgr.gui.deface_dialog import DefaceDialog
+    d = SE._show(DefaceDialog(root, None, ed, kind=KIND_STRIP), (1240, 820))
+    d._derivatives.setChecked(True)
+    H.pump(settle=60)
+    H.wait(1.0)
+    H.pump(settle=30)
+    from PyQt6.QtWidgets import QTreeWidget
+    tree = d._preview if isinstance(d._preview, QTreeWidget) else None
+    if tree is not None:
+        tree.expandAll()
+        for i in range(tree.topLevelItemCount()):
+            item = tree.topLevelItem(i)
+            if item.text(0).startswith("Cannot be done"):
+                item.setExpanded(False)
+        H.pump(settle=20)
+    H.take(Shot("g-strip-derivatives", "Remove the skull, with Include derivatives ticked: the raw T1w, FLAIR "
+                "and PET, and fMRIPrep's preprocessed T1w, whose brain-only version is written as "
+                "desc-preprocbrain; every result goes to derivatives/bidsmgr-skullstrip.", d,
+                allow_elided=("QTreeWidget",)))
+    SE._close(d)
+
 GROUPS = {
     "g-anonymise": anonymise,
     "g-anonymise-scope": anonymise_scope,
@@ -436,3 +536,5 @@ GROUPS = {
     "l03-leave-out": leave_out,
     "g-names": names,
 }
+
+GROUPS.update({"g-sidecars": sidecars, "g-strip-derivatives": deface_derivatives})

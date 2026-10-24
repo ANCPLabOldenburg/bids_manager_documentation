@@ -1,0 +1,72 @@
+{
+ "id": "l08-settings-physio",
+ "kind": "figure",
+ "width": 900,
+ "height": 760,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "900": "l08-settings-physio-dark-900-1262017f.avif",
+    "1800": "l08-settings-physio-dark-1800-b68262fb.avif"
+   },
+   "webp": {
+    "900": "l08-settings-physio-dark-900-23f2dd4d.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "900": "l08-settings-physio-light-900-212dba45.avif",
+    "1800": "l08-settings-physio-light-1800-3cb3ef8f.avif"
+   },
+   "webp": {
+    "900": "l08-settings-physio-light-900-fdb5941f.webp"
+   }
+  }
+ },
+ "regions": [
+  {
+   "key": "dummy",
+   "label": "Dummy volumes",
+   "x": 0.41556,
+   "y": 0.23421,
+   "w": 0.52556,
+   "h": 0.05132,
+   "mx": 0.41778,
+   "my": 0.23684
+  },
+  {
+   "key": "physio",
+   "label": "One table per rate, or one table for the run",
+   "x": 0.41556,
+   "y": 0.28553,
+   "w": 0.52556,
+   "h": 0.04474,
+   "mx": 0.41778,
+   "my": 0.28816
+  },
+  {
+   "key": "crop",
+   "label": "Crop to the run",
+   "x": 0.41556,
+   "y": 0.33026,
+   "w": 0.52556,
+   "h": 0.02895,
+   "mx": 0.41778,
+   "my": 0.33289
+  }
+ ],
+ "alt": "Settings, Convert page: Dummy volumes to leave out at the start of every functional run, how a physiological log is written, and cropping it to the run.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.2",
+  "commit": "bd70a80+changes",
+  "date": "2026-10-23",
+  "sample": "multimodal v2"
+ }
+}

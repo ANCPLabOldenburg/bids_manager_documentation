@@ -319,7 +319,7 @@ $ bidsmgr
 | MRI, MR spectroscopy and PET DICOM to NIfTI | dcm2niix, program included |
 | EEG and MEG | MNE-BIDS, over MNE-Python |
 | PET ECAT images, PET metadata and blood data | nibabel and PET2BIDS |
-| MRI physiological recordings | bidsphysio, built in |
+| MRI physiological recordings | BIDS Manager's own reader of Siemens CMRR logs, built in |
 | Eye tracking | eyelinkio |
 | Defacing, skull stripping, quality-check registration | niimath, program included (Python 3.10 to 3.13) |
 | Brain masks and tissue classes | brainchop (mindgrab, robust_tissue); its networks, about 1.5 MB, are downloaded the first time they are used |

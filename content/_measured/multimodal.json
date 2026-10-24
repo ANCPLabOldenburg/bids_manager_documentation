@@ -1,8 +1,8 @@
 {
  "source": {
-  "bids_manager": "1.5.1",
-  "commit": "4f07b3e",
-  "date": "2026-10-20"
+  "bids_manager": "1.5.2",
+  "commit": "bd70a80",
+  "date": "2026-10-23"
  },
  "scan": {
   "rows": 19,
@@ -59,10 +59,10 @@
   },
   "rows": 19,
   "included": 15,
-  "files": 66,
+  "files": 64,
   "validation": {
-   "ok": 26,
-   "warn": 114,
+   "ok": 25,
+   "warn": 113,
    "err": 3
   }
  },
@@ -72,40 +72,40 @@
  },
  "fixed": {
   "validation": {
-   "ok": 29,
-   "warn": 121,
+   "ok": 28,
+   "warn": 120,
    "err": 0
   }
  },
  "edited": {
   "validation": {
-   "ok": 29,
-   "warn": 119,
+   "ok": 28,
+   "warn": 118,
    "err": 0
   }
  },
  "cli": {
-  "project_convert_files": 66,
+  "project_convert_files": 64,
   "project_validation": {
-   "ok": 26,
-   "warn": 114,
+   "ok": 25,
+   "warn": 113,
    "err": 3
   },
   "without_fill_todos": {
-   "ok": 25,
-   "warn": 117,
+   "ok": 24,
+   "warn": 116,
    "err": 4
   },
   "todo_inserted": 63,
   "todo_files": 7,
-  "convert_seconds": 5.1
+  "convert_seconds": 5.2
  },
  "quick_start": {
   "rc": 0,
-  "files": 66,
+  "files": 64,
   "validation": {
-   "ok": 26,
-   "warn": 116,
+   "ok": 25,
+   "warn": 115,
    "err": 3
   },
   "names": [
@@ -127,5 +127,33 @@
   ],
   "seconds": 14.1,
   "errors": []
+ },
+ "sidecars": {
+  "source": {
+   "deleted": 22,
+   "before": {
+    "ok": 17,
+    "warn": 425,
+    "err": 86
+   },
+   "after": {
+    "ok": 27,
+    "warn": 130,
+    "err": 2
+   }
+  },
+  "headers": {
+   "deleted": 22,
+   "before": {
+    "ok": 17,
+    "warn": 425,
+    "err": 86
+   },
+   "after": {
+    "ok": 24,
+    "warn": 359,
+    "err": 49
+   }
+  }
  }
 }

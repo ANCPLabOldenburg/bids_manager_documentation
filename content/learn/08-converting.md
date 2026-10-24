@@ -23,7 +23,23 @@ The conversion follows **Settings** > **Convert**. The defaults suit the course;
 | **Residuals** | **Skip residual volumes**: dcm2niix sometimes writes extra copies of a series beside the real one; they are dropped. |
 | **Fieldmap links** | How a fieldmap's `IntendedFor` names the runs it corrects: BIDS URIs (`bids::sub-01/...`) or paths from the subject. With **Also write B0FieldIdentifier and B0FieldSource**, the newer pairing is written too. [Fieldmap links and fMRIPrep](/concepts/fieldmap-links/) says which each fMRIPrep version reads. |
 | **Force EDF** | **Re-encode EEG to EDF** instead of keeping the source format. |
+| **Dummy volumes** | How many volumes to leave out at the start of every functional run, while the signal is not yet steady. **None** by default. A run's own number in **Properties** wins (below). |
+| **Physiology** | How a Siemens physiological log is written. **One table per sampling rate, as recorded** (the default), or one table for the run at the fastest rate, the slower channels either **interpolated** or **as recorded** with `n/a` between their samples. All three are valid BIDS. **Crop to the run** keeps only the samples recorded while the run was acquired. |
 | **Deface** | **Remove faces from anatomical and PET images** before the subject is written, with the engine you choose. Chapter 14 covers defacing after conversion instead. |
+
+{{ figure("l08-settings-physio", "Settings, Convert page: Dummy volumes and Physiology.") }}
+
+A run can have its own number of dummy volumes: select its row in the scan table and set **Dummy volumes** in **Properties**. **Default** takes the number in Settings; `0` keeps every volume of this run whatever the default. The conversion then removes those volumes from the image, records how many in the sidecar (`NumberOfVolumesDiscardedByUser`), moves the run's events by the time they took, and starts its physiology at the first volume kept. The course leaves every volume in.
+
+:::: columns
+{{ figure("l07-dummy-volumes", "Properties of the BOLD run: 4 dummy volumes for this run.") }}
+
+<div class="col-text">
+
+The section says whether the number is the default or the run's own, and how many volumes the run has (here 60). The scan table's `drop_volumes` column holds the same number, so a script can set it too (`bidsmgr-convert --drop-volumes N` sets the default).
+
+</div>
+::::
 
 Further down, **Source data** and the **Post-convert chain**:
 
@@ -92,7 +108,7 @@ The conversion log in `.bidsmgr/logs/` has the details. For the sample, it shows
 
 - renamed dcm2niix's pieces of the fieldmap to `magnitude1`, `magnitude2` and `phasediff`;
 - linked the phase-difference fieldmap to the BOLD run, and the reversed-phase diffusion reference to the diffusion run, with `IntendedFor` and a shared `B0FieldIdentifier`;
-- split the physiology log into one `_physio.tsv.gz` per signal (cardiac, ECG, respiratory, trigger), and both eyes of the eye tracker into their own files;
+- wrote the BOLD run's physiological log as one `_physio.tsv.gz` per sampling rate: the four ECG leads at 400 Hz (`_recording-ecg_`), the pulse at 200 Hz (`_recording-cardiac_`) and the breathing at 50 Hz (`_recording-respiratory_`), each with the scanner trigger as its last column, 1 at the start of every volume; and both eyes of the eye tracker into their own files;
 - wrote the PET fields the DICOM header holds but dcm2niix does not copy, and the dose sheet's fields;
 - removed seven identifying fields (the participant's name, ID, birth date, age, sex, size and weight) from every MRI sidecar, and six from the header inside each spectroscopy file.
 

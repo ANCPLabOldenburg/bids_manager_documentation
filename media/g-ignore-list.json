@@ -11,20 +11,20 @@
  "files": {
   "dark": {
    "avif": {
-    "888": "g-ignore-list-dark-888-88989482.avif",
-    "1776": "g-ignore-list-dark-1776-af34daec.avif"
+    "888": "g-ignore-list-dark-888-f2cd6095.avif",
+    "1776": "g-ignore-list-dark-1776-307b332f.avif"
    },
    "webp": {
-    "888": "g-ignore-list-dark-888-f17de7c0.webp"
+    "888": "g-ignore-list-dark-888-87fe4b7b.webp"
    }
   },
   "light": {
    "avif": {
-    "888": "g-ignore-list-light-888-0d58af5b.avif",
-    "1776": "g-ignore-list-light-1776-2e79697e.avif"
+    "888": "g-ignore-list-light-888-b8499d75.avif",
+    "1776": "g-ignore-list-light-1776-d8040881.avif"
    },
    "webp": {
-    "888": "g-ignore-list-light-888-d0633c8d.webp"
+    "888": "g-ignore-list-light-888-c35f425e.webp"
    }
   }
  },
@@ -33,9 +33,9 @@
  "window": false,
  "title": "BIDS-Manager",
  "source": {
-  "bids_manager": "1.5.1",
-  "commit": "4f07b3e",
-  "date": "2026-10-20",
+  "bids_manager": "1.5.2",
+  "commit": "bd70a80+changes",
+  "date": "2026-10-23",
   "sample": "MRI sample 1"
  }
 }

@@ -11,20 +11,20 @@
  "files": {
   "dark": {
    "avif": {
-    "320": "l09-tree-badges-dark-320-96ec27c9.avif",
-    "640": "l09-tree-badges-dark-640-97567dd6.avif"
+    "320": "l09-tree-badges-dark-320-63dacc38.avif",
+    "640": "l09-tree-badges-dark-640-1a2456fb.avif"
    },
    "webp": {
-    "320": "l09-tree-badges-dark-320-16514341.webp"
+    "320": "l09-tree-badges-dark-320-755307b6.webp"
    }
   },
   "light": {
    "avif": {
-    "320": "l09-tree-badges-light-320-231f3995.avif",
-    "640": "l09-tree-badges-light-640-6fe2fb3b.avif"
+    "320": "l09-tree-badges-light-320-378e65d5.avif",
+    "640": "l09-tree-badges-light-640-b7e9de31.avif"
    },
    "webp": {
-    "320": "l09-tree-badges-light-320-4025c4a2.webp"
+    "320": "l09-tree-badges-light-320-eec9f3b3.webp"
    }
   }
  },
@@ -33,9 +33,9 @@
  "window": false,
  "title": "BIDS-Manager",
  "source": {
-  "bids_manager": "1.5.1",
-  "commit": "4f07b3e",
-  "date": "2026-10-20",
+  "bids_manager": "1.5.2",
+  "commit": "bd70a80+changes",
+  "date": "2026-10-23",
   "sample": "multimodal v2"
  }
 }

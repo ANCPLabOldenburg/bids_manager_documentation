@@ -5,135 +5,136 @@
    "files": {
     "dark": {
      "avif": {
-      "1600": "converter-map-dark-1600-3d61d02f.avif",
-      "3200": "converter-map-dark-3200-a49c6086.avif"
+      "1600": "converter-map-dark-1600-ffe29919.avif",
+      "3200": "converter-map-dark-3200-d2ffca14.avif"
      },
      "webp": {
-      "1600": "converter-map-dark-1600-604a55db.webp"
+      "1600": "converter-map-dark-1600-336dcf15.webp"
      }
     },
     "light": {
      "avif": {
-      "1600": "converter-map-light-1600-91c092aa.avif",
-      "3200": "converter-map-light-3200-9808be92.avif"
+      "1600": "converter-map-light-1600-d5c5127d.avif",
+      "3200": "converter-map-light-3200-0c748b33.avif"
      },
      "webp": {
-      "1600": "converter-map-light-1600-8c75c43a.webp"
+      "1600": "converter-map-light-1600-6da7dd26.webp"
      }
     }
    },
-   "bytes": 471771,
+   "bytes": 474873,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "header": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1440": "header-dark-1440-f2cb1320.avif",
-      "2880": "header-dark-2880-e0fe5490.avif"
+      "1440": "header-dark-1440-a15c74dd.avif",
+      "2880": "header-dark-2880-866c8474.avif"
      },
      "webp": {
-      "1440": "header-dark-1440-79a846c3.webp"
+      "1440": "header-dark-1440-63292280.webp"
      }
     },
     "light": {
      "avif": {
-      "1440": "header-light-1440-31dc0b5b.avif",
-      "2880": "header-light-2880-beb54a7e.avif"
+      "1440": "header-light-1440-0daeb3b9.avif",
+      "2880": "header-light-2880-f2a34158.avif"
      },
      "webp": {
-      "1440": "header-light-1440-089d6b87.webp"
+      "1440": "header-light-1440-7eeec709.webp"
      }
     }
    },
-   "bytes": 28658,
+   "bytes": 32030,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "window-home": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1440": "window-home-dark-1440-cc878e65.avif",
-      "2880": "window-home-dark-2880-5dd76949.avif"
+      "1440": "window-home-dark-1440-54d566ef.avif",
+      "2880": "window-home-dark-2880-c47a6482.avif"
      },
      "webp": {
-      "1440": "window-home-dark-1440-02134ae4.webp"
+      "1440": "window-home-dark-1440-e772f284.webp"
      }
     },
     "light": {
      "avif": {
-      "1440": "window-home-light-1440-9cf3790a.avif",
-      "2880": "window-home-light-2880-0777b8a3.avif"
+      "1440": "window-home-light-1440-c887a742.avif",
+      "2880": "window-home-light-2880-1c0df76a.avif"
      },
      "webp": {
-      "1440": "window-home-light-1440-e5a8851d.webp"
+      "1440": "window-home-light-1440-6876b1e8.webp"
      }
     }
    },
-   "bytes": 316161,
+   "bytes": 314896,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l03-scan": {
    "kind": "clip",
    "files": {
     "dark": {
-     "mp4": "l03-scan-dark-b8bfee4b.mp4",
-     "poster": "l03-scan-dark-poster-67ade37e.webp"
+     "mp4": "l03-scan-dark-ba852066.mp4",
+     "webm": "l03-scan-dark-edad68d1.webm",
+     "poster": "l03-scan-dark-poster-ee9e8e2a.webp"
     },
     "light": {
-     "mp4": "l03-scan-light-cd4d1d17.mp4",
-     "poster": "l03-scan-light-poster-2018b7f8.webp"
+     "mp4": "l03-scan-light-955a10b8.mp4",
+     "poster": "l03-scan-light-poster-470270cd.webp"
     }
    },
-   "bytes": 1476297,
+   "bytes": 2012785,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l04-bulk-subject": {
    "kind": "clip",
    "files": {
     "dark": {
-     "mp4": "l04-bulk-subject-dark-1df9723c.mp4",
-     "poster": "l04-bulk-subject-dark-poster-2d948ee6.webp"
+     "mp4": "l04-bulk-subject-dark-22b1192e.mp4",
+     "poster": "l04-bulk-subject-dark-poster-136af16d.webp"
     },
     "light": {
-     "mp4": "l04-bulk-subject-light-8f89da79.mp4",
-     "poster": "l04-bulk-subject-light-poster-0af31740.webp"
+     "mp4": "l04-bulk-subject-light-a673d4b1.mp4",
+     "poster": "l04-bulk-subject-light-poster-b15a67e4.webp"
     }
    },
-   "bytes": 1705601,
+   "bytes": 1713419,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "settings-display": {
    "kind": "still",
@@ -159,43 +160,43 @@
    },
    "bytes": 220488,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "theme-menu": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "199": "theme-menu-dark-199-4147301f.avif",
-      "398": "theme-menu-dark-398-340182c9.avif"
+      "199": "theme-menu-dark-199-469a24c9.avif",
+      "398": "theme-menu-dark-398-cfa35cb2.avif"
      },
      "webp": {
-      "199": "theme-menu-dark-199-88c6dd21.webp"
+      "199": "theme-menu-dark-199-d1f5fec4.webp"
      }
     },
     "light": {
      "avif": {
-      "199": "theme-menu-light-199-bc8e236d.avif",
-      "398": "theme-menu-light-398-e73428eb.avif"
+      "199": "theme-menu-light-199-9732a06a.avif",
+      "398": "theme-menu-light-398-7934bf8e.avif"
      },
      "webp": {
-      "199": "theme-menu-light-199-044cf46e.webp"
+      "199": "theme-menu-light-199-d98e0956.webp"
      }
     }
    },
-   "bytes": 67882,
+   "bytes": 71154,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "settings-bids-version": {
    "kind": "still",
@@ -221,12 +222,12 @@
    },
    "bytes": 140986,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "settings-classification": {
    "kind": "still",
@@ -252,12 +253,12 @@
    },
    "bytes": 221104,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "settings-shortcuts": {
    "kind": "still",
@@ -283,12 +284,12 @@
    },
    "bytes": 194378,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "settings-system": {
    "kind": "still",
@@ -314,12 +315,12 @@
    },
    "bytes": 130089,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "settings-validation": {
    "kind": "still",
@@ -345,12 +346,12 @@
    },
    "bytes": 151289,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "settings-viewer": {
    "kind": "still",
@@ -376,167 +377,167 @@
    },
    "bytes": 164407,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "home-convert": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1600": "home-convert-dark-1600-4e460361.avif",
-      "3200": "home-convert-dark-3200-b97e2d1e.avif"
+      "1600": "home-convert-dark-1600-b73436f6.avif",
+      "3200": "home-convert-dark-3200-7e57f2dc.avif"
      },
      "webp": {
-      "1600": "home-convert-dark-1600-a05e1749.webp"
+      "1600": "home-convert-dark-1600-2a4bf761.webp"
      }
     },
     "light": {
      "avif": {
-      "1600": "home-convert-light-1600-7f637b02.avif",
-      "3200": "home-convert-light-3200-ef51e910.avif"
+      "1600": "home-convert-light-1600-64911f82.avif",
+      "3200": "home-convert-light-3200-4e856e63.avif"
      },
      "webp": {
-      "1600": "home-convert-light-1600-94544974.webp"
+      "1600": "home-convert-light-1600-d160a067.webp"
      }
     }
    },
-   "bytes": 510985,
+   "bytes": 515348,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "home-curate": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1600": "home-curate-dark-1600-faae446e.avif",
-      "3200": "home-curate-dark-3200-931d1b13.avif"
+      "1600": "home-curate-dark-1600-c3c82fc2.avif",
+      "3200": "home-curate-dark-3200-f17cb721.avif"
      },
      "webp": {
-      "1600": "home-curate-dark-1600-f5daa28f.webp"
+      "1600": "home-curate-dark-1600-f4d02f90.webp"
      }
     },
     "light": {
      "avif": {
-      "1600": "home-curate-light-1600-e9454b81.avif",
-      "3200": "home-curate-light-3200-b18dd613.avif"
+      "1600": "home-curate-light-1600-d60b03b6.avif",
+      "3200": "home-curate-light-3200-8f69064c.avif"
      },
      "webp": {
-      "1600": "home-curate-light-1600-e485a781.webp"
+      "1600": "home-curate-light-1600-28ad0030.webp"
      }
     }
    },
-   "bytes": 416511,
+   "bytes": 419708,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "home-editor": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1600": "home-editor-dark-1600-e515d54e.avif",
-      "3200": "home-editor-dark-3200-a5f6da23.avif"
+      "1600": "home-editor-dark-1600-1fe65900.avif",
+      "3200": "home-editor-dark-3200-e52da3f7.avif"
      },
      "webp": {
-      "1600": "home-editor-dark-1600-a8e333a8.webp"
+      "1600": "home-editor-dark-1600-733afe37.webp"
      }
     },
     "light": {
      "avif": {
-      "1600": "home-editor-light-1600-9d4b5c51.avif",
-      "3200": "home-editor-light-3200-504bcde6.avif"
+      "1600": "home-editor-light-1600-075f7d80.avif",
+      "3200": "home-editor-light-3200-a324885b.avif"
      },
      "webp": {
-      "1600": "home-editor-light-1600-cab53dc0.webp"
+      "1600": "home-editor-light-1600-788b1560.webp"
      }
     }
    },
-   "bytes": 601486,
+   "bytes": 605355,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2 (OL_3844, consented)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "home-scan": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1600": "home-scan-dark-1600-3234fb32.avif",
-      "3200": "home-scan-dark-3200-c7669031.avif"
+      "1600": "home-scan-dark-1600-89ef66c1.avif",
+      "3200": "home-scan-dark-3200-c145b524.avif"
      },
      "webp": {
-      "1600": "home-scan-dark-1600-b0c18844.webp"
+      "1600": "home-scan-dark-1600-fa44cd65.webp"
      }
     },
     "light": {
      "avif": {
-      "1600": "home-scan-light-1600-086a3587.avif",
-      "3200": "home-scan-light-3200-ffe6a6f8.avif"
+      "1600": "home-scan-light-1600-ef4ae981.avif",
+      "3200": "home-scan-light-3200-f3193069.avif"
      },
      "webp": {
-      "1600": "home-scan-light-1600-ab703eca.webp"
+      "1600": "home-scan-light-1600-5704c09b.webp"
      }
     }
    },
-   "bytes": 515110,
+   "bytes": 518293,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l02-after-create": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1440": "l02-after-create-dark-1440-b5645e0e.avif",
-      "2880": "l02-after-create-dark-2880-dd6562b3.avif"
+      "1440": "l02-after-create-dark-1440-a9ec0bbb.avif",
+      "2880": "l02-after-create-dark-2880-43f5f67a.avif"
      },
      "webp": {
-      "1440": "l02-after-create-dark-1440-ab05a405.webp"
+      "1440": "l02-after-create-dark-1440-07afb70b.webp"
      }
     },
     "light": {
      "avif": {
-      "1440": "l02-after-create-light-1440-05330a01.avif",
-      "2880": "l02-after-create-light-2880-655ec7e7.avif"
+      "1440": "l02-after-create-light-1440-5726cf81.avif",
+      "2880": "l02-after-create-light-2880-0437370b.avif"
      },
      "webp": {
-      "1440": "l02-after-create-light-1440-bf70be9d.webp"
+      "1440": "l02-after-create-light-1440-739b56b2.webp"
      }
     }
    },
-   "bytes": 200847,
+   "bytes": 204400,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l02-create": {
    "kind": "still",
@@ -562,12 +563,12 @@
    },
    "bytes": 50998,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l02-switcher": {
    "kind": "still",
@@ -593,43 +594,43 @@
    },
    "bytes": 107822,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l03-after-scan": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1600": "l03-after-scan-dark-1600-10f8c096.avif",
-      "3200": "l03-after-scan-dark-3200-359e36c3.avif"
+      "1600": "l03-after-scan-dark-1600-82ca6661.avif",
+      "3200": "l03-after-scan-dark-3200-086e5421.avif"
      },
      "webp": {
-      "1600": "l03-after-scan-dark-1600-e249e8cd.webp"
+      "1600": "l03-after-scan-dark-1600-fbfdbea8.webp"
      }
     },
     "light": {
      "avif": {
-      "1600": "l03-after-scan-light-1600-3aa87a42.avif",
-      "3200": "l03-after-scan-light-3200-ce010666.avif"
+      "1600": "l03-after-scan-light-1600-1bba7270.avif",
+      "3200": "l03-after-scan-light-3200-95929a9a.avif"
      },
      "webp": {
-      "1600": "l03-after-scan-light-1600-d8bf69a6.webp"
+      "1600": "l03-after-scan-light-1600-8e8942f2.webp"
      }
     }
    },
-   "bytes": 584602,
+   "bytes": 587484,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l03-chips": {
    "kind": "still",
@@ -655,43 +656,43 @@
    },
    "bytes": 31922,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l03-log": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1584": "l03-log-dark-1584-332a1edc.avif",
-      "3168": "l03-log-dark-3168-016522bb.avif"
+      "1584": "l03-log-dark-1584-ca63f624.avif",
+      "3168": "l03-log-dark-3168-0a3523b1.avif"
      },
      "webp": {
-      "1584": "l03-log-dark-1584-bc0d4227.webp"
+      "1584": "l03-log-dark-1584-ed21e279.webp"
      }
     },
     "light": {
      "avif": {
-      "1584": "l03-log-light-1584-9315ea38.avif",
-      "3168": "l03-log-light-3168-2d634aab.avif"
+      "1584": "l03-log-light-1584-e7bc9897.avif",
+      "3168": "l03-log-light-3168-c2c33665.avif"
      },
      "webp": {
-      "1584": "l03-log-light-1584-e189a0ef.webp"
+      "1584": "l03-log-light-1584-d8ebe24a.webp"
      }
     }
    },
-   "bytes": 115523,
+   "bytes": 115743,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l03-raw-bar": {
    "kind": "still",
@@ -717,12 +718,12 @@
    },
    "bytes": 56151,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l03-raw-tree": {
    "kind": "still",
@@ -748,12 +749,12 @@
    },
    "bytes": 48579,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l03-settings-rules": {
    "kind": "still",
@@ -779,43 +780,43 @@
    },
    "bytes": 210282,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l03-settings-scan": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1040": "l03-settings-scan-dark-1040-447385f8.avif",
-      "2080": "l03-settings-scan-dark-2080-e1edf62b.avif"
+      "1040": "l03-settings-scan-dark-1040-b8d56f67.avif",
+      "2080": "l03-settings-scan-dark-2080-ac3929b7.avif"
      },
      "webp": {
-      "1040": "l03-settings-scan-dark-1040-24aa92a6.webp"
+      "1040": "l03-settings-scan-dark-1040-0f9d316b.webp"
      }
     },
     "light": {
      "avif": {
-      "1040": "l03-settings-scan-light-1040-4bf36b96.avif",
-      "2080": "l03-settings-scan-light-2080-1c805e83.avif"
+      "1040": "l03-settings-scan-light-1040-e5af3ceb.avif",
+      "2080": "l03-settings-scan-light-2080-63243e20.avif"
      },
      "webp": {
-      "1040": "l03-settings-scan-light-1040-a52e68b9.webp"
+      "1040": "l03-settings-scan-light-1040-15a0b7fd.webp"
      }
     }
    },
-   "bytes": 313091,
+   "bytes": 304335,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l03-skipped": {
    "kind": "still",
@@ -841,12 +842,12 @@
    },
    "bytes": 144792,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l03-warnings": {
    "kind": "still",
@@ -872,12 +873,12 @@
    },
    "bytes": 201412,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l04-bulk-dialog": {
    "kind": "still",
@@ -903,43 +904,43 @@
    },
    "bytes": 157479,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l04-columns": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "600": "l04-columns-dark-600-8e40f547.avif",
-      "1200": "l04-columns-dark-1200-0ff94324.avif"
+      "600": "l04-columns-dark-600-037c1907.avif",
+      "1200": "l04-columns-dark-1200-de507be1.avif"
      },
      "webp": {
-      "600": "l04-columns-dark-600-76b4ca47.webp"
+      "600": "l04-columns-dark-600-093201e4.webp"
      }
     },
     "light": {
      "avif": {
-      "600": "l04-columns-light-600-9be77313.avif",
-      "1200": "l04-columns-light-1200-2448bec8.avif"
+      "600": "l04-columns-light-600-06a957f0.avif",
+      "1200": "l04-columns-light-1200-cf9f6ab3.avif"
      },
      "webp": {
-      "600": "l04-columns-light-600-1466a3ac.webp"
+      "600": "l04-columns-light-600-7500065f.webp"
      }
     }
    },
-   "bytes": 209316,
+   "bytes": 209324,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l04-edit-cell": {
    "kind": "still",
@@ -965,12 +966,12 @@
    },
    "bytes": 117144,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l04-table-after": {
    "kind": "still",
@@ -996,12 +997,12 @@
    },
    "bytes": 228764,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l04-table": {
    "kind": "still",
@@ -1027,12 +1028,12 @@
    },
    "bytes": 230876,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l05-dicom": {
    "kind": "still",
@@ -1058,12 +1059,12 @@
    },
    "bytes": 244760,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l05-mrsref": {
    "kind": "still",
@@ -1089,12 +1090,12 @@
    },
    "bytes": 44951,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l05-preview": {
    "kind": "still",
@@ -1120,12 +1121,12 @@
    },
    "bytes": 315381,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2 (OL_3844, consented)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l05-properties": {
    "kind": "still",
@@ -1151,12 +1152,12 @@
    },
    "bytes": 47910,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l05-row-menu": {
    "kind": "still",
@@ -1182,12 +1183,12 @@
    },
    "bytes": 255761,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l05-why": {
    "kind": "still",
@@ -1213,12 +1214,12 @@
    },
    "bytes": 128906,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l06-overview-after": {
    "kind": "still",
@@ -1244,12 +1245,12 @@
    },
    "bytes": 152587,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l06-overview-before": {
    "kind": "still",
@@ -1275,12 +1276,12 @@
    },
    "bytes": 172989,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l06-preview-json": {
    "kind": "still",
@@ -1306,12 +1307,12 @@
    },
    "bytes": 132367,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l06-recordings": {
    "kind": "still",
@@ -1337,12 +1338,12 @@
    },
    "bytes": 81804,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l06-structure": {
    "kind": "still",
@@ -1368,12 +1369,12 @@
    },
    "bytes": 87873,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l07-description": {
    "kind": "still",
@@ -1399,12 +1400,12 @@
    },
    "bytes": 176676,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l07-dialog": {
    "kind": "still",
@@ -1430,12 +1431,12 @@
    },
    "bytes": 175029,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l07-pet-dose": {
    "kind": "still",
@@ -1461,12 +1462,12 @@
    },
    "bytes": 276703,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l07-properties-minimal": {
    "kind": "still",
@@ -1492,12 +1493,12 @@
    },
    "bytes": 85481,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l07-template-bold": {
    "kind": "still",
@@ -1523,12 +1524,12 @@
    },
    "bytes": 203542,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l08-output-tree": {
    "kind": "still",
@@ -1554,167 +1555,167 @@
    },
    "bytes": 71349,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l08-settings-chain": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "900": "l08-settings-chain-dark-900-c9b78d0b.avif",
-      "1800": "l08-settings-chain-dark-1800-1afce971.avif"
+      "900": "l08-settings-chain-dark-900-1a1b7514.avif",
+      "1800": "l08-settings-chain-dark-1800-99effda0.avif"
      },
      "webp": {
-      "900": "l08-settings-chain-dark-900-eebf5e08.webp"
+      "900": "l08-settings-chain-dark-900-3946607e.webp"
      }
     },
     "light": {
      "avif": {
-      "900": "l08-settings-chain-light-900-be416a62.avif",
-      "1800": "l08-settings-chain-light-1800-9235e8ac.avif"
+      "900": "l08-settings-chain-light-900-f2931b37.avif",
+      "1800": "l08-settings-chain-light-1800-e19b17eb.avif"
      },
      "webp": {
-      "900": "l08-settings-chain-light-900-232fccde.webp"
+      "900": "l08-settings-chain-light-900-f68b5c5b.webp"
      }
     }
    },
-   "bytes": 250952,
+   "bytes": 250818,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l08-settings-convert": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "900": "l08-settings-convert-dark-900-60d6ca43.avif",
-      "1800": "l08-settings-convert-dark-1800-7c9828d0.avif"
+      "900": "l08-settings-convert-dark-900-cb4d9e10.avif",
+      "1800": "l08-settings-convert-dark-1800-d021f12c.avif"
      },
      "webp": {
-      "900": "l08-settings-convert-dark-900-813b7aa7.webp"
+      "900": "l08-settings-convert-dark-900-32ae7aa6.webp"
      }
     },
     "light": {
      "avif": {
-      "900": "l08-settings-convert-light-900-873847b3.avif",
-      "1800": "l08-settings-convert-light-1800-88123ceb.avif"
+      "900": "l08-settings-convert-light-900-938f9f13.avif",
+      "1800": "l08-settings-convert-light-1800-dad5bad1.avif"
      },
      "webp": {
-      "900": "l08-settings-convert-light-900-33241d86.webp"
+      "900": "l08-settings-convert-light-900-e1104dd7.webp"
      }
     }
    },
-   "bytes": 250192,
+   "bytes": 250899,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "editor-map": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1600": "editor-map-dark-1600-435ae65a.avif",
-      "3200": "editor-map-dark-3200-cbaa6ac3.avif"
+      "1600": "editor-map-dark-1600-7ff9681c.avif",
+      "3200": "editor-map-dark-3200-c54c9078.avif"
      },
      "webp": {
-      "1600": "editor-map-dark-1600-03274c21.webp"
+      "1600": "editor-map-dark-1600-2356c165.webp"
      }
     },
     "light": {
      "avif": {
-      "1600": "editor-map-light-1600-71ba14fb.avif",
-      "3200": "editor-map-light-3200-2ee795cc.avif"
+      "1600": "editor-map-light-1600-7bd15206.avif",
+      "3200": "editor-map-light-3200-fed6647f.avif"
      },
      "webp": {
-      "1600": "editor-map-light-1600-575bc080.webp"
+      "1600": "editor-map-light-1600-0e6e3c8e.webp"
      }
     }
    },
-   "bytes": 539442,
+   "bytes": 537550,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l01-tree": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "290": "l01-tree-dark-290-5e21ff1f.avif",
-      "580": "l01-tree-dark-580-910d9b31.avif"
+      "290": "l01-tree-dark-290-9bf83008.avif",
+      "580": "l01-tree-dark-580-c8f49627.avif"
      },
      "webp": {
-      "290": "l01-tree-dark-290-03d467e3.webp"
+      "290": "l01-tree-dark-290-0ce596cd.webp"
      }
     },
     "light": {
      "avif": {
-      "290": "l01-tree-light-290-ac81dd9c.avif",
-      "580": "l01-tree-light-580-e471b77f.avif"
+      "290": "l01-tree-light-290-bfc38488.avif",
+      "580": "l01-tree-light-580-d0916a38.avif"
      },
      "webp": {
-      "290": "l01-tree-light-290-8f2a3420.webp"
+      "290": "l01-tree-light-290-a5cc5ba8.webp"
      }
     }
    },
-   "bytes": 149143,
+   "bytes": 134635,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l08-log": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1584": "l08-log-dark-1584-77c26417.avif",
-      "3168": "l08-log-dark-3168-f95e7582.avif"
+      "1584": "l08-log-dark-1584-fbf41c33.avif",
+      "3168": "l08-log-dark-3168-7c3d3877.avif"
      },
      "webp": {
-      "1584": "l08-log-dark-1584-40bc9401.webp"
+      "1584": "l08-log-dark-1584-ebe307d0.webp"
      }
     },
     "light": {
      "avif": {
-      "1584": "l08-log-light-1584-5b3e9ee3.avif",
-      "3168": "l08-log-light-3168-33be0f34.avif"
+      "1584": "l08-log-light-1584-3c67c1ec.avif",
+      "3168": "l08-log-light-3168-e8aa697c.avif"
      },
      "webp": {
-      "1584": "l08-log-light-1584-4b456c6d.webp"
+      "1584": "l08-log-light-1584-e31b86bf.webp"
      }
     }
    },
-   "bytes": 39931,
+   "bytes": 53145,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l09-error": {
    "kind": "still",
@@ -1740,12 +1741,12 @@
    },
    "bytes": 359972,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l09-fixups": {
    "kind": "still",
@@ -1771,74 +1772,74 @@
    },
    "bytes": 264381,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l09-toolbar": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1600": "l09-toolbar-dark-1600-2b71c1f6.avif",
-      "3200": "l09-toolbar-dark-3200-a9ac31b8.avif"
+      "1600": "l09-toolbar-dark-1600-bcc5b5ce.avif",
+      "3200": "l09-toolbar-dark-3200-47339907.avif"
      },
      "webp": {
-      "1600": "l09-toolbar-dark-1600-6cdffcdf.webp"
+      "1600": "l09-toolbar-dark-1600-7f04666c.webp"
      }
     },
     "light": {
      "avif": {
-      "1600": "l09-toolbar-light-1600-dd62d91d.avif",
-      "3200": "l09-toolbar-light-3200-728f1c3d.avif"
+      "1600": "l09-toolbar-light-1600-984c4528.avif",
+      "3200": "l09-toolbar-light-3200-dba6006b.avif"
      },
      "webp": {
-      "1600": "l09-toolbar-light-1600-893245de.webp"
+      "1600": "l09-toolbar-light-1600-53c500fa.webp"
      }
     }
    },
-   "bytes": 42447,
+   "bytes": 42714,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l09-tree-badges": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "320": "l09-tree-badges-dark-320-96ec27c9.avif",
-      "640": "l09-tree-badges-dark-640-97567dd6.avif"
+      "320": "l09-tree-badges-dark-320-63dacc38.avif",
+      "640": "l09-tree-badges-dark-640-1a2456fb.avif"
      },
      "webp": {
-      "320": "l09-tree-badges-dark-320-16514341.webp"
+      "320": "l09-tree-badges-dark-320-755307b6.webp"
      }
     },
     "light": {
      "avif": {
-      "320": "l09-tree-badges-light-320-231f3995.avif",
-      "640": "l09-tree-badges-light-640-6fe2fb3b.avif"
+      "320": "l09-tree-badges-light-320-378e65d5.avif",
+      "640": "l09-tree-badges-light-640-b7e9de31.avif"
      },
      "webp": {
-      "320": "l09-tree-badges-light-320-4025c4a2.webp"
+      "320": "l09-tree-badges-light-320-eec9f3b3.webp"
      }
     }
    },
-   "bytes": 55427,
+   "bytes": 54849,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l09-validation-dataset": {
    "kind": "still",
@@ -1864,12 +1865,12 @@
    },
    "bytes": 260794,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l09-validation-file": {
    "kind": "still",
@@ -1895,12 +1896,12 @@
    },
    "bytes": 150372,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l10-edit": {
    "kind": "still",
@@ -1926,12 +1927,12 @@
    },
    "bytes": 197352,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l10-search": {
    "kind": "still",
@@ -1957,12 +1958,12 @@
    },
    "bytes": 97676,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l10-sidecar-bids": {
    "kind": "still",
@@ -1988,12 +1989,12 @@
    },
    "bytes": 169335,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l10-sidecar-tree": {
    "kind": "still",
@@ -2019,12 +2020,12 @@
    },
    "bytes": 236826,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l10-tsv": {
    "kind": "still",
@@ -2050,12 +2051,12 @@
    },
    "bytes": 66582,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l11-coherence": {
    "kind": "still",
@@ -2081,12 +2082,12 @@
    },
    "bytes": 188679,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l11-delete": {
    "kind": "still",
@@ -2112,12 +2113,12 @@
    },
    "bytes": 219216,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l11-references": {
    "kind": "still",
@@ -2143,12 +2144,12 @@
    },
    "bytes": 290263,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l11-rename": {
    "kind": "still",
@@ -2174,105 +2175,105 @@
    },
    "bytes": 218967,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l11-sessions": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "980": "l11-sessions-dark-980-3a909c02.avif",
-      "1960": "l11-sessions-dark-1960-50b5c4f3.avif"
+      "980": "l11-sessions-dark-980-7b85bb17.avif",
+      "1960": "l11-sessions-dark-1960-5f7e6cf0.avif"
      },
      "webp": {
-      "980": "l11-sessions-dark-980-544e9316.webp"
+      "980": "l11-sessions-dark-980-3e82daa0.webp"
      }
     },
     "light": {
      "avif": {
-      "980": "l11-sessions-light-980-64f08de0.avif",
-      "1960": "l11-sessions-light-1960-ca7e176f.avif"
+      "980": "l11-sessions-light-980-a383eec8.avif",
+      "1960": "l11-sessions-light-1960-953e0042.avif"
      },
      "webp": {
-      "980": "l11-sessions-light-980-6404d931.webp"
+      "980": "l11-sessions-light-980-be02fc06.webp"
      }
     }
    },
-   "bytes": 261153,
+   "bytes": 261876,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l11-tools-menu": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1600": "l11-tools-menu-dark-1600-8a6fce69.avif",
-      "3200": "l11-tools-menu-dark-3200-1eb5732b.avif"
+      "1600": "l11-tools-menu-dark-1600-4657344f.avif",
+      "3200": "l11-tools-menu-dark-3200-8d1ae962.avif"
      },
      "webp": {
-      "1600": "l11-tools-menu-dark-1600-b4bffa12.webp"
+      "1600": "l11-tools-menu-dark-1600-3b4ba2b4.webp"
      }
     },
     "light": {
      "avif": {
-      "1600": "l11-tools-menu-light-1600-a71e6974.avif",
-      "3200": "l11-tools-menu-light-3200-8e3be26c.avif"
+      "1600": "l11-tools-menu-light-1600-002c5443.avif",
+      "3200": "l11-tools-menu-light-3200-6717fdf5.avif"
      },
      "webp": {
-      "1600": "l11-tools-menu-light-1600-3654c100.webp"
+      "1600": "l11-tools-menu-light-1600-86e4d68e.webp"
      }
     }
    },
-   "bytes": 284500,
+   "bytes": 293350,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l11-tree-menu": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "433": "l11-tree-menu-dark-433-3132cbf4.avif",
-      "866": "l11-tree-menu-dark-866-38ca357a.avif"
+      "524": "l11-tree-menu-dark-524-c6ff8c86.avif",
+      "1048": "l11-tree-menu-dark-1048-9bf3cccd.avif"
      },
      "webp": {
-      "433": "l11-tree-menu-dark-433-c17d24a7.webp"
+      "524": "l11-tree-menu-dark-524-86839be9.webp"
      }
     },
     "light": {
      "avif": {
-      "433": "l11-tree-menu-light-433-bc27fc32.avif",
-      "866": "l11-tree-menu-light-866-45f89a1f.avif"
+      "524": "l11-tree-menu-light-524-63aeb11b.avif",
+      "1048": "l11-tree-menu-light-1048-59aca0cf.avif"
      },
      "webp": {
-      "433": "l11-tree-menu-light-433-9921786e.webp"
+      "524": "l11-tree-menu-light-524-21fc96f3.webp"
      }
     }
    },
-   "bytes": 262996,
+   "bytes": 291275,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l12-eeg": {
    "kind": "still",
@@ -2298,12 +2299,12 @@
    },
    "bytes": 610514,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l12-gradients": {
    "kind": "still",
@@ -2329,12 +2330,12 @@
    },
    "bytes": 243516,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l12-meg": {
    "kind": "still",
@@ -2360,12 +2361,12 @@
    },
    "bytes": 648403,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l12-mrs": {
    "kind": "still",
@@ -2391,43 +2392,43 @@
    },
    "bytes": 302942,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l12-physio": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1294": "l12-physio-dark-1294-f97f5fd9.avif",
-      "2588": "l12-physio-dark-2588-740d1405.avif"
+      "1294": "l12-physio-dark-1294-06d0a7d9.avif",
+      "2588": "l12-physio-dark-2588-7483e6cc.avif"
      },
      "webp": {
-      "1294": "l12-physio-dark-1294-77b9b0b1.webp"
+      "1294": "l12-physio-dark-1294-f46b84b9.webp"
      }
     },
     "light": {
      "avif": {
-      "1294": "l12-physio-light-1294-aef62a28.avif",
-      "2588": "l12-physio-light-2588-24ccfecd.avif"
+      "1294": "l12-physio-light-1294-e96501f1.avif",
+      "2588": "l12-physio-light-2588-48ff44a3.avif"
      },
      "webp": {
-      "1294": "l12-physio-light-1294-4d594577.webp"
+      "1294": "l12-physio-light-1294-b158f618.webp"
      }
     }
    },
-   "bytes": 373305,
+   "bytes": 491804,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l13-meeg-qc": {
    "kind": "still",
@@ -2484,12 +2485,12 @@
    },
    "bytes": 204261,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l13-settings-qc": {
    "kind": "still",
@@ -2515,74 +2516,74 @@
    },
    "bytes": 250137,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l14-dashboard": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1100": "l14-dashboard-dark-1100-e265bcea.avif",
-      "2200": "l14-dashboard-dark-2200-b142ac1a.avif"
+      "1100": "l14-dashboard-dark-1100-0fd6ca59.avif",
+      "2200": "l14-dashboard-dark-2200-d37bb620.avif"
      },
      "webp": {
-      "1100": "l14-dashboard-dark-1100-31e7881a.webp"
+      "1100": "l14-dashboard-dark-1100-4ac05003.webp"
      }
     },
     "light": {
      "avif": {
-      "1100": "l14-dashboard-light-1100-ecd805ac.avif",
-      "2200": "l14-dashboard-light-2200-c0481e89.avif"
+      "1100": "l14-dashboard-light-1100-c6dc0977.avif",
+      "2200": "l14-dashboard-light-2200-6d47b9a0.avif"
      },
      "webp": {
-      "1100": "l14-dashboard-light-1100-55412ca6.webp"
+      "1100": "l14-dashboard-light-1100-dfd0cf82.webp"
      }
     }
    },
-   "bytes": 235797,
+   "bytes": 235751,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l14-deface": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "980": "l14-deface-dark-980-7b25f44a.avif",
-      "1960": "l14-deface-dark-1960-bb85ca63.avif"
+      "980": "l14-deface-dark-980-3402965c.avif",
+      "1960": "l14-deface-dark-1960-da13dc10.avif"
      },
      "webp": {
-      "980": "l14-deface-dark-980-c364f7f7.webp"
+      "980": "l14-deface-dark-980-9688c25c.webp"
      }
     },
     "light": {
      "avif": {
-      "980": "l14-deface-light-980-c1cb5d04.avif",
-      "1960": "l14-deface-light-1960-8db15495.avif"
+      "980": "l14-deface-light-980-8e4e4923.avif",
+      "1960": "l14-deface-light-1960-459a78dc.avif"
      },
      "webp": {
-      "980": "l14-deface-light-980-2b96a0be.webp"
+      "980": "l14-deface-light-980-b646fd7a.webp"
      }
     }
    },
-   "bytes": 250466,
+   "bytes": 259897,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l14-participants": {
    "kind": "still",
@@ -2608,12 +2609,12 @@
    },
    "bytes": 68319,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l14-readme": {
    "kind": "still",
@@ -2639,375 +2640,375 @@
    },
    "bytes": 69366,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l08-convert": {
    "kind": "clip",
    "files": {
     "dark": {
-     "mp4": "l08-convert-dark-bda563af.mp4",
-     "webm": "l08-convert-dark-0ac2da48.webm",
-     "poster": "l08-convert-dark-poster-6c390a45.webp"
+     "mp4": "l08-convert-dark-41d72504.mp4",
+     "webm": "l08-convert-dark-e6ee7ff8.webm",
+     "poster": "l08-convert-dark-poster-dded27cd.webp"
     },
     "light": {
-     "mp4": "l08-convert-light-864cc9e5.mp4",
-     "webm": "l08-convert-light-7a9e90e0.webm",
-     "poster": "l08-convert-light-poster-9d5073c5.webp"
+     "mp4": "l08-convert-light-a3c90991.mp4",
+     "webm": "l08-convert-light-b1c97957.webm",
+     "poster": "l08-convert-light-poster-e9b36724.webp"
     }
    },
-   "bytes": 2668743,
+   "bytes": 2689944,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l09-fix": {
    "kind": "clip",
    "files": {
     "dark": {
-     "mp4": "l09-fix-dark-1ee1e8a2.mp4",
-     "poster": "l09-fix-dark-poster-e6cca9c8.webp"
+     "mp4": "l09-fix-dark-7d7f5cb0.mp4",
+     "poster": "l09-fix-dark-poster-9758a44a.webp"
     },
     "light": {
-     "mp4": "l09-fix-light-6cfa9b1b.mp4",
-     "poster": "l09-fix-light-poster-7ffe4659.webp"
+     "mp4": "l09-fix-light-296d3723.mp4",
+     "poster": "l09-fix-light-poster-452c5feb.webp"
     }
    },
-   "bytes": 1843531,
+   "bytes": 1853847,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l09-validate": {
    "kind": "clip",
    "files": {
     "dark": {
-     "mp4": "l09-validate-dark-d9534d5a.mp4",
-     "poster": "l09-validate-dark-poster-daae7619.webp"
+     "mp4": "l09-validate-dark-e0dc79f7.mp4",
+     "poster": "l09-validate-dark-poster-c9d5f766.webp"
     },
     "light": {
-     "mp4": "l09-validate-light-b45180be.mp4",
-     "poster": "l09-validate-light-poster-5261b32d.webp"
+     "mp4": "l09-validate-light-59fb07a7.mp4",
+     "poster": "l09-validate-light-poster-324c1ac4.webp"
     }
    },
-   "bytes": 345809,
+   "bytes": 351657,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l10-edit-save": {
    "kind": "clip",
    "files": {
     "dark": {
-     "mp4": "l10-edit-save-dark-df82ae22.mp4",
-     "poster": "l10-edit-save-dark-poster-2e235120.webp"
+     "mp4": "l10-edit-save-dark-a783c9b5.mp4",
+     "poster": "l10-edit-save-dark-poster-1e635eda.webp"
     },
     "light": {
-     "mp4": "l10-edit-save-light-b7911694.mp4",
-     "poster": "l10-edit-save-light-poster-b9712939.webp"
+     "mp4": "l10-edit-save-light-8504ea10.mp4",
+     "poster": "l10-edit-save-light-poster-8e645617.webp"
     }
    },
-   "bytes": 1477983,
+   "bytes": 1459022,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l12-bold": {
    "kind": "clip",
    "files": {
     "dark": {
-     "mp4": "l12-bold-dark-be3b2b55.mp4",
-     "webm": "l12-bold-dark-0be0001f.webm",
-     "poster": "l12-bold-dark-poster-d2669a69.webp"
+     "mp4": "l12-bold-dark-122107eb.mp4",
+     "webm": "l12-bold-dark-b336c01d.webm",
+     "poster": "l12-bold-dark-poster-59a60241.webp"
     },
     "light": {
-     "mp4": "l12-bold-light-0c5bcdf1.mp4",
-     "webm": "l12-bold-light-707b086d.webm",
-     "poster": "l12-bold-light-poster-1e14f103.webp"
+     "mp4": "l12-bold-light-2780f013.mp4",
+     "webm": "l12-bold-light-6a5cbb29.webm",
+     "poster": "l12-bold-light-poster-a1bdd0f7.webp"
     }
    },
-   "bytes": 4809401,
+   "bytes": 4463364,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2 (OL_3844, consented)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l12-compare": {
    "kind": "clip",
    "files": {
     "dark": {
      "mp4": "l12-compare-dark-2ed3c2c2.mp4",
-     "webm": "l12-compare-dark-3bb77a95.webm",
+     "webm": "l12-compare-dark-600bcbfe.webm",
      "poster": "l12-compare-dark-poster-4e838312.webp"
     },
     "light": {
      "mp4": "l12-compare-light-22203e16.mp4",
-     "webm": "l12-compare-light-f1cfe4e6.webm",
+     "webm": "l12-compare-light-a78372ea.webm",
      "poster": "l12-compare-light-poster-8ee90594.webp"
     }
    },
    "bytes": 5510115,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2 (OL_3844, consented)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l12-pet": {
    "kind": "clip",
    "files": {
     "dark": {
      "mp4": "l12-pet-dark-c950f4d8.mp4",
-     "webm": "l12-pet-dark-5b590c64.webm",
+     "webm": "l12-pet-dark-fb6ec262.webm",
      "poster": "l12-pet-dark-poster-32b8405e.webp"
     },
     "light": {
      "mp4": "l12-pet-light-36e135d3.mp4",
-     "webm": "l12-pet-light-32cb9d3e.webm",
+     "webm": "l12-pet-light-840987f9.webm",
      "poster": "l12-pet-light-poster-79a5a318.webp"
     }
    },
    "bytes": 5031658,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2 (PET phantom)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l12-t1": {
    "kind": "clip",
    "files": {
     "dark": {
      "mp4": "l12-t1-dark-a0fcfe63.mp4",
-     "webm": "l12-t1-dark-3715d834.webm",
+     "webm": "l12-t1-dark-f3239033.webm",
      "poster": "l12-t1-dark-poster-4a8cd95a.webp"
     },
     "light": {
      "mp4": "l12-t1-light-175d71c0.mp4",
-     "webm": "l12-t1-light-9a7d4296.webm",
+     "webm": "l12-t1-light-679fd917.webm",
      "poster": "l12-t1-light-poster-acba8e8f.webp"
     }
    },
    "bytes": 8735019,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2 (OL_3844, consented)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l12-t1-controls": {
    "kind": "clip",
    "files": {
     "dark": {
      "mp4": "l12-t1-controls-dark-df7509dd.mp4",
-     "webm": "l12-t1-controls-dark-3d822459.webm",
+     "webm": "l12-t1-controls-dark-91ad95c1.webm",
      "poster": "l12-t1-controls-dark-poster-10d48ee9.webp"
     },
     "light": {
      "mp4": "l12-t1-controls-light-c587d4e9.mp4",
-     "webm": "l12-t1-controls-light-9cf5b12a.webm",
+     "webm": "l12-t1-controls-light-756e9416.webm",
      "poster": "l12-t1-controls-light-poster-fe1f6a22.webp"
     }
    },
    "bytes": 4927449,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2 (OL_3844, consented)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l13-bold-qc": {
    "kind": "clip",
    "files": {
     "dark": {
      "mp4": "l13-bold-qc-dark-643121f4.mp4",
-     "webm": "l13-bold-qc-dark-42a39049.webm",
+     "webm": "l13-bold-qc-dark-0a2e550a.webm",
      "poster": "l13-bold-qc-dark-poster-efe4073a.webp"
     },
     "light": {
      "mp4": "l13-bold-qc-light-9bd09281.mp4",
-     "webm": "l13-bold-qc-light-5980bd11.webm",
+     "webm": "l13-bold-qc-light-674ef1ff.webm",
      "poster": "l13-bold-qc-light-poster-cfe99c47.webp"
     }
    },
    "bytes": 3112339,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2 (OL_3844, consented)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l13-qc-panel": {
    "kind": "clip",
    "files": {
     "dark": {
-     "mp4": "l13-qc-panel-dark-fb486464.mp4",
-     "webm": "l13-qc-panel-dark-b535c90d.webm",
-     "poster": "l13-qc-panel-dark-poster-d3c31f2a.webp"
+     "mp4": "l13-qc-panel-dark-084a976e.mp4",
+     "webm": "l13-qc-panel-dark-49562050.webm",
+     "poster": "l13-qc-panel-dark-poster-0f855f57.webp"
     },
     "light": {
-     "mp4": "l13-qc-panel-light-706ef707.mp4",
-     "webm": "l13-qc-panel-light-a8ae4edf.webm",
-     "poster": "l13-qc-panel-light-poster-0b01e986.webp"
+     "mp4": "l13-qc-panel-light-10a14545.mp4",
+     "webm": "l13-qc-panel-light-2f33bbac.webm",
+     "poster": "l13-qc-panel-light-poster-85187ecf.webp"
     }
    },
-   "bytes": 5055918,
+   "bytes": 5033847,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2 (OL_3844, consented)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l14-deface-compare": {
    "kind": "clip",
    "files": {
     "dark": {
      "mp4": "l14-deface-compare-dark-fb89f47e.mp4",
-     "webm": "l14-deface-compare-dark-6c248dcc.webm",
+     "webm": "l14-deface-compare-dark-1c7fced2.webm",
      "poster": "l14-deface-compare-dark-poster-6a551425.webp"
     },
     "light": {
      "mp4": "l14-deface-compare-light-07d77f32.mp4",
-     "webm": "l14-deface-compare-light-5140286d.webm",
+     "webm": "l14-deface-compare-light-94f207ec.webm",
      "poster": "l14-deface-compare-light-poster-e189fb0c.webp"
     }
    },
    "bytes": 4532352,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2 (OL_3844, consented)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-adopt-project": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1600": "guide-adopt-project-dark-1600-9572f192.avif",
-      "3200": "guide-adopt-project-dark-3200-90e7b72a.avif"
+      "1600": "guide-adopt-project-dark-1600-d242cd1f.avif",
+      "3200": "guide-adopt-project-dark-3200-9801c23c.avif"
      },
      "webp": {
-      "1600": "guide-adopt-project-dark-1600-8580ea99.webp"
+      "1600": "guide-adopt-project-dark-1600-662aa32f.webp"
      }
     },
     "light": {
      "avif": {
-      "1600": "guide-adopt-project-light-1600-0b21200c.avif",
-      "3200": "guide-adopt-project-light-3200-adc7c7f0.avif"
+      "1600": "guide-adopt-project-light-1600-f90d6ea0.avif",
+      "3200": "guide-adopt-project-light-3200-9c641f41.avif"
      },
      "webp": {
-      "1600": "guide-adopt-project-light-1600-b573e12b.webp"
+      "1600": "guide-adopt-project-light-1600-bdbc4522.webp"
      }
     }
    },
-   "bytes": 347997,
+   "bytes": 351018,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-adopt-view": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1600": "guide-adopt-view-dark-1600-1fcf99e2.avif",
-      "3200": "guide-adopt-view-dark-3200-a91be53d.avif"
+      "1600": "guide-adopt-view-dark-1600-97d2a1f4.avif",
+      "3200": "guide-adopt-view-dark-3200-1bf49486.avif"
      },
      "webp": {
-      "1600": "guide-adopt-view-dark-1600-65139524.webp"
+      "1600": "guide-adopt-view-dark-1600-2187331f.webp"
      }
     },
     "light": {
      "avif": {
-      "1600": "guide-adopt-view-light-1600-a6b1c0bf.avif",
-      "3200": "guide-adopt-view-light-3200-d15936e5.avif"
+      "1600": "guide-adopt-view-light-1600-a6c5a599.avif",
+      "3200": "guide-adopt-view-light-3200-b1f1c5ac.avif"
      },
      "webp": {
-      "1600": "guide-adopt-view-light-1600-a3e182d5.webp"
+      "1600": "guide-adopt-view-light-1600-fe6e6405.webp"
      }
     }
    },
-   "bytes": 209946,
+   "bytes": 213080,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-adv-dwi": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1600": "guide-adv-dwi-dark-1600-5b664d4c.avif",
-      "3200": "guide-adv-dwi-dark-3200-20c355a8.avif"
+      "1600": "guide-adv-dwi-dark-1600-4df92760.avif",
+      "3200": "guide-adv-dwi-dark-3200-d13e06b9.avif"
      },
      "webp": {
-      "1600": "guide-adv-dwi-dark-1600-cee9a3a1.webp"
+      "1600": "guide-adv-dwi-dark-1600-fb2586ec.webp"
      }
     },
     "light": {
      "avif": {
-      "1600": "guide-adv-dwi-light-1600-cd529cef.avif",
-      "3200": "guide-adv-dwi-light-3200-f1dc93d1.avif"
+      "1600": "guide-adv-dwi-light-1600-f36bccb2.avif",
+      "3200": "guide-adv-dwi-light-3200-cad5b949.avif"
      },
      "webp": {
-      "1600": "guide-adv-dwi-light-1600-5cbbd792.webp"
+      "1600": "guide-adv-dwi-light-1600-2f893697.webp"
      }
     }
    },
-   "bytes": 436957,
+   "bytes": 440808,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-adv-table": {
    "kind": "still",
@@ -3033,12 +3034,12 @@
    },
    "bytes": 260607,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-adv-why": {
    "kind": "still",
@@ -3064,12 +3065,12 @@
    },
    "bytes": 129217,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-eeg-bulk": {
    "kind": "still",
@@ -3095,12 +3096,12 @@
    },
    "bytes": 176961,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-eeg-meta": {
    "kind": "still",
@@ -3126,12 +3127,12 @@
    },
    "bytes": 212521,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-eeg-table-after": {
    "kind": "still",
@@ -3157,12 +3158,12 @@
    },
    "bytes": 232857,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-eeg-table": {
    "kind": "still",
@@ -3188,12 +3189,12 @@
    },
    "bytes": 231181,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-eeg-viewer": {
    "kind": "still",
@@ -3219,12 +3220,12 @@
    },
    "bytes": 657672,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-eye-paired": {
    "kind": "still",
@@ -3250,12 +3251,12 @@
    },
    "bytes": 257215,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-eye-plot": {
    "kind": "still",
@@ -3281,12 +3282,12 @@
    },
    "bytes": 289962,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-eye-props": {
    "kind": "still",
@@ -3312,12 +3313,12 @@
    },
    "bytes": 107939,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-meg-noise": {
    "kind": "still",
@@ -3343,12 +3344,12 @@
    },
    "bytes": 67818,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-meg-overview": {
    "kind": "still",
@@ -3374,12 +3375,12 @@
    },
    "bytes": 181967,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-meg-table": {
    "kind": "still",
@@ -3405,12 +3406,12 @@
    },
    "bytes": 220818,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-meg-viewer": {
    "kind": "still",
@@ -3436,43 +3437,43 @@
    },
    "bytes": 628076,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-mri-editor": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1600": "guide-mri-editor-dark-1600-9f9ddf99.avif",
-      "3200": "guide-mri-editor-dark-3200-36d76096.avif"
+      "1600": "guide-mri-editor-dark-1600-532a943a.avif",
+      "3200": "guide-mri-editor-dark-3200-ce21f2f5.avif"
      },
      "webp": {
-      "1600": "guide-mri-editor-dark-1600-a616b3fa.webp"
+      "1600": "guide-mri-editor-dark-1600-038025ac.webp"
      }
     },
     "light": {
      "avif": {
-      "1600": "guide-mri-editor-light-1600-ce26cd30.avif",
-      "3200": "guide-mri-editor-light-3200-741e7ba0.avif"
+      "1600": "guide-mri-editor-light-1600-de9426eb.avif",
+      "3200": "guide-mri-editor-light-3200-c155aa6f.avif"
      },
      "webp": {
-      "1600": "guide-mri-editor-light-1600-e68eda2d.webp"
+      "1600": "guide-mri-editor-light-1600-1b58302b.webp"
      }
     }
    },
-   "bytes": 502674,
+   "bytes": 506140,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-mri-fmap": {
    "kind": "still",
@@ -3498,12 +3499,12 @@
    },
    "bytes": 174373,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-mri-overview": {
    "kind": "still",
@@ -3529,12 +3530,12 @@
    },
    "bytes": 203225,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-mri-table": {
    "kind": "still",
@@ -3560,12 +3561,12 @@
    },
    "bytes": 246811,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-pet-blood": {
    "kind": "still",
@@ -3591,12 +3592,12 @@
    },
    "bytes": 134666,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-pet-dose": {
    "kind": "still",
@@ -3622,12 +3623,12 @@
    },
    "bytes": 261439,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-pet-ecat": {
    "kind": "still",
@@ -3653,43 +3654,43 @@
    },
    "bytes": 112550,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "guide-pet-editor": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1600": "guide-pet-editor-dark-1600-8aef836e.avif",
-      "3200": "guide-pet-editor-dark-3200-2577b7c0.avif"
+      "1600": "guide-pet-editor-dark-1600-ed7f5a77.avif",
+      "3200": "guide-pet-editor-dark-3200-585c597c.avif"
      },
      "webp": {
-      "1600": "guide-pet-editor-dark-1600-6a68aa0b.webp"
+      "1600": "guide-pet-editor-dark-1600-75db96f6.webp"
      }
     },
     "light": {
      "avif": {
-      "1600": "guide-pet-editor-light-1600-aefde586.avif",
-      "3200": "guide-pet-editor-light-3200-0819a187.avif"
+      "1600": "guide-pet-editor-light-1600-15195167.avif",
+      "3200": "guide-pet-editor-light-3200-becb0334.avif"
      },
      "webp": {
-      "1600": "guide-pet-editor-light-1600-218be95b.webp"
+      "1600": "guide-pet-editor-light-1600-06f20ae2.webp"
      }
     }
    },
-   "bytes": 343852,
+   "bytes": 346856,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "t-eeg-psd": {
    "kind": "still",
@@ -3715,12 +3716,12 @@
    },
    "bytes": 321187,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "t-meg-butterfly": {
    "kind": "still",
@@ -3746,12 +3747,12 @@
    },
    "bytes": 288738,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "t-mri-header": {
    "kind": "still",
@@ -3777,12 +3778,12 @@
    },
    "bytes": 502342,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2 (OL_3844, consented)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "t-mri-mosaic": {
    "kind": "still",
@@ -3808,43 +3809,43 @@
    },
    "bytes": 706139,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2 (OL_3844, consented)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "w-add-entity": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "980": "w-add-entity-dark-980-e404d4b8.avif",
-      "1960": "w-add-entity-dark-1960-739dae15.avif"
+      "980": "w-add-entity-dark-980-15f39abc.avif",
+      "1960": "w-add-entity-dark-1960-d3484f22.avif"
      },
      "webp": {
-      "980": "w-add-entity-dark-980-ebde55ec.webp"
+      "980": "w-add-entity-dark-980-c5413a18.webp"
      }
     },
     "light": {
      "avif": {
-      "980": "w-add-entity-light-980-24e02b1f.avif",
-      "1960": "w-add-entity-light-1960-f1d62b9d.avif"
+      "980": "w-add-entity-light-980-66f60044.avif",
+      "1960": "w-add-entity-light-1960-4bd38115.avif"
      },
      "webp": {
-      "980": "w-add-entity-light-980-18321134.webp"
+      "980": "w-add-entity-light-980-55daa21e.webp"
      }
     }
    },
-   "bytes": 292569,
+   "bytes": 293007,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "w-bulk-remove": {
    "kind": "still",
@@ -3870,12 +3871,12 @@
    },
    "bytes": 201772,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "w-find-replace": {
    "kind": "still",
@@ -3901,43 +3902,43 @@
    },
    "bytes": 330809,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "w-index-widths": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "900": "w-index-widths-dark-900-bb794e06.avif",
-      "1800": "w-index-widths-dark-1800-3abdc526.avif"
+      "900": "w-index-widths-dark-900-72be29ea.avif",
+      "1800": "w-index-widths-dark-1800-2b730501.avif"
      },
      "webp": {
-      "900": "w-index-widths-dark-900-7090258b.webp"
+      "900": "w-index-widths-dark-900-24659934.webp"
      }
     },
     "light": {
      "avif": {
-      "900": "w-index-widths-light-900-f023bda0.avif",
-      "1800": "w-index-widths-light-1800-8942d73e.avif"
+      "900": "w-index-widths-light-900-50f19d15.avif",
+      "1800": "w-index-widths-light-1800-fdaae42a.avif"
      },
      "webp": {
-      "900": "w-index-widths-light-900-04b83862.webp"
+      "900": "w-index-widths-light-900-980f9e03.webp"
      }
     }
    },
-   "bytes": 200013,
+   "bytes": 200377,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "MRI sample (Oldenburg 1)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "t-eeg-annotate": {
    "kind": "clip",
@@ -3953,12 +3954,12 @@
    },
    "bytes": 2153204,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2 (PhysioNet EEG, ODC-By 1.0)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "t-eeg-filters": {
    "kind": "clip",
@@ -3969,319 +3970,319 @@
     },
     "light": {
      "mp4": "t-eeg-filters-light-12d4dbf1.mp4",
-     "webm": "t-eeg-filters-light-01db6b71.webm",
+     "webm": "t-eeg-filters-light-7ba9147d.webm",
      "poster": "t-eeg-filters-light-poster-e8b5283a.webp"
     }
    },
    "bytes": 5988594,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2 (PhysioNet EEG, ODC-By 1.0)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "t-mri-clip": {
    "kind": "clip",
    "files": {
     "dark": {
      "mp4": "t-mri-clip-dark-f81c05b3.mp4",
-     "webm": "t-mri-clip-dark-6ee9762a.webm",
+     "webm": "t-mri-clip-dark-1cd3fca3.webm",
      "poster": "t-mri-clip-dark-poster-6d8c9537.webp"
     },
     "light": {
      "mp4": "t-mri-clip-light-bde6ea96.mp4",
-     "webm": "t-mri-clip-light-e0f7c91f.webm",
+     "webm": "t-mri-clip-light-3a626db6.webm",
      "poster": "t-mri-clip-light-poster-68ba2dd9.webp"
     }
    },
    "bytes": 7583554,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2 (OL_3844, consented)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "t-mri-effects": {
    "kind": "clip",
    "files": {
     "dark": {
      "mp4": "t-mri-effects-dark-33374bc8.mp4",
-     "webm": "t-mri-effects-dark-51cd97e3.webm",
+     "webm": "t-mri-effects-dark-96613002.webm",
      "poster": "t-mri-effects-dark-poster-8ea62222.webp"
     },
     "light": {
      "mp4": "t-mri-effects-light-a29ba1a3.mp4",
-     "webm": "t-mri-effects-light-6357f2aa.webm",
+     "webm": "t-mri-effects-light-0a4ddd8b.webm",
      "poster": "t-mri-effects-light-poster-9abeab0f.webp"
     }
    },
    "bytes": 10755206,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2 (OL_3844, consented)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "t-mri-layouts": {
    "kind": "clip",
    "files": {
     "dark": {
      "mp4": "t-mri-layouts-dark-524debeb.mp4",
-     "webm": "t-mri-layouts-dark-4372e45d.webm",
+     "webm": "t-mri-layouts-dark-7f6d6eab.webm",
      "poster": "t-mri-layouts-dark-poster-c61802ee.webp"
     },
     "light": {
      "mp4": "t-mri-layouts-light-c6a39327.mp4",
-     "webm": "t-mri-layouts-light-553f1cea.webm",
+     "webm": "t-mri-layouts-light-9de380d8.webm",
      "poster": "t-mri-layouts-light-poster-72b13290.webp"
     }
    },
    "bytes": 9253108,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2 (OL_3844, consented)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "t-mri-overlay": {
    "kind": "clip",
    "files": {
     "dark": {
      "mp4": "t-mri-overlay-dark-56f6d4cf.mp4",
-     "webm": "t-mri-overlay-dark-efa1e244.webm",
+     "webm": "t-mri-overlay-dark-d6221e22.webm",
      "poster": "t-mri-overlay-dark-poster-403497a5.webp"
     },
     "light": {
      "mp4": "t-mri-overlay-light-dc7b1309.mp4",
-     "webm": "t-mri-overlay-light-512c763d.webm",
+     "webm": "t-mri-overlay-light-edf3557f.webm",
      "poster": "t-mri-overlay-light-poster-89e448db.webp"
     }
    },
    "bytes": 4325787,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2 (OL_3844, consented)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "t-mrs": {
    "kind": "clip",
    "files": {
     "dark": {
      "mp4": "t-mrs-dark-24315b5f.mp4",
-     "webm": "t-mrs-dark-3e922b17.webm",
+     "webm": "t-mrs-dark-91d383e9.webm",
      "poster": "t-mrs-dark-poster-593a2d73.webp"
     },
     "light": {
      "mp4": "t-mrs-light-d1b98d26.mp4",
-     "webm": "t-mrs-light-247eb870.webm",
+     "webm": "t-mrs-light-a551e201.webm",
      "poster": "t-mrs-light-poster-cdb250d9.webp"
     }
    },
    "bytes": 3429427,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "g-anon-dialog": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1320": "g-anon-dialog-dark-1320-16dca04c.avif",
-      "2640": "g-anon-dialog-dark-2640-5adacc78.avif"
+      "1320": "g-anon-dialog-dark-1320-c2e66514.avif",
+      "2640": "g-anon-dialog-dark-2640-1f65c30b.avif"
      },
      "webp": {
-      "1320": "g-anon-dialog-dark-1320-c07d646f.webp"
+      "1320": "g-anon-dialog-dark-1320-f29757cf.webp"
      }
     },
     "light": {
      "avif": {
-      "1320": "g-anon-dialog-light-1320-f021a40f.avif",
-      "2640": "g-anon-dialog-light-2640-b4bfbad2.avif"
+      "1320": "g-anon-dialog-light-1320-92081d71.avif",
+      "2640": "g-anon-dialog-light-2640-1fb29520.avif"
      },
      "webp": {
-      "1320": "g-anon-dialog-light-1320-1fa19783.webp"
+      "1320": "g-anon-dialog-light-1320-c76501d3.webp"
      }
     }
    },
-   "bytes": 482840,
+   "bytes": 482188,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "g-anon-file": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1320": "g-anon-file-dark-1320-621ae4f9.avif",
-      "2640": "g-anon-file-dark-2640-325e5604.avif"
+      "1320": "g-anon-file-dark-1320-cff17a83.avif",
+      "2640": "g-anon-file-dark-2640-216ef9d3.avif"
      },
      "webp": {
-      "1320": "g-anon-file-dark-1320-fa9f3ff2.webp"
+      "1320": "g-anon-file-dark-1320-1f582bfb.webp"
      }
     },
     "light": {
      "avif": {
-      "1320": "g-anon-file-light-1320-83ae6da0.avif",
-      "2640": "g-anon-file-light-2640-c518b01f.avif"
+      "1320": "g-anon-file-light-1320-d7febdb9.avif",
+      "2640": "g-anon-file-light-2640-77191a06.avif"
      },
      "webp": {
-      "1320": "g-anon-file-light-1320-8385fa43.webp"
+      "1320": "g-anon-file-light-1320-05be5d90.webp"
      }
     }
    },
-   "bytes": 449682,
+   "bytes": 447745,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "g-anon-menu": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "481": "g-anon-menu-dark-481-48e46a1b.avif",
-      "962": "g-anon-menu-dark-962-1a558dd9.avif"
+      "550": "g-anon-menu-dark-550-6e5ccac7.avif",
+      "1100": "g-anon-menu-dark-1100-420b1206.avif"
      },
      "webp": {
-      "481": "g-anon-menu-dark-481-e7e84106.webp"
+      "550": "g-anon-menu-dark-550-1c4c8994.webp"
      }
     },
     "light": {
      "avif": {
-      "481": "g-anon-menu-light-481-3fd7d324.avif",
-      "962": "g-anon-menu-light-962-4cd47f4a.avif"
+      "550": "g-anon-menu-light-550-e4b283c0.avif",
+      "1100": "g-anon-menu-light-1100-cde31f09.avif"
      },
      "webp": {
-      "481": "g-anon-menu-light-481-aee8becf.webp"
+      "550": "g-anon-menu-light-550-0d9f4bf3.webp"
      }
     }
    },
-   "bytes": 142515,
+   "bytes": 152757,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "g-anon-review": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1320": "g-anon-review-dark-1320-bcffc410.avif",
-      "2640": "g-anon-review-dark-2640-c2eaab2e.avif"
+      "1320": "g-anon-review-dark-1320-3de52bde.avif",
+      "2640": "g-anon-review-dark-2640-ed074453.avif"
      },
      "webp": {
-      "1320": "g-anon-review-dark-1320-9b7bdcbf.webp"
+      "1320": "g-anon-review-dark-1320-b1a8f838.webp"
      }
     },
     "light": {
      "avif": {
-      "1320": "g-anon-review-light-1320-a84b265c.avif",
-      "2640": "g-anon-review-light-2640-a435eed7.avif"
+      "1320": "g-anon-review-light-1320-ecca153a.avif",
+      "2640": "g-anon-review-light-2640-cb4084d1.avif"
      },
      "webp": {
-      "1320": "g-anon-review-light-1320-cb089523.webp"
+      "1320": "g-anon-review-light-1320-4ef404f2.webp"
      }
     }
    },
-   "bytes": 433722,
+   "bytes": 432636,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "g-anon-scope": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1320": "g-anon-scope-dark-1320-9249e62a.avif",
-      "2640": "g-anon-scope-dark-2640-cbbe86d9.avif"
+      "1320": "g-anon-scope-dark-1320-5e0d38c9.avif",
+      "2640": "g-anon-scope-dark-2640-dfe08d18.avif"
      },
      "webp": {
-      "1320": "g-anon-scope-dark-1320-8c0cffaf.webp"
+      "1320": "g-anon-scope-dark-1320-c1eb6782.webp"
      }
     },
     "light": {
      "avif": {
-      "1320": "g-anon-scope-light-1320-613ce8f0.avif",
-      "2640": "g-anon-scope-light-2640-054bb4e2.avif"
+      "1320": "g-anon-scope-light-1320-4cf3d4d1.avif",
+      "2640": "g-anon-scope-light-2640-b0f3df5e.avif"
      },
      "webp": {
-      "1320": "g-anon-scope-light-1320-e6fe8c25.webp"
+      "1320": "g-anon-scope-light-1320-27313225.webp"
      }
     }
    },
-   "bytes": 500056,
+   "bytes": 499313,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "MRI sample 1"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "g-anon-strict": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1320": "g-anon-strict-dark-1320-8fa8af83.avif",
-      "2640": "g-anon-strict-dark-2640-5a19ebf7.avif"
+      "1320": "g-anon-strict-dark-1320-4469b72f.avif",
+      "2640": "g-anon-strict-dark-2640-c6f2e6d7.avif"
      },
      "webp": {
-      "1320": "g-anon-strict-dark-1320-7543b75d.webp"
+      "1320": "g-anon-strict-dark-1320-04dd777d.webp"
      }
     },
     "light": {
      "avif": {
-      "1320": "g-anon-strict-light-1320-45fb2032.avif",
-      "2640": "g-anon-strict-light-2640-aec66561.avif"
+      "1320": "g-anon-strict-light-1320-f0de8c54.avif",
+      "2640": "g-anon-strict-light-2640-b8d13ad5.avif"
      },
      "webp": {
-      "1320": "g-anon-strict-light-1320-5f0c8878.webp"
+      "1320": "g-anon-strict-light-1320-56f11ec6.webp"
      }
     }
    },
-   "bytes": 462859,
+   "bytes": 461562,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "g-coherence": {
    "kind": "still",
@@ -4307,260 +4308,260 @@
    },
    "bytes": 359554,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "g-history-menu": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "625": "g-history-menu-dark-625-9b9012b4.avif",
-      "1250": "g-history-menu-dark-1250-0e48b215.avif"
+      "628": "g-history-menu-dark-628-36910617.avif",
+      "1256": "g-history-menu-dark-1256-32c5fa04.avif"
      },
      "webp": {
-      "625": "g-history-menu-dark-625-b36daae5.webp"
+      "628": "g-history-menu-dark-628-620d0dd7.webp"
      }
     },
     "light": {
      "avif": {
-      "625": "g-history-menu-light-625-4d90c89a.avif",
-      "1250": "g-history-menu-light-1250-20359f82.avif"
+      "628": "g-history-menu-light-628-e6c291c2.avif",
+      "1256": "g-history-menu-light-1256-830f0291.avif"
      },
      "webp": {
-      "625": "g-history-menu-light-625-9566565b.webp"
+      "628": "g-history-menu-light-628-af7da8a6.webp"
      }
     }
    },
-   "bytes": 87181,
+   "bytes": 88290,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "g-ignore-list": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "888": "g-ignore-list-dark-888-88989482.avif",
-      "1776": "g-ignore-list-dark-1776-af34daec.avif"
+      "888": "g-ignore-list-dark-888-f2cd6095.avif",
+      "1776": "g-ignore-list-dark-1776-307b332f.avif"
      },
      "webp": {
-      "888": "g-ignore-list-dark-888-f17de7c0.webp"
+      "888": "g-ignore-list-dark-888-87fe4b7b.webp"
      }
     },
     "light": {
      "avif": {
-      "888": "g-ignore-list-light-888-0d58af5b.avif",
-      "1776": "g-ignore-list-light-1776-2e79697e.avif"
+      "888": "g-ignore-list-light-888-b8499d75.avif",
+      "1776": "g-ignore-list-light-1776-d8040881.avif"
      },
      "webp": {
-      "888": "g-ignore-list-light-888-d0633c8d.webp"
+      "888": "g-ignore-list-light-888-c35f425e.webp"
      }
     }
    },
-   "bytes": 434452,
+   "bytes": 441474,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "MRI sample 1"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "g-ignore-menu": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "837": "g-ignore-menu-dark-837-659ff0de.avif",
-      "1674": "g-ignore-menu-dark-1674-ba6a7ecb.avif"
+      "837": "g-ignore-menu-dark-837-fcc84d06.avif",
+      "1674": "g-ignore-menu-dark-1674-0b9f3555.avif"
      },
      "webp": {
-      "837": "g-ignore-menu-dark-837-2466a4c9.webp"
+      "837": "g-ignore-menu-dark-837-a3d66a0d.webp"
      }
     },
     "light": {
      "avif": {
-      "837": "g-ignore-menu-light-837-c5e51689.avif",
-      "1674": "g-ignore-menu-light-1674-ba05c3eb.avif"
+      "837": "g-ignore-menu-light-837-74738a6e.avif",
+      "1674": "g-ignore-menu-light-1674-ff20f2e0.avif"
      },
      "webp": {
-      "837": "g-ignore-menu-light-837-398828ce.webp"
+      "837": "g-ignore-menu-light-837-dca0cb37.webp"
      }
     }
    },
-   "bytes": 255334,
+   "bytes": 255485,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "MRI sample 1"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "g-ignore-stop": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "524": "g-ignore-stop-dark-524-4e682dbf.avif",
-      "1048": "g-ignore-stop-dark-1048-21711878.avif"
+      "715": "g-ignore-stop-dark-715-54a1523c.avif",
+      "1430": "g-ignore-stop-dark-1430-b30a5f55.avif"
      },
      "webp": {
-      "524": "g-ignore-stop-dark-524-0f9dae2e.webp"
+      "715": "g-ignore-stop-dark-715-4ca6c1d8.webp"
      }
     },
     "light": {
      "avif": {
-      "524": "g-ignore-stop-light-524-531efe79.avif",
-      "1048": "g-ignore-stop-light-1048-b433d265.avif"
+      "715": "g-ignore-stop-light-715-9f9e5d7f.avif",
+      "1430": "g-ignore-stop-light-1430-5bd0d33c.avif"
      },
      "webp": {
-      "524": "g-ignore-stop-light-524-0f31001c.webp"
+      "715": "g-ignore-stop-light-715-773a2526.webp"
      }
     }
    },
-   "bytes": 256165,
+   "bytes": 259034,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "MRI sample 1"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "g-ignore-tree": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "430": "g-ignore-tree-dark-430-8150ed54.avif",
-      "860": "g-ignore-tree-dark-860-2725bcb7.avif"
+      "430": "g-ignore-tree-dark-430-7f32e43c.avif",
+      "860": "g-ignore-tree-dark-860-f73b25cf.avif"
      },
      "webp": {
-      "430": "g-ignore-tree-dark-430-44da7a40.webp"
+      "430": "g-ignore-tree-dark-430-67022a3b.webp"
      }
     },
     "light": {
      "avif": {
-      "430": "g-ignore-tree-light-430-3ae317e8.avif",
-      "860": "g-ignore-tree-light-860-e5336435.avif"
+      "430": "g-ignore-tree-light-430-b8a367fa.avif",
+      "860": "g-ignore-tree-light-860-c0953233.avif"
      },
      "webp": {
-      "430": "g-ignore-tree-light-430-2d9319f9.webp"
+      "430": "g-ignore-tree-light-430-eec793d3.webp"
      }
     }
    },
-   "bytes": 261879,
+   "bytes": 262426,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "MRI sample 1"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "g-names-merge": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1000": "g-names-merge-dark-1000-ad3d48b2.avif",
-      "2000": "g-names-merge-dark-2000-227ca571.avif"
+      "1000": "g-names-merge-dark-1000-dabee02d.avif",
+      "2000": "g-names-merge-dark-2000-a5214399.avif"
      },
      "webp": {
-      "1000": "g-names-merge-dark-1000-309b9ebe.webp"
+      "1000": "g-names-merge-dark-1000-41c7279e.webp"
      }
     },
     "light": {
      "avif": {
-      "1000": "g-names-merge-light-1000-8046b8dd.avif",
-      "2000": "g-names-merge-light-2000-b4ae14b6.avif"
+      "1000": "g-names-merge-light-1000-ab05836a.avif",
+      "2000": "g-names-merge-light-2000-db9e7b21.avif"
      },
      "webp": {
-      "1000": "g-names-merge-light-1000-ab5abb0d.webp"
+      "1000": "g-names-merge-light-1000-72064b7b.webp"
      }
     }
    },
-   "bytes": 302315,
+   "bytes": 302407,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "MRI sample 1"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "g-names-merged": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "320": "g-names-merged-dark-320-0c9771c2.avif",
-      "640": "g-names-merged-dark-640-a717efa3.avif"
+      "320": "g-names-merged-dark-320-6d80c3c6.avif",
+      "640": "g-names-merged-dark-640-276ff01a.avif"
      },
      "webp": {
-      "320": "g-names-merged-dark-320-610f6182.webp"
+      "320": "g-names-merged-dark-320-2815da08.webp"
      }
     },
     "light": {
      "avif": {
-      "320": "g-names-merged-light-320-db306717.avif",
-      "640": "g-names-merged-light-640-18cde432.avif"
+      "320": "g-names-merged-light-320-0cc1dcd0.avif",
+      "640": "g-names-merged-light-640-7648769e.avif"
      },
      "webp": {
-      "320": "g-names-merged-light-320-ff69714a.webp"
+      "320": "g-names-merged-light-320-05d79740.webp"
      }
     }
    },
-   "bytes": 53181,
+   "bytes": 53319,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "MRI sample 1"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "g-names-session": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1000": "g-names-session-dark-1000-265ac08e.avif",
-      "2000": "g-names-session-dark-2000-d47e81e2.avif"
+      "1000": "g-names-session-dark-1000-a0656e39.avif",
+      "2000": "g-names-session-dark-2000-c3174cae.avif"
      },
      "webp": {
-      "1000": "g-names-session-dark-1000-d013f0d2.webp"
+      "1000": "g-names-session-dark-1000-b46a3946.webp"
      }
     },
     "light": {
      "avif": {
-      "1000": "g-names-session-light-1000-28a76d92.avif",
-      "2000": "g-names-session-light-2000-b1341210.avif"
+      "1000": "g-names-session-light-1000-be81384c.avif",
+      "2000": "g-names-session-light-2000-912e0b58.avif"
      },
      "webp": {
-      "1000": "g-names-session-light-1000-b6670e49.webp"
+      "1000": "g-names-session-light-1000-2435ef36.webp"
      }
     }
    },
-   "bytes": 295953,
+   "bytes": 295756,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "MRI sample 1"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "g-qc-bold-138": {
    "kind": "still",
@@ -4586,12 +4587,12 @@
    },
    "bytes": 542066,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "BOLD run with motion (Oldenburg)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "g-qc-bold-141": {
    "kind": "still",
@@ -4617,12 +4618,12 @@
    },
    "bytes": 543385,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "BOLD run with motion (Oldenburg)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "g-qc-bold-run": {
    "kind": "still",
@@ -4648,12 +4649,12 @@
    },
    "bytes": 823467,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "BOLD run with motion (Oldenburg)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "g-qc-meg-2.5": {
    "kind": "still",
@@ -4679,12 +4680,12 @@
    },
    "bytes": 1093095,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "MOUS sub-A2004 (Donders Institute)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "g-qc-meg-default": {
    "kind": "still",
@@ -4710,12 +4711,12 @@
    },
    "bytes": 1070770,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "MOUS sub-A2004 (Donders Institute)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "g-qc-meg-muscle": {
    "kind": "still",
@@ -4741,12 +4742,12 @@
    },
    "bytes": 1085205,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "MOUS sub-A2004 (Donders Institute)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "g-tables": {
    "kind": "still",
@@ -4772,12 +4773,12 @@
    },
    "bytes": 253448,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l02-not-bids": {
    "kind": "still",
@@ -4803,43 +4804,43 @@
    },
    "bytes": 90471,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l03-leave-out": {
    "kind": "still",
    "files": {
     "dark": {
      "avif": {
-      "1040": "l03-leave-out-dark-1040-ad59aa27.avif",
-      "2080": "l03-leave-out-dark-2080-f0f943e8.avif"
+      "1040": "l03-leave-out-dark-1040-6c55f274.avif",
+      "2080": "l03-leave-out-dark-2080-cfba00b1.avif"
      },
      "webp": {
-      "1040": "l03-leave-out-dark-1040-1576f4c5.webp"
+      "1040": "l03-leave-out-dark-1040-73a111cb.webp"
      }
     },
     "light": {
      "avif": {
-      "1040": "l03-leave-out-light-1040-386044d7.avif",
-      "2080": "l03-leave-out-light-2080-578d221f.avif"
+      "1040": "l03-leave-out-light-1040-4de7177a.avif",
+      "2080": "l03-leave-out-light-2080-b4f166e9.avif"
      },
      "webp": {
-      "1040": "l03-leave-out-light-1040-461d288c.webp"
+      "1040": "l03-leave-out-light-1040-4cc1a6f5.webp"
      }
     }
    },
-   "bytes": 307454,
+   "bytes": 313304,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l09-eye-error": {
    "kind": "still",
@@ -4865,12 +4866,12 @@
    },
    "bytes": 337716,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "l12-3d": {
    "kind": "still",
@@ -4896,56 +4897,472 @@
    },
    "bytes": 380963,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "multimodal v2 (OL_3844, consented)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "g-qc-bold-scrub": {
    "kind": "clip",
    "files": {
     "dark": {
      "mp4": "g-qc-bold-scrub-dark-ba656b41.mp4",
-     "webm": "g-qc-bold-scrub-dark-997f1712.webm",
+     "webm": "g-qc-bold-scrub-dark-71f32f3d.webm",
      "poster": "g-qc-bold-scrub-dark-poster-b35b0688.webp"
     },
     "light": {
      "mp4": "g-qc-bold-scrub-light-1c4a57aa.mp4",
-     "webm": "g-qc-bold-scrub-light-0d6990ac.webm",
+     "webm": "g-qc-bold-scrub-light-68f7a672.webm",
      "poster": "g-qc-bold-scrub-light-poster-c65f05e8.webp"
     }
    },
    "bytes": 9659614,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "BOLD run with motion (Oldenburg)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
   },
   "g-qc-meg-threshold": {
    "kind": "clip",
    "files": {
     "dark": {
-     "mp4": "g-qc-meg-threshold-dark-088738cb.mp4",
+     "mp4": "g-qc-meg-threshold-dark-69cec2c9.mp4",
      "poster": "g-qc-meg-threshold-dark-poster-6e29b482.webp"
     },
     "light": {
-     "mp4": "g-qc-meg-threshold-light-97f2c2e9.mp4",
+     "mp4": "g-qc-meg-threshold-light-4a865543.mp4",
      "poster": "g-qc-meg-threshold-light-poster-0a564e88.webp"
     }
    },
-   "bytes": 6339063,
+   "bytes": 6349983,
    "source": {
-    "bids_manager": "1.5.1",
-    "commit": "4f07b3e",
-    "date": "2026-10-20",
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
     "sample": "MOUS sub-A2004 (Donders Institute)"
    },
-   "published": "2026-10-20"
+   "published": "2026-10-23"
+  },
+  "g-sidecars-complete": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1500": "g-sidecars-complete-dark-1500-95f54323.avif",
+      "3000": "g-sidecars-complete-dark-3000-d42273ed.avif"
+     },
+     "webp": {
+      "1500": "g-sidecars-complete-dark-1500-d7876e41.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1500": "g-sidecars-complete-light-1500-3d93f880.avif",
+      "3000": "g-sidecars-complete-light-3000-0257b294.avif"
+     },
+     "webp": {
+      "1500": "g-sidecars-complete-light-1500-5303b94f.webp"
+     }
+    }
+   },
+   "bytes": 563623,
+   "source": {
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-23"
+  },
+  "g-sidecars-dialog": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1500": "g-sidecars-dialog-dark-1500-f918c7c7.avif",
+      "3000": "g-sidecars-dialog-dark-3000-fb78d668.avif"
+     },
+     "webp": {
+      "1500": "g-sidecars-dialog-dark-1500-0de641b1.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1500": "g-sidecars-dialog-light-1500-0bd51011.avif",
+      "3000": "g-sidecars-dialog-light-3000-ee80856a.avif"
+     },
+     "webp": {
+      "1500": "g-sidecars-dialog-light-1500-4e63fae9.webp"
+     }
+    }
+   },
+   "bytes": 478225,
+   "source": {
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-23"
+  },
+  "g-sidecars-menu": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "494": "g-sidecars-menu-dark-494-c2064caa.avif",
+      "988": "g-sidecars-menu-dark-988-bffdd549.avif"
+     },
+     "webp": {
+      "494": "g-sidecars-menu-dark-494-069c9e08.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "494": "g-sidecars-menu-light-494-1bdc7bb9.avif",
+      "988": "g-sidecars-menu-light-988-a4fc0142.avif"
+     },
+     "webp": {
+      "494": "g-sidecars-menu-light-494-44d69e5c.webp"
+     }
+    }
+   },
+   "bytes": 254413,
+   "source": {
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-23"
+  },
+  "g-strip-derivatives": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1240": "g-strip-derivatives-dark-1240-70413bd2.avif",
+      "2480": "g-strip-derivatives-dark-2480-4079ca4e.avif"
+     },
+     "webp": {
+      "1240": "g-strip-derivatives-dark-1240-7e83d44b.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1240": "g-strip-derivatives-light-1240-1e83729a.avif",
+      "2480": "g-strip-derivatives-light-2480-ee217226.avif"
+     },
+     "webp": {
+      "1240": "g-strip-derivatives-light-1240-9146fefc.webp"
+     }
+    }
+   },
+   "bytes": 325839,
+   "source": {
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-23"
+  },
+  "guide-home": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1440": "guide-home-dark-1440-85b323b3.avif",
+      "2880": "guide-home-dark-2880-8405dfda.avif"
+     },
+     "webp": {
+      "1440": "guide-home-dark-1440-7f2b3f5b.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1440": "guide-home-light-1440-1f39feb6.avif",
+      "2880": "guide-home-light-2880-be132920.avif"
+     },
+     "webp": {
+      "1440": "guide-home-light-1440-9c572e6d.webp"
+     }
+    }
+   },
+   "bytes": 318848,
+   "source": {
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-23"
+  },
+  "guide-question": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1600": "guide-question-dark-1600-1302b64d.avif",
+      "3200": "guide-question-dark-3200-574683ea.avif"
+     },
+     "webp": {
+      "1600": "guide-question-dark-1600-e7e2fc2d.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1600": "guide-question-light-1600-30438862.avif",
+      "3200": "guide-question-light-3200-4ed7beaa.avif"
+     },
+     "webp": {
+      "1600": "guide-question-light-1600-4d344efc.webp"
+     }
+    }
+   },
+   "bytes": 497255,
+   "source": {
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-23"
+  },
+  "guide-step": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1600": "guide-step-dark-1600-80b98474.avif",
+      "3200": "guide-step-dark-3200-509cd7d5.avif"
+     },
+     "webp": {
+      "1600": "guide-step-dark-1600-7687a12f.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1600": "guide-step-light-1600-0a689380.avif",
+      "3200": "guide-step-light-3200-1f0a1b91.avif"
+     },
+     "webp": {
+      "1600": "guide-step-light-1600-f43a61d5.webp"
+     }
+    }
+   },
+   "bytes": 514228,
+   "source": {
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-23"
+  },
+  "l03-settings-name-entities": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "801": "l03-settings-name-entities-dark-801-36fdac29.avif",
+      "1602": "l03-settings-name-entities-dark-1602-b1e3703f.avif"
+     },
+     "webp": {
+      "801": "l03-settings-name-entities-dark-801-d078ab04.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "801": "l03-settings-name-entities-light-801-03e02d66.avif",
+      "1602": "l03-settings-name-entities-light-1602-b53d2e34.avif"
+     },
+     "webp": {
+      "801": "l03-settings-name-entities-light-801-ff2efe11.webp"
+     }
+    }
+   },
+   "bytes": 134011,
+   "source": {
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-23"
+  },
+  "l03-settings-subjects": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "812": "l03-settings-subjects-dark-812-e88c6774.avif",
+      "1624": "l03-settings-subjects-dark-1624-2d8701c4.avif"
+     },
+     "webp": {
+      "812": "l03-settings-subjects-dark-812-5ac9cd1c.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "812": "l03-settings-subjects-light-812-f93d48a0.avif",
+      "1624": "l03-settings-subjects-light-1624-6464fbef.avif"
+     },
+     "webp": {
+      "812": "l03-settings-subjects-light-812-c8027481.webp"
+     }
+    }
+   },
+   "bytes": 73946,
+   "source": {
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-23"
+  },
+  "l07-dummy-volumes": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "355": "l07-dummy-volumes-dark-355-b3a0e2cf.avif",
+      "710": "l07-dummy-volumes-dark-710-5a001116.avif"
+     },
+     "webp": {
+      "355": "l07-dummy-volumes-dark-355-32a612b0.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "355": "l07-dummy-volumes-light-355-5db53c9d.avif",
+      "710": "l07-dummy-volumes-light-710-74944c9a.avif"
+     },
+     "webp": {
+      "355": "l07-dummy-volumes-light-355-e6a2cba2.webp"
+     }
+    }
+   },
+   "bytes": 116852,
+   "source": {
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-23"
+  },
+  "l08-settings-physio": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "900": "l08-settings-physio-dark-900-1262017f.avif",
+      "1800": "l08-settings-physio-dark-1800-b68262fb.avif"
+     },
+     "webp": {
+      "900": "l08-settings-physio-dark-900-23f2dd4d.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "900": "l08-settings-physio-light-900-212dba45.avif",
+      "1800": "l08-settings-physio-light-1800-3cb3ef8f.avif"
+     },
+     "webp": {
+      "900": "l08-settings-physio-light-900-fdb5941f.webp"
+     }
+    }
+   },
+   "bytes": 261695,
+   "source": {
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-23"
+  },
+  "whats-new": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "1100": "whats-new-dark-1100-d7fb60f4.avif",
+      "2200": "whats-new-dark-2200-d8ecd201.avif"
+     },
+     "webp": {
+      "1100": "whats-new-dark-1100-e854c3e0.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "1100": "whats-new-light-1100-84957e29.avif",
+      "2200": "whats-new-light-2200-02236fbf.avif"
+     },
+     "webp": {
+      "1100": "whats-new-light-1100-4e5b7a08.webp"
+     }
+    }
+   },
+   "bytes": 322334,
+   "source": {
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-23"
+  },
+  "s-guide": {
+   "kind": "clip",
+   "files": {
+    "dark": {
+     "mp4": "s-guide-dark-cef5f687.mp4",
+     "poster": "s-guide-dark-poster-a33e2a97.webp"
+    },
+    "light": {
+     "mp4": "s-guide-light-1fd80026.mp4",
+     "poster": "s-guide-light-poster-2c01bbcb.webp"
+    }
+   },
+   "bytes": 2251904,
+   "source": {
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-23"
+  },
+  "u-whats-new": {
+   "kind": "clip",
+   "files": {
+    "dark": {
+     "mp4": "u-whats-new-dark-d8ec78a7.mp4",
+     "webm": "u-whats-new-dark-2bcabcf7.webm",
+     "poster": "u-whats-new-dark-poster-884e0263.webp"
+    },
+    "light": {
+     "mp4": "u-whats-new-light-9e42d4e9.mp4",
+     "webm": "u-whats-new-light-4e64007b.webm",
+     "poster": "u-whats-new-light-poster-4166b368.webp"
+    }
+   },
+   "bytes": 7114489,
+   "source": {
+    "bids_manager": "1.5.2",
+    "commit": "bd70a80+changes",
+    "date": "2026-10-23",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-23"
   }
  }
 }

@@ -11,19 +11,19 @@
  ],
  "files": {
   "dark": {
-   "mp4": "l09-fix-dark-1ee1e8a2.mp4",
-   "poster": "l09-fix-dark-poster-e6cca9c8.webp"
+   "mp4": "l09-fix-dark-7d7f5cb0.mp4",
+   "poster": "l09-fix-dark-poster-9758a44a.webp"
   },
   "light": {
-   "mp4": "l09-fix-light-6cfa9b1b.mp4",
-   "poster": "l09-fix-light-poster-7ffe4659.webp"
+   "mp4": "l09-fix-light-296d3723.mp4",
+   "poster": "l09-fix-light-poster-452c5feb.webp"
   }
  },
  "alt": "Selecting the PET sidecar, clicking Fix on its error, adding none as the reconstruction parameters' unit and label, saving, and validating again: one error less, the two left are the eye tracker's.",
  "source": {
-  "bids_manager": "1.5.1",
-  "commit": "4f07b3e",
-  "date": "2026-10-20",
+  "bids_manager": "1.5.2",
+  "commit": "bd70a80+changes",
+  "date": "2026-10-23",
   "sample": "multimodal v2"
  }
 }

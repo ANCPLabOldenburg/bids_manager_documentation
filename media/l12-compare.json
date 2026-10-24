@@ -12,20 +12,20 @@
  "files": {
   "dark": {
    "mp4": "l12-compare-dark-2ed3c2c2.mp4",
-   "webm": "l12-compare-dark-3bb77a95.webm",
+   "webm": "l12-compare-dark-600bcbfe.webm",
    "poster": "l12-compare-dark-poster-4e838312.webp"
   },
   "light": {
    "mp4": "l12-compare-light-22203e16.mp4",
-   "webm": "l12-compare-light-f1cfe4e6.webm",
+   "webm": "l12-compare-light-a78372ea.webm",
    "poster": "l12-compare-light-poster-8ee90594.webp"
   }
  },
  "alt": "Compare images: the T1w and the FLAIR side by side, each in the Planes + 3-D layout, turning and moving together.",
  "source": {
-  "bids_manager": "1.5.1",
-  "commit": "4f07b3e",
-  "date": "2026-10-20",
+  "bids_manager": "1.5.2",
+  "commit": "bd70a80+changes",
+  "date": "2026-10-23",
   "sample": "multimodal v2 (OL_3844, consented)"
  }
 }

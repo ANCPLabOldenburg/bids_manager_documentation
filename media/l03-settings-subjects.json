@@ -1,0 +1,41 @@
+{
+ "id": "l03-settings-subjects",
+ "kind": "figure",
+ "width": 812,
+ "height": 304,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "812": "l03-settings-subjects-dark-812-e88c6774.avif",
+    "1624": "l03-settings-subjects-dark-1624-2d8701c4.avif"
+   },
+   "webp": {
+    "812": "l03-settings-subjects-dark-812-5ac9cd1c.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "812": "l03-settings-subjects-light-812-f93d48a0.avif",
+    "1624": "l03-settings-subjects-light-1624-6464fbef.avif"
+   },
+   "webp": {
+    "812": "l03-settings-subjects-light-812-c8027481.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, Scan page, Subject labels opened: numbers by default, or the patient ID, the given name or the family name from the DICOM header.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.2",
+  "commit": "bd70a80+changes",
+  "date": "2026-10-23",
+  "sample": "multimodal v2"
+ }
+}

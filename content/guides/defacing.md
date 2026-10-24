@@ -76,6 +76,20 @@ Look at the face in 3-D, and at the front of the brain in the sagittal plane: th
 
 The result is written to `derivatives/bidsmgr-skullstrip/` as `desc-brain`, with the description that makes the folder a derivative dataset, and the raw image is left as it is: a skull-stripped image is not raw data. Overwriting in place is offered, and is not the default.
 
+## Images in derivatives
+
+A preprocessed image carries the face of the scan it came from: fMRIPrep's `desc-preproc_T1w` is the participant's head, resampled. A dataset shared with its derivatives needs them done too. Both tools offer them: tick **Include derivatives** in the dialog, which names the pipelines it found. It is off unless what you right-clicked is itself in `derivatives/`, because acting on another pipeline's files is a choice to make knowingly.
+
+{{ figure("g-strip-derivatives", "Remove the skull with Include derivatives ticked: the raw images, and fMRIPrep's preprocessed T1w, grouped by where they are.") }}
+
+The preview groups the images by where they are, raw data first, then each pipeline, and says what each becomes. The figure adds a copy of the course's T1w as fMRIPrep's `desc-preproc_T1w` to show it. Three rules keep the results apart:
+
+- A stripped derivative goes to `derivatives/bidsmgr-skullstrip/`, never into the other pipeline's folder, whose `dataset_description.json` says another tool made what is in it.
+- Its description keeps the source's and adds `brain`: `desc-preproc` becomes `desc-preprocbrain`, so it never takes the name of the stripped raw image (`desc-brain`) beside it. Two sources that would make one name are refused for the second.
+- Masks and segmentations in derivatives are listed as not an image of the head, and BIDS Manager's own stripped images are never stripped again.
+
+From a terminal, `bidsmgr-deface --include-derivatives` does the same.
+
 ## Before sharing
 
 Defacing is one of the checks in [Sharing a dataset](/learn/14-sharing/). The quality check reports **A face is visible** on an image that was not defaced ([Checking image quality](/learn/13-image-quality/)).

@@ -1,0 +1,41 @@
+{
+ "id": "g-sidecars-complete",
+ "kind": "figure",
+ "width": 1500,
+ "height": 900,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1500": "g-sidecars-complete-dark-1500-95f54323.avif",
+    "3000": "g-sidecars-complete-dark-3000-d42273ed.avif"
+   },
+   "webp": {
+    "1500": "g-sidecars-complete-dark-1500-d7876e41.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1500": "g-sidecars-complete-light-1500-3d93f880.avif",
+    "3000": "g-sidecars-complete-light-3000-0257b294.avif"
+   },
+   "webp": {
+    "1500": "g-sidecars-complete-light-1500-5303b94f.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The whole dataset with Also add to existing: every other sidecar already holds what its recording says (none to add), and the BOLD run's, deleted, is new.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.2",
+  "commit": "bd70a80+changes",
+  "date": "2026-10-23",
+  "sample": "multimodal v2"
+ }
+}

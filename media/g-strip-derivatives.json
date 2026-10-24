@@ -1,0 +1,41 @@
+{
+ "id": "g-strip-derivatives",
+ "kind": "figure",
+ "width": 1240,
+ "height": 820,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1240": "g-strip-derivatives-dark-1240-70413bd2.avif",
+    "2480": "g-strip-derivatives-dark-2480-4079ca4e.avif"
+   },
+   "webp": {
+    "1240": "g-strip-derivatives-dark-1240-7e83d44b.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1240": "g-strip-derivatives-light-1240-1e83729a.avif",
+    "2480": "g-strip-derivatives-light-2480-ee217226.avif"
+   },
+   "webp": {
+    "1240": "g-strip-derivatives-light-1240-9146fefc.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Remove the skull, with Include derivatives ticked: the raw T1w, FLAIR and PET, and fMRIPrep's preprocessed T1w, whose brain-only version is written as desc-preprocbrain; every result goes to derivatives/bidsmgr-skullstrip.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.2",
+  "commit": "bd70a80+changes",
+  "date": "2026-10-23",
+  "sample": "multimodal v2"
+ }
+}
