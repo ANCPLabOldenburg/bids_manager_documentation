@@ -1001,7 +1001,7 @@
      "choices": null,
      "default": 0,
      "required": false,
-     "help": "Remove the first N volumes (dummy scans) of every functional run whose drop_volumes cell in the table is empty; a cell wins, 0 included. The image, its sidecar (NumberOfVolumesDiscardedByUser), its events and its physiology then start at the first volume kept."
+     "help": "Remove the first N volumes (dummy scans) of every functional run whose drop_volumes cell in the table is empty; a cell wins, 0 included. The image, its sidecar (NumberOfVolumesDiscardedByUser, the acquisition time), its time in the scans table, its events and the physiology recorded with it then start at the first volume kept."
     },
     {
      "flags": [

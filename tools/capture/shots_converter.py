@@ -591,10 +591,31 @@ def dummy_volumes():
     area.verticalScrollBar().setValue(max(0, top - 52))
     H.pump(settle=20)
     from harness import Region
+    # The marker in the free space right of "of 60 volumes", on the number's row: on the
+    # field's edge it covered the "o" of "of".
+    from PyQt6.QtCore import QPoint
+    from PyQt6.QtWidgets import QLabel
+    of = next(w for w in box.findChildren(QLabel) if w.text().startswith("of "))
+    at = of.mapTo(win, QPoint(of.width() + 8, of.height() // 2 - 10))
     H.take(Shot("l07-dummy-volumes", "The Properties panel of the BOLD run, at Dummy volumes: 4 for this "
-                "run, where Default would take the number in Settings.",
+                "run, where Default would take the number in Settings, and the physiological log "
+                "recorded with it.",
                 win, crop_to=conv._properties_frame,
-                regions=[Region("dummy", "This run's dummy volumes", spin, anchor="r")]))
+                regions=[Region("dummy", "This run's dummy volumes", rect=(at.x(), at.y(), 20, 20),
+                                anchor="c")]))
+    # The run's physiological log: read only, the number is the run's.
+    log = _row(conv, bids_name="sub-001_ses-01_task-rest_physio")
+    _properties(conv, log)
+    box = p.physio_volumes_box
+    box.set_expanded(True)
+    H.pump(settle=20)
+    top = box.mapTo(area.widget(), box.rect().topLeft()).y()
+    area.verticalScrollBar().setValue(max(0, top - 52))
+    H.pump(settle=20)
+    H.take(Shot("l07-dummy-physio", "The Properties panel of the BOLD run's physiological log, at "
+                "Dummy volumes: the 4 removed from the run it was recorded with, and that run.",
+                win, crop_to=conv._properties_frame,
+                regions=[Region("run", "The run it follows", p.physio_run_label, anchor="r")]))
 
 
 # ------------------------------------------------- chapter 8: converting

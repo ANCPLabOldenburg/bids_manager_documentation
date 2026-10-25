@@ -11,20 +11,20 @@
  "files": {
   "dark": {
    "avif": {
-    "355": "l07-dummy-volumes-dark-355-b3a0e2cf.avif",
-    "710": "l07-dummy-volumes-dark-710-5a001116.avif"
+    "355": "l07-dummy-volumes-dark-355-da75524b.avif",
+    "710": "l07-dummy-volumes-dark-710-9ef7192e.avif"
    },
    "webp": {
-    "355": "l07-dummy-volumes-dark-355-32a612b0.webp"
+    "355": "l07-dummy-volumes-dark-355-112d129c.webp"
    }
   },
   "light": {
    "avif": {
-    "355": "l07-dummy-volumes-light-355-5db53c9d.avif",
-    "710": "l07-dummy-volumes-light-710-74944c9a.avif"
+    "355": "l07-dummy-volumes-light-355-77ae9b1b.avif",
+    "710": "l07-dummy-volumes-light-710-eacc9150.avif"
    },
    "webp": {
-    "355": "l07-dummy-volumes-light-355-e6a2cba2.webp"
+    "355": "l07-dummy-volumes-light-355-71f13627.webp"
    }
   }
  },
@@ -32,21 +32,21 @@
   {
    "key": "dummy",
    "label": "This run's dummy volumes",
-   "x": 0.07042,
-   "y": 0.38298,
-   "w": 0.40563,
-   "h": 0.06915,
-   "mx": 0.47042,
-   "my": 0.41755
+   "x": 0.75211,
+   "y": 0.39362,
+   "w": 0.07324,
+   "h": 0.0461,
+   "mx": 0.78873,
+   "my": 0.41667
   }
  ],
- "alt": "The Properties panel of the BOLD run, at Dummy volumes: 4 for this run, where Default would take the number in Settings.",
+ "alt": "The Properties panel of the BOLD run, at Dummy volumes: 4 for this run, where Default would take the number in Settings, and the physiological log recorded with it.",
  "window": false,
  "title": "BIDS-Manager",
  "source": {
   "bids_manager": "1.5.2",
-  "commit": "bd70a80+changes",
-  "date": "2026-10-23",
+  "commit": "d330bee+changes",
+  "date": "2026-10-24",
   "sample": "multimodal v2"
  }
 }

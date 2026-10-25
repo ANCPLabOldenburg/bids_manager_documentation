@@ -24,12 +24,12 @@ The conversion follows **Settings** > **Convert**. The defaults suit the course;
 | **Fieldmap links** | How a fieldmap's `IntendedFor` names the runs it corrects: BIDS URIs (`bids::sub-01/...`) or paths from the subject. With **Also write B0FieldIdentifier and B0FieldSource**, the newer pairing is written too. [Fieldmap links and fMRIPrep](/concepts/fieldmap-links/) says which each fMRIPrep version reads. |
 | **Force EDF** | **Re-encode EEG to EDF** instead of keeping the source format. |
 | **Dummy volumes** | How many volumes to leave out at the start of every functional run, while the signal is not yet steady. **None** by default. A run's own number in **Properties** wins (below). |
-| **Physiology** | How a Siemens physiological log is written. **One table per sampling rate, as recorded** (the default), or one table for the run at the fastest rate, the slower channels either **interpolated** or **as recorded** with `n/a` between their samples. All three are valid BIDS. **Crop to the run** keeps only the samples recorded while the run was acquired. |
+| **Physiology** | How a Siemens physiological log is written. **One table per sampling rate, as recorded** (the default), or one table for the run at the fastest rate, the slower channels either **interpolated** or **as recorded** with `n/a` between their samples. All three are valid BIDS. **Crop to the run** keeps only the samples recorded while the run was acquired. A log with no signal (no sensor attached) becomes the trigger alone. |
 | **Deface** | **Remove faces from anatomical and PET images** before the subject is written, with the engine you choose. Chapter 14 covers defacing after conversion instead. |
 
 {{ figure("l08-settings-physio", "Settings, Convert page: Dummy volumes and Physiology.") }}
 
-A run can have its own number of dummy volumes: select its row in the scan table and set **Dummy volumes** in **Properties**. **Default** takes the number in Settings; `0` keeps every volume of this run whatever the default. The conversion then removes those volumes from the image, records how many in the sidecar (`NumberOfVolumesDiscardedByUser`), moves the run's events by the time they took, and starts its physiology at the first volume kept. The course leaves every volume in.
+A run can have its own number of dummy volumes: select its row in the scan table and set **Dummy volumes** in **Properties**. **Default** takes the number in Settings; `0` keeps every volume of this run whatever the default. The conversion then removes those volumes from the image, records how many in the sidecar (`NumberOfVolumesDiscardedByUser`), gives the run the time of its first volume kept (in the sidecar and in the scans table, as BIDS defines a run's time), moves its events by the time the removed volumes took, and starts the physiological log recorded with it at the same volume. The course leaves every volume in.
 
 :::: columns
 {{ figure("l07-dummy-volumes", "Properties of the BOLD run: 4 dummy volumes for this run.") }}
@@ -40,6 +40,10 @@ The section says whether the number is the default or the run's own, and how man
 
 </div>
 ::::
+
+The log has no number of its own: it follows the run it was recorded with. BIDS Manager finds that run from the acquisition (a log's series is named after its run's and is written when the run ends), so a run renamed in the table keeps its log. The log's **Properties** say which run and how many volumes go:
+
+{{ figure("l07-dummy-physio", "Properties of the BOLD run's physiological log: the 4 volumes of the run it follows.") }}
 
 Further down, **Source data** and the **Post-convert chain**:
 

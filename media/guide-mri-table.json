@@ -34,8 +34,8 @@
  "title": "BIDS-Manager",
  "source": {
   "bids_manager": "1.5.2",
-  "commit": "bd70a80+changes",
-  "date": "2026-10-23",
+  "commit": "d330bee+changes",
+  "date": "2026-10-24",
   "sample": "multimodal v2"
  }
 }

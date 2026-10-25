@@ -3449,31 +3449,31 @@
    "files": {
     "dark": {
      "avif": {
-      "1600": "guide-mri-editor-dark-1600-532a943a.avif",
-      "3200": "guide-mri-editor-dark-3200-ce21f2f5.avif"
+      "1600": "guide-mri-editor-dark-1600-5965cfd3.avif",
+      "3200": "guide-mri-editor-dark-3200-97191310.avif"
      },
      "webp": {
-      "1600": "guide-mri-editor-dark-1600-038025ac.webp"
+      "1600": "guide-mri-editor-dark-1600-4e53b7ce.webp"
      }
     },
     "light": {
      "avif": {
-      "1600": "guide-mri-editor-light-1600-de9426eb.avif",
-      "3200": "guide-mri-editor-light-3200-c155aa6f.avif"
+      "1600": "guide-mri-editor-light-1600-38a33aed.avif",
+      "3200": "guide-mri-editor-light-3200-576e5342.avif"
      },
      "webp": {
-      "1600": "guide-mri-editor-light-1600-1b58302b.webp"
+      "1600": "guide-mri-editor-light-1600-c00bf44f.webp"
      }
     }
    },
-   "bytes": 506140,
+   "bytes": 506137,
    "source": {
     "bids_manager": "1.5.2",
-    "commit": "bd70a80+changes",
-    "date": "2026-10-23",
+    "commit": "d330bee+changes",
+    "date": "2026-10-24",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-23"
+   "published": "2026-10-24"
   },
   "guide-mri-fmap": {
    "kind": "still",
@@ -3500,11 +3500,11 @@
    "bytes": 174373,
    "source": {
     "bids_manager": "1.5.2",
-    "commit": "bd70a80+changes",
-    "date": "2026-10-23",
+    "commit": "d330bee+changes",
+    "date": "2026-10-24",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-23"
+   "published": "2026-10-24"
   },
   "guide-mri-overview": {
    "kind": "still",
@@ -3531,11 +3531,11 @@
    "bytes": 203225,
    "source": {
     "bids_manager": "1.5.2",
-    "commit": "bd70a80+changes",
-    "date": "2026-10-23",
+    "commit": "d330bee+changes",
+    "date": "2026-10-24",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-23"
+   "published": "2026-10-24"
   },
   "guide-mri-table": {
    "kind": "still",
@@ -3562,11 +3562,11 @@
    "bytes": 246811,
    "source": {
     "bids_manager": "1.5.2",
-    "commit": "bd70a80+changes",
-    "date": "2026-10-23",
+    "commit": "d330bee+changes",
+    "date": "2026-10-24",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-23"
+   "published": "2026-10-24"
   },
   "guide-pet-blood": {
    "kind": "still",
@@ -5232,31 +5232,31 @@
    "files": {
     "dark": {
      "avif": {
-      "355": "l07-dummy-volumes-dark-355-b3a0e2cf.avif",
-      "710": "l07-dummy-volumes-dark-710-5a001116.avif"
+      "355": "l07-dummy-volumes-dark-355-da75524b.avif",
+      "710": "l07-dummy-volumes-dark-710-9ef7192e.avif"
      },
      "webp": {
-      "355": "l07-dummy-volumes-dark-355-32a612b0.webp"
+      "355": "l07-dummy-volumes-dark-355-112d129c.webp"
      }
     },
     "light": {
      "avif": {
-      "355": "l07-dummy-volumes-light-355-5db53c9d.avif",
-      "710": "l07-dummy-volumes-light-710-74944c9a.avif"
+      "355": "l07-dummy-volumes-light-355-77ae9b1b.avif",
+      "710": "l07-dummy-volumes-light-710-eacc9150.avif"
      },
      "webp": {
-      "355": "l07-dummy-volumes-light-355-e6a2cba2.webp"
+      "355": "l07-dummy-volumes-light-355-71f13627.webp"
      }
     }
    },
-   "bytes": 116852,
+   "bytes": 119138,
    "source": {
     "bids_manager": "1.5.2",
-    "commit": "bd70a80+changes",
-    "date": "2026-10-23",
+    "commit": "d330bee+changes",
+    "date": "2026-10-24",
     "sample": "multimodal v2"
    },
-   "published": "2026-10-23"
+   "published": "2026-10-24"
   },
   "l08-settings-physio": {
    "kind": "still",
@@ -5363,6 +5363,68 @@
     "sample": "multimodal v2"
    },
    "published": "2026-10-23"
+  },
+  "guide-mri-physio": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "758": "guide-mri-physio-dark-758-bb87a53b.avif",
+      "1516": "guide-mri-physio-dark-1516-ad3c26db.avif"
+     },
+     "webp": {
+      "758": "guide-mri-physio-dark-758-30e66b1a.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "758": "guide-mri-physio-light-758-eeba68fb.avif",
+      "1516": "guide-mri-physio-light-1516-2035fbc0.avif"
+     },
+     "webp": {
+      "758": "guide-mri-physio-light-758-13ff9749.webp"
+     }
+    }
+   },
+   "bytes": 133208,
+   "source": {
+    "bids_manager": "1.5.2",
+    "commit": "d330bee+changes",
+    "date": "2026-10-24",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-24"
+  },
+  "l07-dummy-physio": {
+   "kind": "still",
+   "files": {
+    "dark": {
+     "avif": {
+      "355": "l07-dummy-physio-dark-355-1e7518a1.avif",
+      "710": "l07-dummy-physio-dark-710-3d8db4f8.avif"
+     },
+     "webp": {
+      "355": "l07-dummy-physio-dark-355-89da9705.webp"
+     }
+    },
+    "light": {
+     "avif": {
+      "355": "l07-dummy-physio-light-355-c3ccd7fc.avif",
+      "710": "l07-dummy-physio-light-710-c5cc7ad9.avif"
+     },
+     "webp": {
+      "355": "l07-dummy-physio-light-355-9f46f716.webp"
+     }
+    }
+   },
+   "bytes": 129405,
+   "source": {
+    "bids_manager": "1.5.2",
+    "commit": "d330bee+changes",
+    "date": "2026-10-24",
+    "sample": "multimodal v2"
+   },
+   "published": "2026-10-24"
   }
  }
 }

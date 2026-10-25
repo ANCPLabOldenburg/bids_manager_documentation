@@ -1,0 +1,52 @@
+{
+ "id": "l07-dummy-physio",
+ "kind": "figure",
+ "width": 355,
+ "height": 564,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "355": "l07-dummy-physio-dark-355-1e7518a1.avif",
+    "710": "l07-dummy-physio-dark-710-3d8db4f8.avif"
+   },
+   "webp": {
+    "355": "l07-dummy-physio-dark-355-89da9705.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "355": "l07-dummy-physio-light-355-c3ccd7fc.avif",
+    "710": "l07-dummy-physio-light-710-c5cc7ad9.avif"
+   },
+   "webp": {
+    "355": "l07-dummy-physio-light-355-9f46f716.webp"
+   }
+  }
+ },
+ "regions": [
+  {
+   "key": "run",
+   "label": "The run it follows",
+   "x": 0.16056,
+   "y": 0.30142,
+   "w": 0.70986,
+   "h": 0.03901,
+   "mx": 0.86479,
+   "my": 0.32092
+  }
+ ],
+ "alt": "The Properties panel of the BOLD run's physiological log, at Dummy volumes: the 4 removed from the run it was recorded with, and that run.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.2",
+  "commit": "d330bee+changes",
+  "date": "2026-10-24",
+  "sample": "multimodal v2"
+ }
+}
