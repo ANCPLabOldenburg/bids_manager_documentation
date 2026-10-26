@@ -226,7 +226,7 @@
       },
       {
        "label": "Volume of Interest",
-       "tip": "Volume of Interest (voi-): The voi- entity can be used to distinguish acquisitions localized to different regions. The label SHOULD be the name of the body region or part scanned. If used, the fields \"BodyPart\" and \"BodyPartDetails\" MUST be defined in the JSON file.",
+       "tip": "Volume of Interest (voi-): The voi- entity can be used to distinguish acquisitions localized to different regions. The label SHOULD be the name of the body region or part scanned. If used, the fields \"BodyPart\" and \"BodyPartDetails\" MUST be defined in the JSON file. BodyPartDetailsOntology is OPTIONAL to also include.",
        "default": "Off",
        "choices": null
       },
@@ -274,7 +274,7 @@
       },
       {
        "label": "Echo",
-       "tip": "Echo (echo-): If files belonging to an entity-linked file collection are acquired at different echo times, the echo- entity MUST be used to distinguish individual files. This entity represents the \"EchoTime\" metadata field. Therefore, if the echo- entity is present in a filename, \"EchoTime\"",
+       "tip": "Echo (echo-): If files belonging to an entity-linked file collection are acquired at different echo times, the echo- entity MUST be used to distinguish individual files. This entity represents the \"EchoTime\" metadata field.",
        "default": "Off",
        "choices": null
       },
@@ -370,7 +370,7 @@
       },
       {
        "label": "Echo",
-       "tip": "Echo (echo-): the sequence name's value wins. If files belonging to an entity-linked file collection are acquired at different echo times, the echo- entity MUST be used to distinguish individual files. This entity represents the \"EchoTime\" metadata field. Therefore, if the echo- entity is present in a filename, \"EchoTime\"",
+       "tip": "Echo (echo-): the sequence name's value wins. If files belonging to an entity-linked file collection are acquired at different echo times, the echo- entity MUST be used to distinguish individual files. This entity represents the \"EchoTime\" metadata field.",
        "default": "Off",
        "choices": null
       },

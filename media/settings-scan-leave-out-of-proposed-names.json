@@ -34,7 +34,7 @@
  "title": "BIDS-Manager",
  "source": {
   "bids_manager": "1.5.2",
-  "commit": "556d98c",
+  "commit": "059339b",
   "date": "2026-10-26",
   "sample": "multimodal v2"
  }

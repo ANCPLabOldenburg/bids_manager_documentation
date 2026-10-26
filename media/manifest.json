@@ -5450,7 +5450,7 @@
    "bytes": 169220,
    "source": {
     "bids_manager": "1.5.2",
-    "commit": "556d98c",
+    "commit": "059339b",
     "date": "2026-10-26",
     "sample": "multimodal v2"
    },
@@ -5481,7 +5481,7 @@
    "bytes": 214745,
    "source": {
     "bids_manager": "1.5.2",
-    "commit": "556d98c",
+    "commit": "059339b",
     "date": "2026-10-26",
     "sample": "multimodal v2"
    },
@@ -5512,7 +5512,7 @@
    "bytes": 169446,
    "source": {
     "bids_manager": "1.5.2",
-    "commit": "556d98c",
+    "commit": "059339b",
     "date": "2026-10-26",
     "sample": "multimodal v2"
    },
@@ -5543,7 +5543,7 @@
    "bytes": 178592,
    "source": {
     "bids_manager": "1.5.2",
-    "commit": "556d98c",
+    "commit": "059339b",
     "date": "2026-10-26",
     "sample": "multimodal v2"
    },
@@ -5574,7 +5574,7 @@
    "bytes": 193681,
    "source": {
     "bids_manager": "1.5.2",
-    "commit": "556d98c",
+    "commit": "059339b",
     "date": "2026-10-26",
     "sample": "multimodal v2"
    },
@@ -5605,7 +5605,7 @@
    "bytes": 246509,
    "source": {
     "bids_manager": "1.5.2",
-    "commit": "556d98c",
+    "commit": "059339b",
     "date": "2026-10-26",
     "sample": "multimodal v2"
    },
@@ -5636,7 +5636,7 @@
    "bytes": 166483,
    "source": {
     "bids_manager": "1.5.2",
-    "commit": "556d98c",
+    "commit": "059339b",
     "date": "2026-10-26",
     "sample": "multimodal v2"
    },
@@ -5667,7 +5667,7 @@
    "bytes": 199431,
    "source": {
     "bids_manager": "1.5.2",
-    "commit": "556d98c",
+    "commit": "059339b",
     "date": "2026-10-26",
     "sample": "multimodal v2"
    },
@@ -5698,7 +5698,7 @@
    "bytes": 185659,
    "source": {
     "bids_manager": "1.5.2",
-    "commit": "556d98c",
+    "commit": "059339b",
     "date": "2026-10-26",
     "sample": "multimodal v2"
    },
@@ -5729,7 +5729,7 @@
    "bytes": 181659,
    "source": {
     "bids_manager": "1.5.2",
-    "commit": "556d98c",
+    "commit": "059339b",
     "date": "2026-10-26",
     "sample": "multimodal v2"
    },
@@ -5760,7 +5760,7 @@
    "bytes": 324302,
    "source": {
     "bids_manager": "1.5.2",
-    "commit": "556d98c",
+    "commit": "059339b",
     "date": "2026-10-26",
     "sample": "multimodal v2"
    },
@@ -5771,27 +5771,27 @@
    "files": {
     "dark": {
      "avif": {
-      "1040": "settings-scan-rules-custom-sequence-hints-dark-1040-9491152a.avif",
-      "2080": "settings-scan-rules-custom-sequence-hints-dark-2080-0fe4f871.avif"
+      "1040": "settings-scan-rules-custom-sequence-hints-dark-1040-fb7b6dd0.avif",
+      "2080": "settings-scan-rules-custom-sequence-hints-dark-2080-8799db39.avif"
      },
      "webp": {
-      "1040": "settings-scan-rules-custom-sequence-hints-dark-1040-bc0190c1.webp"
+      "1040": "settings-scan-rules-custom-sequence-hints-dark-1040-6edf052d.webp"
      }
     },
     "light": {
      "avif": {
-      "1040": "settings-scan-rules-custom-sequence-hints-light-1040-eaffa827.avif",
-      "2080": "settings-scan-rules-custom-sequence-hints-light-2080-5f012221.avif"
+      "1040": "settings-scan-rules-custom-sequence-hints-light-1040-fb7961c5.avif",
+      "2080": "settings-scan-rules-custom-sequence-hints-light-2080-5a411ae4.avif"
      },
      "webp": {
-      "1040": "settings-scan-rules-custom-sequence-hints-light-1040-13a7cf58.webp"
+      "1040": "settings-scan-rules-custom-sequence-hints-light-1040-13b60087.webp"
      }
     }
    },
-   "bytes": 254940,
+   "bytes": 257598,
    "source": {
     "bids_manager": "1.5.2",
-    "commit": "556d98c",
+    "commit": "059339b",
     "date": "2026-10-26",
     "sample": "multimodal v2"
    },
@@ -5822,7 +5822,7 @@
    "bytes": 160983,
    "source": {
     "bids_manager": "1.5.2",
-    "commit": "556d98c",
+    "commit": "059339b",
     "date": "2026-10-26",
     "sample": "multimodal v2"
    },
@@ -5853,7 +5853,7 @@
    "bytes": 151827,
    "source": {
     "bids_manager": "1.5.2",
-    "commit": "556d98c",
+    "commit": "059339b",
     "date": "2026-10-26",
     "sample": "multimodal v2"
    },

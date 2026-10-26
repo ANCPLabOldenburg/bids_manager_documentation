@@ -11,20 +11,20 @@
  "files": {
   "dark": {
    "avif": {
-    "1040": "settings-scan-rules-custom-sequence-hints-dark-1040-9491152a.avif",
-    "2080": "settings-scan-rules-custom-sequence-hints-dark-2080-0fe4f871.avif"
+    "1040": "settings-scan-rules-custom-sequence-hints-dark-1040-fb7b6dd0.avif",
+    "2080": "settings-scan-rules-custom-sequence-hints-dark-2080-8799db39.avif"
    },
    "webp": {
-    "1040": "settings-scan-rules-custom-sequence-hints-dark-1040-bc0190c1.webp"
+    "1040": "settings-scan-rules-custom-sequence-hints-dark-1040-6edf052d.webp"
    }
   },
   "light": {
    "avif": {
-    "1040": "settings-scan-rules-custom-sequence-hints-light-1040-eaffa827.avif",
-    "2080": "settings-scan-rules-custom-sequence-hints-light-2080-5f012221.avif"
+    "1040": "settings-scan-rules-custom-sequence-hints-light-1040-fb7961c5.avif",
+    "2080": "settings-scan-rules-custom-sequence-hints-light-2080-5a411ae4.avif"
    },
    "webp": {
-    "1040": "settings-scan-rules-custom-sequence-hints-light-1040-13a7cf58.webp"
+    "1040": "settings-scan-rules-custom-sequence-hints-light-1040-13b60087.webp"
    }
   }
  },
@@ -34,7 +34,7 @@
  "title": "BIDS-Manager",
  "source": {
   "bids_manager": "1.5.2",
-  "commit": "556d98c",
+  "commit": "059339b",
   "date": "2026-10-26",
   "sample": "multimodal v2"
  }

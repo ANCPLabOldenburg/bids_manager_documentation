@@ -58,6 +58,8 @@ A guide that shows you which button to press next; physiology from Siemens scann
 - **The four ECG leads of a CMRR log are four columns.** They were written as one column four times too long, the leads interleaved, and the trigger was a constant 1, a flat line.
 - **Acquisition values land in the recording's sidecar only.** With dataset or datatype values in the recording metadata file, `bidsmgr-metadata` wrote fields such as `Manufacturer`, `EEGReference` and `InstitutionName` into every sidecar beside an EEG or MEG recording: its events, channels, electrodes and coordinate system, and the physiology and eye-tracking sidecars. The GUI's **Dataset metadata** was not affected ([issue 187](https://github.com/ANCPLabOldenburg/BIDS-Manager/issues/187)).
 
+- **Settings show their texts whole.** The help text of each entity on **Settings** > **Scan** ended mid-word with its formatting marks showing; it now ends on a whole sentence. The column titles of the built-in classifier table on **Scan rules** are no longer cut.
+
 <p class="rel-kind k-note">Changed</p>
 
 - **A physiological log is one table per sampling rate** by default: `_recording-ecg_`, `_recording-cardiac_` and `_recording-respiratory_physio.tsv.gz`, each with the trigger last. 1.5.1 wrote one table per signal, the trigger on its own.
