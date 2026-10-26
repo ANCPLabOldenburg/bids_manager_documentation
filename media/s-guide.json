@@ -28,19 +28,19 @@
  ],
  "files": {
   "dark": {
-   "mp4": "s-guide-dark-cef5f687.mp4",
-   "poster": "s-guide-dark-poster-a33e2a97.webp"
+   "mp4": "s-guide-dark-d363fc88.mp4",
+   "poster": "s-guide-dark-poster-d6f31b97.webp"
   },
   "light": {
-   "mp4": "s-guide-light-1fd80026.mp4",
-   "poster": "s-guide-light-poster-2c01bbcb.webp"
+   "mp4": "s-guide-light-3dfae43f.mp4",
+   "poster": "s-guide-light-poster-1250673a.webp"
   }
  },
  "alt": "Switching the Guide on in the Converter: it asks what to do; choosing Check and edit the table rings the table; a click on a row moves the card to Properties; Next moves it to Structure.",
  "source": {
   "bids_manager": "1.5.2",
-  "commit": "bd70a80+changes",
-  "date": "2026-10-23",
+  "commit": "556d98c",
+  "date": "2026-10-26",
   "sample": "multimodal v2"
  }
 }

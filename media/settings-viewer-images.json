@@ -1,0 +1,41 @@
+{
+ "id": "settings-viewer-images",
+ "kind": "figure",
+ "width": 900,
+ "height": 760,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "900": "settings-viewer-images-dark-900-4214a7d2.avif",
+    "1800": "settings-viewer-images-dark-1800-aab0ec59.avif"
+   },
+   "webp": {
+    "900": "settings-viewer-images-dark-900-0e46402d.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "900": "settings-viewer-images-light-900-369c103c.avif",
+    "1800": "settings-viewer-images-light-1800-a1f04ce6.avif"
+   },
+   "webp": {
+    "900": "settings-viewer-images-light-900-26c06789.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, Viewer page, scrolled down: Images.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.2",
+  "commit": "556d98c",
+  "date": "2026-10-26",
+  "sample": "multimodal v2"
+ }
+}

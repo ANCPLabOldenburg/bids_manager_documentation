@@ -216,6 +216,25 @@ def _model_page(title, description, sections) -> dict:
     return {"title": title, "description": clean(description), "groups": groups}
 
 
+def tidy_tip(text) -> str:
+    """A tooltip as a table can show it.
+
+    The entity checkboxes on Settings > Scan carry the schema's description
+    cut at 300 characters by the application, mid-word, with its Markdown
+    marks: a cut text ends at its last whole sentence here, backticks and
+    asterisks go, and the ``Name (key-)`` heading is followed by a colon.
+    """
+    s = clean(text)
+    s = s.replace("`", "")
+    s = re.sub(r"\*+([^*]+)\*+", r"\1", s)
+    s = re.sub(r"^([^()]+ \([a-z]+-\)) (?=[A-Z])", r"\1: ", s)
+    if s and s[-1] not in '.!?)"':
+        end = max(s.rfind(". "), s.rfind("! "), s.rfind("? "))
+        if end > 0:
+            s = s[:end + 1]
+    return s
+
+
 def settings(app) -> dict:
     from PyQt6.QtWidgets import (QAbstractButton, QCheckBox, QComboBox, QDoubleSpinBox, QFormLayout,
                                  QGroupBox, QLabel, QLineEdit, QListWidget, QPushButton, QRadioButton,
@@ -237,7 +256,7 @@ def settings(app) -> dict:
         seen = set()
 
         def field_item(label_text, w):
-            tip = clean(w.toolTip())
+            tip = tidy_tip(w.toolTip())
             if isinstance(w, QComboBox):
                 choices = [clean(w.itemText(k)) for k in range(w.count())]
                 return {"label": clean(label_text), "tip": tip, "default": clean(w.currentText()),

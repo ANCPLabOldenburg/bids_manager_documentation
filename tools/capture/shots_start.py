@@ -104,7 +104,7 @@ def open_question():
     from PyQt6.QtCore import QTimer
     from PyQt6.QtWidgets import QApplication
     win = H.main_window("welcome")
-    folder = H.STUDIES / "BIDS_Manager_multimodal_sample_v2"
+    folder = H.STUDIES / "BIDS_Manager_multimodal_sample_v3"
     got = {}
 
     def grab():

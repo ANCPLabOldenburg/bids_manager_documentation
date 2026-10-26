@@ -4,7 +4,7 @@ display_title: The *scan table*
 chapter: 4
 lede: The table between the scan and the conversion is where you decide what the dataset will be. Read its columns and row states, edit a cell, and set one subject and one session for the whole sample in two edits.
 time: 15 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before

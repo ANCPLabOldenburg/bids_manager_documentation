@@ -1,6 +1,6 @@
 ---
 title: Sample data
-lede: Six raw datasets to learn BIDS Manager on, each with a guide that converts it step by step. The course uses the multimodal sample; the others show one kind of data in depth.
+lede: Seven raw datasets to learn BIDS Manager on, each with a guide that converts it step by step. The course uses the multimodal sample; multimodal sample 2 is the same participant recorded coherently; the others show one kind of data in depth.
 description: The BIDS Manager sample datasets, what each one shows, and where to download them.
 ---
 
@@ -9,6 +9,7 @@ description: The BIDS Manager sample datasets, what each one shows, and where to
 | Sample | What it holds | Used in | Download |
 |---|---|---|---|
 | [Multimodal](#multimodal) | One participant: MRI, MR spectroscopy, PET, EEG, MEG and eye tracking | [The course](/learn/), [Multimodal guide](/guides/multimodal/), [Eye tracking](/guides/eye-tracking/) | {{ site.downloads.multimodal.size }} |
+| [Multimodal 2](#multimodal-2) | The same recordings as one participant over four visits: one identity, real dates | [Multimodal guide](/guides/multimodal/) | {{ site.downloads.multimodal2.size }} |
 | [MRI](#mri) | Two participants on a Siemens scanner, one of them in two sessions | [MRI guide](/guides/mri/) | {{ site.downloads.mri.size }} |
 | [MRI, advanced](#mri-advanced) | Two participants, more sequences, spectroscopy and scanner-made maps | [Advanced MRI guide](/guides/mri-advanced/) | {{ site.downloads.mri_advanced.size }} |
 | [PET](#pet) | One FDG phantom scan with blood curves and a dose sheet, and one ECAT scan | [PET guide](/guides/pet/) | {{ site.downloads.pet.size }} |
@@ -31,7 +32,7 @@ Run `unzip <file>.zip` in a terminal, or use your file manager's **Extract Here*
 
 ## Multimodal {#multimodal}
 
-The course's dataset: one participant's folder with recordings from six kinds of acquisition, so one scan produces a genuinely multimodal scan table.
+The course's dataset (version 3): one participant's folder with recordings from six kinds of acquisition, so one scan produces a genuinely multimodal scan table. Each source names the participant in its own way, which the course reconciles.
 
 {{ download("multimodal", "Download the multimodal sample") }}
 
@@ -53,9 +54,35 @@ dose_sheet.csv    the PET fields no scanner records
 |---|---|
 | **Size** | {{ site.downloads.multimodal.size }} as a zip, {{ site.downloads.multimodal.unpacked }} unpacked |
 | **Scan** | {{ m("scan.rows") }} rows, {{ m("scan.included") }} to convert |
-| **Shows** | Reconciling one participant across sources, fieldmaps linked to the runs they correct, physiological recordings split by signal, spectroscopy, PET metadata from a dose sheet, eye tracking |
-| **Note** | A composite: real recordings from different acquisitions in one participant's folder. The PET scan is of a phantom. The 4-D MRI series and the MEG recording are shortened. |
+| **Shows** | Reconciling one participant across sources, fieldmaps linked to the runs they correct, physiological recordings one table per sampling rate, spectroscopy, PET metadata from a dose sheet, eye tracking |
+| **Note** | A composite: real recordings from different acquisitions in one participant's folder. The PET scan is of a phantom. The 4-D MRI series and the MEG recording are shortened; the BOLD run keeps its first 60 volumes and, since version 3, its physiological log the same 60 (version 2 kept all 100, so its trigger marked 40 volumes the image does not have). |
 | **Sources and licences** | MRI and spectroscopy: the neuroimaging unit of the University of Oldenburg; the participant consented to their face being shown. PET: OpenNeuro PET brain phantoms ([10.70883/RGN3768](https://doi.org/10.70883/RGN3768)), CC BY 4.0. EEG: PhysioNet EEG Motor Movement/Imagery Database, ODC-By 1.0. Eye tracking: the eyelinkio test recording, BSD 3-Clause. The licence files are in the zip. |
+
+## Multimodal 2 {#multimodal-2}
+
+The same recordings as the multimodal sample, made coherent the way one participant is recorded in a real multimodal study: every file names the participant, `OL_3844`, in the field its format has for it, and every file was made on the day of its visit. Use it to see a multimodal study with nothing to reconcile but the session labels.
+
+{{ download("multimodal2", "Download the multimodal sample 2") }}
+
+```text
+raw/sub-001/
+├── mri/          visit 1, 14 Sep 2023: the MRI session of the multimodal sample
+├── mrs/          visit 1: spectroscopy, the session's last two series
+├── eyetracking/  visit 1: recording through the resting BOLD run
+├── eeg/          visit 2, 21 Sep 2023: rest, then motor imagery
+├── meg/          visit 3, 28 Sep 2023: rest, 30 s
+└── pet/          visit 4, 5 Oct 2023: FDG, at another site
+participants.csv  the participant's demographics, as the headers state them
+dose_sheet.csv    the PET fields no scanner records, consistent with the dose
+```
+
+| | |
+|---|---|
+| **Size** | {{ site.downloads.multimodal2.size }} as a zip, {{ site.downloads.multimodal2.unpacked }} unpacked |
+| **Scan** | 19 rows, 15 to convert; one subject, `sub-001`, for every recording |
+| **Shows** | One identity across DICOM, EDF+ and FIF headers; an eye tracker given its folder's participant; sessions found per source from real dates, to name in the table; realistic PET dose values |
+| **Note** | A composite made coherent: the recordings of the multimodal sample, with the identity fields and dates of the spectroscopy, PET, EEG, MEG and eye tracking changed to one participant and four visits (listed in its README). Every image, signal and spectrum is as recorded. The PET scan is of a phantom. |
+| **Sources and licences** | As the multimodal sample. The licence files are in the zip. |
 
 ## MRI {#mri}
 

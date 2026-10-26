@@ -12,20 +12,20 @@
  "files": {
   "dark": {
    "mp4": "u-whats-new-dark-d8ec78a7.mp4",
-   "webm": "u-whats-new-dark-2bcabcf7.webm",
+   "webm": "u-whats-new-dark-bf756822.webm",
    "poster": "u-whats-new-dark-poster-884e0263.webp"
   },
   "light": {
    "mp4": "u-whats-new-light-9e42d4e9.mp4",
-   "webm": "u-whats-new-light-4e64007b.webm",
+   "webm": "u-whats-new-light-e26666ef.webm",
    "poster": "u-whats-new-light-poster-4166b368.webp"
   }
  },
  "alt": "The What's new window of BIDS Manager 1.5.2 playing its animations: the guide, then the physiology of a CMRR log, then Sidecars written from the recordings, picked from the list.",
  "source": {
   "bids_manager": "1.5.2",
-  "commit": "bd70a80+changes",
-  "date": "2026-10-23",
+  "commit": "556d98c",
+  "date": "2026-10-26",
   "sample": "multimodal v2"
  }
 }

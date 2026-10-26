@@ -6,7 +6,7 @@ group: Curating a dataset
 lede: Remove the face from anatomical and PET images before a dataset is shared, check the result, and take it back if needed. Or keep only the brain, written as a derivative.
 description: Deface anatomical images, skull strip, compare and restore with BIDS Manager.
 time: 15 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before

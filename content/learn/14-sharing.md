@@ -3,7 +3,7 @@ title: Sharing a dataset
 chapter: 14
 lede: Before a dataset leaves your computer, make sure nothing in it identifies a person, that it says what it is and how to cite it, and that it validates. BIDS Manager has removed most identifiers already; this chapter finds and removes the rest.
 time: 20 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before

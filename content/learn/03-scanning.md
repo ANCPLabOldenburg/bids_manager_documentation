@@ -3,12 +3,12 @@ title: Scanning raw data
 chapter: 3
 lede: Point a scan at the sample's raw folder and read what it found. A scan reads every file's header, groups the recordings by participant and session, and proposes a BIDS name for each one. It writes nothing into your raw data.
 time: 15 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before
 - The project `multimodal_study` is open in the **Converter** (chapter 2).
-- The multimodal sample is unpacked. Its raw data is the folder `raw` inside `BIDS_Manager_multimodal_sample_v2`.
+- The multimodal sample is unpacked. Its raw data is the folder `raw` inside `BIDS_Manager_multimodal_sample_v3`.
 :::
 
 ## The raw folder

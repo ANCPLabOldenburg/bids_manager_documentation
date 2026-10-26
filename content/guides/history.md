@@ -6,7 +6,7 @@ group: Curating a dataset
 lede: Every change the Editor makes to a dataset is one step of its history, kept with the files as they were. Undo walks back through it, Redo walks forward again, and the history lists every step to go back several at once.
 description: Undo and redo in BIDS Manager's Editor: what is recorded, the history list, several steps at once, changes made outside the app, and freeing the space.
 time: 10 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before

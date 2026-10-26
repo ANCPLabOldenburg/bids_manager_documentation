@@ -3,7 +3,7 @@ title: Viewing data
 chapter: 12
 lede: Look at every kind of file the dataset holds without leaving BIDS Manager. One viewer opens images, signals and spectra; the Editor picks the right one for the file you select.
 time: 20 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before

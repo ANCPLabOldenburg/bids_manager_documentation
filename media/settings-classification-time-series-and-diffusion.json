@@ -1,0 +1,41 @@
+{
+ "id": "settings-classification-time-series-and-diffusion",
+ "kind": "figure",
+ "width": 900,
+ "height": 760,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "900": "settings-classification-time-series-and-diffusion-dark-900-ab8e2632.avif",
+    "1800": "settings-classification-time-series-and-diffusion-dark-1800-07a4ecb6.avif"
+   },
+   "webp": {
+    "900": "settings-classification-time-series-and-diffusion-dark-900-14706095.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "900": "settings-classification-time-series-and-diffusion-light-900-590b5997.avif",
+    "1800": "settings-classification-time-series-and-diffusion-light-1800-7fee4d2a.avif"
+   },
+   "webp": {
+    "900": "settings-classification-time-series-and-diffusion-light-900-4eb89f13.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, Classification page, scrolled down: Time series and diffusion.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.2",
+  "commit": "556d98c",
+  "date": "2026-10-26",
+  "sample": "multimodal v2"
+ }
+}

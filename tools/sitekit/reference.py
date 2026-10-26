@@ -200,16 +200,23 @@ class Macros:
                 self.problems.append(f"{self.page}: Settings > {page} has no {label!r}")
         return f"<strong>{_esc(label)}</strong>"
 
-    def settings(self, title: str) -> str:
+    def settings(self, title: str, figures: Optional[dict] = None) -> str:
+        """A Settings page's tables, one per group; ``figures`` maps a group's
+        title to a figure shown under its heading (the page scrolled to it)."""
         p = self._settings_page(title)
         if p is None:
             return ""
+        figures = dict(figures or {})
+        for name in set(figures) - {g.get("title") for g in p["groups"]}:
+            self.problems.append(f"{self.page}: Settings > {title} has no group {name!r} for its figure")
         out = []
         for g in p["groups"]:
             if g.get("title"):
                 out.append(f'<h3 id="{slugify(title)}-{slugify(g["title"])}">{_esc(g["title"])}</h3>')
             if g.get("hint"):
                 out.append(f'<p class="muted" data-generated>{_esc(g["hint"])}</p>')
+            if g.get("title") in figures:
+                out.append(figures[g["title"]])
             rows = []
             for it in g["items"]:
                 if it.get("table"):

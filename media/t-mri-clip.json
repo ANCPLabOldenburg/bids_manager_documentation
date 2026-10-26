@@ -25,20 +25,20 @@
  "files": {
   "dark": {
    "mp4": "t-mri-clip-dark-f81c05b3.mp4",
-   "webm": "t-mri-clip-dark-1cd3fca3.webm",
+   "webm": "t-mri-clip-dark-bda66dc3.webm",
    "poster": "t-mri-clip-dark-poster-6d8c9537.webp"
   },
   "light": {
    "mp4": "t-mri-clip-light-bde6ea96.mp4",
-   "webm": "t-mri-clip-light-3a626db6.webm",
+   "webm": "t-mri-clip-light-aa17eb67.webm",
    "poster": "t-mri-clip-light-poster-68ba2dd9.webp"
   }
  },
  "alt": "Clip planes on the T1w: an axial cut through the crosshair moving down, then a sagittal one, then the corner cut at the crosshair, while the camera swings.",
  "source": {
   "bids_manager": "1.5.2",
-  "commit": "bd70a80+changes",
-  "date": "2026-10-23",
+  "commit": "556d98c",
+  "date": "2026-10-26",
   "sample": "multimodal v2 (OL_3844, consented)"
  }
 }

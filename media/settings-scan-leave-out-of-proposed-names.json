@@ -1,0 +1,41 @@
+{
+ "id": "settings-scan-leave-out-of-proposed-names",
+ "kind": "figure",
+ "width": 1040,
+ "height": 866,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1040": "settings-scan-leave-out-of-proposed-names-dark-1040-b41a905f.avif",
+    "2080": "settings-scan-leave-out-of-proposed-names-dark-2080-7ed33969.avif"
+   },
+   "webp": {
+    "1040": "settings-scan-leave-out-of-proposed-names-dark-1040-325ac263.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1040": "settings-scan-leave-out-of-proposed-names-light-1040-84d66fe4.avif",
+    "2080": "settings-scan-leave-out-of-proposed-names-light-2080-b7d8bed6.avif"
+   },
+   "webp": {
+    "1040": "settings-scan-leave-out-of-proposed-names-light-1040-86ea845f.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, Scan page, scrolled down: Leave out of proposed names and Entities the sequence name decides.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.2",
+  "commit": "556d98c",
+  "date": "2026-10-26",
+  "sample": "multimodal v2"
+ }
+}

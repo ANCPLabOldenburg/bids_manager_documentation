@@ -3,7 +3,7 @@ title: Checking image quality
 chapter: 13
 lede: Run the fast quality check on an anatomical image, read the plots under a BOLD run, check every image of the dataset at once, and look at an MEG recording's channels. The checks run on your computer in seconds and change nothing in the data.
 time: 20 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before

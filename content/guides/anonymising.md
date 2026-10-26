@@ -6,7 +6,7 @@ group: Curating a dataset
 lede: Remove what identifies a participant from every kind of file a dataset holds, sidecars, tables, recording headers and photographs, choosing what by purpose and where by subject and session, and read every change before it is written.
 description: Anonymise a BIDS dataset's metadata with BIDS Manager: presets, categories, scope, dates shifted with their intervals kept, undo, and the command line.
 time: 20 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before

@@ -6,7 +6,7 @@ group: Kinds of data
 lede: Convert an EyeLink recording into BIDS physiological recordings, one pair of files per eye, and pair it with the run it was recorded during, so its files sit beside the run, and give the message that marks the run's start so the recording is placed on the run's clock.
 description: Convert SR Research EyeLink recordings to BIDS with BIDS Manager, and pair them with an MRI run.
 time: 15 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 measured: eye
 ---
 

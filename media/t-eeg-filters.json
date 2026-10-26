@@ -37,15 +37,15 @@
   },
   "light": {
    "mp4": "t-eeg-filters-light-12d4dbf1.mp4",
-   "webm": "t-eeg-filters-light-7ba9147d.webm",
+   "webm": "t-eeg-filters-light-a15a441a.webm",
    "poster": "t-eeg-filters-light-poster-e8b5283a.webp"
   }
  },
  "alt": "The motor-imagery EEG: unfiltered, then 1 to 40 Hz, then 8 to 13 Hz (the alpha band), with the task's events drawn over the traces, and a page forward in time.",
  "source": {
   "bids_manager": "1.5.2",
-  "commit": "bd70a80+changes",
-  "date": "2026-10-23",
+  "commit": "556d98c",
+  "date": "2026-10-26",
   "sample": "multimodal v2 (PhysioNet EEG, ODC-By 1.0)"
  }
 }

@@ -3,7 +3,7 @@ title: Editing metadata
 chapter: 10
 lede: Edit a sidecar as a form that knows the standard, or as the plain tree of keys the file holds; search it; edit a table; and undo. The course answers two of the sample's TODO placeholders, the task description and the instructions of the resting run.
 time: 15 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before

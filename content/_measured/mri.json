@@ -2,7 +2,7 @@
  "scan": {
   "rows": 33,
   "included": 21,
-  "seconds": 22.7,
+  "seconds": 24.1,
   "subjects": [
    "sub-001",
    "sub-002"
@@ -20,7 +20,7 @@
  },
  "convert": {
   "rc": 0,
-  "seconds": 10.5
+  "seconds": 11.1
  },
  "converted": {
   "files": 70,
@@ -36,7 +36,7 @@
  },
  "source": {
   "bids_manager": "1.5.2",
-  "commit": "d330bee+changes",
-  "date": "2026-10-24"
+  "commit": "556d98c",
+  "date": "2026-10-26"
  }
 }

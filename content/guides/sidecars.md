@@ -6,7 +6,7 @@ group: Curating a dataset
 lede: A sidecar deleted by accident, a dataset that never had them, or sidecars that lack fields their recordings could give. BIDS Manager writes them again from what is still there, field by field, and says where it read each one.
 description: Write missing .json sidecars, or complete existing ones, from the source data, the file's own header, your answers and the sidecars that link to it, in the Editor or with bidsmgr-sidecars.
 time: 10 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before

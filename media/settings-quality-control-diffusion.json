@@ -1,0 +1,41 @@
+{
+ "id": "settings-quality-control-diffusion",
+ "kind": "figure",
+ "width": 960,
+ "height": 893,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "960": "settings-quality-control-diffusion-dark-960-5c54182a.avif",
+    "1920": "settings-quality-control-diffusion-dark-1920-91b79984.avif"
+   },
+   "webp": {
+    "960": "settings-quality-control-diffusion-dark-960-60ad8e3c.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "960": "settings-quality-control-diffusion-light-960-62099408.avif",
+    "1920": "settings-quality-control-diffusion-light-1920-6e501974.avif"
+   },
+   "webp": {
+    "960": "settings-quality-control-diffusion-light-960-e3881371.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, Quality control page, scrolled down: Diffusion.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.2",
+  "commit": "556d98c",
+  "date": "2026-10-26",
+  "sample": "multimodal v2"
+ }
+}

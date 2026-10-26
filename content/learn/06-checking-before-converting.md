@@ -3,7 +3,7 @@ title: Checking before you convert
 chapter: 6
 lede: See the dataset the conversion will write before a single file is written, and what differs from one subject to the next. Two places do this: the three views of the panel beside the table, and the Overview in place of the table.
 time: 15 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before

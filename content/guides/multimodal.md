@@ -6,7 +6,7 @@ group: Kinds of data
 lede: Convert one participant's MRI, MR spectroscopy, PET, EEG, MEG and eye tracking in one project. What is particular to a study with several modalities, and where the course covers each step.
 description: Convert a multimodal study (MRI, spectroscopy, PET, EEG, MEG, eye tracking) to one BIDS dataset with BIDS Manager.
 time: 10 minutes to read, the course to do
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 The course works on exactly this case, on the multimodal sample: [Learn BIDS Manager](/learn/). This page collects what is particular to converting several kinds of data into one dataset.
@@ -21,7 +21,7 @@ A single scan reads the whole raw folder: DICOM for MRI, spectroscopy and PET, E
 
 Each source says who was recorded in its own way. DICOM headers carry a patient ID and name, which group the MRI series; the PET scanner had its own; EEG, MEG and eye-tracking files usually carry nothing, so the folder names the subject. The scan therefore proposes several subjects for one person. Setting the **subject** column (and the **session**) with **Bulk edit…** reconciles them in two edits ([The scan table](/learn/04-scan-table/)).
 
-Check the **subject** column of every row afterwards: the identity of an eye-tracking recording is taken from its folder, like EEG and MEG.
+Check the **subject** column of every row afterwards. An eye-tracking file names no participant: it takes the subject of its `sub-` folder when everything else in that folder was given one and the same subject, and a subject of its own otherwise, as in the course's sample, whose folder holds three DICOM identities. The [multimodal sample 2](/start/sample-data/#multimodal-2) holds the same recordings with one identity and four dated visits, so its scan proposes one subject for everything.
 
 ## Sessions
 

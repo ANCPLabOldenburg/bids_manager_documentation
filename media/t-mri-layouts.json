@@ -37,20 +37,20 @@
  "files": {
   "dark": {
    "mp4": "t-mri-layouts-dark-524debeb.mp4",
-   "webm": "t-mri-layouts-dark-7f6d6eab.webm",
+   "webm": "t-mri-layouts-dark-2d806a71.webm",
    "poster": "t-mri-layouts-dark-poster-c61802ee.webp"
   },
   "light": {
    "mp4": "t-mri-layouts-light-c6a39327.mp4",
-   "webm": "t-mri-layouts-light-9de380d8.webm",
+   "webm": "t-mri-layouts-light-e2e52cf1.webm",
    "poster": "t-mri-layouts-light-poster-72b13290.webp"
   }
  },
  "alt": "The layouts of the image viewer on the T1w, one after the other: one plane, three planes, a large view with two small ones, a mosaic of slices, the 3-D rendering, and Planes + 3-D.",
  "source": {
   "bids_manager": "1.5.2",
-  "commit": "bd70a80+changes",
-  "date": "2026-10-23",
+  "commit": "556d98c",
+  "date": "2026-10-26",
   "sample": "multimodal v2 (OL_3844, consented)"
  }
 }

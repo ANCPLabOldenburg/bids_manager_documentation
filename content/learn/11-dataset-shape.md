@@ -3,7 +3,7 @@ title: Changing a dataset's shape
 chapter: 11
 lede: Rename an entity across the dataset, add or remove one, create or remove a session, delete recordings, and keep every reference pointing at the right file. Each tool shows exactly what it will do before it does anything, and every change is recorded in the project, with the files as they were.
 time: 20 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before

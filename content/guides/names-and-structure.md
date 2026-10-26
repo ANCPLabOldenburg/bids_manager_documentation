@@ -6,7 +6,7 @@ group: Curating a dataset
 lede: Rename a subject, a session or a task; merge two subjects that are one person; put a dataset into sessions or take it out; add the label you forgot; write every run the same way; delete what does not belong. Every reference to a file follows it, and every change is one step to undo.
 description: Rename entities, merge subjects, create and remove sessions, add or remove entities, index widths, find and replace and delete in BIDS Manager's Editor, with real cases.
 time: 25 minutes
-sample: MRI sample 1, multimodal sample v2
+sample: MRI sample 1, multimodal sample v3
 ---
 
 ::: before

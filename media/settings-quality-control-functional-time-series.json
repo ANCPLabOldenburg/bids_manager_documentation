@@ -1,0 +1,41 @@
+{
+ "id": "settings-quality-control-functional-time-series",
+ "kind": "figure",
+ "width": 960,
+ "height": 760,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "960": "settings-quality-control-functional-time-series-dark-960-51af9f9d.avif",
+    "1920": "settings-quality-control-functional-time-series-dark-1920-1243620c.avif"
+   },
+   "webp": {
+    "960": "settings-quality-control-functional-time-series-dark-960-a6635950.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "960": "settings-quality-control-functional-time-series-light-960-cb50424a.avif",
+    "1920": "settings-quality-control-functional-time-series-light-1920-8d171805.avif"
+   },
+   "webp": {
+    "960": "settings-quality-control-functional-time-series-light-960-66342494.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, Quality control page, scrolled down: Functional time series (BOLD).",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.2",
+  "commit": "556d98c",
+  "date": "2026-10-26",
+  "sample": "multimodal v2"
+ }
+}

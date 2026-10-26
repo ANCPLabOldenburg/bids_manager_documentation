@@ -3,7 +3,7 @@ title: The command line
 chapter: 15
 lede: Every step of the course has a command. Use them to convert on a server without a display, to repeat a conversion in a script, or to convert the project you curated in the GUI.
 time: 15 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before
@@ -41,7 +41,7 @@ The project keeps the scan table and every edit you made to it in the GUI, so th
 $ bidsmgr-project /tmp/studies/multimodal_study
 Project: /tmp/studies/multimodal_study
   1 scan version(s); active = latest:
-  * 0001__raw  [curating]  19 rows  source=raw  raw=/tmp/studies/BIDS_Manager_multimodal_sample_v2/raw
+  * 0001__raw  [curating]  19 rows  source=raw  raw=/tmp/studies/BIDS_Manager_multimodal_sample_v3/raw
 ```
 The table marked `*` is the one the other commands use, unless `--version` names another.
 :::

@@ -1,0 +1,41 @@
+{
+ "id": "settings-classification-anatomical-contrasts",
+ "kind": "figure",
+ "width": 900,
+ "height": 760,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "900": "settings-classification-anatomical-contrasts-dark-900-c28fb4c9.avif",
+    "1800": "settings-classification-anatomical-contrasts-dark-1800-e199b48a.avif"
+   },
+   "webp": {
+    "900": "settings-classification-anatomical-contrasts-dark-900-760d5ed4.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "900": "settings-classification-anatomical-contrasts-light-900-80cdb3ad.avif",
+    "1800": "settings-classification-anatomical-contrasts-light-1800-71ee5839.avif"
+   },
+   "webp": {
+    "900": "settings-classification-anatomical-contrasts-light-900-38067f8e.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, Classification page, scrolled down: Anatomical contrasts.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.2",
+  "commit": "556d98c",
+  "date": "2026-10-26",
+  "sample": "multimodal v2"
+ }
+}

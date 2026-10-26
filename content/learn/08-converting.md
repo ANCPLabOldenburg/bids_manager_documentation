@@ -3,7 +3,7 @@ title: Converting
 chapter: 8
 lede: Choose how the conversion writes the dataset, run it, and read what it did. The conversion writes every included row under its BIDS name, links fieldmaps to the runs they correct, removes identifying fields, and then fills in the metadata and validates the result.
 time: 10 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before

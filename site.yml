@@ -27,11 +27,17 @@ downloads:
     label: Installers.zip
     goatcounter: download-installers-zip
   multimodal:
-    url: https://cloud.uol.de/s/kY9nQwdzgyQF6At/download
-    file: BIDS_Manager_multimodal_sample_v2.zip
-    size: 126 MB
-    unpacked: 318 MB
+    url: https://cloud.uol.de/s/e9oZzrJbfBtiaTQ/download
+    file: BIDS_Manager_multimodal_sample_v3.zip
+    size: 125 MB
+    unpacked: 311 MB
     goatcounter: download-dataset-multimodal
+  multimodal2:
+    url: https://cloud.uol.de/s/YaYyq5RzmoY7WXJ/download
+    file: BIDS_Manager_multimodal_2_sample_v1.zip
+    size: 125 MB
+    unpacked: 311 MB
+    goatcounter: download-dataset-multimodal-2
   meg:
     url: https://cloud.uol.de/s/XQoEqsa42bNQ4JX/download
     file: MEG_Elekta_sample_data_small.zip

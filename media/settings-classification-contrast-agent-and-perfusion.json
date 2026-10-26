@@ -1,0 +1,41 @@
+{
+ "id": "settings-classification-contrast-agent-and-perfusion",
+ "kind": "figure",
+ "width": 900,
+ "height": 617,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "900": "settings-classification-contrast-agent-and-perfusion-dark-900-940316b7.avif",
+    "1800": "settings-classification-contrast-agent-and-perfusion-dark-1800-66e8704a.avif"
+   },
+   "webp": {
+    "900": "settings-classification-contrast-agent-and-perfusion-dark-900-83207b9b.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "900": "settings-classification-contrast-agent-and-perfusion-light-900-34fb7647.avif",
+    "1800": "settings-classification-contrast-agent-and-perfusion-light-1800-5b692564.avif"
+   },
+   "webp": {
+    "900": "settings-classification-contrast-agent-and-perfusion-light-900-6e0caecc.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, Classification page, scrolled down: Contrast agent and perfusion and Evidence rules.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.2",
+  "commit": "556d98c",
+  "date": "2026-10-26",
+  "sample": "multimodal v2"
+ }
+}
