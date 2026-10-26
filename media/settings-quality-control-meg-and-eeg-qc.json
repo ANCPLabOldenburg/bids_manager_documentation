@@ -1,0 +1,41 @@
+{
+ "id": "settings-quality-control-meg-and-eeg-qc",
+ "kind": "figure",
+ "width": 960,
+ "height": 760,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "960": "settings-quality-control-meg-and-eeg-qc-dark-960-03649c91.avif",
+    "1920": "settings-quality-control-meg-and-eeg-qc-dark-1920-a0dd1b0c.avif"
+   },
+   "webp": {
+    "960": "settings-quality-control-meg-and-eeg-qc-dark-960-da51b3ba.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "960": "settings-quality-control-meg-and-eeg-qc-light-960-92933b00.avif",
+    "1920": "settings-quality-control-meg-and-eeg-qc-light-1920-e5ec5f26.avif"
+   },
+   "webp": {
+    "960": "settings-quality-control-meg-and-eeg-qc-light-960-ce2045e3.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, Quality control page, scrolled down: MEG and EEG QC.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.2",
+  "commit": "059339b",
+  "date": "2026-10-26",
+  "sample": "multimodal v2"
+ }
+}

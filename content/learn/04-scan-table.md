@@ -4,7 +4,7 @@ display_title: The *scan table*
 chapter: 4
 lede: The table between the scan and the conversion is where you decide what the dataset will be. Read its columns and row states, edit a cell, and set one subject and one session for the whole sample in two edits.
 time: 15 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before
@@ -51,7 +51,7 @@ The badge in the second column says what state the row is in, and the row is tin
 | ✕ | Error | It cannot convert as it is: no name, or a name another row also has |
 | − | Skipped | Not ticked: it is left out |
 | ⊘ | Non-image | A DICOM object without an image, left out |
-| P | Physiology | Converted by bidsphysio, beside its run |
+| P | Physiology | Read from the scanner's physiological log and written beside its run |
 
 Hover a row to read its notes. The toolbar counts the rows as valid, warnings, error and skipped (non-image and physiology rows count as valid); click warnings, error or skipped to list those rows.
 

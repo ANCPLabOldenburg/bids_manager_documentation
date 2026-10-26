@@ -20,7 +20,7 @@ The first time, BIDS Manager opens on **Home**. Hover the numbers to see each pa
 
 {{ figure("window-home", "The GUI on first launch, on Home.", hotspots=True) }}
 
-The **header** runs across the top in every view. From left to right: the logo (click it for **About**: the version, the lab, the authors and the acknowledgements), the three views, and, once a project is open, the project switcher. At the right are **Settings** (the gear) and the theme menu (the sun or the moon).
+The **header** runs across the top in every view. From left to right: the logo (click it for **About**: the version, the lab, the authors and the acknowledgements), the three views, and, once a project is open, the project switcher. At the right are the **Guide** switch, **Settings** (the gear) and the theme menu (the sun or the moon).
 
 The **status bar** at the bottom says what BIDS Manager is doing, and holds the version number and **Check updates**.
 
@@ -28,7 +28,7 @@ The **status bar** at the bottom says what BIDS Manager is doing, and holds the 
 
 | View | What it is for |
 |---|---|
-| **Home** | Create a dataset, open one, reopen a recent project. Links to the documentation, a menu of sample datasets (for the course, take the multimodal sample from [Sample data](/start/sample-data/)), and **What's new**: the announcement this release showed when it first opened, and the update notes. |
+| **Home** | Create a dataset, open one, reopen a recent project. Links to the documentation, a menu of sample datasets (for the course, take the multimodal sample from [Sample data](/start/sample-data/)), and **What's new**: a menu of each release's news, as BIDS Manager showed it when that release first opened, and the update notes. |
 | **Converter** | Scan raw data, curate the scan table of what was found, set the metadata the raw files don't capture, and convert. |
 | **Editor** | Validate the converted dataset, edit its sidecars and tables, change its shape, view every file and check the image quality. |
 
@@ -37,6 +37,22 @@ The Converter and the Editor work on a **project**: a BIDS dataset folder that B
 Once a project is open, its name appears in the header. Click it to switch to a recent project.
 
 {{ figure("header", "The header, with a project open.", hotspots=True) }}
+
+## Let the guide show you
+
+Switch **Guide** on, in the header beside **Settings**, and BIDS Manager shows you the way. In the view you are in, it asks what you would like to do; then it rings the control to use and says, in a card beside it, what to do there.
+
+{{ clip("s-guide", "The guide switched on in the Converter: Check and edit the table rings the table, a click on a row moves the card to Properties, and Next to Structure.") }}
+
+- **It asks** when you switch it on, when you come to a view, and when you finish a task. The usual next step is tinted and says **Next step**; Return takes it. **Not now**, Escape or a click elsewhere closes the question, and a small **Guide: what next?** button stays to ask again.
+- **A task is a few steps.** The card names the task and the step (**Check and edit the table · Step 1 of 4**), says what to do, and carries **All tasks**, **Previous** and **Next** (**Finish** on the last step). A step moves on by itself when you do what it asks: pick a folder, finish a scan, click a row. A task always starts at its first step, whatever you did before.
+- **What it offers depends on the view.** Home: create a dataset, open one, reopen a recent project, practise on a sample. The Converter, once a table is open: scan new data, check and edit the table, one recording's metadata or the dataset's, many rows at once, the columns shown, convert, look at the dataset, the settings. The Editor: validate, fix what validation found, look at or edit a file, rename, sessions, delete recordings, remove identifying information, check image quality, repair sidecars and tables, undo a change.
+
+{{ figure("guide-question", "What the guide offers in the Converter once a scan table is open, the usual next step tinted.") }}
+
+{{ figure("guide-home", "The guide switched on at Home.") }}
+
+The guide is off until you switch it on, and remembered from then on. It never takes a click from the window: everything under the ring works as usual, and a dialog you open hides it until you close it.
 
 ## Choose a theme
 
@@ -78,6 +94,10 @@ Two settings on the **Display** page are worth setting now:
 Removing BIDS Manager does not remove the settings or touch your datasets.
 
 ## Updates
+
+The first time a new version opens, it shows **What's new**: the features of every release since the one you had, in a list, and beside them a short animation of each. Click a feature to see it again. Coming from an older version, **Next** moves to the news of the release before; the menu at the top opens any release's news, and **Release notes** opens its card in [Updates](/updates/). Home's **What's new** menu opens the window at any time.
+
+{{ figure("whats-new", "What's new in BIDS Manager 1.5.2, showing Sidecars written from the recordings.") }}
 
 A few seconds after it opens, BIDS Manager asks PyPI whether a newer version exists. If one does, it says so and offers **What changed** (the release notes on this site), **Yes** (close, update and reopen) and **No**. Nothing about your data is sent. **Check updates** in the status bar asks again at any time.
 

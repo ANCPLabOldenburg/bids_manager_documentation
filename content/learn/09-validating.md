@@ -3,7 +3,7 @@ title: Validating in the Editor
 chapter: 9
 lede: Check the converted dataset against the BIDS standard, read each finding where it occurs, and fix the three errors the sample has, one in a form and two that only you can answer. The Editor is where you look at and change the dataset itself.
 time: 15 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before

@@ -23,6 +23,7 @@ description: Guides to converting MRI, PET, EEG, MEG and eye tracking with BIDS 
 - [**Adopting an existing dataset** Open a dataset made elsewhere, to view it or to work on it.](/guides/adopting-a-dataset/)
 - [**Fixing names and structure** Rename, merge two subjects into one, sessions, a forgotten label, run widths, delete.](/guides/names-and-structure/)
 - [**Keeping a dataset consistent** Files renamed outside, scans and sessions tables, references, fix ups.](/guides/consistency/)
+- [**Writing sidecars from the recordings** A sidecar lost or never written, or one that lacks fields: written again from what is still there.](/guides/sidecars/)
 - [**Leaving files out of validation** Notes, logs and documents: ignore one file, a kind of file or a folder, and bring them back.](/guides/ignoring-files/)
 - [**Anonymising metadata** What identifies a participant, by purpose and by scope, with every change read before it is written.](/guides/anonymising/)
 - [**Defacing and skull stripping** Remove faces before sharing, check the result, and take it back.](/guides/defacing/)

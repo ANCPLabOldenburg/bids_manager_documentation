@@ -1,0 +1,62 @@
+{
+ "id": "guide-home",
+ "kind": "figure",
+ "width": 1440,
+ "height": 900,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1440": "guide-home-dark-1440-85b323b3.avif",
+    "2880": "guide-home-dark-2880-8405dfda.avif"
+   },
+   "webp": {
+    "1440": "guide-home-dark-1440-7f2b3f5b.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1440": "guide-home-light-1440-1f39feb6.avif",
+    "2880": "guide-home-light-2880-be132920.avif"
+   },
+   "webp": {
+    "1440": "guide-home-light-1440-9c572e6d.webp"
+   }
+  }
+ },
+ "regions": [
+  {
+   "key": "switch",
+   "label": "The Guide switch",
+   "x": 0.86042,
+   "y": 0.01,
+   "w": 0.07222,
+   "h": 0.04222,
+   "mx": 0.89653,
+   "my": 0.03111
+  },
+  {
+   "key": "question",
+   "label": "What would you like to do?",
+   "x": 0.32986,
+   "y": 0.17111,
+   "w": 0.33958,
+   "h": 0.35222,
+   "mx": 0.33125,
+   "my": 0.17333
+  }
+ ],
+ "alt": "The guide switched on at Home: it asks what you would like to do, with the usual first step tinted, and Not now to close it.",
+ "window": true,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.2",
+  "commit": "556d98c",
+  "date": "2026-10-26",
+  "sample": "multimodal v2"
+ }
+}

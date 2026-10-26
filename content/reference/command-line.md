@@ -66,7 +66,10 @@ Scans a raw folder into a scan table (`inventory.tsv`): one row per recording, w
 
 ```console
 $ bidsmgr-scan /data/raw/my_study --project /data/bids/my_study -j 8
+$ bidsmgr-scan /data/raw/my_study --project /data/bids/my_study --subject-from patient-id --name-entity acq,run
 ```
+
+`--subject-from` names the subjects from the DICOM identity instead of numbers, and `--name-entity` lets the sequence name decide those entities, as **Settings** > **Scan** does ([Scanning](/learn/03-scanning/#settings-that-change-a-scan)).
 
 {{ ref.usage("bidsmgr-scan") }}
 
@@ -102,7 +105,10 @@ Converts `inventory.tsv`, or a project's active scan table, into the BIDS datase
 
 ```console
 $ bidsmgr-convert --project /data/bids/my_study -j 8
+$ bidsmgr-convert --project /data/bids/my_study --drop-volumes 4 --physio-layout one-as-recorded --physio-align
 ```
+
+`--drop-volumes` leaves dummy volumes out of every functional run (a run's `drop_volumes` cell wins), `--physio-layout` writes a physiological log one table per rate (`by-rate`, the default) or one table for the run (`one-interpolated`, `one-as-recorded`), and `--physio-align` crops it to the run ([Converting](/learn/08-converting/#check-the-conversion-settings)).
 
 {{ ref.usage("bidsmgr-convert") }}
 
@@ -138,6 +144,7 @@ Removes the face from anatomical images, or keeps the brain only.
 
 ```console
 $ bidsmgr-deface /data/bids/my_study
+$ bidsmgr-deface /data/bids/my_study --include-derivatives
 ```
 
 {{ ref.usage("bidsmgr-deface") }}
@@ -156,6 +163,20 @@ $ bidsmgr-anonymise /data/bids/my_study --preset strict --keep dates
 {{ ref.usage("bidsmgr-anonymise") }}
 
 {{ ref.cli("bidsmgr-anonymise") }}
+
+## bidsmgr-sidecars {#bidsmgr-sidecars}
+
+Writes the sidecars recordings are missing, or adds what existing ones lack (`--complete`), as **Tools** > **Write sidecars from the recordings...** does ([Writing sidecars from the recordings](/guides/sidecars/)). It plans first and prints the plan; `--dry-run` stops there.
+
+```console
+$ bidsmgr-sidecars /data/bids/my_study --dry-run
+$ bidsmgr-sidecars /data/bids/my_study --complete --fill-scope recommended
+$ bidsmgr-sidecars /data/raw/nifti_folder --no-source --kind mri/t1_mprage.nii=anat/T1w
+```
+
+{{ ref.usage("bidsmgr-sidecars") }}
+
+{{ ref.cli("bidsmgr-sidecars") }}
 
 ## bidsmgr-qc {#bidsmgr-qc}
 

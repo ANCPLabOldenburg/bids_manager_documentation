@@ -1,0 +1,41 @@
+{
+ "id": "whats-new",
+ "kind": "figure",
+ "width": 1100,
+ "height": 660,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1100": "whats-new-dark-1100-d7fb60f4.avif",
+    "2200": "whats-new-dark-2200-d8ecd201.avif"
+   },
+   "webp": {
+    "1100": "whats-new-dark-1100-e854c3e0.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1100": "whats-new-light-1100-84957e29.avif",
+    "2200": "whats-new-light-2200-02236fbf.avif"
+   },
+   "webp": {
+    "1100": "whats-new-light-1100-4e5b7a08.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "What's new in BIDS Manager 1.5.2: the features of 1.5.1 and 1.5.2 in a list, and beside it a short animation of the one chosen, here a sidecar written field by field.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.2",
+  "commit": "556d98c",
+  "date": "2026-10-26",
+  "sample": "multimodal v2"
+ }
+}

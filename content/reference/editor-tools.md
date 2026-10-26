@@ -47,6 +47,14 @@ Runs on its own thread as soon as it opens; **Check again** runs it once more. F
 
 **Scans tables, one per session** and **Sessions tables, one per subject with sessions** choose what to write; **Write N tables** writes the ticked ones as one step. `acq_time` comes from the sidecar's `AcquisitionDateTime`, else from the date and time the scan read, else `n/a`. Rows, columns and values already there are kept. The same tables are written after every conversion while **Settings** > **Convert** > **Write scans and sessions tables** is on, and by `bidsmgr-metadata --tables-only`.
 
+### Write sidecars from the recordings...
+
+*{{ ref.tool_tip("Write sidecars from the recordings...") }}*
+
+{{ figure("g-sidecars-dialog", "Sidecars from the recordings: the recordings, and the selected one's fields with where each was read.") }}
+
+**Read from** sets whether the source data is converted again (only in a project that converted the dataset); the recording's header, your answers and the linking sidecars are always read. **Which sidecars** is **Missing ones** or **Also add to existing**; **Mark what is still unknown with TODO** is **Nothing**, **Required fields**, **Required and recommended** or **Every field the standard declares**; **Where** chooses the scope and a datatype. A field is listed under **Written**, **Already stated higher up, left to it**, **Found, not written: not valid in this BIDS version** or **Required, and nothing to read it from**. **Write N sidecars** writes the ticked ones as one step. In the tree's right-click: **Write its sidecar from the recording...**, **Complete its sidecar from the recording...**, and on a folder **Write missing sidecars here from the recordings...**. The same from a terminal: `bidsmgr-sidecars`. See [Writing sidecars from the recordings](/guides/sidecars/).
+
 ### References (IntendedFor, Sources...)...
 
 *{{ ref.tool_tip("References (IntendedFor, Sources...)...") }}*
@@ -107,7 +115,7 @@ Removes the face from anatomical images, so the dataset can be shared without th
 
 ### Remove the skull...
 
-Keeps only the brain, removing the face and everything else outside it. The result is a derivative, not raw data, and is written to `derivatives/bidsmgr-skullstrip/` (or, if you choose, over the original).
+Keeps only the brain, removing the face and everything else outside it. The result is a derivative, not raw data, and is written to `derivatives/bidsmgr-skullstrip/` (or, if you choose, over the original). **Include derivatives**, in this dialog and in **Deface...**, adds the images of the pipelines in `derivatives/`; a stripped derivative keeps its source's description plus `brain` ([Images in derivatives](/guides/defacing/#images-in-derivatives)).
 
 ### Compare with the original...
 

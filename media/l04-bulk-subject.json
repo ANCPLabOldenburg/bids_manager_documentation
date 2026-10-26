@@ -11,19 +11,19 @@
  ],
  "files": {
   "dark": {
-   "mp4": "l04-bulk-subject-dark-1df9723c.mp4",
-   "poster": "l04-bulk-subject-dark-poster-2d948ee6.webp"
+   "mp4": "l04-bulk-subject-dark-ad983a58.mp4",
+   "poster": "l04-bulk-subject-dark-poster-47102c27.webp"
   },
   "light": {
-   "mp4": "l04-bulk-subject-light-8f89da79.mp4",
-   "poster": "l04-bulk-subject-light-poster-0af31740.webp"
+   "mp4": "l04-bulk-subject-light-79c4d4ce.mp4",
+   "poster": "l04-bulk-subject-light-poster-2240b9af.webp"
   }
  },
  "alt": "Selecting the 15 rows to convert, opening Bulk edit, choosing the subject column and typing 001: the four rows that said 002, 003 and 004 now say 001.",
  "source": {
-  "bids_manager": "1.5.1",
-  "commit": "4f07b3e",
-  "date": "2026-10-20",
+  "bids_manager": "1.5.2",
+  "commit": "556d98c",
+  "date": "2026-10-26",
   "sample": "multimodal v2"
  }
 }

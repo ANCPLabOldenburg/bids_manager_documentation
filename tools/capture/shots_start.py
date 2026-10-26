@@ -23,11 +23,10 @@ def home_window():
             Region("create", "Create a new dataset", H.ancestor(w._create_btn, "welcome-card"), anchor="tl"),
             Region("open", "Open an existing dataset", H.ancestor(w._open_btn, "welcome-card"), anchor="tl"),
             Region("samples", "Download a sample dataset", w._samples_button),
-            Region("news", "What's new: this release, and the update notes",
-                   H.ancestor(next(l for l in w.findChildren(QLabel)
-                                   if l.property("link_url") == "#whats-new"), "welcome-card"),
-                   anchor="tl"),
+            Region("news", "What's new: each release's news, and the update notes",
+                   H.ancestor(w._news_button, "welcome-card"), anchor="tl"),
             Region("recent", "Recent projects", H.ancestor(w._recent, "welcome-card"), anchor="tl"),
+            Region("guide", "The guide: shows the next step", win._header.guide_switch),
             Region("settings", "Settings", win._header._settings_btn),
             Region("theme", "Theme", win._header._theme_btn),
             Region("status", "The status bar: messages, the version, Check updates", win.statusBar(), anchor="t"),
@@ -43,12 +42,13 @@ def header():
     hd = win._header
     H.take(Shot(
         "header", "The header of the GUI with a project open: the logo, the Home, Converter and "
-        "Editor views, the project switcher, Settings and the theme menu.",
+        "Editor views, the project switcher, the Guide switch, Settings and the theme menu.",
         win, crop_to=hd,
         regions=[
             Region("logo", "The logo: opens About", hd._logo),
             Region("views", "The three views", H.find(hd, name="nav-track")),
             Region("project", "The project switcher", hd._project_btn),
+            Region("guide", "The guide: shows the next step", hd.guide_switch),
             Region("settings", "Settings", hd._settings_btn),
             Region("theme", "The theme menu", hd._theme_btn),
         ]))
@@ -104,7 +104,7 @@ def open_question():
     from PyQt6.QtCore import QTimer
     from PyQt6.QtWidgets import QApplication
     win = H.main_window("welcome")
-    folder = H.STUDIES / "BIDS_Manager_multimodal_sample_v2"
+    folder = H.STUDIES / "BIDS_Manager_multimodal_sample_v3"
     got = {}
 
     def grab():
@@ -231,3 +231,84 @@ def quick_start_measure():
 
 
 GROUPS.update({"qs-measure": quick_start_measure})
+
+
+# ----------------------------------------------------------------- the guide
+def guide_on(win):
+    """The header's Guide switch, turned on as a click turns it on."""
+    win._header.guide_switch.set_on(True)
+    win._on_guide_toggled(True)
+    g = win.guide
+    H.pump(lambda: g.question.isVisible() or g.card.isVisible(), timeout=15, settle=40)
+    return g
+
+
+def guide_converter(state: str = "scanned"):
+    """The Converter on a scanned table, the guide switched on there."""
+    import shots_converter as SC
+    win, conv = SC._converter(state)
+    SC.layout(conv)
+    g = guide_on(win)
+    return win, conv, g
+
+
+def guide():
+    """Start > First launch: the guide asking on Home and in the Converter, and
+    a step of the task chosen, its control ringed."""
+    win = H.main_window("welcome")
+    g = guide_on(win)
+    if not g.question.isVisible():
+        raise H.ShotFailed("guide-home: the guide did not ask on Home")
+    H.take(Shot(
+        "guide-home", "The guide switched on at Home: it asks what you would like to do, with the "
+        "usual first step tinted, and Not now to close it.", win, window=True,
+        regions=[Region("switch", "The Guide switch", win._header.guide_switch),
+                 Region("question", "What would you like to do?", g.question, anchor="tl")]))
+    win.close()
+
+    win, conv, g = guide_converter()
+    if not g.question.isVisible():
+        raise H.ShotFailed("guide-question: the guide did not ask in the Converter")
+    H.take(Shot(
+        "guide-question", "In the Converter, with a scan table open: everything the guide can walk you "
+        "through here, the usual next step tinted.", win, window=True,
+        regions=[Region("question", "What would you like to do?", g.question, anchor="tl")]))
+    g._on_chosen("review")
+    H.pump(lambda: g.card.isVisible(), timeout=15, settle=40)
+    H.wait(0.6)
+    H.pump(settle=30)
+    H.take(Shot(
+        "guide-step", "Check and edit the table, step 1 of 4: the table ringed, and the card beside it "
+        "saying what to do there, with All tasks, Previous and Next.", win, window=True,
+        regions=[Region("ring", "The control to use now", conv._table, anchor="tl"),
+                 Region("card", "What to do there; Previous and Next", g.card, anchor="tl"),
+                 Region("switch", "The Guide switch", win._header.guide_switch)],
+        allow_elided=("QTableView",)))
+    win.close()
+
+
+GROUPS.update({"guide": guide})
+
+
+# ------------------------------------------------------------- What's new
+def whats_new():
+    """The announcement a release shows when it first opens (Updates)."""
+    from bidsmgr.gui import whats_new as wn
+    win = H.main_window("welcome")
+    d = wn.WhatsNewDialog(win)
+    d.resize(1100, 660)
+    d.show()
+    H.pump(settle=40)
+    stage = d.page().stage
+    keys = [s.key for s in stage.scenes]
+    stage.set_scene(keys.index("sidecars"), by_user=True)
+    stage.set_time(7.6)
+    H.pump(settle=30)
+    H.take(Shot(
+        "whats-new", "What's new in BIDS Manager 1.5.2: the features of 1.5.1 and 1.5.2 in a list, and "
+        "beside it a short animation of the one chosen, here a sidecar written field by field.", d))
+    d.close()
+    win.close()
+
+
+GROUPS.update({"whats-new": whats_new})

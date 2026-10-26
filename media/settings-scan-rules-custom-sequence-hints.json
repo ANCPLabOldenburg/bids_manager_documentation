@@ -1,0 +1,41 @@
+{
+ "id": "settings-scan-rules-custom-sequence-hints",
+ "kind": "figure",
+ "width": 1040,
+ "height": 824,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "1040": "settings-scan-rules-custom-sequence-hints-dark-1040-fb7b6dd0.avif",
+    "2080": "settings-scan-rules-custom-sequence-hints-dark-2080-8799db39.avif"
+   },
+   "webp": {
+    "1040": "settings-scan-rules-custom-sequence-hints-dark-1040-6edf052d.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "1040": "settings-scan-rules-custom-sequence-hints-light-1040-fb7961c5.avif",
+    "2080": "settings-scan-rules-custom-sequence-hints-light-2080-5a411ae4.avif"
+   },
+   "webp": {
+    "1040": "settings-scan-rules-custom-sequence-hints-light-1040-13b60087.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, Scan rules page, scrolled down: Custom sequence hints (MRI / DICOM only) and Built-in MRI classifier criteria (read-only).",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.2",
+  "commit": "059339b",
+  "date": "2026-10-26",
+  "sample": "multimodal v2"
+ }
+}

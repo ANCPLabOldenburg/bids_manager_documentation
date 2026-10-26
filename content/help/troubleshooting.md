@@ -37,6 +37,8 @@ Most answers start with the log. The Converter's **Log** shows the current run; 
 | A subject that exists already was not converted again | **Existing subjects** is set to skip, the default. Choose update or replace in **Settings** > **Convert** to convert it again. |
 | The conversion refuses to keep source data | The disk cannot hold the copies. Free space, or choose one archive per series, or turn **Keep in sourcedata/** off. |
 | On Windows, a spectroscopy series fails | BIDS Manager brings a build of dcm2niix that can convert it, and uses it on its own. If it still fails, report it with the log. |
+| On Windows, data or a project on a network drive does not convert | Update to 1.5.2 or later: files are copied where Windows will not follow a link on a share, and a drive letter is kept as you wrote it. If the Log says the drive is not connected, connect it (or open the folder through its network path) and run the conversion again. |
+| A run's physiology shows one ECG column or a flat trigger | It was converted before 1.5.2. Delete the run's `_physio` files in the Editor and run the conversion again ([Updates](/updates/#v152)). |
 
 ## Validating and editing
 

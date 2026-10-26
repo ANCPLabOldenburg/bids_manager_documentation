@@ -3,7 +3,7 @@
  "kind": "clip",
  "width": 1594,
  "height": 1054,
- "duration": 14.17,
+ "duration": 14.3,
  "chapters": [
   {
    "t": 1.4,
@@ -14,7 +14,7 @@
    "title": "Check again"
   },
   {
-   "t": 9.0,
+   "t": 9.13,
    "title": "Mark them bad"
   }
  ],
@@ -24,19 +24,19 @@
  ],
  "files": {
   "dark": {
-   "mp4": "g-qc-meg-threshold-dark-088738cb.mp4",
+   "mp4": "g-qc-meg-threshold-dark-69cec2c9.mp4",
    "poster": "g-qc-meg-threshold-dark-poster-6e29b482.webp"
   },
   "light": {
-   "mp4": "g-qc-meg-threshold-light-97f2c2e9.mp4",
+   "mp4": "g-qc-meg-threshold-light-4a865543.mp4",
    "poster": "g-qc-meg-threshold-light-poster-0a564e88.webp"
   }
  },
  "alt": "Lowering one QC threshold on the MOUS recording: Settings... opens the check's parameters, Channel off in a segment beyond goes from 4 to 2.5, Check again flags the stretch at 270 s that the default let through, and Mark flagged segments bad lays it over the traces in red.",
  "source": {
-  "bids_manager": "1.5.1",
-  "commit": "4f07b3e",
-  "date": "2026-10-20",
+  "bids_manager": "1.5.2",
+  "commit": "bd70a80+changes",
+  "date": "2026-10-23",
   "sample": "MOUS sub-A2004 (Donders Institute)"
  }
 }

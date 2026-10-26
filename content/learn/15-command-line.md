@@ -3,7 +3,7 @@ title: The command line
 chapter: 15
 lede: Every step of the course has a command. Use them to convert on a server without a display, to repeat a conversion in a script, or to convert the project you curated in the GUI.
 time: 15 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before
@@ -41,7 +41,7 @@ The project keeps the scan table and every edit you made to it in the GUI, so th
 $ bidsmgr-project /tmp/studies/multimodal_study
 Project: /tmp/studies/multimodal_study
   1 scan version(s); active = latest:
-  * 0001__raw  [curating]  19 rows  source=raw  raw=/tmp/studies/BIDS_Manager_multimodal_sample_v2/raw
+  * 0001__raw  [curating]  19 rows  source=raw  raw=/tmp/studies/BIDS_Manager_multimodal_sample_v3/raw
 ```
 The table marked `*` is the one the other commands use, unless `--version` names another.
 :::
@@ -56,7 +56,7 @@ The conversion replays the edits recorded in the project (one subject, one sessi
 ::: step Write the metadata
 ```console
 $ bidsmgr-metadata --project /tmp/studies/multimodal_study --fill-todos
-  TODO placeholders inserted: 63 fields across 7 files
+  TODO placeholders inserted: {{ m("cli.todo_inserted") }} fields across {{ m("cli.todo_files") }} files
 ```
 `--fill-todos` writes the TODO placeholders the GUI's default post-convert chain writes; `--fill-scope required|recommended|optional` chooses how far they go. The step also writes the scans and sessions tables (`--no-tables` leaves them out), and `--anonymise recommended` or `strict` anonymises the dataset last, as **Settings** > **Convert** does in the GUI.
 :::
@@ -65,7 +65,7 @@ $ bidsmgr-metadata --project /tmp/studies/multimodal_study --fill-todos
 ```console
 $ bidsmgr-validate /tmp/studies/multimodal_study --strict --html
 === /tmp/studies/multimodal_study ===
-  severity: ERR  (ok=26 warn=114 err=3)
+  severity: ERR  (ok={{ m("cli.project_validation.ok") }} warn={{ m("cli.project_validation.warn") }} err={{ m("cli.project_validation.err") }})
 ```
 `--strict` runs the deep checks and `--html` writes `validation_report.html` into the project's `.bidsmgr/` folder. The result is the GUI's, file for file: the same {{ m("cli.project_convert_files") }} files, the same three errors (chapter 9 fixes them).
 :::

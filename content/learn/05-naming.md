@@ -3,7 +3,7 @@ title: Naming recordings
 chapter: 5
 lede: Find out why each recording got the name it has, check the evidence, and change a name where the scan got it wrong. The sample has one to fix: the water reference of the spectroscopy.
 time: 15 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before

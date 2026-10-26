@@ -1,0 +1,41 @@
+{
+ "id": "g-sidecars-menu",
+ "kind": "figure",
+ "width": 494,
+ "height": 1180,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "494": "g-sidecars-menu-dark-494-c2064caa.avif",
+    "988": "g-sidecars-menu-dark-988-bffdd549.avif"
+   },
+   "webp": {
+    "494": "g-sidecars-menu-dark-494-069c9e08.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "494": "g-sidecars-menu-light-494-1bdc7bb9.avif",
+    "988": "g-sidecars-menu-light-988-a4fc0142.avif"
+   },
+   "webp": {
+    "494": "g-sidecars-menu-light-494-44d69e5c.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The BIDS tree's right-click on the BOLD run, whose sidecar is missing: Write its sidecar from the recording...",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.2",
+  "commit": "556d98c",
+  "date": "2026-10-26",
+  "sample": "multimodal v2"
+ }
+}

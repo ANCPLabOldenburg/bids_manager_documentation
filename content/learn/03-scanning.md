@@ -3,12 +3,12 @@ title: Scanning raw data
 chapter: 3
 lede: Point a scan at the sample's raw folder and read what it found. A scan reads every file's header, groups the recordings by participant and session, and proposes a BIDS name for each one. It writes nothing into your raw data.
 time: 15 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before
 - The project `multimodal_study` is open in the **Converter** (chapter 2).
-- The multimodal sample is unpacked. Its raw data is the folder `raw` inside `BIDS_Manager_multimodal_sample_v2`.
+- The multimodal sample is unpacked. Its raw data is the folder `raw` inside `BIDS_Manager_multimodal_sample_v3`.
 :::
 
 ## The raw folder
@@ -100,7 +100,7 @@ In the sample, every MRI, spectroscopy and PET row carries the note about two st
 
 ### Proposed subjects and sessions
 
-The scan proposes a subject for every row from what the source says about the participant: DICOM headers carry a patient ID, EEG and MEG files a folder or a file name. The sample's sources do not agree, so the scan proposes **{{ m("scan.subjects")|length }} subjects**: the MRI, EEG and MEG as `sub-001`, the spectroscopy (a different patient ID) as `sub-002`, the PET phantom (no ID at all) as `sub-003` and the eye tracker as `sub-004`. It also proposes sessions from the recording dates. Chapter 4 sets one subject and one session for all of them, in two edits.
+The scan proposes a subject for every row from what the source says about the participant: DICOM headers carry a patient ID, EEG and MEG files a folder or a file name. The sample's sources do not agree, so the scan proposes **{{ m("scan.subjects")|length }} subjects**: the MRI, EEG and MEG as `sub-001`, the spectroscopy (a different patient ID) as `sub-002`, the PET phantom (patient ID `unif`) as `sub-003` and the eye tracker as `sub-004`. It also proposes sessions from the recording dates. Chapter 4 sets one subject and one session for all of them, in two edits.
 
 ## Scan again, or scan more
 
@@ -120,6 +120,14 @@ If the raw folder moves after a scan, the **Raw input** bar says **Moved** and o
 - **Leave out of proposed names**: entities you never want in a name. Tick **Acquisition** (`acq-`) and the next scan proposes `sub-001_ses-01_T1w` rather than `sub-001_ses-01_acq-tfl3p2_T1w`. On the sample, that takes `acq` off five rows. An entity is kept where the standard requires it, and where it is what tells two recordings apart, so no recording overwrites another: ticking **Run** (`run-`) leaves the sample's two spectroscopy series their `run-1` and `run-2`, and takes `run` off any recording that is alone. A scan table already open is offered the change, as one step you can undo.
 
 {{ figure("l03-leave-out", "Settings, Scan page: Leave out of proposed names, with Acquisition ticked.") }}
+
+- **Subject labels**: what each participant found in the DICOM headers is called. **Numbers** (`sub-001`, `sub-002`, ...) by default, or the **Patient ID**, the **Given name** or the **Family name** from the header, for the many sites that type a study code into these fields (`MOT_017` rather than a person's name). The value is made into a valid label, letters and digits only: `OL_3844` becomes `OL3844`, `MOT_017` becomes `MOT017`. Which series belong to one participant is decided as before; this only names them. On the sample, **Patient ID** names the MRI rows `sub-OL3844`, the spectroscopy `sub-OL3846` and the PET phantom `sub-unif`. EEG and MEG keep `sub-001`, which their folders give, and the eye tracker, which has no identity field, gets a number no label uses. Two participants whose values make the same label are kept apart, with a number added to the second. The course keeps numbers.
+
+{{ figure("l03-settings-subjects", "Settings, Scan page: Subject labels, opened.") }}
+
+- **Entities the sequence name decides**: an operator who types an entity into the series description or the protocol name can have it win over BIDS Manager's estimate, one entity at a time. The sample's spectroscopy series are called `task-xx_rec-tra_run-sedley_voi-RAC_acq-hermes_svs`: with **Acquisition** ticked, the scan names them `sub-002_acq-hermes_run-1_svs` and `sub-002_acq-hermes_run-2_svs`. Only a value valid for the entity is taken (`run-sedley` is not a run number, so it never is), and only where the standard allows the entity for the recording.
+
+{{ figure("l03-settings-name-entities", "Settings, Scan page: Entities the sequence name decides.") }}
 
 **Scan rules** lets you leave out series by name (a calibration series your site always runs) and give your own naming hints for series the classifier cannot name.
 

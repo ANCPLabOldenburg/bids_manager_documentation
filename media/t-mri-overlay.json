@@ -11,21 +11,21 @@
  ],
  "files": {
   "dark": {
-   "mp4": "t-mri-overlay-dark-56f6d4cf.mp4",
-   "webm": "t-mri-overlay-dark-efa1e244.webm",
-   "poster": "t-mri-overlay-dark-poster-403497a5.webp"
+   "mp4": "t-mri-overlay-dark-956fd6ce.mp4",
+   "webm": "t-mri-overlay-dark-c207dbe4.webm",
+   "poster": "t-mri-overlay-dark-poster-9c6715b3.webp"
   },
   "light": {
-   "mp4": "t-mri-overlay-light-dc7b1309.mp4",
-   "webm": "t-mri-overlay-light-512c763d.webm",
-   "poster": "t-mri-overlay-light-poster-89e448db.webp"
+   "mp4": "t-mri-overlay-light-fb57811c.mp4",
+   "webm": "t-mri-overlay-light-0c00180a.webm",
+   "poster": "t-mri-overlay-light-poster-1f0cf7ab.webp"
   }
  },
  "alt": "The brain from skull stripping laid over the T1w as an overlay, in a warm colour map at half opacity, in the planes and the rendering; Advanced controls lists both layers.",
  "source": {
-  "bids_manager": "1.5.1",
-  "commit": "4f07b3e",
-  "date": "2026-10-20",
+  "bids_manager": "1.5.2",
+  "commit": "556d98c",
+  "date": "2026-10-26",
   "sample": "multimodal v2 (OL_3844, consented)"
  }
 }

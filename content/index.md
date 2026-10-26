@@ -87,7 +87,7 @@ hero_lede_short: Reads your raw recordings, names each one by the BIDS standard,
 <h2 id="what-it-reads">Many kinds of recording, <em>one</em> scan</h2>
 <p class="section-lede">A single scan handles a folder that mixes all of these (PET blood curves are not scanned: you attach them to their PET run in **Properties**). Each is converted by the tool built for it, which BIDS Manager installs and drives.</p>
 </div>
-<p class="margin-note"><b>The engines</b>dcm2niix, MNE-BIDS, nibabel, PET2BIDS and bidsphysio do the converting, and eyelinkio reads EyeLink files. BIDS Manager decides what each is asked to do, and repairs what each leaves behind.</p>
+<p class="margin-note"><b>The engines</b>dcm2niix, MNE-BIDS, nibabel and PET2BIDS do the converting, eyelinkio reads EyeLink files, and BIDS Manager reads Siemens physiological logs itself. BIDS Manager decides what each is asked to do, and repairs what each leaves behind.</p>
 </div>
 <ul class="kinds">
 <li style="--kc: var(--k-mri)"><h3>MRI</h3><p>Anatomy, functional runs with their references, diffusion and fieldmaps.</p><dl><dt>From</dt><dd>DICOM from Siemens, Philips, GE, Canon and others</dd><dt>To</dt><dd>NIfTI in <code>anat</code>, <code>func</code>, <code>dwi</code>, <code>fmap</code>, <code>perf</code></dd><dt>With</dt><dd>dcm2niix</dd></dl></li>
@@ -95,7 +95,7 @@ hero_lede_short: Reads your raw recordings, names each one by the BIDS standard,
 <li style="--kc: var(--k-pet)"><h3>PET</h3><p>Dynamic and static scans, with the doses and blood data no scanner records.</p><dl><dt>From</dt><dd>DICOM, ECAT 7, PMOD blood curves</dd><dt>To</dt><dd>NIfTI and blood tables in <code>pet</code></dd><dt>With</dt><dd>dcm2niix, nibabel, PET2BIDS</dd></dl></li>
 <li style="--kc: var(--k-eeg)"><h3>EEG</h3><p>Recordings with their channels, events, montage and reference.</p><dl><dt>From</dt><dd>EDF, BDF, BrainVision, EEGLAB, GDF, EGI MFF</dd><dt>To</dt><dd>The original format (EDF, BDF, BrainVision or EEGLAB) in <code>eeg</code>, or EDF when re-encoding is on</dd><dt>With</dt><dd>MNE-BIDS</dd></dl></li>
 <li style="--kc: var(--k-meg)"><h3>MEG</h3><p>Task, rest and empty-room recordings, with sessions from their dates.</p><dl><dt>From</dt><dd>Elekta/MEGIN FIF, CTF, KIT</dd><dt>To</dt><dd>The original format in <code>meg</code></dd><dt>With</dt><dd>MNE-BIDS</dd></dl></li>
-<li style="--kc: var(--k-physio)"><h3>Physiology</h3><p>The heartbeat, pulse, breathing and triggers recorded with an MRI run.</p><dl><dt>From</dt><dd>The physiological log DICOM (PhysioLog) that Siemens CMRR sequences store with the run</dd><dt>To</dt><dd><code>_physio.tsv.gz</code> beside the run</dd><dt>With</dt><dd>bidsphysio</dd></dl></li>
+<li style="--kc: var(--k-physio)"><h3>Physiology</h3><p>The heartbeat, pulse, breathing and triggers recorded with an MRI run.</p><dl><dt>From</dt><dd>The physiological log DICOM (PhysioLog) that Siemens CMRR sequences store with the run</dd><dt>To</dt><dd><code>_physio.tsv.gz</code> beside the run, one table per sampling rate or one for the run</dd><dt>With</dt><dd>BIDS Manager's own reader</dd></dl></li>
 <li style="--kc: var(--k-eye)"><h3>Eye tracking</h3><p>Gaze and pupil per eye, with the calibration, paired with the run they belong to.</p><dl><dt>From</dt><dd>SR Research EyeLink EDF and ASC</dd><dt>To</dt><dd><code>_physio.tsv.gz</code> per eye</dd><dt>With</dt><dd>eyelinkio for EDF; BIDS Manager reads ASC itself</dd></dl></li>
 </ul>
 </section>

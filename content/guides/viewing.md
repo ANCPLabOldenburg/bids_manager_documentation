@@ -6,7 +6,7 @@ group: Viewing and quality
 lede: The Editor's viewer, option by option, for each kind of file a BIDS dataset holds: images, PET, diffusion gradients, spectra, EEG and MEG, physiological and eye-tracking recordings, documents. Every picture is BIDS Manager on the course's converted sample.
 description: Every option of BIDS Manager's viewers, for MRI, PET, MR spectroscopy, EEG, MEG, physiology, eye tracking and documents.
 time: 25 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before

@@ -11,31 +11,31 @@
  "files": {
   "dark": {
    "avif": {
-    "1294": "l12-physio-dark-1294-f97f5fd9.avif",
-    "2588": "l12-physio-dark-2588-740d1405.avif"
+    "1294": "l12-physio-dark-1294-8312f415.avif",
+    "2588": "l12-physio-dark-2588-d613c3d0.avif"
    },
    "webp": {
-    "1294": "l12-physio-dark-1294-77b9b0b1.webp"
+    "1294": "l12-physio-dark-1294-584cd184.webp"
    }
   },
   "light": {
    "avif": {
-    "1294": "l12-physio-light-1294-aef62a28.avif",
-    "2588": "l12-physio-light-2588-24ccfecd.avif"
+    "1294": "l12-physio-light-1294-ba71f67d.avif",
+    "2588": "l12-physio-light-2588-d1d4f6e1.avif"
    },
    "webp": {
-    "1294": "l12-physio-light-1294-4d594577.webp"
+    "1294": "l12-physio-light-1294-76036f66.webp"
    }
   }
  },
  "regions": [],
- "alt": "The respiratory recording of the BOLD run, opened with Visualize in the table viewer.",
+ "alt": "The BOLD run's ECG table opened with Visualize: its four leads and the scanner trigger at every volume, and below them the run's pulse and breathing tables, each with its trigger.",
  "window": false,
  "title": "BIDS-Manager",
  "source": {
-  "bids_manager": "1.5.1",
-  "commit": "4f07b3e",
-  "date": "2026-10-20",
+  "bids_manager": "1.5.2",
+  "commit": "556d98c",
+  "date": "2026-10-26",
   "sample": "multimodal v2"
  }
 }

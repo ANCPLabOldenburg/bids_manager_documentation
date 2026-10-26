@@ -284,3 +284,91 @@ def edit_save_clip():
 
 
 GROUPS.update({"clip-l09-fix": fix_clip, "clip-l10-edit-save": edit_save_clip})
+
+
+def guide_clip():
+    """Start > First launch: the guide switched on in the Converter, a task
+    chosen, and its first three steps."""
+    from PyQt6.QtCore import QPoint
+
+    from bidsmgr.gui.guide import _ChoiceRow
+    win, conv = SC._converter("scanned")
+    SC.layout(conv)
+    g = win.guide
+    c = Clip("s-guide", win, alt="Switching the Guide on in the Converter: it asks what to do; choosing "
+             "Check and edit the table rings the table; a click on a row moves the card to Properties; "
+             "Next moves it to Structure.", start=(1150, 640))
+    c.hold(0.6)
+    sw = win._header.guide_switch
+
+    def turn_on():
+        sw.set_on(True)
+        win._on_guide_toggled(True)
+    c.chapter("Switch it on")
+    c.click(sw, turn_on, move=0.9)
+    c.wait_until(lambda: g.question.isVisible(), timeout=15, every=0.1, speed=1.0)
+    c.hold(2.2)
+    row = next(r for r in g.question._rows_widget.findChildren(_ChoiceRow) if r.key == "review")
+    c.chapter("Choose a task")
+    c.click(row, lambda: g._on_chosen("review"), move=0.9)
+    c.wait_until(lambda: g.card.isVisible(), timeout=15, every=0.1, speed=1.0)
+    c.hold(2.8)
+    df = conv.model().dataframe()
+    r = next(i for i in range(len(df)) if str(df.iloc[i]["bids_name"]).endswith("_bold"))
+    table = conv._table
+    rh = table.verticalHeader().defaultSectionSize()
+    vp = table.viewport()
+    p = vp.mapTo(win, QPoint(260, table.rowViewportPosition(r) + rh // 2))
+    c.chapter("Do what it says")
+    c.click((p.x(), p.y()), lambda: (conv.select_rows([r]), conv._on_guide_row_click(), g.refresh()),
+            move=1.0)
+    c.wait_until(lambda: g.run("converter") == ("review", 1), timeout=15, every=0.1, speed=1.0)
+    c.do(g.refresh, settle=0.4)
+    c.hold(3.0)
+    c.chapter("Next")
+    c.click(g.card._next_btn, g._on_next, move=0.9)
+    c.do(g.refresh, settle=0.4)
+    c.hold(3.0)
+    c.finish()
+
+
+def whats_new_clip():
+    """Updates: the What's new window of 1.5.2, playing, then a feature picked."""
+    from bidsmgr.gui import whats_new as wn
+
+    win = H.main_window("welcome")
+    d = wn.WhatsNewDialog(win)
+    d.resize(1100, 660)
+    d.show()
+    H.pump(settle=40)
+    page = d.page()
+    stage = page.stage
+    keys = [s.key for s in stage.scenes]
+    c = Clip("u-whats-new", d, alt="The What's new window of BIDS Manager 1.5.2 playing its animations: the "
+             "guide, then the physiology of a CMRR log, then Sidecars written from the recordings, picked "
+             "from the list.", start=(860, 560), popups=False)
+    c.show_cursor = False
+
+    def play(key: str, seconds: float, by_user: bool) -> None:
+        stage.set_scene(keys.index(key), by_user=by_user)
+        for k in range(int(seconds * c.fps)):
+            stage.set_time(k / c.fps)
+            c.refresh()
+            c.frame()
+
+    play("guide", stage.scenes[keys.index("guide")].duration, False)
+    play("physio", stage.scenes[keys.index("physio")].duration, False)
+    c.show_cursor = True
+    button = page.feature_buttons[keys.index("sidecars")]
+    c.move_to(button, 0.9)
+    c.rings.append((c.cursor, c.t))
+    # The picked scene to just before it would fade, then held there: the
+    # clip ends, and its poster shows, on the sidecar fully written.
+    sidecars = stage.scenes[keys.index("sidecars")]
+    play("sidecars", sidecars.duration - wn.FADE - 0.1, True)
+    c.poster_at = c.t
+    c.hold(1.8)
+    c.finish()
+
+
+GROUPS.update({"clip-s-guide": guide_clip, "clip-u-whats-new": whats_new_clip})

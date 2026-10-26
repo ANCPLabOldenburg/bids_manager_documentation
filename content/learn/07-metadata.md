@@ -3,7 +3,7 @@ title: Metadata you provide
 chapter: 7
 lede: Some of what BIDS asks for is in no file: who made the dataset and under what licence, what a task was, how much tracer was injected, who the participants are. Enter it once, before converting, and the conversion writes it into every file it belongs in.
 time: 20 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before

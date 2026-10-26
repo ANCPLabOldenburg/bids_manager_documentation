@@ -6,7 +6,7 @@ group: Curating a dataset
 lede: A dataset can be legal BIDS and still contradict itself, once a file has been renamed in the file manager, a table deleted or a field typed by hand. Four tools find and repair what no validator reports, each change listed before it is written.
 description: Check coherence, scans and sessions tables, references and fix ups in BIDS Manager: what each finds, what it repairs, and when to use which.
 time: 20 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before

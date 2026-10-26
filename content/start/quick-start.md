@@ -3,7 +3,7 @@ title: Quick start
 lede: Convert the multimodal sample from its raw folder to a validated BIDS dataset in nine steps. Each step links to the chapter of the course that explains it.
 description: Convert a sample dataset to BIDS with BIDS Manager in nine steps.
 time: 15 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before

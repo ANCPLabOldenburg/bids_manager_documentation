@@ -11,20 +11,20 @@
  "files": {
   "dark": {
    "avif": {
-    "1440": "l02-after-create-dark-1440-b5645e0e.avif",
-    "2880": "l02-after-create-dark-2880-dd6562b3.avif"
+    "1440": "l02-after-create-dark-1440-a9ec0bbb.avif",
+    "2880": "l02-after-create-dark-2880-43f5f67a.avif"
    },
    "webp": {
-    "1440": "l02-after-create-dark-1440-ab05a405.webp"
+    "1440": "l02-after-create-dark-1440-07afb70b.webp"
    }
   },
   "light": {
    "avif": {
-    "1440": "l02-after-create-light-1440-05330a01.avif",
-    "2880": "l02-after-create-light-2880-655ec7e7.avif"
+    "1440": "l02-after-create-light-1440-5726cf81.avif",
+    "2880": "l02-after-create-light-2880-0437370b.avif"
    },
    "webp": {
-    "1440": "l02-after-create-light-1440-bf70be9d.webp"
+    "1440": "l02-after-create-light-1440-739b56b2.webp"
    }
   }
  },
@@ -74,9 +74,9 @@
  "window": true,
  "title": "BIDS-Manager",
  "source": {
-  "bids_manager": "1.5.1",
-  "commit": "4f07b3e",
-  "date": "2026-10-20",
+  "bids_manager": "1.5.2",
+  "commit": "556d98c",
+  "date": "2026-10-26",
   "sample": "multimodal v2"
  }
 }

@@ -84,7 +84,9 @@ The diffusion run of `sub-002` has two reversed-phase references (`acq-15b0_dir-
 
 ## Physiological logs
 
-The series `…_PhysioLog` hold what the scanner recorded during a run. Here they hold only the trigger pulses; on scanners where a pulse oximeter and a breathing belt are attached they hold those too. Each becomes a `_physio.tsv.gz` beside its run, with a sidecar giving the sampling rate and the start time. They open in the Editor as tables, and **Visualize** draws them ([Viewing data](/learn/12-viewing-data/#physiological-recordings)).
+The series `…_PhysioLog` hold what the scanner recorded during a run. Here no pulse oximeter, breathing belt or ECG was attached, so they hold only when each volume was acquired. Each becomes a `_physio.tsv.gz` beside its run holding the trigger alone: 1 at the start of every volume, on the scanner's clock (400 Hz), with a sidecar giving the rate and the start time. Where sensors are attached, their signals come with it, one table per sampling rate ([Converting](/learn/08-converting/#check-the-conversion-settings)). They open in the Editor as tables, and **Visualize** draws them ([Viewing data](/learn/12-viewing-data/#physiological-recordings)).
+
+{{ figure("guide-mri-physio", "The log of a dmaging run with Visualize: the scanner trigger alone, a mark at every volume.") }}
 
 ## Describe and convert
 

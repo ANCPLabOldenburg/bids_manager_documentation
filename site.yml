@@ -8,7 +8,7 @@ description: >-
   eye-tracking recordings into a BIDS dataset, then validate, view, check and
   edit it.
 base_url: https://ancplaboldenburg.github.io/bids_manager_documentation/
-version: "1.5.1"
+version: "1.5.2"
 release_date: "October 2026"
 repo: https://github.com/ANCPLabOldenburg/BIDS-Manager
 docs_repo: https://github.com/ANCPLabOldenburg/bids_manager_documentation
@@ -27,11 +27,17 @@ downloads:
     label: Installers.zip
     goatcounter: download-installers-zip
   multimodal:
-    url: https://cloud.uol.de/s/kY9nQwdzgyQF6At/download
-    file: BIDS_Manager_multimodal_sample_v2.zip
-    size: 126 MB
-    unpacked: 318 MB
+    url: https://cloud.uol.de/s/e9oZzrJbfBtiaTQ/download
+    file: BIDS_Manager_multimodal_sample_v3.zip
+    size: 125 MB
+    unpacked: 311 MB
     goatcounter: download-dataset-multimodal
+  multimodal2:
+    url: https://cloud.uol.de/s/YaYyq5RzmoY7WXJ/download
+    file: BIDS_Manager_multimodal_2_sample_v1.zip
+    size: 125 MB
+    unpacked: 311 MB
+    goatcounter: download-dataset-multimodal-2
   meg:
     url: https://cloud.uol.de/s/XQoEqsa42bNQ4JX/download
     file: MEG_Elekta_sample_data_small.zip
@@ -122,6 +128,7 @@ sections:
       - guides/adopting-a-dataset/
       - guides/names-and-structure/
       - guides/consistency/
+      - guides/sidecars/
       - guides/ignoring-files/
       - guides/anonymising/
       - guides/defacing/

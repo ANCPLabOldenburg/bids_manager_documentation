@@ -11,11 +11,11 @@
  "files": {
   "dark": {
    "avif": {
-    "1320": "g-anon-scope-dark-1320-9249e62a.avif",
-    "2640": "g-anon-scope-dark-2640-cbbe86d9.avif"
+    "1320": "g-anon-scope-dark-1320-f30c9bf8.avif",
+    "2640": "g-anon-scope-dark-2640-7f341020.avif"
    },
    "webp": {
-    "1320": "g-anon-scope-dark-1320-8c0cffaf.webp"
+    "1320": "g-anon-scope-dark-1320-8d4e2397.webp"
    }
   },
   "light": {
@@ -33,9 +33,9 @@
  "window": false,
  "title": "BIDS-Manager",
  "source": {
-  "bids_manager": "1.5.1",
-  "commit": "4f07b3e",
-  "date": "2026-10-20",
+  "bids_manager": "1.5.2",
+  "commit": "556d98c",
+  "date": "2026-10-26",
   "sample": "MRI sample 1"
  }
 }

@@ -1,0 +1,41 @@
+{
+ "id": "guide-mri-physio",
+ "kind": "figure",
+ "width": 758,
+ "height": 814,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "758": "guide-mri-physio-dark-758-bb87a53b.avif",
+    "1516": "guide-mri-physio-dark-1516-ad3c26db.avif"
+   },
+   "webp": {
+    "758": "guide-mri-physio-dark-758-30e66b1a.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "758": "guide-mri-physio-light-758-eeba68fb.avif",
+    "1516": "guide-mri-physio-light-1516-2035fbc0.avif"
+   },
+   "webp": {
+    "758": "guide-mri-physio-light-758-13ff9749.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "The physiological log of a dmaging run with Visualize: no sensor was attached, so the table is the scanner trigger alone, 1 at the start of every volume.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.2",
+  "commit": "556d98c",
+  "date": "2026-10-26",
+  "sample": "multimodal v2"
+ }
+}

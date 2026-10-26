@@ -1,0 +1,41 @@
+{
+ "id": "settings-convert-post-convert-chain",
+ "kind": "figure",
+ "width": 900,
+ "height": 720,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "900": "settings-convert-post-convert-chain-dark-900-ebcc330a.avif",
+    "1800": "settings-convert-post-convert-chain-dark-1800-89300363.avif"
+   },
+   "webp": {
+    "900": "settings-convert-post-convert-chain-dark-900-0eac16de.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "900": "settings-convert-post-convert-chain-light-900-52637025.avif",
+    "1800": "settings-convert-post-convert-chain-light-1800-3a3261ed.avif"
+   },
+   "webp": {
+    "900": "settings-convert-post-convert-chain-light-900-076b1e44.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, Convert page, scrolled down: Source data and Post-convert chain (run after every conversion).",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.2",
+  "commit": "059339b",
+  "date": "2026-10-26",
+  "sample": "multimodal v2"
+ }
+}

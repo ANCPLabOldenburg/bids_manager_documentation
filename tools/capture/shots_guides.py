@@ -197,6 +197,22 @@ def guide_mri():
     H.take(Shot("guide-mri-editor", "The converted MRI sample in the Editor, validated: the sidecar of the "
                 "diffusion run's reversed-phase reference, with IntendedFor and B0FieldIdentifier.", win, window=True,
                 allow_elided=("QTreeView", "QTreeWidget", "QTableView")))
+    # A log recorded with no sensor attached: the trigger alone.
+    SE._select(ed, root, "sub-002/func/sub-002_task-dmaging_run-1_physio.tsv.gz", wait=0.4)
+    tv = ed._tsv_viewer
+    H.pump(lambda: getattr(tv, "_loader", None) is None, timeout=30, settle=30)
+    H.button(tv, "Visualize").click()
+    H.pump(settle=40)
+    H.wait(2.0)
+    H.pump(settle=40)
+    # A 0/1 column on a lane centred on 0: scaled so a mark ends inside it
+    # (after the load, which resets the scale to the recording's own).
+    tv.visualizer().run("traces.scale", value=0.45)
+    H.wait(1.0)
+    H.pump(settle=40)
+    H.take(Shot("guide-mri-physio", "The physiological log of a dmaging run with Visualize: no sensor was "
+                "attached, so the table is the scanner trigger alone, 1 at the start of every volume.",
+                win, crop_to=ed._center_frame))
     save("mri", rec)
     win.close()
 

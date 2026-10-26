@@ -3,7 +3,7 @@ title: Projects
 chapter: 2
 lede: Create the project the course works in. A project is a BIDS dataset folder that BIDS Manager manages, so it keeps every scan, every edit and every log of that dataset inside it.
 time: 10 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before

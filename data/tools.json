@@ -29,6 +29,10 @@
      "tip": "Write the *_scans.tsv of each session (every recording, with when it was acquired) and the *_sessions.tsv of each subject with sessions. For a dataset that has none, or whose tables have fallen behind. Tables already there are kept and only added to. Shown before anything is written; one Undo."
     },
     {
+     "label": "Write sidecars from the recordings...",
+     "tip": "Write the .json sidecar a recording is missing, or add what one lacks, from the data it was converted from, its own header, your answers and the sidecars that link to it. A value already there is never changed. Every field is shown with where it was read; one Undo."
+    },
+    {
      "label": "References (IntendedFor, Sources...)...",
      "tip": "Which files each file points at, and whether that is right. Lists every IntendedFor, AssociatedEmptyRoom, Sources and AnatomicalImage in the dataset with its status: correct, pointing at a missing file, or disagreeing with the acquisition times. Link by ticking files, not by typing paths."
     },

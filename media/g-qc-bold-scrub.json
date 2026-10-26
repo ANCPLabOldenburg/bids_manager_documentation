@@ -21,20 +21,20 @@
  "files": {
   "dark": {
    "mp4": "g-qc-bold-scrub-dark-ba656b41.mp4",
-   "webm": "g-qc-bold-scrub-dark-997f1712.webm",
+   "webm": "g-qc-bold-scrub-dark-71f32f3d.webm",
    "poster": "g-qc-bold-scrub-dark-poster-b35b0688.webp"
   },
   "light": {
    "mp4": "g-qc-bold-scrub-light-1c4a57aa.mp4",
-   "webm": "g-qc-bold-scrub-light-0d6990ac.webm",
+   "webm": "g-qc-bold-scrub-light-68f7a672.webm",
    "poster": "g-qc-bold-scrub-light-poster-c65f05e8.webp"
   }
  },
  "alt": "Stepping through volumes 128 to 160 of the BOLD run with motion: at volumes 141 and 152 the planes break into stripes and every plot under the time course spikes; at 146 and 147 framewise displacement is high but the slices stay in line.",
  "source": {
-  "bids_manager": "1.5.1",
-  "commit": "4f07b3e",
-  "date": "2026-10-20",
+  "bids_manager": "1.5.2",
+  "commit": "bd70a80+changes",
+  "date": "2026-10-23",
   "sample": "BOLD run with motion (Oldenburg)"
  }
 }

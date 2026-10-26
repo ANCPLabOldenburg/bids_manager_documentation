@@ -1,0 +1,41 @@
+{
+ "id": "settings-classification-echoes-and-fieldmaps",
+ "kind": "figure",
+ "width": 900,
+ "height": 760,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "900": "settings-classification-echoes-and-fieldmaps-dark-900-35dcf0d0.avif",
+    "1800": "settings-classification-echoes-and-fieldmaps-dark-1800-45c94ead.avif"
+   },
+   "webp": {
+    "900": "settings-classification-echoes-and-fieldmaps-dark-900-d9b5e8ab.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "900": "settings-classification-echoes-and-fieldmaps-light-900-1552d649.avif",
+    "1800": "settings-classification-echoes-and-fieldmaps-light-1800-5609f29d.avif"
+   },
+   "webp": {
+    "900": "settings-classification-echoes-and-fieldmaps-light-900-55490d45.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, Classification page, scrolled down: Echoes and fieldmaps.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.2",
+  "commit": "059339b",
+  "date": "2026-10-26",
+  "sample": "multimodal v2"
+ }
+}

@@ -8,6 +8,72 @@ To upgrade, use **Check updates** in BIDS Manager's status bar, run the installe
 
 <p class="rel-legend"><span class="rel-kind k-new">New</span> <span class="rel-kind k-fix">Fixed</span> <span class="rel-kind k-note">Changed</span></p>
 
+::: release 1.5.2 | October 2026 | v152
+
+A guide that shows you which button to press next; physiology from Siemens scanners with every ECG lead and the scanner trigger, aligned with the image; the first volumes of a run left out on request; entity values and subject labels taken from what the scanner was told; data and projects on network drives; sidecars written again from the recordings; and defacing and skull stripping for derivatives. The first time 1.5.2 opens, a new **What's new** window plays a short animation of each feature of the releases you did not have yet, then the 1.5.0 news if you come from an earlier version; Home's **What's new** menu opens the news of any release.
+
+{{ clip("u-whats-new", "The What's new window of 1.5.2: the guide, the physiology of a CMRR log, then Sidecars written from the recordings, picked from the list.") }}
+
+<p class="rel-kind k-new">New</p>
+
+- **A guide that shows you what to press.** Switch **Guide** on in the header, beside **Settings**. It asks what you would like to do and lists the tasks of the view you are in: on Home, start a new dataset or carry on with one; in the Converter, scan raw data, check and edit the table, edit one recording's metadata, convert; in the Editor, validate, look at or edit a file, rename a subject or a session, delete recordings, remove identifying information, check image quality, undo a change. Pick a task and the guide rings the control to use, says what to do there, and moves to the next step by itself when you have done it. **Previous** and **Next** step through by hand, and **All tasks** goes back to the list. It asks again when you open a view and when a task is finished; **Not now** closes it. It is off until you switch it on. See [First launch](/start/first-launch/#let-the-guide-show-you).
+
+{{ figure("guide-question", "The guide in the Converter, with a scan table open: the tasks it can walk you through here, the usual next one tinted.", number=False) }}
+
+{{ figure("guide-step", "Check and edit the table, step 1 of 4: the table ringed, and what to do there.", number=False) }}
+
+- **Physiology from Siemens scanners, every ECG lead and the trigger.** The Siemens CMRR sequences log the physiology of a run with it: the pulse, the breathing, up to four ECG leads, and when every volume was acquired. BIDS Manager now reads these logs itself. Each ECG lead is a column of its own, and the scanner trigger is a column that is 1 at the first sample of every volume of the image and 0 elsewhere, always the last column. BIDS asks for one sampling rate per file and the signals are recorded at three (ECG 400 Hz, pulse 200 Hz, breathing 50 Hz), so **Settings** > **Convert** > **Physiology** offers three ways to write them, all valid BIDS: one table per sampling rate, each with the trigger (the default); or **one table for the run**, the four ECG leads, the pulse, the breathing and the trigger last, with the slower signals either interpolated between their samples or kept as recorded (`n/a` in the rows between their samples, nothing computed). In the Editor, **Visualize** on a physiology table shows the four leads, the pulse, the breathing and the trigger together (`--physio-layout`). See [Converting](/learn/08-converting/#check-the-conversion-settings).
+
+{{ figure("l08-settings-physio", "Settings, Convert: dummy volumes, how a physiological log is written, and cropping it to the run.", number=False) }}
+
+{{ figure("l12-physio", "The BOLD run's ECG table with Visualize: four leads, then the pulse and the breathing, each with the scanner trigger.", number=False) }}
+
+- **Physiology aligned with the image by the scanner's own timings.** The log records when each volume was acquired, and volume 1 of the image is volume 1 of the log (checked to the millisecond on nine real runs of 50 to 1,225 volumes). So the trigger marks exactly the image's volumes, and `StartTime` gives the time of the table's first sample from the first volume. **Crop to the run** keeps only the samples from the first volume to the end of the last (`--physio-align`). When dummy volumes are removed from the image they are removed from the log too: the trigger and `StartTime` start at the first volume kept, so the physiology stays aligned with the image. A run stopped by hand ends in a volume the scanner did not finish; the image leaves it out, and so does the trigger. A log recorded with no sensor attached still gives the trigger alone. A log knows the run it was recorded with by how they were acquired, so renaming either in the table does not separate them, and the log's **Properties** name its run.
+
+{{ figure("l07-dummy-physio", "Properties of the BOLD run's physiological log: the run it was recorded with, and the 4 dummy volumes removed from both.", number=False) }}
+
+- **Leave out the first volumes of a run.** Many sites record a few volumes at the start of each functional run before the signal is steady, and an analysis leaves them out. **Settings** > **Convert** > **Dummy volumes** sets how many to remove from every functional run when it is converted, and a run can have its own number in **Properties** (`0` keeps all of its volumes). The sidecar records how many were removed (`NumberOfVolumesDiscardedByUser`), the run's time in its sidecar and in the scans table becomes that of its first volume kept, its events move by the time the removed volumes took, and its physiological log starts at the same volume. Also `--drop-volumes` and the scan table's `drop_volumes` column. See [Converting](/learn/08-converting/#check-the-conversion-settings).
+
+{{ figure("l07-dummy-volumes", "Properties of the BOLD run: 4 dummy volumes for this run, where Default would take the number in Settings.", number=False) }}
+
+- **Keep the entity values the MRI operator chose.** Operators often name a series with BIDS entities, such as `func_task-nback_acq-mb4_run-02`, sometimes on purpose against what the scanner would suggest. Tick entities in **Settings** > **Scan** > **Entities the sequence name decides** (`task`, `acq`, `ce`, `rec`, `dir`, `run`, `echo` and more), and where the series description or protocol name gives a value for one, that value is used instead of BIDS Manager's own estimate, as long as it is valid for the entity and the recording. An entity the name does not mention keeps the estimate. Subject and session never come from a series name, because a typo would move a recording to another person (`--name-entity`). See [Scanning](/learn/03-scanning/#settings-that-change-a-scan).
+
+{{ figure("l03-settings-name-entities", "Settings, Scan: the entities whose value the series name decides, where the operator wrote one.", number=False) }}
+
+- **Subject labels from the participant's ID or name.** Subjects are numbered by default (`sub-001`). **Settings** > **Scan** > **Subject labels** takes the label from the DICOM header instead: the patient ID, the given name or the family name, made into a valid label (`OL_3844` becomes `sub-OL3844`, `Müller` becomes `sub-Muller`). A participant whose field is empty or anonymised is numbered, and two participants whose values give the same label are kept apart (`Smith`, `Smith2`). Which recordings belong to one participant is decided as before: only the label changes. A label is part of every file name, so for a dataset you will share, choose the patient ID rather than a name (`--subject-from`).
+
+{{ figure("l03-settings-subjects", "Settings, Scan, Subject labels: numbers, or the patient ID, the given name or the family name from the DICOM header.", number=False) }}
+
+- **Data and projects on network drives.** Raw data or a project on a network drive now converts on Windows, on a drive letter mapped to a share or a `\\server\share` path. The conversion gathers each series into a folder of file links, and Windows does not follow a link stored on a network share, so dcm2niix found no images there; a series on a share is now copied to a local temporary folder instead. Mapped drive letters are kept as you wrote them, a network timeout fails only the series it hit, and a drive that is not connected is reported as such. On macOS and Linux nothing changes: a network drive already worked.
+- **Sidecars from the recordings.** A sidecar lost or never written is written again from what is still there: the data it was converted from (converted again in a temporary folder), the file's own header (a NIfTI image's timing, an EEG or MEG recording's acquisition), your answers and the sidecars that link to it, never over a value a sidecar holds. Every field is shown with where it was read; the values follow the BIDS version chosen in **Settings** > **Validation**; any image or recording BIDS Manager reads gets one, named the BIDS way or not. **Also add to existing** completes the sidecars you have. **Tools** > **Check and repair** > **Write sidecars from the recordings...**, the tree's right-click, and `bidsmgr-sidecars`. See [Writing sidecars from the recordings](/guides/sidecars/).
+
+{{ figure("g-sidecars-dialog", "Sidecars from the recordings for a BOLD run whose sidecar was deleted: every field with where it was read.", number=False) }}
+
+- **Defacing and skull stripping in derivatives.** A preprocessed image carries the face of the scan it came from, such as fMRIPrep's `desc-preproc_T1w`. Tick **Include derivatives** in **Tools** > **Deface...** or **Remove the skull...** and the images in `derivatives/` are offered too, grouped by pipeline. A stripped one goes to `derivatives/bidsmgr-skullstrip/` with its description plus `brain` (`desc-preproc` becomes `desc-preprocbrain`), and masks and segmentations are left alone (`bidsmgr-deface --include-derivatives`). See [Defacing and skull stripping](/guides/defacing/#images-in-derivatives).
+
+{{ figure("g-strip-derivatives", "Remove the skull with Include derivatives ticked: the raw images, and fMRIPrep's preprocessed T1w, grouped by where they are.", number=False) }}
+
+<p class="rel-kind k-fix">Fixed</p>
+
+- **The four ECG leads of a CMRR log are four columns.** They were written as one column four times too long, the leads interleaved, and the trigger was a constant 1, a flat line.
+- **Acquisition values land in the recording's sidecar only.** With dataset or datatype values in the recording metadata file, `bidsmgr-metadata` wrote fields such as `Manufacturer`, `EEGReference` and `InstitutionName` into every sidecar beside an EEG or MEG recording: its events, channels, electrodes and coordinate system, and the physiology and eye-tracking sidecars. The GUI's **Dataset metadata** was not affected ([issue 187](https://github.com/ANCPLabOldenburg/BIDS-Manager/issues/187)).
+
+- **Settings show their texts whole.** The help text of each entity on **Settings** > **Scan** ended mid-word with its formatting marks showing; it now ends on a whole sentence. The column titles of the built-in classifier table on **Scan rules** are no longer cut.
+
+<p class="rel-kind k-note">Changed</p>
+
+- **A physiological log is one table per sampling rate** by default: `_recording-ecg_`, `_recording-cardiac_` and `_recording-respiratory_physio.tsv.gz`, each with the trigger last. 1.5.1 wrote one table per signal, the trigger on its own.
+- The scan table has one more column, `drop_volumes` (67 in all).
+- **Two multimodal samples in Home's sample menu.** The multimodal sample is version 3: its BOLD run's physiological log is cut to the run's 60 volumes, as the image is. [Multimodal sample 2](/start/sample-data/#multimodal-2) holds the same recordings as one participant over four visits, with one identity in every file and real dates.
+- **An eye tracker joins its folder's participant.** An EyeLink file names no participant, so the scan gave it a subject of its own every time. It now takes the subject of its `sub-` folder when everything else in that folder was given one and the same subject, and keeps a number of its own otherwise, so two people are never put together by the scan.
+- **What's new knows where you come from.** It shows the news of every release since the version that last ran, one after the other, and keeps each release's news in a menu, in the window and on Home.
+
+<p class="rel-kind k-note">Before you upgrade</p>
+
+- **Physiology converted before 1.5.2** has the ECG leads merged and a flat trigger. To write it again, delete the run's `_physio` files in the Editor (right-click, **Delete this recording...**), then run the conversion again: with **Existing subjects** on **Skip**, the default, only what is missing is written ([Converting](/learn/08-converting/#check-the-conversion-settings)).
+
+:::
+
 ::: release 1.5.1 | October 2026 | v151
 
 Anonymisation chosen by purpose and by subject, scans and sessions tables for every kind of recording, granular control over what validation leaves out, an Undo and Redo that walk the whole history, and installers that need no administrator rights. Validation also checks more than before, so read **Before you upgrade** at the end of this card.

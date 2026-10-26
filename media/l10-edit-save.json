@@ -11,19 +11,19 @@
  ],
  "files": {
   "dark": {
-   "mp4": "l10-edit-save-dark-df82ae22.mp4",
-   "poster": "l10-edit-save-dark-poster-2e235120.webp"
+   "mp4": "l10-edit-save-dark-591e6151.mp4",
+   "poster": "l10-edit-save-dark-poster-1e635eda.webp"
   },
   "light": {
-   "mp4": "l10-edit-save-light-b7911694.mp4",
-   "poster": "l10-edit-save-light-poster-b9712939.webp"
+   "mp4": "l10-edit-save-light-c715b090.mp4",
+   "poster": "l10-edit-save-light-poster-8e645617.webp"
   }
  },
  "alt": "Searching the BOLD run's sidecar for TaskDescription, typing a description, and saving.",
  "source": {
-  "bids_manager": "1.5.1",
-  "commit": "4f07b3e",
-  "date": "2026-10-20",
+  "bids_manager": "1.5.2",
+  "commit": "556d98c",
+  "date": "2026-10-26",
   "sample": "multimodal v2"
  }
 }

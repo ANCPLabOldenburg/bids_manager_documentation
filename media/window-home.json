@@ -11,20 +11,20 @@
  "files": {
   "dark": {
    "avif": {
-    "1440": "window-home-dark-1440-cc878e65.avif",
-    "2880": "window-home-dark-2880-5dd76949.avif"
+    "1440": "window-home-dark-1440-54d566ef.avif",
+    "2880": "window-home-dark-2880-c47a6482.avif"
    },
    "webp": {
-    "1440": "window-home-dark-1440-02134ae4.webp"
+    "1440": "window-home-dark-1440-e772f284.webp"
    }
   },
   "light": {
    "avif": {
-    "1440": "window-home-light-1440-9cf3790a.avif",
-    "2880": "window-home-light-2880-0777b8a3.avif"
+    "1440": "window-home-light-1440-c887a742.avif",
+    "2880": "window-home-light-2880-1c0df76a.avif"
    },
    "webp": {
-    "1440": "window-home-light-1440-e5a8851d.webp"
+    "1440": "window-home-light-1440-6876b1e8.webp"
    }
   }
  },
@@ -81,11 +81,11 @@
   },
   {
    "key": "news",
-   "label": "What's new: this release, and the update notes",
+   "label": "What's new: each release's news, and the update notes",
    "x": 0.13681,
    "y": 0.79556,
    "w": 0.35556,
-   "h": 0.18222,
+   "h": 0.19222,
    "mx": 0.13819,
    "my": 0.79778
   },
@@ -95,9 +95,19 @@
    "x": 0.50069,
    "y": 0.37222,
    "w": 0.35486,
-   "h": 0.60556,
+   "h": 0.61556,
    "mx": 0.50208,
    "my": 0.37444
+  },
+  {
+   "key": "guide",
+   "label": "The guide: shows the next step",
+   "x": 0.86042,
+   "y": 0.01,
+   "w": 0.07222,
+   "h": 0.04222,
+   "mx": 0.89653,
+   "my": 0.03111
   },
   {
    "key": "settings",
@@ -134,9 +144,9 @@
  "window": true,
  "title": "BIDS-Manager",
  "source": {
-  "bids_manager": "1.5.1",
-  "commit": "4f07b3e",
-  "date": "2026-10-20",
+  "bids_manager": "1.5.2",
+  "commit": "556d98c",
+  "date": "2026-10-26",
   "sample": "multimodal v2"
  }
 }

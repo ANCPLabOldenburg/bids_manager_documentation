@@ -3,7 +3,7 @@ title: Converting
 chapter: 8
 lede: Choose how the conversion writes the dataset, run it, and read what it did. The conversion writes every included row under its BIDS name, links fieldmaps to the runs they correct, removes identifying fields, and then fills in the metadata and validates the result.
 time: 10 minutes
-sample: Multimodal sample v2
+sample: Multimodal sample v3
 ---
 
 ::: before
@@ -23,7 +23,27 @@ The conversion follows **Settings** > **Convert**. The defaults suit the course;
 | **Residuals** | **Skip residual volumes**: dcm2niix sometimes writes extra copies of a series beside the real one; they are dropped. |
 | **Fieldmap links** | How a fieldmap's `IntendedFor` names the runs it corrects: BIDS URIs (`bids::sub-01/...`) or paths from the subject. With **Also write B0FieldIdentifier and B0FieldSource**, the newer pairing is written too. [Fieldmap links and fMRIPrep](/concepts/fieldmap-links/) says which each fMRIPrep version reads. |
 | **Force EDF** | **Re-encode EEG to EDF** instead of keeping the source format. |
+| **Dummy volumes** | How many volumes to leave out at the start of every functional run, while the signal is not yet steady. **None** by default. A run's own number in **Properties** wins (below). |
+| **Physiology** | How a Siemens physiological log is written. **One table per sampling rate, as recorded** (the default), or one table for the run at the fastest rate, the slower channels either **interpolated** or **as recorded** with `n/a` between their samples. All three are valid BIDS. **Crop to the run** keeps only the samples recorded while the run was acquired. A log with no signal (no sensor attached) becomes the trigger alone. |
 | **Deface** | **Remove faces from anatomical and PET images** before the subject is written, with the engine you choose. Chapter 14 covers defacing after conversion instead. |
+
+{{ figure("l08-settings-physio", "Settings, Convert page: Dummy volumes and Physiology.") }}
+
+A run can have its own number of dummy volumes: select its row in the scan table and set **Dummy volumes** in **Properties**. **Default** takes the number in Settings; `0` keeps every volume of this run whatever the default. The conversion then removes those volumes from the image, records how many in the sidecar (`NumberOfVolumesDiscardedByUser`), gives the run the time of its first volume kept (in the sidecar and in the scans table, as BIDS defines a run's time), moves its events by the time the removed volumes took, and starts the physiological log recorded with it at the same volume. The course leaves every volume in.
+
+:::: columns
+{{ figure("l07-dummy-volumes", "Properties of the BOLD run: 4 dummy volumes for this run.") }}
+
+<div class="col-text">
+
+The section says whether the number is the default or the run's own, and how many volumes the run has (here 60). The scan table's `drop_volumes` column holds the same number, so a script can set it too (`bidsmgr-convert --drop-volumes N` sets the default).
+
+</div>
+::::
+
+The log has no number of its own: it follows the run it was recorded with. BIDS Manager finds that run from the acquisition (a log's series is named after its run's and is written when the run ends), so a run renamed in the table keeps its log. The log's **Properties** say which run and how many volumes go:
+
+{{ figure("l07-dummy-physio", "Properties of the BOLD run's physiological log: the 4 volumes of the run it follows.") }}
 
 Further down, **Source data** and the **Post-convert chain**:
 
@@ -92,7 +112,7 @@ The conversion log in `.bidsmgr/logs/` has the details. For the sample, it shows
 
 - renamed dcm2niix's pieces of the fieldmap to `magnitude1`, `magnitude2` and `phasediff`;
 - linked the phase-difference fieldmap to the BOLD run, and the reversed-phase diffusion reference to the diffusion run, with `IntendedFor` and a shared `B0FieldIdentifier`;
-- split the physiology log into one `_physio.tsv.gz` per signal (cardiac, ECG, respiratory, trigger), and both eyes of the eye tracker into their own files;
+- wrote the BOLD run's physiological log as one `_physio.tsv.gz` per sampling rate: the four ECG leads at 400 Hz (`_recording-ecg_`), the pulse at 200 Hz (`_recording-cardiac_`) and the breathing at 50 Hz (`_recording-respiratory_`), each with the scanner trigger as its last column, 1 at the start of every volume; and both eyes of the eye tracker into their own files;
 - wrote the PET fields the DICOM header holds but dcm2niix does not copy, and the dose sheet's fields;
 - removed seven identifying fields (the participant's name, ID, birth date, age, sex, size and weight) from every MRI sidecar, and six from the header inside each spectroscopy file.
 

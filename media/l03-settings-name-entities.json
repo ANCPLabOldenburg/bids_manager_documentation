@@ -1,0 +1,41 @@
+{
+ "id": "l03-settings-name-entities",
+ "kind": "figure",
+ "width": 801,
+ "height": 338,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "801": "l03-settings-name-entities-dark-801-36fdac29.avif",
+    "1602": "l03-settings-name-entities-dark-1602-b1e3703f.avif"
+   },
+   "webp": {
+    "801": "l03-settings-name-entities-dark-801-d078ab04.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "801": "l03-settings-name-entities-light-801-03e02d66.avif",
+    "1602": "l03-settings-name-entities-light-1602-b53d2e34.avif"
+   },
+   "webp": {
+    "801": "l03-settings-name-entities-light-801-ff2efe11.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, Scan page, at the bottom: the entities whose value the sequence name decides when the operator wrote it there, such as acq- or run-.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.2",
+  "commit": "556d98c",
+  "date": "2026-10-26",
+  "sample": "multimodal v2"
+ }
+}

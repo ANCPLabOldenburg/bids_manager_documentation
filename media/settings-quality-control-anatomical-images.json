@@ -1,0 +1,41 @@
+{
+ "id": "settings-quality-control-anatomical-images",
+ "kind": "figure",
+ "width": 960,
+ "height": 760,
+ "scale": 2,
+ "themes": [
+  "dark",
+  "light"
+ ],
+ "files": {
+  "dark": {
+   "avif": {
+    "960": "settings-quality-control-anatomical-images-dark-960-379de0c0.avif",
+    "1920": "settings-quality-control-anatomical-images-dark-1920-f98d0ae1.avif"
+   },
+   "webp": {
+    "960": "settings-quality-control-anatomical-images-dark-960-889e19f0.webp"
+   }
+  },
+  "light": {
+   "avif": {
+    "960": "settings-quality-control-anatomical-images-light-960-d35b9247.avif",
+    "1920": "settings-quality-control-anatomical-images-light-1920-b34b4bb0.avif"
+   },
+   "webp": {
+    "960": "settings-quality-control-anatomical-images-light-960-56df69c8.webp"
+   }
+  }
+ },
+ "regions": [],
+ "alt": "Settings, Quality control page, scrolled down: Anatomical images.",
+ "window": false,
+ "title": "BIDS-Manager",
+ "source": {
+  "bids_manager": "1.5.2",
+  "commit": "059339b",
+  "date": "2026-10-26",
+  "sample": "multimodal v2"
+ }
+}

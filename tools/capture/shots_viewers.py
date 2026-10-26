@@ -18,7 +18,7 @@ T1 = f"{SUB}/anat/sub-001_ses-01_acq-tfl3p2_T1w.nii.gz"
 FLAIR = f"{SUB}/anat/sub-001_ses-01_acq-spcir2p3_FLAIR.nii.gz"
 BOLD = f"{SUB}/func/sub-001_ses-01_task-rest_bold.nii.gz"
 DWI_BVAL = f"{SUB}/dwi/sub-001_ses-01_acq-epb0p2_dir-AP_dwi.bval"
-PHYSIO = f"{SUB}/func/sub-001_ses-01_task-rest_recording-respiratory_physio.tsv.gz"
+PHYSIO = f"{SUB}/func/sub-001_ses-01_task-rest_recording-ecg_physio.tsv.gz"
 EEG = f"{SUB}/eeg/sub-001_ses-01_task-motorimagery_eeg.edf"
 MEG = f"{SUB}/meg/sub-001_ses-01_task-rest_meg.fif"
 MRS = f"{SUB}/mrs/sub-001_ses-01_svs.nii.gz"
@@ -145,8 +145,10 @@ def physio():
     H.pump(settle=40)
     H.wait(2.0)
     H.pump(settle=40)
-    H.take(Shot("l12-physio", "The respiratory recording of the BOLD run, opened with Visualize in the table "
-                "viewer.", win, crop_to=ed._center_frame))
+    H.take(Shot("l12-physio", "The BOLD run's ECG table opened with Visualize: its four leads and the scanner "
+                "trigger at every volume, and below them the run's pulse and breathing tables, each with its "
+                "trigger.",
+                win, crop_to=ed._center_frame))
 
 
 def spectrum():

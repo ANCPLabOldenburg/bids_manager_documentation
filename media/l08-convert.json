@@ -3,7 +3,7 @@
  "kind": "clip",
  "width": 1600,
  "height": 1000,
- "duration": 8.48,
+ "duration": 8.4,
  "chapters": [
   {
    "t": 0.5,
@@ -14,7 +14,7 @@
    "title": "The conversion"
   },
   {
-   "t": 3.42,
+   "t": 3.33,
    "title": "Done"
   }
  ],
@@ -24,21 +24,21 @@
  ],
  "files": {
   "dark": {
-   "mp4": "l08-convert-dark-bda563af.mp4",
-   "webm": "l08-convert-dark-0ac2da48.webm",
-   "poster": "l08-convert-dark-poster-6c390a45.webp"
+   "mp4": "l08-convert-dark-7bed83b5.mp4",
+   "webm": "l08-convert-dark-7c2fab0e.webm",
+   "poster": "l08-convert-dark-poster-832e6e09.webp"
   },
   "light": {
-   "mp4": "l08-convert-light-864cc9e5.mp4",
-   "webm": "l08-convert-light-7a9e90e0.webm",
-   "poster": "l08-convert-light-poster-9d5073c5.webp"
+   "mp4": "l08-convert-light-a643210c.mp4",
+   "webm": "l08-convert-light-4bcc603f.webm",
+   "poster": "l08-convert-light-poster-53304294.webp"
   }
  },
  "alt": "Pressing Run conversion: the Log reports each step, the output tree fills with the dataset, metadata and validation run after it, and a message says where the output was written.",
  "source": {
-  "bids_manager": "1.5.1",
-  "commit": "4f07b3e",
-  "date": "2026-10-20",
+  "bids_manager": "1.5.2",
+  "commit": "556d98c",
+  "date": "2026-10-26",
   "sample": "multimodal v2"
  }
 }

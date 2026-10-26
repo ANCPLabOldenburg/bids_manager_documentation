@@ -1,7 +1,7 @@
 {
  "id": "g-history-menu",
  "kind": "figure",
- "width": 625,
+ "width": 628,
  "height": 232,
  "scale": 2,
  "themes": [
@@ -11,20 +11,20 @@
  "files": {
   "dark": {
    "avif": {
-    "625": "g-history-menu-dark-625-9b9012b4.avif",
-    "1250": "g-history-menu-dark-1250-0e48b215.avif"
+    "628": "g-history-menu-dark-628-94f3b429.avif",
+    "1256": "g-history-menu-dark-1256-655d8622.avif"
    },
    "webp": {
-    "625": "g-history-menu-dark-625-b36daae5.webp"
+    "628": "g-history-menu-dark-628-ffa12bb9.webp"
    }
   },
   "light": {
    "avif": {
-    "625": "g-history-menu-light-625-4d90c89a.avif",
-    "1250": "g-history-menu-light-1250-20359f82.avif"
+    "628": "g-history-menu-light-628-b4619404.avif",
+    "1256": "g-history-menu-light-1256-1e0b7c90.avif"
    },
    "webp": {
-    "625": "g-history-menu-light-625-9566565b.webp"
+    "628": "g-history-menu-light-628-704f45cc.webp"
    }
   }
  },
@@ -33,9 +33,9 @@
  "window": false,
  "title": "BIDS-Manager",
  "source": {
-  "bids_manager": "1.5.1",
-  "commit": "4f07b3e",
-  "date": "2026-10-20",
+  "bids_manager": "1.5.2",
+  "commit": "556d98c",
+  "date": "2026-10-26",
   "sample": "multimodal v2"
  }
 }

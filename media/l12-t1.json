@@ -21,20 +21,20 @@
  "files": {
   "dark": {
    "mp4": "l12-t1-dark-a0fcfe63.mp4",
-   "webm": "l12-t1-dark-3715d834.webm",
+   "webm": "l12-t1-dark-32bbe395.webm",
    "poster": "l12-t1-dark-poster-4a8cd95a.webp"
   },
   "light": {
    "mp4": "l12-t1-light-175d71c0.mp4",
-   "webm": "l12-t1-light-9a7d4296.webm",
+   "webm": "l12-t1-light-c03760ef.webm",
    "poster": "l12-t1-light-poster-acba8e8f.webp"
   }
  },
  "alt": "The T1w in the Planes + 3-D layout: the three planes and the rendering turn together as the crosshair moves down through the head, and the corner cut at the crosshair follows it.",
  "source": {
-  "bids_manager": "1.5.1",
-  "commit": "4f07b3e",
-  "date": "2026-10-20",
+  "bids_manager": "1.5.2",
+  "commit": "556d98c",
+  "date": "2026-10-26",
   "sample": "multimodal v2 (OL_3844, consented)"
  }
 }

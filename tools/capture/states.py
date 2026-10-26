@@ -24,7 +24,7 @@ from pathlib import Path
 
 import harness as H
 
-SAMPLE = H.STUDIES / "BIDS_Manager_multimodal_sample_v2"
+SAMPLE = H.STUDIES / "BIDS_Manager_multimodal_sample_v3"
 RAW = SAMPLE / "raw"
 PROJECT = "multimodal_study"
 SUBJECT = "001"
@@ -35,7 +35,7 @@ MEASURED = H.SITE / "content" / "_measured" / "multimodal.json"
 
 def _fresh_sample() -> None:
     src = H.WORK / "work" / "samples" / "multimodal"
-    dst = H.STUDIES_REAL / "BIDS_Manager_multimodal_sample_v2"
+    dst = H.STUDIES_REAL / "BIDS_Manager_multimodal_sample_v3"
     if not dst.exists():
         import subprocess
         subprocess.run(["cp", "-c", "-R", str(src), str(dst)], check=True)
